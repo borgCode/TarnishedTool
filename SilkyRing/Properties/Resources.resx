@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NoClip_UpdateCoords" xml:space="preserve">
+    <value>50                      push   rax
+48 a1 00 00 00 00 00    movabs rax,ds:0x0
+00 00 00
+48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
+48 3b 58 68             cmp    rbx,QWORD PTR [rax+0x68]
+0f 85 d3 00 00 00       jne    f6 &lt;skip&gt;
+0f 10 43 70             movups xmm0,XMMWORD PTR [rbx+0x70]
+41 50                   push   r8
+52                      push   rdx
+48 a1 00 00 00 00 00    movabs rax,ds:0x0
+00 00 00
+48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+48 8b 50 58             mov    rdx,QWORD PTR [rax+0x58]
+48 8b 52 18             mov    rdx,QWORD PTR [rdx+0x18]
+8b 82 c4 01 00 00       mov    eax,DWORD PTR [rdx+0x1c4]
+f3 44 0f 10 bc 82 24    movss  xmm15,DWORD PTR [rdx+rax*4+0x124]
+01 00 00
+45 0f c6 ff 00          shufps xmm15,xmm15,0x0
+b8 cd cc 4c 3e          mov    eax,0x3e4ccccd
+66 44 0f 6e f0          movd   xmm14,eax
+45 0f c6 f6 00          shufps xmm14,xmm14,0x0
+45 0f 59 fe             mulps  xmm15,xmm14
+49 b8 00 00 00 00 00    movabs r8,0x0
+00 00 00
+4d 8b 00                mov    r8,QWORD PTR [r8]
+4d 8b 40 20             mov    r8,QWORD PTR [r8+0x20]
+4d 8b 40 18             mov    r8,QWORD PTR [r8+0x18]
+45 0f 59 78 30          mulps  xmm15,XMMWORD PTR [r8+0x30]
+41 0f 58 c7             addps  xmm0,xmm15
+8b 82 c4 01 00 00       mov    eax,DWORD PTR [rdx+0x1c4]
+f3 44 0f 10 bc 82 74    movss  xmm15,DWORD PTR [rdx+rax*4+0x174]
+01 00 00
+45 0f c6 ff 00          shufps xmm15,xmm15,0x0
+b8 9a 99 19 3e          mov    eax,0x3e19999a
+66 44 0f 6e f0          movd   xmm14,eax
+45 0f c6 f6 00          shufps xmm14,xmm14,0x0
+45 0f 59 fe             mulps  xmm15,xmm14
+45 0f 59 78 10          mulps  xmm15,XMMWORD PTR [r8+0x10]
+41 0f 58 c7             addps  xmm0,xmm15
+8a 15 00 00 00 00       mov    dl,BYTE PTR [rip+0x0]        # c0 &lt;_main+0xc0&gt;
+80 fa 01                cmp    dl,0x1
+75 07                   jne    cc &lt;check_up&gt;
+b8 cd cc 4c be          mov    eax,0xbe4ccccd
+eb 0a                   jmp    d6 &lt;add_z&gt;
+0000000000cc &lt;check_up&gt;:
+80 fa 02                cmp    dl,0x2
+75 1a                   jne    eb &lt;coord_update&gt;
+b8 cd cc 4c 3e          mov    eax,0x3e4ccccd
+0000000000d6 &lt;add_z&gt;:
+66 44 0f 6e f8          movd   xmm15,eax
+45 0f c6 ff e1          shufps xmm15,xmm15,0xe1
+41 0f 58 c7             addps  xmm0,xmm15
+c6 05 00 00 00 00 00    mov    BYTE PTR [rip+0x0],0x0        # eb &lt;coord_update&gt;
+0000000000eb &lt;coord_update&gt;:
+45 0f 57 f6             xorps  xmm14,xmm14
+45 0f 57 ff             xorps  xmm15,xmm15
+5a                      pop    rdx
+41 58                   pop    r8
+0000000000f6 &lt;skip&gt;:
+58                      pop    rax
+0f 11 43 70             movups XMMWORD PTR [rbx+0x70],xmm0
+c7 43 7c 00 00 80 3f    mov    DWORD PTR [rbx+0x7c],0x3f800000
+e9 00 00 00 00          jmp    107 &lt;skip+0x11&gt;</value>
+  </data>
+  <data name="NoClip_InAirTimer" xml:space="preserve">
+    <value>50                      push   rax
+48 a1 00 00 00 00 00    movabs rax,ds:0x0
+00 00 00
+48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
+48 3b 58 70             cmp    rbx,QWORD PTR [rax+0x70]
+75 03                   jne    22 &lt;normal&gt;
+0f 57 c0                xorps  xmm0,xmm0
+000000000022 &lt;normal&gt;:
+f3 0f 11 43 18          movss  DWORD PTR [rbx+0x18],xmm0
+58                      pop    rax
+e9 00 00 00 00          jmp    2d &lt;normal+0xb&gt;</value>
+  </data>
+  <data name="NoClip_Keyboard" xml:space="preserve">
+    <value>48 83 f8 39             cmp    rax,0x39
+75 13                   jne    19 &lt;check_ctrl&gt;
+f6 84 08 e8 07 00 00    test   BYTE PTR [rax+rcx*1+0x7e8],0x80
+80
+76 09                   jbe    19 &lt;check_ctrl&gt;
+c6 05 00 00 00 00 02    mov    BYTE PTR [rip+0x0],0x2        # 17 &lt;_main+0x17&gt;
+eb 17                   jmp    30 &lt;xor_exit&gt;
+000000000019 &lt;check_ctrl&gt;:
+48 83 f8 1d             cmp    rax,0x1d
+75 1a                   jne    39 &lt;normal&gt;
+f6 84 08 e8 07 00 00    test   BYTE PTR [rax+rcx*1+0x7e8],0x80
+80
+76 10                   jbe    39 &lt;normal&gt;
+c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # 30 &lt;xor_exit&gt;
+000000000030 &lt;xor_exit&gt;:
+31 c0                   xor    eax,eax
+85 c0                   test   eax,eax
+e9 00 00 00 00          jmp    39 &lt;normal&gt;
+000000000039 &lt;normal&gt;:
+f6 84 08 e8 07 00 00    test   BYTE PTR [rax+rcx*1+0x7e8],0x80
+80
+e9 00 00 00 00          jmp    46 &lt;normal+0xd&gt;</value>
+  </data>
+  <data name="NoClip_Triggers" xml:space="preserve">
+    <value>80 7c 24 36 4b          cmp    BYTE PTR [rsp+0x36],0x4b
+72 0e                   jb     15 &lt;check_up&gt;
+c6 05 00 00 00 00 01    mov    BYTE PTR [rip+0x0],0x1        # e &lt;_main+0xe&gt;
+c6 44 24 36 00          mov    BYTE PTR [rsp+0x36],0x0
+eb 13                   jmp    28 &lt;exit&gt;
+000000000015 &lt;check_up&gt;:
+80 7c 24 37 4b          cmp    BYTE PTR [rsp+0x37],0x4b
+72 0c                   jb     28 &lt;exit&gt;
+c6 05 00 00 00 00 02    mov    BYTE PTR [rip+0x0],0x2        # 23 &lt;check_up+0xe&gt;
+c6 44 24 37 00          mov    BYTE PTR [rsp+0x37],0x0
+000000000028 &lt;exit&gt;:
+0f b6 44 24 36          movzx  eax,BYTE PTR [rsp+0x36]
+e9 00 00 00 00          jmp    32 &lt;exit+0xa&gt;</value>
+  </data>
+</root>

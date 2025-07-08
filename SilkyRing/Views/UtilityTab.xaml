@@ -1,0 +1,322 @@
+﻿<UserControl x:Class="SilkyRing.Views.UtilityTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:SilkyRing.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3"
+                Margin="0,0,0,5">
+            <!-- <StackPanel Margin="10"> -->
+            <!--     <Grid> -->
+            <!--         <Grid.ColumnDefinitions> -->
+            <!--             <ColumnDefinition Width="Auto" /> -->
+            <!--             <ColumnDefinition Width="*" /> -->
+            <!--         </Grid.ColumnDefinitions> -->
+            <!-- -->
+            <!--         <TextBlock Text="General" -->
+            <!--                    Grid.Column="0" /> -->
+            <!--     </Grid> -->
+            <!-- -->
+            <!--     <StackPanel Margin="0,5,0,0"> -->
+            <!--         <StackPanel Orientation="Horizontal" Margin="0,0,0,3" VerticalAlignment="Center"> -->
+            <!--             <CheckBox Content="Skip Credits" -->
+            <!--                       IsChecked="{Binding IsCreditSkipEnabled}" -->
+            <!--                       VerticalAlignment="Center" -->
+            <!--                       Margin="0,0,20,0" /> -->
+            <!--             <CheckBox Content="100% Drop Rate" -->
+            <!--                       IsChecked="{Binding Is100DropEnabled}" -->
+            <!--                       VerticalAlignment="Center" -->
+            <!--                       Margin="0,0,20,0" /> -->
+            <!--             <Button Content="Force Save" -->
+            <!--                     IsEnabled="{Binding AreButtonsEnabled}" -->
+            <!--                     Padding="5,3" -->
+            <!--                     Click="ForceSave_Click" -->
+            <!--                     Margin="0,0,20,0" /> -->
+            <!--         </StackPanel> -->
+            <!-- -->
+            <!--         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0"> -->
+            <!--             <xctk:DoubleUpDown x:Name="SpeedUpDown" -->
+            <!--                                Value="{Binding GameSpeed}" -->
+            <!--                                TextAlignment="Center" -->
+            <!--                                Width="80" -->
+            <!--                                Minimum="0" -->
+            <!--                                Maximum="5" -->
+            <!--                                Increment="0.50" -->
+            <!--                                FormatString="F2" -->
+            <!--                                BorderBrush="#3F3F46" /> -->
+            <!--             <TextBlock Text="Game Speed" VerticalAlignment="Center" Margin="10,0,30,0" /> -->
+            <!--             <CheckBox Content="Show Mad Warrior Spawn" -->
+            <!--                       IsChecked="{Binding IsMadWarriorSpawnEnabled}" -->
+            <!--                       VerticalAlignment="Center" -->
+            <!--                       Margin="0,0,10,0" /> -->
+            <!--             <TextBlock Text="{Binding MadWarriorStatusText}" -->
+            <!--                        Foreground="{Binding MadWarriorStatusColor}" -->
+            <!--                        VerticalAlignment="Center" -->
+            <!--                        FontWeight="Bold" -->
+            <!--                        Visibility="{Binding IsMadWarriorSpawnEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" /> -->
+            <!--         </StackPanel> -->
+            <!--     </StackPanel> -->
+            <!-- </StackPanel> -->
+        </Border>
+
+        <Border Grid.Row="1"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3"
+                Margin="0,0,0,5">
+            <StackPanel Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="No Clip"
+                               Grid.Column="0" />
+                </Grid>
+
+                <StackPanel Margin="0,5,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <CheckBox Content="No Clip"
+                                  IsChecked="{Binding IsNoClipEnabled}"
+                                  IsEnabled="{Binding AreButtonsEnabled}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,5,0" />
+
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,0,10,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Vertical movement with Ctrl/Space or L2/R2 on controller"
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
+
+                    <!-- <StackPanel Orientation="Horizontal" Margin="20,0,0,0"> -->
+                    <!--     <xctk:DoubleUpDown x:Name="NoClipSpeedUpDown" -->
+                    <!--                        Value="{Binding NoClipSpeed}" -->
+                    <!--                        TextAlignment="Center" -->
+                    <!--                        Width="80" -->
+                    <!--                        Minimum="0.05" -->
+                    <!--                        Maximum="5.0" -->
+                    <!--                        Increment="0.50" -->
+                    <!--                        FormatString="F2" -->
+                    <!--                        IsEnabled="{Binding IsNoClipEnabled}" -->
+                    <!--                        BorderBrush="#3F3F46" /> -->
+                    <!--     <TextBlock Text="Speed" VerticalAlignment="Center" Margin="5,0,0,0" /> -->
+                    <!-- </StackPanel> -->
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2"
+                BorderThickness="1"
+                BorderBrush="#333"
+                CornerRadius="3"
+                Margin="0,0,0,5">
+            <StackPanel Margin="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Rendering"
+                               Grid.Column="0" />
+                </Grid>
+
+                <Grid Margin="10,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Content="Draw hitbox"
+                              IsChecked="{Binding IsDrawHitboxEnabled}"
+                              Grid.Column="0" Grid.Row="0"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Draw Events"
+                              IsChecked="{Binding IsDrawEventEnabled}"
+                              Grid.Column="0" Grid.Row="1"
+                              Margin="0,2" />
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Margin="10,2,0,2">
+                        <CheckBox Content="General Logic"
+                                  IsChecked="{Binding IsDrawEventGeneralEnabled}"
+                                  IsEnabled="{Binding IsDrawEventEnabled}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,5,0" />
+
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Enemy aggro triggers and other logic triggers"
+                                ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
+
+                    <CheckBox Content="Spawn Triggers"
+                              IsChecked="{Binding IsDrawEventSpawnEnabled}"
+                              IsEnabled="{Binding IsDrawEventEnabled}"
+                              Grid.Column="0" Grid.Row="3"
+                              Margin="10,2,0,2" />
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Margin="10,2,0,2">
+                        <CheckBox Content="Judgement (Invasions)"
+                                  IsChecked="{Binding IsDrawEventInvasionEnabled}"
+                                  IsEnabled="{Binding IsDrawEventEnabled}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,5,0" />
+
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Invasions and other judgement locations"
+                                ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
+
+                    <CheckBox Content="Leash Points"
+                              IsChecked="{Binding IsDrawEventLeashEnabled}"
+                              IsEnabled="{Binding IsDrawEventEnabled}"
+                              Grid.Column="0" Grid.Row="5"
+                              Margin="10,2,0,2" />
+                    <CheckBox Content="Other"
+                              IsChecked="{Binding IsDrawEventOtherEnabled}"
+                              IsEnabled="{Binding IsDrawEventEnabled}"
+                              Grid.Column="0" Grid.Row="6"
+                              Margin="10,2,0,2" />
+
+                    <CheckBox Content="Player Sound"
+                              IsChecked="{Binding IsDrawSoundEnabled}"
+                              Grid.Column="0" Grid.Row="7"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Enemy Targeting View"
+                              IsChecked="{Binding IsTargetingViewEnabled}"
+                              Grid.Column="0" Grid.Row="8"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Hide Map"
+                              IsChecked="{Binding IsHideMapEnabled}"
+                              Grid.Column="1" Grid.Row="0"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Hide Characters"
+                              IsChecked="{Binding IsHideCharactersEnabled}"
+                              Grid.Column="1" Grid.Row="1"
+                              Margin="0,2" />
+                    <CheckBox Content="Light Gutter"
+                              IsChecked="{Binding IsLightGutterEnabled}"
+                              Grid.Column="1" Grid.Row="2"
+                              Margin="0,2" />
+
+                    <!-- <CheckBox Content="Hide Sfx" -->
+                    <!--           IsChecked="{Binding IsHideSfxEnabled}" -->
+                    <!--           Grid.Column="1" Grid.Row="2" -->
+                    <!--           Margin="0,2" /> -->
+
+                    <CheckBox Content="No Shaded Woods fog"
+                              IsChecked="{Binding IsNoFogEnabled}"
+                              Grid.Column="1" Grid.Row="3"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Draw Collision"
+                              IsChecked="{Binding IsDrawCollisionEnabled}"
+                              Grid.Column="2" Grid.Row="0"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Wireframe"
+                              IsChecked="{Binding IsColWireframeEnabled}"
+                              IsEnabled="{Binding IsDrawCollisionEnabled}"
+                              Grid.Column="2" Grid.Row="1"
+                              Margin="15,2,0,2" />
+
+                    <CheckBox Content="Draw Killbox"
+                              IsChecked="{Binding IsDrawKillboxEnabled}"
+                              Grid.Column="2" Grid.Row="2"
+                              Margin="0,2" />
+
+                    <CheckBox Content="Draw Ragdolls"
+                              IsChecked="{Binding IsDrawRagdollsEnabled}"
+                              Grid.Column="2" Grid.Row="3"
+                              Margin="0,2" />
+
+                    <CheckBox Content="See Through Walls"
+                              IsChecked="{Binding IsSeeThroughWallsEnabled}"
+                              IsEnabled="{Binding IsDrawRagdollsEnabled}"
+                              Grid.Column="2" Grid.Row="4"
+                              Margin="15,2,0,2" />
+                </Grid>
+            </StackPanel>
+        </Border>
+        <!-- <Button Grid.Row="3" Content="Attunement" -->
+        <!--         IsEnabled="{Binding AreButtonsEnabled}" -->
+        <!--         Padding="5,3" -->
+        <!--         Click="OpenAttunement_Click" -->
+        <!--         Width="150" -->
+        <!--         HorizontalAlignment="Left" -->
+        <!--         Margin="0,15,20,0" /> -->
+    </Grid>
+</UserControl>

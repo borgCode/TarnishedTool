@@ -1,0 +1,138 @@
+﻿<Window x:Class="SilkyRing.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SilkyRing"
+        Height="640"
+        Width="520"
+        Background="{StaticResource BackgroundBrush}"
+        Foreground="{StaticResource TextBrush}"
+        BorderBrush="{StaticResource BorderBrush}"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize">
+    
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            
+            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{StaticResource TitleBarBrush}"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,1"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Image Source="/Assets/Silky.ico"
+                       Grid.Column="0"
+                       Width="16"
+                       Height="16"
+                       Margin="5,0,5,0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+
+                <TextBlock Text="SilkyRing"
+                           Grid.Column="1"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource TextBrush}" />
+
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button 
+                            Content="—"
+                            Width="46"
+                            Height="30"
+                            Click="MinimizeButton_Click">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button
+                            Content="✕"
+                            Width="46"
+                            Height="30"
+                            Click="CloseButton_Click">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E81123" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="0,5,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="AppVersion" Text=""
+                       HorizontalAlignment="Left" VerticalAlignment="Center"
+                       Width="40"
+                       Margin="10,0,0,0" />
+            
+            <!-- <Button x:Name="CheckUpdateButton" Content="Check for Updates" -->
+            <!--         Grid.Column="1" -->
+            <!--         Click="CheckUpdate_Click" -->
+            <!--         Margin="5,0,5,0" -->
+            <!--         HorizontalAlignment="Left" -->
+            <!--         VerticalAlignment="Center"/> -->
+            
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!-- <Button x:Name="LaunchGameButton" Content="Launch Game" -->
+                <!--         Click="LaunchGame_Click" -->
+                <!--         Margin="0,0,10,0" -->
+                <!--         VerticalAlignment="Center"/> -->
+                <TextBlock x:Name="IsAttachedText" Text=""
+                           HorizontalAlignment="Right" VerticalAlignment="Center"
+                           Width="100"
+                           Margin="0,0,10,0" />
+            </StackPanel>
+        </Grid>
+
+        <TabControl x:Name="MainTabControl"
+                    Grid.Row="2"
+                    Background="Transparent"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1">
+            <TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top">
+                            <TabPanel IsItemsHost="True" HorizontalAlignment="Left" />
+                        </Grid>
+                        <ContentPresenter ContentSource="SelectedContent" />
+                    </DockPanel>
+                </ControlTemplate>
+            </TabControl.Template>
+        </TabControl>
+    </Grid>
+</Window>
