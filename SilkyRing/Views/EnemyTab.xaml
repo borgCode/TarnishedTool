@@ -376,6 +376,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0"
@@ -410,6 +411,18 @@
                             </CheckBox.IsEnabled>
                             <CheckBox.IsChecked>
                                 <Binding Path="IsDisableTargetAiEnabled" />
+                            </CheckBox.IsChecked>
+                        </CheckBox>
+                        
+                        <CheckBox Grid.Column="3" Content="Targeting View" Margin="5,0,0,0">
+                            <CheckBox.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </CheckBox.IsEnabled>
+                            <CheckBox.IsChecked>
+                                <Binding Path="IsTargetingViewEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
                     </Grid>

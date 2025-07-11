@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
 using System.Windows.Threading;
 using SilkyRing.Services;
 
@@ -19,7 +15,8 @@ namespace SilkyRing.ViewModels
         private int _targetMaxHealth;
         private long _currentTargetId;
         // private float _targetSpeed;
-        // private bool _isFreezeHealthEnabled;
+        private bool _isFreezeHealthEnabled;
+        private bool _isTargetingViewEnabled;
         private bool _isDisableTargetAiEnabled;
         private bool _isRepeatActEnabled;
 
@@ -146,7 +143,7 @@ namespace SilkyRing.ViewModels
             if (targetId != _currentTargetId)
             {
                 IsDisableTargetAiEnabled = _enemyService.IsAiDisabled();
-               // IsTargetingViewEnabled = _enemyService.IsTargetViewEnabled();
+               IsTargetingViewEnabled = _enemyService.IsTargetViewEnabled();
                int forceActValue = _enemyService.GetForceAct();
                if (forceActValue != 0)
                {
@@ -159,6 +156,7 @@ namespace SilkyRing.ViewModels
                    IsRepeatActEnabled = false;
                }
                
+               IsFreezeHealthEnabled = _enemyService.IsTargetNoDamageEnabled();
                 _currentTargetId = targetId;
                 // TargetMaxHeavyPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.HeavyPoiseMax);
                 // TargetMaxLightPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.LightPoiseMax);
@@ -228,8 +226,6 @@ namespace SilkyRing.ViewModels
                 if (!SetProperty(ref _isRykardNoMegaEnabled, value)) return;
                 _enemyService.ToggleRykardMega(_isRykardNoMegaEnabled);
             } 
-            
-      
         }
 
         public bool IsValidTarget
@@ -280,7 +276,7 @@ namespace SilkyRing.ViewModels
                     IsRepeatActEnabled = false;
                     // ShowAllResistances = false;
                     // IsResistancesWindowOpen = false;
-                    // IsFreezeHealthEnabled = false;
+                    IsFreezeHealthEnabled = false;
                     _enemyService.ToggleTargetHook(false);
                     // ShowHeavyPoise = false;
                     // ShowLightPoise = false;
@@ -433,15 +429,25 @@ namespace SilkyRing.ViewModels
         //     TargetSpeed = value;
         // }
         //
-        // public bool IsFreezeHealthEnabled
-        // {
-        //     get => _isFreezeHealthEnabled;
-        //     set
-        //     {
-        //         SetProperty(ref _isFreezeHealthEnabled, value);
-        //         _damageControlService.ToggleFreezeTargetHp(_isFreezeHealthEnabled);
-        //     }
-        // }
+        public bool IsFreezeHealthEnabled
+        {
+            get => _isFreezeHealthEnabled;
+            set
+            {
+                SetProperty(ref _isFreezeHealthEnabled, value);
+                _enemyService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
+            }
+        }
+        
+        public bool IsTargetingViewEnabled
+        {
+            get => _isTargetingViewEnabled;
+            set
+            {
+                if (!SetProperty(ref _isTargetingViewEnabled, value)) return;
+                _enemyService.ToggleTargetingView(_isTargetingViewEnabled);
+            }
+        }
         //
         // public bool ShowLightPoiseAndNotImmune => ShowLightPoise && !IsLightPoiseImmune;
         // public bool ShowBleedAndNotImmune => ShowBleed && !IsBleedImmune;

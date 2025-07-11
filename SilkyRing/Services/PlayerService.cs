@@ -428,44 +428,32 @@ namespace SilkyRing.Services
         // public void ToggleHidden(bool isHiddenEnabled) =>
         //     _memoryIo.WriteBytes(Patches.Hidden + 1, isHiddenEnabled ? new byte[] { 0x85 } : new byte[] { 0x84 });
         //
-        // public void ToggleInfinitePoise(bool isInfinitePoiseEnabled)
-        // {
-        //     var code = CodeCaveOffsets.Base + CodeCaveOffsets.InfinitePoise;
-        //
-        //     if (isInfinitePoiseEnabled)
-        //     {
-        //         var origin = Offsets.Hooks.InfinitePoise;
-        //         var gameMan = GameManagerImp.Base;
-        //
-        //         if (GameVersion.Current.Edition == GameEdition.Scholar)
-        //         {
-        //             var codeBytes = AsmLoader.GetAsmBytes("InfinitePoise64");
-        //
-        //             var bytes = BitConverter.GetBytes(gameMan.ToInt64());
-        //             Array.Copy(bytes, 0, codeBytes, 0x1 + 2, 8);
-        //             bytes = AsmHelper.GetJmpOriginOffsetBytes(origin, 6, code + 0x2C);
-        //             Array.Copy(bytes, 0, codeBytes, 0x27 + 1, 4);
-        //             _memoryIo.WriteBytes(code, codeBytes);
-        //             _hookManager.InstallHook(code.ToInt64(), origin, new byte[]
-        //                 { 0x39, 0x9D, 0xEC, 0x05, 0x00, 0x00 });
-        //         }
-        //         else
-        //         {
-        //             var codeBytes = AsmLoader.GetAsmBytes("InfinitePoise32");
-        //             var bytes = BitConverter.GetBytes(gameMan.ToInt32());
-        //             Array.Copy(bytes, 0, codeBytes, 0x1 + 1, 4);
-        //             bytes = AsmHelper.GetJmpOriginOffsetBytes(origin, 7, code + 0x21);
-        //             Array.Copy(bytes, 0, codeBytes, 0x1C + 1, 4);
-        //             _memoryIo.WriteBytes(code, codeBytes);
-        //             _hookManager.InstallHook(code.ToInt64(), origin, new byte[]
-        //                 { 0x83, 0xBB, 0xEC, 0x05, 0x00, 0x00, 0x00 });
-        //         }
-        //     }
-        //     else
-        //     {
-        //         _hookManager.UninstallHook(code.ToInt64());
-        //     }
-        // }
+        public void ToggleInfinitePoise(bool isInfinitePoiseEnabled)
+        {
+            var code = CodeCaveOffsets.Base + CodeCaveOffsets.InfinitePoise;
+
+            if (isInfinitePoiseEnabled)
+            {
+                var origin = Hooks.InfinitePoise;
+                var hook = Hooks.InfinitePoise;
+                var codeBytes = AsmLoader.GetAsmBytes("InfinitePoise");
+                var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
+                Array.Copy(bytes, 0, codeBytes, 0x1 + 2, 8);
+                AsmHelper.WriteJumpOffsets(codeBytes, new[]
+                {
+                    (hook, 7, code + 0x1D, 0x1D + 1),
+                    (hook, 7, code + 0x2A, 0x2A + 1),
+                });
+                _memoryIo.WriteBytes(code, codeBytes);
+                _hookManager.InstallHook(code.ToInt64(), hook, new byte[]
+                    { 0x80, 0xBF, 0x5F, 0x02, 0x00, 0x00, 0x00 });
+            }
+            else
+            {
+                _hookManager.UninstallHook(code.ToInt64());
+            }
+        }
+
         //
         // public void ToggleAutoSetNg7(bool isAutoSetNewGameSevenEnabled) =>
         //     _memoryIo.WriteByte(Patches.Ng7 + 3, isAutoSetNewGameSevenEnabled ? 9 : 1);
@@ -603,8 +591,8 @@ namespace SilkyRing.Services
         {
             var bytes = AsmLoader.GetAsmBytes("SetSpEffect");
             var playerIns =
-                _memoryIo.ReadInt64((IntPtr)_memoryIo.ReadInt64(WorldChrMan.Base) + WorldChrMan.Offsets.ChrInsPtr);
-            AsmHelper.WriteAbsoluteAddresses(bytes, new []
+                _memoryIo.ReadInt64((IntPtr)_memoryIo.ReadInt64(WorldChrMan.Base) + WorldChrMan.Offsets.PlayerInsPtr);
+            AsmHelper.WriteAbsoluteAddresses(bytes, new[]
             {
                 (playerIns, 0x0 + 2),
                 (spEffectId, 0xA + 2),
@@ -617,11 +605,11 @@ namespace SilkyRing.Services
         {
             var chrData = _memoryIo.FollowPointers(WorldChrMan.Base, new[]
             {
-                (WorldChrMan.Offsets.ChrInsPtr),
+                (WorldChrMan.Offsets.PlayerInsPtr),
                 (WorldChrMan.Offsets.ChrIns.ModulesPtr),
                 (WorldChrMan.Offsets.ChrIns.Modules.ChrDataPtr)
             }, true);
-            
+
             _memoryIo.SetBitValue(chrData + offset, bitmask, isEnabled);
         }
     }

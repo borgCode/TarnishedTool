@@ -108,10 +108,10 @@ namespace SilkyRing.Services
                 { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
 
         public void ToggleTargetAi(bool isDisableTargetAiEnabled) =>
-            _memoryIo.SetBitValue(GetChrFlagFlagsPtr(), (byte)WorldChrMan.Offsets.ChrIns.ChrCtrl.Unk.Flag.DisableAi,
+            _memoryIo.SetBitValue(GetChrFlagsPtr(), (byte)WorldChrMan.Offsets.ChrIns.ChrCtrl.Unk.Flag.DisableAi,
                 isDisableTargetAiEnabled);
 
-        private IntPtr GetChrFlagFlagsPtr()
+        private IntPtr GetChrFlagsPtr()
         {
             var flagPtr = _memoryIo.FollowPointers(CodeCaveOffsets.Base + (int)CodeCaveOffsets.LockedTarget.SavedPtr,
                 new[]
@@ -125,7 +125,7 @@ namespace SilkyRing.Services
         }
 
         public bool IsAiDisabled() =>
-            _memoryIo.IsBitSet(GetChrFlagFlagsPtr(), (byte)WorldChrMan.Offsets.ChrIns.ChrCtrl.Unk.Flag.DisableAi);
+            _memoryIo.IsBitSet(GetChrFlagsPtr(), (byte)WorldChrMan.Offsets.ChrIns.ChrCtrl.Unk.Flag.DisableAi);
 
         
         public void ForceAct(int forceAct) => 
@@ -151,5 +151,34 @@ namespace SilkyRing.Services
         
         public bool IsTargetRepeating() => 
             _memoryIo.ReadUInt8(GetAiField(WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.ForceAct)) != 0;
+
+        public void ToggleTargetingView(bool isTargetingViewEnabled)
+        {
+            var targetingSystem = _memoryIo.ReadInt64(GetAiField(WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.TargetingSystemPtr));
+            _memoryIo.SetBit32(
+                (IntPtr)targetingSystem + WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.TargetingSystem.Flags,
+                (int)WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.TargetingSystem.Flag.BlueTargetView,
+                isTargetingViewEnabled);
+        }
+
+        public bool IsTargetViewEnabled()
+        {
+            var targetingSystem = _memoryIo.ReadInt64(GetAiField(WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.TargetingSystemPtr));
+            return _memoryIo.GetBit32(
+                (IntPtr)targetingSystem + WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.TargetingSystem.Flags,
+                (int)WorldChrMan.Offsets.ChrIns.ComManipulator.Ai.TargetingSystem.Flag.BlueTargetView);
+        }
+
+        public void ToggleTargetNoDamage(bool isFreezeHealthEnabled)
+        {
+            var chrDataFlags = GetTargetChrDataFieldPtr(WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags);
+            _memoryIo.SetBitValue(chrDataFlags, (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDamage, isFreezeHealthEnabled);
+        }
+
+        public bool IsTargetNoDamageEnabled()
+        {
+            var chrDataFlags = GetTargetChrDataFieldPtr(WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags);
+            return _memoryIo.IsBitSet(chrDataFlags, (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDamage);
+        }
     }
 }

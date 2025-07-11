@@ -227,7 +227,7 @@ namespace SilkyRing
 
         private void ApplyOneTimeFeatures()
         {
-            // _playerViewModel.TryApplyOneTimeFeatures();
+            _playerViewModel.TryApplyOneTimeFeatures();
             _utilityViewModel.TryApplyOneTimeFeatures();
             // _enemyViewModel.TryApplyOneTimeFeatures();
             // _eventViewModel.TryApplyOneTimeFeatures();

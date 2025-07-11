@@ -9,7 +9,6 @@ namespace SilkyRing.Memory
         public static void Initialize() // Patch
         {
             WorldChrMan.Offsets.Intialize();
-            CsTargetingSystem.Initialize();
             MenuMan.Offsets.Initialize();
             TargetView.Offsets.Initialize();
             GameMan.Offsets.Initialize();
@@ -39,12 +38,12 @@ namespace SilkyRing.Memory
             {
                 public static void Intialize()
                 {
-                    ChrInsPtr = 0x1E508;
+                    PlayerInsPtr = 0x1E508;
 
                     ChrIns.Initialize();
                 }
 
-                public static int ChrInsPtr { get; private set; }
+                public static int PlayerInsPtr { get; private set; }
 
                 public static class ChrIns
                 {
@@ -100,6 +99,7 @@ namespace SilkyRing.Memory
                         public static void Initialize()
                         {
                             ChrDataPtr = 0x0;
+                            ChrSuperArmorPtr = 0x40;
                             ChrPhysicsPtr = 0x68;
 
                             ChrData.Initialize();
@@ -107,6 +107,7 @@ namespace SilkyRing.Memory
                         }
 
                         public static int ChrDataPtr { get; private set; }
+                        public static int ChrSuperArmorPtr { get; private set; }
                         public static int ChrPhysicsPtr { get; private set; }
 
                         public static class ChrData
@@ -127,6 +128,20 @@ namespace SilkyRing.Memory
                             public static int Health { get; private set; }
                             public static int MaxHealth { get; private set; }
                             public static int Flags { get; private set; }
+                        }
+                        
+                        public static class ChrSuperArmor
+                        {
+                            public static void Initialize()
+                            {
+                                CurrentPoise = 0x10;
+                                MaxPoise = 0x14;
+                                PoiseTimer = 0x1C;
+                            }
+
+                            public static int CurrentPoise { get; private set; }
+                            public static int MaxPoise { get; private set; }
+                            public static int PoiseTimer { get; private set; }
                         }
 
                         public static class ChrPhysics
@@ -155,12 +170,37 @@ namespace SilkyRing.Memory
                         {
                             public static void Initialize()
                             {
+                                TargetingSystemPtr = 0xC480;
                                 ForceAct = 0xE9C1;
                                 LastAct = 0xE9C2;
+                                
+                                TargetingSystem.Initialize();
                             }
 
+                            public static int TargetingSystemPtr { get; private set; }
                             public static int ForceAct { get; private set; }
                             public static int LastAct { get; private set; }
+                            
+                            
+                            
+                            public static class TargetingSystem
+                            {
+                                public static void Initialize()
+                                {
+                                    Flags = 0xC8;
+                         
+                                }
+
+                                public enum Flag
+                                {
+                                    //Bit pos
+                                    BlueTargetView = 11,
+                                    YellowTargetView = 12,
+                                    WhiteLineToPlayer = 13
+                                }
+                                public static int Flags { get; private set; }
+                       
+                            }
                         }
                     }
                 }
@@ -256,21 +296,6 @@ namespace SilkyRing.Memory
             }
         }
 
-        public static class CsTargetingSystem
-        {
-            //Com manip +0xC0 --> Ptr1 to targeting
-            // ptr1 + 0xC480 --> CSTargetingSystem
-            public static void Initialize()
-            {
-                TargetingFlags = 0xC8;
-                // 1 << 11 for blue target view
-                // 1 << 12 for yellow 
-                // 1 << 13 white line to entity from player
-            }
-
-            public static int TargetingFlags { get; set; }
-        }
-
         public static class Hooks
         {
             public static long UpdateCoords;
@@ -281,6 +306,7 @@ namespace SilkyRing.Memory
             public static long HasSpEffect;
             public static long BlueTargetView;
             public static long LockedTargetPtr;
+            public static long InfinitePoise;
         }
 
         public static class Funcs

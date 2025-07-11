@@ -22,7 +22,7 @@ namespace SilkyRing.Views
             Button button = (Button)sender;
             string parameter = button.CommandParameter.ToString();
             int healthPercentage = int.Parse(parameter);
-            // _enemyViewModel.SetTargetHealth(healthPercentage);
+            _enemyViewModel.SetTargetHealth(healthPercentage);
         }
         
         private void SpeedUpDown_PreviewKeyDown(object sender, KeyEventArgs e)

@@ -150,6 +150,14 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern InfinitePoise = new Pattern(
+            new byte[] { 0x80, 0xBF, 0x5F, 0x02 },
+            "xxxx",
+            0,
+            AddressingMode.Absolute
+        );
+
+
 
         //Funcs
 

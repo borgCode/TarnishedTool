@@ -28,5 +28,7 @@ namespace SilkyRing.Memory
             SavedPtr = 0x560,
             Code = 0x570,
         }
+
+        public const int InfinitePoise = 0x590;
     }
 }

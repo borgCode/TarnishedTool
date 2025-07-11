@@ -75,6 +75,8 @@ namespace SilkyRing.Memory
                 addr => Hooks.BlueTargetView = addr.ToInt64(), saved);
             TryPatternWithFallback("LockedTargetPtr", Pattern.LockedTargetPtr,
                 addr => Hooks.LockedTargetPtr = addr.ToInt64(), saved);
+            TryPatternWithFallback("InfinitePoise", Pattern.InfinitePoise,
+                addr => Hooks.InfinitePoise = addr.ToInt64(), saved);
             // TryPatternWithFallback("AddSubGoal", Patterns.AddSubGoal, addr => Offsets.Hooks.AddSubGoal = addr.ToInt64(),
             //     saved);
             // TryPatternWithFallback("InAirTimer", Patterns.NoClipInAirTimer,

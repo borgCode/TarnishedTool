@@ -99,6 +99,27 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 50                      push   rax
+        ///48 a1 00 00 00 00 00    movabs rax,ds:0x0
+        ///00 00 00
+        ///48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+        ///48 3b 46 08             cmp    rax,QWORD PTR [rsi+0x8]
+        ///75 0a                   jne    22 &lt;normal&gt;
+        ///58                      pop    rax
+        ///48 83 fe 00             cmp    rsi,0x0
+        ///e9 00 00 00 00          jmp    22 &lt;normal&gt;
+        ///000000000022 &lt;normal&gt;:
+        ///58                      pop    rax
+        ///80 bf 5f 02 00 00 00    cmp    BYTE PTR [rdi+0x25f],0x0
+        ///e9 00 00 00 00          jm [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string InfinitePoise {
+            get {
+                return ResourceManager.GetString("InfinitePoise", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 8b 8f 88 00 00 00    mov    rcx,QWORD PTR [rdi+0x88]
         ///48 89 05 00 00 00 00    mov    QWORD PTR [rip+0x0],rax        # e &lt;_main+0xe&gt;
         ///e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;.
