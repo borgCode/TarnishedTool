@@ -77,6 +77,7 @@
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
         <Compile Include="Memory\DLLShared\DllManager.cs" />
+        <Compile Include="Memory\DLLShared\LogCommand.cs" />
         <Compile Include="Memory\DLLShared\SharedMemAddr.cs" />
         <Compile Include="Memory\GameIds.cs" />
         <Compile Include="Models\Grace.cs" />
@@ -91,6 +92,7 @@
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventViewModel.cs" />
+        <Compile Include="ViewModels\LoggerViewModel.cs" />
         <Compile Include="ViewModels\PlayerViewModel.cs" />
         <Compile Include="ViewModels\TravelViewModel.cs" />
         <Compile Include="ViewModels\UtilityViewModel.cs" />
@@ -109,6 +111,9 @@
         <Compile Include="Views\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\LoggerWindow.xaml.cs">
+          <DependentUpon>LoggerWindow.xaml</DependentUpon>
+        </Compile>
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -126,6 +131,7 @@
         <Page Include="Views\PlayerTab.xaml" />
         <Page Include="Views\TravelTab.xaml" />
         <Page Include="Views\UtilityTab.xaml" />
+        <Page Include="Views\Windows\LoggerWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Memory\AobScanner.cs" />
@@ -153,9 +159,13 @@
         <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="Assets\Silky.ico" />
       <Content Include="Resources\DLL\dll.dll">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Views\Tabs\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

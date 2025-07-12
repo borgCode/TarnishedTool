@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
+using SilkyRing.Memory.DLLShared;
 using SilkyRing.Services;
 
 namespace SilkyRing.ViewModels
@@ -62,12 +66,14 @@ namespace SilkyRing.ViewModels
         // private ObservableCollection<Forlorn> _availableForlorns;
         //
         private readonly EnemyService _enemyService;
+        private readonly DllManager _dllManager;
         // private readonly DamageControlService _damageControlService;
         // private readonly HotkeyManager _hotkeyManager;
 
-        public EnemyViewModel(EnemyService enemyService)
+        public EnemyViewModel(EnemyService enemyService, DllManager dllManager)
         {
             _enemyService = enemyService;
+            _dllManager = dllManager;
 
             // _hotkeyManager = hotkeyManager;
             RegisterHotkeys();
@@ -227,7 +233,7 @@ namespace SilkyRing.ViewModels
                 _enemyService.ToggleRykardMega(_isRykardNoMegaEnabled);
             } 
         }
-
+        
         public bool IsValidTarget
         {
             get => _isValidTarget;

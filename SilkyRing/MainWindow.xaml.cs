@@ -72,7 +72,7 @@ namespace SilkyRing
                 new UtilityViewModel(utilityService, _dllManager);
             _travelViewModel = new TravelViewModel(travelService, eventService);
             _eventViewModel = new EventViewModel(eventService);
-            _enemyViewModel = new EnemyViewModel(enemyService);
+            _enemyViewModel = new EnemyViewModel(enemyService, _dllManager);
             // _itemViewModel = new ItemViewModel(itemService);
             // _settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
 

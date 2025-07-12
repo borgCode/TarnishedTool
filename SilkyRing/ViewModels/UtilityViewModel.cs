@@ -1,5 +1,6 @@
 ﻿using SilkyRing.Memory.DLLShared;
 using SilkyRing.Services;
+using SilkyRing.Views;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
@@ -11,8 +12,8 @@ namespace SilkyRing.ViewModels
         private const uint BaseYSpeedHex = 0x3e19999a;
         private float _noClipSpeedMultiplier = DefaultNoclipMultiplier;
         private bool _isNoClipEnabled;
-        
-        
+
+
         private bool _isDrawHitboxEnabled;
         private bool _isDrawLowHitEnabled;
         private bool _isDrawHighHitEnabled;
@@ -22,16 +23,16 @@ namespace SilkyRing.ViewModels
 
         private readonly UtilityService _utilityService;
         private readonly DllManager _dllManager;
-        
-        
+
+
         public UtilityViewModel(UtilityService utilityService, DllManager dllManager)
         {
             _utilityService = utilityService;
             _dllManager = dllManager;
-            
+
             // RegisterHotkeys();
         }
-        
+
         // private void RegisterHotkeys()
         // {
         //     _hotkeyManager.RegisterAction("ForceSave", () =>
@@ -58,14 +59,14 @@ namespace SilkyRing.ViewModels
 
 
         private bool _areOptionsEnabled;
+
         public bool AreOptionsEnabled
         {
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
         }
-        
-        
-        
+
+
         public bool IsDrawHitboxEnabled
         {
             get => _isDrawHitboxEnabled;
@@ -76,7 +77,7 @@ namespace SilkyRing.ViewModels
                 _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
-        
+
         public bool IsDrawLowHitEnabled
         {
             get => _isDrawLowHitEnabled;
@@ -87,7 +88,7 @@ namespace SilkyRing.ViewModels
                 _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
-        
+
         public bool IsDrawHighHitEnabled
         {
             get => _isDrawHighHitEnabled;
@@ -97,7 +98,7 @@ namespace SilkyRing.ViewModels
                 _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, _isDrawHighHitEnabled);
             }
         }
-        
+
         public int ColDrawMode
         {
             get => _colDrawMode;
@@ -183,8 +184,9 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-        
+
         private bool _isTargetingViewEnabled;
+
         public bool IsTargetingViewEnabled
         {
             get => _isTargetingViewEnabled;
@@ -198,8 +200,9 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private bool _isDrawReducedTargetViewEnabled;
+
         public bool IsDrawReducedTargetViewEnabled
         {
             get => _isDrawReducedTargetViewEnabled;
@@ -210,8 +213,9 @@ namespace SilkyRing.ViewModels
                 _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
             }
         }
-        
+
         private float _reducedTargetViewDistance = 100;
+
         public float ReducedTargetViewDistance
         {
             get => _reducedTargetViewDistance;
@@ -222,9 +226,9 @@ namespace SilkyRing.ViewModels
                 _utilityService.SetTargetViewMaxDist(_reducedTargetViewDistance);
             }
         }
-        
+
         //
-        
+
         public bool IsDrawRagdollsEnabled
         {
             get => _isDrawRagdollEnabled;
@@ -232,7 +236,6 @@ namespace SilkyRing.ViewModels
             {
                 if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
                 _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, _isDrawRagdollEnabled);
-         
             }
         }
         //
@@ -298,7 +301,7 @@ namespace SilkyRing.ViewModels
         //         _utilityService.ToggleHideMap(_isHideMapEnabled);
         //     }
         // }
-        
+
         public bool IsNoClipEnabled
         {
             get => _isNoClipEnabled;
@@ -340,11 +343,12 @@ namespace SilkyRing.ViewModels
             //
             // _utilityService.SetNoClipSpeed(xBytes, yBytes);
         }
-        
+
         public void TryEnableFeatures()
         {
             AreOptionsEnabled = true;
         }
+
         public void TryApplyOneTimeFeatures()
         {
             // if (Is100DropEnabled) _utilityService.Toggle100Drop(true);
@@ -359,9 +363,11 @@ namespace SilkyRing.ViewModels
             //
             // if (IsDrawSoundEnabled) _utilityService.ToggleDrawSound(true);
             if (IsTargetingViewEnabled) _utilityService.ToggleTargetingView(true);
-            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled) _utilityService.ToggleReducedTargetingView(true);
-            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled) _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
-            
+            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
+                _utilityService.ToggleReducedTargetingView(true);
+            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
+                _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+
             if (IsDrawLowHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, true);
             if (IsDrawHighHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, true);
             // if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
@@ -377,9 +383,16 @@ namespace SilkyRing.ViewModels
 
         public void ForceSave() => _utilityService.ForceSave();
 
-        public void Inject()
+
+        public async void OpenLogger()
         {
-            _dllManager.InjectDll();
+            
+            var viewModel = new LoggerViewModel(_dllManager);
+            var window = new LoggerWindow { DataContext = viewModel };
+            window.Show();
+            
+            // await viewModel.InitializeAsync();
+
         }
     }
 }

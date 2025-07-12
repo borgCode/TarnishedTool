@@ -16,9 +16,7 @@ namespace SilkyRing.Views
 
         private void ForceSave_Click(object sender, RoutedEventArgs e) => _utilityViewModel.ForceSave();
 
-        private void Inject_Click(object sender, RoutedEventArgs e)
-        {
-            _utilityViewModel.Inject();
-        }
+
+        private void OpenLogger_Click(object sender, RoutedEventArgs e) => _utilityViewModel.OpenLogger();
     }
 }
