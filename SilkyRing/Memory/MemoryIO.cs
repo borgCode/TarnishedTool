@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Timers;
-using SilkySouls3.Memory;
 
 namespace SilkyRing.Memory
 {
@@ -384,5 +384,75 @@ namespace SilkyRing.Memory
         // {
         //     return Kernel32.QueryMemory(ProcessHandle, address).AllocationBase;
         // }
+        public bool InjectDll(string dllPath)
+        {
+            if (!IsAttached || ProcessHandle == IntPtr.Zero) return false;
+
+
+            if (!File.Exists(dllPath)) return false;
+
+            try
+            {
+                string fullDllPath = Path.GetFullPath(dllPath);
+
+                byte[] dllPathBytes = Encoding.Unicode.GetBytes(fullDllPath + "\0");
+                IntPtr dllPathAddress = Kernel32.VirtualAllocEx(
+                    ProcessHandle,
+                    IntPtr.Zero,
+                    (uint)dllPathBytes.Length);
+
+                if (dllPathAddress == IntPtr.Zero) return false;
+                WriteBytes(dllPathAddress, dllPathBytes);
+                
+                IntPtr loadLibraryAddr = GetProcAddress("kernel32.dll", "LoadLibraryW");
+                
+                if (loadLibraryAddr == IntPtr.Zero)
+                {
+                    Console.WriteLine("Failed to get LoadLibraryW address");
+                    Kernel32.VirtualFreeEx(ProcessHandle, dllPathAddress, 0, 0x8000); // MEM_RELEASE
+                    return false;
+                }
+
+                IntPtr threadHandle = Kernel32.CreateRemoteThread(
+                    ProcessHandle,
+                    IntPtr.Zero,
+                    0,
+                    loadLibraryAddr,
+                    dllPathAddress,
+                    0,
+                    IntPtr.Zero);
+
+                if (threadHandle == IntPtr.Zero)
+                {
+                    Console.WriteLine("Failed to create remote thread");
+                    Kernel32.VirtualFreeEx(ProcessHandle, dllPathAddress, 0, 0x8000);
+                    return false;
+                }
+
+                uint result = Kernel32.WaitForSingleObject(threadHandle, 5000);
+                Kernel32.CloseHandle(threadHandle);
+
+                Kernel32.VirtualFreeEx(ProcessHandle, dllPathAddress, 0, 0x8000);
+
+                return result == 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error injecting DLL: {ex.Message}");
+                return false;
+            }
+            
+            
+        }
+        
+        public IntPtr GetProcAddress(string moduleName, string procName)
+        {
+            IntPtr moduleHandle = Kernel32.GetModuleHandle(moduleName);
+            if (moduleHandle == IntPtr.Zero)
+                return IntPtr.Zero;
+
+            return Kernel32.GetProcAddress(moduleHandle, procName);
+        }
+
     }
 }

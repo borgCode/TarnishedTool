@@ -169,7 +169,7 @@
             <Grid Grid.Row="2" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
@@ -183,23 +183,20 @@
                     <CheckBox Content="Infinite Stamina"
                               IsChecked="{Binding IsInfiniteStaminaEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Infinite Consumables / Arrows"
-                              IsChecked="{Binding IsNoGoodsConsumeEnabled}"
+                    <CheckBox Content="Infinite Consumables"
+                              IsChecked="{Binding IsInfiniteGoodsEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Infinite Casts"
-                              IsChecked="{Binding IsInfiniteCastsEnabled}"
+                    <CheckBox Content="Infinite Arrows"
+                              IsChecked="{Binding IsInfiniteArrowsEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Infinite Durability"
-                              IsChecked="{Binding IsInfiniteDurabilityEnabled}"
+                    <CheckBox Content="Infinite Fp"
+                              IsChecked="{Binding IsInfiniteFpEnabled}"
                               Margin="0,2" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
                     <CheckBox Content="One Shot"
                               IsChecked="{Binding IsOneShotEnabled}"
-                              Margin="0,2" />
-                    <CheckBox Content="Deal No Damage"
-                              IsChecked="{Binding IsDealNoDamageEnabled}"
                               Margin="0,2" />
                     <CheckBox Content="Infinite Poise"
                               IsChecked="{Binding IsInfinitePoiseEnabled}"
@@ -212,14 +209,14 @@
                               Margin="0,2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
-                    <CheckBox Content="No Souls from Enemies"
-                              IsChecked="{Binding IsNoSoulGainEnabled}"
+                    <CheckBox Content="No Runes from Enemies"
+                              IsChecked="{Binding IsNoRuneGainEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="No Hollowing on Death"
-                              IsChecked="{Binding IsNoHollowingEnabled}"
+                    <CheckBox Content="No Rune Arc Loss on Death"
+                              IsChecked="{Binding IsNoRuneArcLossEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="No Soul Loss on Death"
-                              IsChecked="{Binding IsNoSoulLossEnabled}"
+                    <CheckBox Content="No Rune Loss on Death"
+                              IsChecked="{Binding IsNoRuneLossEnabled}"
                               Margin="0,2" />
                 </StackPanel>
             </Grid>
@@ -443,12 +440,6 @@
 
                 </StackPanel>
                 <StackPanel Grid.Column="2">
-                    <Button Content="Restore Spellcasts"
-                            Width="150"
-                            Margin="0, 15, 0,0"
-                            Click="RestoreSpellcasts_Click"
-                            IsEnabled="{Binding AreOptionsEnabled}">
-                    </Button>
                     <Button Content="Rune Arc"
                             Width="150"
                             Margin="0, 15, 0,0"

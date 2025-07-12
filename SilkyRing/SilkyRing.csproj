@@ -76,6 +76,8 @@
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
+        <Compile Include="Memory\DLLShared\DllManager.cs" />
+        <Compile Include="Memory\DLLShared\SharedMemAddr.cs" />
         <Compile Include="Memory\GameIds.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Services\EnemyService.cs" />
@@ -147,8 +149,13 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
+        <None Include="App.config" />
         <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="Resources\DLL\dll.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

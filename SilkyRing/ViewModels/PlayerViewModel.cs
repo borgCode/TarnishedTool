@@ -24,17 +24,16 @@ namespace SilkyRing.ViewModels
         //
         private bool _isNoDeathEnabled;
         private bool _isNoDamageEnabled;
-        // private bool _isInfiniteStaminaEnabled;
-        // private bool _isNoGoodsConsumeEnabled;
-        // private bool _isInfiniteCastsEnabled;
-        // private bool _isInfiniteDurabilityEnabled;
-        // private bool _isOneShotEnabled;
-        // private bool _isDealNoDamageEnabled;
-        // private bool _isHiddenEnabled;
-        // private bool _isSilentEnabled;
-        // private bool _isNoSoulGainEnabled;
-        // private bool _isNoSoulLossEnabled;
-        // private bool _isNoHollowingEnabled;
+        private bool _isInfiniteStaminaEnabled;
+        private bool _isInfiniteGoodsEnabled;
+        private bool _isOneShotEnabled;
+        private bool _isHiddenEnabled;
+        private bool _isSilentEnabled;
+        private bool _isInfiniteArrowsEnabled;
+        private bool _isInfiniteFpEnabled;
+        private bool _isNoRuneGainEnabled;
+        private bool _isNoRuneLossEnabled;
+        private bool _isNoRuneArcLossEnabled;
         private bool _isInfinitePoiseEnabled;
         // private bool _isAutoSetNewGameSevenEnabled;
         //
@@ -309,149 +308,131 @@ namespace SilkyRing.ViewModels
             }
         }
 
-        //
-        // public bool IsInfiniteStaminaEnabled
-        // {
-        //     get => _isInfiniteStaminaEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isInfiniteStaminaEnabled, value))
-        //         {
-        //             _playerService.ToggleInfiniteStamina(_isInfiniteStaminaEnabled);
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsNoGoodsConsumeEnabled
-        // {
-        //     get => _isNoGoodsConsumeEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isNoGoodsConsumeEnabled, value))
-        //         {
-        //             _playerService.ToggleNoGoodsConsume(_isNoGoodsConsumeEnabled);
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsInfiniteDurabilityEnabled
-        // {
-        //     get => _isInfiniteDurabilityEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isInfiniteDurabilityEnabled, value))
-        //         {
-        //             _playerService.ToggleInfiniteDurability(_isInfiniteDurabilityEnabled);
-        //         }
-        //     }
-        // }
-        //
-        //
-        // public bool IsInfiniteCastsEnabled
-        // {
-        //     get => _isInfiniteCastsEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isInfiniteCastsEnabled, value))
-        //         {
-        //             _playerService.ToggleInfiniteCasts(_isInfiniteCastsEnabled);
-        //         }
-        //     }
-        // }
-        //
-        //
-        // public bool IsDealNoDamageEnabled
-        // {
-        //     get => _isDealNoDamageEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isDealNoDamageEnabled, value)) return;
-        //         if (IsOneShotEnabled && _isDealNoDamageEnabled)
-        //         {
-        //             _damageControlService.ToggleOneShot(false);
-        //             IsOneShotEnabled = false;
-        //         }
-        //
-        //         _damageControlService.ToggleDealNoDamage(_isDealNoDamageEnabled);
-        //     }
-        // }
-        //
-        // public bool IsOneShotEnabled
-        // {
-        //     get => _isOneShotEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isOneShotEnabled, value)) return;
-        //         if (IsDealNoDamageEnabled && _isOneShotEnabled)
-        //         {
-        //             _damageControlService.ToggleDealNoDamage(false);
-        //             IsDealNoDamageEnabled = false;
-        //         }
-        //
-        //         _damageControlService.ToggleOneShot(_isOneShotEnabled);
-        //     }
-        // }
-        //
-        // public bool IsHiddenEnabled
-        // {
-        //     get => _isHiddenEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isHiddenEnabled, value))
-        //         {
-        //             _playerService.ToggleHidden(_isHiddenEnabled);
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsSilentEnabled
-        // {
-        //     get => _isSilentEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isSilentEnabled, value))
-        //         {
-        //             _playerService.ToggleSilent(_isSilentEnabled);
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsNoSoulLossEnabled
-        // {
-        //     get => _isNoSoulLossEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isNoSoulLossEnabled, value))
-        //         {
-        //             _playerService.ToggleNoSoulLoss(_isNoSoulLossEnabled);
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsNoSoulGainEnabled
-        // {
-        //     get => _isNoSoulGainEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isNoSoulGainEnabled, value))
-        //         {
-        //             _playerService.ToggleNoSoulGain(_isNoSoulGainEnabled);
-        //         }
-        //     }
-        // }
-        //
-        // public bool IsNoHollowingEnabled
-        // {
-        //     get => _isNoHollowingEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isNoHollowingEnabled, value))
-        //         {
-        //             _playerService.ToggleNoHollowing(_isNoHollowingEnabled);
-        //         }
-        //     }
-        // }
-        //
+        
+        public bool IsInfiniteStaminaEnabled
+        {
+            get => _isInfiniteStaminaEnabled;
+            set
+            {
+                if (SetProperty(ref _isInfiniteStaminaEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteStam, _isInfiniteStaminaEnabled);
+                }
+            }
+        }
+        
+        public bool IsInfiniteGoodsEnabled
+        {
+            get => _isInfiniteGoodsEnabled;
+            set
+            {
+                if (SetProperty(ref _isInfiniteGoodsEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteGoods, _isInfiniteGoodsEnabled);
+                }
+            }
+        }
+
+        
+        public bool IsOneShotEnabled
+        {
+            get => _isOneShotEnabled;
+            set
+            {
+                if (SetProperty(ref _isOneShotEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.OneShot, _isOneShotEnabled);
+                }
+            }
+        }
+        
+        public bool IsHiddenEnabled
+        {
+            get => _isHiddenEnabled;
+            set
+            {
+                if (SetProperty(ref _isHiddenEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Hidden, _isHiddenEnabled);
+                }
+            }
+        }
+        
+        public bool IsSilentEnabled
+        {
+            get => _isSilentEnabled;
+            set
+            {
+                if (SetProperty(ref _isSilentEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Silent, _isSilentEnabled);
+                }
+            }
+        }
+        
+        public bool IsInfiniteArrowsEnabled
+        {
+            get => _isInfiniteArrowsEnabled;
+            set
+            {
+                if (SetProperty(ref _isInfiniteArrowsEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteArrows, _isInfiniteArrowsEnabled);
+                }
+            }
+        }
+        
+        public bool IsInfiniteFpEnabled
+        {
+            get => _isInfiniteFpEnabled;
+            set
+            {
+                if (SetProperty(ref _isInfiniteFpEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteFp, _isInfiniteFpEnabled);
+                }
+            }
+        }
+        
+        
+        
+        
+        public bool IsNoRuneLossEnabled
+        {
+            get => _isNoRuneLossEnabled;
+            set
+            {
+                if (SetProperty(ref _isNoRuneLossEnabled, value))
+                {
+                    _playerService.ToggleNoRuneLoss(_isNoRuneLossEnabled);
+                }
+            }
+        }
+        
+        public bool IsNoRuneGainEnabled
+        {
+            get => _isNoRuneGainEnabled;
+            set
+            {
+                if (SetProperty(ref _isNoRuneGainEnabled, value))
+                {
+                    _playerService.ToggleNoRuneGain(_isNoRuneGainEnabled);
+                }
+            }
+        }
+        
+        public bool IsNoRuneArcLossEnabled
+        {
+            get => _isNoRuneArcLossEnabled;
+            set
+            {
+                if (SetProperty(ref _isNoRuneArcLossEnabled, value))
+                {
+                    _playerService.ToggleNoRuneArcLoss(_isNoRuneArcLossEnabled);
+                }
+            }
+        }
+        
         public bool IsInfinitePoiseEnabled
         {
             get => _isInfinitePoiseEnabled;
@@ -651,28 +632,27 @@ namespace SilkyRing.ViewModels
         //
         public void TryApplyOneTimeFeatures()
         {
-            // if (IsOneShotEnabled) _damageControlService.ToggleOneShot(true);
-            // if (IsDealNoDamageEnabled) _damageControlService.ToggleDealNoDamage(true);
-            // if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
-            // if (IsInfiniteStaminaEnabled) _playerService.ToggleInfiniteStamina(true);
-            // if (IsNoGoodsConsumeEnabled) _playerService.ToggleNoGoodsConsume(true);
-            // if (IsInfiniteCastsEnabled) _playerService.ToggleInfiniteCasts(true);
-            // if (IsInfiniteDurabilityEnabled) _playerService.ToggleInfiniteDurability(true);
+            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.OneShot, true);
+            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteStam, true);
+            if (IsInfiniteGoodsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteGoods, true);
+            if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Silent, true);
+            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Hidden, true);
+            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteFp, true);
+            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteArrows, true);
             if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
-            // if (IsSilentEnabled) _playerService.ToggleSilent(true);
-            // if (IsHiddenEnabled) _playerService.ToggleHidden(true);
-            // if (IsNoSoulGainEnabled) _playerService.ToggleNoSoulGain(true);
-            // if (IsNoSoulLossEnabled) _playerService.ToggleNoSoulLoss(true);
-            // if (IsNoHollowingEnabled) _playerService.ToggleNoHollowing(true);
+            if (IsNoRuneGainEnabled) _playerService.ToggleNoRuneGain(true);
+            if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
+            if (IsNoRuneArcLossEnabled) _playerService.ToggleNoRuneArcLoss(true);
             // _pauseUpdates = false;
         }
-        //
-        // public void DisableFeatures()
-        // {
-        //     AreOptionsEnabled = false;
-        //     _timer.Stop();
-        // }
-        //
+        
+        public void DisableFeatures()
+        {
+            AreOptionsEnabled = false;
+            
+            // _timer.Stop();
+        }
+
         // public void GiveSouls() => _playerService.GiveSouls(Souls);
         //
         // public void RestoreSpellcasts() => _playerService.RestoreSpellcasts();

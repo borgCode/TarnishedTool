@@ -612,5 +612,23 @@ namespace SilkyRing.Services
 
             _memoryIo.SetBitValue(chrData + offset, bitmask, isEnabled);
         }
+
+        public void ToggleDebugFlag(int offset, bool isEnabled) =>
+            _memoryIo.WriteByte(WorldChrManDbg.Base + offset, isEnabled ? 1 : 0);
+
+        public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>
+            _memoryIo.WriteBytes(Patches.NoRunesFromEnemies,
+                isNoRuneGainEnabled
+                    ? new byte[] { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 }
+                    : new byte[] { 0x41, 0xFF, 0x91, 0xC8, 0x05, 0x00, 0x00 });
+
+        public void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled) =>
+            _memoryIo.WriteByte(Patches.NoRuneArcLoss, isNoRuneArcLossEnabled ? 0xEB : 0x74);
+
+        public void ToggleNoRuneLoss(bool isNoRuneLossEnabled) => 
+        _memoryIo.WriteBytes(Patches.NoRuneLossOnDeath, 
+            isNoRuneLossEnabled
+                ? new byte[] { 0x90, 0x90, 0x90 }
+                : new byte[] { 0x89, 0x45, 0x6C});
     }
 }

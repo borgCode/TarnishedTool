@@ -12,21 +12,9 @@ namespace SilkyRing.Memory
             MenuMan.Offsets.Initialize();
             TargetView.Offsets.Initialize();
             GameMan.Offsets.Initialize();
-            // GameManagerImp.Offsets.Initialize(edition);
-            // GameManagerImp.CharacterManagerOffsets.Initialize(edition);
-            // GameManagerImp.EventManagerOffsets.Initialize(edition);
-            // GameManagerImp.GameDataManagerOffsets.Initialize(edition);
-            // GameManagerImp.GameDataManagerOffsets.Inventory.Initialize(edition);
-            // GameManagerImp.GameDataManagerOffsets.Inventory.ItemInventory2BagList.Initialize(edition);
-            // GameManagerImp.GameDataManagerOffsets.Inventory.ItemInvetory2SpellList.Initialize(edition);
-            // GameManagerImp.GameDataManagerOffsets.Inventory.SpellEntry.Initialize(edition);
-            // GameManagerImp.SaveLoadSystem.Initialize(edition);
-            // GameManagerImp.ChrCtrlOffsets.Initialize(edition);
-            // GameManagerImp.ChrCtrlOffsets.Operator.Initialize(edition);
-            // GameManagerImp.ChrCtrlOffsets.ChrAiMan.Initialize(edition);
-            // GameManagerImp.ChrCtrlOffsets.ChrPhysicsCtrl.Initialize(edition);
-            // GameManagerImp.ChrCtrlOffsets.Stats.Initialize(edition);
-            // GameManagerImp.PxWorld.Initialize(edition);
+            DamageManager.Offsets.Initialize();
+            WorldHitMan.Offsets.Initialize();
+            WorldChrManDbg.Offsets.Initialize();
         }
 
 
@@ -228,7 +216,38 @@ namespace SilkyRing.Memory
         {
             public static IntPtr Base;
 
-            //+0xA4, some debug draw
+            public static class Offsets
+            {
+                public static void Initialize()
+                {
+                    HitboxView = 0xA0;
+                    HitboxView2 = 0xA1;
+                }
+
+                public static int HitboxView { get; private set; }
+                public static int HitboxView2 { get; private set; }
+            }
+        }
+        
+        public static class WorldHitMan
+        {
+            public static IntPtr Base;
+
+            public static class Offsets
+            {
+                public static void Initialize()
+                {
+                    LowHit = 0xC;
+                    HighHit = 0xD;
+                    Ragdoll = 0xE;
+                    Mode = 0x14;
+                }
+
+                public static int LowHit { get; private set; }
+                public static int HighHit { get; private set; }
+                public static int Ragdoll { get; private set; }
+                public static int Mode { get; private set; }
+            }
         }
 
         public static class MenuMan
@@ -287,10 +306,30 @@ namespace SilkyRing.Memory
                 public static void Initialize()
                 {
                     AllChrsSpheres = 0x9;
+                    OneShot = 0xA;
+                    InfiniteGoods = 0xB;
+                    InfiniteStam = 0xC;
+                    InfiniteFp = 0xD;
+                    InfiniteArrows = 0xE;
+                    Hidden = 0x10;
+                    Silent = 0x11;
+                    AllNoDeath = 0x12;
+                    AllNoDamage = 0x13;
+                    AllDisableAi = 0x17;
                     PoiseBarsFlag = 0x69;
               
                 }
 
+                public static int OneShot { get; private set; }
+                public static int InfiniteGoods { get; private set; }
+                public static int InfiniteStam { get; private set; }
+                public static int InfiniteFp { get; private set; }
+                public static int InfiniteArrows { get; private set; }
+                public static int Hidden { get; private set; }
+                public static int Silent { get; private set; }
+                public static int AllNoDeath { get; private set; }
+                public static int AllNoDamage { get; private set; }
+                public static int AllDisableAi { get; private set; }
                 public static int AllChrsSpheres { get; private set; }
                 public static int PoiseBarsFlag { get; private set; }
             }
@@ -319,6 +358,9 @@ namespace SilkyRing.Memory
         public static class Patches
         {
             public static IntPtr DungeonWarp;
+            public static IntPtr NoRunesFromEnemies;
+            public static IntPtr NoRuneArcLoss;
+            public static IntPtr NoRuneLossOnDeath;
         }
     }
 }

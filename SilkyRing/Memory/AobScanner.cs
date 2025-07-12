@@ -41,11 +41,16 @@ namespace SilkyRing.Memory
             MenuMan.Base = FindAddressByPattern(Pattern.MenuMan);
             TargetView.Base = FindAddressByPattern(Pattern.TargetView);
             GameMan.Base = FindAddressByPattern(Pattern.GameMan);
+            WorldHitMan.Base = FindAddressByPattern(Pattern.WorldHitMan);
+            WorldChrManDbg.Base = FindAddressByPattern(Pattern.WorldChrManDbg);
             
            
 
 
             TryPatternWithFallback("DungeonWarp", Pattern.DungeonWarp, addr => Patches.DungeonWarp = addr, saved);
+            TryPatternWithFallback("NoRunesFromEnemies", Pattern.NoRunesFromEnemies, addr => Patches.NoRunesFromEnemies = addr, saved);
+            TryPatternWithFallback("NoRuneArcLoss", Pattern.NoRuneArcLoss, addr => Patches.NoRuneArcLoss = addr, saved);
+            TryPatternWithFallback("NoRuneLossOnDeath", Pattern.NoRuneLossOnDeath, addr => Patches.NoRuneLossOnDeath = addr, saved);
             // TryPatternWithFallback("AccessFullShop", Patterns.AccessFullShop, addr => Offsets.Patches.AccessFullShop = addr, saved);
             // TryPatternWithFallback("RepeatAct", Patterns.RepeatAct, addr => Offsets.Patches.RepeatAct = addr, saved);
             // TryPatternWithFallback("GameSpeed", Patterns.GameSpeed, addr => Offsets.Patches.GameSpeed = addr, saved);
@@ -143,9 +148,14 @@ namespace SilkyRing.Memory
             Console.WriteLine($"MenuMan.Base: 0x{MenuMan.Base.ToInt64():X}");
             Console.WriteLine($"TargetView.Base: 0x{TargetView.Base.ToInt64():X}");
             Console.WriteLine($"GameMan.Base: 0x{GameMan.Base.ToInt64():X}");
+            Console.WriteLine($"WorldHitMan.Base: 0x{WorldHitMan.Base.ToInt64():X}");
+            Console.WriteLine($"WorldChrManDbg.Base: 0x{WorldChrManDbg.Base.ToInt64():X}");
            
              Console.WriteLine($"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
-//            
+             Console.WriteLine($"NoRunesFromEnemies.NoLogo: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
+             Console.WriteLine($"NoRuneArcLoss.NoLogo: 0x{Patches.NoRuneArcLoss.ToInt64():X}");
+             Console.WriteLine($"NoRuneLossOnDeath.NoLogo: 0x{Patches.NoRuneLossOnDeath.ToInt64():X}");
+             
              Console.WriteLine($"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
              Console.WriteLine($"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");
              Console.WriteLine($"Hooks.NoClipKb: 0x{Hooks.NoClipKb:X}");

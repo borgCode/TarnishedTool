@@ -1,4 +1,6 @@
-﻿using SilkyRing.Services;
+﻿using SilkyRing.Memory.DLLShared;
+using SilkyRing.Services;
+using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
 {
@@ -11,10 +13,22 @@ namespace SilkyRing.ViewModels
         private bool _isNoClipEnabled;
         
         
+        private bool _isDrawHitboxEnabled;
+        private bool _isDrawLowHitEnabled;
+        private bool _isDrawHighHitEnabled;
+        private int _colDrawMode = 1;
+        private bool _isDrawRagdollEnabled;
+
+
         private readonly UtilityService _utilityService;
-        public UtilityViewModel(UtilityService utilityService)
+        private readonly DllManager _dllManager;
+        
+        
+        public UtilityViewModel(UtilityService utilityService, DllManager dllManager)
         {
             _utilityService = utilityService;
+            _dllManager = dllManager;
+            
             // RegisterHotkeys();
         }
         
@@ -50,15 +64,50 @@ namespace SilkyRing.ViewModels
             set => SetProperty(ref _areOptionsEnabled, value);
         }
         
-        // public bool IsDrawHitboxEnabled
-        // {
-        //     get => _isDrawHitboxEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isDrawHitboxEnabled, value)) return;
-        //         _utilityService.ToggleDrawHitbox(_isDrawHitboxEnabled);
-        //     }
-        // }
+        
+        
+        public bool IsDrawHitboxEnabled
+        {
+            get => _isDrawHitboxEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawHitboxEnabled, value)) return;
+                _utilityService.ToggleDrawHitbox(_isDrawHitboxEnabled);
+                _utilityService.SetColDrawMode(ColDrawMode);
+            }
+        }
+        
+        public bool IsDrawLowHitEnabled
+        {
+            get => _isDrawLowHitEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
+                _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, _isDrawLowHitEnabled);
+                _utilityService.SetColDrawMode(ColDrawMode);
+            }
+        }
+        
+        public bool IsDrawHighHitEnabled
+        {
+            get => _isDrawHighHitEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
+                _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, _isDrawHighHitEnabled);
+            }
+        }
+        
+        public int ColDrawMode
+        {
+            get => _colDrawMode;
+            set
+            {
+                if (!SetProperty(ref _colDrawMode, value)) return;
+                if (!IsDrawHighHitEnabled && !IsDrawLowHitEnabled) return;
+                _utilityService.SetColDrawMode(_colDrawMode);
+            }
+        }
         //
         // public bool IsDrawEventEnabled
         // {
@@ -175,17 +224,17 @@ namespace SilkyRing.ViewModels
         }
         
         //
-        //
-        // public bool IsDrawRagdollsEnabled
-        // {
-        //     get => _isDrawRagdollEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
-        //         _utilityService.ToggleRagdoll(_isDrawRagdollEnabled);
-        //         if (!_isDrawRagdollEnabled) IsSeeThroughWallsEnabled = false;
-        //     }
-        // }
+        
+        public bool IsDrawRagdollsEnabled
+        {
+            get => _isDrawRagdollEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
+                _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, _isDrawRagdollEnabled);
+         
+            }
+        }
         //
         // public bool IsSeeThroughWallsEnabled
         // {
@@ -300,7 +349,7 @@ namespace SilkyRing.ViewModels
         {
             // if (Is100DropEnabled) _utilityService.Toggle100Drop(true);
             // if (IsCreditSkipEnabled) _utilityService.ToggleCreditSkip(true);
-            // if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
+            if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
             //
             // if (IsDrawEventGeneralEnabled) _utilityService.ToggleDrawEvent(DrawType.EventGeneral, true);
             // if (IsDrawEventSpawnEnabled) _utilityService.ToggleDrawEvent(DrawType.EventSpawn, true);
@@ -312,6 +361,9 @@ namespace SilkyRing.ViewModels
             if (IsTargetingViewEnabled) _utilityService.ToggleTargetingView(true);
             if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled) _utilityService.ToggleReducedTargetingView(true);
             if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled) _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+            
+            if (IsDrawLowHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, true);
+            if (IsDrawHighHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, true);
             // if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
             // if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
             // if (IsLightGutterEnabled) _utilityService.ToggleLightGutter(true);
@@ -319,10 +371,15 @@ namespace SilkyRing.ViewModels
             // if (IsNoFogEnabled) _utilityService.ToggleShadedFog(true);
             // if (IsColWireframeEnabled) _utilityService.ToggleColWireframe(true);
             // if (IsDrawKillboxEnabled) _utilityService.ToggleDrawKillbox(true);
-            // if (IsDrawRagdollsEnabled) _utilityService.ToggleRagdoll(true);
+            if (IsDrawRagdollsEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, true);
             // if (IsSeeThroughWallsEnabled) _utilityService.ToggleRagdollEsp(true);
         }
 
         public void ForceSave() => _utilityService.ForceSave();
+
+        public void Inject()
+        {
+            _dllManager.InjectDll();
+        }
     }
 }

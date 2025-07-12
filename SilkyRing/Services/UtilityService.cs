@@ -148,5 +148,15 @@ namespace SilkyRing.Services
 
         public void ForceSave() =>
             _memoryIo.WriteByte((IntPtr)_memoryIo.ReadInt64(GameMan.Base) + GameMan.Offsets.ForceSave, 1);
+
+        public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
+            _memoryIo.WriteByte((IntPtr)_memoryIo.ReadInt64(DamageManager.Base) + DamageManager.Offsets.HitboxView,
+                isDrawHitboxEnabled ? 1 : 0);
+
+        public void ToggleWorldHitDraw(int offset, bool isEnabled) =>
+            _memoryIo.WriteByte(WorldHitMan.Base + offset, isEnabled ? 1 : 0);
+
+        public void SetColDrawMode(int val) =>
+            _memoryIo.WriteByte(WorldHitMan.Base + WorldHitMan.Offsets.Mode, (byte)val);
     }
 }

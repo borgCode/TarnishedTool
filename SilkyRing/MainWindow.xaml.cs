@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using SilkyRing.Memory;
+using SilkyRing.Memory.DLLShared;
 using SilkyRing.Services;
 using SilkyRing.ViewModels;
 using SilkyRing.Views;
@@ -29,6 +30,7 @@ namespace SilkyRing
         private readonly EventViewModel _eventViewModel;
         private readonly UtilityViewModel _utilityViewModel;
         private readonly EnemyViewModel _enemyViewModel;
+        private readonly DllManager _dllManager;
         // private readonly ItemViewModel _itemViewModel;
         // private readonly SettingsViewModel _settingsViewModel;
         //
@@ -51,6 +53,7 @@ namespace SilkyRing
             // GameLauncher.SetVersionOffsets();
             _hookManager = new HookManager(_memoryIo);
             _aobScanner = new AoBScanner(_memoryIo);
+            _dllManager = new DllManager(_memoryIo);
 
             // var hotkeyManager = new HotkeyManager(_memoryIo);
             //
@@ -66,7 +69,7 @@ namespace SilkyRing
 
             _playerViewModel = new PlayerViewModel(playerService);
             _utilityViewModel =
-                new UtilityViewModel(utilityService);
+                new UtilityViewModel(utilityService, _dllManager);
             _travelViewModel = new TravelViewModel(travelService, eventService);
             _eventViewModel = new EventViewModel(eventService);
             _enemyViewModel = new EnemyViewModel(enemyService);
@@ -246,7 +249,7 @@ namespace SilkyRing
         private void DisableFeatures()
         {
             // _utilityViewModel.DisableFeatures();
-            // _playerViewModel.DisableFeatures();
+            _playerViewModel.DisableFeatures();
             // _enemyViewModel.DisableFeatures();
             // _itemViewModel.DisableFeatures();
             // _travelViewModel.DisableFeatures();

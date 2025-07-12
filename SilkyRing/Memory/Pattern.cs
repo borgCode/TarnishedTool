@@ -92,6 +92,24 @@
             7
         );
 
+        public static readonly Pattern WorldHitMan = new Pattern(
+            new byte[] { 0x48, 0x8B, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x48, 0x63, 0xD8 },
+            "xxx????xxx",
+            0,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
+        public static readonly Pattern WorldChrManDbg = new Pattern(
+            new byte[] { 0x83, 0xCF, 0x10, 0x89, 0x7C, 0x24, 0x20, 0x48, 0x83 },
+            "xxxxxxxxx",
+            0x7,
+            AddressingMode.Relative,
+            3,
+            8
+        );
+
 
         //Hooks
         public static readonly Pattern UpdateCoords = new Pattern(
@@ -158,7 +176,6 @@
         );
 
 
-
         //Funcs
 
 
@@ -196,6 +213,28 @@
             0,
             AddressingMode.Absolute
         );
+
+        public static readonly Pattern NoRunesFromEnemies = new Pattern(
+            new byte[] { 0x41, 0xFF, 0x91, 0xC8, 0x05 },
+            "xxxxx",
+            0,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern NoRuneArcLoss = new Pattern(
+            new byte[] { 0x74, 0x09, 0x66, 0xC7, 0x81, 0xFF },
+            "xxxxxx",
+            0,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern NoRuneLossOnDeath = new Pattern(
+            new byte[] { 0x48, 0x0F, 0x4C, 0xC1, 0x44 },
+            "xxxxx",
+            0xB,
+            AddressingMode.Absolute
+        );
+        
     }
 
 
