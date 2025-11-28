@@ -14,6 +14,7 @@
         <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
         <WarningLevel>4</WarningLevel>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,14 +77,24 @@
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
-        <Compile Include="Memory\DLLShared\DllManager.cs" />
-        <Compile Include="Memory\DLLShared\LogCommand.cs" />
-        <Compile Include="Memory\DLLShared\SharedMemAddr.cs" />
+        <Compile Include="Enums\State.cs" />
+        <Compile Include="Interfaces\IEnemyService.cs" />
+        <Compile Include="Interfaces\IEventService.cs" />
+        <Compile Include="Interfaces\IMemoryService.cs" />
+        <Compile Include="Interfaces\IPlayerService.cs" />
+        <Compile Include="Interfaces\IStateService.cs" />
+        <Compile Include="Interfaces\ITargetService.cs" />
+        <Compile Include="Interfaces\ITravelService.cs" />
+        <Compile Include="Interfaces\IUtilityService.cs" />
+        <Compile Include="Memory\BitFlag.cs" />
         <Compile Include="Memory\GameIds.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Services\EnemyService.cs" />
+        <Compile Include="Services\TargetService.cs" />
         <Compile Include="Services\EventService.cs" />
+        <Compile Include="Services\MemoryService.cs" />
         <Compile Include="Services\PlayerService.cs" />
+        <Compile Include="Services\StateService.cs" />
         <Compile Include="Services\TravelService.cs" />
         <Compile Include="Services\UtilityService.cs" />
         <Compile Include="Utilities\AsmHelper.cs" />
@@ -91,13 +102,16 @@
         <Compile Include="Utilities\DataLoader.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
+        <Compile Include="ViewModels\TargetViewModel.cs" />
         <Compile Include="ViewModels\EventViewModel.cs" />
-        <Compile Include="ViewModels\LoggerViewModel.cs" />
         <Compile Include="ViewModels\PlayerViewModel.cs" />
         <Compile Include="ViewModels\TravelViewModel.cs" />
         <Compile Include="ViewModels\UtilityViewModel.cs" />
         <Compile Include="Views\Tabs\EnemyTab.xaml.cs">
           <DependentUpon>EnemyTab.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Tabs\TargetTab.xaml.cs">
+          <DependentUpon>TargetTab.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Tabs\EventTab.xaml.cs">
           <DependentUpon>EventTab.xaml</DependentUpon>
@@ -110,9 +124,6 @@
         </Compile>
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
-        </Compile>
-        <Compile Include="Views\Windows\LoggerWindow.xaml.cs">
-          <DependentUpon>LoggerWindow.xaml</DependentUpon>
         </Compile>
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
@@ -127,18 +138,17 @@
             <SubType>Code</SubType>
         </Compile>
         <Page Include="Views\Tabs\EnemyTab.xaml" />
+        <Page Include="Views\Tabs\TargetTab.xaml" />
         <Page Include="Views\Tabs\EventTab.xaml" />
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
-        <Page Include="Views\Windows\LoggerWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Memory\AobScanner.cs" />
         <Compile Include="Memory\CodeCaveOffsets.cs" />
         <Compile Include="Memory\HookManager.cs" />
         <Compile Include="Memory\Kernel32.cs" />
-        <Compile Include="Memory\MemoryIO.cs" />
         <Compile Include="Memory\Offsets.cs" />
         <Compile Include="Memory\Pattern.cs" />
         <Compile Include="Properties\AssemblyInfo.cs">
@@ -160,9 +170,9 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="Assets\Silky.ico" />
-      <Content Include="Resources\DLL\dll.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Views\Windows\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

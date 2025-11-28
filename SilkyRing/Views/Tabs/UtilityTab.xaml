@@ -353,12 +353,5 @@
                 </Grid>
             </StackPanel>
         </Border>
-        <Button Grid.Row="3" Content="Logger"
-                IsEnabled="{Binding AreButtonsEnabled}"
-                Padding="5,3"
-                Click="OpenLogger_Click"
-                Width="150"
-                HorizontalAlignment="Left"
-                Margin="0,15,20,0" />
     </Grid>
 </UserControl>

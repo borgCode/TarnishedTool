@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using SilkyRing.Interfaces;
 using SilkyRing.Models;
 using SilkyRing.Services;
 using SilkyRing.Utilities;
@@ -29,7 +30,7 @@ namespace SilkyRing.ViewModels
         private string _preSearchMainArea;
         private readonly ObservableCollection<Grace> _searchResultsCollection = new ObservableCollection<Grace>();
         
-        public TravelViewModel(TravelService travelService, EventService eventService)
+        public TravelViewModel(TravelService travelService, EventService eventService, IStateService stateService)
         {
             _travelService = travelService;
             // _hotkeyManager = hotkeyManager;

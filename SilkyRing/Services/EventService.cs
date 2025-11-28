@@ -6,12 +6,12 @@ namespace SilkyRing.Services
 {
     public class EventService
     {
-        private readonly MemoryIo _memoryIo;
+        private readonly MemoryService _memoryService;
         private readonly HookManager _hookManager;
         
-        public EventService(MemoryIo memoryIo, HookManager hookManager)
+        public EventService(MemoryService memoryService, HookManager hookManager)
         {
-            _memoryIo = memoryIo;
+            _memoryService = memoryService;
             _hookManager = hookManager;
         }
         

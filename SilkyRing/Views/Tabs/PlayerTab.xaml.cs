@@ -173,9 +173,9 @@ namespace SilkyRing.Views
             // _playerViewModel.ResumeUpdates();
         }
 
-        private void GiveSouls_Click(object sender, RoutedEventArgs e)
+        private void GiveRunes_Click(object sender, RoutedEventArgs e)
         {
-            // _playerViewModel.GiveSouls();
+            _playerViewModel.GiveRunes();
         }
 
         private void RestoreSpellcasts_Click(object sender, RoutedEventArgs e) => _playerViewModel.RestoreSpellcasts();

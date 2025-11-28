@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using SilkyRing.Services;
 using static SilkyRing.Memory.Offsets;
 
 
@@ -8,11 +9,11 @@ namespace SilkyRing.Memory
 {
     public class AoBScanner
     {
-        private readonly MemoryIo _memoryIo;
+        private readonly MemoryService _memoryService;
 
-        public AoBScanner(MemoryIo memoryIo)
+        public AoBScanner(MemoryService memoryService)
         {
-            _memoryIo = memoryIo;
+            _memoryService = memoryService;
         }
 
         public void Scan()
@@ -208,7 +209,7 @@ namespace SilkyRing.Memory
                 }
                 else
                 {
-                    int offset = _memoryIo.ReadInt32(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
+                    int offset = _memoryService.ReadInt32(IntPtr.Add(instructionAddress, pattern.OffsetLocation));
                     addresses[i] = IntPtr.Add(instructionAddress, offset + pattern.InstructionLength);
                 }
             }
@@ -221,7 +222,7 @@ namespace SilkyRing.Memory
             const int chunkSize = 4096 * 16;
             byte[] buffer = new byte[chunkSize];
 
-            IntPtr currentAddress = _memoryIo.BaseAddress;
+            IntPtr currentAddress = _memoryService.BaseAddress;
             IntPtr endAddress = IntPtr.Add(currentAddress, 0x3200000);
 
             List<IntPtr> addresses = new List<IntPtr>();
@@ -234,7 +235,7 @@ namespace SilkyRing.Memory
                 if (bytesToRead < pattern.Length)
                     break;
 
-                buffer = _memoryIo.ReadBytes(currentAddress, bytesToRead);
+                buffer = _memoryService.ReadBytes(currentAddress, bytesToRead);
 
                 for (int i = 0; i <= bytesToRead - pattern.Length; i++)
                 {

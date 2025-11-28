@@ -9,11 +9,11 @@ namespace SilkyRing.Services
     public class TravelService
     {
         
-        private readonly MemoryIo _memoryIo;
+        private readonly MemoryService _memoryService;
         private readonly HookManager _hookManager;
-        public TravelService(MemoryIo memoryIo, HookManager hookManager)
+        public TravelService(MemoryService memoryService, HookManager hookManager)
         {
-            _memoryIo = memoryIo;
+            _memoryService = memoryService;
             _hookManager = hookManager;
         }
 
@@ -28,7 +28,7 @@ namespace SilkyRing.Services
                 (Funcs.GraceWarp, 0x20 + 2)
             });
             
-            _memoryIo.AllocateAndExecute(bytes);
+            _memoryService.AllocateAndExecute(bytes);
         }
 
         public void UnlockGrace(Grace grace)
@@ -36,12 +36,12 @@ namespace SilkyRing.Services
             var bytes = AsmLoader.GetAsmBytes("SetEvent");
             AsmHelper.WriteAbsoluteAddresses(bytes, new []
             {
-                (_memoryIo.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
+                (_memoryService.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
                 (grace.FlagId, 0xE + 2),
                 (1, 0x18 + 2),
                 (Funcs.SetEvent, 0x22 + 2)
             });
-            _memoryIo.AllocateAndExecute(bytes);
+            _memoryService.AllocateAndExecute(bytes);
         }
 
         public void Test()

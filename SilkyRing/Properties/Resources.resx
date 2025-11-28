@@ -783,4 +783,16 @@ e9 00 00 00 00          jmp    22 &lt;normal&gt;
 80 bf 5f 02 00 00 00    cmp    BYTE PTR [rdi+0x25f],0x0
 e9 00 00 00 00          jmp    2f &lt;normal+0xd&gt;</value>
   </data>
+  <data name="GiveRunes" xml:space="preserve">
+    <value>48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+48 ba 00 00 00 00 00    movabs rdx,0x0
+00 00 00
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+48 83 ec 20             sub    rsp,0x20
+ff d0                   call   rax
+48 83 c4 20             add    rsp,0x20
+c3                      ret</value>
+  </data>
 </root>

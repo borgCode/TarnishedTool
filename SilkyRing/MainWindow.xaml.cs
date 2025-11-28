@@ -5,11 +5,13 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using SilkyRing.Enums;
+using SilkyRing.Interfaces;
 using SilkyRing.Memory;
-using SilkyRing.Memory.DLLShared;
 using SilkyRing.Services;
 using SilkyRing.ViewModels;
 using SilkyRing.Views;
+using SilkyRing.Views.Tabs;
 using UtilityTab = SilkyRing.Views.UtilityTab;
 
 namespace SilkyRing
@@ -19,18 +21,13 @@ namespace SilkyRing
     /// </summary>
     public partial class MainWindow
     {
-        private readonly MemoryIo _memoryIo;
+        private readonly MemoryService _memoryService;
+        private readonly IStateService _stateService;
         private readonly AoBScanner _aobScanner;
 
         private readonly DispatcherTimer _gameLoadedTimer;
         private readonly HookManager _hookManager;
-
-        private readonly PlayerViewModel _playerViewModel;
-        private readonly TravelViewModel _travelViewModel;
-        private readonly EventViewModel _eventViewModel;
-        private readonly UtilityViewModel _utilityViewModel;
-        private readonly EnemyViewModel _enemyViewModel;
-        private readonly DllManager _dllManager;
+        
         // private readonly ItemViewModel _itemViewModel;
         // private readonly SettingsViewModel _settingsViewModel;
         //
@@ -38,8 +35,8 @@ namespace SilkyRing
 
         public MainWindow()
         {
-            _memoryIo = new MemoryIo();
-            _memoryIo.StartAutoAttach();
+            _memoryService = new MemoryService();
+            _memoryService.StartAutoAttach();
             InitializeComponent();
 
             //
@@ -51,45 +48,49 @@ namespace SilkyRing
             // else WindowStartupLocation = WindowStartupLocation.CenterScreen;
             //
             // GameLauncher.SetVersionOffsets();
-            _hookManager = new HookManager(_memoryIo);
-            _aobScanner = new AoBScanner(_memoryIo);
-            _dllManager = new DllManager(_memoryIo);
-
+            _aobScanner = new AoBScanner(_memoryService);
+            _stateService = new StateService(_memoryService);
+        
+            var hookManager = new HookManager(_memoryService, _stateService);
             // var hotkeyManager = new HotkeyManager(_memoryIo);
             //
-            var playerService = new PlayerService(_memoryIo, _hookManager);
-            var utilityService = new UtilityService(_memoryIo, _hookManager);
-            var eventService = new EventService(_memoryIo, _hookManager);
-            var enemyService = new EnemyService(_memoryIo, _hookManager);
-            var travelService = new TravelService(_memoryIo, _hookManager);
-            // var cinderService = new CinderService(_memoryIo, _hookManager);
+            var playerService = new PlayerService(_memoryService, hookManager);
+            var utilityService = new UtilityService(_memoryService, hookManager);
+            var eventService = new EventService(_memoryService, hookManager);
+            ITargetService targetService = new TargetService(_memoryService, hookManager);
+            IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
+            var travelService = new TravelService(_memoryService, hookManager);
+            
             // var itemService = new ItemService(_memoryIo);
             // var settingsService = new SettingsService(_memoryIo);
             // _debugDrawService = new DebugDrawService(_memoryIo);
 
-            _playerViewModel = new PlayerViewModel(playerService);
-            _utilityViewModel =
-                new UtilityViewModel(utilityService, _dllManager);
-            _travelViewModel = new TravelViewModel(travelService, eventService);
-            _eventViewModel = new EventViewModel(eventService);
-            _enemyViewModel = new EnemyViewModel(enemyService, _dllManager);
+            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService);
+            TravelViewModel travelViewModel = new TravelViewModel(travelService, eventService, _stateService);
+            EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService); 
+            TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService);
+            EventViewModel eventViewModel = new EventViewModel(eventService, _stateService);
+            UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService);
             // _itemViewModel = new ItemViewModel(itemService);
             // _settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager);
-
-
-            var eventTab = new EventTab(_eventViewModel);
-            var playerTab = new PlayerTab(_playerViewModel);
-            var utilityTab = new UtilityTab(_utilityViewModel);
-            var travelTab = new TravelTab(_travelViewModel);
-            var enemyTab = new EnemyTab(_enemyViewModel);
+            
+            var playerTab = new PlayerTab(playerViewModel);
+            var travelTab = new TravelTab(travelViewModel);
+            var enemyTab = new EnemyTab(enemyViewModel);
+            var targetTab = new TargetTab(targetViewModel);
+            var utilityTab = new UtilityTab(utilityViewModel);
             // var itemTab = new ItemTab(_itemViewModel);
+            var eventTab = new EventTab(eventViewModel);
             // var settingsTab = new SettingsTab(_settingsViewModel);
+
+
             //
             MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
             MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
-            MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
-            MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
             MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Target", Content = targetTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             // MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
             // MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
             //
@@ -111,23 +112,18 @@ namespace SilkyRing
         //     VersionChecker.CheckForUpdates(this);
         // }
         private bool _loaded;
-        private bool _hasAppliedDelayedFeatures;
 
         private bool _hasScanned;
 
         private bool _hasAllocatedMemory;
-
-        private bool _hasAppliedNoLogo;
+        
 
         private bool _appliedOneTimeFeatures;
-        private bool _hasAppliedLaunchFeatures;
-        private int _storedArea;
-        private int _currentArea;
-        private bool _hasShownVersionError;
+
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (_memoryIo.IsAttached)
+            if (_memoryService.IsAttached)
             {
                 IsAttachedText.Text = "Attached to game";
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
@@ -138,66 +134,37 @@ namespace SilkyRing
                 {
                     _aobScanner.Scan();
                     _hasScanned = true;
-                    Offsets.Initialize();
-                    Console.WriteLine($"Base: 0x{_memoryIo.BaseAddress.ToInt64():X}");
+                    _stateService.Publish(State.Attached);
+                    Console.WriteLine($"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
                 }
 
-
-                if (!_hasAppliedLaunchFeatures)
-                {
-                    ApplyLaunchFeatures();
-                }
-
-
-                // _currentArea = _memoryIo.ReadInt32(Offsets.MapId);
-                // if (_currentArea != _storedArea)
-                // {
-                //     _eventViewModel.AreaChange(_currentArea);
-                //     _storedArea = _currentArea;
-                // }
 
                 if (!_hasAllocatedMemory)
                 {
-                    _memoryIo.AllocCodeCave();
+                    _memoryService.AllocCodeCave();
                     Console.WriteLine($"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
                     _hasAllocatedMemory = true;
-                    // _damageControlService.WriteDamageControlCode();
-                    // _dllManager.CreateDrawSharedMem();
-                    // _dllManager.CreateSpeedSharedMem();
+
                 }
 
-                if (_memoryIo.IsGameLoaded())
+                if (_stateService.IsLoaded())
                 {
-                    if (!_hasAppliedDelayedFeatures)
-                    {
-                        // if (!_memoryIo.IsLoadingScreen())
-                        // {
-                        //     ApplyDelayedFeatures();
-                        //     _hasAppliedDelayedFeatures = true;
-                        // }
-                    }
-
+                  
                     if (_loaded) return;
                     _loaded = true;
-                    TryEnableFeatures();
+                    _stateService.Publish(State.Loaded);
                     // _settingsViewModel.ApplyLoadedOptions();
                     if (_appliedOneTimeFeatures) return;
-                    ApplyOneTimeFeatures();
                     _appliedOneTimeFeatures = true;
                 }
                 else if (_loaded)
                 {
-                    DisableFeatures();
                     _loaded = false;
-                    _hasAppliedDelayedFeatures = false;
                 }
             }
             else
             {
                 _hookManager.ClearHooks();
-                DisableFeatures();
-                // _nopManager.ClearRegistry();
-                ResetState();
                 _hasScanned = false;
                 _loaded = false;
                 _hasAllocatedMemory = false;
@@ -207,55 +174,8 @@ namespace SilkyRing
                 // LaunchGameButton.IsEnabled = true;
             }
         }
-
-        private void ApplyDelayedFeatures()
-        {
-            // _utilityViewModel.ApplyDelayedFeatures();
-        }
-
-        private void ResetState()
-        {
-            // _dllManager.ResetState();
-            // _settingsViewModel.ResetAttached();
-            // _itemService.Reset();
-            // _utilityViewModel.Reset();
-        }
-
-        private void ApplyLaunchFeatures()
-        {
-            // _playerViewModel.ApplyLaunchFeatures();
-            // _itemViewModel.ApplyLaunchFeatures();
-            // _utilityViewModel.ApplyLaunchFeatures();
-        }
-
-        private void ApplyOneTimeFeatures()
-        {
-            _playerViewModel.TryApplyOneTimeFeatures();
-            _utilityViewModel.TryApplyOneTimeFeatures();
-            // _enemyViewModel.TryApplyOneTimeFeatures();
-            // _eventViewModel.TryApplyOneTimeFeatures();
-        }
-
-        private void TryEnableFeatures()
-        {
-            _playerViewModel.TryEnableFeatures();
-            _utilityViewModel.TryEnableFeatures();
-            _enemyViewModel.TryEnableFeatures();
-            // _itemViewModel.TryEnableFeatures();
-            // _travelViewModel.TryEnableFeatures();
-            // _eventViewModel.TryEnableFeatures();
-        }
-
-        private void DisableFeatures()
-        {
-            // _utilityViewModel.DisableFeatures();
-            _playerViewModel.DisableFeatures();
-            // _enemyViewModel.DisableFeatures();
-            // _itemViewModel.DisableFeatures();
-            // _travelViewModel.DisableFeatures();
-            // _eventViewModel.DisableFeatures();
-        }
-
+        
+        
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)

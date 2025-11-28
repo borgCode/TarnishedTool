@@ -53,10 +53,6 @@
                             Margin="10,0,0,0"
                             Width="60" />
 
-                    <CheckBox Content="Health Overlay"
-                              IsChecked="{Binding IsHealthWindowOpen}"
-                              Margin="10,0, 0,2" />
-
                     <Border
                         Background="#3498db"
                         CornerRadius="10"
@@ -228,15 +224,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
    
-                <TextBlock Grid.Column="0" Text="{Binding SoulLevel, StringFormat='Soul Level: {0}'}" FontWeight="Bold" />
-                <TextBlock Grid.Column="1" Text="{Binding SoulMemory, StringFormat='Soul Memory: {0}'}"
-                           FontWeight="Bold" Margin="15,0,0,0" />
-   
-                <CheckBox Grid.Column="2" 
-                          IsChecked="{Binding IsDisableSoulMemWriteEnabled}"
-                          Content="Exclude Soul Memory when stat editing"
-                          VerticalAlignment="Center" 
-                          Margin="25,0,5,0" />
+                <TextBlock Grid.Column="0" Text="{Binding RuneLevel, StringFormat='Rune Level: {0}'}" FontWeight="Bold" />
                 
             </Grid>
             <Grid Grid.Row="4">
@@ -461,11 +449,11 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Souls to give:" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="0" Text="Runes to give:" VerticalAlignment="Center" />
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <xctk:IntegerUpDown
-                                        Value="{Binding Souls}"
+                                        Value="{Binding Runes}"
                                         TextAlignment="Center"
                                         Width="120"
                                         Minimum="0"
@@ -478,8 +466,8 @@
                                         IsEnabled="{Binding AreOptionsEnabled}"
                                         BorderBrush="#3F3F46" />
 
-                    <Button Content="Give Souls"
-                            Click="GiveSouls_Click"
+                    <Button Content="Give Runes"
+                            Click="GiveRunes_Click"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
                             Width="100"

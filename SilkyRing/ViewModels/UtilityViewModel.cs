@@ -1,7 +1,5 @@
-﻿using SilkyRing.Memory.DLLShared;
+﻿using SilkyRing.Interfaces;
 using SilkyRing.Services;
-using SilkyRing.Views;
-using SilkyRing.Views.Windows;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
@@ -23,13 +21,11 @@ namespace SilkyRing.ViewModels
 
 
         private readonly UtilityService _utilityService;
-        private readonly DllManager _dllManager;
 
 
-        public UtilityViewModel(UtilityService utilityService, DllManager dllManager)
+        public UtilityViewModel(UtilityService utilityService, IStateService stateService)
         {
             _utilityService = utilityService;
-            _dllManager = dllManager;
 
             // RegisterHotkeys();
         }
@@ -85,7 +81,7 @@ namespace SilkyRing.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
-                _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, _isDrawLowHitEnabled);
+                // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, _isDrawLowHitEnabled);
                 _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
@@ -96,7 +92,7 @@ namespace SilkyRing.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
-                _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, _isDrawHighHitEnabled);
+                // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, _isDrawHighHitEnabled);
             }
         }
 
@@ -236,7 +232,7 @@ namespace SilkyRing.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
-                _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, _isDrawRagdollEnabled);
+                // _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, _isDrawRagdollEnabled);
             }
         }
         //
@@ -352,48 +348,23 @@ namespace SilkyRing.ViewModels
 
         public void TryApplyOneTimeFeatures()
         {
-            // if (Is100DropEnabled) _utilityService.Toggle100Drop(true);
-            // if (IsCreditSkipEnabled) _utilityService.ToggleCreditSkip(true);
-            if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
             //
-            // if (IsDrawEventGeneralEnabled) _utilityService.ToggleDrawEvent(DrawType.EventGeneral, true);
-            // if (IsDrawEventSpawnEnabled) _utilityService.ToggleDrawEvent(DrawType.EventSpawn, true);
-            // if (IsDrawEventInvasionEnabled) _utilityService.ToggleDrawEvent(DrawType.EventInvasion, true);
-            // if (IsDrawEventLeashEnabled) _utilityService.ToggleDrawEvent(DrawType.EventLeash, true);
-            // if (IsDrawEventOtherEnabled) _utilityService.ToggleDrawEvent(DrawType.EventOther, true);
+            // if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
             //
-            // if (IsDrawSoundEnabled) _utilityService.ToggleDrawSound(true);
-            if (IsTargetingViewEnabled) _utilityService.ToggleTargetingView(true);
-            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
-                _utilityService.ToggleReducedTargetingView(true);
-            if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
-                _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
-
-            if (IsDrawLowHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, true);
-            if (IsDrawHighHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, true);
-            // if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
-            // if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
-            // if (IsLightGutterEnabled) _utilityService.ToggleLightGutter(true);
-            // if (IsDrawCollisionEnabled) _utilityService.ToggleDrawCol(true);
-            // if (IsNoFogEnabled) _utilityService.ToggleShadedFog(true);
-            // if (IsColWireframeEnabled) _utilityService.ToggleColWireframe(true);
-            // if (IsDrawKillboxEnabled) _utilityService.ToggleDrawKillbox(true);
-            if (IsDrawRagdollsEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, true);
-            // if (IsSeeThroughWallsEnabled) _utilityService.ToggleRagdollEsp(true);
+            // if (IsTargetingViewEnabled) _utilityService.ToggleTargetingView(true);
+            // if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
+            //     _utilityService.ToggleReducedTargetingView(true);
+            // if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
+            //     _utilityService.SetTargetViewMaxDist(ReducedTargetViewDistance);
+            //
+            // if (IsDrawLowHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, true);
+            // if (IsDrawHighHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, true);
+            //
+            // if (IsDrawRagdollsEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, true);
+            //
         }
 
         public void ForceSave() => _utilityService.ForceSave();
-
-
-        public async void OpenLogger()
-        {
-            
-            var viewModel = new LoggerViewModel(_dllManager);
-            var window = new LoggerWindow(viewModel);
-            window.Show();
-            
-            await viewModel.InitializeAsync();
-
-        }
+        
     }
 }

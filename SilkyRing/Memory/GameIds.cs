@@ -1,6 +1,6 @@
 ﻿namespace SilkyRing.Memory
 {
-    public class GameIds
+    public static class GameIds
     {
         public static class SpEffect
         {

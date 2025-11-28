@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Media;
+using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Services;
 using SilkyRing.Utilities;
@@ -22,7 +23,7 @@ namespace SilkyRing.ViewModels
         //
         // private bool _areButtonsEnabled;
         
-        public EventViewModel(EventService eventService)
+        public EventViewModel(EventService eventService, IStateService stateService)
         {
             LoadNpcs();
         }

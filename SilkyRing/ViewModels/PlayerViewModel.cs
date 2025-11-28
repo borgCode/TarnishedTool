@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Windows.Threading;
+using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Services;
 using static SilkyRing.Memory.Offsets;
@@ -48,12 +49,12 @@ namespace SilkyRing.ViewModels
         // private int _faith;
         // private int _adp;
         // private int _vitality;
-        // private int _soulLevel;
+        private int _runeLevel;
         // private int _soulMemory;
-        // private int _souls = 10000; 
+        private int _runes = 10000; 
         private int _newGame;
 
-        // private int _currentSoulLevel;
+        private int _currentRuneLevel;
         
         // private HealthWindow _healthWindow;
 
@@ -72,7 +73,7 @@ namespace SilkyRing.ViewModels
         // private readonly DamageControlService _damageControlService;
         // private readonly HotkeyManager _hotkeyManager;
 
-        public PlayerViewModel(PlayerService playerService)
+        public PlayerViewModel(PlayerService playerService, IStateService stateService)
         {
             _playerService = playerService;
 
@@ -87,18 +88,18 @@ namespace SilkyRing.ViewModels
             {
                 if (_pauseUpdates) return;
             
-                CurrentHp = _playerService.GetHp();
+                CurrentHp = _playerService.GetCurrentHp();
                 CurrentMaxHp = _playerService.GetMaxHp();
                 PlayerSpeed = _playerService.GetPlayerSpeed();
-                // int newSoulLevel = _playerService.GetSoulLevel();
+                int newRuneLevel = _playerService.GetRuneLevel();
                 // SoulMemory = _playerService.GetSoulMemory();
                 // _coords = _playerService.GetCoords();
                 // PosX = _coords.x;
                 // PosY = _coords.y;
                 // PosZ = _coords.z;
-                // if (_currentSoulLevel == newSoulLevel) return;
-                // SoulLevel = newSoulLevel;
-                // _currentSoulLevel = newSoulLevel;
+                if (_currentRuneLevel == newRuneLevel) return;
+                RuneLevel = newRuneLevel;
+                _currentRuneLevel = newRuneLevel;
                 LoadStats();
             };
             _timer.Start();
@@ -138,16 +139,16 @@ namespace SilkyRing.ViewModels
 
         private void LoadStats()
         {
-            // Vigor = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Vigor);
-            // Endurance = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Endurance);
-            // Vitality = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Vitality);
-            // Attunement = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Attunement);
-            // Strength = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Strength);
-            // Dexterity = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Dexterity);
-            // Adp = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Adp);
-            // Intelligence = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Intelligence);
-            // Faith = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlOffsets.Stats.Faith);
-            // SoulLevel = _playerService.GetSoulLevel();
+            // Vigor = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vigor);
+            // Endurance = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Endurance);
+            // Vitality = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Vitality);
+            // Attunement = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Attunement);
+            // Strength = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Strength);
+            // Dexterity = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Dexterity);
+            // Adp = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Adp);
+            // Intelligence = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Intelligence);
+            // Faith = _playerService.GetPlayerStat(GameManagerImp.ChrCtrlStats.Faith);
+            RuneLevel = _playerService.GetRuneLevel();
             NewGame = _playerService.GetNewGame();
             // PlayerSpeed = _playerService.GetPlayerSpeed();
         }
@@ -285,11 +286,11 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isNoDeathEnabled, value))
                 {
-                    _playerService.ToggleChrDataFlag(
-                        WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
-                        (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDeath,
-                        _isNoDeathEnabled
-                    );
+                    // _playerService.ToggleChrDataFlag(
+                    //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
+                    //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDeath,
+                    //     _isNoDeathEnabled
+                    // );
                 }
             }
         }
@@ -301,11 +302,11 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isNoDamageEnabled, value))
                 {
-                    _playerService.ToggleChrDataFlag(
-                        WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
-                        (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDamage,
-                        _isNoDamageEnabled
-                    );
+                    // _playerService.ToggleChrDataFlag(
+                    //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
+                    //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDamage,
+                    //     _isNoDamageEnabled
+                    // );
                 }
             }
         }
@@ -318,7 +319,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isInfiniteStaminaEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteStam, _isInfiniteStaminaEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, _isInfiniteStaminaEnabled);
                 }
             }
         }
@@ -330,7 +331,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isInfiniteGoodsEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteGoods, _isInfiniteGoodsEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, _isInfiniteGoodsEnabled);
                 }
             }
         }
@@ -343,7 +344,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isOneShotEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.OneShot, _isOneShotEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, _isOneShotEnabled);
                 }
             }
         }
@@ -355,7 +356,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isHiddenEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Hidden, _isHiddenEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, _isHiddenEnabled);
                 }
             }
         }
@@ -367,7 +368,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isSilentEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Silent, _isSilentEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, _isSilentEnabled);
                 }
             }
         }
@@ -379,7 +380,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isInfiniteArrowsEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteArrows, _isInfiniteArrowsEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, _isInfiniteArrowsEnabled);
                 }
             }
         }
@@ -391,7 +392,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isInfiniteFpEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteFp, _isInfiniteFpEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, _isInfiniteFpEnabled);
                 }
             }
         }
@@ -530,21 +531,15 @@ namespace SilkyRing.ViewModels
         //     set => SetProperty(ref _vitality, value);
         // }
         //
-        // public int SoulLevel
-        // {
-        //     get => _soulLevel;
-        //     private set => SetProperty(ref _soulLevel, value);
-        // }
-        //
-        // public int SoulMemory
-        // {
-        //     get => _soulMemory;
-        //     private set => SetProperty(ref _soulMemory, value);
-        // }
-        //
+        public int RuneLevel
+        {
+            get => _runeLevel;
+            private set => SetProperty(ref _runeLevel, value);
+        }
+ 
         // public void SetStat(string statName, int value)
         // {
-        //     var property = typeof(GameManagerImp.ChrCtrlOffsets.Stats)
+        //     var property = typeof(GameManagerImp.ChrCtrlStats)
         //         .GetProperty(statName, BindingFlags.Public | BindingFlags.Static);
         //
         //     if (property != null)
@@ -560,12 +555,12 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-        // public int Souls
-        // {
-        //     get => _souls;
-        //     set => SetProperty(ref _souls, value);
-        // }
-        //
+        public int Runes
+        {
+            get => _runes;
+            set => SetProperty(ref _runes, value);
+        }
+        
         public int NewGame
         {
             get => _newGame;
@@ -585,7 +580,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _playerSpeed, value))
                 {
-                    _playerService.SetPlayerSpeed(value);
+                    // _playerService.SetPlayerSpeed(value);
                 }
             }
         }
@@ -615,17 +610,17 @@ namespace SilkyRing.ViewModels
         
         public void TryEnableFeatures()
         {
-            if (IsNoDamageEnabled) _playerService.ToggleChrDataFlag(
-                WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
-                (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDamage,
-                _isNoDamageEnabled
-            );
-            
-            if (IsNoDeathEnabled) _playerService.ToggleChrDataFlag(
-                WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flags,
-                (byte)WorldChrMan.Offsets.ChrIns.Modules.ChrData.Flag.NoDeath,
-                _isNoDeathEnabled
-            );
+            // if (IsNoDamageEnabled) _playerService.ToggleChrDataFlag(
+            //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
+            //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDamage,
+            //     _isNoDamageEnabled
+            // );
+            //
+            // if (IsNoDeathEnabled) _playerService.ToggleChrDataFlag(
+            //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
+            //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDeath,
+            //     _isNoDeathEnabled
+            // );
             
             AreOptionsEnabled = true;
             LoadStats();
@@ -634,13 +629,13 @@ namespace SilkyRing.ViewModels
 
         public void TryApplyOneTimeFeatures()
         {
-            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.OneShot, true);
-            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteStam, true);
-            if (IsInfiniteGoodsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteGoods, true);
-            if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Silent, true);
-            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.Hidden, true);
-            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteFp, true);
-            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Offsets.InfiniteArrows, true);
+            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, true);
+            if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, true);
+            if (IsInfiniteGoodsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, true);
+            if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, true);
+            if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, true);
+            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, true);
+            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, true);
             if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
             if (IsNoRuneGainEnabled) _playerService.ToggleNoRuneGain(true);
             if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
@@ -654,8 +649,7 @@ namespace SilkyRing.ViewModels
             
             _timer.Stop();
         }
-
-        // public void GiveSouls() => _playerService.GiveSouls(Souls);
+        
         //
         // public void RestoreSpellcasts() => _playerService.RestoreSpellcasts();
         //
@@ -683,8 +677,9 @@ namespace SilkyRing.ViewModels
             {
                 _playerService.ApplySpEffect(id);
             }
-
-            _playerService.ApplySpEffect(100690);
+            
         }
+
+        public void GiveRunes() => _playerService.GiveRunes(Runes);
     }
 }
