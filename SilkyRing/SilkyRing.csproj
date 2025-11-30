@@ -101,6 +101,7 @@
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
+        <Compile Include="Utilities\MsgBox.cs" />
         <Compile Include="Utilities\UpDownHelper.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
@@ -127,6 +128,9 @@
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\CustomMessageBox.xaml.cs">
+          <DependentUpon>CustomMessageBox.xaml</DependentUpon>
+        </Compile>
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -145,6 +149,7 @@
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
+        <Page Include="Views\Windows\CustomMessageBox.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Memory\AobScanner.cs" />
@@ -172,9 +177,6 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="Assets\Silky.ico" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Views\Windows\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

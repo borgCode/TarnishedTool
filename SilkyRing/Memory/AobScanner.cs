@@ -86,6 +86,8 @@ namespace SilkyRing.Memory
                 addr => Hooks.InfinitePoise = addr.ToInt64(), saved);
             TryPatternWithFallback("ShouldUpdateAi", Pattern.ShouldUpdateAi,
                 addr => Hooks.ShouldUpdateAi = addr.ToInt64(), saved);
+            TryPatternWithFallback("GetForceActIdx", Pattern.GetForceActIdx,
+                addr => Hooks.GetForceActIdx = addr.ToInt64(), saved);
 
             using (var writer = new StreamWriter(savePath))
             {
@@ -128,6 +130,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($"Hooks.LockedTargetPtr: 0x{Hooks.LockedTargetPtr:X}");
             Console.WriteLine($"Hooks.InfinitePoise: 0x{Hooks.InfinitePoise:X}");
             Console.WriteLine($"Hooks.ShouldUpdateAi: 0x{Hooks.ShouldUpdateAi:X}");
+            Console.WriteLine($"Hooks.GetForceActIdx: 0x{Hooks.GetForceActIdx:X}");
 
             Console.WriteLine($"Funcs.GraceWarp: 0x{Funcs.GraceWarp:X}");
             Console.WriteLine($"Funcs.SetEvent: 0x{Funcs.SetEvent:X}");
@@ -185,7 +188,8 @@ namespace SilkyRing.Memory
             byte[] buffer = new byte[chunkSize];
 
             IntPtr currentAddress = _memoryService.BaseAddress;
-            IntPtr endAddress = IntPtr.Add(currentAddress, 0x3200000);
+            int memSize = _memoryService.ModuleMemorySize;
+            IntPtr endAddress = IntPtr.Add(currentAddress, memSize);
 
             List<IntPtr> addresses = new List<IntPtr>();
 

@@ -119,7 +119,6 @@
             7
         );
 
-
         //Hooks
         public static readonly Pattern UpdateCoords = new Pattern(
             new byte[] { 0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43 },
@@ -191,9 +190,14 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern GetForceActIdx = new Pattern(
+            new byte[] { 0x0F, 0xBE, 0x80, 0xC1 },
+            "xxxx",
+            0,
+            AddressingMode.Absolute
+        );
 
         //Funcs
-
 
         public static readonly Pattern GraceWarp = new Pattern(
             new byte[] { 0xC7, 0x44, 0x24, 0x30, 0x10, 0x27, 0x00, 0x00, 0x48, 0x8B, 0xCF },
@@ -238,7 +242,6 @@
             5
         );
 
-
         //Patches
 
         public static readonly Pattern DungeonWarp = new Pattern(
@@ -269,7 +272,6 @@
             AddressingMode.Absolute
         );
     }
-
 
     public enum AddressingMode
     {

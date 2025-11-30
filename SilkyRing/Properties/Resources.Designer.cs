@@ -79,6 +79,24 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 7 &lt;_main+0x7&gt;
+        ///75 39                   jne    42 &lt;normal&gt;
+        ///81 78 28 00 00 00 00    cmp    DWORD PTR [rax+0x28],0x0
+        ///75 30                   jne    42 &lt;normal&gt;
+        ///52                      push   rdx
+        ///41 50                   push   r8
+        ///8b 15 00 00 00 00       mov    edx,DWORD PTR [rip+0x0]        # 1b &lt;_main+0x1b&gt;
+        ///4c 8d 05 00 00 00 00    lea    r8,[rip+0x0]        # 22 &lt;_main+0x22&gt;
+        ///41 8b 04 90             mov    eax,DWORD PTR [r8+rdx*4]
+        ///ff c2      [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ForceActSequence {
+            get {
+                return ResourceManager.GetString("ForceActSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00
         ///48 ba 00 00 00 00 00    movabs rdx,0x0

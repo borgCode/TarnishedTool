@@ -28,21 +28,48 @@
                            FontWeight="Bold"
                            Margin="0,0,0,5" />
 
-                <CheckBox Content="Enable Target Options"
-                          IsChecked="{Binding IsTargetOptionsEnabled}"
-                          Margin="0,0,0,0" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Grid.Column="0"
+                              Content="Enable Target Options"
+                              IsChecked="{Binding IsTargetOptionsEnabled}"
+                              Margin="0,0,0,0" />
+
+                    <StackPanel Grid.Column="1"
+                                Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <xctk:IntegerUpDown Width="80" Margin="5,2"
+                                            Value="{Binding CustomHp}"
+                                            Minimum="0" />
+                        <Button Content="Set hp" Margin="1"
+                                Command="{Binding SetCustomHpCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                    </StackPanel>
+                </Grid>
 
                 <StackPanel Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
                     <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
                         <Run Text="Health: " />
-                        <Run Text="{Binding TargetCurrentHealth, Mode=OneWay}" />
+                        <Run Text="{Binding CurrentHealth, Mode=OneWay}" />
                         <Run Text="/" />
-                        <Run Text="{Binding TargetMaxHealth, Mode=OneWay}" />
+                        <Run Text="{Binding MaxHealth, Mode=OneWay}" />
                     </TextBlock>
 
                     <ProgressBar Width="250" Height="20"
-                                 Value="{Binding TargetCurrentHealth}"
-                                 Maximum="{Binding TargetMaxHealth, FallbackValue=100}"
+                                 Value="{Binding CurrentHealth}"
+                                 Maximum="{Binding MaxHealth, FallbackValue=100}"
                                  Margin="0,0,0,5">
                         <ProgressBar.Template>
                             <ControlTemplate TargetType="ProgressBar">
@@ -420,7 +447,7 @@
                                 </MultiBinding>
                             </CheckBox.IsEnabled>
                             <CheckBox.IsChecked>
-                                <Binding Path="IsDisableTargetAiEnabled" />
+                                <Binding Path="IsFreezeAiEnabled" />
                             </CheckBox.IsChecked>
                         </CheckBox>
 
@@ -489,9 +516,44 @@
                                FontWeight="Bold"
                                Margin="5,10,0,0" />
 
-                    <TextBox Height="70" />
-
                     <StackPanel Orientation="Horizontal">
+                        
+                        <TextBox
+                            Text="{Binding ActSequence}"
+                            Height="35"
+                            Width="250"
+                            FontSize="14"
+                            Margin="10"
+                            MaxLength="29">
+                        </TextBox>
+                        
+                        <Button Content="Force acts"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding ForActSequenceCommand}"
+                                HorizontalAlignment="Right"
+                                
+                                Margin="10,0,0,0" />
+                        
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Enter a sequence of acts separated by spaces, max 10 acts"
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
                         <Button Content="Kill All Enemies Besides Target"
                                 Command="{Binding KillAllCommand}"
                                 HorizontalAlignment="Right"

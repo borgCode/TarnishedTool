@@ -13,6 +13,7 @@ namespace SilkyRing.Services
         public Process? TargetProcess { get; private set; }
         public IntPtr ProcessHandle { get; private set; } = IntPtr.Zero;
         public IntPtr BaseAddress { get; private set; }
+        public int ModuleMemorySize { get; private set; }
 
         private const int ProcessVmRead = 0x0010;
         private const int ProcessVmWrite = 0x0020;
@@ -284,6 +285,7 @@ namespace SilkyRing.Services
                     if (TargetProcess.MainModule != null)
                     {
                         BaseAddress = TargetProcess.MainModule.BaseAddress;
+                        ModuleMemorySize = TargetProcess.MainModule.ModuleMemorySize;
                     }
 
                     IsAttached = true;

@@ -4,6 +4,7 @@ using System.Windows.Threading;
 using SilkyRing.Core;
 using SilkyRing.Enums;
 using SilkyRing.Interfaces;
+using SilkyRing.Utilities;
 
 namespace SilkyRing.ViewModels
 {
@@ -11,13 +12,11 @@ namespace SilkyRing.ViewModels
     {
         private readonly DispatcherTimer _targetTick;
 
-        private int _targetCurrentHealth;
-        private int _targetMaxHealth;
+        private const int MaxNumOfActs = 10;
+
+        private bool _customHpHasBeenSet;
 
         private ulong _currentTargetId;
-
-        
-
 
         // private ResistancesWindow _resistancesWindowWindow;
         // private bool _isResistancesWindowOpen;
@@ -51,13 +50,15 @@ namespace SilkyRing.ViewModels
         // private bool _isAllDisableAiEnabled;
         //
 
-
         private readonly ITargetService _targetService;
+
+        private readonly IEnemyService _enemyService;
         // private readonly HotkeyManager _hotkeyManager;
 
-        public TargetViewModel(ITargetService targetService, IStateService stateService)
+        public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService)
         {
             _targetService = targetService;
+            _enemyService = enemyService;
 
             // _hotkeyManager = hotkeyManager;
             RegisterHotkeys();
@@ -69,7 +70,7 @@ namespace SilkyRing.ViewModels
             SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
 
-
+            ForActSequenceCommand = new DelegateCommand(ForceActSequence);
 
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
 
@@ -80,21 +81,19 @@ namespace SilkyRing.ViewModels
             _targetTick.Tick += TargetTick;
         }
 
-      
-
+        
         #region Commands
 
         public ICommand SetHpCommand { get; set; }
         public ICommand SetHpPercentageCommand { get; set; }
         public ICommand SetCustomHpCommand { get; set; }
         
-        
-        
+        public ICommand ForActSequenceCommand { get; set; }
+
         public ICommand KillAllCommand { get; set; }
 
         #endregion
-        
-        
+
         #region Properties
 
         private bool _areOptionsEnabled = true;
@@ -112,7 +111,6 @@ namespace SilkyRing.ViewModels
             get => _isValidTarget;
             set => SetProperty(ref _isValidTarget, value);
         }
-
 
         private bool _isTargetOptionsEnabled;
 
@@ -135,6 +133,7 @@ namespace SilkyRing.ViewModels
                     // ShowAllResistances = false;
                     // IsResistancesWindowOpen = false;
                     IsFreezeHealthEnabled = false;
+                    IsDisableAllExceptTargetEnabled = false;
                     _targetService.ToggleTargetHook(false);
                     // ShowHeavyPoise = false;
                     // ShowLightPoise = false;
@@ -145,16 +144,16 @@ namespace SilkyRing.ViewModels
             }
         }
 
-        private bool _isDisableTargetAiEnabled;
+        private bool _isFreezeAiEnabled;
 
-        public bool IsDisableTargetAiEnabled
+        public bool IsFreezeAiEnabled
         {
-            get => _isDisableTargetAiEnabled;
+            get => _isFreezeAiEnabled;
             set
             {
-                if (SetProperty(ref _isDisableTargetAiEnabled, value))
+                if (SetProperty(ref _isFreezeAiEnabled, value))
                 {
-                    _targetService.ToggleTargetAi(_isDisableTargetAiEnabled);
+                    _targetService.ToggleTargetAi(_isFreezeAiEnabled);
                 }
             }
         }
@@ -205,16 +204,34 @@ namespace SilkyRing.ViewModels
             set => SetProperty(ref _lastAct, value);
         }
 
-        public int TargetCurrentHealth
+        private int _customHp;
+
+        public int CustomHp
         {
-            get => _targetCurrentHealth;
-            set => SetProperty(ref _targetCurrentHealth, value);
+            get => _customHp;
+            set
+            {
+                if (SetProperty(ref _customHp, value))
+                {
+                    _customHpHasBeenSet = true;
+                }
+            }
         }
 
-        public int TargetMaxHealth
+        private int _currentHealth;
+
+        public int CurrentHealth
         {
-            get => _targetMaxHealth;
-            set => SetProperty(ref _targetMaxHealth, value);
+            get => _currentHealth;
+            set => SetProperty(ref _currentHealth, value);
+        }
+
+        private int _maxHealth;
+
+        public int MaxHealth
+        {
+            get => _maxHealth;
+            set => SetProperty(ref _maxHealth, value);
         }
 
         private bool _isFreezeHealthEnabled;
@@ -228,8 +245,23 @@ namespace SilkyRing.ViewModels
                 _targetService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
             }
         }
+        
+        private float _targetSpeed;
+
+        public float TargetSpeed
+        {
+            get => _targetSpeed;
+            set
+            {
+                if (SetProperty(ref _targetSpeed, value))
+                {
+                    _targetService.SetSpeed(value);
+                }
+            }
+        }
 
         private bool _isTargetingViewEnabled;
+
         public bool IsTargetingViewEnabled
         {
             get => _isTargetingViewEnabled;
@@ -239,8 +271,9 @@ namespace SilkyRing.ViewModels
                 _targetService.ToggleTargetingView(_isTargetingViewEnabled);
             }
         }
-        
+
         private bool _isDisableAllExceptTargetEnabled;
+
         public bool IsDisableAllExceptTargetEnabled
         {
             get => _isDisableAllExceptTargetEnabled;
@@ -250,12 +283,16 @@ namespace SilkyRing.ViewModels
                 _targetService.ToggleDisableAllExceptTarget(_isDisableAllExceptTargetEnabled);
             }
         }
+
+        private string _actSequence;
         
-        
+        public string ActSequence
+        {
+            get => _actSequence;
+            set => SetProperty(ref _actSequence, value);
+        }
+
         #endregion
-
-   
-
 
         #region Private Methods
 
@@ -278,6 +315,7 @@ namespace SilkyRing.ViewModels
             LastAct = 0;
             ForceAct = 0;
             AreOptionsEnabled = false;
+            _enemyService.UnhookForceAct();
         }
 
         private void RegisterHotkeys()
@@ -328,15 +366,15 @@ namespace SilkyRing.ViewModels
         private void SetHpPercentage(object parameter)
         {
             int healthPercentage = Convert.ToInt32(parameter);
-            int newHealth = TargetMaxHealth * healthPercentage / 100;
+            int newHealth = MaxHealth * healthPercentage / 100;
             _targetService.SetHp(newHealth);
         }
 
         private void SetCustomHp()
         {
-            // if (!_customHpHasBeenSet) return;
-            // if (CustomHp > TargetMaxHealth) CustomHp = TargetMaxHealth;
-            // _targetService.SetHp(CustomHp);
+            if (!_customHpHasBeenSet) return;
+            if (CustomHp > MaxHealth) CustomHp = MaxHealth;
+            _targetService.SetHp(CustomHp);
         }
 
         private void TargetTick(object sender, EventArgs e)
@@ -351,7 +389,7 @@ namespace SilkyRing.ViewModels
             ulong targetId = _targetService.GetTargetAddr();
             if (targetId != _currentTargetId)
             {
-                IsDisableTargetAiEnabled = _targetService.IsAiDisabled();
+                IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
                 int forceActValue = _targetService.GetForceAct();
                 if (forceActValue != 0)
@@ -388,8 +426,8 @@ namespace SilkyRing.ViewModels
                 // _resistancesWindowWindow.DataContext = this;
             }
 
-            TargetCurrentHealth = _targetService.GetCurrentHp();
-            TargetMaxHealth = _targetService.GetMaxHp();
+            CurrentHealth = _targetService.GetCurrentHp();
+            MaxHealth = _targetService.GetMaxHp();
             LastAct = _targetService.GetLastAct();
             TargetSpeed = _targetService.GetSpeed();
             // TargetCurrentHeavyPoise = _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.HeavyPoiseCurrent);
@@ -443,9 +481,34 @@ namespace SilkyRing.ViewModels
         }
 
         private void KillAllBesidesTarget() => _targetService.KillAllBesidesTarget();
+        
+        private void ForceActSequence()
+        {
+            if (string.IsNullOrWhiteSpace(ActSequence))
+            {
+                MsgBox.Show("Sequence of acts is empty");
+                return;
+            }
+            string actSequence = ActSequence.Trim();
+            string[] parts = actSequence.Split(' ');
+            int[] acts = new int[MaxNumOfActs + 1]; // +1 for trailing zero
+
+            for (int i = 0; i < MaxNumOfActs; i++)
+            {
+                if (i >= parts.Length) continue;
+                if (!int.TryParse(parts[i], out int act) || act < 0 || act > 99)
+                {
+                    MsgBox.Show("Invalid act: " + parts[i]);
+                    return;
+                }
+                acts[i] = act;
+            }
+
+            var npcThinkParamId = _targetService.GetNpcThinkParamId();
+            _enemyService.ForceActSequence(acts, npcThinkParamId);
+        }
 
         #endregion
-
 
         //
         // private void UpdateResistancesDisplay()
@@ -504,29 +567,8 @@ namespace SilkyRing.ViewModels
         //     _resistancesWindowWindow = null;
         // }
         //
-
-
-        public void SetTargetHealth(int value)
-        {
-            int health = TargetMaxHealth * value / 100;
-            _targetService.SetHp(health);
-        }
-
-        private float _targetSpeed;
-        public float TargetSpeed
-        {
-            get => _targetSpeed;
-            set
-            {
-                if (SetProperty(ref _targetSpeed, value))
-                {
-                    _targetService.SetSpeed(value);
-                }
-            }
-        }
         
         public void SetSpeed(double value) => TargetSpeed = (float)value;
-        
 
         //
         // public bool ShowLightPoiseAndNotImmune => ShowLightPoise && !IsLightPoiseImmune;
@@ -688,103 +730,7 @@ namespace SilkyRing.ViewModels
         //     }
         // }
         //
-        //
-        // public bool IsAllDisableAiEnabled
-        // {
-        //     get => _isAllDisableAiEnabled;
-        //     set
-        //     {
-        //         if (SetProperty(ref _isAllDisableAiEnabled, value))
-        //         {
-        //             _enemyService.ToggleDisableAi(_isAllDisableAiEnabled);
-        //         }
-        //     }
-        // }
-        //
-        //
-        // public ObservableCollection<Forlorn> AvailableForlorns 
-        // {
-        //     get => _availableForlorns;
-        //     private set => SetProperty(ref _availableForlorns, value);
-        // }
-        //
-        // public Forlorn SelectedForlorn
-        // {
-        //     get => _selectedForlorn;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _selectedForlorn, value)) return;
-        //         CurrentAreaName = value?.AreaName ?? "No Forlorn selected";
-        //         IsForlornAvailable = value != null;
-        //         OnPropertyChanged(nameof(ForlornIndexes));
-        //         
-        //         Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-        //             SelectedForlornIndex = 0;
-        //         }));
-        //     }
-        // }
-        //
-        // public bool IsScholar
-        // {
-        //     get => _isScholar;
-        //     private set => SetProperty(ref _isScholar, value);
-        // }
-        //
-        // public bool IsForlornAvailable
-        // {
-        //     get => _isForlornAvailable;
-        //     private set => SetProperty(ref _isForlornAvailable, value);
-        // }
-        //
-        // public string CurrentAreaName
-        // {
-        //     get => _currentAreaName;
-        //     private set => SetProperty(ref _currentAreaName, value);
-        // }
-        //
-        //
-        // public int SelectedForlornIndex
-        // {
-        //     get => _selectedForlornIndex; 
-        //     set
-        //     {
-        //         if (!SetProperty(ref _selectedForlornIndex, value)) return;
-        //         if (SelectedForlorn == null || !IsGuaranteedSpawnEnabled) return;
-        //         _enemyService.UpdateForlornIndex(_selectedForlornIndex + 1);
-        //         _enemyService.ToggleForlornSpawn(true, 
-        //             SelectedForlorn.EsdFuncId,
-        //             _selectedForlornIndex + 1);
-        //     }
-        // }
-        //
-        //
-        // public bool IsGuaranteedSpawnEnabled
-        // {
-        //     get => _isGuaranteedSpawnEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isGuaranteedSpawnEnabled, value)) return;
-        //         if (SelectedForlorn != null)
-        //         {
-        //             _enemyService.ToggleForlornSpawn(_isGuaranteedSpawnEnabled, 
-        //                 SelectedForlorn.EsdFuncId,
-        //                 SelectedForlornIndex + 1);
-        //         }
-        //     }
-        // }
-        //
-        // public IEnumerable<string> ForlornIndexes 
-        // {
-        //     get
-        //     {
-        //         if (SelectedForlorn?.SpawnNames == null)
-        //             return Enumerable.Empty<string>();
-        //         return SelectedForlorn.SpawnNames
-        //             .Select((name, i) => $"{i + 1}: {name}")
-        //             .ToArray();
-        //     }
-        // }
-        //
+
 
 
         //

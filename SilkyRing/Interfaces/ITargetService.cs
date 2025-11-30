@@ -32,4 +32,5 @@ public interface ITargetService
 
     void KillAllBesidesTarget();
     void ToggleDisableAllExceptTarget(bool isEnabled);
+    int GetNpcThinkParamId();
 }

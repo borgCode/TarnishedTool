@@ -32,5 +32,10 @@ namespace SilkyRing.Memory
         public const int InfinitePoise = 0x590;
 
         public const int DisableAllExceptTarget = 0x600;
+
+        public const int ActArray = 0x650;
+        public const int CurrentIdx = 0x6A0;
+        public const int ShouldRun = 0x6A4;
+        public const int ForceActSequence = 0x6B0;
     }
 }

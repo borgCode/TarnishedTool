@@ -10,24 +10,23 @@ namespace SilkyRing.Memory
     {
         private readonly MemoryService _memoryService;
         private readonly Dictionary<long, HookData> _hookRegistry = new Dictionary<long, HookData>();
-        
+
         private class HookData
         {
             public long OriginAddr { get; set; }
             public long CaveAddr { get; set; }
             public byte[] OriginalBytes { get; set; }
         }
-        
+
         public HookManager(MemoryService memoryService, IStateService stateService)
         {
             _memoryService = memoryService;
         }
 
-
         public long InstallHook(long codeLoc, long origin, byte[] originalBytes)
         {
             byte[] hookBytes = GetHookBytes(originalBytes.Length, codeLoc, origin);
-            _memoryService.WriteBytes((IntPtr) origin, hookBytes);
+            _memoryService.WriteBytes((IntPtr)origin, hookBytes);
             _hookRegistry[codeLoc] = new HookData
             {
                 CaveAddr = codeLoc,
@@ -50,20 +49,17 @@ namespace SilkyRing.Memory
             {
                 hookBytes[i] = 0x90;
             }
+
             return hookBytes;
         }
 
         public void UninstallHook(long key)
         {
-            if (!_hookRegistry.TryGetValue(key, out HookData hookToUninstall))
-            {
-                return;
-            }
+            if (!_hookRegistry.TryGetValue(key, out HookData hookToUninstall)) return;
             
             IntPtr originAddrPtr = (IntPtr)hookToUninstall.OriginAddr;
             _memoryService.WriteBytes(originAddrPtr, hookToUninstall.OriginalBytes);
             _hookRegistry.Remove(key);
-
         }
 
         public void ClearHooks()

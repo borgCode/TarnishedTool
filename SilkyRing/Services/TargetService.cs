@@ -154,6 +154,9 @@ namespace SilkyRing.Services
             }
         }
 
+        public int GetNpcThinkParamId() =>
+            memoryService.ReadInt32(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.NpcThinkParamId);
+
         private IntPtr GetChrFlagsPtr()
         {
             return memoryService.FollowPointers(

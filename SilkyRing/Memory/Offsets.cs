@@ -63,6 +63,7 @@ namespace SilkyRing.Memory
 
             public enum AiThinkOffsets
             {
+                NpcThinkParamId = 0x28,
                 TargetingSystem = 0xC480,
                 ForceAct = 0xE9C1,
                 LastAct = 0xE9C2,
@@ -173,6 +174,7 @@ namespace SilkyRing.Memory
             public static long LockedTargetPtr;
             public static long InfinitePoise;
             public static long ShouldUpdateAi;
+            public static long GetForceActIdx;
         }
 
         public static class Funcs

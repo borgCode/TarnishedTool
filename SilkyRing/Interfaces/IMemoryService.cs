@@ -10,6 +10,7 @@ public interface IMemoryService
     public bool IsAttached { get; }
     public Process? TargetProcess { get; }
     public nint BaseAddress { get; }
+    public int ModuleMemorySize { get; }
     void Dispose();
 
     byte ReadUInt8(nint addr);
