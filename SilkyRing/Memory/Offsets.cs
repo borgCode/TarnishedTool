@@ -30,6 +30,7 @@ namespace SilkyRing.Memory
             public static readonly BitFlag DisableAi = new(0x0, 1 << 0);
 
             public static readonly int[] ChrDataModule = [Modules, 0x0];
+            public static readonly int[] ChrTimeActModule = [Modules, 0x18];
             public static readonly int[] ChrResistModule = [Modules, 0x20];
             public static readonly int[] ChrBehaviorModule = [Modules, 0x28];
             public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
@@ -47,6 +48,11 @@ namespace SilkyRing.Memory
             {
                 NoDeath = 1 << 0,
                 NoDamage = 1 << 1,
+            }
+            
+            public enum ChrTimeActOffsets
+            {
+                AnimationId = 0x20,
             }
             
             public enum ChrResistOffsets
@@ -96,10 +102,18 @@ namespace SilkyRing.Memory
             public enum NpcParamOffsets
             {
                 PoisonImmune = 0x64,
-                RotImmune = 0x64,
+                RotImmune = 0x68,
                 BleedImmune = 0x178,
                 FrostImmune = 0x180,
-                SleepImmune = 0x184
+                SleepImmune = 0x184,
+                StandardAbsorption = 0x1A4, 
+                SlashAbsorption = 0x1A8, 
+                StrikeAbsorption = 0x1AC, 
+                ThrustAbsorption = 0x1B0, 
+                MagicAbsorption = 0x1B4,
+                FireAbsorption = 0x1B8, 
+                LightningAbsorption = 0x1BC, 
+                HolyAbsorption = 0x1C0,
             }
             
             public static readonly BitFlag BlueTargetView = new(0xC8, 1 << 4);
@@ -209,6 +223,8 @@ namespace SilkyRing.Memory
             public static long ShouldUpdateAi;
             public static long GetForceActIdx;
             public static long TargetNoStagger;
+            public static long AttackInfo;
+            
         }
 
         public static class Funcs

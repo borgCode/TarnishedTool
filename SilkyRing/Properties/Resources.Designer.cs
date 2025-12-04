@@ -346,6 +346,25 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 30 db                   xor    bl,bl
+        ///0f 57 ff                xorps  xmm7,xmm7
+        ///52                      push   rdx
+        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # d &lt;_main+0xd&gt;
+        ///48 3b 96 e0 01 00 00    cmp    rdx,QWORD PTR [rsi+0x1e0]
+        ///0f 85 d0 00 00 00       jne    ea &lt;normal&gt;
+        ///51                      push   rcx
+        ///53                      push   rbx
+        ///50                      push   rax
+        ///ff 05 00 00 00 00       inc    DWORD PTR [rip+0x0]        # 23 &lt;_main+0x23&gt;
+        ///8b 05 00 00 00 00       mov    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SaveAttackInfo {
+            get {
+                return ResourceManager.GetString("SaveAttackInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 83 ec 20             sub    rsp,0x20
         ///48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00

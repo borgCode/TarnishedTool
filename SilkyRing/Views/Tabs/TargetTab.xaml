@@ -258,7 +258,7 @@
                                             Visibility="{Binding ShowSleep, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
                                             Margin="5,0,0,5">
                                     <TextBlock
-                                        Text="Timer"
+                                        Text=""
                                         HorizontalAlignment="Center" Margin="0,2,0,0" />
                                     <Grid>
                                         <ProgressBar Height="25"
@@ -368,7 +368,7 @@
                                     </Grid>
                                     <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
                                         <Run Text="Rot " />
-                                        <Run Text="{Binding CurrentRot, Mode=OneWay, StringFormat=F1}" />
+                                        <Run Text="{Binding CurrentRot, Mode=OneWay}" />
                                         <Run Text="/" />
                                         <Run Text="{Binding MaxRot, Mode=OneWay}" />
                                     </TextBlock>
@@ -567,6 +567,7 @@
                         </Border>
                         <Button Content="Defenses"
                                 IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding OpenDefensesWindowCommand}"
                                 HorizontalAlignment="Right"
                                 Margin="130,0,0,0" />
                     </StackPanel>
@@ -609,7 +610,19 @@
                                        FontWeight="Bold"
                                        FontSize="10" />
                         </Border>
-
+                        
+                        <CheckBox Content="Show Attack Info"  Margin="40,0,0,0">
+                            
+                            <CheckBox.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </CheckBox.IsEnabled>
+                            <CheckBox.IsChecked>
+                                <Binding Path="IsShowAttackInfoEnabled" />
+                            </CheckBox.IsChecked>
+                        </CheckBox>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="5,10,0,0">

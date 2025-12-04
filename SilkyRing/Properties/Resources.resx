@@ -907,4 +907,63 @@ f3 0f 11 47 10          movss  DWORD PTR [rdi+0x10],xmm0
 58                      pop    rax
 e9 00 00 00 00          jmp    1e &lt;normal+0xb&gt;</value>
   </data>
+  <data name="SaveAttackInfo" xml:space="preserve">
+    <value>30 db                   xor    bl,bl
+0f 57 ff                xorps  xmm7,xmm7
+52                      push   rdx
+48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # d &lt;_main+0xd&gt;
+48 3b 96 e0 01 00 00    cmp    rdx,QWORD PTR [rsi+0x1e0]
+0f 85 d0 00 00 00       jne    ea &lt;normal&gt;
+51                      push   rcx
+53                      push   rbx
+50                      push   rax
+ff 05 00 00 00 00       inc    DWORD PTR [rip+0x0]        # 23 &lt;_main+0x23&gt;
+8b 05 00 00 00 00       mov    eax,DWORD PTR [rip+0x0]        # 29 &lt;_main+0x29&gt;
+6b c0 48                imul   eax,eax,0x48
+48 8d 1d 00 00 00 00    lea    rbx,[rip+0x0]        # 33 &lt;_main+0x33&gt;
+48 01 c3                add    rbx,rax
+c7 43 04 00 00 00 00    mov    DWORD PTR [rbx+0x4],0x0
+8b 0d 00 00 00 00       mov    ecx,DWORD PTR [rip+0x0]        # 43 &lt;_main+0x43&gt;
+89 0b                   mov    DWORD PTR [rbx],ecx
+f3 44 0f 10 3e          movss  xmm15,DWORD PTR [rsi]
+f3 44 0f 11 7b 08       movss  DWORD PTR [rbx+0x8],xmm15
+f3 44 0f 10 7e 04       movss  xmm15,DWORD PTR [rsi+0x4]
+f3 44 0f 11 7b 0c       movss  DWORD PTR [rbx+0xc],xmm15
+f3 44 0f 10 7e 08       movss  xmm15,DWORD PTR [rsi+0x8]
+f3 44 0f 11 7b 10       movss  DWORD PTR [rbx+0x10],xmm15
+f3 44 0f 10 7e 0c       movss  xmm15,DWORD PTR [rsi+0xc]
+f3 44 0f 11 7b 14       movss  DWORD PTR [rbx+0x14],xmm15
+f3 44 0f 10 7e 10       movss  xmm15,DWORD PTR [rsi+0x10]
+f3 44 0f 11 7b 18       movss  DWORD PTR [rbx+0x18],xmm15
+f3 44 0f 10 be 44 02    movss  xmm15,DWORD PTR [rsi+0x244]
+00 00
+f3 44 0f 59 be 00 01    mulss  xmm15,DWORD PTR [rsi+0x100]
+00 00
+f3 44 0f 11 7b 20       movss  DWORD PTR [rbx+0x20],xmm15
+8a 4e 64                mov    cl,BYTE PTR [rsi+0x64]
+88 4b 24                mov    BYTE PTR [rbx+0x24],cl
+8b 8e 28 02 00 00       mov    ecx,DWORD PTR [rsi+0x228]
+89 4b 28                mov    DWORD PTR [rbx+0x28],ecx
+8b 8e 34 02 00 00       mov    ecx,DWORD PTR [rsi+0x234]
+89 4b 2c                mov    DWORD PTR [rbx+0x2c],ecx
+8b 8e 38 02 00 00       mov    ecx,DWORD PTR [rsi+0x238]
+89 4b 30                mov    DWORD PTR [rbx+0x30],ecx
+8b 8e 3c 02 00 00       mov    ecx,DWORD PTR [rsi+0x23c]
+89 4b 34                mov    DWORD PTR [rbx+0x34],ecx
+8b 8e 40 02 00 00       mov    ecx,DWORD PTR [rsi+0x240]
+89 4b 38                mov    DWORD PTR [rbx+0x38],ecx
+8b 4a 60                mov    ecx,DWORD PTR [rdx+0x60]
+89 4b 3c                mov    DWORD PTR [rbx+0x3c],ecx
+ff c0                   inc    eax
+83 e0 0f                and    eax,0xf
+89 05 00 00 00 00       mov    DWORD PTR [rip+0x0],eax        # dc &lt;_main+0xdc&gt;
+c7 43 04 01 00 00 00    mov    DWORD PTR [rbx+0x4],0x1
+45 0f 57 ff             xorps  xmm15,xmm15
+58                      pop    rax
+5b                      pop    rbx
+59                      pop    rcx
+0000000000ea &lt;normal&gt;:
+5a                      pop    rdx
+e9 00 00 00 00          jmp    f0 &lt;normal+0x6&gt;</value>
+  </data>
 </root>

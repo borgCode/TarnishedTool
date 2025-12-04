@@ -31,5 +31,7 @@ public interface ITargetService
     void ToggleDisableAllExceptTarget(bool isEnabled);
     int GetNpcThinkParamId();
     int GetResistance(int offset);
+    bool[] GetImmunities();
+    float[] GetDefenses();
 
 }

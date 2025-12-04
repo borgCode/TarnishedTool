@@ -22,8 +22,8 @@ namespace SilkyRing.Services
                     (code.ToInt64() + 0xE, hook + 0x7, 5, 0xE + 1)
                 });
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hook, new byte[]
-                    { 0x48, 0x8B, 0x8F, 0x88, 0x00, 0x00, 0x00 });
+                hookManager.InstallHook(code.ToInt64(), hook,
+                    [0x48, 0x8B, 0x8F, 0x88, 0x00, 0x00, 0x00]);
             }
             else
             {
@@ -191,6 +191,33 @@ namespace SilkyRing.Services
         public int GetResistance(int offset) =>
             memoryService.ReadInt32(GetChrResistPtr() + offset);
 
+        public bool[] GetImmunities()
+        {
+            var ptr = GetNpcParamPtr();
+            var immunities = new bool[5];
+            immunities[0] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.SleepImmune) == 90300;
+            immunities[1] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.PoisonImmune) == 90000;
+            immunities[2] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.RotImmune) == 90010;
+            immunities[4] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.FrostImmune) == 90040;
+            immunities[3] = memoryService.ReadInt32(ptr + (int)ChrIns.NpcParamOffsets.BleedImmune) == 90020;
+            return immunities;
+        }
+
+        public float[] GetDefenses()
+        {
+            var ptr = GetNpcParamPtr();
+            var defenses = new float[8];
+            defenses[0] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.StandardAbsorption);
+            defenses[1] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.SlashAbsorption);
+            defenses[2] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.StrikeAbsorption);
+            defenses[3] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.ThrustAbsorption);
+            defenses[4] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.MagicAbsorption);
+            defenses[5] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.FireAbsorption);
+            defenses[6] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.LightningAbsorption);
+            defenses[7] = memoryService.ReadFloat(ptr + (int)ChrIns.NpcParamOffsets.HolyAbsorption);
+            return defenses;
+        }
+
         private IntPtr GetChrFlagsPtr() =>
             memoryService.FollowPointers(
                 CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
@@ -214,8 +241,11 @@ namespace SilkyRing.Services
                 [..ChrIns.ChrSuperArmorModule], true);
 
         private IntPtr GetAiThinkPtr() =>
-            memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr, [
-                ..ChrIns.AiThink,
-            ], true);
+            memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
+                [..ChrIns.AiThink], true);
+
+        private IntPtr GetNpcParamPtr() =>
+            memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
+                [..ChrIns.NpcParam], true);
     }
 }

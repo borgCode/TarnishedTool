@@ -5,6 +5,7 @@ using SilkyRing.Core;
 using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 using SilkyRing.Utilities;
+using SilkyRing.Views.Windows;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
@@ -16,11 +17,14 @@ namespace SilkyRing.ViewModels
         private bool _customHpHasBeenSet;
 
         private ulong _currentTargetId;
+        
+        private AttackInfoWindow _attackInfoWindow;
+        private AttackInfoViewModel _attackInfoViewModel;
 
         // private ResistancesWindow _resistancesWindowWindow;
         // private bool _isResistancesWindowOpen;
         //
-        // private DefenseWindow _defenseWindow;
+        private DefensesWindow _defensesWindow;
         //
         //
         //
@@ -29,12 +33,18 @@ namespace SilkyRing.ViewModels
         private readonly ITargetService _targetService;
 
         private readonly IEnemyService _enemyService;
+
+        private readonly IAttackInfoService _attackInfoService;
         // private readonly HotkeyManager _hotkeyManager;
 
-        public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService)
+        public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
+            IAttackInfoService attackInfoService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
+            _attackInfoService = attackInfoService;
+            
+            _attackInfoViewModel = new AttackInfoViewModel();
 
             // _hotkeyManager = hotkeyManager;
             RegisterHotkeys();
@@ -45,10 +55,9 @@ namespace SilkyRing.ViewModels
             SetHpCommand = new DelegateCommand(SetHp);
             SetHpPercentageCommand = new DelegateCommand(SetHpPercentage);
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
-
             ForActSequenceCommand = new DelegateCommand(ForceActSequence);
-
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
+            OpenDefensesWindowCommand = new DelegateCommand(OpenDefenseWindow);
 
             _targetTick = new DispatcherTimer
             {
@@ -57,15 +66,16 @@ namespace SilkyRing.ViewModels
             _targetTick.Tick += TargetTick;
         }
 
+       
+
         #region Commands
 
         public ICommand SetHpCommand { get; set; }
         public ICommand SetHpPercentageCommand { get; set; }
         public ICommand SetCustomHpCommand { get; set; }
-
         public ICommand ForActSequenceCommand { get; set; }
-
         public ICommand KillAllCommand { get; set; }
+        public ICommand OpenDefensesWindowCommand { get; set; }
 
         #endregion
 
@@ -233,7 +243,7 @@ namespace SilkyRing.ViewModels
             get => _isBleedImmune;
             set => SetProperty(ref _isBleedImmune, value);
         }
-        
+
         private int _currentRot;
 
         public int CurrentRot
@@ -271,7 +281,7 @@ namespace SilkyRing.ViewModels
             get => _isRotImmune;
             set => SetProperty(ref _isRotImmune, value);
         }
-        
+
         private int _currentFrost;
 
         public int CurrentFrost
@@ -309,7 +319,7 @@ namespace SilkyRing.ViewModels
             get => _isFrostImmune;
             set => SetProperty(ref _isFrostImmune, value);
         }
-        
+
         private int _currentSleep;
 
         public int CurrentSleep
@@ -360,6 +370,70 @@ namespace SilkyRing.ViewModels
                     UpdateResistancesDisplay();
                 }
             }
+        }
+
+        private float _standardDefense;
+
+        public float StandardDefense
+        {
+            get => _standardDefense;
+            set => SetProperty(ref _standardDefense, value);
+        }
+
+        private float _slashDefense;
+
+        public float SlashDefense
+        {
+            get => _slashDefense;
+            set => SetProperty(ref _slashDefense, value);
+        }
+
+        private float _strikeDefense;
+
+        public float StrikeDefense
+        {
+            get => _strikeDefense;
+            set => SetProperty(ref _strikeDefense, value);
+        }
+
+        private float _thrustDefense;
+
+        public float ThrustDefense
+        {
+            get => _thrustDefense;
+            set => SetProperty(ref _thrustDefense, value);
+        }
+
+        private float _magicDefense;
+
+        public float MagicDefense
+        {
+            get => _magicDefense;
+            set => SetProperty(ref _magicDefense, value);
+        }
+
+        private float _fireDefense;
+
+        public float FireDefense
+        {
+            get => _fireDefense;
+            set => SetProperty(ref _fireDefense, value);
+        }
+
+        private float _lightningDefense;
+
+        public float LightningDefense
+        {
+            get => _lightningDefense;
+            set => SetProperty(ref _lightningDefense, value);
+        }
+
+        private float _holyDefense;
+
+        public float HolyDefense
+        {
+            get => _holyDefense;
+            set => SetProperty(ref _holyDefense, value);
         }
 
         private bool _isFreezeAiEnabled;
@@ -521,6 +595,28 @@ namespace SilkyRing.ViewModels
             get => _actSequence;
             set => SetProperty(ref _actSequence, value);
         }
+        
+        private bool _isShowAttackInfoEnabled;
+        
+        public bool IsShowAttackInfoEnabled
+        {
+            get => _isShowAttackInfoEnabled;
+            set
+            {
+                if (!SetProperty(ref _isShowAttackInfoEnabled, value))
+                {
+                    if (_isShowAttackInfoEnabled)
+                    {
+                        OpenAttackInfoWindow();
+                    }
+                    _attackInfoService.ToggleAttackInfoHook(_isShowAttackInfoEnabled);
+                    
+                }
+                
+            }
+        }
+
+        
 
         #endregion
 
@@ -636,20 +732,8 @@ namespace SilkyRing.ViewModels
                 IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
                 _currentTargetId = targetId;
                 MaxPoise = _targetService.GetMaxPoise();
-
-                // (IsPoisonToxicImmune, IsBleedImmune) = _enemyService.GetImmunities();
-                // TargetMaxPoison = IsPoisonToxicImmune
-                //     ? 0
-                //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.PoisonMax);
-                // TargetMaxToxic = IsPoisonToxicImmune
-                //     ? 0
-                //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.ToxicMax);
-                // TargetMaxBleed = IsBleedImmune
-                //     ? 0
-                //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.BleedMax);
-                //
-                // IsLightPoiseImmune = _enemyService.IsLightPoiseImmune();
-                // UpdateDefenses();
+                UpdateImmunities();
+                UpdateDefenses();
                 //
                 // if (!IsResistancesWindowOpen || _resistancesWindowWindow == null) return;
                 // _resistancesWindowWindow.DataContext = null;
@@ -662,28 +746,49 @@ namespace SilkyRing.ViewModels
             TargetSpeed = _targetService.GetSpeed();
             CurrentPoise = _targetService.GetCurrentPoise();
             PoiseTimer = _targetService.GetPoiseTimer();
-            
-            CurrentPoison = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.PoisonCurrent);
-            MaxPoison = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.PoisonMax);
-            CurrentRot = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.RotCurrent);
-            MaxRot = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.RotMax);
-            CurrentBleed = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.BleedCurrent);
-            MaxBleed = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.BleedMax);
-            CurrentFrost = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.FrostCurrent);
-            MaxFrost = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.FrostMax);
-            CurrentSleep = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.SleepCurrent);
-            MaxSleep = _targetService.GetResistance((int) ChrIns.ChrResistOffsets.SleepMax);
-            
 
-            // TargetCurrentPoison = IsPoisonToxicImmune
-            //     ? 0
-            //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.PoisonCurrent);
-            // TargetCurrentToxic = IsPoisonToxicImmune
-            //     ? 0
-            //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.ToxicCurrent);
-            // TargetCurrentBleed = IsBleedImmune
-            //     ? 0
-            //     : _enemyService.GetTargetResistance(GameManagerImp.ChrCtrlOffsets.BleedCurrent);
+            CurrentPoison = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.PoisonCurrent);
+            MaxPoison = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.PoisonMax);
+            CurrentRot = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.RotCurrent);
+            MaxRot = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.RotMax);
+            CurrentBleed = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.BleedCurrent);
+            MaxBleed = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.BleedMax);
+            CurrentFrost = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.FrostCurrent);
+            MaxFrost = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.FrostMax);
+            CurrentSleep = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.SleepCurrent);
+            MaxSleep = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.SleepMax);
+
+            if (IsShowAttackInfoEnabled)
+            {
+                var attackInfo = _attackInfoService.PollAttackInfo();
+                if (attackInfo.Count > 0)
+                {
+                    _attackInfoViewModel.AddAttacks(attackInfo);
+                }
+            }
+        }
+
+        private void UpdateImmunities()
+        {
+            bool[] immunities = _targetService.GetImmunities();
+            IsSleepImmune = immunities[0];
+            IsPoisonImmune = immunities[1];
+            IsRotImmune = immunities[2];
+            IsFrostImmune = immunities[3];
+            IsBleedImmune = immunities[4];
+        }
+
+        private void UpdateDefenses()
+        {
+            float[] defenses = _targetService.GetDefenses();
+            StandardDefense = (1 - defenses[0]) * 100;
+            SlashDefense = (1 - defenses[1]) * 100;
+            StrikeDefense = (1 - defenses[2]) * 100;
+            ThrustDefense = (1 - defenses[3]) * 100;
+            MagicDefense = (1 - defenses[4]) * 100;
+            FireDefense = (1 - defenses[5]) * 100;
+            LightningDefense = (1 - defenses[6]) * 100;
+            HolyDefense = (1 - defenses[7]) * 100;
         }
 
         private bool IsTargetValid()
@@ -737,19 +842,6 @@ namespace SilkyRing.ViewModels
             // _resistancesWindowWindow.DataContext = this;
         }
 
-        private void UpdateDefenses()
-        {
-            // MagicResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.MagicResist);
-            // LightningResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.LightningResist);
-            // FireResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.FireResist);
-            // DarkResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.DarkResist);
-            // PoisonToxicResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.PoisonToxicResist);
-            // BleedResist = _enemyService.GetChrParam(GameManagerImp.ChrCtrlOffsets.ChrParam.BleedResist);
-            // SlashDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Slash);
-            // ThrustDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Thrust);
-            // StrikeDefense = _enemyService.GetChrCommonParam(GameManagerImp.ChrCtrlOffsets.ChrCommon.Strike);
-        }
-
         private void KillAllBesidesTarget() => _targetService.KillAllBesidesTarget();
 
         private void ForceActSequence()
@@ -778,6 +870,40 @@ namespace SilkyRing.ViewModels
             var npcThinkParamId = _targetService.GetNpcThinkParamId();
             _enemyService.ForceActSequence(acts, npcThinkParamId);
         }
+        
+        private void OpenDefenseWindow()
+        {
+            if (_defensesWindow != null && _defensesWindow.IsVisible) 
+            {
+                _defensesWindow.Activate(); 
+                return;
+            }
+            
+            _defensesWindow = new DefensesWindow
+            {
+                DataContext = this
+            };
+            
+            _defensesWindow.Closed += (s, e) => _defensesWindow = null;
+            _defensesWindow.Show();
+        }
+        
+        private void OpenAttackInfoWindow()
+        {
+            _attackInfoWindow = new AttackInfoWindow
+            {
+                DataContext = _attackInfoViewModel
+            };
+            
+            _attackInfoWindow.Closed += (s, e) => _attackInfoWindow = null;
+            _attackInfoWindow.Show();
+        }
+        
+        #endregion
+
+        #region Public Methods
+
+        public void SetSpeed(double value) => TargetSpeed = (float)value;
 
         #endregion
 
@@ -839,30 +965,12 @@ namespace SilkyRing.ViewModels
         // }
         //
 
-        public void SetSpeed(double value) => TargetSpeed = (float)value;
 
         //
         // public bool ShowLightPoiseAndNotImmune => ShowLightPoise && !IsLightPoiseImmune;
         // public bool ShowBleedAndNotImmune => ShowBleed && !IsBleedImmune;
         // public bool ShowPoisonAndNotImmune => ShowPoison && !IsPoisonToxicImmune;
         // public bool ShowToxicAndNotImmune => ShowToxic && !IsPoisonToxicImmune;
-
-        public void OpenDefenseWindow()
-        {
-            // if (_defenseWindow != null && _defenseWindow.IsVisible) 
-            // {
-            //     _defenseWindow.Activate(); 
-            //     return;
-            // }
-            //
-            // _defenseWindow = new DefenseWindow
-            // {
-            //     DataContext = this
-            // };
-            //
-            // _defenseWindow.Closed += (s, e) => _defenseWindow = null;
-            //
-            // _defenseWindow.Show();
-        }
+        
     }
 }

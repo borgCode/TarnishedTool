@@ -198,8 +198,8 @@
         );
 
         public static readonly Pattern TargetNoStagger = new Pattern(
-            new byte[] { 0xF3, 0x0F, 0x11, 0x47, 0x10, 0xF6 },
-            "xxxxxx",
+            new byte[] { 0x32, 0xDB, 0x0F, 0x57 },
+            "xxxx",
             0,
             AddressingMode.Absolute
         );

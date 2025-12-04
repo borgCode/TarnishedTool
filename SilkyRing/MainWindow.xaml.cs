@@ -52,10 +52,11 @@ namespace SilkyRing
         
             var hookManager = new HookManager(_memoryService, _stateService);
             // var hotkeyManager = new HotkeyManager(_memoryIo);
-            //
+
             IPlayerService playerService = new PlayerService(_memoryService, hookManager);
             var utilityService = new UtilityService(_memoryService, hookManager);
             var eventService = new EventService(_memoryService, hookManager);
+            IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService = new TargetService(_memoryService, hookManager);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
             var travelService = new TravelService(_memoryService, hookManager);
@@ -67,7 +68,7 @@ namespace SilkyRing
             PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService);
             TravelViewModel travelViewModel = new TravelViewModel(travelService, eventService, _stateService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService); 
-            TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService);
+            TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService, attackInfoService);
             EventViewModel eventViewModel = new EventViewModel(eventService, _stateService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService);
             // _itemViewModel = new ItemViewModel(itemService);

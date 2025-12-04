@@ -36,7 +36,12 @@ namespace SilkyRing.Memory
         public const int ForceActSequence = 0x6B0;
 
         public const int TargetNoStagger = 0x750;
-        
-        
+
+        public const int AttackInfoProcessedFlags = 0x7A0;
+        public const int AttackInfoId = 0x7B0;
+        public const int AttackInfoWriteIndex = 0x7B4;
+        public const int AttackInfoStart = 0x7C0; // 16 structs
+        public const int AttackInfoCode = 0xC40;
+
     }
 }

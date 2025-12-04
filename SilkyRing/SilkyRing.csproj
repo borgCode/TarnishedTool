@@ -79,6 +79,7 @@
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
         <Compile Include="Core\DelegateCommand.cs" />
         <Compile Include="Enums\State.cs" />
+        <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IEnemyService.cs" />
         <Compile Include="Interfaces\IEventService.cs" />
         <Compile Include="Interfaces\IMemoryService.cs" />
@@ -90,8 +91,9 @@
         <Compile Include="Memory\BitFlag.cs" />
         <Compile Include="Memory\GameIds.cs" />
         <Compile Include="Models\Act.cs" />
-        <Compile Include="Models\AttackStruct.cs" />
+        <Compile Include="Models\AttackInfo.cs" />
         <Compile Include="Models\Grace.cs" />
+        <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\EnemyService.cs" />
         <Compile Include="Services\TargetService.cs" />
         <Compile Include="Services\EventService.cs" />
@@ -104,7 +106,9 @@
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
         <Compile Include="Utilities\MsgBox.cs" />
+        <Compile Include="Utilities\SettingsManager.cs" />
         <Compile Include="Utilities\UpDownHelper.cs" />
+        <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\TargetViewModel.cs" />
@@ -130,8 +134,14 @@
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\AttackInfoWindow.xaml.cs">
+          <DependentUpon>AttackInfoWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\CustomMessageBox.xaml.cs">
           <DependentUpon>CustomMessageBox.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\DefensesWindow.xaml.cs">
+          <DependentUpon>DefensesWindow.xaml</DependentUpon>
         </Compile>
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
@@ -151,7 +161,9 @@
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
+        <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
+        <Page Include="Views\Windows\DefensesWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Memory\AobScanner.cs" />
