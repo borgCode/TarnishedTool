@@ -46,7 +46,7 @@ namespace SilkyRing.Memory
         public const int WarpCoords = 0xE40;
         public const int Angle = 0xE50;
         public const int WarpCode = 0xE60;
-        public const int AngleCode = 0xE70;
+        public const int AngleCode = 0xE80;
 
     }
 }

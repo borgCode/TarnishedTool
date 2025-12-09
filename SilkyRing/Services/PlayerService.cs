@@ -128,8 +128,8 @@ namespace SilkyRing.Services
             {
                 (area, 0x0 + 1),
                 (block, 0x5 + 1),
-                (map, 0xA + 1),
-                (altNo, 0x10 + 1),
+                (map, 0xA + 2),
+                (altNo, 0x10 + 2),
             });
 
             memoryService.AllocateAndExecute(bytes);
@@ -156,14 +156,14 @@ namespace SilkyRing.Services
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (warpCode.ToInt64(), targetCoords.ToInt64(), 7, 0x0 + 3),
-                (warpCode.ToInt64() + 0xE, coordHook, 5, 0xE + 1)
+                (warpCode.ToInt64() + 0xE, coordHook + 7, 5, 0xE + 1)
             });
             memoryService.WriteBytes(warpCode, bytes);
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (angleCode.ToInt64(), targetAngle.ToInt64(), 7, 0x0 + 3),
-                (angleCode.ToInt64() + 0xE, angleHook, 5, 0xE + 3)
+                (angleCode.ToInt64() + 0xE, angleHook + 7, 5, 0xE + 1)
             });
             memoryService.WriteBytes(angleCode, bytes);
             memoryService.WriteInt32(angleCode + 0x7 + 3, angleOffset);
