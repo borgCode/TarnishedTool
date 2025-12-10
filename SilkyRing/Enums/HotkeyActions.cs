@@ -10,6 +10,16 @@ public enum HotkeyActions
     SavePos2,
     RestorePos1,
     RestorePos2,
+    NoDeath,
+    NoDamage,
+    InfiniteStamina,
+    InfiniteConsumables,
+    InfiniteArrows,
+    InfiniteFp,
+    OneShot,
+    InfinitePoise,
+    Silent,
+    Hidden,
     
     
     

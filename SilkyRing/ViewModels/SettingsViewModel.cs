@@ -32,12 +32,22 @@ public class SettingsViewModel : BaseViewModel
         
         PlayerHotkeys =
         [
+            new("Set RFBS", HotkeyActions.SetRfbs),
+            new("Set Max Hp", HotkeyActions.SetMaxHp),
             new("Save Position 1", HotkeyActions.SavePos1),
             new("Save Position 2", HotkeyActions.SavePos2),
             new("Restore Position 2", HotkeyActions.RestorePos1),
-            new("Restore Position 2", HotkeyActions.RestorePos2)
+            new("No Death", HotkeyActions.NoDeath),
+            new("No Damage", HotkeyActions.NoDamage),
+            new("Infinite Stamina", HotkeyActions.InfiniteStamina),
+            new("Infinite Consumables", HotkeyActions.InfiniteConsumables),
+            new("Infinite Arrows", HotkeyActions.InfiniteArrows),
+            new("Infinite Fp", HotkeyActions.InfiniteFp),
+            new("One Shot", HotkeyActions.OneShot),
+            new("Infinite Poise", HotkeyActions.InfinitePoise),
+            new("Silent", HotkeyActions.Silent),
+            new("Hidden", HotkeyActions.Hidden),
         ];
-
         EnemyHotkeys = new ObservableCollection<HotkeyBindingViewModel>
         {
             // Add enemy hotkeys

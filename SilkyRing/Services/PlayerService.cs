@@ -220,13 +220,13 @@ namespace SilkyRing.Services
         }
 
         public void SetFp(int fp) =>
-            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, fp);
+            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp, fp);
 
         public int GetCurrentFp() =>
             memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp);
 
         public void SetSp(int sp) =>
-            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, sp);
+            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp, sp);
 
         public int GetCurrentSp() =>
             memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp);
@@ -275,16 +275,15 @@ namespace SilkyRing.Services
             });
             memoryService.AllocateAndExecute(bytes);
         }
-
-        public void ToggleChrDataFlag(int offset, byte bitmask, bool isEnabled)
-        {
-            var chrData = GetChrDataPtr();
-
-            memoryService.SetBitValue(chrData + offset, bitmask, isEnabled);
-        }
-
+        
         public void ToggleDebugFlag(int offset, bool isEnabled) =>
             memoryService.WriteUInt8(WorldChrManDbg.Base + offset, isEnabled ? 1 : 0);
+
+        public void ToggleNoDamage(bool isFreezeHealthEnabled)
+        {
+            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
+            memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
+        }
 
         public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>
             memoryService.WriteBytes(Patches.NoRunesFromEnemies,

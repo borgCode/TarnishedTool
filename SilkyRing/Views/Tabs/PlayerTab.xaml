@@ -34,18 +34,19 @@
                                         Value="{Binding CurrentHp}"
                                         TextAlignment="Center"
                                         Width="100"
-                              
                                         IsEnabled="{Binding AreOptionsEnabled}"
                                         BorderBrush="#3F3F46" />
                     <TextBlock Text="{Binding CurrentMaxHp, StringFormat=Max: {0}}"
                                VerticalAlignment="Center"
                                Margin="10,0,0,0" />
                     <Button 
-                            Content="RTSR"
+                            Content="RFBS"
+                            Command="{Binding SetRfbsCommand}"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
                             Width="60" />
                     <Button 
+                            Command="{Binding SetMaxHpCommand}"
                             Content="Max Hp"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="10,0,0,0"
@@ -165,7 +166,7 @@
                               IsChecked="{Binding IsInfiniteStaminaEnabled}"
                               Margin="0,2" />
                     <CheckBox Content="Infinite Consumables"
-                              IsChecked="{Binding IsInfiniteGoodsEnabled}"
+                              IsChecked="{Binding IsInfiniteConsumablesEnabled}"
                               Margin="0,2" />
                     <CheckBox Content="Infinite Arrows"
                               IsChecked="{Binding IsInfiniteArrowsEnabled}"

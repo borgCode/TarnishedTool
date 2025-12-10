@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Windows.Input;
 using System.Windows.Threading;
 using SilkyRing.Core;
@@ -13,14 +14,7 @@ namespace SilkyRing.ViewModels
 {
     public class PlayerViewModel : BaseViewModel
     {
-        //
-        // 
-        // 
-        // 
-        // private (float x, float y, float z) _coords;
-        // private float _posX;
-        // private float _posZ;
-        // private float _posY;
+        private Vector3 _coords;
 
         // private bool _isAutoSetNewGameSevenEnabled;
         //
@@ -42,7 +36,7 @@ namespace SilkyRing.ViewModels
         private int _newGame;
 
         private int _currentRuneLevel;
-        
+
         private float _playerSpeed;
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
@@ -82,12 +76,12 @@ namespace SilkyRing.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
-        
+
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
         public ICommand SetMaxHpCommand { get; set; }
-        
+
         public ICommand SavePositionCommand { get; set; }
         public ICommand RestorePositionCommand { get; set; }
 
@@ -143,47 +137,29 @@ namespace SilkyRing.ViewModels
             set => SetProperty(ref _isStateIncluded, value);
         }
 
-        #endregion
+        private float _posX;
 
-        public void PauseUpdates()
+        public float PosX
         {
-            _pauseUpdates = true;
+            get => _posX;
+            set => SetProperty(ref _posX, value);
         }
 
-        public void ResumeUpdates()
+        private float _posY;
+
+        public float PosY
         {
-            _pauseUpdates = false;
+            get => _posY;
+            set => SetProperty(ref _posY, value);
         }
 
-        public void SetHp(int hp)
-        {
-            _playerService.SetHp(hp);
-            CurrentHp = hp;
-        }
-        
+        private float _posZ;
 
-        
-        
-        
-        //
-        // public float PosX
-        // {
-        //     get => _posX;
-        //     set => SetProperty(ref _posX, value);
-        // }
-        //
-        // public float PosY
-        // {
-        //     get => _posY;
-        //     set => SetProperty(ref _posY, value);
-        // }
-        //
-        // public float PosZ
-        // {
-        //     get => _posZ;
-        //     set => SetProperty(ref _posZ, value);
-        // }
-        //
+        public float PosZ
+        {
+            get => _posZ;
+            set => SetProperty(ref _posZ, value);
+        }
 
         private bool _isNoDeathEnabled;
 
@@ -195,11 +171,6 @@ namespace SilkyRing.ViewModels
                 if (SetProperty(ref _isNoDeathEnabled, value))
                 {
                     _playerService.ToggleDebugFlag(WorldChrManDbg.PlayerNoDeath, true);
-                    // _playerService.ToggleChrDataFlag(
-                    //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
-                    //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDeath,
-                    //     _isNoDeathEnabled
-                    // );
                 }
             }
         }
@@ -213,11 +184,7 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isNoDamageEnabled, value))
                 {
-                    // _playerService.ToggleChrDataFlag(
-                    //     WorldChrMan.ChrIns.Modules.ChrData.Flags,
-                    //     (byte)WorldChrMan.ChrIns.Modules.ChrData.Flag.NoDamage,
-                    //     _isNoDamageEnabled
-                    // );
+                    _playerService.ToggleNoDamage(_isNoDamageEnabled);
                 }
             }
         }
@@ -236,62 +203,20 @@ namespace SilkyRing.ViewModels
             }
         }
 
-        private bool _isInfiniteGoodsEnabled;
+        private bool _isInfiniteConsumablesEnabled;
 
-        public bool IsInfiniteGoodsEnabled
+        public bool IsInfiniteConsumablesEnabled
         {
-            get => _isInfiniteGoodsEnabled;
+            get => _isInfiniteConsumablesEnabled;
             set
             {
-                if (SetProperty(ref _isInfiniteGoodsEnabled, value))
+                if (SetProperty(ref _isInfiniteConsumablesEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, _isInfiniteGoodsEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, _isInfiniteConsumablesEnabled);
                 }
             }
         }
-
-        private bool _isOneShotEnabled;
-
-        public bool IsOneShotEnabled
-        {
-            get => _isOneShotEnabled;
-            set
-            {
-                if (SetProperty(ref _isOneShotEnabled, value))
-                {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, _isOneShotEnabled);
-                }
-            }
-        }
-
-        private bool _isHiddenEnabled;
-
-        public bool IsHiddenEnabled
-        {
-            get => _isHiddenEnabled;
-            set
-            {
-                if (SetProperty(ref _isHiddenEnabled, value))
-                {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, _isHiddenEnabled);
-                }
-            }
-        }
-
-        private bool _isSilentEnabled;
-
-        public bool IsSilentEnabled
-        {
-            get => _isSilentEnabled;
-            set
-            {
-                if (SetProperty(ref _isSilentEnabled, value))
-                {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, _isSilentEnabled);
-                }
-            }
-        }
-
+        
         private bool _isInfiniteArrowsEnabled;
 
         public bool IsInfiniteArrowsEnabled
@@ -320,6 +245,62 @@ namespace SilkyRing.ViewModels
             }
         }
 
+        private bool _isOneShotEnabled;
+
+        public bool IsOneShotEnabled
+        {
+            get => _isOneShotEnabled;
+            set
+            {
+                if (SetProperty(ref _isOneShotEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, _isOneShotEnabled);
+                }
+            }
+        }
+        
+        private bool _isInfinitePoiseEnabled;
+
+        public bool IsInfinitePoiseEnabled
+        {
+            get => _isInfinitePoiseEnabled;
+            set
+            {
+                if (SetProperty(ref _isInfinitePoiseEnabled, value))
+                {
+                    _playerService.ToggleInfinitePoise(_isInfinitePoiseEnabled);
+                }
+            }
+        }
+        
+        private bool _isSilentEnabled;
+
+        public bool IsSilentEnabled
+        {
+            get => _isSilentEnabled;
+            set
+            {
+                if (SetProperty(ref _isSilentEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, _isSilentEnabled);
+                }
+            }
+        }
+
+        private bool _isHiddenEnabled;
+
+        public bool IsHiddenEnabled
+        {
+            get => _isHiddenEnabled;
+            set
+            {
+                if (SetProperty(ref _isHiddenEnabled, value))
+                {
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, _isHiddenEnabled);
+                }
+            }
+        }
+        
         private bool _isNoRuneLossEnabled;
 
         public bool IsNoRuneLossEnabled
@@ -330,6 +311,20 @@ namespace SilkyRing.ViewModels
                 if (SetProperty(ref _isNoRuneLossEnabled, value))
                 {
                     _playerService.ToggleNoRuneLoss(_isNoRuneLossEnabled);
+                }
+            }
+        }
+        
+        private bool _isNoRuneArcLossEnabled;
+
+        public bool IsNoRuneArcLossEnabled
+        {
+            get => _isNoRuneArcLossEnabled;
+            set
+            {
+                if (SetProperty(ref _isNoRuneArcLossEnabled, value))
+                {
+                    _playerService.ToggleNoRuneArcLoss(_isNoRuneArcLossEnabled);
                 }
             }
         }
@@ -347,34 +342,17 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
+        
+        
+        #endregion
 
-        private bool _isNoRuneArcLossEnabled;
+        #region Public Methods
 
-        public bool IsNoRuneArcLossEnabled
-        {
-            get => _isNoRuneArcLossEnabled;
-            set
-            {
-                if (SetProperty(ref _isNoRuneArcLossEnabled, value))
-                {
-                    _playerService.ToggleNoRuneArcLoss(_isNoRuneArcLossEnabled);
-                }
-            }
-        }
+        public void PauseUpdates() => _pauseUpdates = true;
+        public void ResumeUpdates() => _pauseUpdates = false;
+        public void SetHp(int hp) => _playerService.SetHp(hp);
 
-        private bool _isInfinitePoiseEnabled;
-
-        public bool IsInfinitePoiseEnabled
-        {
-            get => _isInfinitePoiseEnabled;
-            set
-            {
-                if (SetProperty(ref _isInfinitePoiseEnabled, value))
-                {
-                    _playerService.ToggleInfinitePoise(_isInfinitePoiseEnabled);
-                }
-            }
-        }
+        #endregion
 
         //
         // public bool IsAutoSetNewGameSevenEnabled
@@ -595,40 +573,43 @@ namespace SilkyRing.ViewModels
             AreOptionsEnabled = true;
             LoadStats();
             _playerTick.Start();
+            _pauseUpdates = false;
         }
 
         private void OnGameFirstLoaded()
         {
-            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, true);
+            if (IsNoDeathEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.PlayerNoDeath, true);
             if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteStam, true);
-            if (IsInfiniteGoodsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, true);
+            if (IsInfiniteConsumablesEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteGoods, true);
+            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, true);
+            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, true);
+            if (IsOneShotEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.OneShot, true);
+            if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
             if (IsSilentEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, true);
             if (IsHiddenEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, true);
-            if (IsInfiniteFpEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteFp, true);
-            if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(WorldChrManDbg.InfiniteArrows, true);
-            if (IsInfinitePoiseEnabled) _playerService.ToggleInfinitePoise(true);
             if (IsNoRuneGainEnabled) _playerService.ToggleNoRuneGain(true);
-            if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
             if (IsNoRuneArcLossEnabled) _playerService.ToggleNoRuneArcLoss(true);
+            if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
             _pauseUpdates = false;
         }
 
         private void RegisterHotkeys()
         {
-            // _hotkeyManager.RegisterAction(HotkeyActions.SetRfbs.ToString(), () => SavePosition(0));
-            // _hotkeyManager.RegisterAction(HotkeyActions.SetMaxHp.ToString(), () => SavePosition(0));
-            
+            _hotkeyManager.RegisterAction(HotkeyActions.SetRfbs.ToString(), SetRfbs);
+            _hotkeyManager.RegisterAction(HotkeyActions.SetMaxHp.ToString(), SetMaxHp);
             _hotkeyManager.RegisterAction(HotkeyActions.SavePos1.ToString(), () => SavePosition(0));
             _hotkeyManager.RegisterAction(HotkeyActions.SavePos2.ToString(), () => SavePosition(1));
             _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1.ToString(), () => RestorePosition(0));
             _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2.ToString(), () => RestorePosition(1));
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteStamina.ToString(), () => { IsInfiniteStaminaEnabled = !IsInfiniteStaminaEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteConsumables.ToString(),() => { IsInfiniteConsumablesEnabled = !IsInfiniteConsumablesEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteArrows.ToString(),() => { IsInfiniteArrowsEnabled = !IsInfiniteArrowsEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteFp.ToString(),() => { IsInfiniteFpEnabled = !IsInfiniteFpEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.OneShot.ToString(),() => { IsOneShotEnabled = !IsOneShotEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise.ToString(),() => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.Silent.ToString(),() => { IsSilentEnabled = !IsSilentEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.Hidden.ToString(),() => { IsHiddenEnabled = !IsHiddenEnabled; });
             
-            // _hotkeyManager.RegisterAction("SavePos1", () => SavePos(0));
-            // _hotkeyManager.RegisterAction("SavePos2", () => SavePos(1));
-            // _hotkeyManager.RegisterAction("RestorePos1", () => RestorePos(0));
-            // _hotkeyManager.RegisterAction("RestorePos2", () => RestorePos(1));
-         
-            // _hotkeyManager.RegisterAction("NoDeath", () => { IsNoDeathEnabled = !IsNoDeathEnabled; });
             // _hotkeyManager.RegisterAction("OneShot", () => { IsOneShotEnabled = !IsOneShotEnabled; });
             // _hotkeyManager.RegisterAction("DealNoDamage", () => { IsDealNoDamageEnabled = !IsDealNoDamageEnabled; });
             // _hotkeyManager.RegisterAction("PlayerNoDamage", () => { IsNoDamageEnabled = !IsNoDamageEnabled; });
@@ -656,16 +637,16 @@ namespace SilkyRing.ViewModels
         private void PlayerTick(object sender, EventArgs e)
         {
             if (_pauseUpdates) return;
-            
+
             CurrentHp = _playerService.GetCurrentHp();
             CurrentMaxHp = _playerService.GetMaxHp();
             PlayerSpeed = _playerService.GetSpeed();
             int newRuneLevel = _playerService.GetRuneLevel();
             // SoulMemory = _playerService.GetSoulMemory();
-            // _coords = _playerService.GetCoords();
-            // PosX = _coords.x;
-            // PosY = _coords.y;
-            // PosZ = _coords.z;
+            _coords = _playerService.GetPlayerPos();
+            PosX = _coords.X;
+            PosY = _coords.Y;
+            PosZ = _coords.Z;
             if (_currentRuneLevel == newRuneLevel) return;
             RuneLevel = newRuneLevel;
             _currentRuneLevel = newRuneLevel;
@@ -687,7 +668,7 @@ namespace SilkyRing.ViewModels
             NewGame = _playerService.GetNewGame();
             // PlayerSpeed = _playerService.GetPlayerSpeed();
         }
-        
+
         private void SetRfbs() => _playerService.SetRfbs();
         private void SetMaxHp() => _playerService.SetFullHp();
 
@@ -702,7 +683,8 @@ namespace SilkyRing.ViewModels
             if (IsStateIncluded)
             {
                 state.Hp = CurrentHp;
-                // state.Sp = _playerService.GetSp();
+                state.Fp = _playerService.GetCurrentFp();
+                state.Sp = _playerService.GetCurrentSp();
             }
 
             _playerService.SavePos(index);
@@ -720,8 +702,9 @@ namespace SilkyRing.ViewModels
             var state = index == 0 ? _saveState1 : _saveState2;
             if (IsStateIncluded && state.IncludesState)
             {
-                // _playerService.SetHp(state.Hp);
-                // _playerService.SetSp(state.Sp);
+                _playerService.SetHp(state.Hp);
+                _playerService.SetFp(state.Fp);
+                _playerService.SetSp(state.Sp);
             }
         }
 

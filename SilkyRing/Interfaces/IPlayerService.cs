@@ -25,8 +25,8 @@ public interface IPlayerService
     void SetSpeed(float speed);
     void ToggleInfinitePoise(bool isInfinitePoiseEnabled);
     void ApplySpEffect(long spEffectId);
-    void ToggleChrDataFlag(int offset, byte bitmask, bool isEnabled);
     void ToggleDebugFlag(int offset, bool isEnabled);
+    void ToggleNoDamage(bool isFreezeHealthEnabled);
     void ToggleNoRuneGain(bool isNoRuneGainEnabled);
     void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled);
     void ToggleNoRuneLoss(bool isNoRuneLossEnabled);
