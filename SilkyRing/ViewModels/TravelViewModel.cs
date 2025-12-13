@@ -55,6 +55,8 @@ namespace SilkyRing.ViewModels
             }
 
             SelectedMainArea = _mainAreas.FirstOrDefault();
+            
+            Dictionary<string, List<BossWarp>> bossWarps = DataLoader.GetBossWarps(); 
         }
         
         public bool AreButtonsEnabled
