@@ -60,7 +60,7 @@ namespace SilkyRing
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService = new TargetService(_memoryService, hookManager, playerService);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
-            var travelService = new TravelService(_memoryService, hookManager);
+            ITravelService travelService = new TravelService(_memoryService, hookManager);
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
             

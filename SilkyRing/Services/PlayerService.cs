@@ -35,8 +35,8 @@ namespace SilkyRing.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
             posToSave.BlockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
-            posToSave.GlobalCoords = ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
-            posToSave.GlobalAngle =
+            posToSave.Coords = ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
+            posToSave.Angle =
                 memoryService.ReadFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalAngle);
         }
 
@@ -56,7 +56,7 @@ namespace SilkyRing.Services
             {
                 var currentCoords = ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
                 var currentAbsolute = GetAbsoluteCoords(currentCoords, currentBlockId);
-                var savedAbsolute = GetAbsoluteCoords(savedPos.GlobalCoords, savedPos.BlockId);
+                var savedAbsolute = GetAbsoluteCoords(savedPos.Coords, savedPos.BlockId);
                 var delta = savedAbsolute - currentAbsolute;
 
                 var chrRideModule = GetChrRidePtr();
@@ -70,7 +70,7 @@ namespace SilkyRing.Services
 
                 WriteVector3(coordsPtr, ReadVector3(coordsPtr) + delta);
                 memoryService.WriteFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalAngle,
-                    savedPos.GlobalAngle);
+                    savedPos.Angle);
 
                 if (isLongDistance)
                 {
@@ -154,9 +154,9 @@ namespace SilkyRing.Services
             var targetAngle = CodeCaveOffsets.Base + CodeCaveOffsets.Angle;
             var warpCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpCode;
             var angleCode = CodeCaveOffsets.Base + CodeCaveOffsets.AngleCode;
-            WriteVector3(targetCoords, savedPos.GlobalCoords);
+            WriteVector3(targetCoords, savedPos.Coords);
             memoryService.WriteFloat(targetCoords + 0xC, 1f);
-            memoryService.WriteFloat(targetAngle + 0x4, savedPos.GlobalAngle);
+            memoryService.WriteFloat(targetAngle + 0x4, savedPos.Angle);
 
             var bytes = AsmLoader.GetAsmBytes("WarpCoordWrite");
             AsmHelper.WriteRelativeOffsets(bytes, new[]

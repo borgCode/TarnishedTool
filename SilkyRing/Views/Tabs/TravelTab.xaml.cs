@@ -23,10 +23,5 @@ namespace SilkyRing.Views
         private void UnlockAllMainGameGraces_Click(object sender, RoutedEventArgs e) => _travelViewModel.UnlockMainGameGraces();
 
         private void UnlockAllDlcGraces_Click(object sender, RoutedEventArgs e)=> _travelViewModel.UnlockDlcGraces();
-
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            _travelViewModel.Test();
-        }
     }
 }

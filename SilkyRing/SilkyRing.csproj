@@ -114,6 +114,7 @@
         <Compile Include="Models\Act.cs" />
         <Compile Include="Models\AttackInfo.cs" />
         <Compile Include="Models\AttackInfoEntry.cs" />
+        <Compile Include="Models\BossWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\Position.cs" />

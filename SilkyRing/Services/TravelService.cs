@@ -1,4 +1,4 @@
-﻿using System;
+﻿using SilkyRing.Interfaces;
 using SilkyRing.Memory;
 using SilkyRing.Models;
 using SilkyRing.Utilities;
@@ -6,17 +6,8 @@ using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Services
 {
-    public class TravelService
+    public class TravelService(MemoryService memoryService, HookManager hookManager) : ITravelService
     {
-        
-        private readonly MemoryService _memoryService;
-        private readonly HookManager _hookManager;
-        public TravelService(MemoryService memoryService, HookManager hookManager)
-        {
-            _memoryService = memoryService;
-            _hookManager = hookManager;
-        }
-
 
         public void Warp(Grace grace)
         {
@@ -28,7 +19,7 @@ namespace SilkyRing.Services
                 (Functions.GraceWarp, 0x20 + 2)
             });
             
-            _memoryService.AllocateAndExecute(bytes);
+            memoryService.AllocateAndExecute(bytes);
         }
 
         public void UnlockGrace(Grace grace)
@@ -36,17 +27,13 @@ namespace SilkyRing.Services
             var bytes = AsmLoader.GetAsmBytes("SetEvent");
             AsmHelper.WriteAbsoluteAddresses(bytes, new []
             {
-                (_memoryService.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
+                (memoryService.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
                 (grace.FlagId, 0xE + 2),
                 (1, 0x18 + 2),
                 (Functions.SetEvent, 0x22 + 2)
             });
-            _memoryService.AllocateAndExecute(bytes);
+            memoryService.AllocateAndExecute(bytes);
         }
-
-        public void Test()
-        {
-            
-        }
+        
     }
 }

@@ -235,10 +235,6 @@
                              Click="UnlockAllDlcGraces_Click"
                              IsEnabled="{Binding AreOptionsEnabled}"
                              Margin="0,2" />
-                     <Button Grid.Column="2" Content="Test"
-                             Click="Test_Click"
-                             IsEnabled="{Binding AreOptionsEnabled}"
-                             Margin="0,2" />
                  </Grid>
              </StackPanel>
          </Border>

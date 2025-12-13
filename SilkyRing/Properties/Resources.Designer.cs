@@ -60,14 +60,14 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
-        ///Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
-        ///Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
-        ///Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.80
-        ///Limgrave,Crucible Knight,1009394944,-68.52|158.16|45.94|1,-0.83
-        ///Limgrave,Deathbird,1009395200,90.76|199.90|95.32|1,-0.63
-        ///Limgrave,Demi-Human Chief,521076736,20.10|-26.18|-72.41|1,-0.02
-        ///Limgrave,Erdtree Burial Watchdog,503447552 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 0,Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
+        ///0,Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
+        ///0,Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
+        ///0,Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.80
+        ///0,Limgrave,Crucible Knight,1009394944,-68.52|158.16|45.94|1,-0.83
+        ///0,Limgrave,Deathbird,1009395200,90.76|199.90|95.32|1,-0.63
+        ///0,Limgrave,Demi-Human Chief,521076736,20.10|-26.18|-72.41|1,-0.02
+        ///0,Limgrave,Erdtree Burial Wa [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BossWarps {
             get {

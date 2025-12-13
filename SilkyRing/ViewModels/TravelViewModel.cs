@@ -10,7 +10,8 @@ namespace SilkyRing.ViewModels
 {
     public class TravelViewModel : BaseViewModel
     {
-        private readonly TravelService _travelService;
+        private readonly ITravelService _travelService;
+
         private readonly EventService _eventService;
         // private readonly HotkeyManager _hotkeyManager;
 
@@ -30,9 +31,10 @@ namespace SilkyRing.ViewModels
         private string _preSearchMainArea;
         private readonly ObservableCollection<Grace> _searchResultsCollection = new ObservableCollection<Grace>();
         
-        public TravelViewModel(TravelService travelService, EventService eventService, IStateService stateService)
+        public TravelViewModel(ITravelService travelService, EventService eventService, IStateService stateService)
         {
             _travelService = travelService;
+
             // _hotkeyManager = hotkeyManager;
             
             _mainAreas = new ObservableCollection<string>();
@@ -184,10 +186,6 @@ namespace SilkyRing.ViewModels
                 _travelService.UnlockGrace(grace);
             }
         }
-
-        public void Test()
-        {
-            _travelService.Test();
-        }
+        
     }
 }

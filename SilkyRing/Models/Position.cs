@@ -4,9 +4,9 @@ using System.Numerics;
 
 namespace SilkyRing.Models;
 
-public class Position(uint blockId, Vector3 globalCoords, float globalAngle)
+public class Position(uint blockId, Vector3 coords, float angle)
 {
     public uint BlockId { get; set; } = blockId;
-    public Vector3 GlobalCoords { get; set; } = globalCoords;
-    public float GlobalAngle { get; set; } = globalAngle;
+    public Vector3 Coords { get; set; } = coords;
+    public float Angle { get; set; } = angle;
 }

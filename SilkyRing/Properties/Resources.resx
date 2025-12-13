@@ -984,212 +984,212 @@ c3                      ret</value>
 e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
   </data>
   <data name="BossWarps" xml:space="preserve">
-    <value>Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
-Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
-Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
-Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.80
-Limgrave,Crucible Knight,1009394944,-68.52|158.16|45.94|1,-0.83
-Limgrave,Deathbird,1009395200,90.76|199.90|95.32|1,-0.63
-Limgrave,Demi-Human Chief,521076736,20.10|-26.18|-72.41|1,-0.02
-Limgrave,Erdtree Burial Watchdog,503447552,75.57|95.04|58.05|1,-2.10
-Limgrave,Flying Dragon Agheel,1009460224,-112.19|66.72|18.52|1,-2.31
-Limgrave,Godrick the Grafted,167772160,-202.97|81.87|314.08|1,2.42
-Limgrave,Grave Warden Duelist,503578624,-0.45|46.44|71.40|1,2.49
-Limgrave,Guardian Golem,521207808,70.33|-9.42|179.88|1,-0.02
-Limgrave,Mad Pumpkin Head,1009525760,17.95|80.81|51.57|1,-0.06
-Limgrave,Margit,167772160,21.23|-7.15|-11.37|1,1.48
-Limgrave,Night's Cavalry,1009460480,53.21|89.65|-120.50|1,-2.46
-Limgrave,Patches,520093696,18.52|46.98|69.51|1,-1.38
-Limgrave,Soldier of Godrick,301989888,-5.91|9.09|80.35|1,0.78
-Limgrave,Stonedigger Troll,536936448,50.15|-29.96|16.95|1,0.93
-Limgrave,Tibia Mariner,1009592064,-110.72|95.81|-20.88|1,-2.02
-Limgrave,Tree Sentinel,1009394688,-26.75|78.72|-20.25|1,-2.91
-Limgrave,Ulcerated Tree Spirit,301989888,12.97|-111.58|87.40|1,-0.47
-Weeping Peninsula,Ancient Hero of Zamor,1009393920,-107.90|18.85|106.41|1,1.33
-Weeping Peninsula,Cemetary Shade,503316480,-33.18|46.24|68.07|1,-1.57
-Weeping Peninsula,Deathbird,1009524736,-86.94|50.65|39.10|1,0.45
-Weeping Peninsula,Erdtree Avatar,1009459456,-43.50|82.93|63.67|1,0.23
-Weeping Peninsula,Erdtree Burial Watchdog,503382016,-48.33|23.44|-130.85|1,-0.51
-Weeping Peninsula,Leonine Misbegotten,1009458688,-12.57|-0.00|37.03|1,-0.15
-Weeping Peninsula,Miranda the Blighted Bloom,520224768,-295.25|-28.28|-25.62|1,1.55
-Weeping Peninsula,Night's Cavalry,1009524992,40.03|36.12|-71.03|1,0.08
-Weeping Peninsula,Runebear,520159232,-149.44|-40.50|-123.33|1,1.01
-Weeping Peninsula,Scaly Misbegotten,536870912,87.80|-24.20|-55.85|1,3.10
-Liurnia of the Lakes,Adan Thief of Fire,1009394688,-25.43|95.18|127.63|1,-0.24
-Liurnia of the Lakes,Alecto,1008806400,-30.77|345.36|67.15|1,2.14
-Liurnia of the Lakes,Bell Bearing Hunter,1009069568,-32.12|397.94|13.23|1,1.40
-Liurnia of the Lakes,Black Knife Assasin,503644160,-220.75|411.51|17.12|1,1.45
-Liurnia of the Lakes,Bloodhound Knight,520421376,-161.65|154.66|6.04|1,0.19
-Liurnia of the Lakes,Bols,1008807168,-27.69|243.03|-38.05|1,1.52
-Liurnia of the Lakes,Cemetery Shade,503644160,-165.18|406.55|120.58|1,1.65
-Liurnia of the Lakes,Cleanrot Knight,520355840,60.09|200.65|-165.59|1,-1.79
-Liurnia of the Lakes,Crystalian Duo,520486912,163.71|216.60|101.76|1,-1.63
-Liurnia of the Lakes,Crystalian,537001984,23.46|112.06|-3.61|1,3.13
-Liurnia of the Lakes,Deathbird,1009068800,-123.38|237.66|-120.99|1,-0.99
-Liurnia of the Lakes,Erdtree Avatar (Northeast),1009135616,20.92|409.59|-89.99|1,1.33
-Liurnia of the Lakes,Erdtree Avatar (Southwest),1008806656,60.53|284.65|-3.74|1,2.63
-Liurnia of the Lakes,Erdtree Burial Watchdog,503709696,18.78|194.62|5.14|1,-0.11
-Liurnia of the Lakes,Glintstone Dragon Adula,1008937472,-108.71|404.60|5.55|1,0.75
-Liurnia of the Lakes,Glintstone Dragon Smarag,1008872704,-28.25|237.66|8.94|1,2.63
-Liurnia of the Lakes,Grafted Scion,167837696,-33.27|21.37|-87.86|1,2.92
-Liurnia of the Lakes,Magma Wyrm Makar,655622144,-42.37|351.53|-1345.61|1,1.97
-Liurnia of the Lakes,Night's Cavalry (North),1009004544,-80.01|321.18|-92.93|1,-2.33
-Liurnia of the Lakes,Night's Cavalry (South),1009134336,104.96|255.77|9.40|1,-1.19
-Liurnia of the Lakes,Omenkiller,1008937472,-91.18|281.30|-22.80|1,-1.33
-Liurnia of the Lakes,Onyx Lord,1009005056,94.93|378.24|17.17|1,-1.35
-Liurnia of the Lakes,Red Wolf,234881024,116.19|110.49|-224.92|1,-1.51
-Liurnia of the Lakes,Rennala,234881024,92.89|154.06|-44.76|1,1.89
-Liurnia of the Lakes,Loretta,1008939520,2.35|431.01|87.62|1,2.02
-Liurnia of the Lakes,Royal Revenant,1008873472,53.78|252.21|93.66|1,0.41
-Liurnia of the Lakes,Spirit-Caller Snail,503513088,80.45|193.84|-5.37|1,3.14
-Liurnia of the Lakes,Tibia Mariner,1009199872,-61.59|305.18|116.16|1,-3.14
-Altus Plateau,Ancient Dragon Lansseax,1009333248,-4.12|909.35|-100.14|1,-1.54
-Altus Plateau,Ancient Hero of Zamor,503840768,302.89|742.52|18.24|1,-1.45
-Altus Plateau,Black Knife Assassin (Sage's Cave),521338880,147.91|625.75|-43.99|1,2.94
-Altus Plateau,Black Knife Assassin (Sainted Hero's Grave),1009267712,100.08|885.49|6.59|1,1.59
-Altus Plateau,Crystalian Duo,537198592,55.84|778.10|-14.51|1,-0.17
-Altus Plateau,Demi-Human Queen Gilika,1009136384,-46.99|770.80|15.10|1,-0.79
-Altus Plateau,Elemer of the Briar,1009202688,-28.42|768.31|55.91|1,1.62
-Altus Plateau,Fallingstar Beast,1009332992,60.58|841.78|-99.15|1,0.36
-Altus Plateau,Godefroy The Grafted,1009201664,-64.52|708.50|-76.21|1,0.10
-Altus Plateau,Godskin Apostle,1009399552,-48.25|969.12|-23.98|1,-0.67
-Altus Plateau,Necromancer Garris,521338880,114.31|628.38|-69.34|1,3.08
-Altus Plateau,Night's Cavalry,1009201920,-7.42|751.93|-52.74|1,0.00
-Altus Plateau,Omenkiller / Miranda,521273344,-64.37|790.75|190.36|1,1.49
-Altus Plateau,Perfumer Tricia / Misbegotten Warrior,504102912,5.51|618.64|218.61|1,-2.95
-Altus Plateau,Sanguine Noble,1009267968,-79.14|802.27|58.34|1,2.24
-Altus Plateau,Stonedigger Troll,537133056,-284.36|678.15|-98.27|1,0.76
-Altus Plateau,Tibia Mariner,1009136640,36.20|792.04|-55.82|1,2.10
-Altus Plateau,Tree Sentinel Duo,1009398528,-134.07|851.27|-40.65|1,1.26
-Altus Plateau,Wormface,1009267968,124.23|775.15|8.42|1,-1.88
-Leyndell,Bell Bearing Hunter,1009464576,-3.67|993.12|5.72|1,1.07
-Leyndell,Crucible Knight Ordovis / Crucible Knight,503971840,-104.09|761.76|319.38|1,3.09
-Leyndell,Deathbird,1009530112,-56.57|1026.71|88.77|1,-1.56
-Leyndell,Draconic Tree Sentinel,1009595392,40.49|1027.97|28.55|1,2.47
-Leyndell,Esgar,587202560,-183.41|-153.54|-286.83|1,0.78
-Leyndell,Fell Twins,571342848,458.95|30.34|-228.61|1,-0.57
-Leyndell,Godfrey,184549376,-131.37|29.86|-419.72|1,3.10
-Leyndell,Grave Warden Duelist,504168448,27.96|954.72|65.84|1,2.07
-Leyndell,Morgott,184549376,3.53|64.98|-372.41|1,-0.60
-Leyndell,Mohg the Omen,587202560,38.09|-298.70|-101.40|1,-2.08
-Leyndell,Onyx Lord,571211776,-136.20|802.77|-12.45|1,1.13
-Mt. Gelmir,Abductor Virgins (Duo),268435456,232.15|-132.95|-230.29|1,-0.09
-Mt. Gelmir,Demi-Human Queen Margot,520683520,-91.80|1013.21|-74.38|1,-1.67
-Mt. Gelmir,Demi-Human Queen Maggie,1009071104,50.11|906.26|117.37|1,2.15
-Mt. Gelmir,Erdtree Burial Watchdog,503775232,-127.05|820.84|201.82|1,3.14
-Mt. Gelmir,Full-Grown Fallingstar Beast,1009006080,69.47|1058.17|-63.02|1,-2.37
-Mt. Gelmir,Rykard,268435456,97.29|-439.51|-34.83|1,0.02
-Mt. Gelmir,Godskin Noble,268435456,15.61|6.54|-189.56|1,-1.21
-Mt. Gelmir,Kindred of Rot (Duo),520552448,-149.20|719.13|245.70|1,-1.90
-Mt. Gelmir,Magma Wyrm,1008940288,-8.92|823.91|-1.81|1,-0.21
-Mt. Gelmir,Red Wolf of the Champion,503906304,-142.97|646.55|52.91|1,2.91
-Mt. Gelmir,Ulcerated Tree Spirit,1009071616,-116.45|887.61|-58.36|1,-1.31
-Caelid,Battlemage Hugues,1009854208,-87.03|164.37|24.84|1,0.33
-Caelid,Cemetery Shade,504299520,108.59|24.52|237.53|1,-2.38
-Caelid,Cleanrot Knight(Duo),521404416,171.09|86.76|127.45|1,-2.77
-Caelid,Commander O'Neil,1009853952,-49.99|64.31|84.61|1,-0.62
-Caelid,Crucible Knight and Misbegotten Warrior,1009984512,80.99|91.84|-15.60|1,3.12
-Caelid,Death Rite Bird,1009853696,46.18|92.86|31.70|1,-1.09
-Caelid,Decaying Ekzykes,1009788160,-79.86|114.67|2.53|1,-0.64
-Caelid,Putrid Avatar,1009723648,-95.93|127.66|-123.08|1,0.25
-Caelid,Erdtree Burial Watchdog(Duo),504233984,-126.46|73.52|-8.38|1,0.02
-Caelid,Fallingstar Beast,537395200,-42.26|124.56|244.99|1,1.38
-Caelid,Frenzied Duelist,521469952,-129.57|43.84|73.57|1,0.97
-Caelid,Mad Pumpking Heads,1009788928,-114.74|138.42|-109.37|1,3.10
-Caelid,Magma Wyrm,537329664,-13.10|90.89|129.11|1,2.80
-Caelid,Night's Cavalry,1009788160,74.54|113.70|-55.36|1,-2.75
-Caelid,Nox Duo,1009854208,96.34|83.07|60.64|1,-3.13
-Caelid,Crystalian Trio,520814592,-128.02|127.51|151.03|1,0.59
-Caelid,Starscourge Radahn,1009984768,65.75|0.75|-76.10|1,-2.95
-Dragonbarrow,Beast of Farum Azula (Duo),520749056,32.77|125.32|48.48|1,-0.10
-Dragonbarrow,Bell Bearing Hunter,1009789184,-86.98|226.50|-89.11|1,0.88
-Dragonbarrow,Black Blade Kindred,1009986304,-21.53|343.24|-10.93|1,-0.82
-Dragonbarrow,Flying Dragon Greyll,1009986048,127.70|257.88|45.54|1,-0.08
-Dragonbarrow,Godskin Apostle,571277312,77.47|37.08|-59.88|1,-0.00
-Dragonbarrow,Night's Cavalry,1010051328,17.34|219.01|37.85|1,3.03
-Dragonbarrow,Putrid Avatar,1009985536,32.29|213.72|51.83|1,-2.79
-Dragonbarrow,Putrid Tree Spirit,504365056,-97.60|-24.92|-89.66|1,1.55
-Forbidden Lands,Black Blade Kindred,1009857536,-23.33|1043.93|6.50|1,-3.12
-Forbidden Lands,Stray Mimic Tear,504627200,-89.00|1278.72|-240.31|1,0.01
-Forbidden Lands,Night's Cavalry,1009791744,-113.47|977.08|59.23|1,-1.04
-Mountaintops of the Giants,Ancient Hero of Zamor,504430592,-34.94|1452.02|-35.88|1,-1.84
-Mountaintops of the Giants,Borealis the Freezing Fog,1010120960,21.16|1620.18|37.46|1,-0.93
-Mountaintops of the Giants,Commander Niall,1009989888,89.19|1632.02|175.78|1,2.79
-Mountaintops of the Giants,Death Rite Bird,1009924352,108.95|1635.57|-39.12|1,0.88
-Mountaintops of the Giants,Erdtree Avatar,1010055168,-12.95|1679.50|104.34|1,0.73
-Mountaintops of the Giants,Fire Giant,1010054400,17.79|1809.41|-14.41|1,-0.79
-Mountaintops of the Giants,Godskins(Summoner Snail),521535488,-51.90|1579.07|-100.50|1,-0.03
-Mountaintops of the Giants,Ulcerated Tree Spirit,504496128,-103.34|1477.71|157.60|1,1.32
-Mountaintops of the Giants,Vyke Knight of the Roundtable,1010120704,-53.94|1668.07|-80.99|1,-0.70
-Consecrated Snowfield,Astel Stars of Darkness,537591808,49.54|1207.97|68.18|1,-2.99
-Consecrated Snowfield,Death Rite Bird,1009793280,-95.71|1291.67|88.01|1,-3.11
-Consecrated Snowfield,Great Wyrm Theodorix,1009924096,-53.30|1255.08|-10.44|1,-1.73
-Consecrated Snowfield,Misbegotten Crusader,520880128,-26.85|1194.36|94.62|1,-2.44
-Consecrated Snowfield,Night's Cavalry(Duo),1009792768,93.41|1266.51|80.82|1,-0.01
-Consecrated Snowfield,Putrid Avatar,1009924352,-92.51|1386.87|-99.69|1,-3.00
-Consecrated Snowfield,Putrid Grave Warden Duelist,504561664,44.98|1375.02|-154.33|1,-1.22
-Mohgwyn Palace,Mohg Lord of Blood,201654272,1614.64|-505.78|1205.17|1,1.98
-The Haligtree,Loretta,251658240,141.56|431.78|213.93|1,-2.34
-The Haligtree,Malenia,251658240,45.99|54.64|520.38|1,0.92
-Siofra River,Ancestor Spirit,201850880,1432.25|-1735.82|1052.02|1,-1.57
-Siofra River,Dragonkin Soldier,201457664,1258.61|-748.32|1662.64|1,2.81
-Ainsel River,Dragonkin Soldier of Nokstella,201392128,-95.25|-224.35|53.14|1,2.53
-Nokron Eternal City,Mimic Tear,201457664,961.53|-617.44|1166.31|1,-1.05
-Nokron Eternal City,Regal Ancestor Spirit,201916416,1217.28|-1538.17|1814.91|1,2.68
-Nokron Eternal City,Valiant Gargoyles,201457664,1311.76|-618.70|1871.87|1,2.19
-Deeproot Depths,Crucible Knight Siluria,201523200,-857.50|93.01|-339.41|1,2.17
-Deeproot Depths,Fia's Champions,201523200,-475.30|149.39|-329.01|1,-2.69
-Deeproot Depths,Lichdragon Fortissax,201523200,-475.30|149.39|-329.01|1,-2.69
-Lake of Rot,Astel Naturalborn of the Void,201588736,-103.14|-106.09|-245.48|1,3.03
-Lake of Rot,Dragonkin Soldier,201392128,-155.06|-316.16|-301.71|1,1.28
-Crumbling Farum Azula,Godskin Duo,218103808,-0.33|-38.98|388.31|1,2.93
-Crumbling Farum Azula,Maliketh,218103808,132.56|-32.80|394.95|1,-1.22
-Crumbling Farum Azula,Dragonlord Placidusax,218103808,53.68|-186.71|405.86|1,0.14
-Leyndell Ashen Capital,Gideon,184877056,-181.97|29.87|-387.47|1,-0.40
-Leyndell Ashen Capital,Hoarah Loux,184877056,4.10|64.98|-372.18|1,-0.73
-Leyndell Ashen Capital,Radagon and Elden Beast,318767104,84.41|79.07|-478.42|1,-0.62
-Gravesite Plain,Blackgaol Knight,1026435328,-152.02|317.66|54.72|1,1.67
-Gravesite Plain,Chief Bloodfiend,721420288,110.03|117.20|124.93|1,-1.52
-Gravesite Plain,Demi-Human Swordmaster Onze,687865856,-184.60|79.29|-170.69|1,-0.46
-Gravesite Plain,Divine Beast Dancing Lion,335544320,-57.96|118.12|286.23|1,-2.86
-Gravesite Plain,Ghostflame Dragon,1026435840,-121.97|267.82|82.60|1,2.33
-Gravesite Plain,Lamenter,687996928,131.76|20.81|8.27|1,-0.96
-Gravesite Plain,Rellana Twin Moon Knight,1026567168,-58.12|427.01|14.26|1,-3.14
-Gravesite Plain,Red Bear,1026436352,98.24|395.92|-62.70|1,-0.62
-Scadu Atlus,Black Knight Edreed,1026632448,51.52|396.48|-82.79|1,-0.87
-Scadu Atlus,Black Knight Garrew,1026501888,-32.66|354.07|-120.69|1,0.72
-Scadu Atlus,Commander Gaius,1026633728,47.49|583.85|-48.13|1,-2.63
-Scadu Atlus,Count Ymir Mother of Fingers,1026764032,-90.98|472.02|38.30|1,0.02
-Scadu Atlus,Curseblade Labirith,687931392,-173.37|191.35|70.14|1,2.17
-Scadu Atlus,Death Knight,671088640,-397.88|114.01|-34.10|1,1.39
-Scadu Atlus,Dryleaf Dane,1026632704,-54.73|351.25|119.46|1,-1.09
-Scadu Atlus,Ghostflame Dragon,1026632448,-22.68|405.52|77.27|1,-2.96
-Scadu Atlus,Golden Hippopotamus,352321536,62.09|157.06|107.72|1,-2.68
-Scadu Atlus,Messmer The Impaler,352387072,97.11|351.76|318.32|1,2.86
-Scadu Atlus,Metyr,1026764288,-103.69|423.23|-109.00|1,2.87
-Scadu Atlus,Rakshasa,1026763776,-13.03|162.91|78.79|1,-2.35
-Scadu Atlus,Ralva the Great Red Bear,1026633216,36.31|405.90|-99.81|1,-0.51
-Scadu Atlus,Tree Sentinel (Torch and Shield),1026699008,-48.11|553.42|109.64|1,-2.02
-Rauh Base,Death Knight,671154176,168.46|150.02|-117.10|1,-0.68
-Rauh Base,Divine Beast Dancing Lion,1026436608,-74.51|533.80|11.26|1,-0.37
-Rauh Base,Romina,1026305536,-46.26|625.38|-77.72|1,0.26
-Rauh Base,Rugalea the Great Red Bear,1026306048,-0.70|328.21|-122.58|1,0.83
-Cerulean Coast,Dancer of Ranah,1026434560,-23.15|8.46|-75.44|1,0.06
-Cerulean Coast,Ghostflame Dragon,1026565632,-71.62|20.94|86.37|1,1.85
-Cerulean Coast,Putrescent Knight,369098752,-53.10|221.70|140.04|1,0.44
-Charo's Hidden Grave,Death Rite Bird,1026565888,-104.25|93.59|-10.16|1,2.46
-Charo's Hidden Grave,Demi-Human Queen Marigga,1026435072,7.06|20.09|-50.19|1,2.00
-Jagged Peak,Ancient Dragon-Man,721485824,33.89|94.09|29.35|1,-0.20
-Jagged Peak,Ancient Dragon Senessax,1026893568,102.59|515.78|-3.08|1,-1.88
-Jagged Peak,Bayle the Dread,1026959104,75.72|955.06|84.12|1,-0.76
-Jagged Peak,Jagged Peak Drake,1026762752,98.68|286.60|-18.13|1,-1.21
-Abyssal Woods,Jori,671219712,196.65|-507.98|114.71|1,0.20
-Abyssal Woods,Midra Lord of Frenzied Flame,469762048,-7.27|16.12|-58.36|1,0.19
-Scaduview,Fallingstar Beast,1026830592,-27.95|493.57|-103.64|1,-0.95
-Scaduview,Scadutree Avatar,352321536,381.02|-239.48|416.31|1,-3.13
-Finger Ruins Rhia,Jagged Peak Drake,1026631936,2.77|70.53|-94.80|1,-1.38
-Enir-Ilim,Leda Gank,335609856,-290.28|174.59|-311.78|1,-1.32
-Enir-Ilim,Consort,335609856,-201.73|298.91|-186.25|1,2.00
+    <value>0,Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
+0,Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
+0,Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
+0,Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.80
+0,Limgrave,Crucible Knight,1009394944,-68.52|158.16|45.94|1,-0.83
+0,Limgrave,Deathbird,1009395200,90.76|199.90|95.32|1,-0.63
+0,Limgrave,Demi-Human Chief,521076736,20.10|-26.18|-72.41|1,-0.02
+0,Limgrave,Erdtree Burial Watchdog,503447552,75.57|95.04|58.05|1,-2.10
+0,Limgrave,Flying Dragon Agheel,1009460224,-112.19|66.72|18.52|1,-2.31
+0,Limgrave,Godrick the Grafted,167772160,-202.97|81.87|314.08|1,2.42
+0,Limgrave,Grave Warden Duelist,503578624,-0.45|46.44|71.40|1,2.49
+0,Limgrave,Guardian Golem,521207808,70.33|-9.42|179.88|1,-0.02
+0,Limgrave,Mad Pumpkin Head,1009525760,17.95|80.81|51.57|1,-0.06
+0,Limgrave,Margit,167772160,21.23|-7.15|-11.37|1,1.48
+0,Limgrave,Night's Cavalry,1009460480,53.21|89.65|-120.50|1,-2.46
+0,Limgrave,Patches,520093696,18.52|46.98|69.51|1,-1.38
+0,Limgrave,Soldier of Godrick,301989888,-5.91|9.09|80.35|1,0.78
+0,Limgrave,Stonedigger Troll,536936448,50.15|-29.96|16.95|1,0.93
+0,Limgrave,Tibia Mariner,1009592064,-110.72|95.81|-20.88|1,-2.02
+0,Limgrave,Tree Sentinel,1009394688,-26.75|78.72|-20.25|1,-2.91
+0,Limgrave,Ulcerated Tree Spirit,301989888,12.97|-111.58|87.40|1,-0.47
+0,Weeping Peninsula,Ancient Hero of Zamor,1009393920,-107.90|18.85|106.41|1,1.33
+0,Weeping Peninsula,Cemetary Shade,503316480,-33.18|46.24|68.07|1,-1.57
+0,Weeping Peninsula,Deathbird,1009524736,-86.94|50.65|39.10|1,0.45
+0,Weeping Peninsula,Erdtree Avatar,1009459456,-43.50|82.93|63.67|1,0.23
+0,Weeping Peninsula,Erdtree Burial Watchdog,503382016,-48.33|23.44|-130.85|1,-0.51
+0,Weeping Peninsula,Leonine Misbegotten,1009458688,-12.57|-0.00|37.03|1,-0.15
+0,Weeping Peninsula,Miranda the Blighted Bloom,520224768,-295.25|-28.28|-25.62|1,1.55
+0,Weeping Peninsula,Night's Cavalry,1009524992,40.03|36.12|-71.03|1,0.08
+0,Weeping Peninsula,Runebear,520159232,-149.44|-40.50|-123.33|1,1.01
+0,Weeping Peninsula,Scaly Misbegotten,536870912,87.80|-24.20|-55.85|1,3.10
+0,Liurnia of the Lakes,Adan Thief of Fire,1009394688,-25.43|95.18|127.63|1,-0.24
+0,Liurnia of the Lakes,Alecto,1008806400,-30.77|345.36|67.15|1,2.14
+0,Liurnia of the Lakes,Bell Bearing Hunter,1009069568,-32.12|397.94|13.23|1,1.40
+0,Liurnia of the Lakes,Black Knife Assasin,503644160,-220.75|411.51|17.12|1,1.45
+0,Liurnia of the Lakes,Bloodhound Knight,520421376,-161.65|154.66|6.04|1,0.19
+0,Liurnia of the Lakes,Bols,1008807168,-27.69|243.03|-38.05|1,1.52
+0,Liurnia of the Lakes,Cemetery Shade,503644160,-165.18|406.55|120.58|1,1.65
+0,Liurnia of the Lakes,Cleanrot Knight,520355840,60.09|200.65|-165.59|1,-1.79
+0,Liurnia of the Lakes,Crystalian Duo,520486912,163.71|216.60|101.76|1,-1.63
+0,Liurnia of the Lakes,Crystalian,537001984,23.46|112.06|-3.61|1,3.13
+0,Liurnia of the Lakes,Deathbird,1009068800,-123.38|237.66|-120.99|1,-0.99
+0,Liurnia of the Lakes,Erdtree Avatar (Northeast),1009135616,20.92|409.59|-89.99|1,1.33
+0,Liurnia of the Lakes,Erdtree Avatar (Southwest),1008806656,60.53|284.65|-3.74|1,2.63
+0,Liurnia of the Lakes,Erdtree Burial Watchdog,503709696,18.78|194.62|5.14|1,-0.11
+0,Liurnia of the Lakes,Glintstone Dragon Adula,1008937472,-108.71|404.60|5.55|1,0.75
+0,Liurnia of the Lakes,Glintstone Dragon Smarag,1008872704,-28.25|237.66|8.94|1,2.63
+0,Liurnia of the Lakes,Grafted Scion,167837696,-33.27|21.37|-87.86|1,2.92
+0,Liurnia of the Lakes,Magma Wyrm Makar,655622144,-42.37|351.53|-1345.61|1,1.97
+0,Liurnia of the Lakes,Night's Cavalry (North),1009004544,-80.01|321.18|-92.93|1,-2.33
+0,Liurnia of the Lakes,Night's Cavalry (South),1009134336,104.96|255.77|9.40|1,-1.19
+0,Liurnia of the Lakes,Omenkiller,1008937472,-91.18|281.30|-22.80|1,-1.33
+0,Liurnia of the Lakes,Onyx Lord,1009005056,94.93|378.24|17.17|1,-1.35
+0,Liurnia of the Lakes,Red Wolf,234881024,116.19|110.49|-224.92|1,-1.51
+0,Liurnia of the Lakes,Rennala,234881024,92.89|154.06|-44.76|1,1.89
+0,Liurnia of the Lakes,Loretta,1008939520,2.35|431.01|87.62|1,2.02
+0,Liurnia of the Lakes,Royal Revenant,1008873472,53.78|252.21|93.66|1,0.41
+0,Liurnia of the Lakes,Spirit-Caller Snail,503513088,80.45|193.84|-5.37|1,3.14
+0,Liurnia of the Lakes,Tibia Mariner,1009199872,-61.59|305.18|116.16|1,-3.14
+0,Altus Plateau,Ancient Dragon Lansseax,1009333248,-4.12|909.35|-100.14|1,-1.54
+0,Altus Plateau,Ancient Hero of Zamor,503840768,302.89|742.52|18.24|1,-1.45
+0,Altus Plateau,Black Knife Assassin (Sage's Cave),521338880,147.91|625.75|-43.99|1,2.94
+0,Altus Plateau,Black Knife Assassin (Sainted Hero's Grave),1009267712,100.08|885.49|6.59|1,1.59
+0,Altus Plateau,Crystalian Duo,537198592,55.84|778.10|-14.51|1,-0.17
+0,Altus Plateau,Demi-Human Queen Gilika,1009136384,-46.99|770.80|15.10|1,-0.79
+0,Altus Plateau,Elemer of the Briar,1009202688,-28.42|768.31|55.91|1,1.62
+0,Altus Plateau,Fallingstar Beast,1009332992,60.58|841.78|-99.15|1,0.36
+0,Altus Plateau,Godefroy The Grafted,1009201664,-64.52|708.50|-76.21|1,0.10
+0,Altus Plateau,Godskin Apostle,1009399552,-48.25|969.12|-23.98|1,-0.67
+0,Altus Plateau,Necromancer Garris,521338880,114.31|628.38|-69.34|1,3.08
+0,Altus Plateau,Night's Cavalry,1009201920,-7.42|751.93|-52.74|1,0.00
+0,Altus Plateau,Omenkiller / Miranda,521273344,-64.37|790.75|190.36|1,1.49
+0,Altus Plateau,Perfumer Tricia / Misbegotten Warrior,504102912,5.51|618.64|218.61|1,-2.95
+0,Altus Plateau,Sanguine Noble,1009267968,-79.14|802.27|58.34|1,2.24
+0,Altus Plateau,Stonedigger Troll,537133056,-284.36|678.15|-98.27|1,0.76
+0,Altus Plateau,Tibia Mariner,1009136640,36.20|792.04|-55.82|1,2.10
+0,Altus Plateau,Tree Sentinel Duo,1009398528,-134.07|851.27|-40.65|1,1.26
+0,Altus Plateau,Wormface,1009267968,124.23|775.15|8.42|1,-1.88
+0,Leyndell,Bell Bearing Hunter,1009464576,-3.67|993.12|5.72|1,1.07
+0,Leyndell,Crucible Knight Ordovis / Crucible Knight,503971840,-104.09|761.76|319.38|1,3.09
+0,Leyndell,Deathbird,1009530112,-56.57|1026.71|88.77|1,-1.56
+0,Leyndell,Draconic Tree Sentinel,1009595392,40.49|1027.97|28.55|1,2.47
+0,Leyndell,Esgar,587202560,-183.41|-153.54|-286.83|1,0.78
+0,Leyndell,Fell Twins,571342848,458.95|30.34|-228.61|1,-0.57
+0,Leyndell,Godfrey,184549376,-131.37|29.86|-419.72|1,3.10
+0,Leyndell,Grave Warden Duelist,504168448,27.96|954.72|65.84|1,2.07
+0,Leyndell,Morgott,184549376,3.53|64.98|-372.41|1,-0.60
+0,Leyndell,Mohg the Omen,587202560,38.09|-298.70|-101.40|1,-2.08
+0,Leyndell,Onyx Lord,571211776,-136.20|802.77|-12.45|1,1.13
+0,Mt.Gelmir,Abductor Virgins (Duo),268435456,232.15|-132.95|-230.29|1,-0.09
+0,Mt.Gelmir,Demi-Human Queen Margot,520683520,-91.80|1013.21|-74.38|1,-1.67
+0,Mt.Gelmir,Demi-Human Queen Maggie,1009071104,50.11|906.26|117.37|1,2.15
+0,Mt.Gelmir,Erdtree Burial Watchdog,503775232,-127.05|820.84|201.82|1,3.14
+0,Mt.Gelmir,Full-Grown Fallingstar Beast,1009006080,69.47|1058.17|-63.02|1,-2.37
+0,Mt.Gelmir,Rykard,268435456,97.29|-439.51|-34.83|1,0.02
+0,Mt.Gelmir,Godskin Noble,268435456,15.61|6.54|-189.56|1,-1.21
+0,Mt.Gelmir,Kindred of Rot (Duo),520552448,-149.20|719.13|245.70|1,-1.90
+0,Mt.Gelmir,Magma Wyrm,1008940288,-8.92|823.91|-1.81|1,-0.21
+0,Mt.Gelmir,Red Wolf of the Champion,503906304,-142.97|646.55|52.91|1,2.91
+0,Mt.Gelmir,Ulcerated Tree Spirit,1009071616,-116.45|887.61|-58.36|1,-1.31
+0,Caelid,Battlemage Hugues,1009854208,-87.03|164.37|24.84|1,0.33
+0,Caelid,Cemetery Shade,504299520,108.59|24.52|237.53|1,-2.38
+0,Caelid,Cleanrot Knight(Duo),521404416,171.09|86.76|127.45|1,-2.77
+0,Caelid,Commander O'Neil,1009853952,-49.99|64.31|84.61|1,-0.62
+0,Caelid,Crucible Knight and Misbegotten Warrior,1009984512,80.99|91.84|-15.60|1,3.12
+0,Caelid,Death Rite Bird,1009853696,46.18|92.86|31.70|1,-1.09
+0,Caelid,Decaying Ekzykes,1009788160,-79.86|114.67|2.53|1,-0.64
+0,Caelid,Putrid Avatar,1009723648,-95.93|127.66|-123.08|1,0.25
+0,Caelid,Erdtree Burial Watchdog(Duo),504233984,-126.46|73.52|-8.38|1,0.02
+0,Caelid,Fallingstar Beast,537395200,-42.26|124.56|244.99|1,1.38
+0,Caelid,Frenzied Duelist,521469952,-129.57|43.84|73.57|1,0.97
+0,Caelid,Mad Pumpking Heads,1009788928,-114.74|138.42|-109.37|1,3.10
+0,Caelid,Magma Wyrm,537329664,-13.10|90.89|129.11|1,2.80
+0,Caelid,Night's Cavalry,1009788160,74.54|113.70|-55.36|1,-2.75
+0,Caelid,Nox Duo,1009854208,96.34|83.07|60.64|1,-3.13
+0,Caelid,Crystalian Trio,520814592,-128.02|127.51|151.03|1,0.59
+0,Caelid,Starscourge Radahn,1009984768,65.75|0.75|-76.10|1,-2.95
+0,Dragonbarrow,Beast of Farum Azula (Duo),520749056,32.77|125.32|48.48|1,-0.10
+0,Dragonbarrow,Bell Bearing Hunter,1009789184,-86.98|226.50|-89.11|1,0.88
+0,Dragonbarrow,Black Blade Kindred,1009986304,-21.53|343.24|-10.93|1,-0.82
+0,Dragonbarrow,Flying Dragon Greyll,1009986048,127.70|257.88|45.54|1,-0.08
+0,Dragonbarrow,Godskin Apostle,571277312,77.47|37.08|-59.88|1,-0.00
+0,Dragonbarrow,Night's Cavalry,1010051328,17.34|219.01|37.85|1,3.03
+0,Dragonbarrow,Putrid Avatar,1009985536,32.29|213.72|51.83|1,-2.79
+0,Dragonbarrow,Putrid Tree Spirit,504365056,-97.60|-24.92|-89.66|1,1.55
+0,Forbidden Lands,Black Blade Kindred,1009857536,-23.33|1043.93|6.50|1,-3.12
+0,Forbidden Lands,Stray Mimic Tear,504627200,-89.00|1278.72|-240.31|1,0.01
+0,Forbidden Lands,Night's Cavalry,1009791744,-113.47|977.08|59.23|1,-1.04
+0,Mountaintops of the Giants,Ancient Hero of Zamor,504430592,-34.94|1452.02|-35.88|1,-1.84
+0,Mountaintops of the Giants,Borealis the Freezing Fog,1010120960,21.16|1620.18|37.46|1,-0.93
+0,Mountaintops of the Giants,Commander Niall,1009989888,89.19|1632.02|175.78|1,2.79
+0,Mountaintops of the Giants,Death Rite Bird,1009924352,108.95|1635.57|-39.12|1,0.88
+0,Mountaintops of the Giants,Erdtree Avatar,1010055168,-12.95|1679.50|104.34|1,0.73
+0,Mountaintops of the Giants,Fire Giant,1010054400,17.79|1809.41|-14.41|1,-0.79
+0,Mountaintops of the Giants,Godskins(Summoner Snail),521535488,-51.90|1579.07|-100.50|1,-0.03
+0,Mountaintops of the Giants,Ulcerated Tree Spirit,504496128,-103.34|1477.71|157.60|1,1.32
+0,Mountaintops of the Giants,Vyke Knight of the Roundtable,1010120704,-53.94|1668.07|-80.99|1,-0.70
+0,Consecrated Snowfield,Astel Stars of Darkness,537591808,49.54|1207.97|68.18|1,-2.99
+0,Consecrated Snowfield,Death Rite Bird,1009793280,-95.71|1291.67|88.01|1,-3.11
+0,Consecrated Snowfield,Great Wyrm Theodorix,1009924096,-53.30|1255.08|-10.44|1,-1.73
+0,Consecrated Snowfield,Misbegotten Crusader,520880128,-26.85|1194.36|94.62|1,-2.44
+0,Consecrated Snowfield,Night's Cavalry(Duo),1009792768,93.41|1266.51|80.82|1,-0.01
+0,Consecrated Snowfield,Putrid Avatar,1009924352,-92.51|1386.87|-99.69|1,-3.00
+0,Consecrated Snowfield,Putrid Grave Warden Duelist,504561664,44.98|1375.02|-154.33|1,-1.22
+0,Mohgwyn Palace,Mohg Lord of Blood,201654272,1614.64|-505.78|1205.17|1,1.98
+0,The Haligtree,Loretta,251658240,141.56|431.78|213.93|1,-2.34
+0,The Haligtree,Malenia,251658240,45.99|54.64|520.38|1,0.92
+0,Siofra River,Ancestor Spirit,201850880,1432.25|-1735.82|1052.02|1,-1.57
+0,Siofra River,Dragonkin Soldier,201457664,1258.61|-748.32|1662.64|1,2.81
+0,Ainsel River,Dragonkin Soldier of Nokstella,201392128,-95.25|-224.35|53.14|1,2.53
+0,Nokron Eternal City,Mimic Tear,201457664,961.53|-617.44|1166.31|1,-1.05
+0,Nokron Eternal City,Regal Ancestor Spirit,201916416,1217.28|-1538.17|1814.91|1,2.68
+0,Nokron Eternal City,Valiant Gargoyles,201457664,1311.76|-618.70|1871.87|1,2.19
+0,Deeproot Depths,Crucible Knight Siluria,201523200,-857.50|93.01|-339.41|1,2.17
+0,Deeproot Depths,Fia's Champions,201523200,-475.30|149.39|-329.01|1,-2.69
+0,Deeproot Depths,Lichdragon Fortissax,201523200,-475.30|149.39|-329.01|1,-2.69
+0,Lake of Rot,Astel Naturalborn of the Void,201588736,-103.14|-106.09|-245.48|1,3.03
+0,Lake of Rot,Dragonkin Soldier,201392128,-155.06|-316.16|-301.71|1,1.28
+0,Crumbling Farum Azula,Godskin Duo,218103808,-0.33|-38.98|388.31|1,2.93
+0,Crumbling Farum Azula,Maliketh,218103808,132.56|-32.80|394.95|1,-1.22
+0,Crumbling Farum Azula,Dragonlord Placidusax,218103808,53.68|-186.71|405.86|1,0.14
+0,Leyndell Ashen Capital,Gideon,184877056,-181.97|29.87|-387.47|1,-0.40
+0,Leyndell Ashen Capital,Hoarah Loux,184877056,4.10|64.98|-372.18|1,-0.73
+0,Leyndell Ashen Capital,Radagon and Elden Beast,318767104,84.41|79.07|-478.42|1,-0.62
+1,Gravesite Plain,Blackgaol Knight,1026435328,-152.02|317.66|54.72|1,1.67
+1,Gravesite Plain,Chief Bloodfiend,721420288,110.03|117.20|124.93|1,-1.52
+1,Gravesite Plain,Demi-Human Swordmaster Onze,687865856,-184.60|79.29|-170.69|1,-0.46
+1,Gravesite Plain,Divine Beast Dancing Lion,335544320,-57.96|118.12|286.23|1,-2.86
+1,Gravesite Plain,Ghostflame Dragon,1026435840,-121.97|267.82|82.60|1,2.33
+1,Gravesite Plain,Lamenter,687996928,131.76|20.81|8.27|1,-0.96
+1,Gravesite Plain,Rellana Twin Moon Knight,1026567168,-58.12|427.01|14.26|1,-3.14
+1,Gravesite Plain,Red Bear,1026436352,98.24|395.92|-62.70|1,-0.62
+1,Scadu Atlus,Black Knight Edreed,1026632448,51.52|396.48|-82.79|1,-0.87
+1,Scadu Atlus,Black Knight Garrew,1026501888,-32.66|354.07|-120.69|1,0.72
+1,Scadu Atlus,Commander Gaius,1026633728,47.49|583.85|-48.13|1,-2.63
+1,Scadu Atlus,Count Ymir Mother of Fingers,1026764032,-90.98|472.02|38.30|1,0.02
+1,Scadu Atlus,Curseblade Labirith,687931392,-173.37|191.35|70.14|1,2.17
+1,Scadu Atlus,Death Knight,671088640,-397.88|114.01|-34.10|1,1.39
+1,Scadu Atlus,Dryleaf Dane,1026632704,-54.73|351.25|119.46|1,-1.09
+1,Scadu Atlus,Ghostflame Dragon,1026632448,-22.68|405.52|77.27|1,-2.96
+1,Scadu Atlus,Golden Hippopotamus,352321536,62.09|157.06|107.72|1,-2.68
+1,Scadu Atlus,Messmer The Impaler,352387072,97.11|351.76|318.32|1,2.86
+1,Scadu Atlus,Metyr,1026764288,-103.69|423.23|-109.00|1,2.87
+1,Scadu Atlus,Rakshasa,1026763776,-13.03|162.91|78.79|1,-2.35
+1,Scadu Atlus,Ralva the Great Red Bear,1026633216,36.31|405.90|-99.81|1,-0.51
+1,Scadu Atlus,Tree Sentinel (Torch and Shield),1026699008,-48.11|553.42|109.64|1,-2.02
+1,Rauh Base,Death Knight,671154176,168.46|150.02|-117.10|1,-0.68
+1,Rauh Base,Divine Beast Dancing Lion,1026436608,-74.51|533.80|11.26|1,-0.37
+1,Rauh Base,Romina,1026305536,-46.26|625.38|-77.72|1,0.26
+1,Rauh Base,Rugalea the Great Red Bear,1026306048,-0.70|328.21|-122.58|1,0.83
+1,Cerulean Coast,Dancer of Ranah,1026434560,-23.15|8.46|-75.44|1,0.06
+1,Cerulean Coast,Ghostflame Dragon,1026565632,-71.62|20.94|86.37|1,1.85
+1,Cerulean Coast,Putrescent Knight,369098752,-53.10|221.70|140.04|1,0.44
+1,Charo's Hidden Grave,Death Rite Bird,1026565888,-104.25|93.59|-10.16|1,2.46
+1,Charo's Hidden Grave,Demi-Human Queen Marigga,1026435072,7.06|20.09|-50.19|1,2.00
+1,Jagged Peak,Ancient Dragon-Man,721485824,33.89|94.09|29.35|1,-0.20
+1,Jagged Peak,Ancient Dragon Senessax,1026893568,102.59|515.78|-3.08|1,-1.88
+1,Jagged Peak,Bayle the Dread,1026959104,75.72|955.06|84.12|1,-0.76
+1,Jagged Peak,Jagged Peak Drake,1026762752,98.68|286.60|-18.13|1,-1.21
+1,Abyssal Woods,Jori,671219712,196.65|-507.98|114.71|1,0.20
+1,Abyssal Woods,Midra Lord of Frenzied Flame,469762048,-7.27|16.12|-58.36|1,0.19
+1,Scaduview,Fallingstar Beast,1026830592,-27.95|493.57|-103.64|1,-0.95
+1,Scaduview,Scadutree Avatar,352321536,381.02|-239.48|416.31|1,-3.13
+1,Finger Ruins Rhia,Jagged Peak Drake,1026631936,2.77|70.53|-94.80|1,-1.38
+1,Enir-Ilim,Leda Gank,335609856,-290.28|174.59|-311.78|1,-1.32
+1,Enir-Ilim,Consort,335609856,-201.73|298.91|-186.25|1,2.00
 
 
 
