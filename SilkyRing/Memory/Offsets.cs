@@ -327,6 +327,8 @@ namespace SilkyRing.Memory
             public static long GetEvent;
             public static long GetPlayerItemQuantityById;
             public static long ItemSpawn;
+            public static long MatrixVectorProduct;
+            public static long ChrInsByHandle;
         }
 
         public static class Patches

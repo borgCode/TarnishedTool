@@ -37,4 +37,5 @@ public interface IPlayerService
     Stats GetStats();
     void SetStat(int offset, int newValue);
     long GetHandle();
+    void EnableGravity();
 }

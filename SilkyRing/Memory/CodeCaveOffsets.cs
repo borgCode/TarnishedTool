@@ -15,8 +15,7 @@ namespace SilkyRing.Memory
             UpdateCoords = 0x100
         }
 
-        public const int Rykard = 0x300;
-
+        
         public enum TargetView
         {
             MaxDist = 0x350,
@@ -58,5 +57,8 @@ namespace SilkyRing.Memory
         public const int ItemSpawnStruct = 0x1250;
         public const int ItemSpawnCode = 0x1350;
 
+        
+        //TODO 
+        public const int Rykard = 0x300;
     }
 }

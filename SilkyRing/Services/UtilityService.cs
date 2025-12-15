@@ -6,7 +6,7 @@ using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Services
 {
-    public class UtilityService(MemoryService memoryService, HookManager hookManager) : IUtilityService
+    public class UtilityService(MemoryService memoryService, HookManager hookManager, IPlayerService playerService) : IUtilityService
     {
         public void ToggleNoClip(bool isNoClipEnabled)
         {
@@ -30,10 +30,6 @@ namespace SilkyRing.Services
                     { 0x0F, 0xB6, 0x44, 0x24, 0x36 });
                 hookManager.InstallHook(updateCoordsCode.ToInt64(), Hooks.UpdateCoords, new byte[]
                     { 0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43, 0x7C, 0x00, 0x00, 0x80, 0x3F });
-
-                var physicsPtr = memoryService.FollowPointers(WorldChrMan.Base,
-                    [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
-                memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
             }
             else
             {
@@ -41,9 +37,9 @@ namespace SilkyRing.Services
                 hookManager.UninstallHook(kbCode.ToInt64());
                 hookManager.UninstallHook(triggersCode.ToInt64());
                 hookManager.UninstallHook(updateCoordsCode.ToInt64());
-                var physicsPtr = memoryService.FollowPointers(WorldChrMan.Base,
-                    [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
-                memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
+
+                playerService.EnableGravity();
+                //TODO set both player and torrent to gravity
             }
         }
 
@@ -95,12 +91,14 @@ namespace SilkyRing.Services
             
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
-                (updateCoordsCode.ToInt64() + 0x1, WorldChrMan.Base.ToInt64(), 7, 0x1 + 3),
-                (updateCoordsCode.ToInt64() + 0x2F, InputManager.Base.ToInt64(), 7, 0x2F + 3),
-                (updateCoordsCode.ToInt64() + 0xB9, FieldArea.Base.ToInt64(), 7, 0xB9 + 3),
-                (updateCoordsCode.ToInt64() + 0xE4, zDirection.ToInt64(), 6, 0xE4 + 2),
-                (updateCoordsCode.ToInt64() + 0x10E, zDirection.ToInt64(), 7, 0x10E + 2),
-                (updateCoordsCode.ToInt64() + 0x13C, Hooks.UpdateCoords + 0xB, 5, 0x13C + 1)
+                (updateCoordsCode.ToInt64() + 0x7, WorldChrMan.Base.ToInt64(), 7, 0x7 + 3),
+                (updateCoordsCode.ToInt64() + 0x42, Functions.ChrInsByHandle, 5, 0x42 + 1),
+                (updateCoordsCode.ToInt64() + 0x7E, InputManager.Base.ToInt64(), 7, 0x7E + 3),
+                (updateCoordsCode.ToInt64() + 0xE8, FieldArea.Base.ToInt64(), 7, 0xE8 + 3),
+                (updateCoordsCode.ToInt64() + 0x104, Functions.MatrixVectorProduct, 5, 0x104 + 1),
+                (updateCoordsCode.ToInt64() + 0x13A, zDirection.ToInt64(), 6, 0x13A + 2),
+                (updateCoordsCode.ToInt64() + 0x164, zDirection.ToInt64(), 7, 0x164 + 2),
+                (updateCoordsCode.ToInt64() + 0x19B, Hooks.UpdateCoords + 0xB, 5, 0x19B + 1)
             });
             memoryService.WriteBytes(updateCoordsCode, codeBytes);
         }

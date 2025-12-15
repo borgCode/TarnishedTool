@@ -110,6 +110,8 @@ namespace SilkyRing.Memory
             Functions.GetEvent = FindAddressByPattern(Pattern.GetEvent).ToInt64();
             Functions.GetPlayerItemQuantityById = FindAddressByPattern(Pattern.GetPlayerItemQuantityById).ToInt64();
             Functions.ItemSpawn = FindAddressByPattern(Pattern.ItemSpawn).ToInt64();
+            Functions.MatrixVectorProduct = FindAddressByPattern(Pattern.MatrixVectorProduct).ToInt64();
+            Functions.ChrInsByHandle = FindAddressByPattern(Pattern.ChrInsByHandle).ToInt64();
 
 
 #if DEBUG
@@ -158,6 +160,8 @@ namespace SilkyRing.Memory
             Console.WriteLine($"Funcs.GetEvent: 0x{Functions.GetEvent:X}");
             Console.WriteLine($"Funcs.GetPlayerItemQuantityById: 0x{Functions.GetPlayerItemQuantityById:X}");
             Console.WriteLine($"Funcs.ItemSpawn: 0x{Functions.ItemSpawn:X}");
+            Console.WriteLine($"Funcs.MatrixVectorProduct: 0x{Functions.MatrixVectorProduct:X}");
+            Console.WriteLine($"Funcs.ChrInsByHandle: 0x{Functions.ChrInsByHandle:X}");
 #endif
         }
 

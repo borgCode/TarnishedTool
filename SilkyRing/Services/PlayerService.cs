@@ -382,6 +382,14 @@ namespace SilkyRing.Services
             return memoryService.ReadInt64((IntPtr)playerIns + (int)WorldChrMan.PlayerInsOffsets.Handle);
         }
 
+        public void EnableGravity()
+        {
+            var chrRideModule = GetChrRidePtr();
+            var torrentPhysicsPtr = GetTorrentPhysicsPtr(chrRideModule);
+            memoryService.WriteUInt8(torrentPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
+            memoryService.WriteUInt8(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
+        }
+
         private int CalculateLevelUpCost(int nextLevel)
         {
             float baseLevel = nextLevel + BaseLevelOffset;

@@ -347,6 +347,22 @@
             5
         );
 
+        public static readonly Pattern MatrixVectorProduct = new Pattern(
+            new byte[] { 0xE8, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x28, 0x00, 0x0F, 0x29, 0x85, 0xD0, 0x08, 0x00, 0x00 },
+            "x????xxxxxxxxxx",
+            0,
+            AddressingMode.Relative,
+            1,
+            5
+        );
+
+        public static readonly Pattern ChrInsByHandle = new Pattern(
+            new byte[] { 0x48, 0xC1, 0xE8, 0x1C, 0x24, 0x0F, 0x3C, 0x01, 0x0F, 0x85, 0xA7 },
+            "xxxxxxxxxxx",
+            -0x1B,
+            AddressingMode.Absolute
+        );
+
         //Patches
 
         public static readonly Pattern DungeonWarp = new Pattern(

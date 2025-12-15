@@ -56,7 +56,7 @@ namespace SilkyRing
             var hotkeyManager = new HotkeyManager(_memoryService);
 
             IPlayerService playerService = new PlayerService(_memoryService, hookManager);
-            IUtilityService utilityService = new UtilityService(_memoryService, hookManager);
+            IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
             IEventService eventService = new EventService(_memoryService, hookManager);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService = new TargetService(_memoryService, hookManager, playerService);

@@ -555,16 +555,16 @@ namespace SilkyRing.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
-        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
-        ///48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
-        ///48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
-        ///48 3b 58 68             cmp    rbx,QWORD PTR [rax+0x68]
-        ///0f 85 14 01 00 00       jne    134 &lt;skip&gt;
-        ///0f 10 43 70             movups xmm0,XMMWORD PTR [rbx+0x70]
+        ///51                      push   rcx
         ///41 51                   push   r9
         ///41 50                   push   r8
         ///52                      push   rdx
-        ///51            [rest of string was truncated]&quot;;.
+        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # e &lt;_main+0xe&gt;
+        ///48 8b 82 08 e5 01 00    mov    rax,QWORD PTR [rdx+0x1e508]
+        ///48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
+        ///48 3b 58 68             cmp    rbx,QWORD PTR [rax+0x68]
+        ///74 3d                   je     5f &lt;start&gt;
+        ///48 8b 88 e8 00 00 00    mov    rcx,QW [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoClip_UpdateCoords {
             get {
