@@ -7,6 +7,7 @@ namespace SilkyRing.Services
 {
     public class EventService(MemoryService memoryService, HookManager hookManager) : IEventService
     {
+        
         public void SetEvent(long eventId, bool flagValue)
         {
             var bytes = AsmLoader.GetAsmBytes("SetEvent");

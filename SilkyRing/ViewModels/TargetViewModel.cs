@@ -733,7 +733,7 @@ namespace SilkyRing.ViewModels
                     else ForceAct -= 1;
                 }));
             
-            _hotkeyManager.RegisterAction(HotkeyActions.KillTarget, () => 
+            _hotkeyManager.RegisterAction(HotkeyActions.SetForceActToZero, () => 
                 ExecuteTargetAction(() => ForceAct = 0));
             _hotkeyManager.RegisterAction(HotkeyActions.DisableTargetAi,
                 () => ExecuteTargetAction(() => IsFreezeAiEnabled = !IsFreezeAiEnabled));

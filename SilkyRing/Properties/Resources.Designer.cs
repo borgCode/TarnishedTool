@@ -125,6 +125,31 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,80030DA4,Aspects of the Crucible: Wings,1,0
+        ///0,8000EB28,Assassin&apos;s Gambit,1,0
+        ///0,8000FDE8,Barbaric Roar,1,0
+        ///0,80009CA4,Barrage,1,0
+        ///0,80007594,Barricade Shield,1,0
+        ///0,8000FEB0,Beast&apos;s Roar,1,0
+        ///0,80005654,Black Flame Tornado,1,0
+        ///0,80063DA8,Blind Spot,1,0
+        ///0,80064D48,Blinkbolt,1,0
+        ///0,80005780,Blood Blade,1,0
+        ///0,80002A30,Blood Tax,1,0
+        ///0,800138E4,Bloodhound&apos;s Step,1,0
+        ///0,80004FB0,Bloody Slash,1,0
+        ///0,8000FF78,Braggart&apos;s Roar,1,0
+        ///0,80005528,Carian Grandeur,1,0
+        ///0,8000558C,Carian Greatsword,1,0
+        ///0,80007724, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AshOfWarSpawn {
+            get {
+                return ResourceManager.GetString("AshOfWarSpawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,400022E9,Abandoned Merchant&apos;s Bell Bearing,1,1
         ///0,400022D4,Bernahl&apos;s Bell Bearing,1,1
         ///0,400022EE,Blackguard&apos;s Bell Bearing,1,1
@@ -140,6 +165,18 @@ namespace SilkyRing.Properties {
         internal static string BellBearings {
             get {
                 return ResourceManager.GetString("BellBearings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,Grafted Scion,1,10010800,0,510030,0
+        ///0,Tree Sentinel,0,1042360800,0,530100,0
+        ///0,Margit the Fell Omen,1,10000851,0,10000850,0,60510,0,71001,0
+        ///0,Godrick the Grafted,0,10000801,0,10000800,0,10002802,0,10000720,0,3269,0,3265,0,71000,0.
+        /// </summary>
+        internal static string BossRevives {
+            get {
+                return ResourceManager.GetString("BossRevives", resourceCulture);
             }
         }
         
@@ -458,6 +495,26 @@ namespace SilkyRing.Properties {
         internal static string ItemSpawn {
             get {
                 return ResourceManager.GetString("ItemSpawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,40001FAD,Academy Glintstone Key (Player),1,1,0,-1
+        ///0,40001FEE,Academy Glintstone Key (Thops),1,1,0,-1
+        ///0,40001FE6,Amber Draught,1,1,0,-1
+        ///0,40001FCE,Amber Starlight,1,1,0,-1
+        ///0,40000BB8,Ancestral Infant&apos;s Head,1,600,1,12027090
+        ///0,400022A1,Ancient Dragon Prayerbook,1,1,0,-1
+        ///1,401EA3DC,Ancient Ruins Cross Message,1,1,0,-1
+        ///0,4000229B,Assassin&apos;s Prayerbook,1,1,0,-1
+        ///0,40002313,Beast Eye,1,1,1,400239
+        ///0,40001FEC,Black Knifeprint,1,1,0,-1
+        ///1,401EA3D3,Black Syrup,1,1,1,400642
+        ///0,4000230E,Black Whetblade,1,1,1, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string KeyItems {
+            get {
+                return ResourceManager.GetString("KeyItems", resourceCulture);
             }
         }
         
@@ -832,28 +889,6 @@ namespace SilkyRing.Properties {
         internal static string Weapons {
             get {
                 return ResourceManager.GetString("Weapons", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 0,65600,Upgrade - Standard,1,1
-        ///0,65610,Iron Whetblade (Heavy),1,1
-        ///0,65620,Iron Whetblade (Keen),1,1
-        ///0,65630,Iron Whetblade (Quality),1,1
-        ///0,65640,Red-Hot Whetblade (Fire),1,1
-        ///0,65650,Red-Hot Whetblade (Flame Art),1,1
-        ///0,65660,Sanctified Whetblade (Lightning),1,1
-        ///0,65670,Sanctified Whetblade (Sacred),1,1
-        ///0,65680,Glintstone Whetblade (Magic),1,1
-        ///0,65690,Glintstone Whetblade (Frost),1,1
-        ///0,65700,Black Whetblade (Poison),1,1
-        ///0,65710,Black Whetblade (Blood),1,1
-        ///0,65720,Black Whetblade (Occult),1,1
-        ///.
-        /// </summary>
-        internal static string Whetblades {
-            get {
-                return ResourceManager.GetString("Whetblades", resourceCulture);
             }
         }
     }

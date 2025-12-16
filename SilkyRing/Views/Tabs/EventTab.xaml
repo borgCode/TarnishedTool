@@ -267,14 +267,8 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <CheckBox Content="Skip Ivory Gank"
-                                  IsChecked="{Binding IsIvorySkipEnabled}"
-                                  Margin="0,2" />
-                        <CheckBox Content="Disable Frigid Snowstorm"
-                                  IsChecked="{Binding IsSnowstormDisabled}"
-                                  Margin="0,2" />
-                        <CheckBox Content="Disable Memory Timer"
-                                  IsChecked="{Binding IsMemoryTimerDisabled}"
+                        <Button Content="Unlock All Whetblades"
+                                  Command="{Binding UnlockWhetbladesCommand}"
                                   Margin="0,2" />
                     </StackPanel>
 

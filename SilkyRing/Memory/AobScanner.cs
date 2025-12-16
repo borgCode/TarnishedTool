@@ -49,19 +49,7 @@ namespace SilkyRing.Memory
             TryPatternWithFallback("NoRuneArcLoss", Pattern.NoRuneArcLoss, addr => Patches.NoRuneArcLoss = addr, saved);
             TryPatternWithFallback("NoRuneLossOnDeath", Pattern.NoRuneLossOnDeath,
                 addr => Patches.NoRuneLossOnDeath = addr, saved);
-            // TryPatternWithFallback("AccessFullShop", Patterns.AccessFullShop, addr => Offsets.Patches.AccessFullShop = addr, saved);
-            // TryPatternWithFallback("RepeatAct", Patterns.RepeatAct, addr => Offsets.Patches.RepeatAct = addr, saved);
-            // TryPatternWithFallback("GameSpeed", Patterns.GameSpeed, addr => Offsets.Patches.GameSpeed = addr, saved);
-            // TryPatternWithFallback("InfiniteDurability", Patterns.InfiniteDurability,
-            //     addr => Offsets.Patches.InfiniteDurability = addr, saved);
-            // TryPatternWithFallback("PlayerSoundView", Patterns.PlayerSoundView,
-            //     addr => Offsets.Patches.PlayerSoundView = addr, saved);
-            // TryPatternWithFallback("DebugFont", Patterns.DebugFont, addr => Offsets.Patches.DebugFont = addr, saved);
-            // TryPatternWithFallback("NoRoll", Patterns.NoRoll, addr => Offsets.Patches.NoRoll = addr, saved);
-            // TryPatternWithFallback("TargetingView", Patterns.DbgDrawFlag, addr => Offsets.Patches.DbgDrawFlag = addr,
-            //     saved);
-            // TryPatternWithFallback("FreeCam", Patterns.FreeCamPatch, addr => Offsets.Patches.FreeCam = addr, saved);
-            //
+  
             TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
                 addr => Hooks.UpdateCoords = addr.ToInt64(), saved);
             TryPatternWithFallback("InAirTimer", Pattern.InAirTimer,
@@ -131,9 +119,10 @@ namespace SilkyRing.Memory
             Console.WriteLine($"InputManager.Base: 0x{InputManager.Base.ToInt64():X}");
 
             Console.WriteLine($"Patches.NoLogo: 0x{Patches.DungeonWarp.ToInt64():X}");
-            Console.WriteLine($"NoRunesFromEnemies.NoLogo: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
-            Console.WriteLine($"NoRuneArcLoss.NoLogo: 0x{Patches.NoRuneArcLoss.ToInt64():X}");
-            Console.WriteLine($"NoRuneLossOnDeath.NoLogo: 0x{Patches.NoRuneLossOnDeath.ToInt64():X}");
+            Console.WriteLine($"Patches.NoRunesFromEnemies: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
+            Console.WriteLine($"Patches.NoRuneArcLoss: 0x{Patches.NoRuneArcLoss.ToInt64():X}");
+            Console.WriteLine($"Patches.NoRuneLossOnDeath: 0x{Patches.NoRuneLossOnDeath.ToInt64():X}");
+            Console.WriteLine($"Patches.DungeonWarp: 0x{Patches.DungeonWarp.ToInt64():X}");
 
             Console.WriteLine($"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
             Console.WriteLine($"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");

@@ -98,6 +98,7 @@
         <Compile Include="Enums\Affinity.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\State.cs" />
+        <Compile Include="GameIds\Event.cs" />
         <Compile Include="GameIds\EzState.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
@@ -118,6 +119,8 @@
         <Compile Include="Models\AshOfWar.cs" />
         <Compile Include="Models\AttackInfo.cs" />
         <Compile Include="Models\AttackInfoEntry.cs" />
+        <Compile Include="Models\BossFlag.cs" />
+        <Compile Include="Models\BossRevive.cs" />
         <Compile Include="Models\BossWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\EventItem.cs" />

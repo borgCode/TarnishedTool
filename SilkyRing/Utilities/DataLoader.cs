@@ -185,7 +185,7 @@ namespace SilkyRing.Utilities
 
             return items;
         }
-        
+
         public static List<EventItem> GetEventItems(string name)
         {
             List<EventItem> items = new List<EventItem>();
@@ -257,6 +257,43 @@ namespace SilkyRing.Utilities
             }
 
             return bytes;
+        }
+
+        public static List<BossRevive> GetBossRevives()
+        {
+            List<BossRevive> bossRevives = new List<BossRevive>();
+            string csvData = Resources.BossRevives;
+            if (string.IsNullOrWhiteSpace(csvData)) return bossRevives;
+    
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+                if (parts.Length < 3) continue;
+        
+                BossRevive boss = new BossRevive
+                {
+                    IsDlc = parts[0] == "1",
+                    BossName = parts[1],
+                    IsInitializeDeadSet = parts[2] == "1"
+                };
+                
+                List<BossFlag> flags = new List<BossFlag>();
+                for (int i = 3; i < parts.Length - 1; i += 2)
+                {
+                    if (int.TryParse(parts[i], out int eventId))
+                    {
+                        bool setValue = parts[i + 1] == "1";
+                        flags.Add(new BossFlag { EventId = eventId, SetValue = setValue });
+                    }
+                }
+
+                boss.BossFlags = flags;
+                bossRevives.Add(boss);
+            }
+    
+            return bossRevives;
         }
     }
 }

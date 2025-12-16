@@ -2,18 +2,22 @@
 using System.Windows.Media;
 using SilkyRing.Core;
 using SilkyRing.Enums;
+using SilkyRing.GameIds;
 using SilkyRing.Interfaces;
-using SilkyRing.Services;
+using SilkyRing.Utilities;
 
 namespace SilkyRing.ViewModels
 {
     public class EventViewModel : BaseViewModel
     {
         private readonly IEventService _eventService;
+        private readonly IItemService _itemService;
+        public const int WhetstoneBladeId = 0x4000218E;
 
-        public EventViewModel(IEventService eventService, IStateService stateService)
+        public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService)
         {
             _eventService = eventService;
+            _itemService = itemService;
 
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -21,12 +25,16 @@ namespace SilkyRing.ViewModels
 
             SetEventCommand = new DelegateCommand(SetEvent);
             GetEventCommand = new DelegateCommand(GetEvent);
+            UnlockWhetbladesCommand = new DelegateCommand(UnlockWhetblades);
+
+            DataLoader.GetBossRevives();
         }
         
         #region Commands
         
         public ICommand SetEventCommand { get; set; }
         public ICommand GetEventCommand { get; set; }
+        public ICommand UnlockWhetbladesCommand { get; set; }
 
         #endregion
 
@@ -127,6 +135,15 @@ namespace SilkyRing.ViewModels
             {
                 EventStatusText = "False";
                 EventStatusColor = Brushes.Red;
+            }
+        }
+        
+        private void UnlockWhetblades()
+        {
+            _itemService.SpawnItem(WhetstoneBladeId, 1, -1, false, 1);
+            foreach (var whetBlade in Event.WhetBlades)
+            {
+                _eventService.SetEvent(whetBlade, true);
             }
         }
 

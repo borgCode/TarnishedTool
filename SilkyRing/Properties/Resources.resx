@@ -2105,22 +2105,6 @@ c3                      ret</value>
 0,20002030,Talisman of All Crucibles,1,1
 </value>
   </data>
-  <data name="Whetblades" xml:space="preserve">
-    <value>0,65600,Upgrade - Standard,1,1
-0,65610,Iron Whetblade (Heavy),1,1
-0,65620,Iron Whetblade (Keen),1,1
-0,65630,Iron Whetblade (Quality),1,1
-0,65640,Red-Hot Whetblade (Fire),1,1
-0,65650,Red-Hot Whetblade (Flame Art),1,1
-0,65660,Sanctified Whetblade (Lightning),1,1
-0,65670,Sanctified Whetblade (Sacred),1,1
-0,65680,Glintstone Whetblade (Magic),1,1
-0,65690,Glintstone Whetblade (Frost),1,1
-0,65700,Black Whetblade (Poison),1,1
-0,65710,Black Whetblade (Blood),1,1
-0,65720,Black Whetblade (Occult),1,1
-</value>
-  </data>
   <data name="Cookbooks" xml:space="preserve">
     <value>0,40002134,Crafting Kit,1,1,1,60120
 0,40002454,Nomadic Warrior's Cookbook [1],1,1,1,67000
@@ -3734,5 +3718,338 @@ c3                      ret</value>
 0,4000089B,Prattling Pate "Wonderful",1,600
 0,4000089F,Prattling Pate "You're beautiful",1,600
 </value>
+  </data>
+  <data name="KeyItems" xml:space="preserve">
+    <value>0,40001FAD,Academy Glintstone Key (Player),1,1,0,-1
+0,40001FEE,Academy Glintstone Key (Thops),1,1,0,-1
+0,40001FE6,Amber Draught,1,1,0,-1
+0,40001FCE,Amber Starlight,1,1,0,-1
+0,40000BB8,Ancestral Infant's Head,1,600,1,12027090
+0,400022A1,Ancient Dragon Prayerbook,1,1,0,-1
+1,401EA3DC,Ancient Ruins Cross Message,1,1,0,-1
+0,4000229B,Assassin's Prayerbook,1,1,0,-1
+0,40002313,Beast Eye,1,1,1,400239
+0,40001FEC,Black Knifeprint,1,1,0,-1
+1,401EA3D3,Black Syrup,1,1,1,400642
+0,4000230E,Black Whetblade,1,1,1,65720
+0,40000820,Blasphemous Claw,1,600,1,400292
+0,40000066,Bloody Finger,1,0,1,60270
+0,40000069,Blue Cipher Ring,1,0,1,60290
+1,401E9038,Bondstone,1,600,0,-1
+0,40001FAF,Carian Inverted Statue,1,1,0,-1
+1,401EA3DB,Castle Cross Message,1,1,0,-1
+0,40000852,Celestial Dew,99,600,0,-1
+0,4000200A,Champion's Song Painting,1,1,1,580020
+0,40001FEB,Chrysalids' Memento,1,1,0,-1
+0,40002292,Conspectus Scroll,1,1,0,-1
+0,4000251C,Cracked Pot,20,0,0,-1
+0,40002134,Crafting Kit,1,1,1,60120
+1,401EA3C7,Cross Map,1,1,0,-1
+0,40001FFF,Cursemark of Death,1,1,0,34117500
+0,40001FE8,Dancer's Castanets,1,1,0,400181
+0,40001FB9,Dark Moon Ring,1,1,1,114
+0,4000082A,Deathroot,99,600,0,-1
+0,40001FA9,Dectus Medallion (Left),1,1,0,1046367500
+0,40001FAA,Dectus Medallion (Right),1,1,0,1051397900
+0,40002007,Discarded Palace Key,1,1,0,400159
+0,400022A0,Dragon Cult Prayerbook,1,1,0,-1
+0,4000274C,Dragon Heart,99,600,0,-1
+0,40001FC6,Drawing-Room Key,1,1,1,400072
+0,40000065,Duelist's Furled Finger,1,0,1,60240
+0,40000B93,Elden Remembrance,99,600,0,-1
+0,4000006F,Festering Bloody Finger,99,99,0,-1
+0,40000067,Finger Severer,1,0,1,60310
+0,40001FBE,Fingerprint Grape,1,1,0,-1
+0,40001FDF,Fingerslayer Blade,1,1,0,12027080
+0,40002297,Fire Monks' Prayerbook,1,1,0,-1
+0,400000FA,Flask of Wondrous Physick,1,1,1,60020
+0,4000200D,Flightless Bird Painting,1,1,1,580050
+0,40000096,Furlcalling Finger Remedy,999,0,0,-1
+1,401EA3C6,Gaol Lower Level Key,1,1,0,-1
+1,401EA3C5,Gaol Upper Level Key,1,1,0,-1
+0,40002298,Giant's Prayerbook,1,1,0,-1
+0,4000230D,Glintstone Whetblade,1,1,1,65680
+0,400000BF,Godrick's Great Rune (Activated),1,0,1,191
+0,40001FD4,Godrick's Great Rune (Deactivated),1,1,1,171
+0,40002299,Godskin Prayerbook,1,1,0,-1
+0,40001FE2,Gold Sewing Needle,1,1,0,1037467000
+0,4000229E,Golden Order Principia,1,1,0,-1
+0,4000271A,Golden Seed,99,600,0,-1
+0,40001FFC,Golden Tailoring Tools,1,1,0,60150
+0,40002760,Great Rune of the Unborn,1,0,1,197
+0,40001FEF,Haligtree Secret Medallion (Left),1,1,1,400280
+0,40001FF0,Haligtree Secret Medallion (Right),1,1,1,400130
+1,401EA3CB,Heart of Bayle,99,600,0,-1
+1,401EA99C,Hefty Cracked Pot,10,0,0,-1
+1,401EA3C8,Hole-Laden Necklace,1,1,1,400660
+0,40002008,Homing Instinct Painting,1,1,1,580000
+1,401E90BA,Horned Bairn,1,600,0,-1
+1,401EA3C3,Igon's Furled Finger,1,1,1,400710
+0,40001FFA,Imbued Sword Key,99,1,0,-1
+0,40001FC3,Irina's Letter,1,1,1,400080
+1,401E8CC8,Iris of Grace,99,600,0,-1
+1,401E8CD2,Iris of Occultation,99,600,0,-1
+0,4000230A,Iron Whetblade,1,1,1,65610
+1,401EA3D7,Keep Wall Key,1,1,0,-1
+0,40001FFE,Knifeprint Clue,1,1,0,-1
+1,401E8C6E,Lamenter's Mask,1,600,0,-1
+0,40000816,Lantern,1,600,0,-1
+0,40001FF9,Larval Tear (Base Game),99,600,0,-1
+1,401EA3E1,Larval Tear (DLC),99,600,0,-1
+1,401EA3CF,Letter for Freyja,1,1,1,400625
+0,40001FBF,Letter from Volcano Manor (Istvan),1,1,1,400073
+0,40001FC4,Letter from Volcano Manor (Rileigh),1,1,1,400074
+0,40001FED,Letter to Bernahl,1,1,1,400290
+0,40001FE7,Letter to Patches,1,1,1,400180
+0,40001FDB,Lord of Blood's Favor (Bloody),1,1,1,400033
+0,40001FDA,Lord of Blood's Favor (White),1,1,1,400031
+0,40002756,Lost Ashes of War,99,600,0,-1
+0,400000C4,Malenia's Great Rune (Activated),1,0,1,196
+0,40001FD9,Malenia's Great Rune (Dectivated),1,1,1,176
+0,4000085C,Margit's Shackle,1,600,1,110000
+0,40002006,Meeting Place Map,1,1,0,-1
+0,4000272E,Memory Stone,8,0,0,-1
+0,40001FF6,Mending Rune of Perfect Order,1,1,1,9500
+0,40001FF7,Mending Rune of the Death-Prince,1,1,1,9502
+0,40001FF8,Mending Rune of the Fell Curse,1,1,1,9504
+1,401EA3D5,Messmer's Kindling,1,1,1,510460
+0,40000BE0,Mimic's Veil,1,600,1,10007970
+0,40001FD2,Miniature Ranni,1,1,1,400394
+0,40001FFB,Miniature Ranni (Empty),1,1,0,-1
+1,401EA3C0,Miquella's Great Rune,1,1,0,-1
+0,4000088E,Miquella's Needle,1,600,1,400324
+0,400021D4,Mirage Riddle,1,1,0,-1
+0,400000C3,Mohg's Great Rune (Activated),1,0,1,195
+0,40001FD8,Mohg's Great Rune (Dectivated),1,1,1,175
+0,40000866,Mohg's Shackle,1,600,1,35007310
+1,401EA3DD,Monk's Missive,1,1,1,2048457510
+0,400000C1,Morgott's Great Rune (Activated),1,0,1,193
+0,40001FD6,Morgott's Great Rune (Dectivated),1,1,1,173
+1,401EA3CC,New Cross Map,1,1,0,-1
+0,4000220D,Note: Below the Capital,1,1,0,-1
+0,40002204,Note: Demi-Human Mobs,1,1,0,-1
+0,40002203,Note: Flame Chariots,1,1,0,-1
+0,400021FE,Note: Flask of Wondrous Physick,1,1,0,-1
+0,4000220B,Note: Frenzied Flame Village,1,1,0,-1
+0,40002209,Note: Gateway,1,1,0,-1
+0,40002206,Note: Gravity's Advantage,1,1,0,-1
+0,400021FC,Note: Hidden Cave,1,1,0,-1
+0,400021FD,Note: Imp Shades,1,1,0,-1
+0,40002205,Note: Land Squirts,1,1,0,-1
+0,4000220A,Note: Miquella's Needle,1,1,0,-1
+0,40002207,Note: Revenants,1,1,0,-1
+0,400021FF,Note: Stonedigger Trolls,1,1,0,-1
+0,4000220C,Note: The Lord of Frenzied Flame,1,1,0,-1
+0,40002020,Note: The Preceptor's Secret,1,1,0,-1
+0,40002201,Note: Unseen Assassins,1,1,0,-1
+0,40002200,Note: Walking Mausoleum,1,1,0,-1
+0,40000BC2,Omen Bairn,1,600,1,35007990
+0,40002526,Perfume Bottle,10,0,0,-1
+1,401E90C4,Perfumed Oil of Ranah,1,600,0,-1
+0,40000087,Phantom Great Rune,99,0,0,-1
+1,401EA3E4,Prayer Room Key,1,1,1,400696
+1,401E8C64,Priestess Heart,1,600,0,-1
+0,4000200C,Prophecy Painting,1,1,1,580040
+0,400000C0,Radahn's Great Rune (Activated),1,0,1,192
+0,40001FD5,Radahn's Great Rune (Dectivated),1,1,1,172
+0,40000070,Recusant Finger,1,0,1,60260
+0,40001FC5,Red Letter,1,1,1,400075
+0,4000230B,Red-Hot Whetblade,1,1,1,65640
+0,4000200E,Redmane Painting,1,1,1,580060
+0,40000BC3,Regal Omen Bairn,1,600,1,290050
+0,40000B8D,Remembrance of Hoarah Loux,99,600,0,-1
+0,40000B8C,Remembrance of the Black Blade,99,600,0,-1
+0,40000B89,Remembrance of the Blasphemous,99,600,0,-1
+0,40000B8B,Remembrance of the Blood Lord,99,600,0,-1
+0,40000B8E,Remembrance of the Dragonlord,99,600,0,-1
+0,40000B91,Remembrance of the Fire Giant,99,600,0,-1
+0,40000B8F,Remembrance of the Full Moon Queen,99,600,0,-1
+0,40000B86,Remembrance of the Grafted,99,600,0,-1
+0,40000B90,Remembrance of the Lichdragon,99,600,0,-1
+0,40000B94,Remembrance of the Naturalborn,99,600,0,-1
+0,40000B88,Remembrance of the Omen King,99,600,0,-1
+0,40000B92,Remembrance of the Regal Ancestor,99,600,0,-1
+0,40000B8A,Remembrance of the Rot Goddess,99,600,0,-1
+0,40000B87,Remembrance of the Starscourge,99,600,0,-1
+0,40002009,Resurrection Painting,1,1,1,580010
+1,401EABF4,Revered Spirit Ash,99,600,0,-1
+0,4000251D,Ritual Pot,10,0,0,-1
+1,401E8C5A,Rock Heart,1,600,0,-1
+0,4000201F,Rogier's Letter,1,1,1,400356
+0,40001FAB,Rold Medallion,1,1,1,-1
+0,40002293,Royal House Scroll,1,1,0,-1
+1,401EA3D0,Ruins Map (1st),1,1,1,400660
+1,401EA3D1,Ruins Map (2nd),1,1,1,400661
+1,401EA3D2,Ruins Map (3rd),1,1,1,400662
+0,40001F4A,Rusty Key,1,1,0,-1
+0,40001FC2,Rya's Necklace,1,1,0,-1
+0,400000C2,Rykard's Great Rune (Activated),1,0,1,194
+0,40001FD7,Rykard's Great Rune (Dectivated),1,1,1,174
+0,40002724,Sacred Tear,99,600,0,-1
+1,401EAB90,Scadutree Fragment,99,600,0,-1
+1,40000CF8,Scriptstone,10,600,0,-1
+1,401EA3CE,Secret Rite Scroll,1,1,1,21017340
+0,40002312,Sellia's Secret,1,1,1,400311
+0,40001FCF,Seluvis's Introduction,1,1,0,-1
+0,40001FE4,Seluvis's Potion,1,1,0,-1
+0,40001FC1,Serpent's Amnion,1,1,0,-1
+0,40002005,Sewer-Gaol Key,1,1,1,400380
+0,40001FE1,Sewing Needle,1,1,0,-1
+0,400004D8,Shabriri Grape,99,999,0,-1
+0,4000006D,Small Golden Effigy,1,0,1,60230
+0,4000006E,Small Red Effigy,1,0,1,60250
+0,4000200B,Sorcerer Painting,1,1,1,580030
+0,40000082,Spectral Steed Whistle,1,0,1,60100
+0,40001FDE,Spirit Calling Bell,1,1,1,60110
+0,40001F40,Stonesword Key,99,600,0,-1
+1,401EA3DE,Storehouse Cross Message,1,1,1,21017180
+1,401EA3CD,Storeroom Key,1,1,1,20007480
+0,40001FE3,Tailoring Tools,1,1,1,60140
+0,40002738,Talisman Pouch (Enia),3,0,1,60520
+0,40002738,Talisman Pouch (Golden Shade Godfrey),3,0,1,60500
+0,40002738,Talisman Pouch (Margit/Morgott),3,0,1,60510
+0,4000006A,Tarnished's Furled Finger,1,0,1,60210
+0,4000006C,Tautner's Tongue,1,0,1,60300
+0,40002002,The Stormhawk King,1,1,1,10017010
+1,401E8CDC,Thiollier's Concoction,99,600,0,-1
+0,40001FC0,Tonic of Forgetfulness,1,1,0,-1
+1,401EA3E0,Torn Diary Page,1,1,0,-1
+0,4000229A,Two Fingers' Prayerbook,1,1,0,-1
+0,4000230F,Unalloyed Gold Needle (Broken),1,1,1,530405
+0,40002310,Unalloyed Gold Needle (Gowry),1,1,1,400310
+0,40002004,Unalloyed Gold Needle (Millicent),1,1,1,400321
+0,40002311,Valkyrie's Prosthesis,1,1,0,-1
+0,40002314,Weathered Dagger,1,1,0,-1
+0,40002023,Weathered Map,1,1,0,-1
+1,401EA3C4,Well Depths Key,1,1,1,20007510
+0,4000218E,Whetstone Knife,1,1,1,60130
+0,40000068,White Cipher Ring,1,0,1,60280
+0,40000C08,Wraith Calling Bell,1,600,1,1037427900
+0,4000201D,Zorayas's Letter,1,1,1,400091
+</value>
+  </data>
+  <data name="BossRevives" xml:space="preserve">
+    <value>0,Grafted Scion,1,10010800,0,510030,0
+0,Tree Sentinel,0,1042360800,0,530100,0
+0,Margit the Fell Omen,1,10000851,0,10000850,0,60510,0,71001,0
+0,Godrick the Grafted,0,10000801,0,10000800,0,10002802,0,10000720,0,3269,0,3265,0,71000,0</value>
+  </data>
+  <data name="AshOfWarSpawn" xml:space="preserve">
+    <value>0,80030DA4,Aspects of the Crucible: Wings,1,0
+0,8000EB28,Assassin's Gambit,1,0
+0,8000FDE8,Barbaric Roar,1,0
+0,80009CA4,Barrage,1,0
+0,80007594,Barricade Shield,1,0
+0,8000FEB0,Beast's Roar,1,0
+0,80005654,Black Flame Tornado,1,0
+0,80063DA8,Blind Spot,1,0
+0,80064D48,Blinkbolt,1,0
+0,80005780,Blood Blade,1,0
+0,80002A30,Blood Tax,1,0
+0,800138E4,Bloodhound's Step,1,0
+0,80004FB0,Bloody Slash,1,0
+0,8000FF78,Braggart's Roar,1,0
+0,80005528,Carian Grandeur,1,0
+0,8000558C,Carian Greatsword,1,0
+0,80007724,Carian Retaliation,1,0
+0,800660D0,Carian Sovereignty,1,0
+0,80002904,Charge Forth,1,0
+0,800058AC,Chilling Mist,1,0
+0,8000ED1C,Cragblade,1,0
+0,8000EA60,Determination,1,0
+0,80065900,Divine Beast Frost Stomp,1,0
+0,80002BC0,Double Slash,1,0
+0,80030D40,Dryleaf Whirlwind,1,0
+0,800052D0,Earthshaker,1,0
+0,80009DD0,Enchanted Shot,1,0
+0,80011170,Endure,1,0
+0,800050DC,Eruption,1,0
+0,8000C544,Flame of the Redmanes,1,0
+0,80065130,Flame Skewer,1,0
+0,80065CE8,Flame Spear,1,0
+0,80005398,Flaming Strike,1,0
+0,80067070,Ghostflame Call,1,0
+0,80002D50,Giant Hunt,1,0
+0,80004E20,Glintblade Phalanx,1,0
+0,80004F4C,Glintstone Pebble,1,0
+0,80005334,Golden Land,1,0
+0,800077EC,Golden Parry,1,0
+0,8000C60C,Golden Slam,1,0
+0,8000EB8C,Golden Vow,1,0
+0,800051A4,Gravitas,1,0
+0,8000C5A8,Ground Slam,1,0
+0,8000C6D4,Hoarah Loux's Earthshaker,1,0
+0,8000C3B4,Hoarfrost Stomp,1,0
+0,80011238,Holy Ground,1,0
+0,80004EE8,Ice Spear,1,0
+0,80085CA0,Igon's Drake Hunt,1,0
+0,80002774,Impaling Thrust,1,0
+0,8000C47C,Kick,1,0
+0,80005014,Lifesteal Fist,1,0
+0,8000C4E0,Lightning Ram,1,0
+0,800054C4,Lightning Slash,1,0
+0,80002710,Lion's Claw,1,0
+0,80002E18,Loretta's Slash,1,0
+0,80009D08,Mighty Shot,1,0
+0,800078B4,No Skill,1,0
+0,80064578,Overhead Stance,1,0
+0,80061E68,Palm Blast,1,0
+0,800075F8,Parry,1,0
+0,800057E4,Phantom Slash,1,0
+0,800027D8,Piercing Fang,1,0
+0,80062250,Piercing Throw,1,0
+0,80002E7C,Poison Moth Flight,1,0
+0,80005910,Poisonous Mist,1,0
+0,80005140,Prayerful Strike,1,0
+0,80002C24,Prelate's Charge,1,0
+0,80013880,Quickstep,1,0
+0,800631F0,Raging Beast,1,0
+0,80009E98,Rain of Arrows,1,0
+0,80013948,Raptor of the Mists,1,0
+0,80002A94,Repeating Thrust,1,0
+0,80062E08,Rolling Sparks,1,0
+0,8000EAC4,Royal Knight's Resolve,1,0
+0,80004E84,Sacred Blade,1,0
+0,8000EBF0,Sacred Order,1,0
+0,800056B8,Sacred Ring of Light,1,0
+0,800635D8,Savage Claws,1,0
+0,80065518,Savage Lion's Claw,1,0
+0,80062638,Scattershot Throw,1,0
+0,8000ECB8,Seppuku,1,0
+0,8000EC54,Shared Order,1,0
+0,80007530,Shield Bash,1,0
+0,80007850,Shield Crash,1,0
+0,800C3500,Shield Strike,1,0
+0,800664B8,Shriek of Sorrow,1,0
+0,80009E34,Sky Shot,1,0
+0,80005848,Spectral Lance,1,0
+0,80061A80,Spinning Gravity Thrust,1,0
+0,8000283C,Spinning Slash,1,0
+0,80002B5C,Spinning Strikes,1,0
+0,80002EE0,Spinning Weapon,1,0
+0,80002CEC,Square Off,1,0
+0,800029CC,Stamp (Sweep),1,0
+0,80002968,Stamp (Upward Cut),1,0
+0,80002FA8,Storm Assault,1,0
+0,80005208,Storm Blade,1,0
+0,8000C418,Storm Stomp,1,0
+0,80007788,Storm Wall,1,0
+0,8000300C,Stormcaller,1,0
+0,80064190,Swift Slash,1,0
+0,80003070,Sword Dance,1,0
+0,8007B4A8,The Poison Flower Blooms Twice,1,0
+0,80007918,Thops's Barrier,1,0
+0,80009C40,Through and Through,1,0
+0,80005460,Thunderbolt,1,0
+0,8000FF14,Troll's Roar,1,0
+0,80002C88,Unsheathe,1,0
+0,800055F0,Vacuum Slice,1,0
+0,800111D4,Vow of the Indomitable,1,0
+0,80062A20,Wall of Sparks,1,0
+0,8000FE4C,War Cry,1,0
+0,8000C670,Waves of Darkness,1,0
+0,80014C08,White Shadow's Lure,1,0
+0,80002AF8,Wild Strikes,1,0
+0,80064960,Wing Stance,1,0</value>
   </data>
 </root>
