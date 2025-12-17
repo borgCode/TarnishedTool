@@ -393,20 +393,13 @@ namespace SilkyRing.Services
 
         public void ToggleTorrentNoDeath(bool isEnabled)
         {
-            var torrentChrIns = GetTorrentChrIns();
-            var chrDataFlags = memoryService.FollowPointers(torrentChrIns,
-                [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
-                false);
-            memoryService.SetBitValue(chrDataFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
-        }
-
-        public void ToggleTorrentNoDamage(bool isEnabled)
-        {
-            var torrentChrIns = GetTorrentChrIns();
-            var chrDataFlags = memoryService.FollowPointers(torrentChrIns,
-                [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
-                false);
-            memoryService.SetBitValue(chrDataFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
+            var chrRideModule = GetChrRidePtr();
+            var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
+            var handle = memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.HorseHandle);
+            var torrentChrIns = ChrInsLookup(handle);
+            var bitFlags = memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
+                false, false);
+            memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
         }
 
         private int CalculateLevelUpCost(int nextLevel)
@@ -434,14 +427,6 @@ namespace SilkyRing.Services
 
         private IntPtr GetChrRidePtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrRideModule], true);
-
-        private IntPtr GetTorrentChrIns()
-        {
-            var chrRideModule = GetChrRidePtr();
-            var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
-            var handle = memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.HorseHandle);
-            return ChrInsLookup(handle);
-        }
 
         private Vector3 ReadVector3(IntPtr address)
         {

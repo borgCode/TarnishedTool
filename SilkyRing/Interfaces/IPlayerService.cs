@@ -39,5 +39,4 @@ public interface IPlayerService
     long GetHandle();
     void EnableGravity();
     void ToggleTorrentNoDeath(bool isEnabled);
-    void ToggleTorrentNoDamage(bool isEnabled);
 }

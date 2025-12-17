@@ -314,20 +314,7 @@ namespace SilkyRing.ViewModels
             }
         }
         
-        private bool _isTorrentNoDamageEnabled;
-
-        public bool IsTorrentNoDamageEnabled
-        {
-            get => _isTorrentNoDamageEnabled;
-            set
-            {
-                if (SetProperty(ref _isTorrentNoDamageEnabled, value))
-                {
-                    _playerService.ToggleTorrentNoDamage(_isTorrentNoDamageEnabled);
-                }
-            }
-        }
-
+        
         private bool _isNoRuneLossEnabled;
 
         public bool IsNoRuneLossEnabled
@@ -504,6 +491,7 @@ namespace SilkyRing.ViewModels
         {
             AreOptionsEnabled = true;
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
+            if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             LoadStats();
             _playerTick.Start();
             _pauseUpdates = false;
