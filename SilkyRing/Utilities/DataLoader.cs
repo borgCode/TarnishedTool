@@ -323,5 +323,23 @@ namespace SilkyRing.Utilities
     
             return bossRevives;
         }
+
+        public static List<T> GetSimpleList<T>(string resourceName, Func<string, T> parser)
+        {
+            List<T> items = new List<T>();
+            string csvData = Resources.ResourceManager.GetString(resourceName);
+    
+            if (string.IsNullOrWhiteSpace(csvData)) return items;
+
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+                items.Add(parser(line.Trim()));
+            }
+
+            return items;
+        }
     }
 }

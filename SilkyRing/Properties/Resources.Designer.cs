@@ -150,6 +150,43 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 62004
+        ///62005
+        ///62006
+        ///62007
+        ///62008
+        ///62009
+        ///62010
+        ///62011
+        ///62012
+        ///62022
+        ///62021
+        ///62020
+        ///62031
+        ///62030
+        ///62032
+        ///62041
+        ///62040
+        ///62052
+        ///62051
+        ///62050
+        ///62063
+        ///62062
+        ///62061
+        ///62060
+        ///62064
+        ///62103
+        ///62102
+        ///82001
+        ///.
+        /// </summary>
+        internal static string BaseGameMaps {
+            get {
+                return ResourceManager.GetString("BaseGameMaps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,400022E9,Abandoned Merchant&apos;s Bell Bearing,1,1
         ///0,400022D4,Bernahl&apos;s Bell Bearing,1,1
         ///0,400022EE,Blackguard&apos;s Bell Bearing,1,1
@@ -295,6 +332,20 @@ namespace SilkyRing.Properties {
         internal static string DisableAllExceptTarget {
             get {
                 return ResourceManager.GetString("DisableAllExceptTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 62080
+        ///62081
+        ///62082
+        ///62083
+        ///62084
+        ///82002.
+        /// </summary>
+        internal static string DLCMaps {
+            get {
+                return ResourceManager.GetString("DLCMaps", resourceCulture);
             }
         }
         

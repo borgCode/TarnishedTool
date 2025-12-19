@@ -15,7 +15,7 @@ namespace SilkyRing.Services
             memoryService.WriteBytes(Patches.CloseMap, isEnabled ? [0x90, 0x90, 0x90] : [0xff, 0x50, 0x60]);
         }
 
-        public void ToggleDungeonMap(bool isEnabled) =>
+        public void ToggleDungeonWarp(bool isEnabled) =>
             memoryService.WriteUInt8(Patches.DungeonWarp, isEnabled ? 0xEB : 0x74);
 
         public void ToggleNoClip(bool isNoClipEnabled)

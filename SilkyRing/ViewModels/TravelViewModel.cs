@@ -15,7 +15,8 @@ namespace SilkyRing.ViewModels
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
 
-        public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService)
+        public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService,
+            IDlcService dlcService)
         {
             _travelService = travelService;
             _eventService = eventService;

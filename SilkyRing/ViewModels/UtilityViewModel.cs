@@ -114,15 +114,15 @@ namespace SilkyRing.ViewModels
             }
         }
 
-        private bool _isDungeonMapEnabled;
+        private bool _isDungeonWarpEnabled;
 
-        public bool IsDungeonMapEnabled
+        public bool IsDungeonWarpEnabled
         {
-            get => _isDungeonMapEnabled;
+            get => _isDungeonWarpEnabled;
             set
             {
-                if (!SetProperty(ref _isDungeonMapEnabled, value)) return;
-                _utilityService.ToggleDungeonMap(_isDungeonMapEnabled);
+                if (!SetProperty(ref _isDungeonWarpEnabled, value)) return;
+                _utilityService.ToggleDungeonWarp(_isDungeonWarpEnabled);
             }
         }
 
@@ -143,7 +143,7 @@ namespace SilkyRing.ViewModels
         private void OnGameFirstLoaded()
         {
             if (IsCombatMapEnabled) _utilityService.ToggleCombatMap(true);
-            if (IsDungeonMapEnabled) _utilityService.ToggleDungeonMap(true);
+            if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
         }
 
         private void RegisterHotkeys()

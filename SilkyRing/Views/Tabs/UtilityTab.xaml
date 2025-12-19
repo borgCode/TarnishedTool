@@ -43,8 +43,8 @@
                                   IsChecked="{Binding IsCombatMapEnabled}"
                                   VerticalAlignment="Center"
                                   Margin="0,0,20,0" />
-                        <CheckBox Content="Open Map in Dungeons"
-                                  IsChecked="{Binding IsDungeonMapEnabled}"
+                        <CheckBox Content="Warp in Dungeons"
+                                  IsChecked="{Binding IsDungeonWarpEnabled}"
                                   VerticalAlignment="Center"
                                   Margin="0,0,20,0" />
                         <Button Content="Force Save"

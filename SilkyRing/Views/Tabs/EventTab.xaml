@@ -62,27 +62,27 @@
                     </Grid.RowDefinitions>
 
                 </Grid>
-                
+
                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock Text="Event ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
                     <TextBox Width="100" Text="{Binding GetFlagId}" Margin="0,0,10,0" />
-                
+
                     <Button Content="Get Event"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Padding="10,3"
                             Margin="10,0,0,0"
                             Command="{Binding GetEventCommand}" />
-                
+
                     <TextBlock Text="State:" VerticalAlignment="Center" Margin="10,0,5,0" />
                     <TextBlock Text="{Binding EventStatusText}"
                                Foreground="{Binding EventStatusColor}"
                                VerticalAlignment="Center" Margin="5,0,10,0" />
                 </StackPanel>
-                
+
                 <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
                     <TextBlock Text="Event ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
                     <TextBox Width="100" Text="{Binding SetFlagId}" Margin="0,0,10,0" />
-                    
+
                     <ComboBox Width="70" SelectedIndex="{Binding FlagStateIndex}" Margin="10,0,0,0">
                         <ComboBoxItem Content="ON" />
                         <ComboBoxItem Content="OFF" />
@@ -267,12 +267,24 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
-                        <Button Content="Unlock All Whetblades"
-                                  Command="{Binding UnlockWhetbladesCommand}"
-                                  Margin="0,2" />
-                        <Button Content="Test"
-                                Command="{Binding TestCommand}"
+                        <Button Content="Unlock All Affinities"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding UnlockWhetbladesCommand}"
                                 Margin="0,2" />
+                        <Button Content="Unlock Base Game Maps"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding UnlockBaseGameMapsCommand}"
+                                Margin="0,2" />
+                        <Button Content="Unlock DLC Maps"
+                                Command="{Binding UnlockDlcMapsCommand}"
+                                Margin="0,2">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsDlcAvailable" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
                     </StackPanel>
 
                     <!-- <UniformGrid Grid.Column="1" -->

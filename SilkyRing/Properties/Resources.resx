@@ -4050,4 +4050,43 @@ c3                      ret</value>
 0,80002AF8,Wild Strikes,1,0
 0,80064960,Wing Stance,1,0</value>
   </data>
+  <data name="BaseGameMaps" xml:space="preserve">
+    <value>62004
+62005
+62006
+62007
+62008
+62009
+62010
+62011
+62012
+62022
+62021
+62020
+62031
+62030
+62032
+62041
+62040
+62052
+62051
+62050
+62063
+62062
+62061
+62060
+62064
+62103
+62102
+82001
+</value>
+  </data>
+  <data name="DLCMaps" xml:space="preserve">
+    <value>62080
+62081
+62082
+62083
+62084
+82002</value>
+  </data>
 </root>

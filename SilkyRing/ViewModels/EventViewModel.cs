@@ -15,14 +15,20 @@ namespace SilkyRing.ViewModels
     {
         private readonly IEventService _eventService;
         private readonly IItemService _itemService;
+        private readonly IDlcService _dlcService;
         public const int WhetstoneBladeId = 0x4000218E;
         
         private List<BossRevive> _bossReviveList;
 
-        public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService)
+        private List<long> _baseGameMaps;
+        private List<long> _dlcMaps;
+
+        public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService,
+            IDlcService dlcService)
         {
             _eventService = eventService;
             _itemService = itemService;
+            _dlcService = dlcService;
 
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -31,18 +37,21 @@ namespace SilkyRing.ViewModels
             SetEventCommand = new DelegateCommand(SetEvent);
             GetEventCommand = new DelegateCommand(GetEvent);
             UnlockWhetbladesCommand = new DelegateCommand(UnlockWhetblades);
-            TestCommand = new DelegateCommand(TestRevive);
-
+            UnlockBaseGameMapsCommand = new DelegateCommand(UnlockBaseGameMaps);
+            UnlockDlcMapsCommand = new DelegateCommand(UnlockDlcMaps);
+            
             _bossReviveList = DataLoader.GetBossRevives();
+            _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
+            _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
         }
-
         
         #region Commands
         
         public ICommand SetEventCommand { get; set; }
         public ICommand GetEventCommand { get; set; }
         public ICommand UnlockWhetbladesCommand { get; set; }
-        public ICommand TestCommand { get; set; }
+        public ICommand UnlockBaseGameMapsCommand { get; set; }
+        public ICommand UnlockDlcMapsCommand { get; set; }
 
         #endregion
 
@@ -54,6 +63,14 @@ namespace SilkyRing.ViewModels
         {
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
+        }
+
+        private bool _isDlcAvailable;
+        
+        public bool IsDlcAvailable
+        {
+            get => _isDlcAvailable;
+            set => SetProperty(ref _isDlcAvailable, value);
         }
 
         private string _setFlagId;
@@ -104,6 +121,7 @@ namespace SilkyRing.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
+            IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
         private void OnGameNotLoaded()
@@ -162,6 +180,22 @@ namespace SilkyRing.ViewModels
             foreach (var bossFlag in boss.BossFlags)
             {
                 _eventService.SetEvent(bossFlag.EventId, bossFlag.SetValue);
+            }
+        }
+        
+        private void UnlockBaseGameMaps()
+        {
+            foreach (var baseGameMap in _baseGameMaps)
+            {
+                _eventService.SetEvent(baseGameMap, true);
+            }
+        }
+
+        private void UnlockDlcMaps()
+        {
+            foreach (var dlcMap in _dlcMaps)
+            {
+                _eventService.SetEvent(dlcMap, true);
             }
         }
 
