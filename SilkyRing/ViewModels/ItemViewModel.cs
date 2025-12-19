@@ -36,6 +36,7 @@ public class ItemViewModel : BaseViewModel
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+        stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
 
         LoadItems();
 
@@ -43,6 +44,7 @@ public class ItemViewModel : BaseViewModel
         MassSpawnCommand = new DelegateCommand(MassSpawn);
     }
 
+    
     #region Commands
     
     public ICommand SpawnItemCommand { get; set; }
@@ -239,7 +241,8 @@ public class ItemViewModel : BaseViewModel
         set
         {
             if (!SetProperty(ref _selectedAshOfWar, value) || value == null) return;
-
+            
+            _selectedAffinity = 0;
             AvailableAffinities = new ObservableCollection<Affinity>(value.GetAvailableAffinities());
             SelectedAffinity = AvailableAffinities.FirstOrDefault();
         }
@@ -276,14 +279,18 @@ public class ItemViewModel : BaseViewModel
     
     private void OnGameLoaded()
     {
-        _hasDlc = _dlcService.IsDlcAvailable;
-        UpdateItemsList();
         AreOptionsEnabled = true;
     }
 
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
+    }
+    
+    private void OnGameFirstLoaded()
+    {
+        _hasDlc = _dlcService.IsDlcAvailable;
+        UpdateItemsList();
     }
     
     private void LoadItems()

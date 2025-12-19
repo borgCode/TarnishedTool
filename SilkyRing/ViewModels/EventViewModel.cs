@@ -16,6 +16,7 @@ namespace SilkyRing.ViewModels
         private readonly IEventService _eventService;
         private readonly IItemService _itemService;
         private readonly IDlcService _dlcService;
+        private readonly IEzStateService _ezStateService;
         public const int WhetstoneBladeId = 0x4000218E;
         
         private List<BossRevive> _bossReviveList;
@@ -24,11 +25,12 @@ namespace SilkyRing.ViewModels
         private List<long> _dlcMaps;
 
         public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService,
-            IDlcService dlcService)
+            IDlcService dlcService, IEzStateService ezStateService)
         {
             _eventService = eventService;
             _itemService = itemService;
             _dlcService = dlcService;
+            _ezStateService = ezStateService;
 
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -39,12 +41,18 @@ namespace SilkyRing.ViewModels
             UnlockWhetbladesCommand = new DelegateCommand(UnlockWhetblades);
             UnlockBaseGameMapsCommand = new DelegateCommand(UnlockBaseGameMaps);
             UnlockDlcMapsCommand = new DelegateCommand(UnlockDlcMaps);
+            TestCommand = new DelegateCommand(Test);
             
             _bossReviveList = DataLoader.GetBossRevives();
             _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
             _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
         }
-        
+
+        private void Test()
+        {
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture);
+        }
+
         #region Commands
         
         public ICommand SetEventCommand { get; set; }
@@ -52,6 +60,7 @@ namespace SilkyRing.ViewModels
         public ICommand UnlockWhetbladesCommand { get; set; }
         public ICommand UnlockBaseGameMapsCommand { get; set; }
         public ICommand UnlockDlcMapsCommand { get; set; }
+        public ICommand TestCommand { get; set; }
 
         #endregion
 

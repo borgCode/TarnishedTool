@@ -275,6 +275,10 @@
                                 IsEnabled="{Binding AreOptionsEnabled}"
                                 Command="{Binding UnlockBaseGameMapsCommand}"
                                 Margin="0,2" />
+                        <Button Content="Test"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Command="{Binding TestCommand}"
+                                Margin="0,2" />
                         <Button Content="Unlock DLC Maps"
                                 Command="{Binding UnlockDlcMapsCommand}"
                                 Margin="0,2">

@@ -19,6 +19,8 @@ public static class EzState
         public static readonly TalkCommand OpenChest = new(30, []);
         public static readonly TalkCommand OpenSell = new(46, [-1, -1]); //Needs player handle
         public static readonly TalkCommand OpenAllot = new(105, []); 
-        public static readonly TalkCommand OpenPhysick = new(130, []); 
+        public static readonly TalkCommand OpenPhysick = new(130, []);
+
+        public static readonly TalkCommand AcquireGesture = new(131, [108]); // TODO call with all gesture ids
     }
 }

@@ -233,7 +233,9 @@ namespace SilkyRing.Memory
                 Arcane = 0x58,
                 RuneLevel = 0x68,
                 Runes = 0x6C,
-                RuneMemory = 0x70
+                RuneMemory = 0x70,
+                Scadutree = 0xFC, // Byte, 0-20
+                SpiritAsh = 0xFD, // byte 0-10
             }
             public const int NewGame = 0x120;
         }

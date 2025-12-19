@@ -81,6 +81,122 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 71190
+        ///76101
+        ///76100
+        ///76111
+        ///76104
+        ///76105
+        ///76102
+        ///71002
+        ///76117
+        ///71007
+        ///71006
+        ///76201
+        ///76216
+        ///76205
+        ///76213
+        ///76214
+        ///76230
+        ///76228
+        ///76208
+        ///76209
+        ///76239
+        ///76401
+        ///76417
+        ///76418
+        ///76453
+        ///76451
+        ///76301
+        ///76309
+        ///76312
+        ///71104
+        ///71105
+        ///71107
+        ///73501
+        ///76500
+        ///76502
+        ///76501
+        ///76504
+        ///76521
+        ///76508
+        ///76510
+        ///76550
+        ///76551
+        ///76652
+        ///71506
+        ///71507
+        ///71508
+        ///71501
+        ///71504
+        ///71253
+        ///71271
+        ///71224
+        ///71225
+        ///71234
+        ///71235
+        ///71216
+        ///71218
+        ///71306
+        ///71309
+        ///71310
+        ///.
+        /// </summary>
+        internal static string ArBaseGraces {
+            get {
+                return ResourceManager.GetString("ArBaseGraces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 76800
+        ///76802
+        ///76813
+        ///76810
+        ///76812
+        ///76803
+        ///74301
+        ///76852
+        ///76822
+        ///72003
+        ///72013
+        ///72014
+        ///72015
+        ///72016
+        ///76941
+        ///76943
+        ///76902
+        ///76900
+        ///76906
+        ///76905
+        ///76918
+        ///74002
+        ///72106
+        ///72107
+        ///72109
+        ///76931
+        ///72111
+        ///72114
+        ///72116
+        ///72117
+        ///72120
+        ///76935
+        ///76835
+        ///76834
+        ///72202
+        ///72203
+        ///72204
+        ///76862
+        ///72801
+        ///72803.
+        /// </summary>
+        internal static string ArDlcGraces {
+            get {
+                return ResourceManager.GetString("ArDlcGraces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,1001D588,Alberich&apos;s Bracers,1,1
         ///0,1001D4C0,Alberich&apos;s Pointed Hat,1,1
         ///0,1001D8A8,Alberich&apos;s Pointed Hat (Altered),1,1
@@ -408,6 +524,69 @@ namespace SilkyRing.Properties {
         internal static string ForceActSequence {
             get {
                 return ResourceManager.GetString("ForceActSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,0
+        ///0,1
+        ///0,2
+        ///0,3
+        ///0,4
+        ///0,5
+        ///0,6
+        ///0,7
+        ///0,8
+        ///0,9
+        ///0,10
+        ///0,20
+        ///0,21
+        ///0,22
+        ///0,23
+        ///0,24
+        ///0,25
+        ///0,30
+        ///0,40
+        ///0,41
+        ///0,50
+        ///0,51
+        ///0,52
+        ///0,53
+        ///0,54
+        ///0,60
+        ///0,70
+        ///0,71
+        ///0,72
+        ///0,73
+        ///0,80
+        ///0,90
+        ///0,91
+        ///0,92
+        ///0,93
+        ///0,94
+        ///0,95
+        ///0,97
+        ///0,98
+        ///0,100
+        ///0,101
+        ///0,102
+        ///0,103
+        ///0,104
+        ///0,105
+        ///0,106
+        ///0,108
+        ///0,109
+        ///1,111
+        ///1,112
+        ///1,113
+        ///1,114
+        ///1,115
+        ///1,116
+        ///.
+        /// </summary>
+        internal static string Gestures {
+            get {
+                return ResourceManager.GetString("Gestures", resourceCulture);
             }
         }
         
