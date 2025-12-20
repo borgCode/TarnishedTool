@@ -34,8 +34,14 @@ namespace SilkyRing.Memory
             public enum SpecialEffectOffsets
             {
                 Head = 0x8,
-                Next = 0x30,
+            }
+
+            public enum SpEffectEntry
+            {
                 Id = 0x8,
+                Next = 0x30,
+                TimeLeft = 0x40,
+                Duration = 0x48,
             }
             
             public const int Modules = 0x190;

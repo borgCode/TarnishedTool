@@ -1,7 +1,9 @@
 ﻿// 
 
 using System;
+using System.Collections.Generic;
 using SilkyRing.Interfaces;
+using SilkyRing.Models;
 using SilkyRing.Utilities;
 using static SilkyRing.Memory.Offsets;
 
@@ -42,9 +44,27 @@ public class SpEffectService(MemoryService memoryService) : ISpEffectService
         
         while (current != IntPtr.Zero)
         {
-            if (memoryService.ReadUInt32(current + (int)ChrIns.SpecialEffectOffsets.Id) == spEffectId) return true;
-            current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpecialEffectOffsets.Next);
+            if (memoryService.ReadUInt32(current + (int)ChrIns.SpEffectEntry.Id) == spEffectId) return true;
+            current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpEffectEntry.Next);
         }
         return false;
+    }
+
+    public List<SpEffectEntry> GetActiveSpEffectList(long chrIns)
+    {
+        var spEffectList = new List<SpEffectEntry>();
+        var specialEffect = memoryService.ReadInt64((IntPtr)chrIns + ChrIns.SpecialEffect);
+        var current = (IntPtr) memoryService.ReadInt64((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
+        
+        while (current != IntPtr.Zero)
+        {
+            int id = memoryService.ReadInt32(current + (int)ChrIns.SpEffectEntry.Id);
+            float timeLeft = memoryService.ReadFloat(current + (int)ChrIns.SpEffectEntry.TimeLeft);
+            float duration = memoryService.ReadFloat(current + (int)ChrIns.SpEffectEntry.Duration);
+            spEffectList.Add(new SpEffectEntry(id, timeLeft, duration));
+            current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpEffectEntry.Next);
+        }
+        
+        return spEffectList;
     }
 }

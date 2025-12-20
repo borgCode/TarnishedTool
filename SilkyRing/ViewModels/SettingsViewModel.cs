@@ -54,6 +54,8 @@ public class SettingsViewModel : BaseViewModel
             new("Toggle Speed", HotkeyActions.TogglePlayerSpeed),
             new("Increase Speed", HotkeyActions.IncreasePlayerSpeed),
             new("Decrease Speed", HotkeyActions.DecreasePlayerSpeed),
+            new("Apply Special Effect", HotkeyActions.ApplySpEffect),
+            new("Remove Special Effect", HotkeyActions.RemoveSpEffect),
         ];
         EnemiesHotkeys = [
             new ("All No Death", HotkeyActions.AllNoDeath),

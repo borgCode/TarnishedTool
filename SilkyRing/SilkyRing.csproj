@@ -129,6 +129,7 @@
         <Compile Include="Models\Item.cs" />
         <Compile Include="Models\Position.cs" />
         <Compile Include="Models\PosWithHurtbox.cs" />
+        <Compile Include="Models\SpEffectEntry.cs" />
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
@@ -160,6 +161,7 @@
         <Compile Include="ViewModels\ItemViewModel.cs" />
         <Compile Include="ViewModels\SearchableGroupedCollection.cs" />
         <Compile Include="ViewModels\SettingsViewModel.cs" />
+        <Compile Include="ViewModels\SpEffectViewModel.cs" />
         <Compile Include="ViewModels\TargetViewModel.cs" />
         <Compile Include="ViewModels\EventViewModel.cs" />
         <Compile Include="ViewModels\PlayerViewModel.cs" />
@@ -201,6 +203,9 @@
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\SpEffectsWindow.xaml.cs">
+          <DependentUpon>SpEffectsWindow.xaml</DependentUpon>
+        </Compile>
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -225,6 +230,7 @@
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
+        <Page Include="Views\Windows\SpEffectsWindow.xaml" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Memory\AobScanner.cs" />

@@ -23,6 +23,8 @@ public enum HotkeyActions
     TogglePlayerSpeed,
     IncreasePlayerSpeed,
     DecreasePlayerSpeed,
+    ApplySpEffect,
+    RemoveSpEffect,
     AllNoDeath,
     AllNoDamage,
     AllNoHit,

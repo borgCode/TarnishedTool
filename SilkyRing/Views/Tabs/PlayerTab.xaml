@@ -569,6 +569,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
@@ -588,6 +589,10 @@
                                 Padding="10,3"
                                 Margin="10,0,0,0"
                                 Command="{Binding ApplySpEffectCommand}" />
+                        <CheckBox
+                            IsChecked="{Binding IsSpEffectWindowOpen}"
+                            Content="Show active special effects"
+                            Margin="50,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="10,5,0,0">

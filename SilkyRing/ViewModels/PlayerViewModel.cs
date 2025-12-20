@@ -8,6 +8,7 @@ using SilkyRing.GameIds;
 using SilkyRing.Interfaces;
 using SilkyRing.Models;
 using SilkyRing.Utilities;
+using SilkyRing.Views.Windows;
 using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.ViewModels
@@ -33,6 +34,9 @@ namespace SilkyRing.ViewModels
         private readonly HotkeyManager _hotkeyManager;
         private readonly IEventService _eventService;
         private readonly ISpEffectService _spEffectService;
+
+        private readonly SpEffectViewModel _spEffectViewModel = new();
+        private SpEffectsWindow _spEffectsWindow;
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
@@ -507,7 +511,24 @@ namespace SilkyRing.ViewModels
             get => _removeSpEffectId;
             set => SetProperty(ref _removeSpEffectId, value);
         }
-
+        
+        private bool _isSpEffectWindowOpen;
+        
+        public bool IsSpEffectWindowOpen
+        {
+            get => _isSpEffectWindowOpen;
+            set
+            {
+                if (SetProperty(ref _isSpEffectWindowOpen, value))
+                {
+                    if (_isSpEffectWindowOpen)
+                    {
+                        OpenSpEffectsWindow();
+                    }
+                }
+            }
+        }
+        
         #endregion
 
         #region Public Methods
@@ -591,8 +612,16 @@ namespace SilkyRing.ViewModels
                 () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
             _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed,
                 () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
+            _hotkeyManager.RegisterAction(HotkeyActions.ApplySpEffect, () => SafeExecute(ApplySpEffect));
+            _hotkeyManager.RegisterAction(HotkeyActions.RemoveSpEffect, () => SafeExecute(RemoveSpEffect));
         }
-
+        
+        private void SafeExecute(Action action)
+        {
+            if (!AreOptionsEnabled) return;
+            action();
+        }
+        
         private void PlayerTick(object sender, EventArgs e)
         {
             if (_pauseUpdates) return;
@@ -607,6 +636,11 @@ namespace SilkyRing.ViewModels
             PosX = _coords.X;
             PosY = _coords.Y;
             PosZ = _coords.Z;
+            if (IsSpEffectWindowOpen)
+            {
+               var spEffects =  _spEffectService.GetActiveSpEffectList(_playerService.GetPlayerIns());
+               _spEffectViewModel.RefreshEffects(spEffects);
+            }
             if (_currentRuneLevel == newRuneLevel) return;
             RuneLevel = newRuneLevel;
             _currentRuneLevel = newRuneLevel;
@@ -706,6 +740,16 @@ namespace SilkyRing.ViewModels
             if (!uint.TryParse(RemoveSpEffectId, out uint spEffectId)) return;
             var playerIns = _playerService.GetPlayerIns();
             _spEffectService.RemoveSpEffect(playerIns, spEffectId);
+        }
+        
+        private void OpenSpEffectsWindow()
+        {
+            _spEffectsWindow = new SpEffectsWindow
+            {
+                DataContext = _spEffectViewModel
+            };
+            _spEffectsWindow.Closed += (s, e) => _spEffectsWindow = null;
+            _spEffectsWindow.Show();
         }
 
         #endregion
