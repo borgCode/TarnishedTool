@@ -38,6 +38,7 @@ public class SettingsViewModel : BaseViewModel
         [
             new("Set RFBS", HotkeyActions.SetRfbs),
             new("Set Max Hp", HotkeyActions.SetMaxHp),
+            new("Set Custom Hp", HotkeyActions.PlayerSetCustomHp),
             new("Save Position 1", HotkeyActions.SavePos1),
             new("Save Position 2", HotkeyActions.SavePos2),
             new("Restore Position 2", HotkeyActions.RestorePos1),

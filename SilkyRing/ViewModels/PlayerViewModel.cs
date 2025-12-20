@@ -18,6 +18,8 @@ namespace SilkyRing.ViewModels
         private Vector3 _coords;
         private int _currentRuneLevel;
 
+        private bool _customHpHasBeenSet;
+
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
         private const float Epsilon = 0.0001f;
@@ -56,6 +58,7 @@ namespace SilkyRing.ViewModels
 
             SetRfbsCommand = new DelegateCommand(SetRfbs);
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
+            SetCustomHpCommand = new DelegateCommand(SetCustomHp);
 
             SavePositionCommand = new DelegateCommand(SavePosition);
             RestorePositionCommand = new DelegateCommand(RestorePosition);
@@ -72,18 +75,19 @@ namespace SilkyRing.ViewModels
             };
             _playerTick.Tick += PlayerTick;
         }
-        
+
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
         public ICommand SetMaxHpCommand { get; set; }
+        public ICommand SetCustomHpCommand { get; set; }
 
         public ICommand SavePositionCommand { get; set; }
         public ICommand RestorePositionCommand { get; set; }
 
         public ICommand GiveRunesCommand { get; set; }
         public ICommand ApplyRuneArcCommand { get; set; }
-        
+
         public ICommand ApplySpEffectCommand { get; set; }
         public ICommand RemoveSpEffectCommand { get; set; }
 
@@ -113,6 +117,20 @@ namespace SilkyRing.ViewModels
         {
             get => _currentMaxHp;
             set => SetProperty(ref _currentMaxHp, value);
+        }
+
+        private int _customHp;
+
+        public int CustomHp
+        {
+            get => _customHp;
+            set
+            {
+                if (SetProperty(ref _customHp, value))
+                {
+                    _customHpHasBeenSet = true;
+                }
+            }
         }
 
         private bool _isSetRfbsOnLoadEnabled;
@@ -495,7 +513,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private string _applySpEffectId;
 
         public string ApplySpEffectId
@@ -511,9 +529,9 @@ namespace SilkyRing.ViewModels
             get => _removeSpEffectId;
             set => SetProperty(ref _removeSpEffectId, value);
         }
-        
+
         private bool _isSpEffectWindowOpen;
-        
+
         public bool IsSpEffectWindowOpen
         {
             get => _isSpEffectWindowOpen;
@@ -528,7 +546,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         #endregion
 
         #region Public Methods
@@ -579,7 +597,7 @@ namespace SilkyRing.ViewModels
             if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
             _pauseUpdates = false;
         }
-        
+
         private void OnGameNotLoaded()
         {
             AreOptionsEnabled = false;
@@ -614,14 +632,15 @@ namespace SilkyRing.ViewModels
                 () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
             _hotkeyManager.RegisterAction(HotkeyActions.ApplySpEffect, () => SafeExecute(ApplySpEffect));
             _hotkeyManager.RegisterAction(HotkeyActions.RemoveSpEffect, () => SafeExecute(RemoveSpEffect));
+            _hotkeyManager.RegisterAction(HotkeyActions.PlayerSetCustomHp, SetCustomHp);
         }
-        
+
         private void SafeExecute(Action action)
         {
             if (!AreOptionsEnabled) return;
             action();
         }
-        
+
         private void PlayerTick(object sender, EventArgs e)
         {
             if (_pauseUpdates) return;
@@ -638,9 +657,10 @@ namespace SilkyRing.ViewModels
             PosZ = _coords.Z;
             if (IsSpEffectWindowOpen)
             {
-               var spEffects =  _spEffectService.GetActiveSpEffectList(_playerService.GetPlayerIns());
-               _spEffectViewModel.RefreshEffects(spEffects);
+                var spEffects = _spEffectService.GetActiveSpEffectList(_playerService.GetPlayerIns());
+                _spEffectViewModel.RefreshEffects(spEffects);
             }
+
             if (_currentRuneLevel == newRuneLevel) return;
             RuneLevel = newRuneLevel;
             _currentRuneLevel = newRuneLevel;
@@ -664,6 +684,13 @@ namespace SilkyRing.ViewModels
 
         private void SetRfbs() => _playerService.SetRfbs();
         private void SetMaxHp() => _playerService.SetFullHp();
+
+        private void SetCustomHp()
+        {
+            if (!_customHpHasBeenSet) return;
+            if (CustomHp > CurrentMaxHp) CustomHp = CurrentMaxHp;
+            _playerService.SetHp(CustomHp);
+        }
 
         private void SavePosition(object parameter)
         {
@@ -705,7 +732,8 @@ namespace SilkyRing.ViewModels
         {
             var playerIns = _playerService.GetPlayerIns();
             _spEffectService.ApplySpEffect(playerIns, SpEffect.RuneArc);
-        } 
+        }
+
         private void GiveRunes() => _playerService.GiveRunes(Runes);
 
         private void ToggleSpeed()
@@ -727,7 +755,7 @@ namespace SilkyRing.ViewModels
         {
             return Math.Abs(a - b) < Epsilon;
         }
-        
+
         private void ApplySpEffect()
         {
             if (!uint.TryParse(ApplySpEffectId, out uint spEffectId)) return;
@@ -741,7 +769,7 @@ namespace SilkyRing.ViewModels
             var playerIns = _playerService.GetPlayerIns();
             _spEffectService.RemoveSpEffect(playerIns, spEffectId);
         }
-        
+
         private void OpenSpEffectsWindow()
         {
             _spEffectsWindow = new SpEffectsWindow

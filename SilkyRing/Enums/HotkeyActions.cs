@@ -6,6 +6,7 @@ public enum HotkeyActions
 {
     SetRfbs,
     SetMaxHp,
+    PlayerSetCustomHp,
     SavePos1,
     SavePos2,
     RestorePos1,

@@ -52,10 +52,16 @@
                         IsEnabled="{Binding AreOptionsEnabled}"
                         Margin="10,0,0,0"
                         Width="60" />
-                    <CheckBox
-                        IsChecked="{Binding IsSetRfbsOnLoadEnabled}"
-                        Content="Set RFBS on load in"
-                        Margin="10,0,0,0" />
+                    <xctk:IntegerUpDown Width="80" 
+                                        Margin="20,0,0,0"
+                                        Value="{Binding CustomHp}"
+                                        Minimum="0" />
+                    <Button
+                        Command="{Binding SetCustomHpCommand}"
+                        Content="Set Custom Hp"
+                        IsEnabled="{Binding AreOptionsEnabled}"
+                        Margin="5,0,0,0"
+                        Width="100" />
                 </StackPanel>
             </Grid>
 
@@ -197,6 +203,9 @@
                     <CheckBox Content="Torrent No Death"
                               IsChecked="{Binding IsTorrentNoDeathEnabled}"
                               Margin="0,2" />
+                    <CheckBox Content="Set RFBS on load in"
+                              IsChecked="{Binding IsSetRfbsOnLoadEnabled}"
+                              Margin="0, 2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
                     <CheckBox Content="No Runes from Enemies"
