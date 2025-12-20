@@ -29,7 +29,15 @@ namespace SilkyRing.Memory
         public static class ChrIns
         {
             public const int ChrCtrl = 0x58;
-            public const int SpEffectMan = 0x178;
+            public const int SpecialEffect = 0x178;
+
+            public enum SpecialEffectOffsets
+            {
+                Head = 0x8,
+                Next = 0x30,
+                Id = 0x8,
+            }
+            
             public const int Modules = 0x190;
             public const int Flags = 0x530;
 
@@ -234,9 +242,11 @@ namespace SilkyRing.Memory
                 RuneLevel = 0x68,
                 Runes = 0x6C,
                 RuneMemory = 0x70,
-                Scadutree = 0xFC, // Byte, 0-20
-                SpiritAsh = 0xFD, // byte 0-10
+                Scadutree = 0xFC, 
+                SpiritAsh = 0xFD, 
             }
+
+            public const int Igt = 0xA0; //Uint
             public const int NewGame = 0x120;
         }
 
@@ -330,6 +340,7 @@ namespace SilkyRing.Memory
             public static long ItemSpawn;
             public static long MatrixVectorProduct;
             public static long ChrInsByHandle;
+            public static long FindAndRemoveSpEffect;
         }
 
         public static class Patches

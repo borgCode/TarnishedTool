@@ -11,7 +11,7 @@ public interface IPlayerService
     void SavePos(int index);
     void RestorePos(int index);
     PosWithHurtbox GetPosWithHurtbox();
-
+    long GetPlayerIns();
     void SetHp(int hp);
     int GetCurrentHp();
     int GetMaxHp();
@@ -24,7 +24,6 @@ public interface IPlayerService
     float GetSpeed();
     void SetSpeed(float speed);
     void ToggleInfinitePoise(bool isInfinitePoiseEnabled);
-    void ApplySpEffect(long spEffectId);
     void ToggleDebugFlag(int offset, bool isEnabled);
     void ToggleNoDamage(bool isFreezeHealthEnabled);
     void ToggleNoRuneGain(bool isNoRuneGainEnabled);

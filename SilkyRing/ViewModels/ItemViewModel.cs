@@ -305,6 +305,7 @@ public class ItemViewModel : BaseViewModel
         _itemsByCategory["Crystal Tears"] = DataLoader.GetItems("CrystalTears", "Crystal Tears");
         _itemsByCategory["Incantations"] = DataLoader.GetItems("Incantations", "Incantations");
         _itemsByCategory["Key Items"] = DataLoader.GetEventItems("KeyItems", "Key Items").Cast<Item>().ToList();
+        _itemsByCategory["Pots and Perfumes"] = DataLoader.GetItems("PotsAndPerfumes", "Pots and Perfumes");
         _itemsByCategory["Prattling Pate"] = DataLoader.GetItems("PrattlingPate", "Prattling Pate");
         _itemsByCategory["Sorceries"] = DataLoader.GetItems("Sorceries", "Sorceries");
         _itemsByCategory["Spirit Ashes"] = DataLoader.GetItems("SpiritAshes", "Spirit Ashes");

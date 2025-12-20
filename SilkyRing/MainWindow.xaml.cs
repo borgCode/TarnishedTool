@@ -61,11 +61,12 @@ namespace SilkyRing
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
             IItemService itemService = new ItemService(_memoryService);
+            ISpEffectService spEffectService = new SpEffectService(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
 
-            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager, eventService);
+            PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager, eventService, spEffectService);
             TravelViewModel travelViewModel = new TravelViewModel(travelService, eventService, _stateService, _dlcService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,

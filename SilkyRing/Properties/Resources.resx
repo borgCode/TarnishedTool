@@ -4250,4 +4250,71 @@ c3                      ret</value>
 1,116
 </value>
   </data>
+  <data name="RemoveSpEffect" xml:space="preserve">
+    <value>48 b9 00 00 00 00 00    movabs rcx,0x0
+00 00 00
+48 ba 00 00 00 00 00    movabs rdx,0x0
+00 00 00
+48 b8 00 00 00 00 00    movabs rax,0x0
+00 00 00
+48 83 ec 20             sub    rsp,0x20
+ff d0                   call   rax
+48 83 c4 20             add    rsp,0x20
+c3                      ret</value>
+  </data>
+  <data name="PotsAndPerfumes" xml:space="preserve">
+    <value>0,40000295,Academy Magic Pot,10,600
+0,40000262,Albinauric Pot,10,600
+0,40000186,Alluring Pot,10,600
+0,40000141,Ancient Dragonbolt Pot,10,600
+0,40000187,Beastlure Pot,10,600
+0,40000276,Cursed-Blood Pot,10,600
+1,401E8764,Eternal Sleep Pot,10,600
+0,4000014A,Fetid Pot,10,600
+0,4000012C,Fire Pot,10,600
+0,40000168,Freezing Pot,10,600
+1,401E85CA,Hefty Fetid Pot,10,600
+1,401E85AC,Hefty Fire Pot,10,600
+1,401E85D4,Hefty Fly Pot,10,600
+1,401E85E8,Hefty Freezing Pot,10,600
+1,401E86EC,Hefty Frenzied Flame Pot,10,600
+1,401E8728,Hefty Furnace Pot,10,600
+1,401E85C0,Hefty Lightning Pot,10,600
+1,401E8714,Hefty Magic Pot,10,600
+1,401E85FC,Hefty Oil Pot,10,600
+1,401E85F2,Hefty Poison Pot,10,600
+1,401E870A,Hefty Rancor Pot,10,600
+1,401E8732,Hefty Red Lightning Pot,10,600
+1,401E85B6,Hefty Rock Pot,10,600
+1,401E871E,Hefty Rot Pot,10,600
+1,401E86D8,Hefty Volcano Pot,10,600
+0,4000015E,Holy Water Pot,10,600
+0,40000140,Lightning Pot,10,600
+0,40000294,Magic Pot,10,600
+0,4000017C,Oil Pot,10,600
+0,40000172,Poison Pot,10,600
+0,4000028A,Rancor Pot,10,600
+1,401E873C,Red Lightning Pot,10,600
+0,4000012D,Redmane Fire Pot,10,600
+0,4000251D,Ritual Pot,10,600
+0,400001AE,Roped Fetid Pot,10,600
+0,40000190,Roped Fire Pot,10,600
+0,400001D6,Roped Fly Pot,10,600
+1,401E8778,Roped Frenzied Flame Pot,10,600
+0,400001FE,Roped Holy Water Pot,10,600
+0,400001A4,Roped Lightning Pot,10,600
+0,400001CC,Roped Magic Pot,10,600
+0,400001C2,Roped Oil Pot,10,600
+0,400001B8,Roped Poison Pot,10,600
+0,400001EA,Roped Volcano Pot,10,600
+0,4000029E,Rot Pot,10,600
+0,4000015F,Sacred Order Pot,10,600
+0,40000280,Sleep Pot,10,600
+0,40000154,Swarm Pot,10,600
+0,40000258,Volcano Pot,10,600
+0,40000DDE,Bloodboil Aromatic,10,600
+0,40000DC0,Ironjar Aromatic,10,600
+0,40000DB6,Spark Aromatic,10,600
+0,40000DAC,Uplifting Aromatic,10,600</value>
+  </data>
 </root>

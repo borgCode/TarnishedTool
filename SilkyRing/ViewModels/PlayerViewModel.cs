@@ -14,11 +14,9 @@ namespace SilkyRing.ViewModels
 {
     public class PlayerViewModel : BaseViewModel
     {
-        
-        
         private Vector3 _coords;
         private int _currentRuneLevel;
-        
+
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
         private const float Epsilon = 0.0001f;
@@ -34,20 +32,23 @@ namespace SilkyRing.ViewModels
 
         private readonly HotkeyManager _hotkeyManager;
         private readonly IEventService _eventService;
+        private readonly ISpEffectService _spEffectService;
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
-            IEventService eventService)
+            IEventService eventService, ISpEffectService spEffectService)
         {
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
             _eventService = eventService;
+            _spEffectService = spEffectService;
 
             RegisterHotkeys();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
+            stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
             SetRfbsCommand = new DelegateCommand(SetRfbs);
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
@@ -66,6 +67,7 @@ namespace SilkyRing.ViewModels
             _playerTick.Tick += PlayerTick;
         }
 
+        
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
@@ -88,7 +90,7 @@ namespace SilkyRing.ViewModels
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
         }
-        
+
         private int _currentHp;
 
         public int CurrentHp
@@ -106,7 +108,7 @@ namespace SilkyRing.ViewModels
         }
 
         private bool _isSetRfbsOnLoadEnabled;
-        
+
         public bool IsSetRfbsOnLoadEnabled
         {
             get => _isSetRfbsOnLoadEnabled;
@@ -314,8 +316,7 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
-        
+
         private bool _isNoRuneLossEnabled;
 
         public bool IsNoRuneLossEnabled
@@ -357,9 +358,9 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private int _runeLevel;
-        
+
         public int RuneLevel
         {
             get => _runeLevel;
@@ -429,7 +430,7 @@ namespace SilkyRing.ViewModels
             get => _arcane;
             set => SetProperty(ref _arcane, value);
         }
-        
+
         private int _scadu;
 
         public int Scadu
@@ -437,7 +438,7 @@ namespace SilkyRing.ViewModels
             get => _scadu;
             set => SetProperty(ref _scadu, value);
         }
-        
+
         private int _spiritAsh;
 
         public int SpiritAsh
@@ -453,9 +454,9 @@ namespace SilkyRing.ViewModels
             get => _runes;
             set => SetProperty(ref _runes, value);
         }
-        
+
         private int _newGame;
-        
+
         public int NewGame
         {
             get => _newGame;
@@ -472,9 +473,9 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
-        
+
         private float _playerSpeed;
-        
+
         public float PlayerSpeed
         {
             get => _playerSpeed;
@@ -494,7 +495,7 @@ namespace SilkyRing.ViewModels
         public void PauseUpdates() => _pauseUpdates = true;
         public void ResumeUpdates() => _pauseUpdates = false;
         public void SetHp(int hp) => _playerService.SetHp(hp);
-        
+
         public void SetStat(string statName, int value)
         {
             if (Enum.TryParse<GameDataMan.PlayerGameDataOffsets>(statName, out var offset))
@@ -506,9 +507,9 @@ namespace SilkyRing.ViewModels
         public void SetScadu(int value) => _playerService.SetScadu(value);
         public void SetSpiritAsh(int value) => _playerService.SetSpiritAsh(value);
         public void SetSpeed(float value) => PlayerSpeed = value;
-        
+
         #endregion
-        
+
         #region Private Methods
 
         private void OnGameLoaded()
@@ -537,6 +538,12 @@ namespace SilkyRing.ViewModels
             if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
             _pauseUpdates = false;
         }
+        
+        private void OnGameNotLoaded()
+        {
+            AreOptionsEnabled = false;
+            _playerTick.Stop();
+        }
 
         private void RegisterHotkeys()
         {
@@ -546,17 +553,24 @@ namespace SilkyRing.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.SavePos2, () => SavePosition(1));
             _hotkeyManager.RegisterAction(HotkeyActions.RestorePos1, () => RestorePosition(0));
             _hotkeyManager.RegisterAction(HotkeyActions.RestorePos2, () => RestorePosition(1));
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteStamina, () => { IsInfiniteStaminaEnabled = !IsInfiniteStaminaEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteConsumables, () => { IsInfiniteConsumablesEnabled = !IsInfiniteConsumablesEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteArrows, () => { IsInfiniteArrowsEnabled = !IsInfiniteArrowsEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteFp, () => { IsInfiniteFpEnabled = !IsInfiniteFpEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteStamina,
+                () => { IsInfiniteStaminaEnabled = !IsInfiniteStaminaEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteConsumables,
+                () => { IsInfiniteConsumablesEnabled = !IsInfiniteConsumablesEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteArrows,
+                () => { IsInfiniteArrowsEnabled = !IsInfiniteArrowsEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfiniteFp,
+                () => { IsInfiniteFpEnabled = !IsInfiniteFpEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.OneShot, () => { IsOneShotEnabled = !IsOneShotEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise, () => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.InfinitePoise,
+                () => { IsInfinitePoiseEnabled = !IsInfinitePoiseEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.Silent, () => { IsSilentEnabled = !IsSilentEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.Hidden, () => { IsHiddenEnabled = !IsHiddenEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.TogglePlayerSpeed, ToggleSpeed);
-            _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed, () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
-            _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed, () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
+            _hotkeyManager.RegisterAction(HotkeyActions.IncreasePlayerSpeed,
+                () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
+            _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed,
+                () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
         }
 
         private void PlayerTick(object sender, EventArgs e)
@@ -632,10 +646,14 @@ namespace SilkyRing.ViewModels
                 _playerService.SetSp(state.Sp);
             }
         }
-        
-        private void ApplyRuneArc() =>  _playerService.ApplySpEffect(SpEffect.RuneArc);
+
+        private void ApplyRuneArc()
+        {
+            var playerIns = _playerService.GetPlayerIns();
+            _spEffectService.ApplySpEffect(playerIns, SpEffect.RuneArc);
+        } 
         private void GiveRunes() => _playerService.GiveRunes(Runes);
-        
+
         private void ToggleSpeed()
         {
             if (!AreOptionsEnabled) return;
@@ -657,7 +675,5 @@ namespace SilkyRing.ViewModels
         }
 
         #endregion
-
-        
     }
 }

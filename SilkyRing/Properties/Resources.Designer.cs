@@ -857,6 +857,29 @@ namespace SilkyRing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0,40000295,Academy Magic Pot,10,600
+        ///0,40000262,Albinauric Pot,10,600
+        ///0,40000186,Alluring Pot,10,600
+        ///0,40000141,Ancient Dragonbolt Pot,10,600
+        ///0,40000187,Beastlure Pot,10,600
+        ///0,40000276,Cursed-Blood Pot,10,600
+        ///1,401E8764,Eternal Sleep Pot,10,600
+        ///0,4000014A,Fetid Pot,10,600
+        ///0,4000012C,Fire Pot,10,600
+        ///0,40000168,Freezing Pot,10,600
+        ///1,401E85CA,Hefty Fetid Pot,10,600
+        ///1,401E85AC,Hefty Fire Pot,10,600
+        ///1,401E85D4,Hefty Fly Pot,10,600
+        ///1,401E85E8,Hefty Freezing Pot,10,600
+        ///1,401E86EC,Hefty Frenzied Flame  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PotsAndPerfumes {
+            get {
+                return ResourceManager.GetString("PotsAndPerfumes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,4000089A,Prattling Pate &quot;Apologies&quot;,1,600
         ///0,40000898,Prattling Pate &quot;Hello&quot;,1,600
         ///1,401E8CE6,Prattling Pate &quot;Lamentation&quot;,1,600
@@ -890,6 +913,24 @@ namespace SilkyRing.Properties {
         internal static string ReduceTargetView {
             get {
                 return ResourceManager.GetString("ReduceTargetView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
+        ///00 00 00
+        ///48 ba 00 00 00 00 00    movabs rdx,0x0
+        ///00 00 00
+        ///48 b8 00 00 00 00 00    movabs rax,0x0
+        ///00 00 00
+        ///48 83 ec 20             sub    rsp,0x20
+        ///ff d0                   call   rax
+        ///48 83 c4 20             add    rsp,0x20
+        ///c3                      ret.
+        /// </summary>
+        internal static string RemoveSpEffect {
+            get {
+                return ResourceManager.GetString("RemoveSpEffect", resourceCulture);
             }
         }
         

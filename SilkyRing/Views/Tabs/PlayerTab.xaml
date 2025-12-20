@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:SilkyRing.Converters"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="700" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
     </UserControl.Resources>
@@ -14,6 +14,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -54,8 +55,7 @@
                     <CheckBox
                         IsChecked="{Binding IsSetRfbsOnLoadEnabled}"
                         Content="Set RFBS on load in"
-                        Margin="10,0,0,0"
-                         />
+                        Margin="10,0,0,0" />
                 </StackPanel>
             </Grid>
 
@@ -373,7 +373,7 @@
                                             BorderBrush="#3F3F46" />
                         <TextBlock Text="Arcane" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
                     </Grid>
-                    
+
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -390,7 +390,7 @@
                                             BorderBrush="#3F3F46" />
                         <TextBlock Text="Scadutree" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,0,0" />
                     </Grid>
-                    
+
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -499,12 +499,8 @@
                         </Grid>
                     </StackPanel>
 
-                    <Border Grid.Column="1"
-                            BorderThickness="1"
-                            BorderBrush="#333"
-                            CornerRadius="3"
-                            Margin="5,5,0,0"
-                            Padding="10">
+                    <Grid Grid.Column="1"
+                          Margin="5,5,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -534,17 +530,77 @@
                                                    FontSize="10" />
                                     </Border>
                                 </StackPanel>
-
-                                <!-- <CheckBox Content="Disable Roll" -->
-                                <!--           IsChecked="{Binding IsNoRollEnabled}" -->
-                                <!--           Margin="0,2" /> -->
-
                             </StackPanel>
-
                             <StackPanel Grid.Column="1" />
                         </Grid>
-                    </Border>
+                    </Grid>
                 </Grid>
+            </Border>
+            
+            <Border Grid.Row="7" Margin="0,10,0,0"
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3"
+                    Padding="10">
+                     <StackPanel Margin="10">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="Special Effects"
+                               FontWeight="Bold" />
+
+                    <Border Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Apply or remove Special effects by ID"
+                            ToolTipService.InitialShowDelay='100'>
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
+                </StackPanel>
+
+                <Grid Margin="10,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <TextBlock Text="ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox Width="100" Text="{Binding ApplySpEffectId}" Margin="0,0,10,0" />
+
+                    <Button Content="Apply"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Padding="10,3"
+                            Margin="10,0,0,0"
+                            Command="{Binding ApplySpEffectCommand}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <TextBlock Text="ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox Width="100" Text="{Binding RemoveSpEffectId}" Margin="0,0,10,0" />
+                    
+                    <Button Content="Remove"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Padding="10,3"
+                            Margin="10,0,0,0"
+                            Command="{Binding RemoveSpEffectCommand}" />
+                </StackPanel>
+            </StackPanel>
             </Border>
         </Grid>
     </ScrollViewer>

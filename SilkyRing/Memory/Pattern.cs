@@ -363,6 +363,15 @@
             AddressingMode.Absolute
         );
 
+        public static readonly Pattern FindAndRemoveSpEffect = new Pattern(
+            new byte[] { 0x0F, 0xB6, 0xD0, 0x42 },
+            "xxxx",
+            0xC,
+            AddressingMode.Relative,
+            1,
+            5
+        );
+
         //Patches
 
         public static readonly Pattern DungeonWarp = new Pattern(

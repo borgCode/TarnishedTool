@@ -9,7 +9,8 @@ using static SilkyRing.Memory.Offsets;
 
 namespace SilkyRing.Services
 {
-    public class PlayerService(MemoryService memoryService, HookManager hookManager, ITravelService travelService) : IPlayerService
+    public class PlayerService(MemoryService memoryService, HookManager hookManager, ITravelService travelService)
+        : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
 
@@ -34,7 +35,8 @@ namespace SilkyRing.Services
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
             posToSave.BlockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
-            posToSave.Coords = memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
+            posToSave.Coords =
+                memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
             posToSave.Angle =
                 memoryService.ReadFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalAngle);
         }
@@ -53,7 +55,8 @@ namespace SilkyRing.Services
 
             if (currentArea == savedArea)
             {
-                var currentCoords = memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
+                var currentCoords =
+                    memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
                 var currentAbsolute = GetAbsoluteCoords(currentCoords, currentBlockId);
                 var savedAbsolute = GetAbsoluteCoords(savedPos.Coords, savedPos.BlockId);
                 var delta = savedAbsolute - currentAbsolute;
@@ -119,7 +122,7 @@ namespace SilkyRing.Services
 
             return globalCoords;
         }
-        
+
         public PosWithHurtbox GetPosWithHurtbox()
         {
             var physPtr = GetChrPhysicsPtr();
@@ -127,6 +130,9 @@ namespace SilkyRing.Services
             var capsuleRadius = memoryService.ReadFloat(physPtr + (int)ChrIns.ChrPhysicsOffsets.HurtCapsuleRadius);
             return new PosWithHurtbox(position, capsuleRadius);
         }
+
+        public long GetPlayerIns() =>
+            memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
 
         public void SetHp(int hp) =>
             memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, hp);
@@ -190,20 +196,6 @@ namespace SilkyRing.Services
             {
                 hookManager.UninstallHook(code.ToInt64());
             }
-        }
-
-        public void ApplySpEffect(long spEffectId)
-        {
-            var bytes = AsmLoader.GetAsmBytes("SetSpEffect");
-            var playerIns =
-                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
-            AsmHelper.WriteAbsoluteAddresses(bytes, new[]
-            {
-                (playerIns, 0x0 + 2),
-                (spEffectId, 0xA + 2),
-                (Functions.SetSpEffect, 0x18 + 2)
-            });
-            memoryService.AllocateAndExecute(bytes);
         }
 
         public void ToggleDebugFlag(int offset, bool isEnabled) =>
@@ -321,20 +313,21 @@ namespace SilkyRing.Services
             var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
             var handle = memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.HorseHandle);
             var torrentChrIns = ChrInsLookup(handle);
-            var bitFlags = memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
+            var bitFlags = memoryService.FollowPointers(torrentChrIns,
+                [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
                 false, false);
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
         }
 
         public void SetScadu(int value) =>
             memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree, value);
-        
+
         public int GetScadu() =>
             memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree);
 
-        public void SetSpiritAsh(int value)  =>
+        public void SetSpiritAsh(int value) =>
             memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh, value);
-        
+
         public int GetSpiritAsh() =>
             memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
 
@@ -364,7 +357,6 @@ namespace SilkyRing.Services
         private IntPtr GetChrRidePtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrRideModule], true);
 
-        
         private IntPtr ChrInsLookup(int handle)
         {
             int poolIndex = (handle >> 20) & 0xFF;

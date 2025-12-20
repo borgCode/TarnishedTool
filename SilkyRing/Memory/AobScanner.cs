@@ -104,6 +104,7 @@ namespace SilkyRing.Memory
             Functions.ItemSpawn = FindAddressByPattern(Pattern.ItemSpawn).ToInt64();
             Functions.MatrixVectorProduct = FindAddressByPattern(Pattern.MatrixVectorProduct).ToInt64();
             Functions.ChrInsByHandle = FindAddressByPattern(Pattern.ChrInsByHandle).ToInt64();
+            Functions.FindAndRemoveSpEffect = FindAddressByPattern(Pattern.FindAndRemoveSpEffect).ToInt64();
 
 
 #if DEBUG
@@ -157,6 +158,7 @@ namespace SilkyRing.Memory
             Console.WriteLine($"Funcs.ItemSpawn: 0x{Functions.ItemSpawn:X}");
             Console.WriteLine($"Funcs.MatrixVectorProduct: 0x{Functions.MatrixVectorProduct:X}");
             Console.WriteLine($"Funcs.ChrInsByHandle: 0x{Functions.ChrInsByHandle:X}");
+            Console.WriteLine($"Funcs.FindAndRemoveSpEffect: 0x{Functions.FindAndRemoveSpEffect:X}");
 #endif
         }
 

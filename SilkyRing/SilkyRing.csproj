@@ -110,6 +110,7 @@
         <Compile Include="Interfaces\IMemoryService.cs" />
         <Compile Include="Interfaces\IPlayerService.cs" />
         <Compile Include="Interfaces\ISettingsService.cs" />
+        <Compile Include="Interfaces\ISpEffectService.cs" />
         <Compile Include="Interfaces\IStateService.cs" />
         <Compile Include="Interfaces\ITargetService.cs" />
         <Compile Include="Interfaces\ITravelService.cs" />
@@ -136,6 +137,7 @@
         <Compile Include="Services\EzStateService.cs" />
         <Compile Include="Services\ItemService.cs" />
         <Compile Include="Services\SettingsService.cs" />
+        <Compile Include="Services\SpEffectService.cs" />
         <Compile Include="Services\TargetService.cs" />
         <Compile Include="Services\EventService.cs" />
         <Compile Include="Services\MemoryService.cs" />
