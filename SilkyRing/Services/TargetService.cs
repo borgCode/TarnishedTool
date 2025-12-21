@@ -74,35 +74,23 @@ namespace SilkyRing.Services
             memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
 
         public void ToggleTargetAi(bool isDisableTargetAiEnabled) =>
-            memoryService.SetBitValue(GetChrFlagsPtr() + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit,
+            memoryService.SetBitValue(GetChrCtrlFlagsPtr() + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit,
                 isDisableTargetAiEnabled);
 
         public bool IsAiDisabled() =>
-            memoryService.IsBitSet(GetChrFlagsPtr() + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit);
+            memoryService.IsBitSet(GetChrCtrlFlagsPtr() + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit);
 
-        public void ToggleNoAttack(bool isNoAttackEnabled)
-        {
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
-            memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrInsFlags.NoAttack, isNoAttackEnabled);
-        }
+        public void ToggleNoAttack(bool isNoAttackEnabled) =>
+            memoryService.SetBitValue(GetChrInsFlagsPtr(), (int)ChrIns.ChrInsFlags.NoAttack, isNoAttackEnabled);
 
-        public bool IsNoAttackEnabled()
-        {
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
-            return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrInsFlags.NoAttack);
-        }
+        public bool IsNoAttackEnabled() =>
+            memoryService.IsBitSet(GetChrInsFlagsPtr(), (int)ChrIns.ChrInsFlags.NoAttack);
 
-        public void ToggleNoMove(bool isNoMoveEnabled)
-        {
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
-            memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrInsFlags.NoMove, isNoMoveEnabled);
-        }
+        public void ToggleNoMove(bool isNoMoveEnabled) =>
+            memoryService.SetBitValue(GetChrInsFlagsPtr(), (int)ChrIns.ChrInsFlags.NoMove, isNoMoveEnabled);
 
-        public bool IsNoMoveEnabled()
-        {
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
-            return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrInsFlags.NoMove);
-        }
+        public bool IsNoMoveEnabled() =>
+            memoryService.IsBitSet(GetChrInsFlagsPtr(), (int)ChrIns.ChrInsFlags.NoMove);
 
         public void ForceAct(int act) =>
             memoryService.WriteUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct, act);
@@ -122,7 +110,7 @@ namespace SilkyRing.Services
         public bool IsTargetRepeating() =>
             memoryService.ReadUInt8(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.ForceAct) != 0;
 
-        public int GetCurrentAnimation() => 
+        public int GetCurrentAnimation() =>
             memoryService.ReadInt32(GetChrTimeActPtr() + (int)ChrIns.ChrTimeActOffsets.AnimationId);
 
         public void SetAnimation(int animationId) =>
@@ -259,10 +247,13 @@ namespace SilkyRing.Services
             return distance - targetPos.capsuleRadius - playerPos.capsuleRadius;
         }
 
-        private IntPtr GetChrFlagsPtr() =>
+        private IntPtr GetChrCtrlFlagsPtr() =>
             memoryService.FollowPointers(
                 CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [ChrIns.ChrCtrl, ..ChrIns.ChrCtrlFlags], false);
+
+        private IntPtr GetChrInsFlagsPtr() =>
+            memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr, [ChrIns.Flags], false);
 
         private nint GetChrResistPtr() =>
             memoryService.FollowPointers(
