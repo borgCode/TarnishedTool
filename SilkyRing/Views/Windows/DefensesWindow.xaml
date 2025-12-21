@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:SilkyRing.Views.Windows"
+        xmlns:controls="clr-namespace:SilkyRing.Controls"
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -16,72 +16,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0"
-                Background="{StaticResource TitleBarBrush}"
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0,0,0,1"
-                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Image Source="/Assets/Silky.ico"
-                       Grid.Column="0"
-                       Width="16"
-                       Height="16"
-                       Margin="5,0,5,0"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-
-                <TextBlock Text="Defenses"
-                           Grid.Column="1"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center"
-                           FontWeight="SemiBold"
-                           Foreground="{StaticResource TextBrush}" />
-
-                <StackPanel Grid.Column="2"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right">
-                    <Button Content="—"
-                            Width="46"
-                            Height="30"
-                            Click="MinimizeButton_Click">
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button Content="✕"
-                            Width="46"
-                            Height="30"
-                            Click="CloseButton_Click">
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#E81123" />
-                                        <Setter Property="Foreground" Value="White" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
+        <controls:TitleBar Title="Defenses" />
 
         <Grid Grid.Row="1" Margin="20">
             <Grid.ColumnDefinitions>

@@ -797,7 +797,11 @@ namespace SilkyRing.ViewModels
             {
                 DataContext = _spEffectViewModel
             };
-            _spEffectsWindow.Closed += (s, e) => _spEffectsWindow = null;
+            _spEffectsWindow.Closed += (s, e) =>
+            {
+                _spEffectsWindow = null;
+                IsSpEffectWindowOpen = false;
+            };
             _spEffectsWindow.Show();
         }
 

@@ -969,7 +969,11 @@ namespace SilkyRing.ViewModels
                 DataContext = this
             };
 
-            _defensesWindow.Closed += (s, e) => _defensesWindow = null;
+            _defensesWindow.Closed += (s, e) =>
+            {
+                _defensesWindow = null;
+                //TODO set to false
+            };
             _defensesWindow.Show();
         }
 
@@ -980,7 +984,11 @@ namespace SilkyRing.ViewModels
                 DataContext = _attackInfoViewModel
             };
 
-            _attackInfoWindow.Closed += (s, e) => _attackInfoWindow = null;
+            _attackInfoWindow.Closed += (s, e) =>
+            {
+                _attackInfoWindow = null;
+                //TODO set to false
+            };
             _attackInfoWindow.Show();
         }
 

@@ -5,188 +5,211 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:SilkyRing.Views.Windows"
         xmlns:viewmodels="clr-namespace:SilkyRing.Models"
+        xmlns:controls="clr-namespace:SilkyRing.Controls"
         mc:Ignorable="d"
         Title="AttackInfoWindow" Height="450" Width="800">
-    
+
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-        
-        <SolidColorBrush x:Key="PhysicalBrush" Color="#A0A0A0"/>
-        <SolidColorBrush x:Key="FireBrush" Color="#FF6B35"/>
-        <SolidColorBrush x:Key="MagicBrush" Color="#4A90D9"/>
-        <SolidColorBrush x:Key="LightningBrush" Color="#FFD700"/>
-        <SolidColorBrush x:Key="HolyBrush" Color="#FFFACD"/>
-        <SolidColorBrush x:Key="DimTextBrush" Color="#888888"/>
-        <SolidColorBrush x:Key="BorderBrush" Color="#555555"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+        <SolidColorBrush x:Key="PhysicalBrush" Color="#A0A0A0" />
+        <SolidColorBrush x:Key="FireBrush" Color="#FF6B35" />
+        <SolidColorBrush x:Key="MagicBrush" Color="#4A90D9" />
+        <SolidColorBrush x:Key="LightningBrush" Color="#FFD700" />
+        <SolidColorBrush x:Key="HolyBrush" Color="#FFFACD" />
+        <SolidColorBrush x:Key="DimTextBrush" Color="#888888" />
+        <SolidColorBrush x:Key="BorderBrush" Color="#555555" />
     </Window.Resources>
-    <Grid Margin="8">
+
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="0"
-                 ItemsSource="{Binding VisibleLog}"
-                 VirtualizingPanel.IsVirtualizing="True"
-                 VirtualizingPanel.VirtualizationMode="Recycling"
-                 ScrollViewer.CanContentScroll="True"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 HorizontalContentAlignment="Stretch"
-                 BorderBrush="{StaticResource BorderBrush}">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type viewmodels:AttackInfoEntry}">
-                    <Border BorderBrush="{StaticResource BorderBrush}" 
-                            BorderThickness="0,0,0,1" 
-                            Padding="6,4">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
 
-                            <!-- Row 0: Header - ID, Enemy, Attack Type -->
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0" FontSize="11" Foreground="{StaticResource DimTextBrush}">
-                                    <Run Text="#"/><Run Text="{Binding Id, Mode=OneWay}"/>
-                                </TextBlock>
-
-                                <TextBlock Grid.Column="1" 
-                                           HorizontalAlignment="Center" 
-                                           FontSize="11" 
-                                           Foreground="{StaticResource DimTextBrush}">
-                                    <Run Text="Enemy: "/><Run Text="{Binding EnemyId, Mode=OneWay}"/>
-                                </TextBlock>
-
-                                <TextBlock Grid.Column="2" 
-                                           FontSize="11" 
-                                           Foreground="{StaticResource PhysicalBrush}"
-                                           Text="{Binding AttackType, Mode=OneWay}"/>
-                            </Grid>
-
-                            <!-- Row 1: Total Damage + Poise -->
-                            <Grid Grid.Row="1" Margin="0,4,0,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0" FontSize="14" FontWeight="SemiBold">
-                                    <Run Text="{Binding TotalDamage, Mode=OneWay}"/>
-                                    <Run Text=" damage" Foreground="{StaticResource DimTextBrush}" FontWeight="Normal" FontSize="11"/>
-                                </TextBlock>
-
-                                <TextBlock Grid.Column="1" FontSize="11">
-                                    <Run Text="Poise: " Foreground="{StaticResource DimTextBrush}"/>
-                                    <Run Text="{Binding PoiseDamage, StringFormat={}{0:F2}, Mode=OneWay}"/>
-                                </TextBlock>
-                            </Grid>
-
-                            <!-- Row 2: Final Damage Breakdown -->
-                            <WrapPanel Grid.Row="2" Margin="0,2,0,0">
-                                <TextBlock FontSize="11" Margin="0,0,10,0">
-                                    <Run Text="Phys " Foreground="{StaticResource DimTextBrush}"/>
-                                    <Run Text="{Binding PhysicalDamage, Mode=OneWay}" Foreground="{StaticResource PhysicalBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="11" Margin="0,0,10,0"
-                                           Visibility="{Binding HasFireDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="Fire " Foreground="{StaticResource DimTextBrush}"/>
-                                    <Run Text="{Binding FireDamage, Mode=OneWay}" Foreground="{StaticResource FireBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="11" Margin="0,0,10,0"
-                                           Visibility="{Binding HasMagicDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="Magic " Foreground="{StaticResource DimTextBrush}"/>
-                                    <Run Text="{Binding MagicDamage, Mode=OneWay}" Foreground="{StaticResource MagicBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="11" Margin="0,0,10,0"
-                                           Visibility="{Binding HasLightningDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="Ltn " Foreground="{StaticResource DimTextBrush}"/>
-                                    <Run Text="{Binding LightningDamage, Mode=OneWay}" Foreground="{StaticResource LightningBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="11"
-                                           Visibility="{Binding HasHolyDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="Holy " Foreground="{StaticResource DimTextBrush}"/>
-                                    <Run Text="{Binding HolyDamage, Mode=OneWay}" Foreground="{StaticResource HolyBrush}"/>
-                                </TextBlock>
-                            </WrapPanel>
-
-                            <!-- Row 3: Raw Damage Breakdown -->
-                            <WrapPanel Grid.Row="3" Margin="0,2,0,0">
-                                <TextBlock FontSize="10" Margin="0,0,8,0" Foreground="{StaticResource DimTextBrush}">
-                                    <Run Text="Raw:"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="10" Margin="0,0,8,0">
-                                    <Run Text="{Binding RawPhysicalDamage, StringFormat={}{0:F2}, Mode=OneWay}" Foreground="{StaticResource PhysicalBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="10" Margin="0,0,8,0"
-                                           Visibility="{Binding HasRawFireDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="{Binding RawFireDamage, StringFormat={}{0:F2}, Mode=OneWay}" Foreground="{StaticResource FireBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="10" Margin="0,0,8,0"
-                                           Visibility="{Binding HasRawMagicDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="{Binding RawMagicDamage, StringFormat={}{0:F2}, Mode=OneWay}" Foreground="{StaticResource MagicBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="10" Margin="0,0,8,0"
-                                           Visibility="{Binding HasRawLightningDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="{Binding RawLightningDamage, StringFormat={}{0:F2}, Mode=OneWay}" Foreground="{StaticResource LightningBrush}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="10"
-                                           Visibility="{Binding HasRawHolyDamage, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="{Binding RawHolyDamage, StringFormat={}{0:F2}, Mode=OneWay}" Foreground="{StaticResource HolyBrush}"/>
-                                </TextBlock>
-                            </WrapPanel>
-
-                            <!-- Row 4: Split Info (only if 2 damage types) -->
-                            <StackPanel Grid.Row="4" Margin="0,2,0,0">
-                                <TextBlock FontSize="10" 
-                                           FontStyle="Italic"
-                                           Foreground="{StaticResource DimTextBrush}"
-                                           Visibility="{Binding HasFinalSplit, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="Split: "/>
-                                    <Run Text="{Binding FinalSplitText, Mode=OneWay}"/>
-                                </TextBlock>
-                                
-                                <TextBlock FontSize="10" 
-                                           FontStyle="Italic"
-                                           Foreground="{StaticResource DimTextBrush}"
-                                           Visibility="{Binding HasRawSplit, Converter={StaticResource BoolToVis}}">
-                                    <Run Text="Raw Split: "/>
-                                    <Run Text="{Binding RawSplitText, Mode=OneWay}"/>
-                                </TextBlock>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <controls:TitleBar Title="Attack Information" />
         
-        <StackPanel Grid.Row="1" 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Right" 
-                    Margin="0,8,0,0">
-            <Button Content="Export CSV" 
-                    Command="{Binding ExportCommand}" 
-                    Padding="12,4" 
-                    Margin="0,0,8,0"/>
-            <Button Content="Clear" 
-                    Command="{Binding ClearCommand}" 
-                    Padding="12,4"/>
-        </StackPanel>
+        <Grid Grid.Row="1" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="0"
+                     ItemsSource="{Binding VisibleLog}"
+                     VirtualizingPanel.IsVirtualizing="True"
+                     VirtualizingPanel.VirtualizationMode="Recycling"
+                     ScrollViewer.CanContentScroll="True"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     HorizontalContentAlignment="Stretch"
+                     BorderBrush="{StaticResource BorderBrush}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:AttackInfoEntry}">
+                        <Border BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="0,0,0,1"
+                                Padding="6,4">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Row 0: Header - ID, Enemy, Attack Type -->
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" FontSize="11" Foreground="{StaticResource DimTextBrush}">
+                                        <Run Text="#" /><Run Text="{Binding Id, Mode=OneWay}" />
+                                    </TextBlock>
+
+                                    <TextBlock Grid.Column="1"
+                                               HorizontalAlignment="Center"
+                                               FontSize="11"
+                                               Foreground="{StaticResource DimTextBrush}">
+                                        <Run Text="Enemy: " /><Run Text="{Binding EnemyId, Mode=OneWay}" />
+                                    </TextBlock>
+
+                                    <TextBlock Grid.Column="2"
+                                               FontSize="11"
+                                               Foreground="{StaticResource PhysicalBrush}"
+                                               Text="{Binding AttackType, Mode=OneWay}" />
+                                </Grid>
+
+                                <!-- Row 1: Total Damage + Poise -->
+                                <Grid Grid.Row="1" Margin="0,4,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" FontSize="14" FontWeight="SemiBold">
+                                        <Run Text="{Binding TotalDamage, Mode=OneWay}" />
+                                        <Run Text=" damage" Foreground="{StaticResource DimTextBrush}"
+                                             FontWeight="Normal" FontSize="11" />
+                                    </TextBlock>
+
+                                    <TextBlock Grid.Column="1" FontSize="11">
+                                        <Run Text="Poise: " Foreground="{StaticResource DimTextBrush}" />
+                                        <Run Text="{Binding PoiseDamage, StringFormat={}{0:F2}, Mode=OneWay}" />
+                                    </TextBlock>
+                                </Grid>
+
+                                <!-- Row 2: Final Damage Breakdown -->
+                                <WrapPanel Grid.Row="2" Margin="0,2,0,0">
+                                    <TextBlock FontSize="11" Margin="0,0,10,0">
+                                        <Run Text="Phys " Foreground="{StaticResource DimTextBrush}" />
+                                        <Run Text="{Binding PhysicalDamage, Mode=OneWay}"
+                                             Foreground="{StaticResource PhysicalBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="11" Margin="0,0,10,0"
+                                               Visibility="{Binding HasFireDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="Fire " Foreground="{StaticResource DimTextBrush}" />
+                                        <Run Text="{Binding FireDamage, Mode=OneWay}"
+                                             Foreground="{StaticResource FireBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="11" Margin="0,0,10,0"
+                                               Visibility="{Binding HasMagicDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="Magic " Foreground="{StaticResource DimTextBrush}" />
+                                        <Run Text="{Binding MagicDamage, Mode=OneWay}"
+                                             Foreground="{StaticResource MagicBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="11" Margin="0,0,10,0"
+                                               Visibility="{Binding HasLightningDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="Ltn " Foreground="{StaticResource DimTextBrush}" />
+                                        <Run Text="{Binding LightningDamage, Mode=OneWay}"
+                                             Foreground="{StaticResource LightningBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="11"
+                                               Visibility="{Binding HasHolyDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="Holy " Foreground="{StaticResource DimTextBrush}" />
+                                        <Run Text="{Binding HolyDamage, Mode=OneWay}"
+                                             Foreground="{StaticResource HolyBrush}" />
+                                    </TextBlock>
+                                </WrapPanel>
+
+                                <!-- Row 3: Raw Damage Breakdown -->
+                                <WrapPanel Grid.Row="3" Margin="0,2,0,0">
+                                    <TextBlock FontSize="10" Margin="0,0,8,0"
+                                               Foreground="{StaticResource DimTextBrush}">
+                                        <Run Text="Raw:" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="10" Margin="0,0,8,0">
+                                        <Run Text="{Binding RawPhysicalDamage, StringFormat={}{0:F2}, Mode=OneWay}"
+                                             Foreground="{StaticResource PhysicalBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="10" Margin="0,0,8,0"
+                                               Visibility="{Binding HasRawFireDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="{Binding RawFireDamage, StringFormat={}{0:F2}, Mode=OneWay}"
+                                             Foreground="{StaticResource FireBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="10" Margin="0,0,8,0"
+                                               Visibility="{Binding HasRawMagicDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="{Binding RawMagicDamage, StringFormat={}{0:F2}, Mode=OneWay}"
+                                             Foreground="{StaticResource MagicBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="10" Margin="0,0,8,0"
+                                               Visibility="{Binding HasRawLightningDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="{Binding RawLightningDamage, StringFormat={}{0:F2}, Mode=OneWay}"
+                                             Foreground="{StaticResource LightningBrush}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="10"
+                                               Visibility="{Binding HasRawHolyDamage, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="{Binding RawHolyDamage, StringFormat={}{0:F2}, Mode=OneWay}"
+                                             Foreground="{StaticResource HolyBrush}" />
+                                    </TextBlock>
+                                </WrapPanel>
+
+                                <!-- Row 4: Split Info (only if 2 damage types) -->
+                                <StackPanel Grid.Row="4" Margin="0,2,0,0">
+                                    <TextBlock FontSize="10"
+                                               FontStyle="Italic"
+                                               Foreground="{StaticResource DimTextBrush}"
+                                               Visibility="{Binding HasFinalSplit, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="Split: " />
+                                        <Run Text="{Binding FinalSplitText, Mode=OneWay}" />
+                                    </TextBlock>
+
+                                    <TextBlock FontSize="10"
+                                               FontStyle="Italic"
+                                               Foreground="{StaticResource DimTextBrush}"
+                                               Visibility="{Binding HasRawSplit, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="Raw Split: " />
+                                        <Run Text="{Binding RawSplitText, Mode=OneWay}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,8,0,0">
+                <Button Content="Export CSV"
+                        Command="{Binding ExportCommand}"
+                        Padding="12,4"
+                        Margin="0,0,8,0" />
+                <Button Content="Clear"
+                        Command="{Binding ClearCommand}"
+                        Padding="12,4" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

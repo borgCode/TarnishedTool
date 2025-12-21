@@ -86,6 +86,9 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="Controls\Titlebar.xaml.cs">
+          <DependentUpon>Titlebar.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Converters\BooleanAndConverter.cs" />
         <Compile Include="Converters\BoolToBorderBrushConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
@@ -209,6 +212,7 @@
         <Compile Include="Views\Windows\SpEffectsWindow.xaml.cs">
           <DependentUpon>SpEffectsWindow.xaml</DependentUpon>
         </Compile>
+        <Page Include="Controls\Titlebar.xaml" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -260,7 +264,7 @@
         <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-      <Content Include="Assets\Silky.ico" />
+      <Resource Include="Assets\Silky.ico" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>

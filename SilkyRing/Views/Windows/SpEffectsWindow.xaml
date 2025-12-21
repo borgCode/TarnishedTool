@@ -3,22 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:SilkyRing.Views.Windows"
+        xmlns:controls="clr-namespace:SilkyRing.Controls"
         mc:Ignorable="d"
-        Title="SpEffectsWindow" Height="450" Width="800">
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Title="SpEffectsWindow" Height="450" Width="400"
+        Style="{StaticResource DefaultWindowStyle}">
     <Grid>
-        <ItemsControl ItemsSource="{Binding ActiveEffects}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <controls:TitleBar Title="Active Special Effects" />
+
+        <Grid Grid.Row="1" Margin="10,10,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="ID" Foreground="#888" FontWeight="SemiBold" />
+            <TextBlock Grid.Column="1" Text="Time Left" Foreground="#888" FontWeight="SemiBold" />
+            <TextBlock Grid.Column="2" Text="Duration" Foreground="#888" FontWeight="SemiBold" />
+        </Grid>
+
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding ActiveEffects}"
+                      Padding="10,0,10,10">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="60"/>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Id}" Foreground="White"/>
-                        <TextBlock Grid.Column="1" Text="{Binding TimeLeft, StringFormat={}{0:F1}}" Foreground="#aaa"/>
-                        <TextBlock Grid.Column="2" Text="{Binding Duration, StringFormat={}{0:F1}}" Foreground="#666"/>
+                        <TextBlock Grid.Column="0" Text="{Binding Id}" Foreground="White" />
+                        <TextBlock Grid.Column="1" Text="{Binding TimeLeft, StringFormat={}{0:F1}}" Foreground="#aaa" />
+                        <TextBlock Grid.Column="2" Text="{Binding Duration, StringFormat={}{0:F1}}" Foreground="#666" />
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
