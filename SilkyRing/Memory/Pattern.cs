@@ -97,7 +97,7 @@
         );
 
         public static readonly Pattern WorldChrManDbg = new Pattern(
-            new byte[] { 0x83, 0xCF, 0x10, 0x89, 0x7C, 0x24, 0x20, 0x48, 0x83 },
+            [0x83, 0xCF, 0x10, 0x89, 0x7C, 0x24, 0x20, 0x48, 0x83],
             "xxxxxxxxx",
             0x7,
             AddressingMode.Relative,
@@ -106,7 +106,7 @@
         );
 
         public static readonly Pattern GameDataMan = new Pattern(
-            new byte[] { 0x0F, 0x84, 0x27, 0x01, 0x00, 0x00, 0xF6, 0x41 },
+            [0x0F, 0x84, 0x27, 0x01, 0x00, 0x00, 0xF6, 0x41],
             "xxxxxxxx",
             -0x1B,
             AddressingMode.Relative,
@@ -115,7 +115,7 @@
         );
 
         public static readonly Pattern CsDlcImp = new Pattern(
-            new byte[] { 0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00, 0xC6, 0x40, 0x42 },
+            [0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00, 0xC6, 0x40, 0x42],
             "xxx????xxx",
             0,
             AddressingMode.Relative,
@@ -124,7 +124,7 @@
         );
 
         public static readonly Pattern MapItemManImpl = new Pattern(
-            new byte[] { 0xC7, 0x44, 0x24, 0x3C, 0x01, 0x00, 0x00, 0x00, 0xC7, 0x44, 0x24, 0x40 },
+            [0xC7, 0x44, 0x24, 0x3C, 0x01, 0x00, 0x00, 0x00, 0xC7, 0x44, 0x24, 0x40],
             "xxxxxxxxxxxx",
             0x10,
             AddressingMode.Relative,
@@ -133,7 +133,7 @@
         );
 
         public static readonly Pattern InputManager = new Pattern(
-            new byte[] { 0x80, 0xB8, 0xF9, 0x02, 0x00, 0x00, 0x00, 0x74 },
+            [0x80, 0xB8, 0xF9, 0x02, 0x00, 0x00, 0x00, 0x74],
             "xxxxxxxx",
             -0x3F,
             AddressingMode.Relative,
@@ -142,7 +142,7 @@
         );
 
         public static readonly Pattern CSEmkSystem = new Pattern(
-            new byte[] { 0x0F, 0x11, 0x80, 0x8C },
+            [0x0F, 0x11, 0x80, 0x8C],
             "xxxx",
             0x7,
             AddressingMode.Relative,
@@ -151,7 +151,7 @@
         );
 
         public static readonly Pattern WorldAreaTimeImpl = new Pattern(
-            new byte[] { 0x48, 0x8B, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x48, 0xC1 },
+            [0x48, 0x8B, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x48, 0xC1],
             "xxx????xx",
             0,
             AddressingMode.Relative,
@@ -160,7 +160,7 @@
         );
 
         public static readonly Pattern GroupMask = new Pattern(
-            new byte[] { 0x80, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x10, 0x00 },
+            [0x80, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x10, 0x00],
             "xx????xxxx",
             0,
             AddressingMode.Relative,
@@ -169,9 +169,18 @@
         );
 
         public static readonly Pattern CSFlipperImp = new Pattern(
-            new byte[] { 0xF3, 0x0F, 0x10, 0xB7, 0x14, 0x01, 0x00, 0x00, 0x85 },
+            [0xF3, 0x0F, 0x10, 0xB7, 0x14, 0x01, 0x00, 0x00, 0x85],
             "xxxxxxxxx",
             0xC,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
+        public static readonly Pattern CSDbgEvent = new Pattern(
+            new byte[] { 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x8B, 0x43, 0x30, 0x89, 0x44, 0x24, 0x50 },
+            "xxx????xxxxxxx",
+            0,
             AddressingMode.Relative,
             3,
             7
@@ -414,6 +423,13 @@
             AddressingMode.Relative,
             1,
             5
+        );
+
+        public static readonly Pattern CanDrawEvents = new Pattern(
+            new byte[] { 0x48, 0x89, 0x77, 0x28, 0xE8 },
+            "xxxxx",
+            0,
+            AddressingMode.Absolute
         );
 
         //Patches

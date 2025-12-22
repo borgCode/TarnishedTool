@@ -13,5 +13,6 @@ public interface IUtilityService
     void SetSpeed(float speed);
     void ToggleFreeCam(bool isEnabled);
     void ToggleFreezeWorld(bool isEnabled);
+    void ToggleDrawHitbox(bool isEnabled);
 
 }

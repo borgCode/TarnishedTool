@@ -15,7 +15,7 @@ namespace SilkyRing.ViewModels
         private const float DefaultGameSpeed = 1f;
         private const float Epsilon = 0.0001f;
 
-        private bool _isDrawHitboxEnabled;
+   
         private bool _isDrawLowHitEnabled;
         private bool _isDrawHighHitEnabled;
         private int _colDrawMode = 1;
@@ -25,26 +25,33 @@ namespace SilkyRing.ViewModels
         private readonly IEzStateService _ezStateService;
         private readonly IPlayerService _playerService;
         private readonly HotkeyManager _hotkeyManager;
+        private readonly IEmevdService _emevdService;
 
         public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
-            IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager)
+            IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager,
+            IEmevdService emevdService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
+            _emevdService = emevdService;
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
 
             SaveCommand = new DelegateCommand(Save);
+            SetMorningCommand = new DelegateCommand(SetMorning);
+            SetNoonCommand = new DelegateCommand(SetNoon);
+            SetNightCommand = new DelegateCommand(SetNight);
 
 
             RegisterHotkeys();
             ApplyPrefs();
         }
 
+        
         private void ApplyPrefs()
         {
             _isRememberSpeedEnabled = SettingsManager.Default.RememberGameSpeed;
@@ -55,6 +62,9 @@ namespace SilkyRing.ViewModels
         #region Commands
         
         public ICommand SaveCommand { get; set; }
+        public ICommand SetMorningCommand { get; set; }
+        public ICommand SetNoonCommand { get; set; }
+        public ICommand SetNightCommand { get; set; }
 
         #endregion
 
@@ -193,6 +203,18 @@ namespace SilkyRing.ViewModels
                 _utilityService.ToggleFreezeWorld(_isFreezeWorldEnabled);
             }
         }
+        
+        private bool _isDrawHitboxEnabled;
+        
+        public bool IsDrawHitboxEnabled
+        {
+            get => _isDrawHitboxEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawHitboxEnabled, value)) return;
+                _utilityService.ToggleDrawHitbox(_isDrawHitboxEnabled);
+            }
+        }
 
 
         #endregion
@@ -220,6 +242,7 @@ namespace SilkyRing.ViewModels
         {
             if (IsCombatMapEnabled) _utilityService.ToggleCombatMap(true);
             if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
+            if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
         }
 
         private void RegisterHotkeys()
@@ -263,20 +286,16 @@ namespace SilkyRing.ViewModels
             return Math.Abs(a - b) < Epsilon;
         }
 
+        
+        private void SetMorning() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetMorning);
+        private void SetNoon() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetNoon);
+        private void SetNight() => _emevdService.ExecuteEmevdCommand(GameIds.Emevd.EmevdCommands.SetNight);
+
         #endregion
         
         
 
-        // public bool IsDrawHitboxEnabled
-        // {
-        //     get => _isDrawHitboxEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isDrawHitboxEnabled, value)) return;
-        //         _utilityService.ToggleDrawHitbox(_isDrawHitboxEnabled);
-        //         _utilityService.SetColDrawMode(ColDrawMode);
-        //     }
-        // }
+      
         //
         // public bool IsDrawLowHitEnabled
         // {
@@ -379,21 +398,5 @@ namespace SilkyRing.ViewModels
         //         _utilityService.ToggleHideMap(_isHideMapEnabled);
         //     }
         // }
-
-        
-        public void TryApplyOneTimeFeatures()
-        {
-            //
-            // if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
-            //
-
-
-            //
-            // if (IsDrawLowHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.LowHit, true);
-            // if (IsDrawHighHitEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.HighHit, true);
-            //
-            // if (IsDrawRagdollsEnabled) _utilityService.ToggleWorldHitDraw(WorldHitMan.Offsets.Ragdoll, true);
-            //
-        }
     }
 }

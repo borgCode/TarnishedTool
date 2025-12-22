@@ -184,7 +184,6 @@ public class SettingsViewModel : BaseViewModel
 
     public void StartSettingHotkey(string actionId)
     {
-        // Reset previous if we were already setting one
         if (_currentSettingHotkeyId != null && 
             _hotkeyLookup.TryGetValue(_currentSettingHotkeyId, out var prev))
         {

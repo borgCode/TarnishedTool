@@ -19,7 +19,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -53,10 +52,16 @@
                                 Padding="5,3"
                                 Command="{Binding SaveCommand}"
                                 Margin="0,0,20,0" />
+                        
+                        <Button Content="Trigger next NG cycle"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Padding="5,3"
+                                Command="{Binding TriggerNgCycleCommand}"
+                                Margin="0,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
-                        <xctk:DoubleUpDown x:Name="SpeedUpDown"
+                        <xctk:DoubleUpDown
                                            Value="{Binding GameSpeed}"
                                            TextAlignment="Center"
                                            Width="80"
@@ -99,54 +104,91 @@
             <StackPanel Margin="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="No Clip"
-                               Grid.Column="0" />
-                </Grid>
+                    <Border Grid.Column="0"
+                            BorderThickness="1"
+                            BorderBrush="#444"
+                            CornerRadius="3"
+                            Margin="0,0,5,0"
+                            Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="No Clip" FontWeight="SemiBold" Margin="0,0,0,5" />
 
-                <StackPanel Margin="0,5,0,0">
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <CheckBox Content="No Clip"
-                                  IsChecked="{Binding IsNoClipEnabled}"
-                                  IsEnabled="{Binding AreOptionsEnabled}"
-                                  VerticalAlignment="Center"
-                                  Margin="0,0,5,0" />
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <CheckBox Content="No Clip"
+                                          IsChecked="{Binding IsNoClipEnabled}"
+                                          IsEnabled="{Binding AreOptionsEnabled}"
+                                          VerticalAlignment="Center"
+                                          Margin="0,0,5,0" />
 
-                        <Border
-                            Background="#3498db"
-                            CornerRadius="10"
-                            Width="12"
-                            Height="12"
-                            Margin="5,0,10,0"
-                            VerticalAlignment="Center"
-                            ToolTip="Vertical movement with Ctrl/Space or L2/R2 on controller"
-                            ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
-                            <xctk:DoubleUpDown 
-                                               Value="{Binding NoClipSpeed}"
-                                               TextAlignment="Center"
-                                               Width="80"
-                                               Minimum="0.5"
-                                               Maximum="5.0"
-                                               Increment="0.50"
-                                               FormatString="F2"
-                                               IsEnabled="{Binding IsNoClipEnabled}"
-                                               BorderBrush="#3F3F46" />
-                            <TextBlock Text="Speed" VerticalAlignment="Center" Margin="5,0,0,0" />
+                                <Border
+                                    Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="5,0,10,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Vertical movement with Ctrl/Space or L2/R2 on controller"
+                                    ToolTipService.InitialShowDelay='100'>
+                                    <TextBlock Text="i"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="10" />
+                                </Border>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <xctk:DoubleUpDown
+                                    Value="{Binding NoClipSpeed}"
+                                    TextAlignment="Center"
+                                    Width="80"
+                                    Minimum="0.5"
+                                    Maximum="5.0"
+                                    Increment="0.50"
+                                    FormatString="F2"
+                                    IsEnabled="{Binding IsNoClipEnabled}"
+                                    BorderBrush="#3F3F46" />
+                                <TextBlock Text="Speed" VerticalAlignment="Center" Margin="5,0,0,0" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1"
+                            BorderThickness="1"
+                            BorderBrush="#444"
+                            CornerRadius="3"
+                            Margin="5,0,0,0"
+                            Padding="10">
+                        <StackPanel>
+                            <TextBlock Text="Set Time" FontWeight="SemiBold" Margin="0,0,0,5" />
+
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <Button 
+                                    Content="Morning"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetMorningCommand}"
+                                    />
+                                <Button 
+                                    Content="Noon"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetNoonCommand}"
+                                />
+                                <Button 
+                                    Content="Night"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetNightCommand}"
+                                />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
             </StackPanel>
         </Border>
 
@@ -267,7 +309,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Text="Rendering"
@@ -276,20 +318,12 @@
 
                 <Grid Margin="10,5,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="180" />
-                        <ColumnDefinition Width="150" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -299,144 +333,49 @@
                               IsChecked="{Binding IsDrawHitboxEnabled}"
                               Grid.Column="0" Grid.Row="0"
                               Margin="0,2" />
-
-                    <CheckBox Content="Draw Events"
-                              IsChecked="{Binding IsDrawEventEnabled}"
-                              Grid.Column="0" Grid.Row="1"
-                              Margin="0,2" />
-
-                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2" Margin="10,2,0,2">
-                        <CheckBox Content="General Logic"
-                                  IsChecked="{Binding IsDrawEventGeneralEnabled}"
-                                  IsEnabled="{Binding IsDrawEventEnabled}"
-                                  VerticalAlignment="Center"
-                                  Margin="0,0,5,0" />
-
-                        <Border Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Enemy aggro triggers and other logic triggers"
-                                ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
-                    </StackPanel>
-
-                    <CheckBox Content="Spawn Triggers"
-                              IsChecked="{Binding IsDrawEventSpawnEnabled}"
-                              IsEnabled="{Binding IsDrawEventEnabled}"
-                              Grid.Column="0" Grid.Row="3"
-                              Margin="10,2,0,2" />
-
-                    <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Margin="10,2,0,2">
-                        <CheckBox Content="Judgement (Invasions)"
-                                  IsChecked="{Binding IsDrawEventInvasionEnabled}"
-                                  IsEnabled="{Binding IsDrawEventEnabled}"
-                                  VerticalAlignment="Center"
-                                  Margin="0,0,5,0" />
-
-                        <Border Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Invasions and other judgement locations"
-                                ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
-                    </StackPanel>
-
-                    <CheckBox Content="Leash Points"
-                              IsChecked="{Binding IsDrawEventLeashEnabled}"
-                              IsEnabled="{Binding IsDrawEventEnabled}"
-                              Grid.Column="0" Grid.Row="5"
-                              Margin="10,2,0,2" />
-                    <CheckBox Content="Other"
-                              IsChecked="{Binding IsDrawEventOtherEnabled}"
-                              IsEnabled="{Binding IsDrawEventEnabled}"
-                              Grid.Column="0" Grid.Row="6"
-                              Margin="10,2,0,2" />
-
+                    
                     <CheckBox Content="Player Sound"
                               IsChecked="{Binding IsDrawSoundEnabled}"
-                              Grid.Column="0" Grid.Row="7"
+                              Grid.Column="0" Grid.Row="1"
                               Margin="0,2" />
-
-
-                    <CheckBox Content="Hide Map"
-                              IsChecked="{Binding IsHideMapEnabled}"
-                              Grid.Column="1" Grid.Row="0"
+                    <CheckBox Content="Ragdolls"
+                              IsChecked="{Binding IsDrawRagdollsEnabled}"
+                              Grid.Column="0" Grid.Row="2"
                               Margin="0,2" />
-
-                    <CheckBox Content="Hide Characters"
-                              IsChecked="{Binding IsHideCharactersEnabled}"
-                              Grid.Column="1" Grid.Row="1"
-                              Margin="0,2" />
-                    <CheckBox Content="Light Gutter"
-                              IsChecked="{Binding IsLightGutterEnabled}"
-                              Grid.Column="1" Grid.Row="2"
-                              Margin="0,2" />
-
-                    <!-- <CheckBox Content="Hide Sfx" -->
-                    <!--           IsChecked="{Binding IsHideSfxEnabled}" -->
-                    <!--           Grid.Column="1" Grid.Row="2" -->
-                    <!--           Margin="0,2" /> -->
-
-                    <CheckBox Content="No Shaded Woods fog"
-                              IsChecked="{Binding IsNoFogEnabled}"
-                              Grid.Column="1" Grid.Row="3"
-                              Margin="0,2" />
-
+            
                     <CheckBox Content="Draw Low Hit"
                               IsChecked="{Binding IsDrawLowHitEnabled}"
-                              Grid.Column="2" Grid.Row="0"
+                              Grid.Column="1" Grid.Row="0"
                               Margin="0,2" />
-
+                    
                     <CheckBox Content="Draw High Hit"
                               IsChecked="{Binding IsDrawHighHitEnabled}"
-                              Grid.Column="2" Grid.Row="1"
+                              Grid.Column="1" Grid.Row="1"
                               Margin="0,2,0,2" />
-                    <StackPanel Grid.Column="2" Grid.Row="2" Orientation="Horizontal"
-                                Margin="0,2,0,20">
+                    <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal"
+                                Margin="0,2,0,0">
                         <TextBlock Text="Mode: " Margin="0,0,10,0" VerticalAlignment="Center" />
                         <xctk:IntegerUpDown Width="50" Height="20"
                                             Value="{Binding ColDrawMode, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="0"
                                             Maximum="5"
-                                            VerticalAlignment="Center">
-                        </xctk:IntegerUpDown>
+                                            VerticalAlignment="Center" />
                     </StackPanel>
-                    <CheckBox Content="Draw Ragdolls"
-                              IsChecked="{Binding IsDrawRagdollsEnabled}"
-                              Grid.Column="2" Grid.Row="3"
+                    
+                    <CheckBox Content="Hide Map"
+                              IsChecked="{Binding IsHideMapEnabled}"
+                              Grid.Column="2" Grid.Row="0"
                               Margin="0,2" />
 
-                    <CheckBox Content="See Through Walls"
-                              IsChecked="{Binding IsSeeThroughWallsEnabled}"
-                              IsEnabled="{Binding IsDrawRagdollsEnabled}"
-                              Grid.Column="2" Grid.Row="4"
-                              Margin="15,2,0,2" />
+                    <CheckBox Content="Hide Characters"
+                              IsChecked="{Binding IsHideCharactersEnabled}"
+                              Grid.Column="2" Grid.Row="1"
+                              Margin="0,2" />
+                    
+                  
                 </Grid>
             </StackPanel>
         </Border>
-        <Button Grid.Row="4"
-                Command="{Binding TestCommand}"
-                Content="Test">
-
-        </Button>
     </Grid>
 
 </UserControl>
