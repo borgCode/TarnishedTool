@@ -12,6 +12,8 @@ public class SettingsManager
 
     public double DefenseWindowLeft { get; set; }
     public double DefenseWindowTop { get; set; }
+    public double AttackInfoWindowLeft { get; set; }
+    public double AttackInfoWindowTop { get; set; }
     public double WindowLeft { get; set; }
     public double WindowTop { get; set; }
     public bool AlwaysOnTop { get; set; }
@@ -45,6 +47,8 @@ public class SettingsManager
             {
                 $"DefenseWindowLeft={DefenseWindowLeft}",
                 $"DefenseWindowTop={DefenseWindowTop}",
+                $"AttackInfoWindowLeft={AttackInfoWindowLeft}",
+                $"AttackInfoWindowTop={AttackInfoWindowTop}",
                 $"WindowLeft={WindowLeft}",
                 $"WindowTop={WindowTop}",
                 $"AlwaysOnTop={AlwaysOnTop}",
@@ -97,6 +101,14 @@ public class SettingsManager
                             case "DefenseWindowTop":
                                 double.TryParse(value, out double dwt);
                                 settings.DefenseWindowTop = dwt;
+                                break;
+                            case "AttackInfoWindowLeft":
+                                double.TryParse(value, out double aiwl);
+                                settings.AttackInfoWindowLeft = aiwl;
+                                break;
+                            case "AttackInfoWindowTop":
+                                double.TryParse(value, out double aiwt);
+                                settings.AttackInfoWindowTop = aiwt;
                                 break;
                             case "WindowLeft":
                                 double.TryParse(value, out double wl);

@@ -7,6 +7,9 @@
         xmlns:viewmodels="clr-namespace:SilkyRing.Models"
         xmlns:controls="clr-namespace:SilkyRing.Controls"
         mc:Ignorable="d"
+        Style="{StaticResource DefaultWindowStyle}"
+        WindowStyle="None"
+        AllowsTransparency="True"
         Title="AttackInfoWindow" Height="450" Width="800">
 
     <Window.Resources>
@@ -206,9 +209,9 @@
                         Command="{Binding ExportCommand}"
                         Padding="12,4"
                         Margin="0,0,8,0" />
-                <Button Content="Clear"
-                        Command="{Binding ClearCommand}"
-                        Padding="12,4" />
+                <!-- <Button Content="Clear" -->
+                <!--         Command="{Binding ClearCommand}" -->
+                <!--         Padding="12,4" /> -->
             </StackPanel>
         </Grid>
     </Grid>

@@ -47,44 +47,6 @@
                               IsChecked="{Binding IsDisableAchievementsEnabled}"
                               Margin="0,0,0,0" />
                 </StackPanel>
-
-                <!-- <StackPanel -->
-                <!--     Orientation="Horizontal" -->
-                <!--     Margin="0,10,0,0"> -->
-                <!--     <CheckBox Content="Change Default Sound" -->
-                <!--               IsChecked="{Binding IsDefaultSoundChangeEnabled}" /> -->
-                <!-- -->
-                <!--     <xctk:IntegerUpDown -->
-                <!--         Margin="5,0,0,0" -->
-                <!--         Value="{Binding DefaultSoundVolume}" -->
-                <!--         TextAlignment="Center" -->
-                <!--         Width="80" -->
-                <!--         Minimum="0" -->
-                <!--         Maximum="10" -->
-                <!--         IsEnabled="{Binding IsDefaultSoundChangeEnabled}" -->
-                <!--         BorderBrush="#3F3F46" /> -->
-                <!-- -->
-                <!--     <Border -->
-                <!--         Background="#3498db" -->
-                <!--         CornerRadius="10" -->
-                <!--         Width="12" -->
-                <!--         Height="12" -->
-                <!--         Margin="5,0,0,0" -->
-                <!--         VerticalAlignment="Center" -->
-                <!--         ToolTip="Set the volume that should be used when first launching the game and the game hasn't loaded your preferences" -->
-                <!--         ToolTipService.InitialShowDelay='100'> -->
-                <!--         <TextBlock Text="i" -->
-                <!--                    Foreground="White" -->
-                <!--                    HorizontalAlignment="Center" -->
-                <!--                    VerticalAlignment="Center" -->
-                <!--                    FontWeight="Bold" -->
-                <!--                    FontSize="10" /> -->
-                <!--     </Border> -->
-                <!-- -->
-                <!--     <CheckBox Content="Disable Menu Music" -->
-                <!--               IsChecked="{Binding IsDisableMenuMusicEnabled}" -->
-                <!--               Margin="25,0,0,0" /> -->
-                <!-- </StackPanel> -->
             </StackPanel>
 
             <Separator Margin="0,0,0,10" />
@@ -101,7 +63,7 @@
 
             <TabControl x:Name="HotkeyCategoriesTabControl" Margin="0,5,0,0">
                 <TabItem Header="Player">
-                    <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding PlayerHotkeys}"
                                       ItemTemplate="{StaticResource HotkeyItemTemplate}">
                             <ItemsControl.ItemsPanel>
@@ -113,7 +75,7 @@
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="Enemies">
-                    <ScrollViewer MaxHeight="370" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding EnemiesHotkeys}"
                                       ItemTemplate="{StaticResource HotkeyItemTemplate}">
                             <ItemsControl.ItemsPanel>

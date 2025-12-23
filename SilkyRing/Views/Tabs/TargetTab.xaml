@@ -518,28 +518,6 @@
                                 <TextBlock Text="{Binding CurrentAnimation}" VerticalAlignment="Center" Width="35"
                                            TextAlignment="Right" Margin="5,0,15,0" />
                             </StackPanel>
-                            <!-- <StackPanel Orientation="Horizontal" Margin="0, 10, 0, 0"> -->
-                            <!--     <TextBlock Text="Force Animation" VerticalAlignment="Center" Margin="0,0,10,0" /> -->
-                            <!--     <xctk:IntegerUpDown Width="80" Height="20" -->
-                            <!--                         Value="{Binding RequestedAnimation, UpdateSourceTrigger=PropertyChanged}" -->
-                            <!--                         Minimum="-1" -->
-                            <!--                         Maximum="999999" -->
-                            <!--                         VerticalAlignment="Center"> -->
-                            <!--         <xctk:IntegerUpDown.IsEnabled> -->
-                            <!--             <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                            <!--                 <Binding Path="AreOptionsEnabled" /> -->
-                            <!--                 <Binding Path="IsValidTarget" /> -->
-                            <!--             </MultiBinding> -->
-                            <!--         </xctk:IntegerUpDown.IsEnabled> -->
-                            <!--     </xctk:IntegerUpDown> -->
-                            <!--     <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="10,0,0,0" -->
-                            <!--             VerticalAlignment="Center" -->
-                            <!--             ToolTip="Will force the animation until set to -1&#x0A; you can use the keybind to toggle between the selected anim and -1" -->
-                            <!--             ToolTipService.InitialShowDelay="100"> -->
-                            <!--         <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center" -->
-                            <!--                    VerticalAlignment="Center" FontWeight="Bold" FontSize="10" /> -->
-                            <!--     </Border> -->
-                            <!-- </StackPanel> -->
                         </StackPanel>
 
 

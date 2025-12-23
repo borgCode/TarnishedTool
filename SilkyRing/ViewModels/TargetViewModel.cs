@@ -56,7 +56,7 @@ namespace SilkyRing.ViewModels
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
             ForActSequenceCommand = new DelegateCommand(ForceActSequence);
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
-            OpenDefensesWindowCommand = new DelegateCommand(OpenDefenseWindow);
+            
 
             _targetTick = new DispatcherTimer
             {
@@ -72,7 +72,6 @@ namespace SilkyRing.ViewModels
         public ICommand SetCustomHpCommand { get; set; }
         public ICommand ForActSequenceCommand { get; set; }
         public ICommand KillAllCommand { get; set; }
-        public ICommand OpenDefensesWindowCommand { get; set; }
 
         #endregion
 
@@ -519,18 +518,7 @@ namespace SilkyRing.ViewModels
             set => SetProperty(ref _currentAnimation, value);
         }
 
-        private int _requestedAnimation;
-
-        public int RequestedAnimation
-        {
-            get => _requestedAnimation;
-            set
-            {
-                if (!SetProperty(ref _requestedAnimation, value)) return;
-                _targetService.SetAnimation(_requestedAnimation);
-            }
-        }
-
+        
         private int _customHp;
 
         public int CustomHp
@@ -630,6 +618,21 @@ namespace SilkyRing.ViewModels
             get => _actSequence;
             set => SetProperty(ref _actSequence, value);
         }
+        
+        private bool _isShowDefensesEnabled;
+
+        public bool IsShowDefensesEnabled
+        {
+            get => _isShowDefensesEnabled;
+            set
+            {
+                if (!SetProperty(ref _isShowDefensesEnabled, value)) return;
+                if (_isShowDefensesEnabled) OpenDefenseWindow();
+                else CloseDefensesWindow();
+
+            }
+        }
+        
 
         private bool _isShowAttackInfoEnabled;
 
@@ -640,11 +643,9 @@ namespace SilkyRing.ViewModels
             {
                 if (SetProperty(ref _isShowAttackInfoEnabled, value))
                 {
-                    if (_isShowAttackInfoEnabled)
-                    {
-                        OpenAttackInfoWindow();
-                    }
-
+                    if (_isShowAttackInfoEnabled) OpenAttackInfoWindow();
+                    else CloseAttackInfoWindow();
+                    
                     _attackInfoService.ToggleAttackInfoHook(_isShowAttackInfoEnabled);
                 }
             }
@@ -958,12 +959,6 @@ namespace SilkyRing.ViewModels
 
         private void OpenDefenseWindow()
         {
-            if (_defensesWindow != null && _defensesWindow.IsVisible)
-            {
-                _defensesWindow.Activate();
-                return;
-            }
-
             _defensesWindow = new DefensesWindow
             {
                 DataContext = this
@@ -972,9 +967,16 @@ namespace SilkyRing.ViewModels
             _defensesWindow.Closed += (s, e) =>
             {
                 _defensesWindow = null;
-                //TODO set to false
+                IsShowDefensesEnabled = false;
             };
             _defensesWindow.Show();
+        }
+        
+        private void CloseDefensesWindow()
+        {
+            if (_defensesWindow == null || !_defensesWindow.IsVisible) return;
+            _defensesWindow.Close();
+            _defensesWindow = null;
         }
 
         private void OpenAttackInfoWindow()
@@ -987,9 +989,16 @@ namespace SilkyRing.ViewModels
             _attackInfoWindow.Closed += (s, e) =>
             {
                 _attackInfoWindow = null;
-                //TODO set to false
+                IsShowAttackInfoEnabled = false;
             };
             _attackInfoWindow.Show();
+        }
+        
+        private void CloseAttackInfoWindow()
+        {
+            if (_attackInfoWindow == null || !_attackInfoWindow.IsVisible) return;
+            _attackInfoWindow.Close();
+            _attackInfoWindow = null;
         }
 
         #endregion
