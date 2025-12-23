@@ -89,7 +89,7 @@ namespace SilkyRing.Memory
 
             public enum ChrTimeActOffsets
             {
-                AnimationId = 0x20,
+                AnimationId = 0xD0,
             }
 
             public enum ChrResistOffsets
