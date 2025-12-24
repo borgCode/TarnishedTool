@@ -12,6 +12,7 @@
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanOrConverter x:Key="BooleanOrConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -357,7 +358,14 @@
                                             Value="{Binding ColDrawMode, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="0"
                                             Maximum="5"
-                                            VerticalAlignment="Center" />
+                                            VerticalAlignment="Center">
+                            <xctk:IntegerUpDown.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanOrConverter}">
+                                    <Binding Path="IsDrawLowHitEnabled" />
+                                    <Binding Path="IsDrawHighHitEnabled" />
+                                </MultiBinding>
+                            </xctk:IntegerUpDown.IsEnabled>
+                        </xctk:IntegerUpDown>
                     </StackPanel>
 
                     <CheckBox Content="Hide Map"

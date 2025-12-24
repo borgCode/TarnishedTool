@@ -90,6 +90,7 @@
           <DependentUpon>Titlebar.xaml</DependentUpon>
         </Compile>
         <Compile Include="Converters\BooleanAndConverter.cs" />
+        <Compile Include="Converters\BooleanOrConverter.cs" />
         <Compile Include="Converters\BoolToBorderBrushConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
         <Compile Include="Converters\ImmuneFillConverter.cs" />

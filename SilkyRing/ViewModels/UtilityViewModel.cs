@@ -275,7 +275,7 @@ namespace SilkyRing.ViewModels
             {
                 if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
                 _utilityService.ToggleWorldHitDraw(Offsets.WorldHitMan.LowHit, _isDrawLowHitEnabled);
-                // _utilityService.SetColDrawMode(ColDrawMode);
+                _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
 
@@ -288,6 +288,7 @@ namespace SilkyRing.ViewModels
             {
                 if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
                 _utilityService.ToggleWorldHitDraw(Offsets.WorldHitMan.HighHit, _isDrawHighHitEnabled);
+                _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
 
@@ -300,7 +301,7 @@ namespace SilkyRing.ViewModels
             {
                 if (!SetProperty(ref _colDrawMode, value)) return;
                 if (!IsDrawHighHitEnabled && !IsDrawLowHitEnabled) return;
-                // _utilityService.SetColDrawMode(_colDrawMode);
+                _utilityService.SetColDrawMode(_colDrawMode);
             }
         }
 
@@ -519,16 +520,7 @@ namespace SilkyRing.ViewModels
 
         #endregion
 
-        // public bool IsDrawEventGeneralEnabled
-        // {
-        //     get => _isDrawEventGeneralEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isDrawEventGeneralEnabled, value)) return;
-        //         _utilityService.ToggleDrawEvent(DrawType.EventGeneral, _isDrawEventGeneralEnabled);
-        //     }
-        // }
-        //
+     
 
         // public bool IsDrawSoundEnabled
         // {

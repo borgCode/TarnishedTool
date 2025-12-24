@@ -226,7 +226,7 @@ namespace SilkyRing.Memory
 
             public const int LowHit = 0xC;
             public const int HighHit = 0xD;
-            public const int Ragdoll = 0xE;
+            public const int Ragdoll = 0xF;
             public const int Mode = 0x14;
         }
 
