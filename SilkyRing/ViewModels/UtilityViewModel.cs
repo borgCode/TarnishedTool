@@ -339,6 +339,18 @@ namespace SilkyRing.ViewModels
             get => _selectedShop;
             set => SetProperty(ref _selectedShop, value);
         }
+        
+        private bool _isShowFullShopLineupEnabled;
+
+        public bool IsShowFullShopLineupEnabled
+        {
+            get => _isShowFullShopLineupEnabled;
+            set
+            {
+                if (!SetProperty(ref _isShowFullShopLineupEnabled, value)) return;
+                _utilityService.ToggleFullShopLineup(_isShowFullShopLineupEnabled);
+            }
+        }
 
         #endregion
 
@@ -366,6 +378,7 @@ namespace SilkyRing.ViewModels
             if (IsCombatMapEnabled) _utilityService.ToggleCombatMap(true);
             if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
             if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
+            if (IsShowFullShopLineupEnabled) _utilityService.ToggleFullShopLineup(true);
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 

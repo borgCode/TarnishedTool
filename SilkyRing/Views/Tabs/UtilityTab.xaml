@@ -451,11 +451,17 @@
                 </TabItem>
 
                 <TabItem Header="Shops">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Open shops"
+                                Command="{Binding OpenShopSelectorCommand}">
+                        </Button>
 
-                    <Button 
-                        Content="Open shops"
-                        Command="{Binding OpenShopSelectorCommand}"
-                            ></Button>
+                        <CheckBox
+                            Content="Show full shop lineup"
+                            IsChecked="{Binding IsShowFullShopLineupEnabled}"
+                            Margin="15,0,0,0">
+                        </CheckBox>
+                    </StackPanel>
                 </TabItem>
 
             </TabControl>
