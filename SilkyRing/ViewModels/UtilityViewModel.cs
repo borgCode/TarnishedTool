@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Enums;
 using SilkyRing.Interfaces;
 using SilkyRing.Memory;
+using SilkyRing.Models;
 using SilkyRing.Utilities;
+using SilkyRing.Views.Windows;
 
 namespace SilkyRing.ViewModels
 {
@@ -17,6 +22,8 @@ namespace SilkyRing.ViewModels
         private const float Epsilon = 0.0001f;
 
         private bool _wasNoDeathEnabled;
+        
+        private ShopSelectorWindow _shopSelectorWindow;
 
         private readonly IUtilityService _utilityService;
         private readonly IEzStateService _ezStateService;
@@ -24,10 +31,13 @@ namespace SilkyRing.ViewModels
         private readonly HotkeyManager _hotkeyManager;
         private readonly IEmevdService _emevdService;
         private readonly PlayerViewModel _playerViewModel;
+        private readonly IDlcService _dlcService;
+        
+        private readonly List<ShopCommand> _allShops;
 
         public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
             IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager,
-            IEmevdService emevdService, PlayerViewModel playerViewModel)
+            IEmevdService emevdService, PlayerViewModel playerViewModel, IDlcService dlcService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
@@ -35,6 +45,7 @@ namespace SilkyRing.ViewModels
             _hotkeyManager = hotkeyManager;
             _emevdService = emevdService;
             _playerViewModel = playerViewModel;
+            _dlcService = dlcService;
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -56,7 +67,12 @@ namespace SilkyRing.ViewModels
             OpenUpgradeCommand = new DelegateCommand(OpenUpgrade);
             OpenSellCommand = new DelegateCommand(OpenSell);
             OpenRebirthCommand = new DelegateCommand(OpenRebirth);
+            OpenShopSelectorCommand = new DelegateCommand(OpenShopSelector);
+            OpenShopCommand = new DelegateCommand<ShopCommand>(OpenShop);
 
+            _allShops = DataLoader.GetShops();
+            FilteredShops = new ObservableCollection<ShopCommand>();
+            
             RegisterHotkeys();
             ApplyPrefs();
         }
@@ -79,6 +95,8 @@ namespace SilkyRing.ViewModels
         public ICommand OpenUpgradeCommand { get; set; }
         public ICommand OpenSellCommand { get; set; }
         public ICommand OpenRebirthCommand { get; set; }
+        public ICommand OpenShopSelectorCommand { get; set; }
+        public ICommand OpenShopCommand { get; }
 
         #endregion
 
@@ -90,6 +108,14 @@ namespace SilkyRing.ViewModels
         {
             get => _areOptionsEnabled;
             set => SetProperty(ref _areOptionsEnabled, value);
+        }
+        
+        private bool _isDlcAvailable;
+        
+        public bool IsDlcAvailable
+        {
+            get => _isDlcAvailable;
+            set => SetProperty(ref _isDlcAvailable, value);
         }
 
         private bool _isNoClipEnabled;
@@ -289,6 +315,30 @@ namespace SilkyRing.ViewModels
                 _utilityService.ToggleWorldHitDraw(Offsets.WorldHitMan.Ragdoll, _isDrawRagdollEnabled);
             }
         }
+        
+        private string _shopsSearchText = string.Empty;
+
+        public string ShopsSearchText
+        {
+            get => _shopsSearchText;
+            set
+            {
+                if (SetProperty(ref _shopsSearchText, value))
+                {
+                    ApplyFilter();
+                }
+            }
+        }
+        
+        public ObservableCollection<ShopCommand> FilteredShops { get; }
+        
+        private ShopCommand _selectedShop;
+
+        public ShopCommand SelectedShop
+        {
+            get => _selectedShop;
+            set => SetProperty(ref _selectedShop, value);
+        }
 
         #endregion
 
@@ -316,6 +366,7 @@ namespace SilkyRing.ViewModels
             if (IsCombatMapEnabled) _utilityService.ToggleCombatMap(true);
             if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
             if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
+            IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
         private void RegisterHotkeys()
@@ -407,6 +458,51 @@ namespace SilkyRing.ViewModels
             var playerHandle = _playerService.GetHandle();
             _ezStateService.ExecuteTalkCommand(GameIds.EzState.TalkCommands.OpenSell, playerHandle);
         }
+        
+        private void OpenShopSelector()
+        {
+            if (_shopSelectorWindow != null && _shopSelectorWindow.IsVisible)
+            {
+                _shopSelectorWindow.Activate();
+                return;
+            }
+
+            _shopSelectorWindow = new ShopSelectorWindow
+            {
+                DataContext = this
+            };
+
+            ApplyFilter();
+            _shopSelectorWindow.Closed += (sender, args) => _shopSelectorWindow = null;
+            _shopSelectorWindow.Show();
+        }
+        
+        private void ApplyFilter()
+        {
+            FilteredShops.Clear();
+
+            var filtered = _allShops.AsEnumerable();
+
+            if (!IsDlcAvailable)
+            {
+                filtered = filtered.Where(s => !s.IsDlc);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ShopsSearchText))
+            {
+                var searchLower = ShopsSearchText.ToLowerInvariant();
+                filtered = filtered.Where(s => 
+                    s.Name.ToLowerInvariant().Contains(searchLower));
+            }
+
+            foreach (var shop in filtered)
+            {
+                FilteredShops.Add(shop);
+            }
+        }
+
+        private void OpenShop(ShopCommand shop) => _ezStateService.ExecuteTalkCommand(shop.Command);
+
 
         #endregion
 

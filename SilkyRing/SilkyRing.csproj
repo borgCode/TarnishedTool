@@ -210,6 +210,9 @@
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\ShopSelectorWindow.xaml.cs">
+          <DependentUpon>ShopSelectorWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\SpEffectsWindow.xaml.cs">
           <DependentUpon>SpEffectsWindow.xaml</DependentUpon>
         </Compile>
@@ -238,6 +241,7 @@
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
+        <Page Include="Views\Windows\ShopSelectorWindow.xaml" />
         <Page Include="Views\Windows\SpEffectsWindow.xaml" />
     </ItemGroup>
     <ItemGroup>

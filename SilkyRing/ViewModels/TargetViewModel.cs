@@ -35,6 +35,9 @@ namespace SilkyRing.ViewModels
         private readonly IAttackInfoService _attackInfoService;
 
         private readonly HotkeyManager _hotkeyManager;
+        
+        private DateTime _forceActSequenceLastExecuted = DateTime.MinValue;
+        private static readonly TimeSpan ForceActSequenceCooldown = TimeSpan.FromSeconds(2);
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
             IAttackInfoService attackInfoService, HotkeyManager hotkeyManager)
@@ -673,6 +676,12 @@ namespace SilkyRing.ViewModels
                     CloseResistancesWindow();
             }
         }
+        
+        public bool ShowSleepAndNotImmune => ShowSleep && !IsSleepImmune;
+        public bool ShowPoisonAndNotImmune => ShowPoison && !IsPoisonImmune;
+        public bool ShowRotAndNotImmune => ShowRot && !IsRotImmune;
+        public bool ShowFrostAndNotImmune => ShowFrost && !IsFrostImmune;
+        public bool ShowBleedAndNotImmune => ShowBleed && !IsBleedImmune;
 
         #endregion
 
@@ -932,6 +941,10 @@ namespace SilkyRing.ViewModels
 
         private void ForceActSequence()
         {
+            var now = DateTime.UtcNow;
+            if (now - _forceActSequenceLastExecuted < ForceActSequenceCooldown) return;
+            _forceActSequenceLastExecuted = now;
+            
             if (string.IsNullOrWhiteSpace(ActSequence))
             {
                 MsgBox.Show("Sequence of acts is empty");
@@ -1000,15 +1013,7 @@ namespace SilkyRing.ViewModels
             _attackInfoWindow.Close();
             _attackInfoWindow = null;
         }
-
-        #endregion
-
-        #region Public Methods
-
-        public void SetSpeed(double value) => TargetSpeed = (float)value;
-
-        #endregion
-
+        
         private void UpdateResistancesDisplay()
         {
             if (!IsTargetOptionsEnabled) return;
@@ -1059,10 +1064,14 @@ namespace SilkyRing.ViewModels
             _resistancesWindowWindow.DataContext = this;
         }
 
-        public bool ShowSleepAndNotImmune => ShowSleep && !IsSleepImmune;
-        public bool ShowPoisonAndNotImmune => ShowPoison && !IsPoisonImmune;
-        public bool ShowRotAndNotImmune => ShowRot && !IsRotImmune;
-        public bool ShowFrostAndNotImmune => ShowFrost && !IsFrostImmune;
-        public bool ShowBleedAndNotImmune => ShowBleed && !IsBleedImmune;
+        #endregion
+
+        #region Public Methods
+
+        public void SetSpeed(double value) => TargetSpeed = (float)value;
+
+        #endregion
+        
+        
     }
 }

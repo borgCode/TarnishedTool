@@ -76,7 +76,7 @@ namespace SilkyRing
             EventViewModel eventViewModel =
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService,
-                playerService, hotkeyManager, emevdService, playerViewModel);
+                playerService, hotkeyManager, emevdService, playerViewModel, _dlcService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
 
