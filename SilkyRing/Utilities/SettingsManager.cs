@@ -34,7 +34,7 @@ public class SettingsManager
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "SilkyRing",
+        "TarnishedTool",
         "settings.txt");
 
     public void Save()

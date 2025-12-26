@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 using SilkyRing.Models;
 using SilkyRing.ViewModels;
 
-namespace SilkyRing.Views;
+namespace SilkyRing.Views.Windows;
 
 public partial class CreateLoadoutWindow : Window
 {
@@ -43,8 +43,8 @@ public partial class CreateLoadoutWindow : Window
             Owner = this,
             WindowStyle = WindowStyle.None,
             AllowsTransparency = true,
-            Background = (System.Windows.Media.Brush)Application.Current.Resources["BackgroundBrush"],
-            Foreground = (System.Windows.Media.Brush)Application.Current.Resources["TextBrush"]
+            Background = (Brush)Application.Current.Resources["BackgroundBrush"],
+            Foreground = (Brush)Application.Current.Resources["TextBrush"]
         };
 
         var panel = new StackPanel { Margin = new Thickness(10) };
@@ -69,24 +69,7 @@ public partial class CreateLoadoutWindow : Window
         return dialog.ShowDialog() == true ? textBox.Text : string.Empty;
     }
 
-    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if (e.ClickCount == 2)
-        {
-            WindowState = WindowState == WindowState.Maximized 
-                ? WindowState.Normal 
-                : WindowState.Maximized;
-        }
-        else
-        {
-            DragMove();
-        }
-    }
-
-    private void MinimizeButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
     
-    private void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
-
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
         DialogResult = true;

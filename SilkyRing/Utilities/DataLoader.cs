@@ -370,7 +370,7 @@ namespace SilkyRing.Utilities
         
         private static readonly string LoadoutsPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "SilkyRing",
+            "TarnishedTool",
             "CustomLoadouts.json");
 
         public static Dictionary<string, LoadoutTemplate> LoadCustomLoadouts()

@@ -12,6 +12,7 @@ using SilkyRing.Interfaces;
 using SilkyRing.Models;
 using SilkyRing.Utilities;
 using SilkyRing.Views;
+using SilkyRing.Views.Windows;
 
 namespace SilkyRing.ViewModels;
 
@@ -43,7 +44,11 @@ public class ItemViewModel : BaseViewModel
 
         _itemsByCategory = LoadItemData();
         _allAshesOfWar = DataLoader.GetAshOfWars();
+        
         _customLoadoutTemplates = DataLoader.LoadCustomLoadouts();
+        _loadouts = new ObservableCollection<string>(_customLoadoutTemplates.Keys);
+        SelectedLoadoutName = _loadouts.FirstOrDefault();
+        
         _allItems = _itemsByCategory.Values.SelectMany(x => x).ToList();
 
         ItemSelection = new ItemSelectionViewModel(_itemsByCategory, _allAshesOfWar);
@@ -61,6 +66,7 @@ public class ItemViewModel : BaseViewModel
         SpawnItemCommand = new DelegateCommand(SpawnItem);
         MassSpawnCommand = new DelegateCommand(MassSpawn);
         OpenCreateLoadoutCommand = new DelegateCommand(OpenCreateLoadoutWindow);
+        SpawnLoadoutCommand = new DelegateCommand(SpawnLoadout);
     }
     
 
@@ -69,6 +75,7 @@ public class ItemViewModel : BaseViewModel
     public ICommand SpawnItemCommand { get; set; }
     public ICommand MassSpawnCommand { get; set; }
     public ICommand OpenCreateLoadoutCommand { get; set; }
+    public ICommand SpawnLoadoutCommand { get; set; }
 
     #endregion
 

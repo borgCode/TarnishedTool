@@ -132,8 +132,8 @@
                         Height="25" />
             </StackPanel>
 
-            <StackPanel Grid.Row="5" Margin="0,15,0,0">
-                <Grid>
+            <StackPanel Grid.Row="5" Margin="0,15,0,0" IsEnabled="False">
+                <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -354,7 +354,7 @@
                                   Margin="0,0,0,5" />
 
                         <Button Content="Spawn Selected Preset"
-
+                                Command="{Binding SpawnLoadoutCommand}"
                                 IsEnabled="{Binding AreOptionsEnabled}"
                                 Height="25" />
                     </StackPanel>

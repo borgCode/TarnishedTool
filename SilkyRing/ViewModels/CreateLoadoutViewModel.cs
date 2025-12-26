@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Models;
+using SilkyRing.Utilities;
 
 namespace SilkyRing.ViewModels;
 
@@ -163,7 +164,11 @@ public class CreateLoadoutViewModel : BaseViewModel
 
     private void AddItem()
     {
-        if (SelectedLoadout == null || ItemSelection.SelectedItem == null) return;
+        if (SelectedLoadout == null || ItemSelection.SelectedItem == null)
+        {
+            MsgBox.Show("Please select or create a loadout to add an item.");
+            return;
+        }
 
         var template = new ItemTemplate
         {

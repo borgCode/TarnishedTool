@@ -12,7 +12,7 @@ namespace SilkyRing.Memory
         public void Scan()
         {
             string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "SilkyRing");
+                "TarnishedTool");
             Directory.CreateDirectory(appData);
             string savePath = Path.Combine(appData, "backup_addresses.txt");
 
