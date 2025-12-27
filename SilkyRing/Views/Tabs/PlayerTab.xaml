@@ -602,6 +602,12 @@
                                 </Border>
                             </StackPanel>
 
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                                <TextBlock Text="Current Animation: "></TextBlock>
+                                <TextBlock Text="{Binding CurrentAnimation}" VerticalAlignment="Center" Width="65"
+                                           TextAlignment="Right" Margin="5,0,0,0" />
+                            </StackPanel>
+
                         </Grid>
                     </Grid>
                 </Grid>

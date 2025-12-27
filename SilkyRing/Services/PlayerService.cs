@@ -100,11 +100,12 @@ namespace SilkyRing.Services
         {
             var playerGameData =
                 memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
-            var handle = memoryService.ReadInt32((IntPtr)playerGameData + (int)GameDataMan.PlayerGameDataOffsets.TorrentHandle);
+            var handle =
+                memoryService.ReadInt32((IntPtr)playerGameData + (int)GameDataMan.PlayerGameDataOffsets.TorrentHandle);
             var torrentChrIns = ChrInsLookup(handle);
             return memoryService.FollowPointers(torrentChrIns, [..ChrIns.ChrPhysicsModule], true, false);
         }
-        
+
         public PosWithHurtbox GetPosWithHurtbox()
         {
             var physPtr = GetChrPhysicsPtr();
@@ -211,7 +212,7 @@ namespace SilkyRing.Services
             {
                 var hook = Hooks.HookedDeathFunction.ToInt64();
                 var bytes = AsmLoader.GetAsmBytes("NoTimePassOnDeath");
-                AsmHelper.WriteRelativeOffsets(bytes, new []
+                AsmHelper.WriteRelativeOffsets(bytes, new[]
                 {
                     (code.ToInt64() + 0x8, WorldAreaTimeImpl.Base.ToInt64(), 7, 0x8 + 3),
                     (code.ToInt64() + 0xF, GameMan.Base.ToInt64(), 7, 0xF + 3),
@@ -314,7 +315,8 @@ namespace SilkyRing.Services
         {
             var playerGameData =
                 memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
-            var handle = memoryService.ReadInt32((IntPtr)playerGameData + (int)GameDataMan.PlayerGameDataOffsets.TorrentHandle);
+            var handle =
+                memoryService.ReadInt32((IntPtr)playerGameData + (int)GameDataMan.PlayerGameDataOffsets.TorrentHandle);
             var torrentChrIns = ChrInsLookup(handle);
             var bitFlags = memoryService.FollowPointers(torrentChrIns,
                 [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
@@ -342,7 +344,7 @@ namespace SilkyRing.Services
                 var bytes = AsmLoader.GetAsmBytes("TorrentNoStagger");
                 var hook = Hooks.TorrentNoStagger;
                 var skipOffset = hook + 0x14;
-                AsmHelper.WriteRelativeOffsets(bytes, new []
+                AsmHelper.WriteRelativeOffsets(bytes, new[]
                 {
                     (code.ToInt64() + 0x1, WorldChrMan.Base.ToInt64(), 7, 0x1 + 3),
                     (code.ToInt64() + 0x17, skipOffset, 5, 0x17 + 1),
@@ -356,6 +358,9 @@ namespace SilkyRing.Services
                 hookManager.UninstallHook(code.ToInt64());
             }
         }
+
+        public int GetCurrentAnimation() =>
+            memoryService.ReadInt32(GetChrTimeActPtr() + (int)ChrIns.ChrTimeActOffsets.AnimationId);
 
         private int CalculateLevelUpCost(int nextLevel)
         {
@@ -383,6 +388,9 @@ namespace SilkyRing.Services
         private IntPtr GetChrRidePtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrRideModule], true);
 
+        private IntPtr GetChrTimeActPtr() =>
+            memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrTimeActModule], true);
+
         private IntPtr ChrInsLookup(int handle)
         {
             int poolIndex = (handle >> 20) & 0xFF;
@@ -392,9 +400,9 @@ namespace SilkyRing.Services
             var chrSet = (IntPtr)memoryService.ReadInt64(worldChrMan + WorldChrMan.ChrSetPool + poolIndex * 8);
             var entriesBase = (IntPtr)memoryService.ReadInt64(chrSet + (int)WorldChrMan.ChrSetOffsets.ChrSetEntries);
             var chrIns = (IntPtr)memoryService.ReadInt64(entriesBase + slotIndex * 16);
-            
+
 #if DEBUG
-            
+
             Console.WriteLine($@"ChrIns looked up by handle: 0x{chrIns.ToInt64():X}");
 #endif
 

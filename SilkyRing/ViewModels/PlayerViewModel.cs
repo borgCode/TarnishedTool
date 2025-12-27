@@ -540,6 +540,14 @@ namespace SilkyRing.ViewModels
                 }
             }
         }
+        private int _currentAnimation;
+
+        public int CurrentAnimation
+        {
+            get => _currentAnimation;
+            set => SetProperty(ref _currentAnimation, value);
+        }
+        
 
         private float _playerSpeed;
 
@@ -748,6 +756,7 @@ namespace SilkyRing.ViewModels
             Scadu = _playerService.GetScadu();
             SpiritAsh = _playerService.GetSpiritAsh();
             _coords = _playerService.GetPlayerPos();
+            CurrentAnimation = _playerService.GetCurrentAnimation();
             PosX = _coords.X;
             PosY = _coords.Y;
             PosZ = _coords.Z;
