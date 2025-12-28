@@ -134,6 +134,7 @@ namespace SilkyRing.ViewModels
 
         private void UnlockMainGameGraces()
         {
+            _eventService.SetEvent(Event.SeeUndergroundGraces, true);
             foreach (var grace in Graces.AllItems)
             {
                 if (grace.IsDlc) continue;
@@ -143,6 +144,7 @@ namespace SilkyRing.ViewModels
 
         private void UnlockDlcGraces()
         {
+            _eventService.SetEvent(Event.SeeDlcGraces, true);
             foreach (var grace in Graces.AllItems)
             {
                 if (!grace.IsDlc) continue;
@@ -168,6 +170,7 @@ namespace SilkyRing.ViewModels
         
         private void UnlockBaseArGraces()
         {
+            _eventService.SetEvent(Event.SeeUndergroundGraces, true);
             foreach (var baseArGrace in _baseArGraces)
             {
                 _eventService.SetEvent(baseArGrace, true);
@@ -176,6 +179,7 @@ namespace SilkyRing.ViewModels
 
         private void UnlockDlcArGraces()
         {
+            _eventService.SetEvent(Event.SeeDlcGraces, true);
             foreach (var dlcArGrace in _dlcArGraces)
             {
                 _eventService.SetEvent(dlcArGrace, true);
