@@ -22,6 +22,7 @@ public class SettingsManager
     public bool NoLogo { get; set; }
     public double ResistancesWindowScaleX { get; set; } = 1.0;
     public double ResistancesWindowScaleY { get; set; } = 1.0;
+    public double ResistancesWindowOpacity { get; set; }
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
     public double ResistancesWindowTop { get; set; }
@@ -57,6 +58,7 @@ public class SettingsManager
                 $"NoLogo={NoLogo}",
                 $"ResistancesWindowScaleX={ResistancesWindowScaleX}",
                 $"ResistancesWindowScaleY={ResistancesWindowScaleY}",
+                $"ResistancesWindowOpacity={ResistancesWindowOpacity}",
                 $"ResistancesWindowWidth={ResistancesWindowWidth}",
                 $"ResistancesWindowLeft={ResistancesWindowLeft}",
                 $"ResistancesWindowTop={ResistancesWindowTop}",
@@ -141,6 +143,10 @@ public class SettingsManager
                             case "ResistancesWindowScaleY":
                                 double.TryParse(value, out double rwy);
                                 settings.ResistancesWindowScaleY = rwy;
+                                break;
+                            case "ResistancesWindowOpacity":
+                                double.TryParse(value, out double rwo);
+                                settings.ResistancesWindowOpacity = rwo;
                                 break;
                             case "ResistancesWindowLeft":
                                 double.TryParse(value, out double rwl);

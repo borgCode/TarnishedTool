@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using SilkyRing.Core;
 using SilkyRing.Enums;
@@ -18,6 +19,9 @@ namespace SilkyRing.ViewModels
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
+        
+        private readonly List<long> _baseGameMaps;
+        private readonly List<long> _dlcMaps;
 
         public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService,
             IDlcService dlcService, IEmevdService emevdService)
@@ -44,6 +48,11 @@ namespace SilkyRing.ViewModels
             UnlockMainGameGracesCommand = new DelegateCommand(UnlockMainGameGraces);
             UnlockDlcGracesCommand = new DelegateCommand(UnlockDlcGraces);
             BossWarpCommand = new DelegateCommand(BossWarp);
+            UnlockBaseGameMapsCommand = new DelegateCommand(UnlockBaseGameMaps);
+            UnlockDlcMapsCommand = new DelegateCommand(UnlockDlcMaps);
+            
+            _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
+            _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
         }
 
         #region Commands
@@ -52,6 +61,8 @@ namespace SilkyRing.ViewModels
         public ICommand BossWarpCommand { get; set; }
         public ICommand UnlockMainGameGracesCommand { get; set; }
         public ICommand UnlockDlcGracesCommand { get; set; }
+        public ICommand UnlockBaseGameMapsCommand { get; set; }
+        public ICommand UnlockDlcMapsCommand { get; set; }
 
         #endregion
 
@@ -127,6 +138,22 @@ namespace SilkyRing.ViewModels
             {
                 if (!grace.IsDlc) continue;
                 _eventService.SetEvent(grace.FlagId, true);
+            }
+        }
+        
+        private void UnlockBaseGameMaps()
+        {
+            foreach (var baseGameMap in _baseGameMaps)
+            {
+                _eventService.SetEvent(baseGameMap, true);
+            }
+        }
+
+        private void UnlockDlcMaps()
+        {
+            foreach (var dlcMap in _dlcMaps)
+            {
+                _eventService.SetEvent(dlcMap, true);
             }
         }
 

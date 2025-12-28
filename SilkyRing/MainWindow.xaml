@@ -41,10 +41,10 @@
             <!--         VerticalAlignment="Center"/> -->
             
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <!-- <Button x:Name="LaunchGameButton" Content="Launch Game" -->
-                <!--         Click="LaunchGame_Click" -->
-                <!--         Margin="0,0,10,0" -->
-                <!--         VerticalAlignment="Center"/> -->
+                <Button x:Name="LaunchGameButton" Content="Launch Game"
+                        Click="LaunchGame_Click"
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"/>
                 <TextBlock x:Name="IsAttachedText" Text=""
                            HorizontalAlignment="Right" VerticalAlignment="Center"
                            Width="100"

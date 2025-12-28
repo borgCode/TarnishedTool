@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -41,9 +42,7 @@ namespace SilkyRing
                 Top = SettingsManager.Default.WindowTop;
             }
             else WindowStartupLocation = WindowStartupLocation.CenterScreen;
-
-            //
-            // GameLauncher.SetVersionOffsets();
+            
             _aobScanner = new AoBScanner(_memoryService);
             _stateService = new StateService(_memoryService);
 
@@ -110,6 +109,7 @@ namespace SilkyRing
             _gameLoadedTimer.Tick += Timer_Tick;
             _gameLoadedTimer.Start();
         }
+        
 
         // VersionChecker.UpdateVersionText(AppVersion);
         //
@@ -129,7 +129,7 @@ namespace SilkyRing
                 IsAttachedText.Text = "Attached to game";
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
 
-                // LaunchGameButton.IsEnabled = false;
+                LaunchGameButton.IsEnabled = false;
 
                 if (!_hasScanned)
                 {
@@ -177,7 +177,7 @@ namespace SilkyRing
                 _appliedOneTimeFeatures = false;
                 IsAttachedText.Text = "Not attached";
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["NotAttachedBrush"];
-                // LaunchGameButton.IsEnabled = true;
+                LaunchGameButton.IsEnabled = true;
             }
         }
 
@@ -192,12 +192,9 @@ namespace SilkyRing
             SettingsManager.Default.WindowLeft = Left;
             SettingsManager.Default.WindowTop = Top;
             SettingsManager.Default.Save();
-            // _itemService.SignalClose();
-            // _hookManager.UninstallAllHooks();
-            // _nopManager.RestoreAll();
         }
 
-        // private void LaunchGame_Click(object sender, RoutedEventArgs e) => Task.Run(GameLauncher.LaunchDarkSouls2);
+        private void LaunchGame_Click(object sender, RoutedEventArgs e) => Task.Run(GameLauncher.LaunchGame);
         // private void CheckUpdate_Click(object sender, RoutedEventArgs e) => VersionChecker.CheckForUpdates(this, true);
     }
 }

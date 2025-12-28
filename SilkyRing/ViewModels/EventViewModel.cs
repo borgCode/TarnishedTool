@@ -21,8 +21,7 @@ namespace SilkyRing.ViewModels
         
         private List<BossRevive> _bossReviveList;
 
-        private List<long> _baseGameMaps;
-        private List<long> _dlcMaps;
+        
 
         public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService,
             IDlcService dlcService, IEzStateService ezStateService, IEmevdService emevdService)
@@ -40,28 +39,18 @@ namespace SilkyRing.ViewModels
             SetEventCommand = new DelegateCommand(SetEvent);
             GetEventCommand = new DelegateCommand(GetEvent);
             UnlockWhetbladesCommand = new DelegateCommand(UnlockWhetblades);
-            UnlockBaseGameMapsCommand = new DelegateCommand(UnlockBaseGameMaps);
-            UnlockDlcMapsCommand = new DelegateCommand(UnlockDlcMaps);
-            TestCommand = new DelegateCommand(Test);
+            ClearDlcCommand = new DelegateCommand(ClearDlc);
             
             _bossReviveList = DataLoader.GetBossRevives();
-            _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
-            _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
+            
         }
-
-        private void Test()
-        {
-            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture);
-        }
-
+        
         #region Commands
         
         public ICommand SetEventCommand { get; set; }
         public ICommand GetEventCommand { get; set; }
         public ICommand UnlockWhetbladesCommand { get; set; }
-        public ICommand UnlockBaseGameMapsCommand { get; set; }
-        public ICommand UnlockDlcMapsCommand { get; set; }
-        public ICommand TestCommand { get; set; }
+        public ICommand ClearDlcCommand { get; set; }
 
         #endregion
 
@@ -210,32 +199,8 @@ namespace SilkyRing.ViewModels
                 _eventService.SetEvent(whetBlade, true);
             }
         }
-        
-        private void TestRevive()
-        {
-            var boss = _bossReviveList[1];
 
-            foreach (var bossFlag in boss.BossFlags)
-            {
-                _eventService.SetEvent(bossFlag.EventId, bossFlag.SetValue);
-            }
-        }
-        
-        private void UnlockBaseGameMaps()
-        {
-            foreach (var baseGameMap in _baseGameMaps)
-            {
-                _eventService.SetEvent(baseGameMap, true);
-            }
-        }
-
-        private void UnlockDlcMaps()
-        {
-            foreach (var dlcMap in _dlcMaps)
-            {
-                _eventService.SetEvent(dlcMap, true);
-            }
-        }
+        private void ClearDlc() => _eventService.SetEvent(Event.ClearDlc, true);
 
         #endregion
     }

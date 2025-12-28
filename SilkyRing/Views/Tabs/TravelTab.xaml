@@ -228,16 +228,36 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Button Grid.Column="0" Content="Unlock All Main Game Graces"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Button Grid.Row="0" Grid.Column="0" Content="Unlock All Main Game Graces"
                                     Command="{Binding UnlockMainGameGracesCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Margin="0,2" />
-                            <Button Grid.Column="1" Content="Unlock All DLC Graces"
+                            <Button Grid.Row="0" Grid.Column="1" Content="Unlock All DLC Graces"
                                     Command="{Binding UnlockDlcGracesCommand}"
-                                    Margin="20,0, 0,2">
+                                    Margin="20,5, 0,2">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsDlcAvailable" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+
+                            <Button Grid.Row="1" Grid.Column="0" Content="Unlock Base Game Maps"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding UnlockBaseGameMapsCommand}"
+                                    Margin="0,2" />
+
+                            <Button Grid.Row="1" Grid.Column="1" Content="Unlock DLC Maps"
+                                    Command="{Binding UnlockDlcMapsCommand}"
+                                    Margin="20,5, 0,2">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                         <Binding Path="AreOptionsEnabled" />
@@ -451,7 +471,7 @@
                         </ListView>
                     </Border>
                 </Grid>
-                
+
                 <Border Grid.Row="2"
                         BorderThickness="1"
                         BorderBrush="#333"
@@ -468,10 +488,10 @@
                             </Grid.ColumnDefinitions>
 
                             <CheckBox Grid.Column="0" Content="Rest on Boss Warp"
-                                    IsChecked="{Binding IsRestOnWarpEnabled}"
-                                    Margin="0,2" />
-                            
-                          
+                                      IsChecked="{Binding IsRestOnWarpEnabled}"
+                                      Margin="0,2" />
+
+
                         </Grid>
                     </StackPanel>
                 </Border>

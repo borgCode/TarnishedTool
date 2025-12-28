@@ -10,6 +10,7 @@ namespace SilkyRing.Views.Windows;
 public partial class ResistancesWindow : Window
 {
     private double _scaleMultiplier = 1.0;
+    private double _backgroundOpacity = 0.5;
     
     public ResistancesWindow()
     {
@@ -33,6 +34,12 @@ public partial class ResistancesWindow : Window
                 ContentScale.ScaleX = _scaleMultiplier;
                 ContentScale.ScaleY = _scaleMultiplier;
             }
+            
+            if (SettingsManager.Default.ResistancesWindowOpacity > 0)
+                _backgroundOpacity = SettingsManager.Default.ResistancesWindowOpacity;
+        
+            UpdateBackground();
+            
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
             User32.SetTopmost(hwnd);
 
@@ -52,6 +59,12 @@ public partial class ResistancesWindow : Window
         };
     }
     
+    private void UpdateBackground()
+    {
+        Background = new SolidColorBrush(
+            Color.FromArgb((byte)(_backgroundOpacity * 255), 0, 0, 0));
+    }
+    
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         if (DataContext is TargetViewModel viewModel)
@@ -67,10 +80,17 @@ public partial class ResistancesWindow : Window
         base.OnClosing(e);
 
         SettingsManager.Default.ResistancesWindowScaleX = _scaleMultiplier;
+        SettingsManager.Default.ResistancesWindowOpacity = _backgroundOpacity;
         SettingsManager.Default.ResistancesWindowLeft = Left;
         SettingsManager.Default.ResistancesWindowTop = Top;
         SettingsManager.Default.ResistancesWindowWidth = Width;
         SettingsManager.Default.Save();
+    }
+    
+    private void CycleOpacity_Click(object sender, RoutedEventArgs e)
+    {
+        _backgroundOpacity = _backgroundOpacity >= 0.9 ? 0.3 : _backgroundOpacity + 0.2;
+        UpdateBackground();
     }
 
 

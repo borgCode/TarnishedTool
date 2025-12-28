@@ -178,6 +178,7 @@
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\CoordUtils.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
+        <Compile Include="Utilities\GameLauncher.cs" />
         <Compile Include="Utilities\HotkeyManager.cs" />
         <Compile Include="Utilities\MsgBox.cs" />
         <Compile Include="Utilities\SettingsManager.cs" />

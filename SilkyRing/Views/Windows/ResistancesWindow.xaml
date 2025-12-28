@@ -49,6 +49,9 @@
                                 Margin="2,0,0,0"
                                 Click="IncreaseSize_Click"
                                 Cursor="Hand"/>
+                        <Button Content="◐" Width="24" Height="20" FontSize="14"
+                                Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
+                                Click="CycleOpacity_Click" Cursor="Hand" ToolTip="Opacity"/>
 
                     </StackPanel>
         
