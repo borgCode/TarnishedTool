@@ -29,6 +29,9 @@ namespace TarnishedTool.Services
         public Vector3 GetPlayerPos() =>
             memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
+        public void SetPlayerPos(Vector3 pos) =>
+            memoryService.WriteVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
+
         public void SavePos(int index)
         {
             var posToSave = _positions[index];
@@ -304,11 +307,11 @@ namespace TarnishedTool.Services
             return memoryService.ReadInt64((IntPtr)playerIns + (int)WorldChrMan.PlayerInsOffsets.Handle);
         }
 
-        public void EnableGravity()
+        public void ToggleNoGravity(bool isEnabled)
         {
             var torrentPhysicsPtr = GetTorrentPhysicsPtr();
-            memoryService.WriteUInt8(torrentPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
-            memoryService.WriteUInt8(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 0);
+            memoryService.WriteUInt8(torrentPhysicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, isEnabled ? 1 : 0);
+            memoryService.WriteUInt8(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.NoGravity, isEnabled ? 1 : 0);
         }
 
         public void ToggleTorrentNoDeath(bool isEnabled)

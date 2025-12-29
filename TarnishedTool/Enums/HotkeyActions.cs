@@ -60,9 +60,6 @@ public enum HotkeyActions
     KillAllExceptTarget,
     
     
-    
-    
-    
     Quitout,
     ForceSave,
     Noclip,
@@ -71,7 +68,15 @@ public enum HotkeyActions
     IncreaseGameSpeed,
     DecreaseGameSpeed,
     ToggleGameSpeed,
-    
+    ToggleFreeCam,
+    ToggleFreezeWorld,
+    MoveCamToPlayer,
+    MovePlayerToCam,
+    DrawHitbox,
+    DrawPlayerSound,
+    DrawRagdolls,
+    DrawLowHit,
+    DrawHighHit,
     
     
 }

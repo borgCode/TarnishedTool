@@ -290,8 +290,7 @@ public class ItemViewModel : BaseViewModel
             {
                 _eventService.SetEvent(eventItem.EventId, true);
             }
-
-            Task.Delay(50).Wait();
+            
             _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
         }
     }

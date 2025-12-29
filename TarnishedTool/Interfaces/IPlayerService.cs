@@ -8,6 +8,7 @@ namespace TarnishedTool.Interfaces;
 public interface IPlayerService
 {
     Vector3 GetPlayerPos();
+    void SetPlayerPos(Vector3 pos);
     void SavePos(int index);
     void RestorePos(int index);
     PosWithHurtbox GetPosWithHurtbox();
@@ -37,7 +38,7 @@ public interface IPlayerService
     Stats GetStats();
     void SetStat(int offset, int newValue);
     long GetHandle();
-    void EnableGravity();
+    void ToggleNoGravity(bool isEnabled);
     void ToggleTorrentNoDeath(bool isEnabled);
     void SetScadu(int value);
     int GetScadu();

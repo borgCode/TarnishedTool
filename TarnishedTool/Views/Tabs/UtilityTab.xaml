@@ -252,12 +252,18 @@
                             </CheckBox.IsEnabled>
                         </CheckBox>
 
-                        <!-- <Button Content="Move Free Cam to Player" -->
-                        <!--         Command="{Binding MoveCamToPlayerCommand}" -->
-                        <!--         IsEnabled="{Binding IsFreeCamEnabled}" -->
-                        <!--         Padding="5,0" -->
-                        <!--         Margin="20,10,0,5" -->
-                        <!--         HorizontalAlignment="Left" /> -->
+                        <Button Content="Move Free Cam to Player"
+                                Command="{Binding MoveCamToPlayerCommand}"
+                                IsEnabled="{Binding IsFreeCamEnabled}"
+                                Padding="5,0"
+                                Margin="10,10,0, 0"
+                                HorizontalAlignment="Left" />
+                        <Button Content="Move Player to Free Cam"
+                                Command="{Binding MovePlayerToCamCommand}"
+                                IsEnabled="{Binding IsFreeCamEnabled}"
+                                Padding="5,0"
+                                Margin="10,5,0,0"
+                                HorizontalAlignment="Left" />
                
                     </StackPanel>
                     <StackPanel Grid.Column="1" HorizontalAlignment="Right">

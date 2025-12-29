@@ -75,6 +75,7 @@ namespace TarnishedTool.ViewModels
             OpenShopSelectorCommand = new DelegateCommand(OpenShopSelector);
             OpenShopCommand = new DelegateCommand<ShopCommand>(OpenShop);
             MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
+            MovePlayerToCamCommand = new DelegateCommand(MovePlayerToCam);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -82,7 +83,9 @@ namespace TarnishedTool.ViewModels
             RegisterHotkeys();
             ApplyPrefs();
         }
+
         
+
         #region Commands
 
         public ICommand SaveCommand { get; set; }
@@ -104,6 +107,7 @@ namespace TarnishedTool.ViewModels
         public ICommand OpenShopSelectorCommand { get; set; }
         public ICommand OpenShopCommand { get; }
         public ICommand MoveCamToPlayerCommand { get; }
+        public ICommand MovePlayerToCamCommand { get; }
 
         #endregion
 
@@ -445,6 +449,23 @@ namespace TarnishedTool.ViewModels
                 () => SetSpeed(Math.Min(10, GameSpeed + 0.50f)));
             _hotkeyManager.RegisterAction(HotkeyActions.DecreaseGameSpeed,
                 () => SetSpeed(Math.Max(0.5f, GameSpeed - 0.50f)));
+            
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreeCam, () => IsFreeCamEnabled = !IsFreeCamEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreezeWorld, () =>
+            {
+                if (!IsFreeCamEnabled) return;
+                IsFreezeWorldEnabled = !IsFreezeWorldEnabled;
+            });
+            _hotkeyManager.RegisterAction(HotkeyActions.MoveCamToPlayer, () =>
+            {
+                if (!IsFreeCamEnabled) return;
+                MoveCamToPlayer();
+            });
+            _hotkeyManager.RegisterAction(HotkeyActions.MovePlayerToCam, () =>
+            {
+                if (!IsFreeCamEnabled) return;
+                MovePlayerToCam();
+            });
         }
 
         private void ApplyPrefs()
@@ -561,22 +582,14 @@ namespace TarnishedTool.ViewModels
         private void OpenShop(ShopCommand shop) => _ezStateService.ExecuteTalkCommand(shop.Command);
 
         private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
-        
-        
+        private void MovePlayerToCam() => _utilityService.MovePlayerToCam();
+
+
         #endregion
 
 
 
-        // public bool IsDrawSoundEnabled
-        // {
-        //     get => _isDrawSoundEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isDrawSoundEnabled, value)) return;
-        //         _utilityService.ToggleDrawSound(_isDrawSoundEnabled);
-        //     }
-        // }
-        //
+
 
         //
         // public bool IsHideCharactersEnabled

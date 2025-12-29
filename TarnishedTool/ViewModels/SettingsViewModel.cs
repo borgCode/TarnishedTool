@@ -114,6 +114,10 @@ public class SettingsViewModel : BaseViewModel
             new("Toggle Game Speed", HotkeyActions.ToggleGameSpeed),
             new("Increase NoClip Speed", HotkeyActions.IncreaseNoClipSpeed),
             new("Decrease NoClip Speed", HotkeyActions.DecreaseNoClipSpeed),
+            new("Toggle Free Cam", HotkeyActions.ToggleFreeCam),
+            new("Toggle Freeze World", HotkeyActions.ToggleFreezeWorld),
+            new("Move Free Cam to Player", HotkeyActions.MoveCamToPlayer),
+            new("Move Player to Free Cam", HotkeyActions.MovePlayerToCam),
         ];
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -37,7 +38,6 @@ namespace TarnishedTool.Services
 
             if (isNoClipEnabled)
             {
-                
                 WriteInAirTimer(inAirTimerCode);
                 WriteKbCode(kbCode);
                 WriteTriggerCode(triggersCode);
@@ -63,11 +63,10 @@ namespace TarnishedTool.Services
                 hookManager.UninstallHook(updateCoordsCode.ToInt64());
                 hookManager.UninstallHook(jumpInterceptCode.ToInt64());
 
-                playerService.EnableGravity();
+                playerService.ToggleNoGravity(false);
             }
         }
 
-        
         private void WriteInAirTimer(IntPtr inAirTimerCode)
         {
             var codeBytes = AsmLoader.GetAsmBytes("NoClip_InAirTimer");
@@ -133,7 +132,7 @@ namespace TarnishedTool.Services
             });
             memoryService.WriteBytes(updateCoordsCode, codeBytes);
         }
-        
+
         private void WriteJumpIntercept(IntPtr jumpInterceptCode)
         {
             var bytes = AsmLoader.GetAsmBytes("NoClip_JumpHook");
@@ -167,6 +166,21 @@ namespace TarnishedTool.Services
                 memoryService.WriteBytes(patchLoc, [0xEB, 0x80, 0xCC]);
                 memoryService.WriteUInt8(camMode, 0);
             }
+
+            MoveCamToPlayer();
+        }
+
+        public void MoveCamToPlayer()
+        {
+            var playerLoc = playerService.GetPlayerPos();
+            playerLoc.Y += 2.5f;
+            memoryService.WriteVector3(GetDbgCamCoordsPtr(), playerLoc);
+        }
+
+        public void MovePlayerToCam()
+        {
+            var cameraLoc = memoryService.ReadVector3(GetDbgCamCoordsPtr());
+            playerService.SetPlayerPos(cameraLoc);
         }
 
         public void ToggleFreezeWorld(bool isEnabled)
@@ -189,13 +203,13 @@ namespace TarnishedTool.Services
         public void SetColDrawMode(int val) =>
             memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.Mode, (byte)val);
 
-        public void MoveCamToPlayer()
-        {
-        }
-
         public void PatchDebugFont() => memoryService.WriteUInt8(Patches.DebugFont, 0xC3);
 
         public void TogglePlayerSound(bool isEnabled) =>
             memoryService.WriteUInt8(Patches.PlayerSound, isEnabled ? 0x75 : 0x74);
+
+        private IntPtr GetDbgCamCoordsPtr() =>
+            memoryService.FollowPointers(FieldArea.Base,
+                [FieldArea.GameRend, FieldArea.CSDebugCam, FieldArea.CamCoords], false);
     }
 }
