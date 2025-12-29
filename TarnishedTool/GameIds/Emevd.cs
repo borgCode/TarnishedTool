@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TarnishedTool.GameIds;
 
-public class Emevd
+public static class Emevd
 {
     public class EmevdCommand(int groupId, int commandId, params object[] args)
     {

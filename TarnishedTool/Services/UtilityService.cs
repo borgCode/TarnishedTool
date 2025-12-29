@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Input;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -193,8 +192,22 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(DamageManager.Base) + DamageManager.HitboxView,
                 isDrawHitboxEnabled ? 1 : 0);
 
-        public void ToggleWorldHitDraw(int offset, bool isEnabled) =>
-            memoryService.WriteUInt8(WorldHitMan.Base + offset, isEnabled ? 1 : 0);
+        public void ToggleDrawRagdolls(bool isEnabled) => 
+            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.Ragdoll, isEnabled ? 1 : 0);
+
+        public void ToggleDrawLowHit(bool isEnabled)
+        {
+            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.LowHit, isEnabled ? 1 : 0);
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom, isEnabled ? 0 : 1);
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap, isEnabled ? 0 : 1);
+        }
+
+        public void ToggleDrawHighHit(bool isEnabled)
+        {
+            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.HighHit, isEnabled ? 1 : 0);
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom, isEnabled ? 0 : 1);
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap, isEnabled ? 0 : 1);
+        }
 
         public void ToggleFullShopLineup(bool isEnabled) =>
             memoryService.WriteBytes(Patches.GetShopEvent,
@@ -207,6 +220,16 @@ namespace TarnishedTool.Services
 
         public void TogglePlayerSound(bool isEnabled) =>
             memoryService.WriteUInt8(Patches.PlayerSound, isEnabled ? 0x75 : 0x74);
+
+        public void ToggleHideChr(bool isEnabled) =>
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowChrs, isEnabled ? 0 : 1);
+
+        public void ToggleHideMap(bool isEnabled)
+        {
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom, isEnabled ? 0 : 1);
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap, isEnabled ? 0 : 1);
+            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap2, isEnabled ? 0 : 1);
+        }
 
         private IntPtr GetDbgCamCoordsPtr() =>
             memoryService.FollowPointers(FieldArea.Base,

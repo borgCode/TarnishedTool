@@ -58,8 +58,6 @@ public enum HotkeyActions
     TargetNoMove,
     ForceActSequence,
     KillAllExceptTarget,
-    
-    
     Quitout,
     ForceSave,
     Noclip,
@@ -72,11 +70,7 @@ public enum HotkeyActions
     ToggleFreezeWorld,
     MoveCamToPlayer,
     MovePlayerToCam,
-    DrawHitbox,
-    DrawPlayerSound,
-    DrawRagdolls,
-    DrawLowHit,
-    DrawHighHit,
+    
     
     
 }

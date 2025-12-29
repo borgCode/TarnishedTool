@@ -295,7 +295,7 @@ namespace TarnishedTool.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
-                _utilityService.ToggleWorldHitDraw(Offsets.WorldHitMan.LowHit, _isDrawLowHitEnabled);
+                _utilityService.ToggleDrawLowHit(_isDrawLowHitEnabled);
                 _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
@@ -308,7 +308,7 @@ namespace TarnishedTool.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
-                _utilityService.ToggleWorldHitDraw(Offsets.WorldHitMan.HighHit, _isDrawHighHitEnabled);
+                _utilityService.ToggleDrawHighHit(_isDrawHighHitEnabled);
                 _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
@@ -334,7 +334,7 @@ namespace TarnishedTool.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawRagdollEnabled, value)) return;
-                _utilityService.ToggleWorldHitDraw(Offsets.WorldHitMan.Ragdoll, _isDrawRagdollEnabled);
+                _utilityService.ToggleDrawRagdolls(_isDrawRagdollEnabled);
             }
         }
         
@@ -352,6 +352,30 @@ namespace TarnishedTool.ViewModels
                 }
                 _utilityService.TogglePlayerSound(_isDrawPlayerSoundEnabled);
                 
+            }
+        }
+
+        private bool _isHideCharactersEnabled;
+        
+        public bool IsHideCharactersEnabled
+        {
+            get => _isHideCharactersEnabled;
+            set
+            {
+                if (!SetProperty(ref _isHideCharactersEnabled, value)) return;
+                _utilityService.ToggleHideChr(_isHideCharactersEnabled);
+            }
+        }
+
+        private bool _isHideMapEnabled;
+        
+        public bool IsHideMapEnabled
+        {
+            get => _isHideMapEnabled;
+            set
+            {
+                if (!SetProperty(ref _isHideMapEnabled, value)) return;
+                _utilityService.ToggleHideMap(_isHideMapEnabled);
             }
         }
 
@@ -427,6 +451,16 @@ namespace TarnishedTool.ViewModels
             if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
             if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
             if (IsShowFullShopLineupEnabled) _utilityService.ToggleFullShopLineup(true);
+            if (IsDrawPlayerSoundEnabled)
+            {
+                _utilityService.PatchDebugFont();
+                _utilityService.TogglePlayerSound(true);
+            }
+            if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
+            if (IsDrawLowHitEnabled) _utilityService.ToggleDrawLowHit(true);
+            if (IsDrawHighHitEnabled) _utilityService.ToggleDrawHighHit(true);
+            if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
+            if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
@@ -586,30 +620,6 @@ namespace TarnishedTool.ViewModels
 
 
         #endregion
-
-
-
-
-
-        //
-        // public bool IsHideCharactersEnabled
-        // {
-        //     get => _isHideCharactersEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isHideCharactersEnabled, value)) return;
-        //         _utilityService.ToggleHideChr(_isHideCharactersEnabled);
-        //     }
-        // }
-        //
-        // public bool IsHideMapEnabled
-        // {
-        //     get => _isHideMapEnabled;
-        //     set
-        //     {
-        //         if (!SetProperty(ref _isHideMapEnabled, value)) return;
-        //         _utilityService.ToggleHideMap(_isHideMapEnabled);
-        //     }
-        // }
+        
     }
 }

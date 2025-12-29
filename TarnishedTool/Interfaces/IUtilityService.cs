@@ -17,9 +17,13 @@ public interface IUtilityService
     void MovePlayerToCam();
     void ToggleFreezeWorld(bool isEnabled);
     void ToggleDrawHitbox(bool isEnabled);
-    void ToggleWorldHitDraw(int offset, bool isEnabled);
+    void ToggleDrawRagdolls(bool isEnabled);
+    void ToggleDrawLowHit(bool isEnabled);
+    void ToggleDrawHighHit(bool isEnabled);
     void ToggleFullShopLineup(bool isEnabled);
     void SetColDrawMode(int val);
     void PatchDebugFont();
     void TogglePlayerSound(bool isEnabled);
+    void ToggleHideChr(bool isEnabled);
+    void ToggleHideMap(bool isEnabled);
 }
