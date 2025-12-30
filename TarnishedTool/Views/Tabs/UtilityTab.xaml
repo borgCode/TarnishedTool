@@ -209,8 +209,8 @@
 
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0">
@@ -252,11 +252,16 @@
                             </CheckBox.IsEnabled>
                         </CheckBox>
 
+                    
+
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        
                         <Button Content="Move Free Cam to Player"
                                 Command="{Binding MoveCamToPlayerCommand}"
                                 IsEnabled="{Binding IsFreeCamEnabled}"
                                 Padding="5,0"
-                                Margin="10,10,0, 0"
+                                Margin="10,0,0, 0"
                                 HorizontalAlignment="Left" />
                         <Button Content="Move Player to Free Cam"
                                 Command="{Binding MovePlayerToCamCommand}"
@@ -264,43 +269,6 @@
                                 Padding="5,0"
                                 Margin="10,5,0,0"
                                 HorizontalAlignment="Left" />
-
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                        <!-- <CheckBox Content="Increase Camera Vertical limits" -->
-                        <!--           VerticalAlignment="Center" -->
-                        <!--           IsEnabled="{Binding IsFreeCamEnabled, Converter={StaticResource InverseBooleanConverter}}" -->
-                        <!--           IsChecked="{Binding IsCamVertIncreaseEnabled}" -->
-                        <!--           Margin="0,0,0,15" /> -->
-                        <!-- -->
-                        <!-- <StackPanel Orientation="Horizontal" Margin="0,0,0,8" -->
-                        <!--             IsEnabled="{Binding IsFreeCamEnabled, Converter={StaticResource InverseBooleanConverter}}"> -->
-                        <!--     <xctk:IntegerUpDown x:Name="FovUpDown" -->
-                        <!--                         Value="{Binding CameraFov}" -->
-                        <!--                         TextAlignment="Center" -->
-                        <!--                         Width="80" -->
-                        <!--                         Minimum="5" -->
-                        <!--                         Maximum="140" -->
-                        <!--                         Increment="1" -->
-                        <!--                         IsEnabled="{Binding AreButtonsEnabled}" -->
-                        <!--                         BorderBrush="#3F3F46" /> -->
-                        <!--     <TextBlock Text="Field of View" VerticalAlignment="Center" Margin="10,0,0,0" /> -->
-                        <!-- </StackPanel> -->
-                        <!-- -->
-                        <!-- <Button Content="Set Default FOV" -->
-                        <!--    -->
-                        <!--         HorizontalAlignment="Right" -->
-                        <!--         Padding="5,2" -->
-                        <!--         Margin="0,0,0,0" -->
-                        <!--         Width="100"> -->
-                        <!--     <Button.IsEnabled> -->
-                        <!--         <MultiBinding Converter="{StaticResource BooleanAndConverter}"> -->
-                        <!--             <Binding Path="AreButtonsEnabled" /> -->
-                        <!--             <Binding Path="IsFreeCamEnabled" -->
-                        <!--                      Converter="{StaticResource InverseBooleanConverter}" /> -->
-                        <!--         </MultiBinding> -->
-                        <!--     </Button.IsEnabled> -->
-                        <!-- </Button> -->
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -476,6 +444,19 @@
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
                                     <Binding Path="IsUpgradingFlask"
+                                             Converter="{StaticResource InverseBooleanConverter}" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+                        
+                        <Button
+                            Content="Increase Flask Charges"
+                            Command="{Binding IncreaseChargesCommand}"
+                            Margin="0,10,10,0">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsIncreasingCharges"
                                              Converter="{StaticResource InverseBooleanConverter}" />
                                 </MultiBinding>
                             </Button.IsEnabled>

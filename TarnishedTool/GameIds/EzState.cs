@@ -63,6 +63,7 @@ public static class EzState
             new(59, [itemIdToReplace, newItemId, newItemQuantity]);
 
         public static readonly TalkCommand OpenAllot = new(105, []);
+        public static TalkCommand EstusAllocationUpdate(int newFlaskCount) => new(108, [newFlaskCount, 0]);
         public static TalkCommand UpgradeFlask(int newLevel) => new(109, [newLevel]);
         public static readonly TalkCommand Rebirth = new(113, []);
         public static readonly TalkCommand OpenPhysick = new(130, []);

@@ -79,6 +79,7 @@ namespace TarnishedTool.ViewModels
             MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
             MovePlayerToCamCommand = new DelegateCommand(MovePlayerToCam);
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
+            IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -86,7 +87,9 @@ namespace TarnishedTool.ViewModels
             RegisterHotkeys();
             ApplyPrefs();
         }
-        
+
+    
+
         #region Commands
 
         public ICommand SaveCommand { get; set; }
@@ -110,6 +113,7 @@ namespace TarnishedTool.ViewModels
         public ICommand MoveCamToPlayerCommand { get; }
         public ICommand MovePlayerToCamCommand { get; }
         public ICommand UpgradeFlaskCommand { get; }
+        public ICommand IncreaseChargesCommand { get; }
 
         #endregion
 
@@ -465,6 +469,14 @@ namespace TarnishedTool.ViewModels
             get => _isUpgradingFlask;
             set => SetProperty(ref _isUpgradingFlask, value);
         }
+        
+        private bool _isIncreasingCharges;
+
+        public bool IsIncreasingCharges
+        {
+            get => _isIncreasingCharges;
+            set => SetProperty(ref _isIncreasingCharges, value);
+        }
 
         #endregion
 
@@ -690,6 +702,19 @@ namespace TarnishedTool.ViewModels
             finally
             {
                 IsUpgradingFlask = false;
+            }
+        }
+        
+        private async void IncreaseCharges()
+        {
+            IsIncreasingCharges = true; 
+            try
+            {
+                await _flaskService.TryIncreaseCharges();
+            }
+            finally
+            {
+                IsIncreasingCharges = false;
             }
         }
 
