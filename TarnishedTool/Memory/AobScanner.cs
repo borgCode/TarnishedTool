@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using TarnishedTool.Services;
 using static TarnishedTool.Memory.Offsets;
 
@@ -15,7 +17,7 @@ namespace TarnishedTool.Memory
             Directory.CreateDirectory(appData);
             string savePath = Path.Combine(appData, "backup_addresses.txt");
 
-            Dictionary<string, long> saved = new Dictionary<string, long>();
+            ConcurrentDictionary<string, long> saved = new ConcurrentDictionary<string, long>();
             if (File.Exists(savePath))
             {
                 foreach (string line in File.ReadAllLines(savePath))
@@ -26,45 +28,106 @@ namespace TarnishedTool.Memory
             }
 
 
-            WorldChrMan.Base = FindAddressByPattern(Pattern.WorldChrMan);
-            FieldArea.Base = FindAddressByPattern(Pattern.FieldArea);
-            LuaEventMan.Base = FindAddressByPattern(Pattern.LuaEventMan);
-            VirtualMemFlag.Base = FindAddressByPattern(Pattern.VirtualMemFlag);
-            DamageManager.Base = FindAddressByPattern(Pattern.DamageManager);
-            MenuMan.Base = FindAddressByPattern(Pattern.MenuMan);
-            TargetView.Base = FindAddressByPattern(Pattern.TargetView);
-            GameMan.Base = FindAddressByPattern(Pattern.GameMan);
-            WorldHitMan.Base = FindAddressByPattern(Pattern.WorldHitMan);
-            WorldChrManDbg.Base = FindAddressByPattern(Pattern.WorldChrManDbg);
-            GameDataMan.Base = FindAddressByPattern(Pattern.GameDataMan);
-            CsDlcImp.Base = FindAddressByPattern(Pattern.CsDlcImp);
-            MapItemManImpl.Base = FindAddressByPattern(Pattern.MapItemManImpl);
-            FD4PadManager.Base = FindAddressByPattern(Pattern.FD4PadManager);
-            CSEmkSystem.Base = FindAddressByPattern(Pattern.CSEmkSystem);
-            WorldAreaTimeImpl.Base = FindAddressByPattern(Pattern.WorldAreaTimeImpl);
-            GroupMask.Base = FindAddressByPattern(Pattern.GroupMask);
-            CSFlipperImp.Base = FindAddressByPattern(Pattern.CSFlipperImp);
-            CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent);
-            UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager);
-            CSTrophy.Base = FindAddressByPattern(Pattern.CSTrophy);
-            MapDebugFlags.Base = FindAddressByPattern(Pattern.MapDebugFlags);
+            Parallel.Invoke(
+                () => WorldChrMan.Base = FindAddressByPattern(Pattern.WorldChrMan),
+                () => FieldArea.Base = FindAddressByPattern(Pattern.FieldArea),
+                () => LuaEventMan.Base = FindAddressByPattern(Pattern.LuaEventMan),
+                () => VirtualMemFlag.Base = FindAddressByPattern(Pattern.VirtualMemFlag),
+                () => DamageManager.Base = FindAddressByPattern(Pattern.DamageManager),
+                () => MenuMan.Base = FindAddressByPattern(Pattern.MenuMan),
+                () => TargetView.Base = FindAddressByPattern(Pattern.TargetView),
+                () => GameMan.Base = FindAddressByPattern(Pattern.GameMan),
+                () => WorldHitMan.Base = FindAddressByPattern(Pattern.WorldHitMan),
+                () => WorldChrManDbg.Base = FindAddressByPattern(Pattern.WorldChrManDbg),
+                () => GameDataMan.Base = FindAddressByPattern(Pattern.GameDataMan),
+                () => CsDlcImp.Base = FindAddressByPattern(Pattern.CsDlcImp),
+                () => MapItemManImpl.Base = FindAddressByPattern(Pattern.MapItemManImpl),
+                () => FD4PadManager.Base = FindAddressByPattern(Pattern.FD4PadManager),
+                () => CSEmkSystem.Base = FindAddressByPattern(Pattern.CSEmkSystem),
+                () => WorldAreaTimeImpl.Base = FindAddressByPattern(Pattern.WorldAreaTimeImpl),
+                () => GroupMask.Base = FindAddressByPattern(Pattern.GroupMask),
+                () => CSFlipperImp.Base = FindAddressByPattern(Pattern.CSFlipperImp),
+                () => CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent),
+                () => UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager),
+                () => CSTrophy.Base = FindAddressByPattern(Pattern.CSTrophy),
+                () => MapDebugFlags.Base = FindAddressByPattern(Pattern.MapDebugFlags),
+                () => Functions.GraceWarp = FindAddressByPattern(Pattern.GraceWarp).ToInt64(),
+                () => Functions.SetEvent = FindAddressByPattern(Pattern.SetEvent).ToInt64(),
+                () => Functions.SetSpEffect = FindAddressByPattern(Pattern.SetSpEffect).ToInt64(),
+                () => Functions.GiveRunes = FindAddressByPattern(Pattern.GiveRunes).ToInt64(),
+                () => Functions.LookupByFieldInsHandle = FindAddressByPattern(Pattern.LookupByFieldInsHandle).ToInt64(),
+                () => Functions.WarpToBlock = FindAddressByPattern(Pattern.WarpToBlock).ToInt64(),
+                () => Functions.ExternalEventTempCtor = FindAddressByPattern(Pattern.ExternalEventTempCtor).ToInt64(),
+                () => Functions.ExecuteTalkCommand = FindAddressByPattern(Pattern.ExecuteTalkCommand).ToInt64(),
+                () => Functions.GetEvent = FindAddressByPattern(Pattern.GetEvent).ToInt64(),
+                () => Functions.GetPlayerItemQuantityById =
+                    FindAddressByPattern(Pattern.GetPlayerItemQuantityById).ToInt64(),
+                () => Functions.ItemSpawn = FindAddressByPattern(Pattern.ItemSpawn).ToInt64(),
+                () => Functions.MatrixVectorProduct = FindAddressByPattern(Pattern.MatrixVectorProduct).ToInt64(),
+                () => Functions.ChrInsByHandle = FindAddressByPattern(Pattern.ChrInsByHandle).ToInt64(),
+                () => Functions.FindAndRemoveSpEffect = FindAddressByPattern(Pattern.FindAndRemoveSpEffect).ToInt64(),
+                () => Functions.EmevdSwitch = FindAddressByPattern(Pattern.EmevdSwitch).ToInt64(),
+                () => Functions.EmkEventInsCtor = FindAddressByPattern(Pattern.EmkEventInsCtor).ToInt64(),
+                () => Functions.GetMovement = FindAddressByPattern(Pattern.GetMovement).ToInt64(),
+                () => Functions.GetChrInsByEntityId = FindAddressByPattern(Pattern.GetChrInsByEntityId).ToInt64(),
+                () => Functions.NpcEzStateTalkCtor = FindAddressByPattern(Pattern.NpcEzStateTalkCtor).ToInt64(),
+                () => Functions.EzStateEnvQueryImplCtor =
+                    FindAddressByPattern(Pattern.EzStateEnvQueryImplCtor).ToInt64()
+            );
 
 
-            TryPatternWithFallback("CanFastTravel", Pattern.CanFastTravel, addr => Patches.CanFastTravel = addr, saved);
-            TryPatternWithFallback("NoRunesFromEnemies", Pattern.NoRunesFromEnemies,
-                addr => Patches.NoRunesFromEnemies = addr, saved);
-            TryPatternWithFallback("NoRuneArcLoss", Pattern.NoRuneArcLoss, addr => Patches.NoRuneArcLoss = addr, saved);
-            TryPatternWithFallback("NoRuneLossOnDeath", Pattern.NoRuneLossOnDeath,
-                addr => Patches.NoRuneLossOnDeath = addr, saved);
-            TryPatternWithFallback("OpenMap", Pattern.OpenMap,
-                addr => Patches.OpenMap = addr, saved);
-            TryPatternWithFallback("CloseMap", Pattern.CloseMap,
-                addr => Patches.CloseMap = addr, saved);
-            TryPatternWithFallback("NoLogo", Pattern.NoLogo,
-                addr => Patches.NoLogo = addr, saved);
-            TryPatternWithFallback("PlayerSound", Pattern.PlayerSound,
-                addr => Patches.PlayerSound = addr, saved);
-            
+            Parallel.Invoke(
+                () => TryPatternWithFallback("CanFastTravel", Pattern.CanFastTravel,
+                    addr => Patches.CanFastTravel = addr, saved),
+                () => TryPatternWithFallback("NoRunesFromEnemies", Pattern.NoRunesFromEnemies,
+                    addr => Patches.NoRunesFromEnemies = addr, saved),
+                () => TryPatternWithFallback("NoRuneArcLoss", Pattern.NoRuneArcLoss,
+                    addr => Patches.NoRuneArcLoss = addr, saved),
+                () => TryPatternWithFallback("NoRuneLossOnDeath", Pattern.NoRuneLossOnDeath,
+                    addr => Patches.NoRuneLossOnDeath = addr, saved),
+                () => TryPatternWithFallback("OpenMap", Pattern.OpenMap, addr => Patches.OpenMap = addr, saved),
+                () => TryPatternWithFallback("CloseMap", Pattern.CloseMap, addr => Patches.CloseMap = addr, saved),
+                () => TryPatternWithFallback("NoLogo", Pattern.NoLogo, addr => Patches.NoLogo = addr, saved),
+                () => TryPatternWithFallback("PlayerSound", Pattern.PlayerSound, addr => Patches.PlayerSound = addr,
+                    saved),
+                () => TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
+                    addr => Hooks.UpdateCoords = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("InAirTimer", Pattern.InAirTimer,
+                    addr => Hooks.InAirTimer = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("NoClipKb", Pattern.NoClipKb, addr => Hooks.NoClipKb = addr.ToInt64(),
+                    saved),
+                () => TryPatternWithFallback("NoClipTriggers", Pattern.NoClipTriggers,
+                    addr => Hooks.NoClipTriggers = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("HasSpEffect", Pattern.HasSpEffect,
+                    addr => Hooks.HasSpEffect = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("BlueTargetView", Pattern.BlueTargetViewHook,
+                    addr => Hooks.BlueTargetView = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("LockedTargetPtr", Pattern.LockedTargetPtr,
+                    addr => Hooks.LockedTargetPtr = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("InfinitePoise", Pattern.InfinitePoise,
+                    addr => Hooks.InfinitePoise = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("ShouldUpdateAi", Pattern.ShouldUpdateAi,
+                    addr => Hooks.ShouldUpdateAi = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("GetForceActIdx", Pattern.GetForceActIdx,
+                    addr => Hooks.GetForceActIdx = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("NoStagger", Pattern.NoStagger,
+                    addr => Hooks.TargetNoStagger = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("AttackInfo", Pattern.AttackInfo,
+                    addr => Hooks.AttackInfo = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("WarpCoordWrite", Pattern.WarpCoordWrite,
+                    addr => Hooks.WarpCoordWrite = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("WarpAngleWrite", Pattern.WarpAngleWrite,
+                    addr => Hooks.WarpAngleWrite = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("LionCooldownHook", Pattern.LionCooldownHook,
+                    addr => Hooks.LionCooldownHook = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("SetActionRequested", Pattern.SetActionRequested,
+                    addr => Hooks.SetActionRequested = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("TorrentNoStagger", Pattern.TorrentNoStagger,
+                    addr => Hooks.TorrentNoStagger = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("NoMapAcquiredPopup", Pattern.NoMapAcquiredPopup,
+                    addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved)
+            );
+
             Patches.EnableFreeCam = FindAddressByPattern(Pattern.EnableFreeCam);
             Patches.GetShopEvent = FindAddressByPattern(Pattern.GetShopEvent);
             Patches.DebugFont = FindAddressByPattern(Pattern.DebugFont);
@@ -73,46 +136,8 @@ namespace TarnishedTool.Memory
                 { addr => Patches.CanDrawEvents1 = (IntPtr)addr, 0x4 },
                 { addr => Patches.CanDrawEvents2 = (IntPtr)addr, 0xD },
             });
-  
-            TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
-                addr => Hooks.UpdateCoords = addr.ToInt64(), saved);
-            TryPatternWithFallback("InAirTimer", Pattern.InAirTimer,
-                addr => Hooks.InAirTimer = addr.ToInt64(), saved);
-            TryPatternWithFallback("NoClipKb", Pattern.NoClipKb,
-                addr => Hooks.NoClipKb = addr.ToInt64(), saved);
-            TryPatternWithFallback("NoClipTriggers", Pattern.NoClipTriggers,
-                addr => Hooks.NoClipTriggers = addr.ToInt64(), saved);
-            TryPatternWithFallback("HasSpEffect", Pattern.HasSpEffect,
-                addr => Hooks.HasSpEffect = addr.ToInt64(), saved);
-            TryPatternWithFallback("BlueTargetView", Pattern.BlueTargetViewHook,
-                addr => Hooks.BlueTargetView = addr.ToInt64(), saved);
-            TryPatternWithFallback("LockedTargetPtr", Pattern.LockedTargetPtr,
-                addr => Hooks.LockedTargetPtr = addr.ToInt64(), saved);
-            TryPatternWithFallback("InfinitePoise", Pattern.InfinitePoise,
-                addr => Hooks.InfinitePoise = addr.ToInt64(), saved);
-            TryPatternWithFallback("ShouldUpdateAi", Pattern.ShouldUpdateAi,
-                addr => Hooks.ShouldUpdateAi = addr.ToInt64(), saved);
-            TryPatternWithFallback("GetForceActIdx", Pattern.GetForceActIdx,
-                addr => Hooks.GetForceActIdx = addr.ToInt64(), saved);
-            TryPatternWithFallback("NoStagger", Pattern.NoStagger,
-                addr => Hooks.TargetNoStagger = addr.ToInt64(), saved);
-            TryPatternWithFallback("AttackInfo", Pattern.AttackInfo,
-                addr => Hooks.AttackInfo = addr.ToInt64(), saved);
-            TryPatternWithFallback("WarpCoordWrite", Pattern.WarpCoordWrite,
-                addr => Hooks.WarpCoordWrite = addr.ToInt64(), saved);
-            TryPatternWithFallback("WarpAngleWrite", Pattern.WarpAngleWrite,
-                addr => Hooks.WarpAngleWrite = addr.ToInt64(), saved);
-            TryPatternWithFallback("LionCooldownHook", Pattern.LionCooldownHook,
-                addr => Hooks.LionCooldownHook = addr.ToInt64(), saved);
-            TryPatternWithFallback("SetActionRequested", Pattern.SetActionRequested,
-                addr => Hooks.SetActionRequested = addr.ToInt64(), saved);
-            TryPatternWithFallback("TorrentNoStagger", Pattern.TorrentNoStagger,
-                addr => Hooks.TorrentNoStagger = addr.ToInt64(), saved);
-            TryPatternWithFallback("NoMapAcquiredPopup", Pattern.NoMapAcquiredPopup,
-                addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved);
-            TryPatternWithFallback("NoGrab", Pattern.NoGrab,
-                addr => Hooks.NoGrab = addr.ToInt64(), saved);
-            
+
+
             using (var writer = new StreamWriter(savePath))
             {
                 foreach (var pair in saved)
@@ -120,27 +145,6 @@ namespace TarnishedTool.Memory
             }
 
             Hooks.HookedDeathFunction = Patches.NoRuneLossOnDeath - 7;
-
-            Functions.GraceWarp = FindAddressByPattern(Pattern.GraceWarp).ToInt64();
-            Functions.SetEvent = FindAddressByPattern(Pattern.SetEvent).ToInt64();
-            Functions.SetSpEffect = FindAddressByPattern(Pattern.SetSpEffect).ToInt64();
-            Functions.GiveRunes = FindAddressByPattern(Pattern.GiveRunes).ToInt64();
-            Functions.LookupByFieldInsHandle = FindAddressByPattern(Pattern.LookupByFieldInsHandle).ToInt64();
-            Functions.WarpToBlock = FindAddressByPattern(Pattern.WarpToBlock).ToInt64();
-            Functions.ExternalEventTempCtor = FindAddressByPattern(Pattern.ExternalEventTempCtor).ToInt64();
-            Functions.ExecuteTalkCommand = FindAddressByPattern(Pattern.ExecuteTalkCommand).ToInt64();
-            Functions.GetEvent = FindAddressByPattern(Pattern.GetEvent).ToInt64();
-            Functions.GetPlayerItemQuantityById = FindAddressByPattern(Pattern.GetPlayerItemQuantityById).ToInt64();
-            Functions.ItemSpawn = FindAddressByPattern(Pattern.ItemSpawn).ToInt64();
-            Functions.MatrixVectorProduct = FindAddressByPattern(Pattern.MatrixVectorProduct).ToInt64();
-            Functions.ChrInsByHandle = FindAddressByPattern(Pattern.ChrInsByHandle).ToInt64();
-            Functions.FindAndRemoveSpEffect = FindAddressByPattern(Pattern.FindAndRemoveSpEffect).ToInt64();
-            Functions.EmevdSwitch = FindAddressByPattern(Pattern.EmevdSwitch).ToInt64();
-            Functions.EmkEventInsCtor = FindAddressByPattern(Pattern.EmkEventInsCtor).ToInt64();
-            Functions.GetMovement = FindAddressByPattern(Pattern.GetMovement).ToInt64();
-            Functions.GetChrInsByEntityId = FindAddressByPattern(Pattern.GetChrInsByEntityId).ToInt64();
-            Functions.NpcEzStateTalkCtor = FindAddressByPattern(Pattern.NpcEzStateTalkCtor).ToInt64();
-            Functions.EzStateEnvQueryImplCtor = FindAddressByPattern(Pattern.EzStateEnvQueryImplCtor).ToInt64();
 
 
 #if DEBUG
@@ -221,7 +225,7 @@ namespace TarnishedTool.Memory
         }
 
         private void TryPatternWithFallback(string name, Pattern pattern, Action<IntPtr> setter,
-            Dictionary<string, long> saved)
+            ConcurrentDictionary<string, long> saved)
         {
             var addr = FindAddressByPattern(pattern);
 
