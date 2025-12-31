@@ -161,7 +161,7 @@ namespace TarnishedTool.Services
                 });
                 memoryService.WriteBytes(code, bytes);
                 hookManager.InstallHook(code.ToInt64(), hookLoc,
-                    [0x48, 0x8B, 0x41, 0x08, 0x48, 0x2C, 0x08, 0x59]);
+                    [0x48, 0x8B, 0x41, 0x08, 0x83, 0x48, 0x2C, 0x08]);
             }
             else
             {

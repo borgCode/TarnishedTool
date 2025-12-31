@@ -34,10 +34,11 @@
                     <xctk:IntegerUpDown x:Name="HealthUpDown"
                                         Value="{Binding CurrentHp}"
                                         TextAlignment="Center"
-                                        Width="100"
+                                        Width="70"
                                         IsEnabled="{Binding AreOptionsEnabled}"
                                         BorderBrush="#3F3F46" />
                     <TextBlock Text="{Binding CurrentMaxHp, StringFormat=Max: {0}}"
+                               Width="60"
                                VerticalAlignment="Center"
                                Margin="10,0,0,0" />
                     <Button
@@ -52,7 +53,13 @@
                         IsEnabled="{Binding AreOptionsEnabled}"
                         Margin="10,0,0,0"
                         Width="60" />
-                    <xctk:IntegerUpDown Width="80"
+                    <Button
+                        Command="{Binding DieCommand}"
+                        Content="Die"
+                        IsEnabled="{Binding AreOptionsEnabled}"
+                        Margin="10,0,0,0"
+                        Width="40" />
+                    <xctk:IntegerUpDown Width="70"
                                         Margin="20,0,0,0"
                                         Value="{Binding CustomHp}"
                                         Minimum="0" />

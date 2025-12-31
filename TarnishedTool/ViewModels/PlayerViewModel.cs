@@ -66,6 +66,7 @@ namespace TarnishedTool.ViewModels
             SetRfbsCommand = new DelegateCommand(SetRfbs);
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
+            DieCommand = new DelegateCommand(Die);
 
             SavePositionCommand = new DelegateCommand(SavePosition);
             RestorePositionCommand = new DelegateCommand(RestorePosition);
@@ -86,12 +87,12 @@ namespace TarnishedTool.ViewModels
             _playerTick.Tick += PlayerTick;
         }
         
-
         #region Commands
 
         public ICommand SetRfbsCommand { get; set; }
         public ICommand SetMaxHpCommand { get; set; }
         public ICommand SetCustomHpCommand { get; set; }
+        public ICommand DieCommand { get; set; }
 
         public ICommand SavePositionCommand { get; set; }
         public ICommand RestorePositionCommand { get; set; }
@@ -795,7 +796,8 @@ namespace TarnishedTool.ViewModels
 
         private void SetRfbs() => _playerService.SetRfbs();
         private void SetMaxHp() => _playerService.SetFullHp();
-
+        private void Die() => _playerService.SetHp(0);
+        
         private void SetCustomHp()
         {
             if (!_customHpHasBeenSet) return;
