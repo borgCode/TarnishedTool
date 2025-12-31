@@ -134,6 +134,7 @@ namespace TarnishedTool.Memory
             public enum ChrRideOffsets
             {
                 RideNode = 0x10,
+                IsHorseWhistleDisabled = 0x164,
             }
 
             public enum RideNodeOffsets
@@ -485,6 +486,8 @@ namespace TarnishedTool.Memory
             public static IntPtr NoLogo;
             public static IntPtr DebugFont;
             public static IntPtr PlayerSound;
+            public static IntPtr IsHorseDisabled;
+            public static IntPtr IsHorseDisabledInDungeons;
         }
     }
 }

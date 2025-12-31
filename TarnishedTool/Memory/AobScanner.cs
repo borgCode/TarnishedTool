@@ -10,6 +10,20 @@ namespace TarnishedTool.Memory
 {
     public class AoBScanner(MemoryService memoryService)
     {
+        public readonly struct RelativeJump
+        {
+            public int Offset { get; }
+            public int RelativeOffsetPosition { get; }
+            public int InstructionLength { get; }
+
+            public RelativeJump(int offset, int relativeOffsetPosition, int instructionLength)
+            {
+                Offset = offset;
+                RelativeOffsetPosition = relativeOffsetPosition;
+                InstructionLength = instructionLength;
+            }
+        }
+
         public void Scan()
         {
             string appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -72,7 +86,11 @@ namespace TarnishedTool.Memory
                 () => Functions.GetChrInsByEntityId = FindAddressByPattern(Pattern.GetChrInsByEntityId).ToInt64(),
                 () => Functions.NpcEzStateTalkCtor = FindAddressByPattern(Pattern.NpcEzStateTalkCtor).ToInt64(),
                 () => Functions.EzStateEnvQueryImplCtor =
-                    FindAddressByPattern(Pattern.EzStateEnvQueryImplCtor).ToInt64()
+                    FindAddressByPattern(Pattern.EzStateEnvQueryImplCtor).ToInt64(),
+                () => Patches.IsHorseDisabledInDungeons = FindAddressByRelativeChain(Pattern.IsHorseDisabledInDungeons,
+                    new RelativeJump(0, 1, 5),
+                    new RelativeJump(4, 1, 5)
+                ) + 0xD6
             );
 
 
@@ -89,6 +107,9 @@ namespace TarnishedTool.Memory
                 () => TryPatternWithFallback("CloseMap", Pattern.CloseMap, addr => Patches.CloseMap = addr, saved),
                 () => TryPatternWithFallback("NoLogo", Pattern.NoLogo, addr => Patches.NoLogo = addr, saved),
                 () => TryPatternWithFallback("PlayerSound", Pattern.PlayerSound, addr => Patches.PlayerSound = addr,
+                    saved),
+                () => TryPatternWithFallback("IsHorseDisabled", Pattern.IsHorseDisabled,
+                    addr => Patches.IsHorseDisabled = addr,
                     saved),
                 () => TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
                     addr => Hooks.UpdateCoords = addr.ToInt64(), saved),
@@ -125,7 +146,9 @@ namespace TarnishedTool.Memory
                 () => TryPatternWithFallback("TorrentNoStagger", Pattern.TorrentNoStagger,
                     addr => Hooks.TorrentNoStagger = addr.ToInt64(), saved),
                 () => TryPatternWithFallback("NoMapAcquiredPopup", Pattern.NoMapAcquiredPopup,
-                    addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved)
+                    addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("NoGrab", Pattern.NoGrab,
+                    addr => Hooks.NoGrab = addr.ToInt64(), saved)
             );
 
             Patches.EnableFreeCam = FindAddressByPattern(Pattern.EnableFreeCam);
@@ -184,6 +207,8 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
             Console.WriteLine($@"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
             Console.WriteLine($@"Patches.PlayerSound: 0x{Patches.PlayerSound.ToInt64():X}");
+            Console.WriteLine($@"Patches.IsHorseDisabled: 0x{Patches.IsHorseDisabled.ToInt64():X}");
+            Console.WriteLine($@"Patches.IsHorseDisabledInDungeons: 0x{Patches.IsHorseDisabledInDungeons.ToInt64():X}");
 
             Console.WriteLine($@"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
             Console.WriteLine($@"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");
@@ -326,6 +351,30 @@ namespace TarnishedTool.Memory
 
                 mapping.Key(callTarget.ToInt64());
             }
+        }
+
+        public IntPtr FindAddressByRelativeChain(Pattern pattern, params RelativeJump[] chain)
+        {
+            var baseAddress = FindAddressByPattern(pattern);
+            if (baseAddress == IntPtr.Zero)
+                return IntPtr.Zero;
+
+            return FollowRelativeChain(baseAddress, chain);
+        }
+
+        private IntPtr FollowRelativeChain(IntPtr baseAddress, params RelativeJump[] chain)
+        {
+            IntPtr currentAddress = baseAddress;
+
+            foreach (var jump in chain)
+            {
+                IntPtr instructionAddress = IntPtr.Add(currentAddress, jump.Offset);
+                int relativeOffset =
+                    memoryService.ReadInt32(IntPtr.Add(instructionAddress, jump.RelativeOffsetPosition));
+                currentAddress = IntPtr.Add(instructionAddress, relativeOffset + jump.InstructionLength);
+            }
+
+            return currentAddress;
         }
     }
 }

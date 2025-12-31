@@ -527,6 +527,20 @@
 
         //Patches
 
+        public static readonly Pattern IsHorseDisabled = new Pattern(
+            new byte[] { 0x48, 0x8B, 0x48, 0x68, 0x80, 0x79, 0x36 },
+            "xxxxxxx",
+            4,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern IsHorseDisabledInDungeons = new Pattern(
+            new byte[] { 0x48, 0x8D, 0x4B, 0x28, 0x48, 0x8D, 0x54, 0x24, 0x60 },
+            "xxxxxxxxx",
+            0x9,
+            AddressingMode.Absolute
+        );
+
         public static readonly Pattern DebugFont = new(
             [0xF3, 0x0F, 0x11, 0x55, 0xE3, 0x66],
             "xxxxxx",
