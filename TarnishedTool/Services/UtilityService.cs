@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -194,7 +195,8 @@ namespace TarnishedTool.Services
 
         public void MoveCamToPlayer()
         {
-            var playerLoc = playerService.GetPlayerPos();
+            var playerLoc = playerService.IsRiding() ? playerService.GetTorrentPos() : playerService.GetPlayerPos();
+             
             playerLoc.Y += 2.5f;
             memoryService.WriteVector3(GetDbgCamCoordsPtr(), playerLoc);
         }
@@ -202,7 +204,15 @@ namespace TarnishedTool.Services
         public void MovePlayerToCam()
         {
             var cameraLoc = memoryService.ReadVector3(GetDbgCamCoordsPtr());
-            playerService.SetPlayerPos(cameraLoc);
+
+            if (playerService.IsRiding())
+            {
+                playerService.SetTorrentPos(cameraLoc);
+            }
+            else
+            {
+                playerService.SetPlayerPos(cameraLoc);
+            }
         }
 
         public void ToggleFreezeWorld(bool isEnabled)

@@ -9,6 +9,8 @@ public interface IPlayerService
 {
     Vector3 GetPlayerPos();
     void SetPlayerPos(Vector3 pos);
+    Vector3 GetTorrentPos();
+    void SetTorrentPos(Vector3 pos);
     void SavePos(int index);
     void RestorePos(int index);
     PosWithHurtbox GetPosWithHurtbox();
@@ -47,4 +49,5 @@ public interface IPlayerService
     int GetSpiritAsh();
     int GetCurrentAnimation();
     void ToggleTorrentAnywhere(bool isEnabled);
+    bool IsRiding();
 }

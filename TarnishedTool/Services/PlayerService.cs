@@ -33,6 +33,12 @@ namespace TarnishedTool.Services
         public void SetPlayerPos(Vector3 pos) =>
             memoryService.WriteVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
 
+        public Vector3 GetTorrentPos() =>
+            memoryService.ReadVector3(GetTorrentPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
+
+        public void SetTorrentPos(Vector3 pos) =>
+            memoryService.WriteVector3(GetTorrentPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
+
         public void SavePos(int index)
         {
             var posToSave = _positions[index];
@@ -66,7 +72,7 @@ namespace TarnishedTool.Services
                 var delta = savedAbsolute - currentAbsolute;
 
                 var chrRideModule = GetChrRidePtr();
-                var isRiding = IsRiding(chrRideModule);
+                var isRiding = IsRidingInternal(chrRideModule);
                 var physicsPtr = isRiding ? GetTorrentPhysicsPtr() : GetChrPhysicsPtr();
                 var coordsPtr = physicsPtr + (int)ChrIns.ChrPhysicsOffsets.Coords;
                 var isLongDistance = delta.Length() > LongDistanceRestore;
@@ -94,7 +100,9 @@ namespace TarnishedTool.Services
             }
         }
 
-        private bool IsRiding(IntPtr chrRideModule)
+        public bool IsRiding() => IsRidingInternal(GetChrRidePtr());
+
+        private bool IsRidingInternal(IntPtr chrRideModule)
         {
             var rideNode = memoryService.ReadInt64(chrRideModule + (int)ChrIns.ChrRideOffsets.RideNode);
             return memoryService.ReadInt32((IntPtr)rideNode + (int)ChrIns.RideNodeOffsets.IsRiding) != 0;

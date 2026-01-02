@@ -618,11 +618,7 @@ namespace TarnishedTool.ViewModels
                 () => SetSpeed(Math.Max(0.5f, GameSpeed - 0.50f)));
 
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreeCam, () => IsFreeCamEnabled = !IsFreeCamEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreezeWorld, () =>
-            {
-                if (!IsFreeCamEnabled) return;
-                IsFreezeWorldEnabled = !IsFreezeWorldEnabled;
-            });
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreezeWorld, () => IsFreezeWorldEnabled = !IsFreezeWorldEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.MoveCamToPlayer, () =>
             {
                 if (!IsFreeCamEnabled) return;
