@@ -105,6 +105,10 @@ namespace TarnishedTool.Memory
                 () => TryPatternWithFallback("NoLogo", Pattern.NoLogo, addr => Patches.NoLogo = addr, saved),
                 () => TryPatternWithFallback("PlayerSound", Pattern.PlayerSound, addr => Patches.PlayerSound = addr,
                     saved),
+                () => TryPatternWithFallback("IsTorrentDisabledInUnderworld", Pattern.IsTorrentDisabledInUnderworld, addr => Patches.IsTorrentDisabledInUnderworld = addr,
+                    saved),
+                () => TryPatternWithFallback("IsWhistleDisabled", Pattern.IsWhistleDisabled, addr => Patches.IsWhistleDisabled = addr,
+                    saved),
                 () => TryPatternWithFallback("UpdateCoords", Pattern.UpdateCoords,
                     addr => Hooks.UpdateCoords = addr.ToInt64(), saved),
                 () => TryPatternWithFallback("InAirTimer", Pattern.InAirTimer,
@@ -199,6 +203,8 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
             Console.WriteLine($@"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
             Console.WriteLine($@"Patches.PlayerSound: 0x{Patches.PlayerSound.ToInt64():X}");
+            Console.WriteLine($@"Patches.IsTorrentDisabledInUnderworld: 0x{Patches.IsTorrentDisabledInUnderworld.ToInt64():X}");
+            Console.WriteLine($@"Patches.IsWhistleDisabled: 0x{Patches.IsWhistleDisabled.ToInt64():X}");
 
             Console.WriteLine($@"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
             Console.WriteLine($@"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");

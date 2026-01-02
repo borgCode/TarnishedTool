@@ -529,6 +529,20 @@
 
         //Patches
 
+        public static readonly Pattern IsTorrentDisabledInUnderworld = new Pattern(
+            [0x80, 0x78, 0x36, 0x00, 0x0F],
+            "xxxxx",
+            4,
+            AddressingMode.Absolute
+        );
+
+        public static readonly Pattern IsWhistleDisabled = new Pattern(
+            [0x80, 0x79, 0x36, 0x00, 0x0F],
+            "xxxxx",
+            4,
+            AddressingMode.Absolute
+        );
+
         public static readonly Pattern DebugFont = new(
             [0xF3, 0x0F, 0x11, 0x55, 0xE3, 0x66],
             "xxxxxx",

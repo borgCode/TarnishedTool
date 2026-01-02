@@ -242,21 +242,13 @@
 
                         <CheckBox Content="Freeze World"
                                   IsChecked="{Binding IsFreezeWorldEnabled}"
-                                  Margin="10,0,0,0"
-                                  VerticalAlignment="Center">
-                            <CheckBox.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="IsFreeCamEnabled" />
-                                    <Binding Path="AreOptionsEnabled" />
-                                </MultiBinding>
-                            </CheckBox.IsEnabled>
-                        </CheckBox>
-
-                    
-
+                                  Margin="0,0,0,0"
+                                  VerticalAlignment="Center"
+                                  IsEnabled="{Binding AreOptionsEnabled}" />
+                        
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        
+
                         <Button Content="Move Free Cam to Player"
                                 Command="{Binding MoveCamToPlayerCommand}"
                                 IsEnabled="{Binding IsFreeCamEnabled}"
@@ -453,7 +445,7 @@
                                 </MultiBinding>
                             </Button.IsEnabled>
                         </Button>
-                        
+
                         <Button
                             Content="Increase Flask Charges"
                             Command="{Binding IncreaseChargesCommand}"

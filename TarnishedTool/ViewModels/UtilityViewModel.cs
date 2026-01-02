@@ -262,8 +262,6 @@ namespace TarnishedTool.ViewModels
                     IsNoClipEnabled = false;
                 }
 
-                if (!_isFreeCamEnabled) IsFreezeWorldEnabled = false;
-
                 _utilityService.ToggleFreeCam(_isFreeCamEnabled);
             }
         }

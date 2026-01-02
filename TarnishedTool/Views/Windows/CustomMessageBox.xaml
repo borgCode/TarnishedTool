@@ -10,13 +10,13 @@
         SizeToContent="Height"
         Width="350"
         MinHeight="120"
-        MaxHeight="300"
+        MaxHeight="500"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         >
     <Border Background="#2D2D30" 
-            BorderBrush="#007ACC" 
+            BorderBrush="#92400E" 
             BorderThickness="1" 
             CornerRadius="4"
             Margin="10">
@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
             
             <Border Grid.Row="0" 
-                    Background="#007ACC" 
+                    Background="#92400E" 
                     CornerRadius="3,3,0,0"
                     MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <TextBlock Text="Message" 
@@ -97,7 +97,7 @@
                     <Setter Property="Background" Value="#505054"/>
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#007ACC"/>
+                    <Setter Property="Background" Value="#92400E"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
