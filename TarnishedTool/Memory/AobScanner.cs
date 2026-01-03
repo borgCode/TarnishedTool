@@ -100,6 +100,8 @@ namespace TarnishedTool.Memory
                     addr => Patches.NoRuneArcLoss = addr, saved),
                 () => TryPatternWithFallback("NoRuneLossOnDeath", Pattern.NoRuneLossOnDeath,
                     addr => Patches.NoRuneLossOnDeath = addr, saved),
+                () => TryPatternWithFallback("IsWorldPaused", Pattern.IsWorldPaused,
+                    addr => Patches.IsWorldPaused = addr, saved),
                 () => TryPatternWithFallback("OpenMap", Pattern.OpenMap, addr => Patches.OpenMap = addr, saved),
                 () => TryPatternWithFallback("CloseMap", Pattern.CloseMap, addr => Patches.CloseMap = addr, saved),
                 () => TryPatternWithFallback("NoLogo", Pattern.NoLogo, addr => Patches.NoLogo = addr, saved),
@@ -205,6 +207,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Patches.PlayerSound: 0x{Patches.PlayerSound.ToInt64():X}");
             Console.WriteLine($@"Patches.IsTorrentDisabledInUnderworld: 0x{Patches.IsTorrentDisabledInUnderworld.ToInt64():X}");
             Console.WriteLine($@"Patches.IsWhistleDisabled: 0x{Patches.IsWhistleDisabled.ToInt64():X}");
+            Console.WriteLine($@"Patches.IsWorldPaused: 0x{Patches.IsWorldPaused.ToInt64():X}");
 
             Console.WriteLine($@"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
             Console.WriteLine($@"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");

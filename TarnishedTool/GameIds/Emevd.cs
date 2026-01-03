@@ -75,5 +75,7 @@ public static class Emevd
             (byte)0,  // shouldWaitForCompletion
             (byte)0   // ignoreWaitForTransition
         );
+
+        public static EmevdCommand ResetCharacterPosition(uint entityId) => new(2004, 81, entityId);
     }
 }

@@ -529,6 +529,13 @@
 
         //Patches
 
+        public static readonly Pattern IsWorldPaused = new Pattern(
+            new byte[] { 0x0F, 0x84, 0x87, 0x00, 0x00, 0x00, 0xC6, 0x83 },
+            "xxxxxxxx",
+            0,
+            AddressingMode.Absolute
+        );
+
         public static readonly Pattern IsTorrentDisabledInUnderworld = new Pattern(
             [0x80, 0x78, 0x36, 0x00, 0x0F],
             "xxxxx",

@@ -98,6 +98,23 @@
                                   Margin="20,0,0,0"
                                   VerticalAlignment="Center"
                                   IsEnabled="{Binding AreOptionsEnabled}" />
+                        
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Advance by frame by pressing triangle"
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

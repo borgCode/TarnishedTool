@@ -377,13 +377,6 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-
-                    <Button Grid.Row="2"
-                            Content="Warp"
-                            Command="{Binding BossWarpCommand}"
-                            IsEnabled="{Binding AreOptionsEnabled}"
-                            Height="25"
-                            Margin="0,10,0,0" />
                 </Grid>
 
                 <TextBox Grid.Row="0" Grid.Column="1"

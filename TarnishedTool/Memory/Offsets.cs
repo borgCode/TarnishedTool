@@ -30,6 +30,7 @@ namespace TarnishedTool.Memory
         {
             public const int ChrCtrl = 0x58;
             public const int SpecialEffect = 0x178;
+            public const int EntityId = 0x1E8;
 
             public enum SpecialEffectOffsets
             {
@@ -492,6 +493,7 @@ namespace TarnishedTool.Memory
             public static IntPtr PlayerSound;
             public static IntPtr IsTorrentDisabledInUnderworld;
             public static IntPtr IsWhistleDisabled;
+            public static IntPtr IsWorldPaused;
         }
     }
 }

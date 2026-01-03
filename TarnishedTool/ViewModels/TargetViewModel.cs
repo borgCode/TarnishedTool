@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
+using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
@@ -29,7 +30,7 @@ namespace TarnishedTool.ViewModels
         private ResistancesWindow _resistancesWindowWindow;
 
         private DefensesWindow _defensesWindow;
-        
+
         private readonly SpEffectViewModel _spEffectViewModel = new();
         private SpEffectsWindow _spEffectsWindow;
 
@@ -39,12 +40,14 @@ namespace TarnishedTool.ViewModels
 
         private readonly HotkeyManager _hotkeyManager;
         private readonly ISpEffectService _spEffectService;
+        private readonly IEmevdService _emevdService;
 
         private DateTime _forceActSequenceLastExecuted = DateTime.MinValue;
         private static readonly TimeSpan ForceActSequenceCooldown = TimeSpan.FromSeconds(2);
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
-            IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService)
+            IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService,
+            IEmevdService emevdService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
@@ -54,6 +57,7 @@ namespace TarnishedTool.ViewModels
 
             _hotkeyManager = hotkeyManager;
             _spEffectService = spEffectService;
+            _emevdService = emevdService;
             RegisterHotkeys();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -64,7 +68,8 @@ namespace TarnishedTool.ViewModels
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
             ForActSequenceCommand = new DelegateCommand(ForceActSequence);
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
-            
+            ResetPositionCommand = new DelegateCommand(ResetPosition);
+
 
             _targetTick = new DispatcherTimer
             {
@@ -73,6 +78,7 @@ namespace TarnishedTool.ViewModels
             _targetTick.Tick += TargetTick;
         }
 
+        
         #region Commands
 
         public ICommand SetHpCommand { get; set; }
@@ -80,6 +86,7 @@ namespace TarnishedTool.ViewModels
         public ICommand SetCustomHpCommand { get; set; }
         public ICommand ForActSequenceCommand { get; set; }
         public ICommand KillAllCommand { get; set; }
+        public ICommand ResetPositionCommand { get; set; }
 
         #endregion
 
@@ -656,7 +663,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private bool _isShowSpEffectEnabled;
 
         public bool IsShowSpEffectEnabled
@@ -672,7 +679,6 @@ namespace TarnishedTool.ViewModels
             }
         }
 
-        
         private float _dist;
 
         public float Dist
@@ -744,6 +750,8 @@ namespace TarnishedTool.ViewModels
                 _showAllResistances = !_showAllResistances;
                 UpdateResistancesDisplay();
             });
+            _hotkeyManager.RegisterAction(HotkeyActions.FreezeTargetHp,
+                () => ExecuteTargetAction(() => IsFreezeHealthEnabled = !IsFreezeHealthEnabled));
             _hotkeyManager.RegisterAction(HotkeyActions.IncreaseTargetSpeed, () =>
                 ExecuteTargetAction(() => SetSpeed(Math.Min(5, TargetSpeed + 0.25f))));
             _hotkeyManager.RegisterAction(HotkeyActions.DecreaseTargetSpeed, () =>
@@ -809,13 +817,14 @@ namespace TarnishedTool.ViewModels
             if (!IsValidTarget) return;
             action();
         }
-        
+
         private void ExecuteWindowAction(Action action)
         {
             if (!IsTargetOptionsEnabled)
             {
                 IsTargetOptionsEnabled = true;
             }
+
             action();
         }
 
@@ -870,7 +879,6 @@ namespace TarnishedTool.ViewModels
 #if DEBUG
                 Console.WriteLine($@"Locked on target chrIns: 0x{chrIns:X}");
 #endif
-                Console.Write($@"Locked on target chrIns: {_targetService.GetNpcParamId()}");
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
                 IsNoMoveEnabled = _targetService.IsNoMoveEnabled();
@@ -927,7 +935,7 @@ namespace TarnishedTool.ViewModels
                     _attackInfoViewModel.AddAttacks(attackInfo);
                 }
             }
-            
+
             if (IsShowSpEffectEnabled)
             {
                 var spEffects = _spEffectService.GetActiveSpEffectList(_targetService.GetTargetChrIns());
@@ -1108,7 +1116,7 @@ namespace TarnishedTool.ViewModels
             _resistancesWindowWindow.DataContext = null;
             _resistancesWindowWindow.DataContext = this;
         }
-        
+
         private void OpenSpEffectsWindow()
         {
             _spEffectsWindow = new SpEffectsWindow
@@ -1123,12 +1131,18 @@ namespace TarnishedTool.ViewModels
             };
             _spEffectsWindow.Show();
         }
-        
+
         private void CloseSpEffectsWindow()
         {
             if (_spEffectsWindow == null || !_spEffectsWindow.IsVisible) return;
             _spEffectsWindow.Close();
             _spEffectsWindow = null;
+        }
+        
+        private void ResetPosition()
+        {
+            var entityId = _targetService.GetEntityId();
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ResetCharacterPosition(entityId));
         }
 
         #endregion

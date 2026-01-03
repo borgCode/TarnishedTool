@@ -670,6 +670,16 @@
                                 </MultiBinding>
                             </CheckBox.IsEnabled>
                         </CheckBox>
+                        
+                        <Button Content="Reset Position"
+                                  Margin="20,10,0,0" Command="{Binding ResetPositionCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="AreOptionsEnabled" />
+                                    <Binding Path="IsValidTarget" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

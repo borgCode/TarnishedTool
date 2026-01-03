@@ -74,7 +74,7 @@ namespace TarnishedTool
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
                 _dlcService, spEffectService, paramService, playerService, eventService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
-                attackInfoService, hotkeyManager, spEffectService);
+                attackInfoService, hotkeyManager, spEffectService, emevdService);
             EventViewModel eventViewModel =
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService,
                     hotkeyManager);

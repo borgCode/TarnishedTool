@@ -40,6 +40,5 @@ public interface ITargetService
     bool[] GetImmunities();
     float[] GetDefenses();
     float GetDist();
-
-    int GetNpcParamId();
+    uint GetEntityId();
 }

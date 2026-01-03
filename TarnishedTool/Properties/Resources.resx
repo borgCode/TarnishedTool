@@ -4283,8 +4283,7 @@ FALSE,Leyndell Ashen Capital,Sir Gideon Ofnir the All-Knowing,TRUE,,184877056,11
 104
 105
 106
-108
-109</value>
+</value>
   </data>
   <data name="RemoveSpEffect" xml:space="preserve">
     <value>48 b9 00 00 00 00 00    movabs rcx,0x0

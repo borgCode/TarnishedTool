@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -51,6 +50,7 @@ namespace TarnishedTool.Services
                     hookManager.InstallHook(kbCode.ToInt64(), Hooks.NoClipKb, new byte[]
                         { 0xF6, 0x84, 0x08, 0xE8, 0x07, 0x00, 0x00, 0x80 });
                 }
+
                 hookManager.InstallHook(triggersCode.ToInt64(), Hooks.NoClipTriggers, new byte[]
                     { 0x0F, 0xB6, 0x44, 0x24, 0x36 });
                 hookManager.InstallHook(updateCoordsCode.ToInt64(), Hooks.UpdateCoords, new byte[]
@@ -135,7 +135,7 @@ namespace TarnishedTool.Services
             });
             memoryService.WriteBytes(updateCoordsCode, codeBytes);
         }
-        
+
         public void ToggleNoclipKeyboardHook(bool isEnabled)
         {
             var kbCode = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.Kb;
@@ -184,7 +184,6 @@ namespace TarnishedTool.Services
                 memoryService.WriteBytes(patchLoc, [0xEB, 0x80, 0xCC]);
                 memoryService.WriteUInt8(camMode, 0);
             }
-
         }
 
         public void TogglePlayerMovementForFreeCam(bool isEnabled)
@@ -196,7 +195,7 @@ namespace TarnishedTool.Services
         public void MoveCamToPlayer()
         {
             var playerLoc = playerService.IsRiding() ? playerService.GetTorrentPos() : playerService.GetPlayerPos();
-             
+
             playerLoc.Y += 2.5f;
             memoryService.WriteVector3(GetDbgCamCoordsPtr(), playerLoc);
         }
@@ -215,17 +214,14 @@ namespace TarnishedTool.Services
             }
         }
 
-        public void ToggleFreezeWorld(bool isEnabled)
-        {
-            var pauseFlag = memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsPaused;
-            memoryService.WriteUInt8((IntPtr)pauseFlag, isEnabled ? 1 : 0);
-        }
+        public void ToggleFreezeWorld(bool isEnabled) =>
+            memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
 
         public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
             memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(DamageManager.Base) + DamageManager.HitboxView,
                 isDrawHitboxEnabled ? 1 : 0);
 
-        public void ToggleDrawRagdolls(bool isEnabled) => 
+        public void ToggleDrawRagdolls(bool isEnabled) =>
             memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.Ragdoll, isEnabled ? 1 : 0);
 
         public void ToggleDrawLowHit(bool isEnabled)
@@ -283,9 +279,8 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap2, isEnabled ? 0 : 1);
         }
 
-        public void ToggleDrawTilesOnMap(bool isEnabled) => 
+        public void ToggleDrawTilesOnMap(bool isEnabled) =>
             memoryService.WriteUInt8(MapDebugFlags.Base + MapDebugFlags.ShowMapTiles, isEnabled ? 1 : 0);
-        
 
         private IntPtr GetDbgCamCoordsPtr() =>
             memoryService.FollowPointers(FieldArea.Base,

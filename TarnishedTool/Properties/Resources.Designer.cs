@@ -349,8 +349,7 @@ namespace TarnishedTool.Properties {
         ///104
         ///105
         ///106
-        ///108
-        ///109.
+        ///.
         /// </summary>
         internal static string BaseGestures {
             get {
