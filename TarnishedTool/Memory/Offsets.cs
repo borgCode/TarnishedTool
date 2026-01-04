@@ -21,8 +21,8 @@ namespace TarnishedTool.Memory
             {
                 Handle = 0x8,
                 CurrentBlockId = 0x6D0,
-                CurrentGlobalCoords = 0x6C0,
-                CurrentGlobalAngle = 0x6CC,
+                CurrentMapCoords = 0x6C0,
+                CurrentMapAngle = 0x6CC,
             }
         }
 

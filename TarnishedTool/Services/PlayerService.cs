@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Numerics;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
@@ -27,6 +26,18 @@ namespace TarnishedTool.Services
             new(0, Vector3.Zero, 0f)
         ];
 
+        public MapLocation GetMapLocation()
+        {
+            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+            var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
+    
+            var blockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
+            var mapCoords = memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+            var localCoords = memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
+    
+            return new MapLocation(blockId, localCoords, mapCoords);
+        }
+
         public Vector3 GetPlayerPos() =>
             memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
@@ -46,9 +57,9 @@ namespace TarnishedTool.Services
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
             posToSave.BlockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
             posToSave.Coords =
-                memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
+                memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
             posToSave.Angle =
-                memoryService.ReadFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalAngle);
+                memoryService.ReadFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
         }
 
         public void RestorePos(int index)
@@ -66,9 +77,9 @@ namespace TarnishedTool.Services
             if (currentArea == savedArea)
             {
                 var currentCoords =
-                    memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalCoords);
-                var currentAbsolute = CoordUtils.ToAbsolute(currentCoords, currentBlockId);
-                var savedAbsolute = CoordUtils.ToAbsolute(savedPos.Coords, savedPos.BlockId);
+                    memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
+                var currentAbsolute = PositionUtils.ToAbsolute(currentCoords, currentBlockId);
+                var savedAbsolute = PositionUtils.ToAbsolute(savedPos.Coords, savedPos.BlockId);
                 var delta = savedAbsolute - currentAbsolute;
 
                 var chrRideModule = GetChrRidePtr();
@@ -81,7 +92,7 @@ namespace TarnishedTool.Services
                     memoryService.WriteUInt8(physicsPtr + (int)ChrIns.ChrPhysicsOffsets.NoGravity, 1);
 
                 memoryService.WriteVector3(coordsPtr, memoryService.ReadVector3(coordsPtr) + delta);
-                memoryService.WriteFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentGlobalAngle,
+                memoryService.WriteFloat(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapAngle,
                     savedPos.Angle);
 
                 if (isLongDistance)

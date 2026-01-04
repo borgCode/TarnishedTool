@@ -15,5 +15,7 @@ public static class Event
 
     public static readonly long FightFortissax = 12032859;
     public static readonly long FightEldenBeast = 19002802;
-    
+
+    public static readonly long SnowfieldMausoleum = 1247580400;
+
 }

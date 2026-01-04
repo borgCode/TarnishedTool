@@ -649,6 +649,22 @@ namespace TarnishedTool.ViewModels
             get => _isResetWorldIncluded;
             set => SetProperty(ref _isResetWorldIncluded, value);
         }
+        
+        private MapLocation _mapLocation;
+
+        public MapLocation MapLocation
+        {
+            get => _mapLocation;
+            set => SetProperty(ref _mapLocation, value);
+        }
+        
+        private bool _showPlayerLocation;
+
+        public bool ShowPlayerLocation
+        {
+            get => _showPlayerLocation;
+            set => SetProperty(ref _showPlayerLocation, value);
+        }
 
         #endregion
 
@@ -778,9 +794,8 @@ namespace TarnishedTool.ViewModels
             SpiritAsh = _playerService.GetSpiritAsh();
             _coords = _playerService.GetPlayerPos();
             CurrentAnimation = _playerService.GetCurrentAnimation();
-            PosX = _coords.X;
-            PosY = _coords.Y;
-            PosZ = _coords.Z;
+            if (ShowPlayerLocation) MapLocation = _playerService.GetMapLocation();
+            
             if (IsSpEffectWindowOpen)
             {
                 var spEffects = _spEffectService.GetActiveSpEffectList(_playerService.GetPlayerIns());

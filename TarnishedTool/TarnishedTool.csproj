@@ -107,6 +107,9 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="Controls\CoordinateDisplay.xaml.cs">
+          <DependentUpon>CoordinateDisplay.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Controls\Titlebar.xaml.cs">
           <DependentUpon>Titlebar.xaml</DependentUpon>
         </Compile>
@@ -119,6 +122,7 @@
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
+        <Compile Include="Converters\Vector3ToStringConverter.cs" />
         <Compile Include="Core\DelegateCommand.cs" />
         <Compile Include="Enums\Affinity.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
@@ -158,6 +162,7 @@
         <Compile Include="Models\Item.cs" />
         <Compile Include="Models\ItemTemplate.cs" />
         <Compile Include="Models\LoadoutTemplate.cs" />
+        <Compile Include="Models\MapLocation.cs" />
         <Compile Include="Models\Position.cs" />
         <Compile Include="Models\PosWithHurtbox.cs" />
         <Compile Include="Models\ShopCommand.cs" />
@@ -183,7 +188,7 @@
         <Compile Include="Services\UtilityService.cs" />
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
-        <Compile Include="Utilities\CoordUtils.cs" />
+        <Compile Include="Utilities\PositionUtils.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
         <Compile Include="Utilities\GameLauncher.cs" />
         <Compile Include="Utilities\HotkeyManager.cs" />
@@ -252,6 +257,7 @@
           <DependentUpon>SpEffectsWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\TopmostWindow.cs" />
+        <Page Include="Controls\CoordinateDisplay.xaml" />
         <Page Include="Controls\Titlebar.xaml" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>

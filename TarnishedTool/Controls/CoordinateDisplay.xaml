@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="TarnishedTool.Controls.CoordinateDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:TarnishedTool.Converters"
+             x:Name="Root">
+    <UserControl.Resources>
+        <converters:Vector3ToStringConverter x:Key="Vector3ToStringConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="{Binding LocalCoords,
+                          Converter={StaticResource Vector3ToStringConverter},
+                          StringFormat=Local coords: {0}}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="{Binding MapCoords,
+                          Converter={StaticResource Vector3ToStringConverter},
+                          StringFormat=Map coords: {0}}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="1"
+                   Text="{Binding AbsoluteCoords,
+                          Converter={StaticResource Vector3ToStringConverter},
+                          StringFormat=Global coords: {0}}"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="1"
+                   Text="{Binding FormattedId,
+                          StringFormat=Map ID: {0}}"/>
+    </Grid>
+</UserControl>

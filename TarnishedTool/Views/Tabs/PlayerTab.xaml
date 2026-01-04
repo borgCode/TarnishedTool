@@ -5,16 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:converters="clr-namespace:TarnishedTool.Converters"
+             xmlns:controls="clr-namespace:TarnishedTool.Controls"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="600">
     <UserControl.Resources>
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
+        <xcad:BoolToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -75,11 +77,12 @@
             <Border Grid.Row="1" Margin="0,10,0,10" BorderThickness="1" BorderBrush="#333" CornerRadius="3">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="35" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
@@ -103,29 +106,32 @@
                         </Button>
                     </UniformGrid>
 
+
                     <StackPanel Grid.Row="0" Grid.Column="1"
-                                Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 Margin="10,0,0,5">
 
-                        <CheckBox Content="Include State"
-                                  IsChecked="{Binding IsStateIncluded}" />
 
-                        <Border Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Remembers HP/Stamina when saving position"
-                                ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Include State"
+                                      IsChecked="{Binding IsStateIncluded}" />
+
+                            <Border Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Remembers HP/Stamina when saving position"
+                                    ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
 
                     <UniformGrid Grid.Row="1" Grid.Column="0" Rows="1" Columns="2">
@@ -147,22 +153,16 @@
                             </Button.IsEnabled>
                         </Button>
                     </UniformGrid>
+                    
+                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Player Location"
+                              Margin="10,5,0,0"
+                              IsChecked="{Binding ShowPlayerLocation}" />
 
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="10,5,0,0"
-                                HorizontalAlignment="Left">
-                        <xctk:DoubleUpDown Width="70" Margin="5,0,0,0"
-                                           Padding="0,0,5,0"
-                                           Value="{Binding PosX}" FormatString="F1"
-                                           IsEnabled="False" />
-                        <xctk:DoubleUpDown Width="70" Margin="5,0,5,0"
-                                           Padding="0,0,5,0"
-                                           Value="{Binding PosY}" FormatString="F1"
-                                           IsEnabled="False" />
-                        <xctk:DoubleUpDown Width="70" Value="{Binding PosZ}"
-                                           Padding="0,0,5,0"
-                                           FormatString="F1"
-                                           IsEnabled="False" />
-                    </StackPanel>
+                    <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
+                            Visibility="{Binding ShowPlayerLocation, Converter={StaticResource BoolToVis}}"
+                            Margin="20, 0, 0, 0">
+                        <controls:CoordinateDisplay DataContext="{Binding MapLocation}" />
+                    </Border>
                 </Grid>
             </Border>
 
@@ -246,7 +246,7 @@
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="5,0,0,0">
@@ -445,9 +445,30 @@
 
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <xctk:IntegerUpDown
+                            Value="{Binding Runes}"
+                            TextAlignment="Center"
+                            Width="100"
+                            Minimum="0"
+                            Maximum="999999999"
+                            DefaultValue="10000"
+
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            BorderBrush="#3F3F46" />
+
+                        <Button Content="Give Runes"
+                                Command="{Binding GiveRunesCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Margin="10,0,0,0"
+                                Width="100"
+                                Height="25" />
+
+                    </StackPanel>
+
                     <Button Content="Rune Arc"
                             Width="150"
-                            Margin="0, 0, 0,0"
+                            Margin="0, 20, 0,0"
                             Command="{Binding ApplyRuneArcCommand}"
                             IsEnabled="{Binding AreOptionsEnabled}">
                     </Button>
@@ -458,43 +479,15 @@
                             IsEnabled="{Binding AreOptionsEnabled}">
                     </Button>
                     <CheckBox Content="Reset Enemies with Rest"
-                            Width="150"
-                            Margin="0, 10, 0,0"
-                            IsChecked="{Binding IsResetWorldIncluded}">
+                              Width="150"
+                              Margin="0, 10, 0,0"
+                              IsChecked="{Binding IsResetWorldIncluded}">
                     </CheckBox>
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Row="5" Margin="0,10,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="Runes to give:" VerticalAlignment="Center" />
-
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0,0,0">
-                    <xctk:IntegerUpDown
-                        Value="{Binding Runes}"
-                        TextAlignment="Center"
-                        Width="120"
-                        Minimum="0"
-                        Maximum="999999999"
-                        DefaultValue="10000"
-
-                        IsEnabled="{Binding AreOptionsEnabled}"
-                        BorderBrush="#3F3F46" />
-
-                    <Button Content="Give Runes"
-                            Command="{Binding GiveRunesCommand}"
-                            IsEnabled="{Binding AreOptionsEnabled}"
-                            Margin="10,0,0,0"
-                            Width="100"
-                            Height="25" />
-                </StackPanel>
-            </Grid>
-
-            <Border Grid.Row="6" Margin="0,0,0,0">
+            <Border Grid.Row="5" Margin="0,15,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -675,7 +668,7 @@
                                     Command="{Binding ApplySpEffectCommand}" />
 
                         </StackPanel>
-                        
+
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="10,5,0,0">
                             <TextBlock Text="ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
                             <TextBox Width="100" Text="{Binding RemoveSpEffectId}" Margin="0,0,10,0" />
@@ -686,13 +679,13 @@
                                     Margin="10,0,0,0"
                                     Command="{Binding RemoveSpEffectCommand}" />
                         </StackPanel>
-                        
+
                         <CheckBox Grid.Row="0" Grid.Column="1"
                                   HorizontalAlignment="Right"
                                   IsChecked="{Binding IsSpEffectWindowOpen}"
                                   Content="Show active special effects"
                                   Margin="0,0,10,0" />
-                        
+
                         <Button Grid.Row="1" Grid.Column="1" Content="About Special Effects"
                                 Width="150"
                                 Height="25"

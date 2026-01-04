@@ -7,6 +7,7 @@ namespace TarnishedTool.Interfaces;
 
 public interface IPlayerService
 {
+    MapLocation GetMapLocation();
     Vector3 GetPlayerPos();
     void SetPlayerPos(Vector3 pos);
     Vector3 GetTorrentPos();
