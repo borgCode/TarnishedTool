@@ -52,6 +52,7 @@ public class ParamService(MemoryService memoryService) : IParamService
     
         return IntPtr.Zero;
     }
+
     
     public void WriteInt32(IntPtr row, int offset, int value) => memoryService.WriteInt32(row + offset, value);
     

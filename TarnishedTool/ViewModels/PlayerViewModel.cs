@@ -15,7 +15,6 @@ namespace TarnishedTool.ViewModels
 {
     public class PlayerViewModel : BaseViewModel
     {
-        private Vector3 _coords;
         private int _currentRuneLevel;
 
         private bool _customHpHasBeenSet;
@@ -241,6 +240,21 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
+        
+        
+        private bool _isNoHitEnabled;
+
+        public bool IsNoHitEnabled
+        {
+            get => _isNoHitEnabled;
+            set
+            {
+                if (SetProperty(ref _isNoHitEnabled, value))
+                {
+                    _playerService.ToggleNoHit(_isNoHitEnabled);
+                }
+            }
+        }
 
         private bool _isInfiniteStaminaEnabled;
 
@@ -335,7 +349,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isSilentEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, _isSilentEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Silent, _isSilentEnabled, true);
                 }
             }
         }
@@ -349,7 +363,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (SetProperty(ref _isHiddenEnabled, value))
                 {
-                    _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, _isHiddenEnabled);
+                    _playerService.ToggleDebugFlag(WorldChrManDbg.Hidden, _isHiddenEnabled, true);
                 }
             }
         }
@@ -696,6 +710,7 @@ namespace TarnishedTool.ViewModels
 
             if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
+            if (IsNoHitEnabled) _playerService.ToggleNoHit(true);
 
             LoadStats();
             _playerTick.Start();
@@ -774,6 +789,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.RuneArc, () => SafeExecute(ApplyRuneArc));
             _hotkeyManager.RegisterAction(HotkeyActions.Rest, () => SafeExecute(Rest));
             _hotkeyManager.RegisterAction(HotkeyActions.PlayerSetCustomHp, SetCustomHp);
+            _hotkeyManager.RegisterAction(HotkeyActions.NoHit, () => { IsNoHitEnabled = !IsNoHitEnabled; });
         }
 
         private void SafeExecute(Action action)
@@ -792,7 +808,6 @@ namespace TarnishedTool.ViewModels
             int newRuneLevel = _playerService.GetRuneLevel();
             Scadu = _playerService.GetScadu();
             SpiritAsh = _playerService.GetSpiritAsh();
-            _coords = _playerService.GetPlayerPos();
             CurrentAnimation = _playerService.GetCurrentAnimation();
             if (ShowPlayerLocation) MapLocation = _playerService.GetMapLocation();
             

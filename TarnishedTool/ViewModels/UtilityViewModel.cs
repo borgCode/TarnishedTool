@@ -384,6 +384,23 @@ namespace TarnishedTool.ViewModels
                 _utilityService.ToggleDrawRagdolls(_isDrawRagdollEnabled);
             }
         }
+        
+        private bool _isDrawPoiseBarsEnabled;
+
+        public bool IsDrawPoiseBarsEnabled
+        {
+            get => _isDrawPoiseBarsEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawPoiseBarsEnabled, value)) return;
+
+                if (_isDrawPoiseBarsEnabled)
+                {
+                    _utilityService.PatchDebugFont();
+                }
+                _utilityService.ToggleDrawPoiseBars(_isDrawPoiseBarsEnabled);
+            }
+        }
 
         private bool _isDrawPlayerSoundEnabled;
 
@@ -602,6 +619,13 @@ namespace TarnishedTool.ViewModels
 
             if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
             if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
+
+            if (IsDrawPoiseBarsEnabled)
+            {
+                _utilityService.PatchDebugFont();
+                _utilityService.ToggleDrawPoiseBars(true);
+            }
+            
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
@@ -664,6 +688,9 @@ namespace TarnishedTool.ViewModels
                 if (!IsFreeCamEnabled) return;
                 IsPlayerMovementEnabled = !IsPlayerMovementEnabled;
             });
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawPoiseBars,
+                () => IsDrawPoiseBarsEnabled = !IsDrawPoiseBarsEnabled);
+            
         }
 
         private void SafeExecute(Action action)

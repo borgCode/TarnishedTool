@@ -61,6 +61,7 @@ namespace TarnishedTool.Memory
                 () => WorldAreaTimeImpl.Base = FindAddressByPattern(Pattern.WorldAreaTimeImpl),
                 () => GroupMask.Base = FindAddressByPattern(Pattern.GroupMask),
                 () => SoloParamRepositoryImp.Base = FindAddressByPattern(Pattern.SoloParamRepositoryImp),
+                () => MsgRepository.Base = FindAddressByPattern(Pattern.MsgRepository),
                 () => CSFlipperImp.Base = FindAddressByPattern(Pattern.CSFlipperImp),
                 () => CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent),
                 () => UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager),
@@ -147,6 +148,8 @@ namespace TarnishedTool.Memory
                     addr => Hooks.SetActionRequested = addr.ToInt64(), saved),
                 () => TryPatternWithFallback("NoMapAcquiredPopup", Pattern.NoMapAcquiredPopup,
                     addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("LoadScreenMsgLookup", Pattern.LoadScreenMsgLookup,
+                    addr => Hooks.LoadScreenMsgLookup = addr.ToInt64(), saved),
                 () => TryPatternWithFallback("NoGrab", Pattern.NoGrab,
                     addr => Hooks.NoGrab = addr.ToInt64(), saved)
             );
@@ -193,6 +196,8 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"UserInputManager.Base: 0x{UserInputManager.Base.ToInt64():X}");
             Console.WriteLine($@"CSTrophy.Base: 0x{CSTrophy.Base.ToInt64():X}");
             Console.WriteLine($@"MapDebugFlags.Base: 0x{MapDebugFlags.Base.ToInt64():X}");
+            Console.WriteLine($@"SoloParamRepositoryImp.Base: 0x{SoloParamRepositoryImp.Base.ToInt64():X}");
+            Console.WriteLine($@"MsgRepository.Base: 0x{MsgRepository.Base.ToInt64():X}");
 
             Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
             Console.WriteLine($@"Patches.NoRunesFromEnemies: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
@@ -230,6 +235,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.LionCooldownHook: 0x{Hooks.LionCooldownHook:X}");
             Console.WriteLine($@"Hooks.SetActionRequested: 0x{Hooks.SetActionRequested:X}");
             Console.WriteLine($@"Hooks.NoGrab: 0x{Hooks.NoGrab:X}");
+            Console.WriteLine($@"Hooks.LoadScreenMsgLookup: 0x{Hooks.LoadScreenMsgLookup:X}");
 
             Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
             Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");

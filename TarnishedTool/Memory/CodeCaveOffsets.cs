@@ -76,9 +76,10 @@ namespace TarnishedTool.Memory
         public const int NoAcquiredMapPopup = 0x1D50; // 0x35
 
         public const int NoGrab = 0x1D90; //0x28
-        
-        
-        
-        
+
+        public const int LoadScreenForce = 0x1E00; //0xE
+
+
+
     }
 }

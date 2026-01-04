@@ -222,7 +222,23 @@
             7
         );
 
+        public static readonly Pattern MsgRepository = new Pattern(
+            new byte[] { 0x80, 0xF9, 0x03, 0x41 },
+            "xxxx",
+            0xC,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
         //Hooks
+
+        public static readonly Pattern LoadScreenMsgLookup = new Pattern(
+            [0x44, 0x8B, 0xCA, 0x33, 0xD2, 0x41, 0xB8, 0xCD],
+            "xxxxxxxx",
+            0,
+            AddressingMode.Absolute
+        );
 
         public static readonly Pattern NoMapAcquiredPopup = new Pattern(
             [0x74, 0x0D, 0x8B, 0x54],

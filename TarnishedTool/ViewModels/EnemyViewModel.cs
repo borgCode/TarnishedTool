@@ -23,6 +23,7 @@ public class EnemyViewModel : BaseViewModel
     private readonly IParamService _paramService;
     private readonly IPlayerService _playerService;
     private readonly IEventService _eventService;
+    private readonly IReminderService _reminderService;
 
     public const uint LionMainBossEntityId = 20000800;
     public const int LionMainBossNpcParamId = 52100088;
@@ -50,7 +51,8 @@ public class EnemyViewModel : BaseViewModel
 
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
         IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService,
-        IParamService paramService, IPlayerService playerService, IEventService eventService)
+        IParamService paramService, IPlayerService playerService, IEventService eventService,
+        IReminderService reminderService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
@@ -60,6 +62,7 @@ public class EnemyViewModel : BaseViewModel
         _paramService = paramService;
         _playerService = playerService;
         _eventService = eventService;
+        _reminderService = reminderService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -374,27 +377,48 @@ public class EnemyViewModel : BaseViewModel
         _spEffectService.RemoveSpEffect(chrIns, 20011237);
     }
 
-    private void ForceLionMainBossLightningPhase() =>
+    private void ForceLionMainBossLightningPhase()
+    {
+        _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
             Emevd.EmevdCommands.ForcePlaybackAnimation(LionMainBossEntityId, LightningAnimationId));
+    }
 
-    private void ForceLionMainBossFrostPhase() =>
+    private void ForceLionMainBossFrostPhase()
+    {
+        _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
             Emevd.EmevdCommands.ForcePlaybackAnimation(LionMainBossEntityId, FrostAnimationId));
+    }
 
-    private void ForceLionMainBossWindPhase() =>
+    private void ForceLionMainBossWindPhase()
+    {
+        _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
             Emevd.EmevdCommands.ForcePlaybackAnimation(LionMainBossEntityId, WindAnimationId));
+    }
 
-    private void ForceLionMiniBossDeathblightPhase() => _emevdService.ExecuteEmevdCommand(
-        Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, DeathblightAnimationId));
+    private void ForceLionMiniBossDeathblightPhase()
+    {
+        _reminderService.TrySetReminder();
+        _emevdService.ExecuteEmevdCommand(
+            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, DeathblightAnimationId));
+    }
 
-    private void ForceLionMiniBossFrostPhase() => _emevdService.ExecuteEmevdCommand(
-        Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, FrostAnimationId));
+    private void ForceLionMiniBossFrostPhase()
+    {
+        _reminderService.TrySetReminder();
+        _emevdService.ExecuteEmevdCommand(
+            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, FrostAnimationId));
+    }
 
-    private void ForceLionMiniBossWindPhase() => _emevdService.ExecuteEmevdCommand(
-        Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, WindAnimationId));
-    
+    private void ForceLionMiniBossWindPhase()
+    {
+        _reminderService.TrySetReminder();
+        _emevdService.ExecuteEmevdCommand(
+            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, WindAnimationId));
+    }
+
     private void ReviveBoss()
     {
         var bossRevive = BossRevives.SelectedItem;

@@ -6,7 +6,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class EnemyService(MemoryService memoryService, HookManager hookManager) : IEnemyService
+public class EnemyService(MemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
 {
     private const int MaxNumOfActs = 10;
 
@@ -35,14 +35,23 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
     public void ToggleNoHit(bool isEnabled) =>
         memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoHit, isEnabled ? 1 : 0);
 
-    public void ToggleNoAttack(bool isEnabled) =>
+    public void ToggleNoAttack(bool isEnabled)
+    {
+        reminderService.TrySetReminder();
         memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoAttack, isEnabled ? 1 : 0);
+    }
 
-    public void ToggleNoMove(bool isEnabled) =>
+    public void ToggleNoMove(bool isEnabled)
+    {
+        reminderService.TrySetReminder();
         memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllNoMove, isEnabled ? 1 : 0);
+    }
 
-    public void ToggleDisableAi(bool isEnabled) =>
+    public void ToggleDisableAi(bool isEnabled)
+    {
+        reminderService.TrySetReminder();
         memoryService.WriteUInt8(WorldChrManDbg.Base + WorldChrManDbg.AllDisableAi, isEnabled ? 1 : 0);
+    }
 
     public void ToggleTargetingView(bool isTargetingViewEnabled) =>
         memoryService.WriteUInt8(TargetView.Base, isTargetingViewEnabled ? 1 : 0);
@@ -101,6 +110,7 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
 
     public void ForceActSequence(int[] actSequence, int npcThinkParamId)
     {
+        reminderService.TrySetReminder();
         var actsArr = CodeCaveOffsets.Base + CodeCaveOffsets.ActArray;
         var currentIdx = CodeCaveOffsets.Base + CodeCaveOffsets.CurrentIdx;
         var shouldRunFlag = CodeCaveOffsets.Base + CodeCaveOffsets.ShouldRun;
@@ -151,6 +161,7 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager) 
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.LionCooldownHook;
         if (isEnabled)
         {
+            reminderService.TrySetReminder();
             var hook = Hooks.LionCooldownHook;
             var codeBytes = AsmLoader.GetAsmBytes("LionCooldownHook");
             var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x36);

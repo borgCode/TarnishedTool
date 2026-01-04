@@ -6,7 +6,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class EventService(MemoryService memoryService, HookManager hookManager) : IEventService
+    public class EventService(MemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEventService
     {
         
         public void SetEvent(long eventId, bool flagValue)
@@ -52,6 +52,7 @@ namespace TarnishedTool.Services
 
         public void ToggleDisableEvents(bool isEnabled)
         {
+            reminderService.TrySetReminder();
             var ptr = memoryService.ReadInt64(CSDbgEvent.Base) + CSDbgEvent.DisableEvent;
             memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
         }

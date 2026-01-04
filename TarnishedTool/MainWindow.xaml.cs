@@ -49,21 +49,22 @@ namespace TarnishedTool
             var hookManager = new HookManager(_memoryService, _stateService);
             var hotkeyManager = new HotkeyManager(_memoryService);
 
+            IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
-            IPlayerService playerService = new PlayerService(_memoryService, hookManager, travelService);
+            IPlayerService playerService = new PlayerService(_memoryService, hookManager, travelService, reminderService);
             IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
-            IEventService eventService = new EventService(_memoryService, hookManager);
+            IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
-            ITargetService targetService = new TargetService(_memoryService, hookManager, playerService);
-            IEnemyService enemyService = new EnemyService(_memoryService, hookManager);
+            ITargetService targetService = new TargetService(_memoryService, hookManager, playerService, reminderService);
+            IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
             IItemService itemService = new ItemService(_memoryService);
-            ISpEffectService spEffectService = new SpEffectService(_memoryService);
+            ISpEffectService spEffectService = new SpEffectService(_memoryService, reminderService);
             IEmevdService emevdService = new EmevdService(_memoryService);
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
-
+            
             _dlcService = new DlcService(_memoryService);
 
 
@@ -72,7 +73,7 @@ namespace TarnishedTool
             TravelViewModel travelViewModel =
                 new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
-                _dlcService, spEffectService, paramService, playerService, eventService);
+                _dlcService, spEffectService, paramService, playerService, eventService, reminderService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager, spEffectService, emevdService);
             EventViewModel eventViewModel =

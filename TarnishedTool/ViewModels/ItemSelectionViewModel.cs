@@ -116,6 +116,11 @@ public class ItemSelectionViewModel : BaseViewModel
                 : value.StackSize;
             SelectedQuantity = value.StackSize;
             QuantityEnabled = value.StackSize > 1;
+            
+            if (SelectedCategory == "Incantations" || SelectedCategory == "Sorceries")
+            {
+                SelectedQuantity = 1;
+            }
 
             if (value is Weapon weapon)
             {

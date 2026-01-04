@@ -8,7 +8,11 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class TargetService(MemoryService memoryService, HookManager hookManager, IPlayerService playerService)
+    public class TargetService(
+        MemoryService memoryService,
+        HookManager hookManager,
+        IPlayerService playerService,
+        IReminderService reminderService)
         : ITargetService
     {
         public void ToggleTargetHook(bool isEnabled)
@@ -16,6 +20,7 @@ namespace TarnishedTool.Services
             var code = CodeCaveOffsets.Base + CodeCaveOffsets.SaveTargetPtrCode;
             if (isEnabled)
             {
+                reminderService.TrySetReminder();
                 var hook = Hooks.LockedTargetPtr;
                 var savedPtr = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 var bytes = AsmLoader.GetAsmBytes("LockedTarget");

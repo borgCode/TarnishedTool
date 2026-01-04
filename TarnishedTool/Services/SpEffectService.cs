@@ -9,7 +9,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class SpEffectService(MemoryService memoryService) : ISpEffectService
+public class SpEffectService(MemoryService memoryService, IReminderService reminderService) : ISpEffectService
 {
     public void ApplySpEffect(long chrIns, uint spEffectId)
     {
@@ -52,6 +52,7 @@ public class SpEffectService(MemoryService memoryService) : ISpEffectService
 
     public List<SpEffectEntry> GetActiveSpEffectList(long chrIns)
     {
+        reminderService.TrySetReminder();
         var spEffectList = new List<SpEffectEntry>();
         var specialEffect = memoryService.ReadInt64((IntPtr)chrIns + ChrIns.SpecialEffect);
         var current = (IntPtr) memoryService.ReadInt64((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);

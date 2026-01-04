@@ -4599,4 +4599,9 @@ e9 00 00 00 00          jmp    35 &lt;_main+0x35&gt;</value>
 48 8d 4c 24 40          lea    rcx,[rsp+0x40]
 e9 00 00 00 00          jmp    28 &lt;_main+0x28&gt;</value>
   </data>
+  <data name="ForceLoadScreenReminder" xml:space="preserve">
+    <value>49 c7 c1 04 00 00 00    mov    r9,0x4
+31 d2                   xor    edx,edx
+e9 00 00 00 00          jmp    e &lt;_main+0xe&gt;</value>
+  </data>
 </root>

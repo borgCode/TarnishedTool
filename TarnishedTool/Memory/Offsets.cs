@@ -365,6 +365,11 @@ namespace TarnishedTool.Memory
         {
             public static IntPtr Base;
         }
+        
+        public static class MsgRepository
+        {
+            public static IntPtr Base;
+        }
 
         public static class UserInputManager
         {
@@ -450,6 +455,7 @@ namespace TarnishedTool.Memory
             public static long SetActionRequested;
             public static long NoMapAcquiredPopup;
             public static long NoGrab;
+            public static long LoadScreenMsgLookup;
         }
 
         public static class Functions

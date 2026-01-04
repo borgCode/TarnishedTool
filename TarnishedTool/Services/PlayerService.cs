@@ -9,8 +9,8 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class PlayerService(MemoryService memoryService, HookManager hookManager, ITravelService travelService)
-        : IPlayerService
+    public class PlayerService(MemoryService memoryService, HookManager hookManager, ITravelService travelService,
+        IReminderService reminderService) : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
 
@@ -30,11 +30,11 @@ namespace TarnishedTool.Services
         {
             var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
             var playerIns = (IntPtr)memoryService.ReadInt64((IntPtr)worldChrMan + WorldChrMan.PlayerIns);
-    
+
             var blockId = memoryService.ReadUInt32(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentBlockId);
             var mapCoords = memoryService.ReadVector3(playerIns + (int)WorldChrMan.PlayerInsOffsets.CurrentMapCoords);
             var localCoords = memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
-    
+
             return new MapLocation(blockId, localCoords, mapCoords);
         }
 
@@ -208,14 +208,14 @@ namespace TarnishedTool.Services
         {
             var hook = Hooks.InfinitePoise;
             var bytes = AsmLoader.GetAsmBytes("InfinitePoise");
-            AsmHelper.WriteRelativeOffsets(bytes, new []
+            AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (code.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
                 (code.ToInt64() + 0x3D, WorldChrMan.Base.ToInt64(), 7, 0x3D + 3),
                 (code.ToInt64() + 0x53, Functions.GetChrInsByEntityId, 5, 0x53 + 1),
                 (code.ToInt64() + 0x6A, hook + 0x7, 5, 0x6A + 1)
             });
-            
+
             memoryService.WriteBytes(code, bytes);
             hookManager.InstallHook(code.ToInt64(), hook, [0x49, 0x89, 0xF8, 0x40, 0x0F, 0xB6, 0xD5]);
         }
@@ -236,13 +236,23 @@ namespace TarnishedTool.Services
                 { 0x41, 0x8B, 0x56, 0x44, 0x48, 0x8D, 0x4C, 0x24, 0x40 });
         }
 
-        public void ToggleDebugFlag(int offset, bool isEnabled) =>
+        public void ToggleDebugFlag(int offset, bool isEnabled, bool needsReminder = false)
+        {
+            if (needsReminder) reminderService.TrySetReminder();
             memoryService.WriteUInt8(WorldChrManDbg.Base + offset, isEnabled ? 1 : 0);
+        }
 
         public void ToggleNoDamage(bool isFreezeHealthEnabled)
         {
+            reminderService.TrySetReminder();
             var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
+        }
+        
+        public void ToggleNoHit(bool isNoHitEnabled)
+        {
+            reminderService.TrySetReminder();
+            memoryService.SetBitValue(GetChrInsFlagsPtr(), (int)ChrIns.ChrInsFlags.NoHit, isNoHitEnabled);
         }
 
         public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>
@@ -390,7 +400,7 @@ namespace TarnishedTool.Services
 
         public int GetSpiritAsh() =>
             memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
-        
+
         public int GetCurrentAnimation() =>
             memoryService.ReadInt32(GetChrTimeActPtr() + (int)ChrIns.ChrTimeActOffsets.AnimationId);
 
@@ -401,11 +411,10 @@ namespace TarnishedTool.Services
                 memoryService.WriteBytes(Patches.IsTorrentDisabledInUnderworld, [0x30, 0xC0, 0x90]);
                 memoryService.WriteBytes(Patches.IsWhistleDisabled, [0x30, 0xC0, 0x90,]);
                 memoryService.WriteUInt8(GetChrRidePtr() + (int)ChrIns.ChrRideOffsets.IsHorseWhistleDisabled, 0);
-                
             }
             else
             {
-                memoryService.WriteBytes(Patches.IsTorrentDisabledInUnderworld, [ 0x0F, 0x95, 0xC0]);
+                memoryService.WriteBytes(Patches.IsTorrentDisabledInUnderworld, [0x0F, 0x95, 0xC0]);
                 memoryService.WriteBytes(Patches.IsWhistleDisabled, [0x0F, 0x95, 0xC0]);
             }
         }
@@ -441,6 +450,9 @@ namespace TarnishedTool.Services
 
         private IntPtr GetChrTimeActPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrTimeActModule], true);
+        
+        private IntPtr GetChrInsFlagsPtr() =>
+            memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ChrIns.Flags], false);
 
         private IntPtr ChrInsLookup(int handle)
         {

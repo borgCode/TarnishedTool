@@ -29,8 +29,9 @@ public interface IPlayerService
     float GetSpeed();
     void SetSpeed(float speed);
     void ToggleInfinitePoise(bool isInfinitePoiseEnabled);
-    void ToggleDebugFlag(int offset, bool isEnabled);
+    void ToggleDebugFlag(int offset, bool isEnabled, bool needsReminder = false);
     void ToggleNoDamage(bool isFreezeHealthEnabled);
+    void ToggleNoHit(bool isNoHitEnabled);
     void ToggleNoRuneGain(bool isNoRuneGainEnabled);
     void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled);
     void ToggleNoRuneLoss(bool isNoRuneLossEnabled);

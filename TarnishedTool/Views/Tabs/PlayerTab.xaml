@@ -195,6 +195,9 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
+                    <CheckBox Content="No Hit"
+                              IsChecked="{Binding IsNoHitEnabled}"
+                              Margin="0,2" />
                     <CheckBox Content="One Shot"
                               IsChecked="{Binding IsOneShotEnabled}"
                               Margin="0,2" />
@@ -209,9 +212,6 @@
                               Margin="0,2" />
                     <CheckBox Content="Torrent No Death"
                               IsChecked="{Binding IsTorrentNoDeathEnabled}"
-                              Margin="0,2" />
-                    <CheckBox Content="Torrent Anywhere"
-                              IsChecked="{Binding IsTorrentAnywhereEnabled}"
                               Margin="0,2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
@@ -229,6 +229,9 @@
                               Margin="0,2" />
                     <CheckBox Content="No Time Pass on Death"
                               IsChecked="{Binding IsNoTimePassOnDeathEnabled}"
+                              Margin="0,2" />
+                    <CheckBox Content="Torrent Anywhere"
+                              IsChecked="{Binding IsTorrentAnywhereEnabled}"
                               Margin="0,2" />
                 </StackPanel>
             </Grid>
