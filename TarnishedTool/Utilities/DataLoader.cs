@@ -297,6 +297,7 @@ namespace TarnishedTool.Utilities
             if (string.IsNullOrWhiteSpace(csvData)) return bossRevives;
 
             using StringReader reader = new StringReader(csvData);
+            reader.ReadLine(); 
             string line;
             while ((line = reader.ReadLine()) != null)
             {
@@ -313,7 +314,12 @@ namespace TarnishedTool.Utilities
                     NpcParamIds = ParseNpcParamIds(parts[4]),
                     BlockId = uint.Parse(parts[5]),
                     FirstEncounterFlags = ParseFlags(parts[6]),
-                    BossFlags = ParseFlags(parts[7])
+                    BossFlags = ParseFlags(parts[7]),
+                    Coords = ParseCoords(parts[8]),
+                    Angle = string.IsNullOrWhiteSpace(parts[9]) ? 0f : float.Parse(parts[9], CultureInfo.InvariantCulture),
+                    CoordsFE = ParseCoords(parts[10]),
+                    AngleFE = string.IsNullOrWhiteSpace(parts[11]) ? 0f : float.Parse(parts[11], CultureInfo.InvariantCulture),
+                    ShouldSetNight = bool.Parse(parts[12])
                 };
 
                 if (!bossRevives.ContainsKey(area))
@@ -370,6 +376,24 @@ namespace TarnishedTool.Utilities
             }
 
             return flags;
+        }
+        
+        private static float[] ParseCoords(string coordData)
+        {
+            if (string.IsNullOrWhiteSpace(coordData))
+            {
+                return null;
+            }
+    
+            string[] parts = coordData.Split('|');
+            float[] coords = new float[parts.Length];
+    
+            for (int i = 0; i < parts.Length; i++)
+            {
+                coords[i] = float.Parse(parts[i], CultureInfo.InvariantCulture);
+            }
+    
+            return coords;
         }
 
         public static List<ShopCommand> GetShops()

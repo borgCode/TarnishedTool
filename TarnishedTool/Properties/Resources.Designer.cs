@@ -377,10 +377,10 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FALSE,Limgrave,Godrick the Grafted,FALSE,47500014,167772160,10000801:FALSE,10000800:FALSE|10000720:FALSE|10002802:FALSE|9101:FALSE|9391:FALSE|9304:FALSE|71000:FALSE|3269:FALSE|3265:FALSE|61101:FALSE|510010:FALSE
-        ///FALSE,Limgrave,Margit the Fell Omen,TRUE,21300014,167772160,10000851:FALSE,10000850:FALSE|9100:FALSE|60510:FALSE|71001:FALSE
-        ///FALSE,Liurnia of the Lakes,Red Wolf of Radagon,FALSE,31811024,234881024,14000851:FALSE,14000850:FALSE|9117:FALSE|60440:FALSE|71401:FALSE
-        ///FALSE,Liurnia of the Lakes,Rennala  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to isDLC,Area,BossName,IsInitializeDeadSet,NpcParamID,BlockID,FirstEncounterFlags,BossFlags,coords,angle,CoordsFE,AngleFE,shouldSetNight
+        ///FALSE,Limgrave,Beastman of Farum Azula,FALSE,39701910,520290304,31030801:FALSE,31030800:FALSE|9233:FALSE|520330:FALSE|31035014:FALSE,-94.56|89.93|63.94|1,2.5,-94.56|89.93|63.94|1,2.5,FALSE
+        ///FALSE,Limgrave,Bell Bearing Hunter (Warmaster&apos;s Shack),TRUE,31000033,1009395200,,1042380850:FALSE|1042387410:FALSE,-2.71|188.32|102.02|1,-0.87,-2.71|188.32|102.02|1,-0.87,TRUE
+        ///FALSE,Limg [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BossRevives {
             get {
