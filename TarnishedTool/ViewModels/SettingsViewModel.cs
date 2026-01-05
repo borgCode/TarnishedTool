@@ -83,6 +83,8 @@ public class SettingsViewModel : BaseViewModel
             new("All Disable Ai", HotkeyActions.AllDisableAi),
             new("Targeting View", HotkeyActions.AllTargetingView),
             new("Force EB act sequence", HotkeyActions.ForceEbActSequence),
+            new("Revive Boss", HotkeyActions.ReviveSelectedBoss),
+            new("Revive Boss (1st Encounter)", HotkeyActions.ReviveSelectedBossFirstEncounter),
         ];
 
         TargetHotkeys =
