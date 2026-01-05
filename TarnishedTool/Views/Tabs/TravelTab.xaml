@@ -491,7 +491,7 @@
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                         <TextBlock Grid.Column="1"
                                                    Text="{Binding MainArea}"
-                                                   Foreground="#888888"
+                                                   Foreground="#ceccca"
                                                    FontStyle="Italic"
                                                    Margin="10,0,0,0"
                                                    Visibility="{Binding DataContext.Bosses.IsSearchActive, 
