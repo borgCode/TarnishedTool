@@ -37,6 +37,8 @@ public enum HotkeyActions
     AllDisableAi,
     AllTargetingView,
     ForceEbActSequence,
+    ReviveSelectedBoss,
+    ReviveSelectedBossFirstEncounter,
     EnableTargetOptions,
     KillTarget,
     SetTargetMaxHp,
