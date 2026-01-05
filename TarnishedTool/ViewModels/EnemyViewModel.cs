@@ -357,6 +357,8 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView,
             () => { IsTargetingViewEnabled = !IsTargetingViewEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.ForceEbActSequence, () => SafeExecute(ForceEbActSequence));
+        _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBoss,() => SafeExecute(ReviveBoss));
+        _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBossFirstEncounter,() => SafeExecute(ReviveBossFirstEncounter));
     }
 
     private void SafeExecute(Action action)
