@@ -207,6 +207,12 @@ namespace TarnishedTool.Memory
         {
             public static IntPtr Base;
         }
+        
+        public static class DrawPathing
+        {
+            public static IntPtr Base;
+        }
+
 
         public static class LuaEventMan
         {

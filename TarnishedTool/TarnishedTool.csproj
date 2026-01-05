@@ -150,6 +150,7 @@
         <Compile Include="Interfaces\ITargetService.cs" />
         <Compile Include="Interfaces\ITravelService.cs" />
         <Compile Include="Interfaces\IUtilityService.cs" />
+        <Compile Include="Memory\AddressJump.cs" />
         <Compile Include="Memory\BitFlag.cs" />
         <Compile Include="Models\Act.cs" />
         <Compile Include="Models\AshOfWar.cs" />

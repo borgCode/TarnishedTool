@@ -127,7 +127,10 @@
                                                FontSize="10" />
                                 </Border>
                             </StackPanel>
-
+                            <CheckBox Content="Draw Navigation Route"
+                                      IsChecked="{Binding IsDrawNavigationRouteEnabled}"
+                                      Grid.Column="2" Grid.Row="0"
+                                      Margin="0,2" />
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -324,7 +327,7 @@
                 </Border>
             </Grid>
         </TabItem>
-        <TabItem Header="Boss Revives (WIP)">
+        <TabItem Header="Boss Revives (No DLC yet)">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

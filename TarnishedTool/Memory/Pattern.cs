@@ -231,6 +231,13 @@
             7
         );
 
+        public static readonly Pattern DrawPathing = new Pattern(
+            [0x38, 0x99, 0xD9, 0x00, 0x00, 0x00, 0x4C],
+            "xxxxxxx",
+            0x10,
+            AddressingMode.Absolute
+        );
+
         //Hooks
 
         public static readonly Pattern LoadScreenMsgLookup = new Pattern(

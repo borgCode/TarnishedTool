@@ -73,7 +73,7 @@ namespace TarnishedTool
             TravelViewModel travelViewModel =
                 new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
-                _dlcService, spEffectService, paramService, playerService, eventService, reminderService);
+                _dlcService, spEffectService, paramService, playerService, eventService, reminderService, travelService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager, spEffectService, emevdService);
             EventViewModel eventViewModel =

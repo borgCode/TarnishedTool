@@ -24,6 +24,7 @@ public class EnemyViewModel : BaseViewModel
     private readonly IPlayerService _playerService;
     private readonly IEventService _eventService;
     private readonly IReminderService _reminderService;
+    private readonly ITravelService _travelService;
 
     public const uint LionMainBossEntityId = 20000800;
     public const int LionMainBossNpcParamId = 52100088;
@@ -46,13 +47,13 @@ public class EnemyViewModel : BaseViewModel
     private const int EldenStarsActIdx = 22;
     private DateTime _ebLastExecuted = DateTime.MinValue;
     private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
-    
+
     public SearchableGroupedCollection<string, BossRevive> BossRevives { get; }
 
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
         IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService,
         IParamService paramService, IPlayerService playerService, IEventService eventService,
-        IReminderService reminderService)
+        IReminderService reminderService, ITravelService travelService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
@@ -63,6 +64,7 @@ public class EnemyViewModel : BaseViewModel
         _playerService = playerService;
         _eventService = eventService;
         _reminderService = reminderService;
+        _travelService = travelService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -92,7 +94,6 @@ public class EnemyViewModel : BaseViewModel
         RegisterHotkeys();
     }
 
-    
     #region Commands
 
     public ICommand EbForceActSequenceCommand { get; set; }
@@ -102,7 +103,7 @@ public class EnemyViewModel : BaseViewModel
     public ICommand SetLionMiniBossDeathblightPhaseCommand { get; set; }
     public ICommand SetLionMiniBossFrostPhaseCommand { get; set; }
     public ICommand SetLionMiniBossWindPhaseCommand { get; set; }
-    
+
     public ICommand ReviveBossCommand { get; set; }
     public ICommand ReviveBossFirstEncounterCommand { get; set; }
     public ICommand ReviveAllBossesCommand { get; set; }
@@ -242,6 +243,18 @@ public class EnemyViewModel : BaseViewModel
         }
     }
 
+    private bool _isDrawNavigationRouteEnabled;
+
+    public bool IsDrawNavigationRouteEnabled
+    {
+        get => _isDrawNavigationRouteEnabled;
+        set
+        {
+            SetProperty(ref _isDrawNavigationRouteEnabled, value);
+            _enemyService.ToggleDrawNavigationRoute(_isDrawNavigationRouteEnabled);
+        }
+    }
+
     private bool _isRykardNoMegaEnabled;
 
     public bool IsRykardNoMegaEnabled
@@ -309,7 +322,7 @@ public class EnemyViewModel : BaseViewModel
         AreOptionsEnabled = true;
         IsDlcAvailable = _dlcService.IsDlcAvailable;
     }
-    
+
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
@@ -341,7 +354,8 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoAttack, () => { IsNoAttackEnabled = !IsNoAttackEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllNoMove, () => { IsNoMoveEnabled = !IsNoMoveEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.AllDisableAi, () => { IsDisableAiEnabled = !IsDisableAiEnabled; });
-        _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView, () => { IsTargetingViewEnabled = !IsTargetingViewEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView,
+            () => { IsTargetingViewEnabled = !IsTargetingViewEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.ForceEbActSequence, () => SafeExecute(ForceEbActSequence));
     }
 
@@ -365,7 +379,8 @@ public class EnemyViewModel : BaseViewModel
         var chrIns = _enemyService.GetChrInsByEntityId(entityId);
         if (chrIns == IntPtr.Zero) return;
         _spEffectService.ApplySpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
-        _spEffectService.ApplySpEffect(chrIns, 20011237); //Some 15sec duration speffect, needed for no triple phase attack in lightning phase
+        _spEffectService.ApplySpEffect(chrIns,
+            20011237); //Some 15sec duration speffect, needed for no triple phase attack in lightning phase
         _spEffectService.ApplySpEffect(chrIns, 20011245); // Phase 2 active
     }
 
@@ -423,23 +438,26 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: false);
-        if (_playerService.GetBlockId() == bossRevive.BlockId)
-            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+        if (_playerService.GetBlockId() != bossRevive.BlockId) return;
+        if (bossRevive.ShouldSetNight) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
+        _travelService.WarpToBlockId(bossRevive.Position);
+
     }
 
     private void ReviveBossFirstEncounter()
     {
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: true);
-        if (_playerService.GetBlockId() == bossRevive.BlockId) //TODO check distance needed / area etc
-            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+        if (_playerService.GetBlockId() != bossRevive.BlockId) return;
+        if (bossRevive.ShouldSetNight) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
+        _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter);
     }
 
     private void ReviveAllBosses()
     {
         foreach (var bossRevive in BossRevives.AllItems)
             SetBossFlags(bossRevive, isFirstEncounter: false);
-    
+        
         _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
     }
 
@@ -447,7 +465,7 @@ public class EnemyViewModel : BaseViewModel
     {
         foreach (var bossRevive in BossRevives.AllItems)
             SetBossFlags(bossRevive, isFirstEncounter: true);
-    
+
         _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
     }
 
@@ -455,13 +473,13 @@ public class EnemyViewModel : BaseViewModel
     {
         if (bossRevive.IsDlc && !IsDlcAvailable) return;
         if (!bossRevive.IsInitializeDeadSet) SetInitializeDead(bossRevive.NpcParamIds);
-    
+
         if (isFirstEncounter)
         {
             foreach (var flag in bossRevive.FirstEncounterFlags)
                 _eventService.SetEvent(flag.EventId, flag.SetValue);
         }
-    
+
         foreach (var flag in bossRevive.BossFlags)
             _eventService.SetEvent(flag.EventId, flag.SetValue);
     }
@@ -473,7 +491,6 @@ public class EnemyViewModel : BaseViewModel
             var paramRow = _paramService.GetParamRow(NpcParamTableIndex, NpcParamSlotIndex, npcParamId);
             _paramService.SetBit(paramRow, InitializeDead.Offset, InitializeDead.Bit, true);
         }
-        
     }
 
     #endregion

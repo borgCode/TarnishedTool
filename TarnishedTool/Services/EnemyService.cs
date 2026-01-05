@@ -175,4 +175,7 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager, 
             hookManager.UninstallHook(code.ToInt64());
         }
     }
+
+    public void ToggleDrawNavigationRoute(bool isDrawNavigationRouteEnabled) => 
+        memoryService.WriteUInt8(DrawPathing.Base, isDrawNavigationRouteEnabled ? 1 : 0);
 }

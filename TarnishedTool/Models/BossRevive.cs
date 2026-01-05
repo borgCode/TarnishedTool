@@ -14,9 +14,7 @@ public class BossRevive
     public uint BlockId { get; set; }
     public List<BossFlag> FirstEncounterFlags { get; set; }
     public List<BossFlag> BossFlags { get; set; }
-    public float[] Coords { get; set; } 
-    public float Angle { get; set; }
-    public float[] CoordsFE { get; set; }    // First Encounter coords
-    public float AngleFE { get; set; }
+    public Position Position { get; set; }
+    public Position PositionFirstEncounter { get; set; }
     public bool ShouldSetNight { get; set; }
 }

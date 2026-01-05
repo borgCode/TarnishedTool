@@ -10,19 +10,7 @@ namespace TarnishedTool.Memory
 {
     public class AoBScanner(MemoryService memoryService)
     {
-        public readonly struct RelativeJump
-        {
-            public int Offset { get; }
-            public int RelativeOffsetPosition { get; }
-            public int InstructionLength { get; }
-
-            public RelativeJump(int offset, int relativeOffsetPosition, int instructionLength)
-            {
-                Offset = offset;
-                RelativeOffsetPosition = relativeOffsetPosition;
-                InstructionLength = instructionLength;
-            }
-        }
+        
 
         public void Scan()
         {
@@ -66,6 +54,11 @@ namespace TarnishedTool.Memory
                 () => CSDbgEvent.Base = FindAddressByPattern(Pattern.CSDbgEvent),
                 () => UserInputManager.Base = FindAddressByPattern(Pattern.UserInputManager),
                 () => CSTrophy.Base = FindAddressByPattern(Pattern.CSTrophy),
+                () => DrawPathing.Base = FindAddressByChain(Pattern.DrawPathing,
+                    AddressJump.Relative(0, 3, 7),
+                    AddressJump.Absolute(0xA, 2),
+                    AddressJump.Relative(0, 2, 6)
+                    ),
                 () => MapDebugFlags.Base = FindAddressByPattern(Pattern.MapDebugFlags),
                 () => Functions.GraceWarp = FindAddressByPattern(Pattern.GraceWarp).ToInt64(),
                 () => Functions.SetEvent = FindAddressByPattern(Pattern.SetEvent).ToInt64(),
@@ -198,6 +191,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"MapDebugFlags.Base: 0x{MapDebugFlags.Base.ToInt64():X}");
             Console.WriteLine($@"SoloParamRepositoryImp.Base: 0x{SoloParamRepositoryImp.Base.ToInt64():X}");
             Console.WriteLine($@"MsgRepository.Base: 0x{MsgRepository.Base.ToInt64():X}");
+            Console.WriteLine($@"DrawPathing.Base: 0x{DrawPathing.Base.ToInt64():X}");
 
             Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
             Console.WriteLine($@"Patches.NoRunesFromEnemies: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
@@ -360,25 +354,34 @@ namespace TarnishedTool.Memory
             }
         }
 
-        public IntPtr FindAddressByRelativeChain(Pattern pattern, params RelativeJump[] chain)
+        public IntPtr FindAddressByChain(Pattern pattern, params AddressJump[] chain)
         {
             var baseAddress = FindAddressByPattern(pattern);
             if (baseAddress == IntPtr.Zero)
                 return IntPtr.Zero;
 
-            return FollowRelativeChain(baseAddress, chain);
+            return FollowChain(baseAddress, chain);
         }
 
-        private IntPtr FollowRelativeChain(IntPtr baseAddress, params RelativeJump[] chain)
+        private IntPtr FollowChain(IntPtr baseAddress, params AddressJump[] chain)
         {
             IntPtr currentAddress = baseAddress;
 
             foreach (var jump in chain)
             {
                 IntPtr instructionAddress = IntPtr.Add(currentAddress, jump.Offset);
-                int relativeOffset =
-                    memoryService.ReadInt32(IntPtr.Add(instructionAddress, jump.RelativeOffsetPosition));
-                currentAddress = IntPtr.Add(instructionAddress, relativeOffset + jump.InstructionLength);
+
+                currentAddress = jump.Type switch
+                {
+                    AddressJump.JumpType.Relative32 => IntPtr.Add(
+                        instructionAddress,
+                        memoryService.ReadInt32(IntPtr.Add(instructionAddress, jump.ImmediatePosition)) + jump.InstructionLength),
+
+                    AddressJump.JumpType.Absolute64 => new IntPtr(
+                        memoryService.ReadInt64(IntPtr.Add(instructionAddress, jump.ImmediatePosition))),
+
+                    _ => throw new ArgumentOutOfRangeException()
+                };
             }
 
             return currentAddress;

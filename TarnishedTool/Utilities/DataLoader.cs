@@ -304,21 +304,20 @@ namespace TarnishedTool.Utilities
                 string[] parts = line.Split(',');
 
                 string area = parts[1];
+                var blockId = uint.Parse(parts[5]);
                 
                 BossRevive boss = new BossRevive
                 {
-                    IsDlc = bool.Parse(parts[0]), 
+                    IsDlc = bool.Parse(parts[0]),
                     Area = area,
                     BossName = parts[2],
                     IsInitializeDeadSet = bool.Parse(parts[3]),
                     NpcParamIds = ParseNpcParamIds(parts[4]),
-                    BlockId = uint.Parse(parts[5]),
+                    BlockId = blockId,
                     FirstEncounterFlags = ParseFlags(parts[6]),
                     BossFlags = ParseFlags(parts[7]),
-                    Coords = ParseCoords(parts[8]),
-                    Angle = string.IsNullOrWhiteSpace(parts[9]) ? 0f : float.Parse(parts[9], CultureInfo.InvariantCulture),
-                    CoordsFE = ParseCoords(parts[10]),
-                    AngleFE = string.IsNullOrWhiteSpace(parts[11]) ? 0f : float.Parse(parts[11], CultureInfo.InvariantCulture),
+                    Position = ParsePosition(blockId, parts[8], parts[9]),
+                    PositionFirstEncounter = ParsePosition(blockId, parts[10], parts[11]),
                     ShouldSetNight = bool.Parse(parts[12])
                 };
 
@@ -378,11 +377,20 @@ namespace TarnishedTool.Utilities
             return flags;
         }
         
-        private static float[] ParseCoords(string coordData)
+        private static Position ParsePosition(uint blockId, string coordData, string rotationData)
+        {
+            return new Position(
+                blockId,
+                ParseCoords(coordData),
+                string.IsNullOrWhiteSpace(rotationData) ? 0f : float.Parse(rotationData, CultureInfo.InvariantCulture)
+            );
+        }
+        
+        private static Vector3 ParseCoords(string coordData)
         {
             if (string.IsNullOrWhiteSpace(coordData))
             {
-                return null;
+                return new Vector3();
             }
     
             string[] parts = coordData.Split('|');
@@ -392,8 +400,8 @@ namespace TarnishedTool.Utilities
             {
                 coords[i] = float.Parse(parts[i], CultureInfo.InvariantCulture);
             }
-    
-            return coords;
+            
+            return new Vector3(coords[0], coords[1], coords[2]);
         }
 
         public static List<ShopCommand> GetShops()

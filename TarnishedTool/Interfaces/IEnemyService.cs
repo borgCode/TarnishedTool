@@ -18,4 +18,5 @@ public interface IEnemyService
     void ForceActSequence(int[] actSequence, int npcThinkParamId);
     void UnhookForceAct();
     void ToggleLionCooldownHook(bool isEnabled, int lionMainBossNpcParamId);
+    void ToggleDrawNavigationRoute(bool isDrawNavigationRouteEnabled);
 }
