@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -40,6 +41,8 @@ public class EnemyViewModel : BaseViewModel
     public const int NpcParamTableIndex = 6;
     public const int NpcParamSlotIndex = 0;
     public static readonly BitFlag InitializeDead = new(0x14D, 1 << 3);
+    
+    private bool _shouldSetNight;
 
     public const int PhaseTransitionCooldownSpEffectId = 20011216;
 
@@ -321,6 +324,11 @@ public class EnemyViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         IsDlcAvailable = _dlcService.IsDlcAvailable;
+        if (_shouldSetNight)
+        {
+            _shouldSetNight = false;
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
+        }
     }
 
     private void OnGameNotLoaded()
@@ -441,9 +449,10 @@ public class EnemyViewModel : BaseViewModel
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: false);
         if (_playerService.GetBlockId() != bossRevive.BlockId) return;
-        if (bossRevive.ShouldSetNight) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
-        _travelService.WarpToBlockId(bossRevive.Position);
-
+        
+        if (bossRevive.ShouldSetNight) _shouldSetNight = true;
+        
+        _ = Task.Run(() => _travelService.WarpToBlockId(bossRevive.Position));
     }
 
     private void ReviveBossFirstEncounter()
@@ -451,8 +460,10 @@ public class EnemyViewModel : BaseViewModel
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: true);
         if (_playerService.GetBlockId() != bossRevive.BlockId) return;
-        if (bossRevive.ShouldSetNight) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
-        _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter);
+        
+        if (bossRevive.ShouldSetNight) _shouldSetNight = true;
+        
+        _ = Task.Run(() => _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter));
     }
 
     private void ReviveAllBosses()

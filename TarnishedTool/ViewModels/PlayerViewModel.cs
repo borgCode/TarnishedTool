@@ -706,11 +706,7 @@ namespace TarnishedTool.ViewModels
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
-
-            if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
-            if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
-            if (IsNoHitEnabled) _playerService.ToggleNoHit(true);
-
+            
             LoadStats();
             _playerTick.Start();
             _pauseUpdates = false;
@@ -720,6 +716,9 @@ namespace TarnishedTool.ViewModels
         private void OnFadedIn()
         {
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
+            if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
+            if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
+            if (IsNoHitEnabled) _playerService.ToggleNoHit(true);
         }
 
         private void OnGameFirstLoaded()
