@@ -67,6 +67,7 @@ public static class EzState
         public static TalkCommand UpgradeFlask(int newLevel) => new(109, [newLevel]);
         public static readonly TalkCommand Rebirth = new(113, []);
         public static readonly TalkCommand OpenPhysick = new(130, []);
+        public static readonly TalkCommand OpenMirror = new(81, []);
 
         public static TalkCommand AcquireGesture(int gestureId) => new(131, [gestureId]);
 
