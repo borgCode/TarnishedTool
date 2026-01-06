@@ -3738,6 +3738,7 @@ c3                      ret</value>
   <data name="KeyItems" xml:space="preserve">
     <value>0,40001FAD,Academy Glintstone Key (Player),1,1,0,-1
 0,40001FEE,Academy Glintstone Key (Thops),1,1,0,-1
+0,400022A2,Academy Scroll,1,1,0,-1
 0,40001FE6,Amber Draught,1,1,0,-1
 0,40001FCE,Amber Starlight,1,1,0,-1
 0,40000BB8,Ancestral Infant's Head,1,600,1,12027090
@@ -4553,7 +4554,7 @@ e9 00 00 00 00          jmp    2d &lt;_main+0x2d&gt;</value>
   </data>
   <data name="Shops" xml:space="preserve">
     <value>0,Bernahl,22,100075,100099
-0,Boggart,22,100425,100474
+0,Boggart,22,100150,100174
 0,Borther Corhyn,22,100350,100399
 0,D,22,100125,100149
 1,Dragon Communion - Bayle,135,102350,102351
