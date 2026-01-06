@@ -103,6 +103,4 @@ public enum HotkeyActions
     MovePlayerToCam,
     ToggleFreeCamPlayerMovement,
     DrawEvent,
-    
-    
 }

@@ -26,11 +26,7 @@ public class SettingsViewModel : BaseViewModel
     private LowLevelKeyboardHook _tempHook;
     private Keys _currentKeys;
 
-    public ObservableCollection<HotkeyBindingViewModel> PlayerHotkeys { get; }
-    public ObservableCollection<HotkeyBindingViewModel> EnemiesHotkeys { get; }
-    public ObservableCollection<HotkeyBindingViewModel> TargetHotkeys { get; }
-    public ObservableCollection<HotkeyBindingViewModel> UtilityHotkeys { get; }
-    public ObservableCollection<HotkeyBindingViewModel> EventHotkeys { get; }
+    public SearchableGroupedCollection<string, HotkeyBindingViewModel> Hotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager, IStateService stateService)
     {
@@ -44,140 +40,138 @@ public class SettingsViewModel : BaseViewModel
         stateService.Subscribe(State.GameStart, OnGameStart);
 
 
-        PlayerHotkeys =
-        [
-            new("Set RFBS", HotkeyActions.SetRfbs),
-            new("Set Max Hp", HotkeyActions.SetMaxHp),
-            new("Set Custom Hp", HotkeyActions.PlayerSetCustomHp),
-            new("Save Position 1", HotkeyActions.SavePos1),
-            new("Save Position 2", HotkeyActions.SavePos2),
-            new("Restore Position 1", HotkeyActions.RestorePos1),
-            new("Restore Position 2", HotkeyActions.RestorePos2),
-            new("No Death", HotkeyActions.NoDeath),
-            new("No Damage", HotkeyActions.NoDamage),
-            new("No Hit", HotkeyActions.NoHit),
-            new("Infinite Stamina", HotkeyActions.InfiniteStamina),
-            new("Infinite Consumables", HotkeyActions.InfiniteConsumables),
-            new("Infinite Arrows", HotkeyActions.InfiniteArrows),
-            new("Infinite Fp", HotkeyActions.InfiniteFp),
-            new("One Shot", HotkeyActions.OneShot),
-            new("Infinite Poise", HotkeyActions.InfinitePoise),
-            new("Silent", HotkeyActions.Silent),
-            new("Hidden", HotkeyActions.Hidden),
-            new("Toggle Speed", HotkeyActions.TogglePlayerSpeed),
-            new("Increase Speed", HotkeyActions.IncreasePlayerSpeed),
-            new("Decrease Speed", HotkeyActions.DecreasePlayerSpeed),
-            new("Apply Special Effect", HotkeyActions.ApplySpEffect),
-            new("Remove Special Effect", HotkeyActions.RemoveSpEffect),
-            new("Rune Arc", HotkeyActions.RuneArc),
-            new("Rest Character", HotkeyActions.Rest),
-        ];
+        var groupedHotkeys = new Dictionary<string, List<HotkeyBindingViewModel>>
+        {
+            ["Player"] =
+            [
+                new("Set RFBS", HotkeyActions.SetRfbs),
+                new("Set Max Hp", HotkeyActions.SetMaxHp),
+                new("Set Custom Hp", HotkeyActions.PlayerSetCustomHp),
+                new("Save Position 1", HotkeyActions.SavePos1),
+                new("Save Position 2", HotkeyActions.SavePos2),
+                new("Restore Position 1", HotkeyActions.RestorePos1),
+                new("Restore Position 2", HotkeyActions.RestorePos2),
+                new("No Death", HotkeyActions.NoDeath),
+                new("No Damage", HotkeyActions.NoDamage),
+                new("No Hit", HotkeyActions.NoHit),
+                new("Infinite Stamina", HotkeyActions.InfiniteStamina),
+                new("Infinite Consumables", HotkeyActions.InfiniteConsumables),
+                new("Infinite Arrows", HotkeyActions.InfiniteArrows),
+                new("Infinite Fp", HotkeyActions.InfiniteFp),
+                new("One Shot", HotkeyActions.OneShot),
+                new("Infinite Poise", HotkeyActions.InfinitePoise),
+                new("Silent", HotkeyActions.Silent),
+                new("Hidden", HotkeyActions.Hidden),
+                new("Toggle Speed", HotkeyActions.TogglePlayerSpeed),
+                new("Increase Speed", HotkeyActions.IncreasePlayerSpeed),
+                new("Decrease Speed", HotkeyActions.DecreasePlayerSpeed),
+                new("Apply Special Effect", HotkeyActions.ApplySpEffect),
+                new("Remove Special Effect", HotkeyActions.RemoveSpEffect),
+                new("Rune Arc", HotkeyActions.RuneArc),
+                new("Rest Character", HotkeyActions.Rest)
+            ],
+            ["Enemies"] =
+            [
+                new("All No Death", HotkeyActions.AllNoDeath),
+                new("All No Damage", HotkeyActions.AllNoDamage),
+                new("All No Hit", HotkeyActions.AllNoHit),
+                new("All No Attack", HotkeyActions.AllNoAttack),
+                new("All No Move", HotkeyActions.AllNoMove),
+                new("All Disable Ai", HotkeyActions.AllDisableAi),
+                new("Targeting View", HotkeyActions.AllTargetingView),
+                new("Force EB act sequence", HotkeyActions.ForceEbActSequence),
+                new("Revive Boss", HotkeyActions.ReviveSelectedBoss),
+                new("Revive Boss (1st Encounter)", HotkeyActions.ReviveSelectedBossFirstEncounter),
+            ],
+
+            ["Target"] =
+            [
+                new("Enable Target Options", HotkeyActions.EnableTargetOptions),
+                new("Kill Target", HotkeyActions.KillTarget),
+                new("Set Max Hp", HotkeyActions.SetTargetMaxHp),
+                new("Set Custom Hp", HotkeyActions.SetTargetCustomHp),
+                new("Freeze Hp", HotkeyActions.FreezeTargetHp),
+                new("Show all resistances", HotkeyActions.ShowAllResistances),
+                new("Pop out resistances", HotkeyActions.PopoutResistances),
+                new("Increase Speed", HotkeyActions.IncreaseTargetSpeed),
+                new("Decrease Speed", HotkeyActions.DecreaseTargetSpeed),
+                new("Toggle Speed", HotkeyActions.ToggleTargetSpeed),
+                new("Increment Force Act", HotkeyActions.IncrementForceAct),
+                new("Decrement Force Act", HotkeyActions.DecrementForceAct),
+                new("Set Force Act to 0", HotkeyActions.SetForceActToZero),
+                new("Disable Ai", HotkeyActions.DisableTargetAi),
+                new("Disable All Except Target", HotkeyActions.DisableAllExceptTargetAi),
+                new("No Stagger", HotkeyActions.TargetNoStagger),
+                new("Repeat Act", HotkeyActions.TargetRepeatAct),
+                new("Targeting View", HotkeyActions.TargetTargetingView),
+                new("Open Attack Info", HotkeyActions.ShowAttackInfo),
+                new("Open Defenses", HotkeyActions.ShowDefenses),
+                new("Open Special Effects", HotkeyActions.ShowTargetSpEffects),
+                new("No Move", HotkeyActions.TargetNoMove),
+                new("No Attack", HotkeyActions.TargetNoAttack),
+                new("Force Act Sequence", HotkeyActions.ForceActSequence),
+                new("Kill All Except Target", HotkeyActions.KillAllExceptTarget),
+                new("Reset Position", HotkeyActions.ResetTargetPosition)
+            ],
+            ["Utility"] =
+            [
+                new("Quitout", HotkeyActions.Quitout),
+                new("Force Save", HotkeyActions.ForceSave),
+                new("Noclip", HotkeyActions.Noclip),
+                new("Increase Game Speed", HotkeyActions.IncreaseGameSpeed),
+                new("Decrease Game Speed", HotkeyActions.DecreaseGameSpeed),
+                new("Toggle Game Speed", HotkeyActions.ToggleGameSpeed),
+                new("Toggle 7x Game Speed", HotkeyActions.ToggleSevenSpeed),
+                new("Increase NoClip Speed", HotkeyActions.IncreaseNoClipSpeed),
+                new("Decrease NoClip Speed", HotkeyActions.DecreaseNoClipSpeed),
+                new("Toggle Free Cam", HotkeyActions.ToggleFreeCam),
+                new("Toggle Freeze World", HotkeyActions.ToggleFreezeWorld),
+                new("Move Free Cam to Player", HotkeyActions.MoveCamToPlayer),
+                new("Move Player to Free Cam", HotkeyActions.MovePlayerToCam),
+                new("Move Player when Free Cam", HotkeyActions.ToggleFreeCamPlayerMovement),
+                new("Draw Hitbox", HotkeyActions.DrawHitbox),
+                new("Draw Player Sound", HotkeyActions.DrawPlayerSound),
+                new("Draw Ragdolls", HotkeyActions.DrawRagdolls),
+                new("Draw Poise Bars", HotkeyActions.DrawPoiseBars),
+                new("Draw Low Hit", HotkeyActions.DrawLowHit),
+                new("Draw High Hit", HotkeyActions.DrawHighHit),
+                new("Level Up", HotkeyActions.LevelUp),
+                new("Allot Flasks", HotkeyActions.AllotFlasks),
+                new("Memorize Spells", HotkeyActions.MemorizeSpells),
+                new("Mix Physick", HotkeyActions.MixPhysick),
+                new("Open Chest", HotkeyActions.OpenChest),
+                new("Great Runes", HotkeyActions.GreatRunes),
+                new("Ashes of War", HotkeyActions.AshesOfWar),
+                new("Alter Garments", HotkeyActions.AlterGarments),
+                new("Upgrade", HotkeyActions.Upgrade),
+                new("Sell", HotkeyActions.Sell),
+                new("Rebirth", HotkeyActions.Rebirth),
+                new("Upgrade Flask", HotkeyActions.UpgradeFlask),
+                new("Increase Flask Charges", HotkeyActions.IncreaseFlaskCharges),
+                new("Open Shop Window", HotkeyActions.OpenShopWindow)
+            ],
+
+            ["Event"] =
+            [
+                new("Draw Events", HotkeyActions.DrawEvent),
+                new("Set Morning", HotkeyActions.SetMorning),
+                new("Set Noon", HotkeyActions.SetNoon),
+                new("Set Night", HotkeyActions.SetNight)
+            ],
+        };
+
+        Hotkeys = new SearchableGroupedCollection<string, HotkeyBindingViewModel>(
+            groupedHotkeys,
+            (hotkey, search) => hotkey.DisplayName.ToLower().Contains(search)
+        );
         
-        EnemiesHotkeys =
-        [
-            new("All No Death", HotkeyActions.AllNoDeath),
-            new("All No Damage", HotkeyActions.AllNoDamage),
-            new("All No Hit", HotkeyActions.AllNoHit),
-            new("All No Attack", HotkeyActions.AllNoAttack),
-            new("All No Move", HotkeyActions.AllNoMove),
-            new("All Disable Ai", HotkeyActions.AllDisableAi),
-            new("Targeting View", HotkeyActions.AllTargetingView),
-            new("Force EB act sequence", HotkeyActions.ForceEbActSequence),
-            new("Revive Boss", HotkeyActions.ReviveSelectedBoss),
-            new("Revive Boss (1st Encounter)", HotkeyActions.ReviveSelectedBossFirstEncounter),
-        ];
-
-        TargetHotkeys =
-        [
-            new("Enable Target Options", HotkeyActions.EnableTargetOptions),
-            new("Kill Target", HotkeyActions.KillTarget),
-            new("Set Max Hp", HotkeyActions.SetTargetMaxHp),
-            new("Set Custom Hp", HotkeyActions.SetTargetCustomHp),
-            new("Freeze Hp", HotkeyActions.FreezeTargetHp),
-            new("Show all resistances", HotkeyActions.ShowAllResistances),
-            new("Pop out resistances", HotkeyActions.PopoutResistances),
-            new("Increase Speed", HotkeyActions.IncreaseTargetSpeed),
-            new("Decrease Speed", HotkeyActions.DecreaseTargetSpeed),
-            new("Toggle Speed", HotkeyActions.ToggleTargetSpeed),
-            new("Increment Force Act", HotkeyActions.IncrementForceAct),
-            new("Decrement Force Act", HotkeyActions.DecrementForceAct),
-            new("Set Force Act to 0", HotkeyActions.SetForceActToZero),
-            new("Disable Ai", HotkeyActions.DisableTargetAi),
-            new("Disable All Except Target", HotkeyActions.DisableAllExceptTargetAi),
-            new("No Stagger", HotkeyActions.TargetNoStagger),
-            new("Repeat Act", HotkeyActions.TargetRepeatAct),
-            new("Targeting View", HotkeyActions.TargetTargetingView),
-            new("Open Attack Info", HotkeyActions.ShowAttackInfo),
-            new("Open Defenses", HotkeyActions.ShowDefenses),
-            new("Open Special Effects", HotkeyActions.ShowTargetSpEffects),
-            new("No Move", HotkeyActions.TargetNoMove),
-            new("No Attack", HotkeyActions.TargetNoAttack),
-            new("Force Act Sequence", HotkeyActions.ForceActSequence),
-            new("Kill All Except Target", HotkeyActions.KillAllExceptTarget),
-            new("Reset Position", HotkeyActions.ResetTargetPosition),
-        ];
-
-        UtilityHotkeys =
-        [
-            new("Quitout", HotkeyActions.Quitout),
-            new("Force Save", HotkeyActions.ForceSave),
-            new("Noclip", HotkeyActions.Noclip),
-            new("Increase Game Speed", HotkeyActions.IncreaseGameSpeed),
-            new("Decrease Game Speed", HotkeyActions.DecreaseGameSpeed),
-            new("Toggle Game Speed", HotkeyActions.ToggleGameSpeed),
-            new("Toggle 7x Game Speed", HotkeyActions.ToggleSevenSpeed),
-            new("Increase NoClip Speed", HotkeyActions.IncreaseNoClipSpeed),
-            new("Decrease NoClip Speed", HotkeyActions.DecreaseNoClipSpeed),
-            new("Toggle Free Cam", HotkeyActions.ToggleFreeCam),
-            new("Toggle Freeze World", HotkeyActions.ToggleFreezeWorld),
-            new("Move Free Cam to Player", HotkeyActions.MoveCamToPlayer),
-            new("Move Player to Free Cam", HotkeyActions.MovePlayerToCam),
-            new("Move Player when Free Cam", HotkeyActions.ToggleFreeCamPlayerMovement),
-            new("Draw Hitbox", HotkeyActions.DrawHitbox),
-            new("Draw Player Sound", HotkeyActions.DrawPlayerSound),
-            new("Draw Ragdolls", HotkeyActions.DrawRagdolls),
-            new("Draw Poise Bars", HotkeyActions.DrawPoiseBars),
-            new("Draw Low Hit", HotkeyActions.DrawLowHit),
-            new("Draw High Hit", HotkeyActions.DrawHighHit),
-            new("Level Up", HotkeyActions.LevelUp),
-            new("Allot Flasks", HotkeyActions.AllotFlasks),
-            new("Memorize Spells", HotkeyActions.MemorizeSpells),
-            new("Mix Physick", HotkeyActions.MixPhysick),
-            new("Open Chest", HotkeyActions.OpenChest),
-            new("Great Runes", HotkeyActions.GreatRunes),
-            new("Ashes of War", HotkeyActions.AshesOfWar),
-            new("Alter Garments", HotkeyActions.AlterGarments),
-            new("Upgrade", HotkeyActions.Upgrade),
-            new("Sell", HotkeyActions.Sell),
-            new("Rebirth", HotkeyActions.Rebirth),
-            new("Upgrade Flask", HotkeyActions.UpgradeFlask),
-            new("Increase Flask Charges", HotkeyActions.IncreaseFlaskCharges),
-            new("Open Shop Window", HotkeyActions.OpenShopWindow),
-        ];
-
-        EventHotkeys =
-        [
-            new("Draw Events", HotkeyActions.DrawEvent),
-            new("Set Morning", HotkeyActions.SetMorning),
-            new("Set Noon", HotkeyActions.SetNoon),
-            new("Set Night", HotkeyActions.SetNight),
-        ];
-
-
-        _hotkeyLookup = PlayerHotkeys
-            .Concat(EnemiesHotkeys)
-            .Concat(TargetHotkeys)
-            .Concat(UtilityHotkeys)
-            .Concat(EventHotkeys)
-            .ToDictionary(h => h.ActionId);
-
+        _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
+        
         LoadHotkeyDisplays();
         RegisterHotkeys();
-
         ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);
     }
 
-    
     #region Commands
 
     public ICommand ClearHotkeysCommand { get; set; }
@@ -210,7 +204,7 @@ public class SettingsViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isHotkeyReminderEnabled;
 
     public bool IsHotkeyReminderEnabled
@@ -225,7 +219,7 @@ public class SettingsViewModel : BaseViewModel
             }
         }
     }
-    
+
     private bool _isBlockGameHotkeysEnabled;
 
     public bool IsBlockGameHotkeysEnabled
@@ -393,7 +387,7 @@ public class SettingsViewModel : BaseViewModel
         OnPropertyChanged(nameof(IsNoLogoEnabled));
         _isMuteMusicEnabled = SettingsManager.Default.MuteMusic;
         OnPropertyChanged(nameof(IsMuteMusicEnabled));
-        
+
         _isHotkeyReminderEnabled = SettingsManager.Default.HotkeyReminder;
         OnPropertyChanged(nameof(IsHotkeyReminderEnabled));
     }
@@ -415,7 +409,7 @@ public class SettingsViewModel : BaseViewModel
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
     }
-    
+
     private void OnGameStart()
     {
         if (!IsHotkeyReminderEnabled) return;

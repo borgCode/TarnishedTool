@@ -30,6 +30,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
     private ObservableCollection<TGroup> _groups;
     public ObservableCollection<TGroup> Groups => _groups;
     private ObservableCollection<TItem> _items;
+    public List<TItem> this[TGroup group] => _groupedItems[group];
 
     public ObservableCollection<TItem> Items
     {

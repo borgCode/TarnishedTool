@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              Focusable="True"
              FocusManager.FocusedElement="{x:Null}"
              Loaded="UserControl_Loaded">
@@ -11,11 +12,9 @@
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBlock Text="{Binding DisplayName}"
                            Width="150"
-                           VerticalAlignment="Center"
-                           
-                           />
+                           VerticalAlignment="Center" />
                 <TextBox Text="{Binding HotkeyText}"
-                         
+
                          Style="{StaticResource HotkeyTextBoxStyle}"
                          Tag="{Binding ActionId}"
                          GotFocus="HotkeyTextBox_GotFocus"
@@ -23,6 +22,8 @@
                          KeyDown="HotkeyTextBox_KeyDown" />
             </StackPanel>
         </DataTemplate>
+        <xcad:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
+        <xcad:BoolToVisibilityConverter x:Key="BoolToVisibility" />
     </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="#333" CornerRadius="3" Margin="5">
         <StackPanel Margin="10">
@@ -73,7 +74,7 @@
             </StackPanel>
 
             <Separator Margin="0,0,0,10" />
-            
+
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="10,0,0,10" HorizontalAlignment="Left" />
                 <CheckBox Content="Enable Hotkeys"
@@ -81,8 +82,8 @@
                           Margin="40,0,0,10" />
                 <CheckBox Content="Block Game Actions"
                           IsChecked="{Binding IsBlockGameHotkeysEnabled}"
-                          Margin="20,0,10,10"/>
-                
+                          Margin="20,0,10,10" />
+
                 <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,10"
                         VerticalAlignment="Center"
                         ToolTip="Disables game actions from happening when you press a hotkey that you've bound to something in here.&#x0A;This may cause some lag depending on your setup"
@@ -90,81 +91,158 @@
                     <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
                                VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
                 </Border>
-                <Button 
-                    Content="Clear All Bindings" 
+                <Button
+                    Content="Clear All Bindings"
                     Margin="15,0,0,10"
-                    Command="{Binding ClearHotkeysCommand}"
-                   />
+                    Command="{Binding ClearHotkeysCommand}" />
             </StackPanel>
-            
 
-            <TabControl x:Name="HotkeyCategoriesTabControl" Margin="0,5,0,0">
-                <TabItem Header="Player">
-                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding PlayerHotkeys}"
-                                      Padding="10"
-                                      ItemTemplate="{StaticResource HotkeyItemTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="2"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Enemies">
-                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding EnemiesHotkeys}"
-                                      Padding="10"
-                                      ItemTemplate="{StaticResource HotkeyItemTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="2"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Target">
-                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding TargetHotkeys}"
-                                      Padding="10"
-                                      ItemTemplate="{StaticResource HotkeyItemTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="2"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Utility">
-                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding UtilityHotkeys}"
-                                      Padding="10"
-                                      ItemTemplate="{StaticResource HotkeyItemTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="2"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Event">
-                    <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding EventHotkeys}"
-                                      Padding="10"
-                                      ItemTemplate="{StaticResource HotkeyItemTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <UniformGrid Columns="2"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </TabItem>
-            </TabControl>
+
+            <Grid Margin="0,5,0,0">
+
+                <TabControl Margin="0,5,0,0"
+                            Visibility="{Binding Hotkeys.IsSearchActive, Converter={StaticResource InverseBoolToVisibility}}">
+
+                    <TabItem Header="Player">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Player]}"
+                                          Padding="10"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Enemies">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Enemies]}"
+                                          Padding="10"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Target">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Target]}"
+                                          Padding="10"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Utility">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Utility]}"
+                                          Padding="10"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Event">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Event]}"
+                                          Padding="10"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+
+                <ScrollViewer MaxHeight="390"
+                              Margin="0,40,0,0"
+                              VerticalScrollBarVisibility="Auto"
+                              Visibility="{Binding Hotkeys.IsSearchActive, Converter={StaticResource BoolToVisibility}}">
+                    <ItemsControl ItemsSource="{Binding Hotkeys.Items}"
+                                  Padding="10"
+                                  ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+                <TextBox Text="{Binding Hotkeys.SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         HorizontalAlignment="Right"
+                         VerticalAlignment="Top"
+                         Width="150"
+                         Height="30"
+                         Margin="0,2,10,0">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost"
+                                                  Focusable="false"
+                                                  HorizontalScrollBarVisibility="Hidden"
+                                                  VerticalScrollBarVisibility="Hidden"
+                                                  VerticalAlignment="Center"
+                                                  Margin="5,0,0,0" />
+                                    <TextBlock x:Name="placeholderText"
+                                               Text="Search hotkeys..."
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Left"
+                                               Margin="5,0,0,0"
+                                               Foreground="Gray"
+                                               IsHitTestVisible="False">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                Value="" />
+                                                            <Condition
+                                                                Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                Value="False" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush"
+                                            Value="{StaticResource AccentBrush}" />
+                                    <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+            </Grid>
         </StackPanel>
     </Border>
 </UserControl>
