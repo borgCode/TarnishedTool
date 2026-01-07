@@ -4,7 +4,7 @@ namespace TarnishedTool.Enums;
 
 public enum GameVersion
 {
-    
+    Version1_2_0, //1.02
     Version2_0_1, //1.10.1
     Version2_2_0, // 1.12.2
     Version2_2_3, // 1.12.4
