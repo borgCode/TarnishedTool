@@ -2123,30 +2123,14 @@ c3                      ret</value>
   </data>
   <data name="Cookbooks" xml:space="preserve">
     <value>0,40002134,Crafting Kit,1,1,1,60120
-0,40002454,Nomadic Warrior's Cookbook [1],1,1,1,67000
-0,4000245F,Nomadic Warrior's Cookbook [2],1,1,1,67110
-0,40002455,Nomadic Warrior's Cookbook [3],1,1,1,67010
-0,400024A4,Nomadic Warrior's Cookbook [4],1,1,1,67800
-0,400024A7,Nomadic Warrior's Cookbook [5],1,1,1,67830
-0,40002456,Nomadic Warrior's Cookbook [6],1,1,1,67020
-0,40002459,Nomadic Warrior's Cookbook [7],1,1,1,67050
-0,400024AC,Nomadic Warrior's Cookbook [8],1,1,1,67880
-0,4000247F,Nomadic Warrior's Cookbook [9],1,1,1,67430
-0,40002457,Nomadic Warrior's Cookbook [10],1,1,1,67030
-0,4000246A,Nomadic Warrior's Cookbook [11],1,1,1,67220
-0,4000245A,Nomadic Warrior's Cookbook [12],1,1,1,67060
-0,4000245C,Nomadic Warrior's Cookbook [13],1,1,1,67080
-0,400024AB,Nomadic Warrior's Cookbook [14],1,1,1,67870
-0,400024AE,Nomadic Warrior's Cookbook [15],1,1,1,67900
-0,40002471,Nomadic Warrior's Cookbook [16],1,1,1,67290
-0,4000245E,Nomadic Warrior's Cookbook [17],1,1,1,67100
-0,4000246F,Nomadic Warrior's Cookbook [18],1,1,1,67270
-0,4000245B,Nomadic Warrior's Cookbook [19],1,1,1,67070
-0,4000246B,Nomadic Warrior's Cookbook [20],1,1,1,67230
-0,40002460,Nomadic Warrior's Cookbook [21],1,1,1,67120
-0,400024AD,Nomadic Warrior's Cookbook [22],1,1,1,67890
-0,4000245D,Nomadic Warrior's Cookbook [23],1,1,1,67090
-0,400024AF,Nomadic Warrior's Cookbook [24],1,1,1,67910
+0,400024B8,Ancient Dragon Apostle's Cookbook [1],1,1,1,68000
+0,400024B9,Ancient Dragon Apostle's Cookbook [2],1,1,1,68010
+0,400024BB,Ancient Dragon Apostle's Cookbook [3],1,1,1,68030
+0,400024BA,Ancient Dragon Apostle's Cookbook [4],1,1,1,68020
+1,401EA8EC,Ancient Dragon Knight's Cookbook [1],1,1,1,68740
+1,401EA8F0,Ancient Dragon Knight's Cookbook [2],1,1,1,68780
+1,401EA8FD,Antiquity Scholar's Cookbook [1],1,1,1,68910
+1,401EA8F8,Antiquity Scholar's Cookbook [2],1,1,1,68860
 0,40002468,Armorer's Cookbook [1],1,1,1,67200
 0,40002469,Armorer's Cookbook [2],1,1,1,67210
 0,40002470,Armorer's Cookbook [3],1,1,1,67280
@@ -2154,65 +2138,26 @@ c3                      ret</value>
 0,40002473,Armorer's Cookbook [5],1,1,1,67310
 0,40002472,Armorer's Cookbook [6],1,1,1,67300
 0,4000246D,Armorer's Cookbook [7],1,1,1,67250
-0,4000247D,Glintstone Craftsman's Cookbook [1],1,1,1,67410
-0,40002481,Glintstone Craftsman's Cookbook [2],1,1,1,67450
-0,40002484,Glintstone Craftsman's Cookbook [3],1,1,1,67480
-0,4000247C,Glintstone Craftsman's Cookbook [4],1,1,1,67400
-0,4000247E,Glintstone Craftsman's Cookbook [5],1,1,1,67420
-0,40002482,Glintstone Craftsman's Cookbook [6],1,1,1,67460
-0,40002483,Glintstone Craftsman's Cookbook [7],1,1,1,67470
-0,40002480,Glintstone Craftsman's Cookbook [8],1,1,1,67440
-0,40002491,Missionary's Cookbook [1],1,1,1,67610
-0,40002490,Missionary's Cookbook [2],1,1,1,67600
-0,40002495,Missionary's Cookbook [3],1,1,1,67650
-0,40002494,Missionary's Cookbook [4],1,1,1,67640
-0,40002493,Missionary's Cookbook [5],1,1,1,67630
-0,40002461,Missionary's Cookbook [6],1,1,1,67130
-0,400024CF,Missionary's Cookbook [7],1,1,1,68230
-0,400024B8,Ancient Dragon Apostle's Cookbook [1],1,1,1,68000
-0,400024B9,Ancient Dragon Apostle's Cookbook [2],1,1,1,68010
-0,400024BB,Ancient Dragon Apostle's Cookbook [3],1,1,1,68030
-0,400024BA,Ancient Dragon Apostle's Cookbook [4],1,1,1,68020
-0,400024A8,Perfumer's Cookbook [1],1,1,1,67840
-0,400024A9,Perfumer's Cookbook [2],1,1,1,67850
-0,400024AA,Perfumer's Cookbook [3],1,1,1,67860
-0,400024B0,Perfumer's Cookbook [4],1,1,1,67920
+1,401EA8F2,Battlefield Priest's Cookbook [1],1,1,1,68800
+1,401EA8F4,Battlefield Priest's Cookbook [2],1,1,1,68820
+1,401EA8FB,Battlefield Priest's Cookbook [3],1,1,1,68890
+1,401EA8FF,Battlefield Priest's Cookbook [4],1,1,1,68930
 0,400024CC,Fevor's Cookbook [1],1,1,1,68200
 0,400024CE,Fevor's Cookbook [2],1,1,1,68220
 0,400024CD,Fevor's Cookbook [3],1,1,1,68210
+1,401EA8FE,Finger-Weaver's Cookbook [1],1,1,1,68920
+1,401EA8DC,Finger-Weaver's Cookbook [2],1,1,1,68580
+1,401EA8EF,Fire Knight's Cookbook [1],1,1,1,68770
+1,401EA8FC,Fire Knight's Cookbook [2],1,1,1,68900
+1,401EA8D6,Forager Brood Cookbook [1],1,1,1,68520
+1,401EA8D7,Forager Brood Cookbook [2],1,1,1,68530
+1,401EA8D8,Forager Brood Cookbook [3],1,1,1,68540
+1,401EA8D9,Forager Brood Cookbook [4],1,1,1,68550
+1,401EA8DA,Forager Brood Cookbook [5],1,1,1,68560
+1,401EA8D5,Forager Brood Cookbook [6],1,1,1,68510
+1,401EA8F5,Forager Brood Cookbook [7],1,1,1,68830
 0,400024E0,Frenzied's Cookbook [1],1,1,1,68400
 0,400024E1,Frenzied's Cookbook [2],1,1,1,68410
-0,40002454,Nomadic Warrior's Cookbook [1],1,1,1,67000
-0,4000245F,Nomadic Warrior's Cookbook [2],1,1,1,67110
-0,40002455,Nomadic Warrior's Cookbook [3],1,1,1,67010
-0,400024A4,Nomadic Warrior's Cookbook [4],1,1,1,67800
-0,400024A7,Nomadic Warrior's Cookbook [5],1,1,1,67830
-0,40002456,Nomadic Warrior's Cookbook [6],1,1,1,67020
-0,40002459,Nomadic Warrior's Cookbook [7],1,1,1,67050
-0,400024AC,Nomadic Warrior's Cookbook [8],1,1,1,67880
-0,4000247F,Nomadic Warrior's Cookbook [9],1,1,1,67430
-0,40002457,Nomadic Warrior's Cookbook [10],1,1,1,67030
-0,4000246A,Nomadic Warrior's Cookbook [11],1,1,1,67220
-0,4000245A,Nomadic Warrior's Cookbook [12],1,1,1,67060
-0,4000245C,Nomadic Warrior's Cookbook [13],1,1,1,67080
-0,400024AB,Nomadic Warrior's Cookbook [14],1,1,1,67870
-0,400024AE,Nomadic Warrior's Cookbook [15],1,1,1,67900
-0,40002471,Nomadic Warrior's Cookbook [16],1,1,1,67290
-0,4000245E,Nomadic Warrior's Cookbook [17],1,1,1,67100
-0,4000246F,Nomadic Warrior's Cookbook [18],1,1,1,67270
-0,4000245B,Nomadic Warrior's Cookbook [19],1,1,1,67070
-0,4000246B,Nomadic Warrior's Cookbook [20],1,1,1,67230
-0,40002460,Nomadic Warrior's Cookbook [21],1,1,1,67120
-0,400024AD,Nomadic Warrior's Cookbook [22],1,1,1,67890
-0,4000245D,Nomadic Warrior's Cookbook [23],1,1,1,67090
-0,400024AF,Nomadic Warrior's Cookbook [24],1,1,1,67910
-0,40002468,Armorer's Cookbook [1],1,1,1,67200
-0,40002469,Armorer's Cookbook [2],1,1,1,67210
-0,40002470,Armorer's Cookbook [3],1,1,1,67280
-0,4000246E,Armorer's Cookbook [4],1,1,1,67260
-0,40002473,Armorer's Cookbook [5],1,1,1,67310
-0,40002472,Armorer's Cookbook [6],1,1,1,67300
-0,4000246D,Armorer's Cookbook [7],1,1,1,67250
 0,4000247D,Glintstone Craftsman's Cookbook [1],1,1,1,67410
 0,40002481,Glintstone Craftsman's Cookbook [2],1,1,1,67450
 0,40002484,Glintstone Craftsman's Cookbook [3],1,1,1,67480
@@ -2221,26 +2166,14 @@ c3                      ret</value>
 0,40002482,Glintstone Craftsman's Cookbook [6],1,1,1,67460
 0,40002483,Glintstone Craftsman's Cookbook [7],1,1,1,67470
 0,40002480,Glintstone Craftsman's Cookbook [8],1,1,1,67440
-0,40002491,Missionary's Cookbook [1],1,1,1,67610
-0,40002490,Missionary's Cookbook [2],1,1,1,67600
-0,40002495,Missionary's Cookbook [3],1,1,1,67650
-0,40002494,Missionary's Cookbook [4],1,1,1,67640
-0,40002493,Missionary's Cookbook [5],1,1,1,67630
-0,40002461,Missionary's Cookbook [6],1,1,1,67130
-0,400024CF,Missionary's Cookbook [7],1,1,1,68230
-0,400024B8,Ancient Dragon Apostle's Cookbook [1],1,1,1,68000
-0,400024B9,Ancient Dragon Apostle's Cookbook [2],1,1,1,68010
-0,400024BB,Ancient Dragon Apostle's Cookbook [3],1,1,1,68030
-0,400024BA,Ancient Dragon Apostle's Cookbook [4],1,1,1,68020
-0,400024A8,Perfumer's Cookbook [1],1,1,1,67840
-0,400024A9,Perfumer's Cookbook [2],1,1,1,67850
-0,400024AA,Perfumer's Cookbook [3],1,1,1,67860
-0,400024B0,Perfumer's Cookbook [4],1,1,1,67920
-0,400024CC,Fevor's Cookbook [1],1,1,1,68200
-0,400024CE,Fevor's Cookbook [2],1,1,1,68220
-0,400024CD,Fevor's Cookbook [3],1,1,1,68210
-0,400024E0,Frenzied's Cookbook [1],1,1,1,68400
-0,400024E1,Frenzied's Cookbook [2],1,1,1,684101,401EA8DD,Greater Potentate's Cookbook [1],1,1,1,68590
+1,401EA900,Grave Keeper's Cookbook [1],1,1,1,68940
+1,401EA8F7,Grave Keeper's Cookbook [2],1,1,1,68850
+1,401EA8DD,Greater Potentate's Cookbook [1],1,1,1,68590
+1,401EA8E3,Greater Potentate's Cookbook [10],1,1,1,68650
+1,401EA8E4,Greater Potentate's Cookbook [11],1,1,1,68660
+1,401EA8E0,Greater Potentate's Cookbook [12],1,1,1,68620
+1,401EA8E8,Greater Potentate's Cookbook [13],1,1,1,68700
+1,401EA8E9,Greater Potentate's Cookbook [14],1,1,1,68710
 1,401EA8EB,Greater Potentate's Cookbook [2],1,1,1,68730
 1,401EA8E7,Greater Potentate's Cookbook [3],1,1,1,68690
 1,401EA8DE,Greater Potentate's Cookbook [4],1,1,1,68600
@@ -2249,42 +2182,51 @@ c3                      ret</value>
 1,401EA8E1,Greater Potentate's Cookbook [7],1,1,1,68630
 1,401EA8E6,Greater Potentate's Cookbook [8],1,1,1,68680
 1,401EA8E2,Greater Potentate's Cookbook [9],1,1,1,68640
-1,401EA8E3,Greater Potentate's Cookbook [10],1,1,1,68650
-1,401EA8E4,Greater Potentate's Cookbook [11],1,1,1,68660
-1,401EA8E0,Greater Potentate's Cookbook [12],1,1,1,68620
-1,401EA8E8,Greater Potentate's Cookbook [13],1,1,1,68700
-1,401EA8E9,Greater Potentate's Cookbook [14],1,1,1,68710
+1,401EA8F3,Igon's Cookbook [1],1,1,1,68810
+1,401EA8DB,Igon's Cookbook [2],1,1,1,68570
+1,401EA8F1,Loyal Knight's Cookbook,1,1,1,68790
 1,401EA8ED,Mad Craftsman's Cookbook [1],1,1,1,68750
 1,401EA8E5,Mad Craftsman's Cookbook [2],1,1,1,68670
 1,401EA8FA,Mad Craftsman's Cookbook [3],1,1,1,68880
-1,401EA8EC,Ancient Dragon Knight's Cookbook [1],1,1,1,68740
-1,401EA8F0,Ancient Dragon Knight's Cookbook [2],1,1,1,68780
+0,40002491,Missionary's Cookbook [1],1,1,1,67610
+0,40002490,Missionary's Cookbook [2],1,1,1,67600
+0,40002495,Missionary's Cookbook [3],1,1,1,67650
+0,40002494,Missionary's Cookbook [4],1,1,1,67640
+0,40002493,Missionary's Cookbook [5],1,1,1,67630
+0,40002461,Missionary's Cookbook [6],1,1,1,67130
+0,400024CF,Missionary's Cookbook [7],1,1,1,68230
+0,40002454,Nomadic Warrior's Cookbook [1],1,1,1,67000
+0,40002457,Nomadic Warrior's Cookbook [10],1,1,1,67030
+0,4000246A,Nomadic Warrior's Cookbook [11],1,1,1,67220
+0,4000245A,Nomadic Warrior's Cookbook [12],1,1,1,67060
+0,4000245C,Nomadic Warrior's Cookbook [13],1,1,1,67080
+0,400024AB,Nomadic Warrior's Cookbook [14],1,1,1,67870
+0,400024AE,Nomadic Warrior's Cookbook [15],1,1,1,67900
+0,40002471,Nomadic Warrior's Cookbook [16],1,1,1,67290
+0,4000245E,Nomadic Warrior's Cookbook [17],1,1,1,67100
+0,4000246F,Nomadic Warrior's Cookbook [18],1,1,1,67270
+0,4000245B,Nomadic Warrior's Cookbook [19],1,1,1,67070
+0,4000245F,Nomadic Warrior's Cookbook [2],1,1,1,67110
+0,4000246B,Nomadic Warrior's Cookbook [20],1,1,1,67230
+0,40002460,Nomadic Warrior's Cookbook [21],1,1,1,67120
+0,400024AD,Nomadic Warrior's Cookbook [22],1,1,1,67890
+0,4000245D,Nomadic Warrior's Cookbook [23],1,1,1,67090
+0,400024AF,Nomadic Warrior's Cookbook [24],1,1,1,67910
+0,40002455,Nomadic Warrior's Cookbook [3],1,1,1,67010
+0,400024A4,Nomadic Warrior's Cookbook [4],1,1,1,67800
+0,400024A7,Nomadic Warrior's Cookbook [5],1,1,1,67830
+0,40002456,Nomadic Warrior's Cookbook [6],1,1,1,67020
+0,40002459,Nomadic Warrior's Cookbook [7],1,1,1,67050
+0,400024AC,Nomadic Warrior's Cookbook [8],1,1,1,67880
+0,4000247F,Nomadic Warrior's Cookbook [9],1,1,1,67430
+0,400024A8,Perfumer's Cookbook [1],1,1,1,67840
+0,400024A9,Perfumer's Cookbook [2],1,1,1,67850
+0,400024AA,Perfumer's Cookbook [3],1,1,1,67860
+0,400024B0,Perfumer's Cookbook [4],1,1,1,67920
 1,401EA8EE,St. Trina Disciple's Cookbook [1],1,1,1,68760
 1,401EA901,St. Trina Disciple's Cookbook [2],1,1,1,68950
 1,401EA8F6,St. Trina Disciple's Cookbook [3],1,1,1,68840
-1,401EA8D6,Forager Brood Cookbook [1],1,1,1,68520
-1,401EA8D7,Forager Brood Cookbook [2],1,1,1,68530
-1,401EA8D8,Forager Brood Cookbook [3],1,1,1,68540
-1,401EA8D9,Forager Brood Cookbook [4],1,1,1,68550
-1,401EA8DA,Forager Brood Cookbook [5],1,1,1,68560
-1,401EA8D5,Forager Brood Cookbook [6],1,1,1,68510
-1,401EA8F5,Forager Brood Cookbook [7],1,1,1,68830
-1,401EA8F3,Igon's Cookbook [1],1,1,1,68810
-1,401EA8DB,Igon's Cookbook [2],1,1,1,68570
-1,401EA8FE,Finger-Weaver's Cookbook [1],1,1,1,68920
-1,401EA8DC,Finger-Weaver's Cookbook [2],1,1,1,68580
-1,401EA8EF,Fire Knight's Cookbook [1],1,1,1,68770
-1,401EA8FC,Fire Knight's Cookbook [2],1,1,1,68900
-1,401EA8F2,Battlefield Priest's Cookbook [1],1,1,1,68800
-1,401EA8F4,Battlefield Priest's Cookbook [2],1,1,1,68820
-1,401EA8FB,Battlefield Priest's Cookbook [3],1,1,1,68890
-1,401EA8FF,Battlefield Priest's Cookbook [4],1,1,1,68930
-1,401EA900,Grave Keeper's Cookbook [1],1,1,1,68940
-1,401EA8F7,Grave Keeper's Cookbook [2],1,1,1,68850
-1,401EA8FD,Antiquity Scholar's Cookbook [1],1,1,1,68910
-1,401EA8F8,Antiquity Scholar's Cookbook [2],1,1,1,68860
-1,401EA8F9,Tibia's Cookbook,1,1,1,68870
-1,401EA8F1,Loyal Knight's Cookbook,1,1,1,68790</value>
+1,401EA8F9,Tibia's Cookbook,1,1,1,68870</value>
   </data>
   <data name="CrystalTears" xml:space="preserve">
     <value>1,401eafaa,Bloodsucking Cracked Tear,1,1
@@ -3738,6 +3680,7 @@ c3                      ret</value>
   <data name="KeyItems" xml:space="preserve">
     <value>0,40001FAD,Academy Glintstone Key (Player),1,1,0,-1
 0,40001FEE,Academy Glintstone Key (Thops),1,1,0,-1
+0,400022A2,Academy Scroll,1,1,0,-1
 0,40001FE6,Amber Draught,1,1,0,-1
 0,40001FCE,Amber Starlight,1,1,0,-1
 0,40000BB8,Ancestral Infant's Head,1,600,1,12027090
@@ -3924,7 +3867,7 @@ c3                      ret</value>
 0,40002738,Talisman Pouch (Enia),3,0,1,60500
 0,40002738,Talisman Pouch (Golden Shade Godfrey),3,0,1,60520
 0,40002738,Talisman Pouch (Margit/Morgott),3,0,1,60510
-0,4000006A,Tarnished's Furled Finger,1,0,1,60210
+0,40000064,Tarnished's Furled Finger,1,0,1,60220
 0,4000006C,Tautner's Tongue,1,0,1,60300
 0,40002002,The Stormhawk King,1,1,1,10017010
 1,401E8CDC,Thiollier's Concoction,99,600,0,-1
@@ -4553,7 +4496,7 @@ e9 00 00 00 00          jmp    2d &lt;_main+0x2d&gt;</value>
   </data>
   <data name="Shops" xml:space="preserve">
     <value>0,Bernahl,22,100075,100099
-0,Boggart,22,100425,100474
+0,Boggart,22,100150,100174
 0,Borther Corhyn,22,100350,100399
 0,D,22,100125,100149
 1,Dragon Communion - Bayle,135,102350,102351

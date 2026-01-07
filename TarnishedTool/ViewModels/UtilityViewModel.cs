@@ -78,6 +78,7 @@ namespace TarnishedTool.ViewModels
             MovePlayerToCamCommand = new DelegateCommand(MovePlayerToCam);
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
+            OpenMirrorCommand = new DelegateCommand(OpenMirror);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -108,6 +109,7 @@ namespace TarnishedTool.ViewModels
         public ICommand MovePlayerToCamCommand { get; }
         public ICommand UpgradeFlaskCommand { get; }
         public ICommand IncreaseChargesCommand { get; }
+        public ICommand OpenMirrorCommand { get; }
 
         #endregion
 
@@ -774,6 +776,8 @@ namespace TarnishedTool.ViewModels
             _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenAlterGarments);
 
         private void OpenRebirth() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.Rebirth);
+
+        private void OpenMirror() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenMirror);
 
         private void OpenUpgrade()
         {

@@ -461,6 +461,11 @@
                                 </MultiBinding>
                             </Button.IsEnabled>
                         </Button>
+                        <Button
+                            Content="Open Mirror"
+                            Command="{Binding OpenMirrorCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0"/>
                     </WrapPanel>
                 </TabItem>
 
