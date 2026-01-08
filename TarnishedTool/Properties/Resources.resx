@@ -1211,7 +1211,7 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 1,Scadu Atlus,Commander Gaius,1026633728,47.49|583.85|-48.13|1,-2.63
 1,Scadu Atlus,Count Ymir Mother of Fingers,1026764032,-90.98|472.02|38.30|1,0.02
 1,Scadu Atlus,Curseblade Labirith,687931392,-173.37|191.35|70.14|1,2.17
-1,Scadu Atlus,Death Knight (Longhaft Axe),671088640,-397.88|114.01|-34.10|1,1.39
+1,Scadu Atlus,Death Knight (Twin Axes),671088640,-397.88|114.01|-34.10|1,1.39
 1,Scadu Atlus,Dryleaf Dane,1026632704,-54.73|351.25|119.46|1,-1.09
 1,Scadu Atlus,Ghostflame Dragon,1026632448,-22.68|405.52|77.27|1,-2.96
 1,Scadu Atlus,Golden Hippopotamus,352321536,62.09|157.06|107.72|1,-2.68
@@ -1220,7 +1220,7 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 1,Scadu Atlus,Rakshasa,1026763776,-13.03|162.91|78.79|1,-2.35
 1,Scadu Atlus,Ralva the Great Red Bear,1026633216,36.31|405.90|-99.81|1,-0.51
 1,Scadu Atlus,Tree Sentinel (Torch and Shield),1026699008,-48.11|553.42|109.64|1,-2.02
-1,Rauh Base,Death Knight (Twin Axes),671154176,168.46|150.02|-117.10|1,-0.68
+1,Rauh Base,Death Knight (Longhaft Axe),671154176,168.46|150.02|-117.10|1,-0.68
 1,Rauh Base,Divine Beast Dancing Lion,1026436608,-74.51|533.80|11.26|1,-0.37
 1,Rauh Base,Romina Saint of the Bud,1026305536,-46.26|625.38|-77.72|1,0.26
 1,Rauh Base,Rugalea the Great Red Bear,1026306048,-0.70|328.21|-122.58|1,0.83
@@ -1233,7 +1233,7 @@ e9 00 00 00 00          jmp    13 &lt;_main+0x13&gt;</value>
 1,Jagged Peak,Ancient Dragon Senessax,1026893568,102.59|515.78|-3.08|1,-1.88
 1,Jagged Peak,Bayle the Dread,1026959104,75.72|955.06|84.12|1,-0.76
 1,Jagged Peak,Jagged Peak Drake,1026762752,98.68|286.60|-18.13|1,-1.21
-1,Abyssal Woods,Inquisitor Jori,671219712,196.65|-507.98|114.71|1,0.2
+1,Abyssal Woods,Jori Elder Inquisitor,671219712,196.65|-507.98|114.71|1,0.2
 1,Abyssal Woods,Midra Lord of Frenzied Flame,469762048,-7.27|16.12|-58.36|1,0.19
 1,Scaduview,Fallingstar Beast,1026830592,-27.95|493.57|-103.64|1,-0.95
 1,Scaduview,Scadutree Avatar,352321536,381.02|-239.48|416.31|1,-3.13
