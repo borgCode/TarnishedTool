@@ -9,7 +9,6 @@ namespace TarnishedTool.Memory
 
         public static GameVersion Version => _version
                                              ?? GameVersion.Version2_6_1;
-                                            
 
         public static bool Initialize(string fileVersion, IntPtr moduleBase)
         {
@@ -22,6 +21,7 @@ namespace TarnishedTool.Memory
                 var v when v.StartsWith("2.2.3.") => GameVersion.Version2_2_3,
                 var v when v.StartsWith("2.3.0.") => GameVersion.Version2_3_0,
                 var v when v.StartsWith("2.4.0.") => GameVersion.Version2_4_0,
+                var v when v.StartsWith("2.5.0.") => GameVersion.Version2_5_0,
                 var v when v.StartsWith("2.6.0.") => GameVersion.Version2_6_0,
                 var v when v.StartsWith("2.6.1.") => GameVersion.Version2_6_1,
                 _ => null
@@ -226,13 +226,13 @@ namespace TarnishedTool.Memory
 
             public static int DrawTiles1 => Version switch
             {
-                GameVersion.Version2_0_1 => 0x60C,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x60C,
                 _ => 0x61C,
             };
 
             public static int DrawTiles2 => Version switch
             {
-                GameVersion.Version2_0_1 => 0x60E,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x60E,
                 _ => 0x61E,
             };
 
@@ -240,7 +240,7 @@ namespace TarnishedTool.Memory
 
             public static int ShouldDrawMiniMap => Version switch
             {
-                GameVersion.Version2_0_1 => 0xB3918,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0xB3918,
                 _ => 0xB3368,
             };
         }
@@ -352,7 +352,7 @@ namespace TarnishedTool.Memory
 
             public static int TorrentHandle => Version switch
             {
-                GameVersion.Version2_0_1 => 0x930,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x930,
                 _ => 0x950,
             };
 
@@ -397,22 +397,22 @@ namespace TarnishedTool.Memory
             public static IntPtr Base;
 
             public const int ShouldQuitout = 0x10;
-            
+
             public static int StoredTime => Version switch
             {
-                GameVersion.Version2_0_1 => 0x18,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x18,
                 _ => 0x20,
             };
 
             public static int ForceSave => Version switch
             {
-                GameVersion.Version2_0_1 => 0xB42,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0xB42,
                 _ => 0xb72,
             };
 
             public static int ShouldStartNewGame => Version switch
             {
-                GameVersion.Version2_0_1 => 0xB4D,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0xB4D,
                 _ => 0xB7D,
             };
         }
@@ -458,7 +458,7 @@ namespace TarnishedTool.Memory
 
             public static int GameSpeed => Version switch
             {
-                GameVersion.Version2_0_1 => 0x2D4,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x2D4,
                 _ => 0x2CC,
             };
         }
@@ -471,7 +471,7 @@ namespace TarnishedTool.Memory
 
             public static int ShowMapTiles => Version switch
             {
-                GameVersion.Version2_0_1 => 0x5,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x5,
                 _ => 0x6,
             };
         }
@@ -592,125 +592,115 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D65F88,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D65F88,
                 _ => 0
             };
 
             FieldArea.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C53470,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDFFC0,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDFFC0,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D691D8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D691D8,
                 _ => 0
             };
 
             LuaEventMan.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C520F8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDEC38,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDEC38,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D67E48,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67E48,
                 _ => 0
             };
 
             VirtualMemFlag.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C526E8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDF238,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDF238,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D68448,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D68448,
                 _ => 0
             };
 
             DamageManager.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C50658,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDD1A8,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDD1A8,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D66378, 
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D66378,
                 _ => 0
             };
 
             MenuMan.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C55B30,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CE2580,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE2580,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D6B7B0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6B7B0,
                 _ => 0
             };
 
             TargetView.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C4C4EA,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CD90BA,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CD90BA,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D6226B,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6226B,
                 _ => 0
             };
 
             GameMan.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C53B88,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CE0708,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE0708,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D69918,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D69918,
                 _ => 0
             };
 
             WorldHitMan.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C54320,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CE0EB0,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE0EB0,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D6A0E0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6A0E0,
                 _ => 0
             };
 
             WorldChrManDbg.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C50478,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDD010,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDD010,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D66198,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D66198,
                 _ => 0
             };
 
@@ -722,140 +712,127 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D5DF38,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D5DF38,
                 _ => 0
             };
 
             CsDlcImp.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C705D8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CFD838,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CFD838,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D86BD8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D86BD8,
                 _ => 0
             };
 
             MapItemManImpl.Base = moduleBase + Version switch
             {
-
                 GameVersion.Version1_2_0 => 0x3C51CF0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDE840,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDE840,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D67A50,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67A50,
                 _ => 0
             };
 
             FD4PadManager.Base = moduleBase + Version switch
             {
-                
                 GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x45B4D50,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x45B4D50,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x485DC20,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x485DC20,
                 _ => 0
             };
 
             CSEmkSystem.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C51E78,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDE9C0,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDE9C0,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D67BD0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67BD0,
                 _ => 0
             };
 
             WorldAreaTimeImpl.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C535A0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CE00F0,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE00F0,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D692F8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D692F8,
                 _ => 0
             };
 
             GroupMask.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3A367E0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3AC2AE8,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3AC2AE8,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3B33D00,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3B33D00,
                 _ => 0
             };
 
             SoloParamRepositoryImp.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x4473138,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CF8BC8,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CF8BC8,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D81EE8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D81EE8,
                 _ => 0
             };
 
             MsgRepository.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C66D48,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CF4218,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CF4218,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D7D4F8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D7D4F8,
                 _ => 0
             };
 
             CSFlipperImp.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x4473138,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x4500708,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x4500708,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x4589AD8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4589AD8,
                 _ => 0
             };
 
             CSDbgEvent.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C522A0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CDEDE8,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CDEDE8,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D67FF8,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D67FF8,
                 _ => 0
             };
 
@@ -867,60 +844,55 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D661A0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D661A0,
                 _ => 0
             };
 
             UserInputManager.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x45255C8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x45B4D48,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x45B4D48,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x485DC18,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x485DC18,
                 _ => 0
             };
 
             CSTrophy.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x4472AD8,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x45000A8,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x45000A8,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x4589478,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4589478,
                 _ => 0
             };
 
             DrawPathing.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C4C030,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CD8C00,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CD8C00,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D61DB0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D61DB0,
                 _ => 0
             };
 
             MapDebugFlags.Base = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x3C56BE0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 =>  0x3CE3D80,
+                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x3CE3D80,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x3D6CFC0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3D6CFC0,
                 _ => 0
             };
 
@@ -934,14 +906,13 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x599CD0,
+                GameVersion.Version2_5_0 => 0x599D00,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x599CD0,
                 _ => 0L
             };
 
             Functions.SetEvent = moduleBase.ToInt64() + Version switch
             {
-
                 GameVersion.Version1_2_0 => 0x5D9E40,
                 GameVersion.Version1_9_1 => 0x5EE1D0,
                 GameVersion.Version2_0_1 => 0x5EE410,
@@ -949,8 +920,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x5F9CD0,
+                GameVersion.Version2_5_0 => 0x5F9B50,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5F9CD0,
                 _ => 0L
             };
 
@@ -962,8 +933,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x3E90F0,
+                GameVersion.Version2_5_0 => 0x3E9120,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3E90F0,
                 _ => 0L
             };
 
@@ -975,8 +946,7 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x25E1B0,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x25E1B0,
                 _ => 0L
             };
 
@@ -989,8 +959,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x507D50,
+                GameVersion.Version2_5_0 => 0x507D80,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x507D50,
                 _ => 0L
             };
 
@@ -1003,38 +973,12 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x5F7BB0,
+                GameVersion.Version2_5_0 => 0x5F7A30,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5F7BB0,
                 _ => 0L
             };
 
-            Functions.ExternalEventTempCtor = moduleBase.ToInt64() + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 or GameVersion.Version2_0_1 => 0x1FFAE70,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x2041020,
-                _ => 0L
-            };
-
-            Functions.ExecuteTalkCommand = moduleBase.ToInt64() + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0xE65470,
-                GameVersion.Version2_0_1 => 0xE65800,
-                GameVersion.Version2_2_0 => 0x0L,
-                GameVersion.Version2_2_3 => 0x0L,
-                GameVersion.Version2_3_0 => 0x0L,
-                GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0xEA52B0,
-                _ => 0L
-            };
-
+            
             Functions.GetEvent = moduleBase.ToInt64() + Version switch
             {
                 GameVersion.Version1_2_0 => 0x5D9650,
@@ -1044,8 +988,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x5F94E0,
+                GameVersion.Version2_5_0 => 0x5F9360,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5F94E0,
                 _ => 0L
             };
 
@@ -1058,8 +1002,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x7850C0,
+                GameVersion.Version2_5_0 => 0x784F40,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x7850C0,
                 _ => 0L
             };
 
@@ -1072,8 +1016,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x560670,
+                GameVersion.Version2_5_0 => 0x5606A0,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x560670,
                 _ => 0L
             };
 
@@ -1086,7 +1030,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0xB12130,
+                GameVersion.Version2_6_0 => 0xB122B0,
                 GameVersion.Version2_6_1 => 0xB12310,
                 _ => 0L
             };
@@ -1100,8 +1045,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x507C70,
+                GameVersion.Version2_5_0 => 0x507CA0,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x507C70,
                 _ => 0L
             };
 
@@ -1114,8 +1059,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x4F6980,
+                GameVersion.Version2_5_0 => 0x4F69B0,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4F6980,
                 _ => 0L
             };
 
@@ -1128,8 +1073,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x567E00,
+                GameVersion.Version2_5_0 => 0x567E30,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x567E00,
                 _ => 0L
             };
 
@@ -1142,8 +1087,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x582700,
+                GameVersion.Version2_5_0 => 0x582730,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x582700,
                 _ => 0L
             };
 
@@ -1156,7 +1101,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0x2664240,
+                GameVersion.Version2_6_0 => 0x2664210,
                 GameVersion.Version2_6_1 => 0x2664270,
                 _ => 0L
             };
@@ -1170,8 +1116,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x507E00,
+                GameVersion.Version2_5_0 => 0x507E30,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x507E00,
                 _ => 0L
             };
 
@@ -1184,7 +1130,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0xE9ECA0,
+                GameVersion.Version2_6_0 => 0xE9EC70,
                 GameVersion.Version2_6_1 => 0xE9ECD0,
                 _ => 0L
             };
@@ -1198,11 +1145,42 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0x207E850,
+                GameVersion.Version2_6_0 => 0x207E820,
                 GameVersion.Version2_6_1 => 0x207E880,
                 _ => 0L
             };
 
+            Functions.ExternalEventTempCtor = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version1_2_0 => 0x0,
+                GameVersion.Version1_9_1 => 0x1FFAAE0,
+                GameVersion.Version2_0_1 => 0x1FFAE70,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0x2040FF0,
+                GameVersion.Version2_6_0 => 0x2040FC0,
+                GameVersion.Version2_6_1 => 0x2041020,
+                _ => 0L
+            };
+
+            Functions.ExecuteTalkCommand = moduleBase.ToInt64() + Version switch
+            {
+                GameVersion.Version1_2_0 => 0x0,
+                GameVersion.Version1_9_1 => 0xE65470,
+                GameVersion.Version2_0_1 => 0xE65800,
+                GameVersion.Version2_2_0 => 0x0L,
+                GameVersion.Version2_2_3 => 0x0L,
+                GameVersion.Version2_3_0 => 0x0L,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xEA5280,
+                GameVersion.Version2_6_0 => 0xEA5250,
+                GameVersion.Version2_6_1 => 0xEA52B0,
+                _ => 0L
+            };
+            
             // Hooks
             Hooks.UpdateCoords = moduleBase.ToInt64() + Version switch
             {
@@ -1213,8 +1191,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x467999,
+                GameVersion.Version2_5_0 => 0x4679C9,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x467999,
                 _ => 0L
             };
 
@@ -1227,8 +1205,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x44E278,
+                GameVersion.Version2_5_0 => 0x44E2A8,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x44E278,
                 _ => 0L
             };
 
@@ -1241,7 +1219,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0x5D1954,
+                GameVersion.Version2_6_0 => 0x1F6D09F,
                 GameVersion.Version2_6_1 => 0x1F6D0FF,
                 _ => 0L
             };
@@ -1255,7 +1234,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0x1F6C14F,
+                GameVersion.Version2_6_0 => 0x1F6C11F,
                 GameVersion.Version2_6_1 => 0x1F6C17F,
                 _ => 0L
             };
@@ -1269,8 +1249,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x4F9A10,
+                GameVersion.Version2_5_0 => 0x4F9A40,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4F9A10,
                 _ => 0L
             };
 
@@ -1282,8 +1262,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x33E263,
+                GameVersion.Version2_5_0 => 0x33E293,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x33E263,
                 _ => 0L
             };
 
@@ -1296,8 +1276,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x717372,
+                GameVersion.Version2_5_0 => 0x7171F2,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x717372,
                 _ => 0L
             };
 
@@ -1310,8 +1290,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x445CB0,
+                GameVersion.Version2_5_0 => 0x445CE0,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x445CB0,
                 _ => 0L
             };
 
@@ -1323,8 +1303,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x3C7910,
+                GameVersion.Version2_5_0 => 0x3C7940,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x3C7910,
                 _ => 0L
             };
 
@@ -1337,7 +1317,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0x123846F,
+                GameVersion.Version2_6_0 => 0x53C8D9,
                 GameVersion.Version2_6_1 => 0x5BED8C4,
                 _ => 0L
             };
@@ -1351,8 +1332,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x47E3C7,
+                GameVersion.Version2_5_0 => 0x47E3F7,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x47E3C7,
                 _ => 0L
             };
 
@@ -1365,8 +1346,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x47E22B,
+                GameVersion.Version2_5_0 => 0x47E25B,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x47E22B,
                 _ => 0L
             };
 
@@ -1379,8 +1360,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x67AABA,
+                GameVersion.Version2_5_0 => 0x67A93A,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x67AABA,
                 _ => 0L
             };
 
@@ -1393,8 +1374,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x67AA9A,
+                GameVersion.Version2_5_0 => 0x67A91A,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x67AA9A,
                 _ => 0L
             };
 
@@ -1406,8 +1387,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x4FF10A,
+                GameVersion.Version2_5_0 => 0x4FF13A,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x4FF10A,
                 _ => 0L
             };
 
@@ -1420,8 +1401,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x407BB2,
+                GameVersion.Version2_5_0 => 0x407BE2,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x407BB2,
                 _ => 0L
             };
 
@@ -1434,8 +1415,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x9C63D1,
+                GameVersion.Version2_5_0 => 0x9C6251,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x9C63D1,
                 _ => 0L
             };
 
@@ -1448,8 +1429,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
-                GameVersion.Version2_6_1 => 0x44998B,
+                GameVersion.Version2_5_0 => 0x4499BB,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x44998B,
                 _ => 0L
             };
 
@@ -1462,25 +1443,13 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0L,
                 GameVersion.Version2_3_0 => 0x0L,
                 GameVersion.Version2_4_0 => 0x0L,
-                GameVersion.Version2_6_0 => 0x0L,
+                GameVersion.Version2_5_0 => 0xD1075C,
+                GameVersion.Version2_6_0 => 0xD108DC,
                 GameVersion.Version2_6_1 => 0xD1093C,
                 _ => 0L
             };
-
+            
             // Patches
-            Patches.CanFastTravel = moduleBase + Version switch
-            {
-                GameVersion.Version1_2_0 => 0x798300,
-                GameVersion.Version1_9_1 => 0x7B3210,
-                GameVersion.Version2_0_1 => 0x7B34A0,
-                GameVersion.Version2_2_0 => 0x0,
-                GameVersion.Version2_2_3 => 0x0,
-                GameVersion.Version2_3_0 => 0x0,
-                GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x7C4E60,
-                _ => 0
-            };
             
             Patches.NoLogo = moduleBase + Version switch
             {
@@ -1491,11 +1460,13 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xB0C26D,
+                GameVersion.Version2_6_0 => 0xB0C3ED,
                 GameVersion.Version2_6_1 => 0xB0C44D,
                 _ => 0
             };
 
+            
             Patches.NoRunesFromEnemies = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x49456E,
@@ -1505,8 +1476,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x651AEF,
+                GameVersion.Version2_5_0 => 0x65196F,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x651AEF,
                 _ => 0
             };
 
@@ -1518,8 +1489,7 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x25E297,
+                GameVersion.Version2_5_0 or GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x25E297,
                 _ => 0
             };
 
@@ -1532,10 +1502,25 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x5F0ABB,
+                GameVersion.Version2_5_0 => 0x5FC095,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5FC215,
                 _ => 0
             };
+            
+            Patches.CanFastTravel = moduleBase + Version switch
+            {
+                GameVersion.Version1_2_0 => 0x798300,
+                GameVersion.Version1_9_1 => 0x7B3210,
+                GameVersion.Version2_0_1 => 0x7B34A0,
+                GameVersion.Version2_2_0 => 0x0,
+                GameVersion.Version2_2_3 => 0x0,
+                GameVersion.Version2_3_0 => 0x0,
+                GameVersion.Version2_4_0 => 0x0,
+                GameVersion.Version2_5_0 => 0x7C4CE0,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x7C4E60,
+                _ => 0
+            };
+
 
             Patches.OpenMap = moduleBase + Version switch
             {
@@ -1546,8 +1531,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x7EED4A,
+                GameVersion.Version2_5_0 => 0x7EEBCA,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x7EED4A,
                 _ => 0
             };
 
@@ -1560,8 +1545,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x9C392E,
+                GameVersion.Version2_5_0 => 0x9C37AE,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x9C392E,
                 _ => 0
             };
 
@@ -1574,7 +1559,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xE43330,
+                GameVersion.Version2_6_0 => 0xE43300,
                 GameVersion.Version2_6_1 => 0xE43360,
                 _ => 0
             };
@@ -1588,7 +1574,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xE53600,
+                GameVersion.Version2_6_0 => 0xE535D0,
                 GameVersion.Version2_6_1 => 0xE53630,
                 _ => 0
             };
@@ -1602,11 +1589,12 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xE535E0,
+                GameVersion.Version2_6_0 => 0xE535B0,
                 GameVersion.Version2_6_1 => 0xE53610,
                 _ => 0
             };
-            
+
             Patches.DebugFont = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x0,
@@ -1616,12 +1604,12 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0x268D360,
+                GameVersion.Version2_6_0 => 0x268D330,
                 GameVersion.Version2_6_1 => 0x268D390,
                 _ => 0
             };
-            
-            
+
 
             Patches.PlayerSound = moduleBase + Version switch
             {
@@ -1631,8 +1619,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x33E596,
+                GameVersion.Version2_5_0 => 0x33E5C6,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x33E596,
                 _ => 0
             };
 
@@ -1645,7 +1633,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xCEF9AA,
+                GameVersion.Version2_6_0 => 0xCEFB2A,
                 GameVersion.Version2_6_1 => 0xCEFB8A,
                 _ => 0
             };
@@ -1659,8 +1648,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x70626F,
+                GameVersion.Version2_5_0 => 0x7060EF,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x70626F,
                 _ => 0
             };
 
@@ -1673,7 +1662,8 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xAF8335,
+                GameVersion.Version2_6_0 => 0xAF84B5,
                 GameVersion.Version2_6_1 => 0xAF8515,
                 _ => 0
             };
@@ -1687,11 +1677,12 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xD3BD6E,
+                GameVersion.Version2_6_0 => 0xD3BEEE,
                 GameVersion.Version2_6_1 => 0xD3BF4E,
                 _ => 0
             };
-            
+
             Patches.GetShopEvent = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x0,
@@ -1701,27 +1692,28 @@ namespace TarnishedTool.Memory
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
+                GameVersion.Version2_5_0 => 0xD49B10,
+                GameVersion.Version2_6_0 => 0xD49C90,
                 GameVersion.Version2_6_1 => 0xD49CF0,
                 _ => 0
             };
 
-            
+
             Hooks.NoTimePassOnDeath = moduleBase + Version switch
             {
                 GameVersion.Version1_2_0 => 0x0,
-                GameVersion.Version1_9_1 => 0x5F0874,
-                GameVersion.Version2_0_1 => 0x5F0AB4,
+                GameVersion.Version1_9_1 => 0x5F08F9,
+                GameVersion.Version2_0_1 => 0x5F0B39,
                 GameVersion.Version2_2_0 => 0x0,
                 GameVersion.Version2_2_3 => 0x0,
                 GameVersion.Version2_3_0 => 0x0,
                 GameVersion.Version2_4_0 => 0x0,
-                GameVersion.Version2_6_0 => 0x0,
-                GameVersion.Version2_6_1 => 0x5FC37A,
+                GameVersion.Version2_5_0 => 0x5FC27F,
+                GameVersion.Version2_6_0 or GameVersion.Version2_6_1 => 0x5FC3FF,
                 _ => 0
             };
-      
-            
+
+
             Console.WriteLine($@"WorldChrMan.Base: 0x{WorldChrMan.Base.ToInt64():X}");
             Console.WriteLine($@"FieldArea.Base: 0x{FieldArea.Base.ToInt64():X}");
             Console.WriteLine($@"LuaEventMan.Base: 0x{LuaEventMan.Base.ToInt64():X}");
@@ -1761,7 +1753,8 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Patches.CanDrawEvents2: 0x{Patches.CanDrawEvents2.ToInt64():X}");
             Console.WriteLine($@"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
             Console.WriteLine($@"Patches.PlayerSound: 0x{Patches.PlayerSound.ToInt64():X}");
-            Console.WriteLine($@"Patches.IsTorrentDisabledInUnderworld: 0x{Patches.IsTorrentDisabledInUnderworld.ToInt64():X}");
+            Console.WriteLine(
+                $@"Patches.IsTorrentDisabledInUnderworld: 0x{Patches.IsTorrentDisabledInUnderworld.ToInt64():X}");
             Console.WriteLine($@"Patches.IsWhistleDisabled: 0x{Patches.IsWhistleDisabled.ToInt64():X}");
             Console.WriteLine($@"Patches.IsWorldPaused: 0x{Patches.IsWorldPaused.ToInt64():X}");
             Console.WriteLine($@"Patches.GetItemChance: 0x{Patches.GetItemChance.ToInt64():X}");

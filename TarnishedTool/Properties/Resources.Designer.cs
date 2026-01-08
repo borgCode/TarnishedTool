@@ -377,10 +377,10 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to isDLC,Area,BossName,IsInitializeDeadSet,NpcParamID,BlockID,FirstEncounterFlags,BossFlags,coords,angle,CoordsFE,AngleFE,shouldSetNight
+        ///   Looks up a localized string similar to 
         ///FALSE,Limgrave,Beastman of Farum Azula,FALSE,39701910,520290304,31030801:FALSE,31030800:FALSE|9233:FALSE|520330:FALSE|31035014:FALSE,-94.56|89.93|63.94|1,2.5,-94.56|89.93|63.94|1,2.5,FALSE
-        ///FALSE,Limgrave,Bell Bearing Hunter (Warmaster&apos;s Shack),TRUE,31000033,1009395200,,1042380850:FALSE|1042387410:FALSE,-2.71|188.32|102.02|1,-0.87,-2.71|188.32|102.02|1,-0.87,TRUE
-        ///FALSE,Limg [rest of string was truncated]&quot;;.
+        ///FALSE,Limgrave,Bell Bearing Hunter,TRUE,31000033,1009395200,,1042380850:FALSE|1042387410:FALSE,-2.71|188.32|102.02|1,-0.87,-2.71|188.32|102.02|1,-0.87,TRUE
+        ///FALSE,Limgrave,Black Knife Assassin,FALSE,21000820,504037376,,30110800:FALSE|9203:FALSE|520030:FALSE,-171.94|177.79|23.30|1,1.47,-171.94|177.79|23.30|1,1.47,FALSE        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BossRevives {
             get {
@@ -389,14 +389,14 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,Limgrave,Beast of Farum Azula,520290304,-94.56|89.93|63.94|1,2.50
+        ///   Looks up a localized string similar to 0,Limgrave,Beastman of Farum Azula,520290304,-94.56|89.93|63.94|1,2.5
         ///0,Limgrave,Bell Bearing Hunter,1009395200,-2.71|188.32|102.02|1,-0.87
         ///0,Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
-        ///0,Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.80
+        ///0,Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.8
         ///0,Limgrave,Crucible Knight,1009394944,-68.52|158.16|45.94|1,-0.83
+        ///0,Limgrave,Crystalian,537001984,23.46|112.06|-3.61|1,3.13
         ///0,Limgrave,Deathbird,1009395200,90.76|199.90|95.32|1,-0.63
-        ///0,Limgrave,Demi-Human Chief,521076736,20.10|-26.18|-72.41|1,-0.02
-        ///0,Limgrave,Erdtree Burial Wa [rest of string was truncated]&quot;;.
+        ///0,Limgrave,Demi-Human Chiefs,521076 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BossWarps {
             get {
@@ -429,15 +429,14 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 0,40002134,Crafting Kit,1,1,1,60120
-        ///0,40002454,Nomadic Warrior&apos;s Cookbook [1],1,1,1,67000
-        ///0,4000245F,Nomadic Warrior&apos;s Cookbook [2],1,1,1,67110
-        ///0,40002455,Nomadic Warrior&apos;s Cookbook [3],1,1,1,67010
-        ///0,400024A4,Nomadic Warrior&apos;s Cookbook [4],1,1,1,67800
-        ///0,400024A7,Nomadic Warrior&apos;s Cookbook [5],1,1,1,67830
-        ///0,40002456,Nomadic Warrior&apos;s Cookbook [6],1,1,1,67020
-        ///0,40002459,Nomadic Warrior&apos;s Cookbook [7],1,1,1,67050
-        ///0,400024AC,Nomadic Warrior&apos;s Cookbook [8],1,1,1,67880
-        ///0,4000247F,Nomadic Warrior&apos;s Cookbo [rest of string was truncated]&quot;;.
+        ///0,400024B8,Ancient Dragon Apostle&apos;s Cookbook [1],1,1,1,68000
+        ///0,400024B9,Ancient Dragon Apostle&apos;s Cookbook [2],1,1,1,68010
+        ///0,400024BB,Ancient Dragon Apostle&apos;s Cookbook [3],1,1,1,68030
+        ///0,400024BA,Ancient Dragon Apostle&apos;s Cookbook [4],1,1,1,68020
+        ///1,401EA8EC,Ancient Dragon Knight&apos;s Cookbook [1],1,1,1,68740
+        ///1,401EA8F0,Ancient Dragon Knight&apos;s Cookbook [2],1,1,1,68780
+        ///1,401EA8FD,Antiquity Scholar&apos;s Cookbook [1],1,1,1,68910
+        ///1,401EA8F8,Antiquity Scholar&apos;s Cookbook [2],1,1, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Cookbooks {
             get {
@@ -831,6 +830,7 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 0,40001FAD,Academy Glintstone Key (Player),1,1,0,-1
         ///0,40001FEE,Academy Glintstone Key (Thops),1,1,0,-1
+        ///0,400022A2,Academy Scroll,1,1,0,-1
         ///0,40001FE6,Amber Draught,1,1,0,-1
         ///0,40001FCE,Amber Starlight,1,1,0,-1
         ///0,40000BB8,Ancestral Infant&apos;s Head,1,600,1,12027090
@@ -839,8 +839,7 @@ namespace TarnishedTool.Properties {
         ///0,4000229B,Assassin&apos;s Prayerbook,1,1,0,-1
         ///0,40002313,Beast Eye,1,1,1,400239
         ///0,40001FEC,Black Knifeprint,1,1,0,-1
-        ///1,401EA3D3,Black Syrup,1,1,1,400642
-        ///0,4000230E,Black Whetblade,1,1,1, [rest of string was truncated]&quot;;.
+        ///1,401EA3D3,Black Syrup,1,1,1,40064 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string KeyItems {
             get {
@@ -1032,7 +1031,7 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 44 89 6c 24 2c          mov    DWORD PTR [rsp+0x2c],r13d
+        ///   Looks up a localized string similar to 4c 8b 74 24 70          mov    r14,QWORD PTR [rsp+0x70]
         ///50                      push   rax
         ///51                      push   rcx
         ///52                      push   rdx
@@ -1041,7 +1040,7 @@ namespace TarnishedTool.Properties {
         ///48 8b 08                mov    rcx,QWORD PTR [rax]
         ///48 89 4a 20             mov    QWORD PTR [rdx+0x20],rcx
         ///48 8b 48 08             mov    rcx,QWORD PTR [rax+0x8]
-        ///48 89 4a 28           [rest of string was truncated]&quot;;.
+        ///48 89 4a 28            [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoTimePassOnDeath {
             get {
@@ -1201,7 +1200,7 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 0,Bernahl,22,100075,100099
-        ///0,Boggart,22,100425,100474
+        ///0,Boggart,22,100150,100174
         ///0,Borther Corhyn,22,100350,100399
         ///0,D,22,100125,100149
         ///1,Dragon Communion - Bayle,135,102350,102351

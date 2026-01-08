@@ -309,7 +309,7 @@ namespace TarnishedTool.Services
                 bytes[savedTimeMovIndex2] = (byte)(GameMan.StoredTime + 8);
                 
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hook, [0x44, 0x89, 0x6C, 0x24, 0x2C]);
+                hookManager.InstallHook(code.ToInt64(), hook, [0x4C, 0x8B, 0x74, 0x24, 0x70]);
             }
             else
             {

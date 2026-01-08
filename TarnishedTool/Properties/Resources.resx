@@ -4479,7 +4479,7 @@ ff 10                   call   QWORD PTR [rax]
 c3                      ret</value>
   </data>
   <data name="NoTimePassOnDeath" xml:space="preserve">
-    <value>44 89 6c 24 2c          mov    DWORD PTR [rsp+0x2c],r13d
+    <value>4c 8b 74 24 70          mov    r14,QWORD PTR [rsp+0x70]
 50                      push   rax
 51                      push   rcx
 52                      push   rdx

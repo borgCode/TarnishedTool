@@ -52,11 +52,13 @@ namespace TarnishedTool
 
             IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
-            IPlayerService playerService = new PlayerService(_memoryService, hookManager, travelService, reminderService);
+            IPlayerService playerService =
+                new PlayerService(_memoryService, hookManager, travelService, reminderService);
             IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
             IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
-            ITargetService targetService = new TargetService(_memoryService, hookManager, playerService, reminderService);
+            ITargetService targetService =
+                new TargetService(_memoryService, hookManager, playerService, reminderService);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
@@ -65,7 +67,7 @@ namespace TarnishedTool
             IEmevdService emevdService = new EmevdService(_memoryService);
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
-            
+
             _dlcService = new DlcService(_memoryService);
 
 
@@ -74,7 +76,8 @@ namespace TarnishedTool
             TravelViewModel travelViewModel =
                 new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
-                _dlcService, spEffectService, paramService, playerService, eventService, reminderService, travelService);
+                _dlcService, spEffectService, paramService, playerService, eventService, reminderService,
+                travelService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
                 attackInfoService, hotkeyManager, spEffectService, emevdService);
             EventViewModel eventViewModel =
@@ -104,11 +107,11 @@ namespace TarnishedTool
             MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
-            
+
             MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
             _stateService.Publish(State.AppStart);
-            
+
             var versionInfo = FileVersionInfo.GetVersionInfo(ExeManager.GetExePath());
             var fileVersion = versionInfo.FileVersion;
             Console.WriteLine($"Version: {fileVersion}");
@@ -121,16 +124,15 @@ namespace TarnishedTool
             };
             _gameLoadedTimer.Tick += Timer_Tick;
             _gameLoadedTimer.Start();
-            
+
             VersionChecker.UpdateVersionText(AppVersion);
-        
+
             if (SettingsManager.Default.EnableUpdateChecks)
             {
                 VersionChecker.CheckForUpdates(this);
             }
         }
 
-        
         private bool _loaded;
         private bool _hasScanned;
         private bool _hasAllocatedMemory;
@@ -150,45 +152,35 @@ namespace TarnishedTool
 
                 if (!_hasCheckedPatch)
                 {
-                    var sw = Stopwatch.StartNew();
                     if (!PatchManager.Initialize(_memoryService))
                     {
-                        sw.Stop();
-                        Console.WriteLine($"PatchManager.Initialize failed: {sw.ElapsedMilliseconds}ms");
-        
-                        sw.Restart();
                         _aobScanner.Scan();
-                        sw.Stop();
-                        Console.WriteLine($"AoBScanner.Scan: {sw.ElapsedMilliseconds}ms");
-        
-                        _stateService.Publish(State.Attached);
 #if DEBUG
                         Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
 #endif
+                        _hasCheckedPatch = true;
                     }
-                    else
-                    {
-                        sw.Stop();
-                        Console.WriteLine($"PatchManager.Initialize succeeded: {sw.ElapsedMilliseconds}ms");
-                    }
-
-                    _hasCheckedPatch = true;
-                    _stateService.Publish(State.Attached);
-                }
-
-                if (!_hasScanned)
-                {
-                    var sw = Stopwatch.StartNew();
-                    _aobScanner.Scan();
-                    sw.Stop();
-                    Console.WriteLine($"AoBScanner.Scan (fallback): {sw.ElapsedMilliseconds}ms");
-    
-                    _hasScanned = true;
-                    _stateService.Publish(State.Attached);
+                    
 #if DEBUG
                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
 #endif
+                    
+                    _hasCheckedPatch = true;
                 }
+
+                // if (!_hasScanned)
+//                 {
+//                     var sw = Stopwatch.StartNew();
+//                     _aobScanner.Scan();
+//                     sw.Stop();
+//                     Console.WriteLine($"AoBScanner.Scan (fallback): {sw.ElapsedMilliseconds}ms");
+//     
+//                     _hasScanned = true;
+//                     _stateService.Publish(State.Attached);
+// #if DEBUG
+//                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+// #endif
+//                 }
 
 
                 if (!_hasAllocatedMemory)
@@ -196,6 +188,7 @@ namespace TarnishedTool
                     _memoryService.AllocCodeCave();
 #if DEBUG
                     Console.WriteLine($@"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
+                    _stateService.Publish(State.Attached);
 #endif
                     _hasAllocatedMemory = true;
                 }
@@ -246,7 +239,8 @@ namespace TarnishedTool
 
         private void CheckIfGameStart()
         {
-            var igt = _memoryService.ReadUInt32((IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Igt);
+            var igt = _memoryService.ReadUInt32(
+                (IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Igt);
             if (igt < 5000) _stateService.Publish(State.GameStart);
         }
 
@@ -258,7 +252,10 @@ namespace TarnishedTool
         }
 
         private void LaunchGame_Click(object sender, RoutedEventArgs e) => Task.Run(ExeManager.LaunchGame);
-        private void CheckUpdate_Click(object sender, RoutedEventArgs e) => VersionChecker.CheckForUpdates(this, true);
+
+        private void CheckUpdate_Click(object sender, RoutedEventArgs e) =>
+            VersionChecker.CheckForUpdates(this, true);
+
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.Source is TabControl && MainTabControl.SelectedItem is TabItem selectedTab)
