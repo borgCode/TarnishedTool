@@ -75,6 +75,9 @@ namespace TarnishedTool.Services
             var codeBytes = AsmLoader.GetAsmBytes("NoClip_InAirTimer");
             var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
             Array.Copy(bytes, 0, codeBytes, 0x1 + 2, 8);
+
+            AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0xB + 3) });
+
             AsmHelper.WriteJumpOffsets(codeBytes, new[]
             {
                 (Hooks.InAirTimer, 5, inAirTimerCode + 0x28, 0x28 + 1),
@@ -116,6 +119,8 @@ namespace TarnishedTool.Services
             var codeBytes = AsmLoader.GetAsmBytes("NoClip_UpdateCoords");
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
             var speedScale = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.SpeedScale;
+            
+            AsmHelper.WriteImmediateDwords(codeBytes, new []{(WorldChrMan.PlayerIns, 0xF + 3)});
 
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {

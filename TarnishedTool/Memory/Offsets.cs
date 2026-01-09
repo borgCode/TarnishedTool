@@ -7,7 +7,7 @@ namespace TarnishedTool.Memory
     public static class Offsets
     {
         private static GameVersion? _version;
-
+ 
         public static GameVersion Version => _version
                                              ?? Version2_6_1;
 
@@ -42,8 +42,12 @@ namespace TarnishedTool.Memory
         public static class WorldChrMan
         {
             public static IntPtr Base;
-
-            public const int ChrSetPool = 0x1DED8;
+            
+            public static int ChrSetPool => Version switch
+            {
+                Version1_2_0 or Version1_2_1 => 0x18038,
+                _ => 0x1DED8,
+            };
 
             public enum ChrSetOffsets
             {
@@ -55,14 +59,44 @@ namespace TarnishedTool.Memory
                 Version1_2_0 or Version1_2_1 => 0x18468,
                 _ => 0x1E508,
             };
-            
 
-            public enum PlayerInsOffsets
+            public static int ChrInsByUpdatePrioBegin => Version switch
             {
-                Handle = 0x8,
-                CurrentBlockId = 0x6D0,
-                CurrentMapCoords = 0x6C0,
-                CurrentMapAngle = 0x6CC,
+                Version1_2_0 or Version1_2_1 => 0x18F10,
+                _ => 0x1F1B8
+                
+            };
+            
+            public static int ChrInsByUpdatePrioEnd => Version switch
+            {
+                Version1_2_0 or Version1_2_1 => 0x18F18,
+                _ => 0x1F1C0
+                
+            };
+
+            public static class PlayerInsOffsets
+            {
+                public const int Handle = 0x8;
+                
+                
+                public static int CurrentBlockId => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 => 0x6C8,
+                    _ => 0x6D0,
+                };
+                
+                public static int CurrentMapCoords => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 => 0x6B8,
+                    _ => 0x6C0,
+                };
+                
+                public static int CurrentMapAngle => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 => 0x6C4,
+                    _ => 0x6CC,
+                };
+                
             }
         }
 
@@ -70,7 +104,13 @@ namespace TarnishedTool.Memory
         {
             public const int ChrCtrl = 0x58;
             public const int SpecialEffect = 0x178;
-            public const int EntityId = 0x1E8;
+            
+            public static int EntityId => Version switch
+            {
+                Version1_2_0 or Version1_2_1 => 0x1E4,
+                _ => 0x1E8,
+            };
+            
 
             public enum SpecialEffectOffsets
             {
@@ -92,8 +132,13 @@ namespace TarnishedTool.Memory
             }
 
             public const int Modules = 0x190;
-            public const int Flags = 0x530;
-
+            
+            public static int Flags => Version switch
+            {
+                Version1_2_0 or Version1_2_1 => 0x520,
+                _ => 0x530,
+            };
+            
             public enum ChrInsFlags
             {
                 NoHit = 1 << 3,
@@ -102,8 +147,12 @@ namespace TarnishedTool.Memory
                 // 1 << 6 is a red capsule towards the direction the boss is facing
                 //1 << 7 same but white capsule
             }
-
-            public const int ChrManipulator = 0x580;
+            
+            public static int ChrManipulator => Version switch
+            {
+                Version1_2_0 or Version1_2_1 => 0x570,
+                _ => 0x580,
+            };
 
             public static readonly int[] ChrCtrlFlags = [0xC8, 0x24];
             public static readonly BitFlag DisableAi = new(0x0, 1 << 0);
@@ -124,8 +173,13 @@ namespace TarnishedTool.Memory
                 MaxFp = 0x14C,
                 Sp = 0x154,
                 MaxSp = 0x158,
-                Flags = 0x19B,
             }
+            
+            public static int ChrDataFlags => Version switch
+            {
+                Version1_2_0 or Version1_2_1 => 0x197,
+                _ => 0x19B,
+            };
 
             [Flags]
             public enum ChrDataBitFlags
@@ -247,13 +301,13 @@ namespace TarnishedTool.Memory
 
             public static int DrawTiles1 => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x60C,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x60C,
                 _ => 0x61C,
             };
 
             public static int DrawTiles2 => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x60E,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x60E,
                 _ => 0x61E,
             };
 
@@ -261,6 +315,7 @@ namespace TarnishedTool.Memory
 
             public static int ShouldDrawMiniMap => Version switch
             {
+                Version1_2_1  => 0x7F098,
                 Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0xB3918,
                 _ => 0xB3368,
             };
@@ -351,7 +406,13 @@ namespace TarnishedTool.Memory
             public const int PopupMenu = 0x80;
             public const int FlagArray = 0x90;
             public const int IsLoaded = 0x94;
-            public const int IsFading = 0x96;
+            
+            public static int IsFading => Version switch
+            {
+                Version1_2_0 or Version1_2_1  => 0x8E,
+                _ => 0x96,
+            };
+            
             public const int IsPaused = 0xD1;
 
             public enum PopupMenuOffsets
@@ -370,10 +431,9 @@ namespace TarnishedTool.Memory
             public static IntPtr Base;
 
             public const int PlayerGameData = 0x8;
-
             public static int TorrentHandle => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x930,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x930,
                 _ => 0x950,
             };
 
@@ -421,19 +481,19 @@ namespace TarnishedTool.Memory
 
             public static int StoredTime => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x18,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x18,
                 _ => 0x20,
             };
 
             public static int ForceSave => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0xB42,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0xB42,
                 _ => 0xb72,
             };
 
             public static int ShouldStartNewGame => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_1 or Version2_0_1 => 0xB4D,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_1 or Version2_0_1 => 0xB4D,
                 _ => 0xB7D,
             };
         }
@@ -479,7 +539,7 @@ namespace TarnishedTool.Memory
 
             public static int GameSpeed => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x2D4,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x2D4,
                 _ => 0x2CC,
             };
         }
@@ -492,7 +552,7 @@ namespace TarnishedTool.Memory
 
             public static int ShowMapTiles => Version switch
             {
-                Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x5,
+                Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x5,
                 _ => 0x6,
             };
         }
@@ -1384,6 +1444,7 @@ namespace TarnishedTool.Memory
             Hooks.ShouldUpdateAi = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x3C09F0,
+                Version1_2_1 => 0x3C0A60,
                 Version1_8_0 or Version1_8_1 => 0x3C5900,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3C5A30,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3C7920,
@@ -1528,13 +1589,14 @@ namespace TarnishedTool.Memory
             Hooks.LoadScreenMsgLookupEarlyPatches = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5F15093C,
-                Version1_2_1 => 0,
+                Version1_2_1 => 0x737A04,
                 _ => 0L
             };
 
             Hooks.TargetNoStagger = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5E8BE3C7,
+                Version1_2_1 => 0x474D35,
                 Version1_8_0 or Version1_8_1 => 0x47B0E5,
                 Version1_9_0 or Version1_9_1 => 0x47B225,
                 Version2_0_1 => 0x47B3C5,
@@ -1548,6 +1610,7 @@ namespace TarnishedTool.Memory
             Hooks.NoMapAcquiredPopup = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x0L,
+                Version1_2_1 => 0x992A51,
                 Version1_8_0 or Version1_8_1 => 0x9A37A1,
                 Version1_9_0 => 0x9A57F1,
                 Version1_9_1 => 0x9A5851,
@@ -1564,6 +1627,7 @@ namespace TarnishedTool.Memory
             Patches.NoLogo = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0xAAADCA,
                 Version1_8_0 or Version1_8_1 => 0xADB0FD,
                 Version1_9_0 => 0xADDC8D,
                 Version1_9_1 => 0xADDCED,
@@ -1580,6 +1644,7 @@ namespace TarnishedTool.Memory
             Patches.NoRunesFromEnemies = moduleBase + Version switch
             {
                 Version1_2_0 => 0x49456E,
+                Version1_2_1 => 0x630D1F,
                 Version1_8_0 or Version1_8_1 => 0x64463F,
                 Version1_9_0 => 0x6453BF,
                 Version1_9_1 => 0x64541F,
@@ -1594,6 +1659,7 @@ namespace TarnishedTool.Memory
             Patches.NoRuneArcLoss = moduleBase + Version switch
             {
                 Version1_2_0 => 0x258347,
+                Version1_2_1 => 0x2583B7,
                 Version1_8_0 or Version1_8_1 => 0x25C757,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x25C887,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0
@@ -1604,6 +1670,7 @@ namespace TarnishedTool.Memory
             Patches.NoRuneLossOnDeath = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5EA3C215,
+                Version1_2_1 => 0x5DC3F5,
                 Version1_8_0 or Version1_8_1 => 0x5EF995,
                 Version1_9_0 => 0x5F06B5,
                 Version1_9_1 => 0x5F0715,
@@ -1618,6 +1685,7 @@ namespace TarnishedTool.Memory
             Patches.CanFastTravel = moduleBase + Version switch
             {
                 Version1_2_0 => 0x798300,
+                Version1_2_1 => 0x798370,
                 Version1_8_0 or Version1_8_1 => 0x7B2110,
                 Version1_9_0 => 0x7B31B0,
                 Version1_9_1 => 0x7B3210,
@@ -1633,6 +1701,7 @@ namespace TarnishedTool.Memory
             Patches.OpenMap = moduleBase + Version switch
             {
                 Version1_2_0 => 0x7C4CDA,
+                Version1_2_1 => 0x7C4D4A,
                 Version1_8_0 or Version1_8_1 => 0x7DBEBA,
                 Version1_9_0 => 0x7DCFBA,
                 Version1_9_1 => 0x7DD01A,
@@ -1647,6 +1716,7 @@ namespace TarnishedTool.Memory
             Patches.CloseMap = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5EE0392E,
+                Version1_2_1 => 0x990C25,
                 Version1_8_0 or Version1_8_1 => 0x9A14FA,
                 Version1_9_0 => 0x9A354A,
                 Version1_9_1 => 0x9A35AA,
@@ -1661,6 +1731,7 @@ namespace TarnishedTool.Memory
             Patches.EnableFreeCam = moduleBase + Version switch
             {
                 Version1_2_0 => 0xDC0D60,
+                Version1_2_1 => 0xDC0DB0,
                 Version1_8_0 => 0xE028C0,
                 Version1_8_1 => 0xE028A0,
                 Version1_9_0 => 0xE055D0,
@@ -1678,6 +1749,7 @@ namespace TarnishedTool.Memory
             Patches.CanDrawEvents1 = moduleBase + Version switch
             {
                 Version1_2_0 => 0xDD0810,
+                Version1_2_1 => 0xDD0860,
                 Version1_8_0 => 0xE127E0,
                 Version1_8_1 => 0xE127C0,
                 Version1_9_0 => 0xE154F0,
@@ -1695,6 +1767,7 @@ namespace TarnishedTool.Memory
             Patches.CanDrawEvents2 = moduleBase + Version switch
             {
                 Version1_2_0 => 0xDD07F0,
+                Version1_2_1 => 0xDD0840,
                 Version1_8_0 => 0xE127C0,
                 Version1_8_1 => 0xE127A0,
                 Version1_9_0 => 0xE154D0,
@@ -1712,6 +1785,7 @@ namespace TarnishedTool.Memory
             Patches.DebugFont = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0x25DF4B0,
                 Version1_8_0 => 0x2644E30,
                 Version1_8_1 => 0x2644E10,
                 Version1_9_0 => 0x2647AF0,
@@ -1730,6 +1804,7 @@ namespace TarnishedTool.Memory
             Patches.PlayerSound = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0x338666,
                 Version1_8_0 or Version1_8_1 => 0x33CC46,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x33CD76,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E5C6,
@@ -1740,6 +1815,7 @@ namespace TarnishedTool.Memory
             Patches.IsTorrentDisabledInUnderworld = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0xC8200A,
                 Version1_8_0 => 0xCBA2FA,
                 Version1_8_1 => 0xCBA2DA,
                 Version1_9_0 => 0xCBCF1A,
@@ -1756,6 +1832,7 @@ namespace TarnishedTool.Memory
             Patches.IsWhistleDisabled = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0x6DFFEF,
                 Version1_8_0 or Version1_8_1 => 0x6F6ABF,
                 Version1_9_0 => 0x6F7B5F,
                 Version1_9_1 => 0x6F7BBF,
@@ -1770,6 +1847,7 @@ namespace TarnishedTool.Memory
             Patches.IsWorldPaused = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0xA981F5,
                 Version1_8_0 or Version1_8_1 => 0xAC78E5,
                 Version1_9_0 => 0xACA475,
                 Version1_9_1 => 0xACA4D5,
@@ -1785,6 +1863,7 @@ namespace TarnishedTool.Memory
             Patches.GetItemChance = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0xCC9E8E,
                 Version1_8_0 => 0xD04AEE,
                 Version1_8_1 => 0xD04ACE,
                 Version1_9_0 => 0xD0770E,
@@ -1802,6 +1881,7 @@ namespace TarnishedTool.Memory
             Patches.GetShopEvent = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0xCD77B0,
                 Version1_8_0 => 0xD12840,
                 Version1_8_1 => 0xD12820,
                 Version1_9_0 => 0xD15460,

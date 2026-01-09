@@ -66,6 +66,9 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager, 
             var codeBytes = AsmLoader.GetAsmBytes("ReduceTargetView");
             var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
             var hook = Hooks.BlueTargetView;
+            
+            AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0x43 + 3) });
+            
             Array.Copy(bytes, 0, codeBytes, 0x36 + 2, 8);
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {

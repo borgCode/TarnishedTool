@@ -1315,24 +1315,6 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 52                      push   rdx
-        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
-        ///48 39 82 08 e5 01 00    cmp    QWORD PTR [rdx+0x1e508],rax
-        ///5a                      pop    rdx
-        ///75 0a                   jne    1c &lt;normal&gt;
-        ///bf 01 00 00 00          mov    edi,0x1
-        ///e9 00 00 00 00          jmp    1c &lt;normal&gt;
-        ///00000000001c &lt;normal&gt;:
-        ///48 8b 88 90 01 00 00    mov    rcx,QWORD PTR [rax+0x190]
-        ///e9 00 00 00 00          jmp    28 &lt;normal+0xc&gt;.
-        /// </summary>
-        internal static string TorrentNoStagger {
-            get {
-                return ResourceManager.GetString("TorrentNoStagger", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 0,40002774,Smithing Stone [1],999,999
         ///0,40002775,Smithing Stone [2],999,999
         ///0,40002776,Smithing Stone [3],999,999

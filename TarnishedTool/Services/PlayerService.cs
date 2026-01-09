@@ -10,7 +10,10 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class PlayerService(MemoryService memoryService, HookManager hookManager, ITravelService travelService,
+    public class PlayerService(
+        MemoryService memoryService,
+        HookManager hookManager,
+        ITravelService travelService,
         IReminderService reminderService) : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
@@ -213,14 +216,14 @@ namespace TarnishedTool.Services
             var originalBytes = OriginalBytesByPatch.InfinitePoise.GetOriginal();
             Array.Copy(originalBytes, 0, bytes, 0, originalBytes.Length);
 
-            
+
             var patchSpecificPlayerIns = WorldChrMan.PlayerIns;
-            AsmHelper.WriteImmediateDwords(bytes, new []
+            AsmHelper.WriteImmediateDwords(bytes, new[]
             {
                 (patchSpecificPlayerIns, 0xF + 3),
                 (patchSpecificPlayerIns, 0x18 + 3)
             });
-            
+
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (code.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
@@ -230,7 +233,7 @@ namespace TarnishedTool.Services
             });
 
             memoryService.WriteBytes(code, bytes);
-            
+
             hookManager.InstallHook(code.ToInt64(), hook, originalBytes);
         }
 
@@ -239,6 +242,9 @@ namespace TarnishedTool.Services
             var hook = Hooks.NoGrab;
             var skipGrabJmpLoc = hook + 0x95;
             var codeBytes = AsmLoader.GetAsmBytes("NoGrab");
+            
+            AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0x8 + 3) });
+
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
                 (noGrabCode.ToInt64() + 0x1, WorldChrMan.Base.ToInt64(), 7, 0x1 + 3),
@@ -259,10 +265,10 @@ namespace TarnishedTool.Services
         public void ToggleNoDamage(bool isFreezeHealthEnabled)
         {
             reminderService.TrySetReminder();
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
+            var bitFlags = GetChrDataPtr() + ChrIns.ChrDataFlags;
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
         }
-        
+
         public void ToggleNoHit(bool isNoHitEnabled)
         {
             reminderService.TrySetReminder();
@@ -278,8 +284,8 @@ namespace TarnishedTool.Services
         public void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled) =>
             memoryService.WriteUInt8(Patches.NoRuneArcLoss, isNoRuneArcLossEnabled ? 0xEB : 0x74);
 
-
         private byte[] _originalRuneBytes;
+
         public void ToggleNoRuneLoss(bool isNoRuneLossEnabled)
         {
             if (isNoRuneLossEnabled)
@@ -287,11 +293,11 @@ namespace TarnishedTool.Services
                 _originalRuneBytes = memoryService.ReadBytes(Patches.NoRuneLossOnDeath, 6);
                 var bytes = _originalRuneBytes.ToArray();
                 bytes[0] = 0xE9;
-                
-                int offset = BitConverter.ToInt32(bytes, 2) + 1;  
+
+                int offset = BitConverter.ToInt32(bytes, 2) + 1;
                 Buffer.BlockCopy(BitConverter.GetBytes(offset), 0, bytes, 1, 4);
 
-                bytes[5] = 0x90; 
+                bytes[5] = 0x90;
                 memoryService.WriteBytes(Patches.NoRuneLossOnDeath, bytes);
             }
             else if (_originalRuneBytes != null)
@@ -313,14 +319,14 @@ namespace TarnishedTool.Services
                     (code.ToInt64() + 0xF, GameMan.Base.ToInt64(), 7, 0xF + 3),
                     (code.ToInt64() + 0x28, hook + 5, 5, 0x28 + 1)
                 });
-                
-                
+
+
                 //Patch specific offsets within GameMan
                 int savedTimeMovIndex1 = 0x19 + 3;
                 int savedTimeMovIndex2 = 0x21 + 3;
                 bytes[savedTimeMovIndex1] = (byte)GameMan.StoredTime;
                 bytes[savedTimeMovIndex2] = (byte)(GameMan.StoredTime + 8);
-                
+
                 memoryService.WriteBytes(code, bytes);
                 hookManager.InstallHook(code.ToInt64(), hook, [0x4C, 0x8B, 0x74, 0x24, 0x70]);
             }
@@ -422,7 +428,7 @@ namespace TarnishedTool.Services
                 memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
             var torrentChrIns = ChrInsLookup(handle);
             var bitFlags = memoryService.FollowPointers(torrentChrIns,
-                [..ChrIns.ChrDataModule, (int)ChrIns.ChrDataOffsets.Flags],
+                [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
                 false, false);
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
         }
@@ -488,7 +494,7 @@ namespace TarnishedTool.Services
 
         private IntPtr GetChrTimeActPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrTimeActModule], true);
-        
+
         private IntPtr GetChrInsFlagsPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ChrIns.Flags], false);
 

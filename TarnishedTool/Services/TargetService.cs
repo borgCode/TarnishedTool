@@ -141,13 +141,13 @@ namespace TarnishedTool.Services
 
         public void ToggleTargetNoDamage(bool isFreezeHealthEnabled)
         {
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
+            var bitFlags = GetChrDataPtr() + ChrIns.ChrDataFlags;
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
         }
 
-        public bool IsNoDamageEnabled()
+        public bool IsNoDamageEnabled() 
         {
-            var bitFlags = GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Flags;
+            var bitFlags = GetChrDataPtr() + ChrIns.ChrDataFlags;
             return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
         }
 
@@ -180,6 +180,14 @@ namespace TarnishedTool.Services
             var lockedTarget =
                 memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
             var bytes = AsmLoader.GetAsmBytes("KillAll");
+
+            AsmHelper.WriteImmediateDwords(bytes, new[]
+            {
+                (WorldChrMan.PlayerIns, 0x18 + 3),
+                (WorldChrMan.ChrInsByUpdatePrioBegin, 0x27 + 3),
+                (WorldChrMan.ChrInsByUpdatePrioEnd, 0x2E + 3),
+            });
+
             AsmHelper.WriteAbsoluteAddresses(bytes, new[]
             {
                 (lockedTarget, 0x4 + 2),
@@ -197,7 +205,7 @@ namespace TarnishedTool.Services
                 var lockedTargetPtr = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 var hookLoc = Hooks.ShouldUpdateAi;
                 var bytes = AsmLoader.GetAsmBytes("DisableAllExceptTarget");
-                
+
                 AsmHelper.WriteRelativeOffsets(bytes, new[]
                 {
                     (code.ToInt64() + 0x5, lockedTargetPtr.ToInt64(), 7, 0x5 + 3),

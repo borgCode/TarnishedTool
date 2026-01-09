@@ -168,19 +168,19 @@ namespace TarnishedTool
                     _hasCheckedPatch = true;
                 }
 
-                if (!_hasScanned)
-                {
-                    var sw = Stopwatch.StartNew();
-                    _aobScanner.Scan();
-                    sw.Stop();
-                    Console.WriteLine($"AoBScanner.Scan (fallback): {sw.ElapsedMilliseconds}ms");
-    
-                    _hasScanned = true;
-                    _stateService.Publish(State.Attached);
-#if DEBUG
-                    Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
-#endif
-                }
+                // if (!_hasScanned)
+//                 {
+//                     var sw = Stopwatch.StartNew();
+//                     _aobScanner.Scan();
+//                     sw.Stop();
+//                     Console.WriteLine($"AoBScanner.Scan (fallback): {sw.ElapsedMilliseconds}ms");
+//     
+//                     _hasScanned = true;
+//                     _stateService.Publish(State.Attached);
+// #if DEBUG
+//                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+// #endif
+//                 }
 
 
                 if (!_hasAllocatedMemory)

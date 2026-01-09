@@ -4590,18 +4590,6 @@ c3                      ret</value>
 59                      pop    rcx
 e9 00 00 00 00          jmp    1c &lt;skip+0x6&gt;</value>
   </data>
-  <data name="TorrentNoStagger" xml:space="preserve">
-    <value>52                      push   rdx
-48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # 8 &lt;_main+0x8&gt;
-48 39 82 08 e5 01 00    cmp    QWORD PTR [rdx+0x1e508],rax
-5a                      pop    rdx
-75 0a                   jne    1c &lt;normal&gt;
-bf 01 00 00 00          mov    edi,0x1
-e9 00 00 00 00          jmp    1c &lt;normal&gt;
-00000000001c &lt;normal&gt;:
-48 8b 88 90 01 00 00    mov    rcx,QWORD PTR [rax+0x190]
-e9 00 00 00 00          jmp    28 &lt;normal+0xc&gt;</value>
-  </data>
   <data name="DlcGestures" xml:space="preserve">
     <value>111
 112
