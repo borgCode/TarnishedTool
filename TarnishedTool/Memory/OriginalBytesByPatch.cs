@@ -11,7 +11,7 @@ public static class OriginalBytesByPatch
     {
         public static byte[] GetOriginal() => Offsets.Version switch
         {
-            Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => [0xF3, 0x44, 0x0F, 0x59, 0xD0],
+            Version1_2_1 or Version1_2_2 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => [0xF3, 0x44, 0x0F, 0x59, 0xD0],
             _ => [0xF3, 0x44, 0x0F, 0x59, 0xC8]
         };
     }
@@ -20,7 +20,7 @@ public static class OriginalBytesByPatch
     {
         public static byte[] GetOriginal() => Offsets.Version switch
         {
-            Version1_2_1 => [0x41, 0xFF, 0x91, 0xA8, 0x05, 0x00, 0x00],
+            Version1_2_1 or Version1_2_2 => [0x41, 0xFF, 0x91, 0xA8, 0x05, 0x00, 0x00],
             Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => [0x41, 0xFF, 0x91, 0xB8, 0x05, 0x00, 0x00],
             _ => [0x41, 0xFF, 0x91, 0xC8, 0x05, 0x00, 0x00]
         };
@@ -30,7 +30,7 @@ public static class OriginalBytesByPatch
     {
         public static byte[] GetOriginal() => Offsets.Version switch
         {
-            Version1_2_1 => [0x4C, 0x8B, 0xC7, 0x41, 0x0F, 0xB6, 0xD6],
+            Version1_2_1 or Version1_2_2 => [0x4C, 0x8B, 0xC7, 0x41, 0x0F, 0xB6, 0xD6],
             _ => [0x4C, 0x8B, 0xC7, 0x40, 0x0F, 0xB6, 0xD5]
         };
     }

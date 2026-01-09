@@ -640,8 +640,8 @@ namespace TarnishedTool.Memory
         );
 
         public static readonly Pattern IsWhistleDisabled = new Pattern(
-            [0x80, 0x79, 0x36, 0x00, 0x0F],
-            "xxxxx",
+            [0x80, 0x79, 0x36, 0x00, 0x0F, 0x95, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3],
+            "xxxxxxxxxxxx",
             4,
             AddressingMode.Absolute
         );

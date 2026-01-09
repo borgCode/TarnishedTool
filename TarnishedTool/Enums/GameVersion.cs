@@ -6,6 +6,7 @@ public enum GameVersion
 {
     Version1_2_0, //1.02
     Version1_2_1, // 1.2.1
+    Version1_2_2, // 1.2.2
     Version1_8_0, // 1.8.0
     Version1_8_1, // 1.8.1
     Version1_9_0, //1.09

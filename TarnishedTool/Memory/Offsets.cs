@@ -670,6 +670,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C50268,
                 Version1_2_1 => 0x3C50288,
+                Version1_2_2 => 0x3C502A8,
                 Version1_8_0 or Version1_8_1 => 0x3CD9998,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDCDD8,
                 Version2_2_0 => 0x3D65F88,
@@ -683,6 +684,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C53470,
                 Version1_2_1 => 0x3C53490,
+                Version1_2_2 => 0x3C534B0,
                 Version1_8_0 or Version1_8_1 => 0x3CDCB80,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDFFC0,
                 Version2_2_0 => 0x3D691D8,
@@ -696,6 +698,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C520F8,
                 Version1_2_1 => 0x3C52118,
+                Version1_2_2 => 0x3C52138,
                 Version1_8_0 or Version1_8_1 => 0x3CDB7F8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDEC38,
                 Version2_2_0 => 0x3D67E48,
@@ -709,6 +712,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C526E8,
                 Version1_2_1 => 0x3C52708,
+                Version1_2_2 => 0x3C52728,
                 Version1_8_0 or Version1_8_1 => 0x3CDBDF8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDF238,
                 Version2_2_0 => 0x3D68448,
@@ -722,6 +726,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C50658,
                 Version1_2_1 => 0x3C50678,
+                Version1_2_2 => 0x3C50698,
                 Version1_8_0 or Version1_8_1 => 0x3CD9D68,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDD1A8,
                 Version2_2_0 => 0x3D66378,
@@ -735,6 +740,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C55B30,
                 Version1_2_1 => 0x3C55B50,
+                Version1_2_2 => 0x3C55B70,
                 Version1_8_0 or Version1_8_1 => 0x3CDF140,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE2580,
                 Version2_2_0 => 0x3D6B7B0,
@@ -748,6 +754,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C4C4EA,
                 Version1_2_1 => 0x3C4C50A,
+                Version1_2_2 => 0x3C4C52A,
                 Version1_8_0 or Version1_8_1 => 0x3CD5C7A,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CD90BA,
                 Version2_2_0 => 0x3D6226B,
@@ -761,6 +768,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C53B88,
                 Version1_2_1 => 0x3C53BA8,
+                Version1_2_2 => 0x3C53BC8,
                 Version1_8_0 or Version1_8_1 => 0x3CDD2C8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE0708,
                 Version2_2_0 => 0x3D69918,
@@ -774,6 +782,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C54320,
                 Version1_2_1 => 0x3C54340,
+                Version1_2_2 => 0x3C54360,
                 Version1_8_0 or Version1_8_1 => 0x3CDDA70,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE0EB0,
                 Version2_2_0 => 0x3D6A0E0,
@@ -787,6 +796,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C50478,
                 Version1_2_1 => 0x3C50498,
+                Version1_2_2 => 0x3C504B8,
                 Version1_8_0 or Version1_8_1 => 0x3CD9BD0,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDD010,
                 Version2_2_0 => 0x3D66198,
@@ -800,6 +810,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C481B8,
                 Version1_2_1 => 0x3C481D8,
+                Version1_2_2 => 0x3C481F8,
                 Version1_8_0 or Version1_8_1 => 0x3CD1948,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CD4D88,
                 Version2_2_0 => 0x3D5DF38,
@@ -813,6 +824,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C705D8,
                 Version1_2_1 => 0x3C701F8,
+                Version1_2_2 => 0x3C70218,
                 Version1_8_0 or Version1_8_1 => 0x3CFA3F8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CFD838,
                 Version2_2_0 => 0x3D86BD8,
@@ -826,6 +838,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C51CF0,
                 Version1_2_1 => 0x3C51D10,
+                Version1_2_2 => 0x3C51D30,
                 Version1_8_0 or Version1_8_1 => 0x3CDB400,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDE840,
                 Version2_2_0 => 0x3D67A50,
@@ -839,6 +852,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0x45251F0,
+                Version1_2_2 => 0x4525210,
                 Version1_8_0 or Version1_8_1 => 0x45B1920,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x45B4D50,
                 Version2_2_0 => 0x485DB70,
@@ -852,6 +866,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C51E78,
                 Version1_2_1 => 0x3C51E98,
+                Version1_2_2 => 0x3C51EB8,
                 Version1_8_0 or Version1_8_1 => 0x3CDB580,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDE9C0,
                 Version2_2_0 => 0x3D67BD0,
@@ -865,6 +880,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C535A0,
                 Version1_2_1 => 0x3C535C0,
+                Version1_2_2 => 0x3C535E0,
                 Version1_8_0 or Version1_8_1 => 0x3CDCCB0,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE00F0,
                 Version2_2_0 => 0x3D692F8,
@@ -877,7 +893,7 @@ namespace TarnishedTool.Memory
             GroupMask.Base = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3A367E0,
-                Version1_2_1 => 0x3A36800,
+                Version1_2_1 or Version1_2_2 => 0x3A36800,
                 Version1_8_0 or Version1_8_1 => 0x3ABFAE8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3AC2AE8,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0
@@ -892,6 +908,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x4473138,
                 Version1_2_1 => 0x4472D58,
+                Version1_2_2 => 0x4472D78,
                 Version1_8_0 or Version1_8_1 => 0x44FD2C8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x4500708,
                 Version2_2_0 => 0x4589AD8,
@@ -905,6 +922,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C522A0,
                 Version1_2_1 => 0x3C522C0,
+                Version1_2_2 => 0x3C522E0,
                 Version1_8_0 or Version1_8_1 => 0x3CDB9A8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDEDE8,
                 Version2_2_0 => 0x3D67FF8,
@@ -919,6 +937,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x45255C8,
                 Version1_2_1 => 0x45251E8,
+                Version1_2_2 => 0x4525208,
                 Version1_8_0 or Version1_8_1 => 0x45B1918,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x45B4D48,
                 Version2_2_0 => 0x485DB68,
@@ -932,6 +951,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x4472AD8,
                 Version1_2_1 => 0x44726F8,
+                Version1_2_2 => 0x4472718,
                 Version1_8_0 or Version1_8_1 => 0x44FCC68,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x45000A8,
                 Version2_2_0 => 0x4589478,
@@ -946,6 +966,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C56BE0,
                 Version1_2_1 => 0x3C56C00,
+                Version1_2_2 => 0x3C56C20,
                 Version1_8_0 or Version1_8_1 => 0x3CE0940,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CE3D80,
                 Version2_2_0 => 0x3D6CFC0,
@@ -959,6 +980,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x4473138,
                 Version1_2_1 => 0x3C6B598,
+                Version1_2_2 => 0x3C6B5B8,
                 Version1_8_0 or Version1_8_1 => 0x3CF5788,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CF8BC8,
                 Version2_2_0 => 0x3D81EE8,
@@ -972,6 +994,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C66D48,
                 Version1_2_1 => 0x3C66D68,
+                Version1_2_2 => 0x3C66D88,
                 Version1_8_0 or Version1_8_1 => 0x3CF0DD8,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CF4218,
                 Version2_2_0 => 0x3D7D4F8,
@@ -985,6 +1008,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C50480,
                 Version1_2_1 => 0x3C504A0,
+                Version1_2_2 => 0x3C504C0,
                 Version1_8_0 or Version1_8_1 => 0x3CD9B97,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CDCFE8,
                 Version2_2_0 => 0x3D661A0,
@@ -998,6 +1022,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x3C4C030,
                 Version1_2_1 => 0x3C4C050,
+                Version1_2_2 => 0x3C4C070,
                 Version1_8_0 or Version1_8_1 => 0x3CD57C0,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3CD8C00,
                 Version2_2_0 => 0x3D61DB0,
@@ -1012,7 +1037,7 @@ namespace TarnishedTool.Memory
             Functions.GraceWarp = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5855B0,
-                Version1_2_1 => 0x585620,
+                Version1_2_1 or Version1_2_2 => 0x585620,
                 Version1_8_0 or Version1_8_1 => 0x5951E0,
                 Version1_9_0 => 0x595560,
                 Version1_9_1 => 0x5955C0,
@@ -1027,7 +1052,7 @@ namespace TarnishedTool.Memory
             Functions.SetEvent = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5D9E40,
-                Version1_2_1 => 0x5D9EB0,
+                Version1_2_1 or Version1_2_2 => 0x5D9EB0,
                 Version1_8_0 or Version1_8_1 => 0x5ED450,
                 Version1_9_0 => 0x5EE170,
                 Version1_9_1 => 0x5EE1D0,
@@ -1042,7 +1067,7 @@ namespace TarnishedTool.Memory
             Functions.SetSpEffect = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x3E17E0,
-                Version1_2_1 => 0x3E1850,
+                Version1_2_1 or Version1_2_2 => 0x3E1850,
                 Version1_8_0 or Version1_8_1 => 0x3E69C0,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3E6AF0,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3E9100,
@@ -1054,7 +1079,7 @@ namespace TarnishedTool.Memory
             Functions.GiveRunes = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x258270,
-                Version1_2_1 => 0x2582E0,
+                Version1_2_1 or Version1_2_2 => 0x2582E0,
                 Version1_8_0 or Version1_8_1 => 0x25C670,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x25C7A0,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0
@@ -1067,7 +1092,7 @@ namespace TarnishedTool.Memory
             Functions.LookupByFieldInsHandle = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4F7580,
-                Version1_2_1 => 0x4F75F0,
+                Version1_2_1 or Version1_2_2 => 0x4F75F0,
                 Version1_8_0 or Version1_8_1 => 0x503B80,
                 Version1_9_0 => 0x503EA0,
                 Version1_9_1 => 0x503F00,
@@ -1082,7 +1107,7 @@ namespace TarnishedTool.Memory
             Functions.WarpToBlock = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5D7DA0,
-                Version1_2_1 => 0x5D7E10,
+                Version1_2_1 or Version1_2_2 => 0x5D7E10,
                 Version1_8_0 or Version1_8_1 => 0x5EB330,
                 Version1_9_0 => 0x5EC050,
                 Version1_9_1 => 0x5EC0B0,
@@ -1098,7 +1123,7 @@ namespace TarnishedTool.Memory
             Functions.GetEvent = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5D9650,
-                Version1_2_1 => 0x5D96C0,
+                Version1_2_1 or Version1_2_2 => 0x5D96C0,
                 Version1_8_0 or Version1_8_1 => 0x5ECC60,
                 Version1_9_0 => 0x5ED980,
                 Version1_9_1 => 0x5ED9E0,
@@ -1113,7 +1138,7 @@ namespace TarnishedTool.Memory
             Functions.GetPlayerItemQuantityById = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x75ACC0,
-                Version1_2_1 => 0x75AD30,
+                Version1_2_1 or Version1_2_2 => 0x75AD30,
                 Version1_8_0 or Version1_8_1 => 0x773500,
                 Version1_9_0 => 0x7745A0,
                 Version1_9_1 => 0x774600,
@@ -1128,7 +1153,7 @@ namespace TarnishedTool.Memory
             Functions.ItemSpawn = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x54E570,
-                Version1_2_1 => 0x54E5E0,
+                Version1_2_1 or Version1_2_2 => 0x54E5E0,
                 Version1_8_0 or Version1_8_1 => 0x55C1A0,
                 Version1_9_0 => 0x55C4C0,
                 Version1_9_1 => 0x55C520,
@@ -1144,6 +1169,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0xAB01E0,
                 Version1_2_1 => 0xAB0260,
+                Version1_2_2 => 0xAB02D0,
                 Version1_8_0 or Version1_8_1 => 0xAE06E0,
                 Version1_9_0 => 0xAE3270,
                 Version1_9_1 => 0xAE32D0,
@@ -1159,7 +1185,7 @@ namespace TarnishedTool.Memory
             Functions.ChrInsByHandle = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4F74A0,
-                Version1_2_1 => 0x4F7510,
+                Version1_2_1 or Version1_2_2 => 0x4F7510,
                 Version1_8_0 or Version1_8_1 => 0x503AA0,
                 Version1_9_0 => 0x503DC0,
                 Version1_9_1 => 0x503E20,
@@ -1174,7 +1200,7 @@ namespace TarnishedTool.Memory
             Functions.FindAndRemoveSpEffect = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4E6970,
-                Version1_2_1 => 0x4E69E0,
+                Version1_2_1 or Version1_2_2 => 0x4E69E0,
                 Version1_8_0 or Version1_8_1 => 0x4F2E00,
                 Version1_9_0 => 0x4F3060,
                 Version1_9_1 => 0x4F3070,
@@ -1189,7 +1215,7 @@ namespace TarnishedTool.Memory
             Functions.EmevdSwitch = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x555D00,
-                Version1_2_1 => 0x555D70,
+                Version1_2_1 or Version1_2_2 => 0x555D70,
                 Version1_8_0 or Version1_8_1 => 0x563930,
                 Version1_9_0 => 0x563C50,
                 Version1_9_1 => 0x563CB0,
@@ -1204,7 +1230,7 @@ namespace TarnishedTool.Memory
             Functions.EmkEventInsCtor = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x56ECA0,
-                Version1_2_1 => 0x56ED10,
+                Version1_2_1 or Version1_2_2 => 0x56ED10,
                 Version1_8_0 or Version1_8_1 => 0x57DDC0,
                 Version1_9_0 => 0x57E0E0,
                 Version1_9_1 => 0x57E140,
@@ -1220,6 +1246,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x25B6CD0,
                 Version1_2_1 => 0x25B6D20,
+                Version1_2_2 => 0x25B71C0,
                 Version1_8_0 => 0x261BD10,
                 Version1_8_1 => 0x261BCF0,
                 Version1_9_0 => 0x261E9D0,
@@ -1237,7 +1264,7 @@ namespace TarnishedTool.Memory
             Functions.GetChrInsByEntityId = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4F7630,
-                Version1_2_1 => 0x4F76A0,
+                Version1_2_1 or Version1_2_2 => 0x4F76A0,
                 Version1_8_0 or Version1_8_1 => 0x503C30,
                 Version1_9_0 => 0x503F50,
                 Version1_9_1 => 0x503FB0,
@@ -1253,6 +1280,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0xE17E70,
                 Version1_2_1 => 0xE17EC0,
+                Version1_2_2 => 0xE18360,
                 Version1_8_0 => 0xE5C320,
                 Version1_8_1 => 0xE5C300,
                 Version1_9_0 => 0xE5EDC0,
@@ -1271,6 +1299,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x1FD0D40,
                 Version1_2_1 => 0x1FD0D90,
+                Version1_2_2 => 0x1FD1230,
                 Version1_8_0 => 0x2035560,
                 Version1_8_1 => 0x2035540,
                 Version1_9_0 => 0x2038230,
@@ -1289,6 +1318,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0x1F93530,
+                Version1_2_2 => 0x1F939D0,
                 Version1_8_0 => 0x1FF7D00,
                 Version1_8_1 => 0x1FF7CE0,
                 Version1_9_0 => 0x1FFA9D0,
@@ -1307,6 +1337,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0xE1E370,
+                Version1_2_2 => 0xE1E810,
                 Version1_8_0 => 0xE628C0,
                 Version1_8_1 => 0xE628A0,
                 Version1_9_0 => 0xE65360,
@@ -1325,7 +1356,7 @@ namespace TarnishedTool.Memory
             Hooks.UpdateCoords = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x45E3C9,
-                Version1_2_1 => 0x45E439,
+                Version1_2_1 or Version1_2_2 => 0x45E439,
                 Version1_8_0 or Version1_8_1 => 0x4647A9,
                 Version1_9_0 or Version1_9_1 => 0x4648E9,
                 Version2_0_1 => 0x464A89,
@@ -1339,7 +1370,7 @@ namespace TarnishedTool.Memory
             Hooks.InAirTimer = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x444CA8,
-                Version1_2_1 => 0x444D18,
+                Version1_2_1 or Version1_2_2 => 0x444D18,
                 Version1_8_0 or Version1_8_1 => 0x44B088,
                 Version1_9_0 or Version1_9_1 => 0x44B1C8,
                 Version2_0_1 => 0x44B368,
@@ -1354,6 +1385,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x1EBF67F,
                 Version1_2_1 => 0x1EBF6CF,
+                Version1_2_2 => 0x1EBFB6F,
                 Version1_8_0 => 0x1F23DCF,
                 Version1_8_1 => 0x1F23DAF,
                 Version1_9_0 => 0x1F26A9F,
@@ -1373,6 +1405,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x1EBE79E,
                 Version1_2_1 => 0x1EBE7EE,
+                Version1_2_2 => 0x1EBEC8E,
                 Version1_8_0 => 0x1F22E8F,
                 Version1_8_1 => 0x1F22E6F,
                 Version1_9_0 => 0x1F25B5F,
@@ -1389,7 +1422,7 @@ namespace TarnishedTool.Memory
             Hooks.HasSpEffect = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4E99C0,
-                Version1_2_1 => 0x4E9A30,
+                Version1_2_1 or Version1_2_2 => 0x4E9A30,
                 Version1_8_0 or Version1_8_1 => 0x4F5E10,
                 Version1_9_0 => 0x4F6070,
                 Version1_9_1 => 0x4F60A0,
@@ -1404,7 +1437,7 @@ namespace TarnishedTool.Memory
             Hooks.BlueTargetView = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x3382C3,
-                Version1_2_1 => 0x338333,
+                Version1_2_1 or Version1_2_2 => 0x338333,
                 Version1_8_0 or Version1_8_1 => 0x33C913,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x33CA43,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E293,
@@ -1415,7 +1448,7 @@ namespace TarnishedTool.Memory
             Hooks.LockedTargetPtr = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x6F0A16,
-                Version1_2_1 => 0x6F0A86,
+                Version1_2_1 or Version1_2_2 => 0x6F0A86,
                 Version1_8_0 or Version1_8_1 => 0x7078C6,
                 Version1_9_0 => 0x708966,
                 Version1_9_1 => 0x7089C6,
@@ -1430,7 +1463,7 @@ namespace TarnishedTool.Memory
             Hooks.InfinitePoise = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5E885CB0,
-                Version1_2_1 => 0x43CADA,
+                Version1_2_1 or Version1_2_2 => 0x43CADA,
                 Version1_8_0 or Version1_8_1 => 0x442BB0,
                 Version1_9_0 or Version1_9_1 => 0x442CF0,
                 Version2_0_1 => 0x442DC0,
@@ -1444,7 +1477,7 @@ namespace TarnishedTool.Memory
             Hooks.ShouldUpdateAi = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x3C09F0,
-                Version1_2_1 => 0x3C0A60,
+                Version1_2_1 or Version1_2_2 => 0x3C0A60,
                 Version1_8_0 or Version1_8_1 => 0x3C5900,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x3C5A30,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3C7920,
@@ -1457,6 +1490,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x6402D8C4,
                 Version1_2_1 => 0x53F7581,
+                Version1_2_2 => 0x4F45CB4,
                 Version1_8_0 => 0x5757732,
                 Version1_8_1 => 0x56BA77E,
                 Version1_9_0 => 0x5679CFE,
@@ -1476,7 +1510,7 @@ namespace TarnishedTool.Memory
             Hooks.AttackInfo = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5E8BE22B,
-                Version1_2_1 => 0x474BAA,
+                Version1_2_1 or Version1_2_2 => 0x474BAA,
                 Version1_8_0 or Version1_8_1 => 0x47AF5A,
                 Version1_9_0 or Version1_9_1 => 0x47B09A,
                 Version2_0_1 => 0x47B23A,
@@ -1490,7 +1524,7 @@ namespace TarnishedTool.Memory
             Hooks.WarpCoordWrite = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x657AFA,
-                Version1_2_1 => 0x657B6A,
+                Version1_2_1 or Version1_2_2 => 0x657B6A,
                 Version1_8_0 or Version1_8_1 => 0x66C2AA,
                 Version1_9_0 => 0x66D20A,
                 Version1_9_1 => 0x66D26A,
@@ -1505,7 +1539,7 @@ namespace TarnishedTool.Memory
             Hooks.WarpAngleWrite = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x657ADA,
-                Version1_2_1 => 0x657B4A,
+                Version1_2_1 or Version1_2_2 => 0x657B4A,
                 Version1_8_0 or Version1_8_1 => 0x66C28A,
                 Version1_9_0 => 0x66D1EA,
                 Version1_9_1 => 0x66D24A,
@@ -1520,7 +1554,7 @@ namespace TarnishedTool.Memory
             Hooks.NoTimePassOnDeath = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
-                Version1_2_1 => 0x5DC5D7,
+                Version1_2_1 or Version1_2_2 => 0x5DC5D7,
                 Version1_8_0 or Version1_8_1 => 0x5EFB77,
                 Version1_9_0 => 0x5F0897,
                 Version1_9_1 => 0x5F08F9,
@@ -1544,7 +1578,7 @@ namespace TarnishedTool.Memory
             Hooks.SetActionRequested = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x3FF362,
-                Version1_2_1 => 0x3FF3D2,
+                Version1_2_1 or Version1_2_2=> 0x3FF3D2,
                 Version1_8_0 or Version1_8_1 => 0x404F92,
                 Version1_9_0 or Version1_9_1 => 0x4050D2,
                 Version2_0_1 => 0x4050C2,
@@ -1558,7 +1592,7 @@ namespace TarnishedTool.Memory
             Hooks.NoGrab = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4402FB,
-                Version1_2_1 => 0x44036B,
+                Version1_2_1 or Version1_2_2 => 0x44036B,
                 Version1_8_0 or Version1_8_1 => 0x44679B,
                 Version1_9_0 or Version1_9_1 => 0x4468DB,
                 Version2_0_1 => 0x446A7B,
@@ -1571,8 +1605,6 @@ namespace TarnishedTool.Memory
 
             Hooks.LoadScreenMsgLookup = moduleBase.ToInt64() + Version switch
             {
-                Version1_2_0 => 0x0,
-                Version1_2_1 => 0x0,
                 Version1_8_0 => 0xCDACFC,
                 Version1_8_1 => 0xCDACDC,
                 Version1_9_0 => 0xCDD91C,
@@ -1589,14 +1621,14 @@ namespace TarnishedTool.Memory
             Hooks.LoadScreenMsgLookupEarlyPatches = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5F15093C,
-                Version1_2_1 => 0x737A04,
+                Version1_2_1 or Version1_2_2 => 0x737A04,
                 _ => 0L
             };
 
             Hooks.TargetNoStagger = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5E8BE3C7,
-                Version1_2_1 => 0x474D35,
+                Version1_2_1 or Version1_2_2 => 0x474D35,
                 Version1_8_0 or Version1_8_1 => 0x47B0E5,
                 Version1_9_0 or Version1_9_1 => 0x47B225,
                 Version2_0_1 => 0x47B3C5,
@@ -1611,6 +1643,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0L,
                 Version1_2_1 => 0x992A51,
+                Version1_2_2 => 0x992AC1,
                 Version1_8_0 or Version1_8_1 => 0x9A37A1,
                 Version1_9_0 => 0x9A57F1,
                 Version1_9_1 => 0x9A5851,
@@ -1628,6 +1661,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0xAAADCA,
+                Version1_2_2 => 0xAAAE3A,
                 Version1_8_0 or Version1_8_1 => 0xADB0FD,
                 Version1_9_0 => 0xADDC8D,
                 Version1_9_1 => 0xADDCED,
@@ -1644,7 +1678,7 @@ namespace TarnishedTool.Memory
             Patches.NoRunesFromEnemies = moduleBase + Version switch
             {
                 Version1_2_0 => 0x49456E,
-                Version1_2_1 => 0x630D1F,
+                Version1_2_1 or Version1_2_2 => 0x630D1F,
                 Version1_8_0 or Version1_8_1 => 0x64463F,
                 Version1_9_0 => 0x6453BF,
                 Version1_9_1 => 0x64541F,
@@ -1659,7 +1693,7 @@ namespace TarnishedTool.Memory
             Patches.NoRuneArcLoss = moduleBase + Version switch
             {
                 Version1_2_0 => 0x258347,
-                Version1_2_1 => 0x2583B7,
+                Version1_2_1 or Version1_2_2 => 0x2583B7,
                 Version1_8_0 or Version1_8_1 => 0x25C757,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x25C887,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0
@@ -1670,7 +1704,7 @@ namespace TarnishedTool.Memory
             Patches.NoRuneLossOnDeath = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5EA3C215,
-                Version1_2_1 => 0x5DC3F5,
+                Version1_2_1 or Version1_2_2 => 0x5DC3F5,
                 Version1_8_0 or Version1_8_1 => 0x5EF995,
                 Version1_9_0 => 0x5F06B5,
                 Version1_9_1 => 0x5F0715,
@@ -1685,7 +1719,7 @@ namespace TarnishedTool.Memory
             Patches.CanFastTravel = moduleBase + Version switch
             {
                 Version1_2_0 => 0x798300,
-                Version1_2_1 => 0x798370,
+                Version1_2_1 or Version1_2_2 => 0x798370,
                 Version1_8_0 or Version1_8_1 => 0x7B2110,
                 Version1_9_0 => 0x7B31B0,
                 Version1_9_1 => 0x7B3210,
@@ -1701,7 +1735,7 @@ namespace TarnishedTool.Memory
             Patches.OpenMap = moduleBase + Version switch
             {
                 Version1_2_0 => 0x7C4CDA,
-                Version1_2_1 => 0x7C4D4A,
+                Version1_2_1 or Version1_2_2 => 0x7C4D4A,
                 Version1_8_0 or Version1_8_1 => 0x7DBEBA,
                 Version1_9_0 => 0x7DCFBA,
                 Version1_9_1 => 0x7DD01A,
@@ -1716,7 +1750,7 @@ namespace TarnishedTool.Memory
             Patches.CloseMap = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5EE0392E,
-                Version1_2_1 => 0x990C25,
+                Version1_2_1 or Version1_2_2=> 0x990C25,
                 Version1_8_0 or Version1_8_1 => 0x9A14FA,
                 Version1_9_0 => 0x9A354A,
                 Version1_9_1 => 0x9A35AA,
@@ -1732,6 +1766,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0xDC0D60,
                 Version1_2_1 => 0xDC0DB0,
+                Version1_2_2 => 0xDC11C0,
                 Version1_8_0 => 0xE028C0,
                 Version1_8_1 => 0xE028A0,
                 Version1_9_0 => 0xE055D0,
@@ -1750,6 +1785,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0xDD0810,
                 Version1_2_1 => 0xDD0860,
+                Version1_2_2 => 0xDD0C70,
                 Version1_8_0 => 0xE127E0,
                 Version1_8_1 => 0xE127C0,
                 Version1_9_0 => 0xE154F0,
@@ -1768,6 +1804,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0xDD07F0,
                 Version1_2_1 => 0xDD0840,
+                Version1_2_2 => 0xDD0C50,
                 Version1_8_0 => 0xE127C0,
                 Version1_8_1 => 0xE127A0,
                 Version1_9_0 => 0xE154D0,
@@ -1786,6 +1823,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0x25DF4B0,
+                Version1_2_2 => 0x25DF950,
                 Version1_8_0 => 0x2644E30,
                 Version1_8_1 => 0x2644E10,
                 Version1_9_0 => 0x2647AF0,
@@ -1804,7 +1842,7 @@ namespace TarnishedTool.Memory
             Patches.PlayerSound = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
-                Version1_2_1 => 0x338666,
+                Version1_2_1 or Version1_2_2 => 0x338666,
                 Version1_8_0 or Version1_8_1 => 0x33CC46,
                 Version1_9_0 or Version1_9_1 or Version2_0_1 => 0x33CD76,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E5C6,
@@ -1816,6 +1854,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0xC8200A,
+                Version1_2_2 => 0xC8216A,
                 Version1_8_0 => 0xCBA2FA,
                 Version1_8_1 => 0xCBA2DA,
                 Version1_9_0 => 0xCBCF1A,
@@ -1832,7 +1871,7 @@ namespace TarnishedTool.Memory
             Patches.IsWhistleDisabled = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
-                Version1_2_1 => 0x6DFFEF,
+                Version1_2_1 or Version1_2_2 => 0x6DFFEF,
                 Version1_8_0 or Version1_8_1 => 0x6F6ABF,
                 Version1_9_0 => 0x6F7B5F,
                 Version1_9_1 => 0x6F7BBF,
@@ -1848,6 +1887,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0xA981F5,
+                Version1_2_2 => 0xA98265,
                 Version1_8_0 or Version1_8_1 => 0xAC78E5,
                 Version1_9_0 => 0xACA475,
                 Version1_9_1 => 0xACA4D5,
@@ -1864,6 +1904,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0xCC9E8E,
+                Version1_2_2 => 0xCC9FEE,
                 Version1_8_0 => 0xD04AEE,
                 Version1_8_1 => 0xD04ACE,
                 Version1_9_0 => 0xD0770E,
@@ -1882,6 +1923,7 @@ namespace TarnishedTool.Memory
             {
                 Version1_2_0 => 0x0,
                 Version1_2_1 => 0xCD77B0,
+                Version1_2_2 => 0xCD7910,
                 Version1_8_0 => 0xD12840,
                 Version1_8_1 => 0xD12820,
                 Version1_9_0 => 0xD15460,
