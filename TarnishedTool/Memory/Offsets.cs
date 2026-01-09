@@ -556,6 +556,7 @@ namespace TarnishedTool.Memory
             public static long NoMapAcquiredPopup;
             public static long NoGrab;
             public static long LoadScreenMsgLookup;
+            public static long LoadScreenMsgLookupEarlyPatches;
         }
 
         public static class Functions
@@ -1414,6 +1415,7 @@ namespace TarnishedTool.Memory
             Hooks.AttackInfo = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5E8BE22B,
+                Version1_2_1 => 0x474BAA,
                 Version1_8_0 or Version1_8_1 => 0x47AF5A,
                 Version1_9_0 or Version1_9_1 => 0x47B09A,
                 Version2_0_1 => 0x47B23A,
@@ -1427,6 +1429,7 @@ namespace TarnishedTool.Memory
             Hooks.WarpCoordWrite = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x657AFA,
+                Version1_2_1 => 0x657B6A,
                 Version1_8_0 or Version1_8_1 => 0x66C2AA,
                 Version1_9_0 => 0x66D20A,
                 Version1_9_1 => 0x66D26A,
@@ -1441,6 +1444,7 @@ namespace TarnishedTool.Memory
             Hooks.WarpAngleWrite = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x657ADA,
+                Version1_2_1 => 0x657B4A,
                 Version1_8_0 or Version1_8_1 => 0x66C28A,
                 Version1_9_0 => 0x66D1EA,
                 Version1_9_1 => 0x66D24A,
@@ -1455,6 +1459,7 @@ namespace TarnishedTool.Memory
             Hooks.NoTimePassOnDeath = moduleBase + Version switch
             {
                 Version1_2_0 => 0x0,
+                Version1_2_1 => 0x5DC5D7,
                 Version1_8_0 or Version1_8_1 => 0x5EFB77,
                 Version1_9_0 => 0x5F0897,
                 Version1_9_1 => 0x5F08F9,
@@ -1478,6 +1483,7 @@ namespace TarnishedTool.Memory
             Hooks.SetActionRequested = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x3FF362,
+                Version1_2_1 => 0x3FF3D2,
                 Version1_8_0 or Version1_8_1 => 0x404F92,
                 Version1_9_0 or Version1_9_1 => 0x4050D2,
                 Version2_0_1 => 0x4050C2,
@@ -1491,6 +1497,7 @@ namespace TarnishedTool.Memory
             Hooks.NoGrab = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x4402FB,
+                Version1_2_1 => 0x44036B,
                 Version1_8_0 or Version1_8_1 => 0x44679B,
                 Version1_9_0 or Version1_9_1 => 0x4468DB,
                 Version2_0_1 => 0x446A7B,
@@ -1503,7 +1510,8 @@ namespace TarnishedTool.Memory
 
             Hooks.LoadScreenMsgLookup = moduleBase.ToInt64() + Version switch
             {
-                Version1_2_0 => 0x5F15093C,
+                Version1_2_0 => 0x0,
+                Version1_2_1 => 0x0,
                 Version1_8_0 => 0xCDACFC,
                 Version1_8_1 => 0xCDACDC,
                 Version1_9_0 => 0xCDD91C,
@@ -1514,6 +1522,13 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xD1075C,
                 Version2_6_0 => 0xD108DC,
                 Version2_6_1 => 0xD1093C,
+                _ => 0L
+            };
+            
+            Hooks.LoadScreenMsgLookupEarlyPatches = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x5F15093C,
+                Version1_2_1 => 0,
                 _ => 0L
             };
 
@@ -1866,6 +1881,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.SetActionRequested: 0x{Hooks.SetActionRequested:X}");
             Console.WriteLine($@"Hooks.NoGrab: 0x{Hooks.NoGrab:X}");
             Console.WriteLine($@"Hooks.LoadScreenMsgLookup: 0x{Hooks.LoadScreenMsgLookup:X}");
+            Console.WriteLine($@"Hooks.LoadScreenMsgLookupEarlyPatches: 0x{Hooks.LoadScreenMsgLookupEarlyPatches:X}");
             Console.WriteLine($@"Hooks.TargetNoStagger: 0x{Hooks.TargetNoStagger:X}");
             Console.WriteLine($@"Hooks.NoMapAcquiredPopup: 0x{Hooks.NoMapAcquiredPopup:X}");
 

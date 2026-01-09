@@ -288,6 +288,13 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Absolute
         );
+        
+        public static readonly Pattern LoadScreenMsgLookupEarlyPatches = new Pattern(
+            [0x48, 0x89, 0x44, 0x24, 0x20, 0x4C, 0x8D, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x44, 0x8B, 0xC2, 0xBA, 0xCD, 0x00, 0x00, 0x00],
+            "xxxxxxxx????xxxxxxxx",
+            0xF,
+            AddressingMode.Absolute
+        );
 
         public static readonly Pattern LoadScreenMsgLookup = new Pattern(
             [0x44, 0x8B, 0xCA, 0x33, 0xD2, 0x41, 0xB8, 0xCD],

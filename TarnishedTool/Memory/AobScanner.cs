@@ -142,6 +142,8 @@ namespace TarnishedTool.Memory
                     addr => Hooks.NoMapAcquiredPopup = addr.ToInt64(), saved),
                 () => TryPatternWithFallback("LoadScreenMsgLookup", Pattern.LoadScreenMsgLookup,
                     addr => Hooks.LoadScreenMsgLookup = addr.ToInt64(), saved),
+                () => TryPatternWithFallback("LoadScreenMsgLookupEarlyPatches", Pattern.LoadScreenMsgLookupEarlyPatches,
+                    addr => Hooks.LoadScreenMsgLookupEarlyPatches = addr.ToInt64(), saved),
                 () => TryPatternWithFallback("NoGrab", Pattern.NoGrab,
                     addr => Hooks.NoGrab = addr.ToInt64(), saved)
             );
@@ -230,6 +232,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.SetActionRequested: 0x{Hooks.SetActionRequested:X} (base+0x{Hooks.SetActionRequested - baseAddr:X})");
             Console.WriteLine($@"Hooks.NoGrab: 0x{Hooks.NoGrab:X} (base+0x{Hooks.NoGrab - baseAddr:X})");
             Console.WriteLine($@"Hooks.LoadScreenMsgLookup: 0x{Hooks.LoadScreenMsgLookup:X} (base+0x{Hooks.LoadScreenMsgLookup - baseAddr:X})");
+            Console.WriteLine($@"Hooks.LoadScreenMsgLookupEarlyPatches: 0x{Hooks.LoadScreenMsgLookupEarlyPatches:X} (base+0x{Hooks.LoadScreenMsgLookupEarlyPatches - baseAddr:X})");
             Console.WriteLine($@"Hooks.TargetNoStagger: 0x{Hooks.TargetNoStagger:X} (base+0x{Hooks.TargetNoStagger - baseAddr:X})");
             Console.WriteLine($@"Hooks.NoMapAcquiredPopup: 0x{Hooks.NoMapAcquiredPopup:X} (base+0x{Hooks.NoMapAcquiredPopup - baseAddr:X})");
 

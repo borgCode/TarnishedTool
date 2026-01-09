@@ -674,6 +674,17 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 49 c7 c0 04 00 00 00    mov    r8,0x4
+        ///ba cd 00 00 00          mov    edx,0xcd
+        ///e9 00 00 00 00          jmp    11 &lt;_main+0x11&gt;.
+        /// </summary>
+        internal static string ForceLoadScreenReminderEarlyPatches {
+            get {
+                return ResourceManager.GetString("ForceLoadScreenReminderEarlyPatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 b9 00 00 00 00 00    movabs rcx,0x0
         ///00 00 00
         ///48 83 ec 28             sub    rsp,0x28

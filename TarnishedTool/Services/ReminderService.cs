@@ -1,6 +1,7 @@
 ﻿// 
 
 using System;
+using System.Diagnostics;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
@@ -79,6 +80,20 @@ public class ReminderService : IReminderService
 
     private void InstallHook()
     {
+
+        switch (Offsets.Version)
+        {
+            case GameVersion.Version1_2_1:
+                DoEarlyPatchesHook();
+                break;
+            default:
+                DoNormalHook();
+                break;
+        }
+    }
+    
+    private void DoNormalHook()
+    {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.LoadScreenForce;
         var hook = Offsets.Hooks.LoadScreenMsgLookup;
         var bytes = AsmLoader.GetAsmBytes("ForceLoadScreenReminder");
@@ -86,5 +101,16 @@ public class ReminderService : IReminderService
         Array.Copy(jmpBytes, 0, bytes, 0x9 + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
         _hookManager.InstallHook(code.ToInt64(), hook, [0x44, 0x8B, 0xCA, 0x33, 0xD2]);
+    }
+    
+    private void DoEarlyPatchesHook()
+    {
+        var code = CodeCaveOffsets.Base + CodeCaveOffsets.LoadScreenForce;
+        var hook = Offsets.Hooks.LoadScreenMsgLookupEarlyPatches;
+        var bytes = AsmLoader.GetAsmBytes("ForceLoadScreenReminderEarlyPatches");
+        var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x11);
+        Array.Copy(jmpBytes, 0, bytes, 0xC + 1, jmpBytes.Length);
+        _memoryService.WriteBytes(code, bytes);
+        _hookManager.InstallHook(code.ToInt64(), hook, [0xBA, 0xCD, 0x00, 0x00, 0x00]);
     }
 }

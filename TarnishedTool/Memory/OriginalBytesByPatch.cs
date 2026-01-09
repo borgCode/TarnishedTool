@@ -11,7 +11,7 @@ public static class OriginalBytesByPatch
     {
         public static byte[] GetOriginal() => Offsets.Version switch
         {
-            Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => [0xF3, 0x44, 0x0F, 0x59, 0xD0],
+            Version1_2_1 or Version1_8_0 or Version1_8_1 or Version1_9_0 or Version1_9_1 or Version2_0_1 => [0xF3, 0x44, 0x0F, 0x59, 0xD0],
             _ => [0xF3, 0x44, 0x0F, 0x59, 0xC8]
         };
     }
