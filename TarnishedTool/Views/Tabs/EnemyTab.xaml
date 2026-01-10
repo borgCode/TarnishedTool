@@ -327,7 +327,7 @@
                 </Border>
             </Grid>
         </TabItem>
-        <TabItem Header="Boss Revives (No DLC yet)">
+        <TabItem Header="Boss Revives">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

@@ -448,7 +448,7 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: false);
-        if (_playerService.GetBlockId() != bossRevive.BlockId) return;
+        if (_playerService.GetBlockId() != bossRevive.BlockId && _playerService.GetBlockId() != bossRevive.BossBlockId) return;
         
         if (bossRevive.ShouldSetNight) _shouldSetNight = true;
         
@@ -459,7 +459,7 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: true);
-        if (_playerService.GetBlockId() != bossRevive.BlockId) return;
+        if (_playerService.GetBlockId() != bossRevive.BlockId && _playerService.GetBlockId() != bossRevive.BossBlockId) return;
         
         if (bossRevive.ShouldSetNight) _shouldSetNight = true;
         

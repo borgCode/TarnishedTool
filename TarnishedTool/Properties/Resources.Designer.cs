@@ -377,10 +377,9 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        ///FALSE,Limgrave,Beastman of Farum Azula,FALSE,39701910,520290304,31030801:FALSE,31030800:FALSE|9233:FALSE|520330:FALSE|31035014:FALSE,-94.56|89.93|63.94|1,2.5,-94.56|89.93|63.94|1,2.5,FALSE
-        ///FALSE,Limgrave,Bell Bearing Hunter,TRUE,31000033,1009395200,,1042380850:FALSE|1042387410:FALSE,-2.71|188.32|102.02|1,-0.87,-2.71|188.32|102.02|1,-0.87,TRUE
-        ///FALSE,Limgrave,Black Knife Assassin,FALSE,21000820,504037376,,30110800:FALSE|9203:FALSE|520030:FALSE,-171.94|177.79|23.30|1,1.47,-171.94|177.79|23.30|1,1.47,FALSE        /// [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to FALSE,Limgrave,Beastman of Farum Azula,FALSE,39701910,520290304,31030801:FALSE,31030800:FALSE|9233:FALSE|520330:FALSE|31035014:FALSE,-94.56|89.93|63.94|1,2.5,-94.56|89.93|63.94|1,2.5,FALSE,520290304
+        ///FALSE,Limgrave,Bell Bearing Hunter,TRUE,31000033,1009395200,,1042380850:FALSE|1042387410:FALSE,-2.71|188.32|102.02|1,-0.87,-2.71|188.32|102.02|1,-0.87,TRUE,1009395200
+        ///FALSE,Limgrave,Black Knife Assassin,FALSE,21000820,504037376,,30110800:FALSE|9203:FALSE|520030:FALSE,-171.94|177.79|23.30|1,1.47,-171.94|177.79| [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BossRevives {
             get {

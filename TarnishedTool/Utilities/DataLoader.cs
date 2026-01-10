@@ -318,7 +318,8 @@ namespace TarnishedTool.Utilities
                     BossFlags = ParseFlags(parts[7]),
                     Position = ParsePosition(blockId, parts[8], parts[9]),
                     PositionFirstEncounter = ParsePosition(blockId, parts[10], parts[11]),
-                    ShouldSetNight = bool.Parse(parts[12])
+                    ShouldSetNight = bool.Parse(parts[12]),
+                    BossBlockId = uint.Parse(parts[13])
                 };
 
                 if (!bossRevives.ContainsKey(area))

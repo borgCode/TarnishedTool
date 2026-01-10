@@ -17,4 +17,5 @@ public class BossRevive
     public Position Position { get; set; }
     public Position PositionFirstEncounter { get; set; }
     public bool ShouldSetNight { get; set; }
+    public uint BossBlockId { get; set; }
 }
