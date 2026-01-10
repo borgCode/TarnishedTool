@@ -1,4 +1,4 @@
-An offline practice tool for challenge running in Elden Ring (Currently only tested on 1.16.1, will be adding support for previous patches)
+An offline practice tool for challenge running in Elden Ring (All Patches)
 
 This tool is strictly for offline practice only, it directly manipulates game memory which violates Terms of Service and will most likely lead to a ban if you use this online.
 
