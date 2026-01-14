@@ -42,6 +42,7 @@ public class SettingsManager
     public bool BlockHotkeysFromGame  { get; set; }
     public bool HotkeyReminder { get; set; }
     public bool EnableUpdateChecks { get; set; } = true;
+    public string SaveCustomHp { get; set; } = "";
     
 
     private static string SettingsPath => Path.Combine(
@@ -89,6 +90,7 @@ public class SettingsManager
                 $"BlockHotkeysFromGame={BlockHotkeysFromGame}",
                 $"EnableUpdateChecks={EnableUpdateChecks}",
                 $"HotkeyReminder={HotkeyReminder}",
+                $"SaveCustomHp={SaveCustomHp}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -242,6 +244,10 @@ public class SettingsManager
                                 bool.TryParse(value, out bool hr);
                                 settings.HotkeyReminder = hr;
                                 break;
+                            case "SaveCustomHp":
+                                settings.SaveCustomHp = value;
+                                break;
+                                
                         }
                     }
                 }

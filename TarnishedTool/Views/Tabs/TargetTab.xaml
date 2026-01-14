@@ -44,9 +44,15 @@
                                 Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                        <xctk:IntegerUpDown Width="80" Margin="5,2"
-                                            Value="{Binding CustomHp}"
-                                            Minimum="0" />
+                    <TextBox Width="60"
+                                        Margin="5,2,5,1"
+                                        Text="{Binding CustomHp, UpdateSourceTrigger=PropertyChanged}"
+                                        FontSize="11"
+                                        Padding="-0.2"
+                                        VerticalContentAlignment="Center"
+                                        HorizontalContentAlignment="Center"
+                                        MaxLength="5"
+                                        />                        
                         <Button Content="Set hp" Margin="1"
                                 Command="{Binding SetCustomHpCommand}">
                             <Button.IsEnabled>

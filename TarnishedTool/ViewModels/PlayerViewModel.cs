@@ -16,8 +16,8 @@ namespace TarnishedTool.ViewModels
     public class PlayerViewModel : BaseViewModel
     {
         private int _currentRuneLevel;
-
-        private bool _customHpHasBeenSet;
+// fixing value getting saved but not being able to set hp until re-input
+        private bool _customHpHasBeenSet = !string.IsNullOrWhiteSpace(SettingsManager.Default.SaveCustomHp);
 
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
@@ -142,9 +142,10 @@ namespace TarnishedTool.ViewModels
             get => _currentMaxHp;
             set => SetProperty(ref _currentMaxHp, value);
         }
-
-        private string _customHp;
-
+        
+// save custom hp throughout sessions, maybe I should've made it a toggle
+        private string _customHp = SettingsManager.Default.SaveCustomHp;
+        
         public string CustomHp
         {
             get => _customHp;
@@ -153,6 +154,7 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _customHp, value))
                 {
                     _customHpHasBeenSet = true;
+                    
                 }
             }
         }
@@ -854,6 +856,8 @@ namespace TarnishedTool.ViewModels
                 customHp = CurrentMaxHp;
 
             _playerService.SetHp(customHp.Value);
+            SettingsManager.Default.SaveCustomHp = CustomHp;
+            SettingsManager.Default.Save();            
         }
 
         private (int? value, string error) ParseCustomHp()

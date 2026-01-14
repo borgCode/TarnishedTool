@@ -404,21 +404,21 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,40000D16,Bewitching Branch,10,600
+        ///   Looks up a localized string similar to 1,401E8CB4,Ancient Dragon&apos;s Blessing,1,0
+        ///0,40000D20,Baldachin&apos;s Blessing,1,0
+        ///0,40000D16,Bewitching Branch,10,600
         ///0,401E8804,Blessing of Marika,1,600
         ///0,400005A0,Blood Grease,10,600
         ///0,40000334,Boiled Crab,99,600
+        ///0,4000033E,Boiled Prawn,10,600
         ///0,401E9038,Bondstone,1,600
         ///0,400006AE,Bone Dart,40,600
+        ///1,401E9007,Broken Rune,99,600
         ///0,401E90CE,Call of Tibia,10,600
         ///0,401E9196,Charming Branch,10,600
         ///0,400003C0,Clarifying Boluses,99,600
         ///0,4000046A,Clarifying Cured Meat,10,999
-        ///0,40000532,Clarifying White Cured Meat,10,999
-        ///0,400006CC,Crystal Dart,40,600
-        ///0,40000BD6,Cuckoo Glintstone,10,600
-        ///0,40000474,Dappled Cured Meat,10,999
-        ///0,4000053C,Dapple [rest of string was truncated]&quot;;.
+        ///0,40000532,Clarifying White C [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Consumables {
             get {
@@ -856,11 +856,11 @@ namespace TarnishedTool.Properties {
         ///0,40001FCE,Amber Starlight,1,1,0,-1
         ///0,40000BB8,Ancestral Infant&apos;s Head,1,600,1,12027090
         ///0,400022A1,Ancient Dragon Prayerbook,1,1,0,-1
-        ///1,401EA3DC,Ancient Ruins Cross Message,1,1,0,-1
+        ///1,401EA3DC,Ancient Ruins Cross Message,1,1,1,2047477000
         ///0,4000229B,Assassin&apos;s Prayerbook,1,1,0,-1
         ///0,40002313,Beast Eye,1,1,1,400239
         ///0,40001FEC,Black Knifeprint,1,1,0,-1
-        ///1,401EA3D3,Black Syrup,1,1,1,40064 [rest of string was truncated]&quot;;.
+        ///1,401EA3D3,Black Syrup,1,1 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string KeyItems {
             get {
@@ -1071,6 +1071,7 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 0,40000295,Academy Magic Pot,10,600
+        ///0,40000E1A,Acid Spraymist,10, 600
         ///0,40000262,Albinauric Pot,10,600
         ///0,40000186,Alluring Pot,10,600
         ///0,40000141,Ancient Dragonbolt Pot,10,600
@@ -1080,11 +1081,10 @@ namespace TarnishedTool.Properties {
         ///0,4000014A,Fetid Pot,10,600
         ///0,4000012C,Fire Pot,10,600
         ///0,40000168,Freezing Pot,10,600
+        ///1,401E8746,Frenzied Flame Pot,10,600
+        ///0,4000012E,Giantsflame Fire Pot,10,600
         ///1,401E85CA,Hefty Fetid Pot,10,600
-        ///1,401E85AC,Hefty Fire Pot,10,600
-        ///1,401E85D4,Hefty Fly Pot,10,600
-        ///1,401E85E8,Hefty Freezing Pot,10,600
-        ///1,401E86EC,Hefty Frenzied Flame  [rest of string was truncated]&quot;;.
+        ///1,401E85AC,Hefty Fire Po [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PotsAndPerfumes {
             get {

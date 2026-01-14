@@ -1739,6 +1739,7 @@ c3                      ret</value>
 33180000,Prince of Death's Staff,57,2,0
 41060000,Pulley Bow,51,0,1
 43050000,Pulley Crossbow,55,0,1
+8500000,Putrescence Cleaver,19,0,1
 6500000,Queelign's Greatsword,16,2,0
 44500000,Rabbath's Cannon,56,0,1
 66520000,Rakshasa's Great Katana,94,0,1
@@ -2406,12 +2407,16 @@ c3                      ret</value>
 </value>
   </data>
   <data name="Consumables" xml:space="preserve">
-    <value>0,40000D16,Bewitching Branch,10,600
+    <value>1,401E8CB4,Ancient Dragon's Blessing,1,0
+0,40000D20,Baldachin's Blessing,1,0
+0,40000D16,Bewitching Branch,10,600
 0,401E8804,Blessing of Marika,1,600
 0,400005A0,Blood Grease,10,600
 0,40000334,Boiled Crab,99,600
+0,4000033E,Boiled Prawn,10,600
 0,401E9038,Bondstone,1,600
 0,400006AE,Bone Dart,40,600
+1,401E9007,Broken Rune,99,600
 0,401E90CE,Call of Tibia,10,600
 0,401E9196,Charming Branch,10,600
 0,400003C0,Clarifying Boluses,99,600
@@ -2456,11 +2461,25 @@ c3                      ret</value>
 0,40000CEF,Frenzyflame Stone,10,600
 0,4000032C,Frozen Raisin,30,600
 0,40000096,Furlcalling Finger Remedy,999,0
+0,40002710,Glass Shard,99,600
 0,401E9100,Glinting Nail,10,600
 0,40000BEA,Glintstone Scrap,10,600
 0,400007EE,Glowstone,99,600
 0,401E8A16,Golden Grease,10,600
 0,401E894E,Golden Horn Tender,10,999
+0,40000B5D,Golden Rune [10],99,600
+0,40000B5E,Golden Rune [11],99,600
+0,40000B5F,Golden Rune [12],99,600
+0,40000B60,Golden Rune [13],99,600
+0,40000B54,Golden Rune [1],99,600
+0,40000B55,Golden Rune [2],99,600
+0,40000B56,Golden Rune [3],99,600
+0,40000B57,Golden Rune [4],99,600
+0,40000B58,Golden Rune [5],99,600
+0,40000B59,Golden Rune [6],99,600
+0,40000B5A,Golden Rune [7],99,600
+0,40000B5B,Golden Rune [8],99,600
+0,40000B5C,Golden Rune [9],99,600
 0,401E90E2,Golden Vow,10,600
 0,400004B0,Gold-Pickled Fowl Foot,10,999
 0,401E8931,Gourmet Scorpion Stew,1,1
@@ -2468,6 +2487,11 @@ c3                      ret</value>
 0,40000802,Grace Mimic,99,600
 0,40000BFE,Gravity Stone Chunk,10,600
 0,40000BF4,Gravity Stone Fan,10,600
+0,40000B62,Hero's Rune [1],99,600
+0,40000B63,Hero's Rune [2],99,600
+0,40000B64,Hero's Rune [3],99,600
+0,40000B65,Hero's Rune [4],99,600
+0,40000B66,Hero's Rune [5],99,600
 0,40000596,Holy Grease,10,600
 0,4000049C,Holyproof Dried Liver,5,999
 0,401E88FE,Holyproof Pickled Liver,5,999
@@ -2480,15 +2504,19 @@ c3                      ret</value>
 0,401E8CC8,Iris of Grace,99,600
 0,401E8CD2,Iris of Occultation,99,600
 0,400006C2,Kukri,30,600
+0,40000BAE,Lands Between Rune,99,600
 0,40000BEB,Large Glintstone Scrap,10,600
+1,401E9006,Leda's Rune,99,600
 0,40000582,Lightning Grease,10,600
 0,40000492,Lightningproof Dried Liver,5,999
 0,401E88F4,Lightningproof Pickled Liver,5,999
 0,40000B67,Lord's Rune,99,600
 0,401E880E,Lulling Branch,10,600
 0,4000058C,Magic Grease,10,600
+1,401E9010,Marika's Rune,99,600
 0,401E89F8,Messmerfire Grease,10,600
 0,40000384,Neutralizing Boluses,99,600
+0,40000B61,Numen's Rune,99,600
 0,401E8908,Opaline Pickled Liver,5,999
 0,401E90C4,Perfumed Oil of Ranah,1,600
 0,4000044C,Pickled Turtle Neck,10,999
@@ -2503,13 +2531,21 @@ c3                      ret</value>
 0,400004D3,Raw Meat Dumpling,3,999
 0,400003B6,Rejuvenating Boluses,99,600
 0,400005D2,Rot Grease,10,600
+0,4000032A,Rowa Raisin,30,600
 0,401E8A0C,Royal Magic Grease,10,600
-0,400006E0,Ruin Fragment,999,999
 0,400000BE,Rune Arc,99,600
+1,401E900F,Rune of an Unsung Hero,99,600
 0,401E893A,Sacred Bloody Flesh,10,999
 0,401E8930,Scorpion Stew,1,1
 0,401E8930,Scorpion Stew,1,1
 0,40000CF8,Scriptstone,10,600
+1,401E9008,Shadow Realm Rune [1],99,600
+1,401E9009,Shadow Realm Rune [2],99,600
+1,401E900A,Shadow Realm Rune [3],99,600
+1,401E900B,Shadow Realm Rune [4],99,600
+1,401E900C,Shadow Realm Rune [5],99,600
+1,401E900D,Shadow Realm Rune [6],99,600
+1,401E900E,Shadow Realm Rune [7],99,600
 0,4000069A,Shield Grease,10,600
 0,401E8944,Silver Horn Tender,10,999
 0,400004A6,Silver-Pickled Fowl Foot,10,999
@@ -2526,6 +2562,7 @@ c3                      ret</value>
 0,40001F40,Stonesword Key,99,600
 0,401E916E,Sunwarmth Stone,10,600
 0,401E90D8,Surging Frenzied Flame,10,600
+0,4000032B,Sweet Raisin,30,600
 0,40000398,Thawfrost Boluses,99,600
 0,401E8CDC,Thiollier's Concoction,99,600
 0,400006A4,Throwing Dagger,40,600
@@ -3670,7 +3707,7 @@ c3                      ret</value>
 0,40001FCE,Amber Starlight,1,1,0,-1
 0,40000BB8,Ancestral Infant's Head,1,600,1,12027090
 0,400022A1,Ancient Dragon Prayerbook,1,1,0,-1
-1,401EA3DC,Ancient Ruins Cross Message,1,1,0,-1
+1,401EA3DC,Ancient Ruins Cross Message,1,1,1,2047477000
 0,4000229B,Assassin's Prayerbook,1,1,0,-1
 0,40002313,Beast Eye,1,1,1,400239
 0,40001FEC,Black Knifeprint,1,1,0,-1
@@ -3681,7 +3718,7 @@ c3                      ret</value>
 0,40000069,Blue Cipher Ring,1,0,1,60290
 1,401E9038,Bondstone,1,600,0,-1
 0,40001FAF,Carian Inverted Statue,1,1,0,-1
-1,401EA3DB,Castle Cross Message,1,1,0,-1
+1,401EA3DB,Castle Cross Message,1,1,1,2047447710
 0,40000852,Celestial Dew,99,600,0,-1
 0,4000200A,Champion's Song Painting,1,1,1,580020
 0,40001FEB,Chrysalids' Memento,1,1,0,-1
@@ -3696,6 +3733,7 @@ c3                      ret</value>
 0,40001FA9,Dectus Medallion (Left),1,1,0,1046367500
 0,40001FAA,Dectus Medallion (Right),1,1,0,1051397900
 0,40002007,Discarded Palace Key,1,1,0,400159
+1,401EA48A,Domain of Dragons Painting,1,1,1,580120
 0,400022A0,Dragon Cult Prayerbook,1,1,0,-1
 0,4000274C,Dragon Heart,99,600,0,-1
 0,40001FC6,Drawing-Room Key,1,1,1,400072
@@ -3709,6 +3747,7 @@ c3                      ret</value>
 0,400000FA,Flask of Wondrous Physick,1,1,1,60020
 0,4000200D,Flightless Bird Painting,1,1,1,580050
 0,40000096,Furlcalling Finger Remedy,999,0,0,-1
+1,401EA3D9,Furnace Keeper's Note,1,1,1,2049477000
 1,401EA3C6,Gaol Lower Level Key,1,1,0,-1
 1,401EA3C5,Gaol Upper Level Key,1,1,0,-1
 0,40002298,Giant's Prayerbook,1,1,0,-1
@@ -3730,6 +3769,7 @@ c3                      ret</value>
 1,401E90BA,Horned Bairn,1,600,0,-1
 1,401EA3C3,Igon's Furled Finger,1,1,1,400710
 0,40001FFA,Imbued Sword Key,99,1,0,-1
+1,401EA488,Incursion Painting,1,1,1,580100
 0,40001FC3,Irina's Letter,1,1,1,400080
 1,401E8CC8,Iris of Grace,99,600,0,-1
 1,401E8CD2,Iris of Occultation,99,600,0,-1
@@ -3757,6 +3797,7 @@ c3                      ret</value>
 0,40001FF7,Mending Rune of the Death-Prince,1,1,1,9502
 0,40001FF8,Mending Rune of the Fell Curse,1,1,1,9504
 1,401EA3D5,Messmer's Kindling,1,1,1,510460
+1,401EA3E2,Message from Leda,1,1,1,580600
 0,40000BE0,Mimic's Veil,1,600,1,10007970
 0,40001FD2,Miniature Ranni,1,1,1,400394
 0,40001FFB,Miniature Ranni (Empty),1,1,0,-1
@@ -3770,23 +3811,6 @@ c3                      ret</value>
 0,400000C1,Morgott's Great Rune (Activated),1,0,1,193
 0,40001FD6,Morgott's Great Rune (Dectivated),1,1,1,173
 1,401EA3CC,New Cross Map,1,1,0,-1
-0,4000220D,Note: Below the Capital,1,1,0,-1
-0,40002204,Note: Demi-Human Mobs,1,1,0,-1
-0,40002203,Note: Flame Chariots,1,1,0,-1
-0,400021FE,Note: Flask of Wondrous Physick,1,1,0,-1
-0,4000220B,Note: Frenzied Flame Village,1,1,0,-1
-0,40002209,Note: Gateway,1,1,0,-1
-0,40002206,Note: Gravity's Advantage,1,1,0,-1
-0,400021FC,Note: Hidden Cave,1,1,0,-1
-0,400021FD,Note: Imp Shades,1,1,0,-1
-0,40002205,Note: Land Squirts,1,1,0,-1
-0,4000220A,Note: Miquella's Needle,1,1,0,-1
-0,40002207,Note: Revenants,1,1,0,-1
-0,400021FF,Note: Stonedigger Trolls,1,1,0,-1
-0,4000220C,Note: The Lord of Frenzied Flame,1,1,0,-1
-0,40002020,Note: The Preceptor's Secret,1,1,0,-1
-0,40002201,Note: Unseen Assassins,1,1,0,-1
-0,40002200,Note: Walking Mausoleum,1,1,0,-1
 0,40000BC2,Omen Bairn,1,600,1,35007990
 0,40002526,Perfume Bottle,10,0,0,-1
 1,401E90C4,Perfumed Oil of Ranah,1,600,0,-1
@@ -3794,6 +3818,7 @@ c3                      ret</value>
 1,401EA3E4,Prayer Room Key,1,1,1,400696
 1,401E8C64,Priestess Heart,1,600,0,-1
 0,4000200C,Prophecy Painting,1,1,1,580040
+0,40000870,Pureblood Knight's Medal,1,600,1,400032
 0,400000C0,Radahn's Great Rune (Activated),1,0,1,192
 0,40001FD5,Radahn's Great Rune (Dectivated),1,1,1,172
 0,40000070,Recusant Finger,1,0,1,60260
@@ -3801,20 +3826,30 @@ c3                      ret</value>
 0,4000230B,Red-Hot Whetblade,1,1,1,65640
 0,4000200E,Redmane Painting,1,1,1,580060
 0,40000BC3,Regal Omen Bairn,1,600,1,290050
+1,401E8FDB,Remembrance of a God and a Lord,99,600,0,-1
 0,40000B8D,Remembrance of Hoarah Loux,99,600,0,-1
+1,401E8FDE,Remembrance of Putrescence,99,600,0,-1
 0,40000B8C,Remembrance of the Black Blade,99,600,0,-1
 0,40000B89,Remembrance of the Blasphemous,99,600,0,-1
 0,40000B8B,Remembrance of the Blood Lord,99,600,0,-1
+1,401E8FD9,Remembrance of the Dancing Lion,99,600,0,-1
 0,40000B8E,Remembrance of the Dragonlord,99,600,0,-1
 0,40000B91,Remembrance of the Fire Giant,99,600,0,-1
 0,40000B8F,Remembrance of the Full Moon Queen,99,600,0,-1
 0,40000B86,Remembrance of the Grafted,99,600,0,-1
+1,401E8FD5,Remembrance of the Impaler,99,600,0,-1
 0,40000B90,Remembrance of the Lichdragon,99,600,0,-1
+1,401E8FDC,Remembrance of the Lord of Frenzied Flame,99,600,0,-1
+1,401E8FDD,Remembrance of the Mother of Fingers,99,600,0,-1
 0,40000B94,Remembrance of the Naturalborn,99,600,0,-1
 0,40000B88,Remembrance of the Omen King,99,600,0,-1
 0,40000B92,Remembrance of the Regal Ancestor,99,600,0,-1
 0,40000B8A,Remembrance of the Rot Goddess,99,600,0,-1
+1,401E8FD8,Remembrance of the Saint of the Bud,99,600,0,-1
+1,401E8FD6,Remembrance of the Shadow Sunflower,99,600,0,-1
 0,40000B87,Remembrance of the Starscourge,99,600,0,-1
+1,401E8FD7,Remembrance of the Twin Moon Knight,99,600,0,-1
+1,401E8FD4,Remembrance of the Wild Boar Rider,99,600,0,-1
 0,40002009,Resurrection Painting,1,1,1,580010
 1,401EABF4,Revered Spirit Ash,99,600,0,-1
 0,4000251D,Ritual Pot,10,0,0,-1
@@ -3830,9 +3865,13 @@ c3                      ret</value>
 0,400000C2,Rykard's Great Rune (Activated),1,0,1,194
 0,40001FD7,Rykard's Great Rune (Dectivated),1,1,1,174
 0,40002724,Sacred Tear,99,600,0,-1
+0,4000230C,Sanctified Whetblade,1,1,1,65660
 1,401EAB90,Scadutree Fragment,99,600,0,-1
 1,40000CF8,Scriptstone,10,600,0,-1
 1,401EA3CE,Secret Rite Scroll,1,1,1,21017340
+0,40002001,Seedbed Curse,99,1,0,-1
+0,40001FD0,Sellen's Primal Glintstone,1,1,1,400100
+0,40001FE9,Sellian Sealbreaker,1,1,1,400102
 0,40002312,Sellia's Secret,1,1,1,400311
 0,40001FCF,Seluvis's Introduction,1,1,0,-1
 0,40001FE4,Seluvis's Potion,1,1,0,-1
@@ -3853,16 +3892,20 @@ c3                      ret</value>
 0,40002738,Talisman Pouch (Golden Shade Godfrey),3,0,1,60520
 0,40002738,Talisman Pouch (Margit/Morgott),3,0,1,60510
 0,40000064,Tarnished's Furled Finger,1,0,1,60220
-0,4000006C,Tautner's Tongue,1,0,1,60300
+0,4000006C,Taunter's Tongue,1,0,1,60300
+0,400007F8,Telescope,1,600,0,-1
+1,401EA489,The Sacred Tower Painting,1,1,1,580110
 0,40002002,The Stormhawk King,1,1,1,10017010
 1,401E8CDC,Thiollier's Concoction,99,600,0,-1
 0,40001FC0,Tonic of Forgetfulness,1,1,0,-1
 1,401EA3E0,Torn Diary Page,1,1,0,-1
+1,401EA3E5,Tower of Shadow Message,1,1,1,20007830
 0,4000229A,Two Fingers' Prayerbook,1,1,0,-1
 0,4000230F,Unalloyed Gold Needle (Broken),1,1,1,530405
 0,40002310,Unalloyed Gold Needle (Gowry),1,1,1,400310
 0,40002004,Unalloyed Gold Needle (Millicent),1,1,1,400321
 0,40002311,Valkyrie's Prosthesis,1,1,0,-1
+0,40001FC9,Volcano Manor Invitation,1,1,1,400090
 0,40002314,Weathered Dagger,1,1,0,-1
 0,40002023,Weathered Map,1,1,0,-1
 1,401EA3C4,Well Depths Key,1,1,1,20007510
@@ -4405,6 +4448,7 @@ c3                      ret</value>
   </data>
   <data name="PotsAndPerfumes" xml:space="preserve">
     <value>0,40000295,Academy Magic Pot,10,600
+0,40000E1A,Acid Spraymist,10, 600
 0,40000262,Albinauric Pot,10,600
 0,40000186,Alluring Pot,10,600
 0,40000141,Ancient Dragonbolt Pot,10,600
@@ -4414,6 +4458,8 @@ c3                      ret</value>
 0,4000014A,Fetid Pot,10,600
 0,4000012C,Fire Pot,10,600
 0,40000168,Freezing Pot,10,600
+1,401E8746,Frenzied Flame Pot,10,600
+0,4000012E,Giantsflame Fire Pot,10,600
 1,401E85CA,Hefty Fetid Pot,10,600
 1,401E85AC,Hefty Fire Pot,10,600
 1,401E85D4,Hefty Fly Pot,10,600
@@ -4434,6 +4480,7 @@ c3                      ret</value>
 0,40000294,Magic Pot,10,600
 0,4000017C,Oil Pot,10,600
 0,40000172,Poison Pot,10,600
+0,40000DFC,Poison Spraymist,10,600
 0,4000028A,Rancor Pot,10,600
 1,401E873C,Red Lightning Pot,10,600
 0,4000012D,Redmane Fire Pot,10,600

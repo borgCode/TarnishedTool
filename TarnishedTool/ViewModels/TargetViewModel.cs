@@ -534,9 +534,9 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _currentAnimation, value);
         }
 
-        private int _customHp;
+        private string _customHp;
 
-        public int CustomHp
+        public string CustomHp
         {
             get => _customHp;
             set
@@ -862,8 +862,38 @@ namespace TarnishedTool.ViewModels
         private void SetCustomHp()
         {
             if (!_customHpHasBeenSet) return;
-            if (CustomHp > MaxHealth) CustomHp = MaxHealth;
-            _targetService.SetHp(CustomHp);
+            var (CustomHp, error) = parseCustomHp();
+            if (CustomHp == null)
+            {
+                MsgBox.Show(error, "Invalid Input");
+                return;
+            }
+
+            {
+                if (CustomHp > MaxHealth)
+                    CustomHp = MaxHealth;
+                
+                _targetService.SetHp(CustomHp.Value);
+            }
+        }
+/* hp percentage test */
+        private (int? value, string error) parseCustomHp()
+        {
+            var input = CustomHp?.Trim();
+            if (string.IsNullOrEmpty(input))
+                return (null, "Please enter a Value");
+            
+            if (input.EndsWith("%"))
+            {
+                if (double.TryParse(input.TrimEnd('%'), out var percent))
+                    return ((int)(percent / 100.0 * MaxHealth), null);
+                return (null, "Invalid percentage format");
+            }
+            
+            if (int.TryParse(input, out var absolute))
+                return (absolute, null);
+            
+            return (null, "Enter a number or percentage (e.g. 545 or 40%)");
         }
 
         private void TargetTick(object sender, EventArgs e)
