@@ -32,6 +32,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Margin="0,0,0,0">
@@ -75,7 +76,18 @@
                      Foreground="#FF9900" FontSize="18" FontWeight="Bold"/>
             </TextBlock>
             
-            <StackPanel Grid.Row="2" Margin="0,0,0,5"
+                <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,8">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="Black" Opacity="0.7"/>
+                </TextBlock.Effect>
+                <Run Text="Distance" Foreground="#FF9900" FontSize="12"/>
+                </TextBlock>
+                <TextBlock Grid.Row="2" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                <Run Text="{Binding Dist, StringFormat={}{0:F2}, Mode=OneWay}"  
+                     Foreground="#FF9900" FontSize="12" FontWeight="Bold"/>
+                </TextBlock>
+            
+            <StackPanel Grid.Row="3" Margin="0,0,0,5"
                         Visibility="{Binding ShowPoise, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="0,0,0,2">
                     <TextBlock Text="Poise" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -109,7 +121,7 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel Grid.Row="3" Margin="0,0,0,5"
+            <StackPanel Grid.Row="4" Margin="0,0,0,5"
                         Visibility="{Binding ShowSleepAndNotImmune, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="0,0,0,2">
                     <TextBlock Text="Sleep" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -145,7 +157,7 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel Grid.Row="4" Margin="0,0,0,5"
+            <StackPanel Grid.Row="5" Margin="0,0,0,5"
                         Visibility="{Binding ShowPoisonAndNotImmune, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="0,0,0,2">
                     <TextBlock Text="Poison" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -181,7 +193,7 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel Grid.Row="5" Margin="0,0,0,5"
+            <StackPanel Grid.Row="6" Margin="0,0,0,5"
                         Visibility="{Binding ShowRotAndNotImmune, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="0,0,0,2">
                     <TextBlock Text="Rot" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -217,7 +229,7 @@
                 </Grid>
             </StackPanel>
 
-            <StackPanel Grid.Row="6" Margin="0,0,0,0"
+            <StackPanel Grid.Row="7" Margin="0,0,0,0"
                         Visibility="{Binding ShowFrostAndNotImmune, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="0,0,0,2">
                     <TextBlock Text="Frost" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -254,7 +266,7 @@
                 </Grid>
             </StackPanel>
             
-                <StackPanel Grid.Row="7" Margin="0,0,0,0"
+                <StackPanel Grid.Row="8" Margin="0,0,0,0"
                         Visibility="{Binding ShowBleedAndNotImmune, Converter={StaticResource BoolToVis}}">
                 <DockPanel Margin="0,0,0,2">
                     <TextBlock Text="Bleed" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
