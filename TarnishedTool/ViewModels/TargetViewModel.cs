@@ -534,7 +534,7 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _currentAnimation, value);
         }
 
-        private string _customHp;
+        private string _customHp = "1";
 
         public string CustomHp
         {
