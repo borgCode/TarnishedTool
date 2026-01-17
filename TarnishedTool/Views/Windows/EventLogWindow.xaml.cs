@@ -80,6 +80,12 @@ public partial class EventLogWindow : TopmostWindow
         }
     }
     
+    private void ExcludeSelected_Click(object sender, RoutedEventArgs e)
+    {
+        var selectedEntries = LogListBox.SelectedItems.Cast<EventLogEntry>();
+        ((EventLogViewModel)DataContext).AddMultipleToExcluded(selectedEntries);
+    }
+    
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);

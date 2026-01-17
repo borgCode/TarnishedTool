@@ -35,7 +35,7 @@
 
             <ListBox Grid.Column="0"
                      x:Name="LogListBox"
-                     SelectionMode="Multiple"
+                     SelectionMode="Extended"
                      ItemsSource="{Binding LogEntries}"
                      VirtualizingPanel.IsVirtualizing="True"
                      VirtualizingPanel.VirtualizationMode="Recycling"
@@ -95,7 +95,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Margin="10, 10, 0, 0"
-                    Content="Log Unique Event IDs"
+                    Content="Hide Duplicate IDs"
                     IsChecked="{Binding IsLogUniqueIdsEnabled}" />
 
                 <StackPanel Grid.Row="1"
@@ -199,6 +199,10 @@
                         <Button
                             Content="Clear all excluded IDs"
                             Command="{Binding ClearExcludedCommand}" />
+                        <Button
+                            Margin="0, 10, 0, 0"
+                            Content="Add selected to excluded"
+                            Click="ExcludeSelected_Click" />
                         <Button
                             Margin="0, 10, 0, 0"
                             Content="Remove ID from exclude"

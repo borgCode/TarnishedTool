@@ -23,10 +23,13 @@ public class EventLogViewModel : BaseViewModel
     {
         AddToExcludeCommand = new DelegateCommand(AddToExclude);
         RemoveFromExcludedCommand = new DelegateCommand(RemoveFromExcluded);
+        
         ClearCommand = new DelegateCommand(ClearLog);
         ClearUniqueCommand = new DelegateCommand(ClearUnique);
         ClearExcludedCommand = new DelegateCommand(ClearExcluded);
+        
         PauseResumeCommand = new DelegateCommand(TogglePauseResume);
+        
         ImportExcludedCommand = new DelegateCommand(ImportExcluded);
         ExportExcludedCommand = new DelegateCommand(ExportExcluded);
     }
@@ -103,7 +106,6 @@ public class EventLogViewModel : BaseViewModel
     
     #endregion
     
-    
     #region Public Methods
     
     public void RefreshEventLogs(List<EventLogEntry> entries)
@@ -134,6 +136,15 @@ public class EventLogViewModel : BaseViewModel
     
     public void RemoveFromExcluded(uint eventId) => _excludedEventIds.Remove(eventId);
     public void AddToExcluded(uint eventId) => _excludedEventIds.Add(eventId);
+    
+    public void AddMultipleToExcluded(IEnumerable<EventLogEntry> entries)
+    {
+        foreach (var entry in entries)
+        {
+            if (!_excludedEventIds.Contains(entry.EventId))
+                _excludedEventIds.Add(entry.EventId);
+        }
+    }
     
     #endregion
     
