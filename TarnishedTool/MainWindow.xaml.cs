@@ -136,7 +136,8 @@ namespace TarnishedTool
         private bool _hasPublishedLoaded;
         private bool _hasPublishedFadedIn;
         private bool _hasCheckedPatch;
-
+        private DateTime? _attachedTime;
+        
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (_memoryService.IsAttached)
@@ -145,6 +146,15 @@ namespace TarnishedTool
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
 
                 LaunchGameButton.IsEnabled = false;
+                
+                if (!_attachedTime.HasValue)
+                {
+                    _attachedTime = DateTime.Now;
+                    return;
+                }
+                
+                if ((DateTime.Now - _attachedTime.Value).TotalSeconds < 2)
+                    return;
 
                 if (!_hasCheckedPatch)
                 {
@@ -207,6 +217,7 @@ namespace TarnishedTool
                 _hasScanned = false;
                 _hasCheckedPatch = false;
                 _loaded = false;
+                _attachedTime = null;
                 _hasAllocatedMemory = false;
                 _appliedOneTimeFeatures = false;
                 _hasPublishedLoaded = false;
