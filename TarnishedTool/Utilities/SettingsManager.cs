@@ -19,6 +19,9 @@ public class SettingsManager
     public double TargetSpEffectWindowLeft { get; set; }
     public double TargetSpEffectWindowTop { get; set; }
     public bool TargetSpEffectAlwaysOnTop { get; set; }
+    public double EventLogWindowLeft { get; set; }
+    public double EventLogWindowTop { get; set; }
+    public bool EventLogWindowAlwaysOnTop { get; set; }
     public double WindowLeft { get; set; }
     public double WindowTop { get; set; }
     public bool AlwaysOnTop { get; set; }
@@ -67,6 +70,9 @@ public class SettingsManager
                 $"TargetSpEffectWindowLeft={TargetSpEffectWindowLeft}",
                 $"TargetSpEffectWindowTop={TargetSpEffectWindowTop}",
                 $"TargetSpEffectAlwaysOnTop={TargetSpEffectAlwaysOnTop}",
+                $"TargetSpEffectWindowLeft={EventLogWindowLeft}",
+                $"TargetSpEffectWindowTop={EventLogWindowTop}",
+                $"TargetSpEffectAlwaysOnTop={EventLogWindowAlwaysOnTop}",
                 $"WindowLeft={WindowLeft}",
                 $"WindowTop={WindowTop}",
                 $"AlwaysOnTop={AlwaysOnTop}",
@@ -154,6 +160,18 @@ public class SettingsManager
                             case "TargetSpEffectAlwaysOnTop":
                                 bool.TryParse(value, out bool tseaot);
                                 settings.TargetSpEffectAlwaysOnTop = tseaot;
+                                break;
+                            case "EventLogWindowLeft":
+                                double.TryParse(value, out double elwl);
+                                settings.EventLogWindowLeft = elwl;
+                                break;
+                            case "EventLogWindowTop":
+                                double.TryParse(value, out double elwt);
+                                settings.EventLogWindowTop = elwt;
+                                break;
+                            case "EventLogWindowAlwaysOnTop":
+                                bool.TryParse(value, out bool elwaot);
+                                settings.EventLogWindowAlwaysOnTop = elwaot;
                                 break;
                             case "WindowLeft":
                                 double.TryParse(value, out double wl);
