@@ -4755,4 +4755,24 @@ e9 00 00 00 00          jmp    11 &lt;_main+0x11&gt;</value>
 41 b8 cd 00 00 00       mov    r8d,0xcd
 e9 00 00 00 00          jmp    12 &lt;_main+0x12&gt;</value>
   </data>
+  <data name="EventLogHook" xml:space="preserve">
+    <value>48 89 5c 24 08          mov    QWORD PTR [rsp+0x8],rbx
+50                      push   rax
+53                      push   rbx
+57                      push   rdi
+8b 3d 00 00 00 00       mov    edi,DWORD PTR [rip+0x0]        # e &lt;_main+0xe&gt;
+89 f8                   mov    eax,edi
+6b c0 05                imul   eax,eax,0x5
+48 8d 1d 00 00 00 00    lea    rbx,[rip+0x0]        # 1a &lt;_main+0x1a&gt;
+48 01 c3                add    rbx,rax
+89 13                   mov    DWORD PTR [rbx],edx
+44 88 43 04             mov    BYTE PTR [rbx+0x4],r8b
+ff c7                   inc    edi
+81 e7 ff 01 00 00       and    edi,0x1ff
+89 3d 00 00 00 00       mov    DWORD PTR [rip+0x0],edi        # 31 &lt;_main+0x31&gt;
+5f                      pop    rdi
+5b                      pop    rbx
+58                      pop    rax
+e9 00 00 00 00          jmp    39 &lt;_main+0x39&gt;</value>
+  </data>
 </root>

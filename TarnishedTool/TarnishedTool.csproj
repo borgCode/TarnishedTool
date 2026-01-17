@@ -121,6 +121,7 @@
         <Compile Include="Converters\ImmuneFillConverter.cs" />
         <Compile Include="Converters\InverseBooleanConverter.cs" />
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+        <Compile Include="Converters\LogEntryToBrushConverter.cs" />
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
         <Compile Include="Converters\Vector3ToStringConverter.cs" />
@@ -137,6 +138,7 @@
         <Compile Include="Interfaces\IDlcService.cs" />
         <Compile Include="Interfaces\IEmevdService.cs" />
         <Compile Include="Interfaces\IEnemyService.cs" />
+        <Compile Include="Interfaces\IEventLogReader.cs" />
         <Compile Include="Interfaces\IEventService.cs" />
         <Compile Include="Interfaces\IEzStateService.cs" />
         <Compile Include="Interfaces\IFlaskService.cs" />
@@ -163,6 +165,7 @@
         <Compile Include="Models\BossWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
         <Compile Include="Models\EventItem.cs" />
+        <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\Item.cs" />
         <Compile Include="Models\ItemTemplate.cs" />
@@ -178,6 +181,7 @@
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />
         <Compile Include="Services\EnemyService.cs" />
+        <Compile Include="Services\EventLogReader.cs" />
         <Compile Include="Services\EzStateService.cs" />
         <Compile Include="Services\FlaskService.cs" />
         <Compile Include="Services\ItemService.cs" />
@@ -208,6 +212,7 @@
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
+        <Compile Include="ViewModels\EventLogViewModel.cs" />
         <Compile Include="ViewModels\HotkeyBindingViewModel.cs" />
         <Compile Include="ViewModels\ItemSelectionViewModel.cs" />
         <Compile Include="ViewModels\ItemViewModel.cs" />
@@ -255,6 +260,9 @@
         <Compile Include="Views\Windows\DefensesWindow.xaml.cs">
           <DependentUpon>DefensesWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\EventLogWindow.xaml.cs">
+          <DependentUpon>EventLogWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
         </Compile>
@@ -291,6 +299,7 @@
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
+        <Page Include="Views\Windows\EventLogWindow.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
         <Page Include="Views\Windows\ShopSelectorWindow.xaml" />
         <Page Include="Views\Windows\SpEffectsWindow.xaml" />

@@ -61,5 +61,31 @@ namespace TarnishedTool.Services
         public bool AreAllEventsTrue(long[] eventToCheck) => eventToCheck.All(GetEvent);
         
         public void ToggleEvent(long eventId) => SetEvent(eventId, !GetEvent(eventId));
+        
+        public void ToggleEventLogger(bool isEnabled)
+        {
+            var code = CodeCaveOffsets.Base + CodeCaveOffsets.EventLogCode;
+            if (isEnabled)
+            {
+                var bytes = AsmLoader.GetAsmBytes("EventLogHook");
+                var writeIndex = CodeCaveOffsets.Base + CodeCaveOffsets.EventLogWriteIndex;
+                var buffer = CodeCaveOffsets.Base + CodeCaveOffsets.EventLogBuffer;
+                var hookLoc = Functions.SetEvent;
+                
+                AsmHelper.WriteRelativeOffsets(bytes, [
+                (code.ToInt64() + 0x8, writeIndex.ToInt64(), 6, 0x8 + 2),
+                (code.ToInt64() + 0x13, buffer.ToInt64(), 7, 0x13 + 3),
+                (code.ToInt64() + 0x2B, writeIndex.ToInt64(), 6, 0x2B + 2),
+                (code.ToInt64() + 0x34, hookLoc + 0x5, 5, 0x34 + 1)
+                ]);
+                
+                memoryService.WriteBytes(code, bytes);
+                hookManager.InstallHook(code.ToInt64(), hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x08]);
+            }
+            else
+            {
+                hookManager.UninstallHook(code.ToInt64());
+            }
+        }
     }
 }

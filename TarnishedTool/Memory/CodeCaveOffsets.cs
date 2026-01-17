@@ -79,7 +79,10 @@ namespace TarnishedTool.Memory
 
         public const int LoadScreenForce = 0x1E00; //0xE
 
-
+        public const int EventLogWriteIndex = 0x1E20;
+        public const int EventLogCode = 0x1E40; //0x39
+        public const int EventLogBuffer = 0x1E80; //0x1000
+        
 
     }
 }

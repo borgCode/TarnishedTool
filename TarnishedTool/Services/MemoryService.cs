@@ -230,7 +230,7 @@ namespace TarnishedTool.Services
         {
             IntPtr searchRangeStart = BaseAddress - 0x40000000;
             IntPtr searchRangeEnd = BaseAddress - 0x30000;
-            uint codeCaveSize = 0x3000;
+            uint codeCaveSize = 0x5000;
             IntPtr allocatedMemory;
 
             for (IntPtr addr = searchRangeEnd; addr.ToInt64() > searchRangeStart.ToInt64(); addr -= 0x10000)

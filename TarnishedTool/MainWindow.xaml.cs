@@ -66,6 +66,7 @@ namespace TarnishedTool
             IEmevdService emevdService = new EmevdService(_memoryService);
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
+            IEventLogReader eventLogReader = new EventLogReader(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
@@ -81,7 +82,7 @@ namespace TarnishedTool
                 attackInfoService, hotkeyManager, spEffectService, emevdService);
             EventViewModel eventViewModel =
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService,
-                    hotkeyManager, utilityService);
+                    hotkeyManager, utilityService, eventLogReader);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService,
                 playerService, hotkeyManager, emevdService, playerViewModel, _dlcService, spEffectService,
                 flaskService);
@@ -135,7 +136,8 @@ namespace TarnishedTool
         private bool _hasPublishedLoaded;
         private bool _hasPublishedFadedIn;
         private bool _hasCheckedPatch;
-
+        private DateTime? _attachedTime;
+        
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (_memoryService.IsAttached)
@@ -144,6 +146,15 @@ namespace TarnishedTool
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
 
                 LaunchGameButton.IsEnabled = false;
+                
+                if (!_attachedTime.HasValue)
+                {
+                    _attachedTime = DateTime.Now;
+                    return;
+                }
+                
+                if ((DateTime.Now - _attachedTime.Value).TotalSeconds < 2)
+                    return;
 
                 if (!_hasCheckedPatch)
                 {
@@ -206,6 +217,7 @@ namespace TarnishedTool
                 _hasScanned = false;
                 _hasCheckedPatch = false;
                 _loaded = false;
+                _attachedTime = null;
                 _hasAllocatedMemory = false;
                 _appliedOneTimeFeatures = false;
                 _hasPublishedLoaded = false;
