@@ -11,4 +11,5 @@ public interface IEventService
     void ToggleDisableEvents(bool isEnabled);
     bool AreAllEventsTrue(long[] unlockMetyr);
     void ToggleEvent(long clearDlc);
+    void ToggleEventLogger(bool isEnabled);
 }

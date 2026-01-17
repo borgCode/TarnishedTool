@@ -582,6 +582,25 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 89 5c 24 08          mov    QWORD PTR [rsp+0x8],rbx
+        ///50                      push   rax
+        ///53                      push   rbx
+        ///57                      push   rdi
+        ///8b 3d 00 00 00 00       mov    edi,DWORD PTR [rip+0x0]        # e &lt;_main+0xe&gt;
+        ///89 f8                   mov    eax,edi
+        ///6b c0 05                imul   eax,eax,0x5
+        ///48 8d 1d 00 00 00 00    lea    rbx,[rip+0x0]        # 1a &lt;_main+0x1a&gt;
+        ///48 01 c3                add    rbx,rax
+        ///89 13                   mov    DWORD PTR [rbx],edx
+        ///44 88 43 04            [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EventLogHook {
+            get {
+                return ResourceManager.GetString("EventLogHook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 89 e5                mov    rbp,rsp
         ///48 81 ec 08 04 00 00    sub    rsp,0x408
         ///48 8d 8d 50 fe ff ff    lea    rcx,[rbp-0x1b0]

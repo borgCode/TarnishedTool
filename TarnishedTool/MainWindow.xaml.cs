@@ -66,6 +66,7 @@ namespace TarnishedTool
             IEmevdService emevdService = new EmevdService(_memoryService);
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
+            IEventLogReader eventLogReader = new EventLogReader(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
@@ -81,7 +82,7 @@ namespace TarnishedTool
                 attackInfoService, hotkeyManager, spEffectService, emevdService);
             EventViewModel eventViewModel =
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService,
-                    hotkeyManager, utilityService);
+                    hotkeyManager, utilityService, eventLogReader);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService,
                 playerService, hotkeyManager, emevdService, playerViewModel, _dlcService, spEffectService,
                 flaskService);
