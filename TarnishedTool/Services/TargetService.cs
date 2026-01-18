@@ -236,9 +236,11 @@ namespace TarnishedTool.Services
             {
                 var hook = Hooks.NoHeal;
                 var codeBytes = AsmLoader.GetAsmBytes("NoHeal");
-                var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 6, code + 0x3c);
-
-                Array.Copy(bytes, 0, codeBytes, 0x37 + 1, 4);
+                var target = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
+                AsmHelper.WriteRelativeOffsets(codeBytes,[
+                (code.ToInt64() + 5, target.ToInt64(), 7, 5+3), 
+                (code.ToInt64() + 0x24, hook + 6, 5, 0x24+1)
+                ]);
                 memoryService.WriteBytes(code, codeBytes);
                 hookManager.InstallHook(code.ToInt64(), hook, new byte[]
                     { 0x89, 0x81, 0x38, 0x01, 0x00, 0x00 });
@@ -248,6 +250,7 @@ namespace TarnishedTool.Services
                 hookManager.UninstallHook(code.ToInt64());
             }
         }
+        
 
         public int GetResistance(int offset) =>
             memoryService.ReadInt32(GetChrResistPtr() + offset);

@@ -77,7 +77,7 @@ namespace TarnishedTool.ViewModels
 
             _targetTick = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(64)
+                Interval = TimeSpan.FromMilliseconds(1)
             };
             _targetTick.Tick += TargetTick;
         }
@@ -577,13 +577,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _isFreezeHealthEnabled, value);
                 _targetService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
-                int chrId = _targetService.GetNpcChrId();
-              if (IsFreezeHealthEnabled && (chrId == MaleniaChrId || chrId == DeathKnightChrId || chrId == AncestorSpiritChrId))
-                {
-                    _targetService.ToggleNoHeal(true);
-                }
-                else 
-                    _targetService.ToggleNoHeal(false);
+                _targetService.ToggleNoHeal(_isFreezeHealthEnabled);
+
   
             }
         }
@@ -943,14 +938,7 @@ namespace TarnishedTool.ViewModels
                 }
 
                 IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
-                int chrId = _targetService.GetNpcChrId();
-                if (IsFreezeHealthEnabled && (chrId == MaleniaChrId || chrId == DeathKnightChrId || chrId == AncestorSpiritChrId))
-                {
-                    _targetService.ToggleNoHeal(true);
-                }
-                else 
-                    _targetService.ToggleNoHeal(false);
-
+                _targetService.ToggleNoHeal(IsFreezeHealthEnabled);
                 _currentTargetChrIns = chrIns;
                 MaxPoise = _targetService.GetMaxPoise();
 
