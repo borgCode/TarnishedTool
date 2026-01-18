@@ -344,8 +344,9 @@ namespace TarnishedTool.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
+                _utilityService.SetColDrawMode(_isDrawLowHitEnabled ? ColDrawMode : 0);
                 _utilityService.ToggleDrawLowHit(_isDrawLowHitEnabled);
-                _utilityService.SetColDrawMode(ColDrawMode);
+                
             }
         }
 
@@ -357,8 +358,8 @@ namespace TarnishedTool.ViewModels
             set
             {
                 if (!SetProperty(ref _isDrawHighHitEnabled, value)) return;
+                _utilityService.SetColDrawMode(_isDrawHighHitEnabled ? ColDrawMode : 0);
                 _utilityService.ToggleDrawHighHit(_isDrawHighHitEnabled);
-                _utilityService.SetColDrawMode(ColDrawMode);
             }
         }
 
@@ -611,15 +612,35 @@ namespace TarnishedTool.ViewModels
             if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
             if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
             if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
-            if (IsDrawLowHitEnabled) _utilityService.ToggleDrawLowHit(true);
-            if (IsDrawHighHitEnabled) _utilityService.ToggleDrawHighHit(true);
+            if (IsDrawLowHitEnabled)
+            {
+                _utilityService.ToggleDrawLowHit(true);
+                _utilityService.SetColDrawMode(ColDrawMode);
+            }
+
+            if (IsDrawHighHitEnabled)
+            {
+                _utilityService.ToggleDrawHighHit(true);
+                _utilityService.SetColDrawMode(ColDrawMode);
+            }
+            _ezStateService.RequestNewNpcTalk();
         }
 
         private void OnGameNotLoaded()
         {
             AreOptionsEnabled = false;
-            _ezStateService.RequestNewNpcTalk();
             IsFreeCamEnabled = false;
+            if (IsDrawLowHitEnabled)
+            {
+                _utilityService.ToggleDrawLowHit(false);
+                _utilityService.SetColDrawMode(0);
+            }
+
+            if (IsDrawHighHitEnabled)
+            {
+                _utilityService.ToggleDrawHighHit(false);
+                _utilityService.SetColDrawMode(0);
+            }
         }
 
         private void OnGameFirstLoaded()

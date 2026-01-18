@@ -14,7 +14,7 @@ public class LogEntryToBrushConverter : IValueConverter
     {
         if (value is EventLogEntry entry)
         {
-            return entry.Value ? Brushes.Green : Brushes.Red; 
+            return entry.Value ? Brushes.Chartreuse : Brushes.Red; 
         }
         
         return Brushes.Black;

@@ -102,8 +102,7 @@ public class EnemyService(MemoryService memoryService, HookManager hookManager, 
             var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 7, code + 0x17);
             Array.Copy(bytes, 0, codeBytes, 0x12 + 1, 4);
             memoryService.WriteBytes(code, codeBytes);
-            hookManager.InstallHook(code.ToInt64(), hook, new byte[]
-                { 0x48, 0x8B, 0x49, 0x08, 0x48, 0x85, 0xC9 });
+            hookManager.InstallHook(code.ToInt64(), hook, [0x48, 0x8B, 0x49, 0x08, 0x48, 0x85, 0xC9]);
         }
         else
         {
