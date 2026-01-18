@@ -134,6 +134,7 @@ namespace TarnishedTool.Memory
         public static class ChrIns
         {
             public const int ChrCtrl = 0x58;
+            public const int ChrId = 0x64;
             public const int SpecialEffect = 0x178;
 
             public static int EntityId => Version switch
@@ -751,6 +752,7 @@ namespace TarnishedTool.Memory
             public static long LoadScreenMsgLookup;
             public static long LoadScreenMsgLookupEarlyPatches;
             public static long LoadScreenMsgLookupMidPatches;
+            public static long NoHeal;
         }
 
         public static class Functions
@@ -2262,6 +2264,27 @@ namespace TarnishedTool.Memory
                 Version2_6_0 or Version2_6_1 => 0x9C63D1,
                 _ => 0L
             };
+            
+            Hooks.NoHeal = moduleBase.ToInt64() + Version switch
+{
+            Version1_2_0 => 0x42E062,
+            Version1_2_1 or Version1_2_2 => 0x42E0D2,
+            Version1_2_3 => 0x42E1F2,
+            Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x42EE02,
+            Version1_4_0 => 0x431482,
+            Version1_4_1 => 0x431492,
+            Version1_5_0 => 0x4318C2,
+            Version1_6_0 => 0x432702,
+            Version1_7_0 => 0x432782,
+            Version1_8_0 or Version1_8_1 => 0x4340E2,
+            Version1_9_0 or Version1_9_1 => 0x434222,
+            Version2_0_0 or Version2_0_1 => 0x4342C2,
+            Version2_2_0 or Version2_2_3 => 0x437022,
+            Version2_3_0 => 0x437042,
+            Version2_4_0 or Version2_5_0 => 0x437082,
+            Version2_6_0 or Version2_6_1 => 0x437052,
+            _ => 0
+            };
 
             // Patches
 
@@ -2761,6 +2784,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.LoadScreenMsgLookupEarlyPatches: 0x{Hooks.LoadScreenMsgLookupEarlyPatches:X}");
             Console.WriteLine($@"Hooks.TargetNoStagger: 0x{Hooks.TargetNoStagger:X}");
             Console.WriteLine($@"Hooks.NoMapAcquiredPopup: 0x{Hooks.NoMapAcquiredPopup:X}");
+            Console.WriteLine($@"Hooks.NoHeal: 0x{Hooks.NoHeal:X}");
 
             Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
             Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");
