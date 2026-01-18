@@ -77,7 +77,7 @@ namespace TarnishedTool.ViewModels
 
             _targetTick = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(1)
+                Interval = TimeSpan.FromMilliseconds(64)
             };
             _targetTick.Tick += TargetTick;
         }
