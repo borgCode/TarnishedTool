@@ -6,7 +6,9 @@ using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels
 {
@@ -19,17 +21,21 @@ namespace TarnishedTool.ViewModels
         private readonly IEmevdService _emevdService;
         private readonly HotkeyManager _hotkeyManager;
         private readonly IUtilityService _utilityService;
+        private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
-        
-        private readonly List<int> _baseGameGestureIds; 
+
+        private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
+
+        private readonly EventLogViewModel _eventLogViewModel = new();
+        private EventLogWindow _eventLogWindow;
 
         private static readonly Brush OnColor = Brushes.Chartreuse;
         private static readonly Brush OffColor = Brushes.Red;
 
         public EventViewModel(IEventService eventService, IStateService stateService, IItemService itemService,
             IDlcService dlcService, IEzStateService ezStateService, IEmevdService emevdService,
-            HotkeyManager hotkeyManager, IUtilityService utilityService)
+            HotkeyManager hotkeyManager, IUtilityService utilityService, IEventLogReader eventLogReader)
         {
             _eventService = eventService;
             _itemService = itemService;
@@ -38,6 +44,7 @@ namespace TarnishedTool.ViewModels
             _emevdService = emevdService;
             _hotkeyManager = hotkeyManager;
             _utilityService = utilityService;
+            _eventLogReader = eventLogReader;
 
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -57,16 +64,18 @@ namespace TarnishedTool.ViewModels
             SetMorningCommand = new DelegateCommand(SetMorning);
             SetNoonCommand = new DelegateCommand(SetNoon);
             SetNightCommand = new DelegateCommand(SetNight);
-            
+
             _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", int.Parse);
             _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", int.Parse);
 
             RegisterHotkeys();
+
+            _eventLogReader = eventLogReader;
+            _eventLogReader.EntriesReceived += OnLogEntriesReceived;
         }
 
-        
         #region Commands
-        
+
         public ICommand SetEventCommand { get; set; }
         public ICommand GetEventCommand { get; set; }
         public ICommand UnlockWhetbladesCommand { get; set; }
@@ -83,9 +92,9 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Properties
-        
+
         private bool _areOptionsEnabled;
-        
+
         public bool AreOptionsEnabled
         {
             get => _areOptionsEnabled;
@@ -93,7 +102,7 @@ namespace TarnishedTool.ViewModels
         }
 
         private bool _isDlcAvailable;
-        
+
         public bool IsDlcAvailable
         {
             get => _isDlcAvailable;
@@ -115,7 +124,6 @@ namespace TarnishedTool.ViewModels
             get => _flagStateIndex;
             set => SetProperty(ref _flagStateIndex, value);
         }
-        
 
         private string _getFlagId;
 
@@ -140,7 +148,7 @@ namespace TarnishedTool.ViewModels
             get => _eventStatusColor;
             set => SetProperty(ref _eventStatusColor, value);
         }
-        
+
         private string _dlcClearStatusText;
 
         public string DlcClearStatusText
@@ -148,14 +156,15 @@ namespace TarnishedTool.ViewModels
             get => _dlcClearStatusText;
             set => SetProperty(ref _dlcClearStatusText, value);
         }
-        
+
         private Brush _dlcClearStatusColor;
+
         public Brush DlcClearStatusColor
         {
             get => _dlcClearStatusColor;
             set => SetProperty(ref _dlcClearStatusColor, value);
         }
-        
+
         private string _deactivateMausoleumStatusText;
 
         public string DeactivateMausoleumStatusText
@@ -165,16 +174,15 @@ namespace TarnishedTool.ViewModels
         }
 
         private Brush _deactivateMausoleumStatusColor;
+
         public Brush DeactivateMausoleumStatusColor
         {
             get => _deactivateMausoleumStatusColor;
             set => SetProperty(ref _deactivateMausoleumStatusColor, value);
         }
 
-        
-        
         private bool _isDrawEventsEnabled;
-        
+
         public bool IsDrawEventsEnabled
         {
             get => _isDrawEventsEnabled;
@@ -186,13 +194,13 @@ namespace TarnishedTool.ViewModels
                     _utilityService.PatchDebugFont();
                     _eventService.PatchEventEnable();
                 }
+
                 _eventService.ToggleDrawEvents(_isDrawEventsEnabled);
-                
             }
         }
-        
+
         private bool _isDisableEventsEnabled;
-        
+
         public bool IsDisableEventsEnabled
         {
             get => _isDisableEventsEnabled;
@@ -200,10 +208,34 @@ namespace TarnishedTool.ViewModels
             {
                 if (!SetProperty(ref _isDisableEventsEnabled, value)) return;
                 _eventService.ToggleDisableEvents(_isDisableEventsEnabled);
-                
             }
         }
-        
+
+        private bool _isEventLoggerEnabled;
+
+        public bool IsEventLoggerEnabled
+        {
+            get => _isEventLoggerEnabled;
+            set
+            {
+                if (!SetProperty(ref _isEventLoggerEnabled, value)) return;
+
+                _eventService.ToggleEventLogger(value);
+
+                if (value)
+                {
+                    OpenEventLogWindow();
+                    _eventLogViewModel.Reset();
+                    _eventLogReader.Start();
+                }
+                else
+                {
+                    _eventLogReader.Stop();
+                    _eventLogWindow?.Close();
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -219,7 +251,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = false;
         }
-        
+
         private void OnGameFirstLoaded()
         {
             if (IsDrawEventsEnabled)
@@ -228,20 +260,21 @@ namespace TarnishedTool.ViewModels
                 _eventService.PatchEventEnable();
                 _eventService.ToggleDrawEvents(true);
             }
+
             if (IsDisableEventsEnabled) _eventService.ToggleDisableEvents(false);
         }
-        
+
         private void OnEventTabActivated()
         {
             if (!AreOptionsEnabled) return;
             UpdateEventStatus();
-            
         }
 
         private void UpdateEventStatus()
         {
             (DlcClearStatusText, DlcClearStatusColor) = GetStatus(_eventService.GetEvent(Event.ClearDlc));
-            (DeactivateMausoleumStatusText, DeactivateMausoleumStatusColor) = GetStatus(_eventService.GetEvent(Event.SnowfieldMausoleum));
+            (DeactivateMausoleumStatusText, DeactivateMausoleumStatusColor) =
+                GetStatus(_eventService.GetEvent(Event.SnowfieldMausoleum));
         }
 
         private (string, Brush) GetStatus(bool isOn) => isOn ? ("ON", OnColor) : ("OFF", OffColor);
@@ -253,14 +286,13 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.SetNoon, () => SafeExecute(SetNoon));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNight, () => SafeExecute(SetNight));
         }
-        
+
         private void SafeExecute(Action action)
         {
             if (!AreOptionsEnabled) return;
             action();
         }
 
-        
         private void SetEvent()
         {
             if (string.IsNullOrWhiteSpace(SetFlagId))
@@ -273,7 +305,7 @@ namespace TarnishedTool.ViewModels
 
             _eventService.SetEvent(flagIdValue, FlagStateIndex == 0);
         }
-        
+
         private void GetEvent()
         {
             if (string.IsNullOrWhiteSpace(GetFlagId)) return;
@@ -282,7 +314,7 @@ namespace TarnishedTool.ViewModels
             var isOn = _eventService.GetEvent(flagIdValue);
             (EventStatusText, EventStatusColor) = isOn ? ("True", OnColor) : ("False", OffColor);
         }
-        
+
         private void UnlockWhetblades()
         {
             _itemService.SpawnItem(WhetstoneBladeId, 1, -1, false, 1);
@@ -292,7 +324,6 @@ namespace TarnishedTool.ViewModels
             }
         }
 
-        
         private void UnlockMetyr()
         {
             foreach (var eventId in Event.UnlockMetyr)
@@ -300,10 +331,10 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(eventId, true);
             }
         }
-        
+
         private void FightFortissax() => _eventService.SetEvent(Event.FightFortissax, true);
         private void FightEldenBeast() => _eventService.SetEvent(Event.FightEldenBeast, true);
-        
+
         private void UnlockGestures()
         {
             foreach (var baseGameGestureId in _baseGameGestureIds)
@@ -312,13 +343,13 @@ namespace TarnishedTool.ViewModels
             }
 
             if (!IsDlcAvailable) return;
-            
+
             foreach (var dlcGestureId in _dlcGestureIds)
             {
                 _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcGestureId));
             }
         }
-        
+
         private void ToggleClearDlc()
         {
             _eventService.ToggleEvent(Event.ClearDlc);
@@ -334,6 +365,30 @@ namespace TarnishedTool.ViewModels
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
+
+        private void OpenEventLogWindow()
+        {
+            _eventLogWindow = new EventLogWindow()
+            {
+                DataContext = _eventLogViewModel,
+                Title = "Event Log"
+            };
+            _eventLogWindow.Closed += (s, e) =>
+            {
+                _eventLogWindow = null;
+                if (_isEventLoggerEnabled)
+                {
+                    _isEventLoggerEnabled = false;
+                    OnPropertyChanged(nameof(IsEventLoggerEnabled));
+                    _eventLogReader.Stop();
+                    _eventService.ToggleEventLogger(false);
+                }
+            };
+            _eventLogWindow.Show();
+        }
+
+        private void OnLogEntriesReceived(List<EventLogEntry> events) =>
+            _eventLogViewModel.RefreshEventLogs(events);
 
         #endregion
     }

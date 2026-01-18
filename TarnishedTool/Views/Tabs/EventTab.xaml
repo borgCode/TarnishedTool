@@ -330,6 +330,12 @@
                                         IsChecked="{Binding IsDisableEventsEnabled}">
 
                                     </CheckBox>
+                                    
+                                    <CheckBox
+                                        Content="Event Logger"
+                                        IsChecked="{Binding IsEventLoggerEnabled}">
+
+                                    </CheckBox>
                                 </StackPanel>
                             </Grid>
                         </StackPanel>
