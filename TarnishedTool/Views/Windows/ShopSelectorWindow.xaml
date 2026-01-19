@@ -1,9 +1,10 @@
-﻿<Window x:Class="TarnishedTool.Views.Windows.ShopSelectorWindow"
+﻿<windows:TopmostWindow x:Class="TarnishedTool.Views.Windows.ShopSelectorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:controls="clr-namespace:TarnishedTool.Controls"
+        xmlns:windows="clr-namespace:TarnishedTool.Views.Windows"
         mc:Ignorable="d"
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None"
@@ -28,6 +29,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -38,6 +40,16 @@
                          Text="{Binding ShopsSearchText, UpdateSourceTrigger=PropertyChanged}"
                          VerticalContentAlignment="Center"
                          Padding="5,3" />
+                <CheckBox  Grid.Row="0"
+                           Grid.Column="2" 
+                           x:Name="AlwaysOnTopCheckBox"
+                           HorizontalAlignment="Right"
+                           Margin="10,0,0,0"
+                           Checked="AlwaysOnTopCheckBox_Checked"
+                           Unchecked="AlwaysOnTopCheckBox_Unchecked">
+                    Always on Top
+                </CheckBox>
+                
             </Grid>
 
             <ListBox Grid.Row="1"
@@ -70,4 +82,4 @@
             </ListBox>
         </Grid>
     </Grid>
-</Window>
+</windows:TopmostWindow>

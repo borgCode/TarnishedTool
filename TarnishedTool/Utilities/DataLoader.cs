@@ -486,5 +486,46 @@ namespace TarnishedTool.Utilities
                 // Silent fail or log
             }
         }
+
+        private static readonly string GracePresetsPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "TarnishedTool",
+            "GracePresets.json");
+
+        public static Dictionary<string, GracePresetTemplate> LoadGracePresets()
+        {
+            try
+            {
+                if (!File.Exists(GracePresetsPath))
+                    return new Dictionary<string, GracePresetTemplate>();
+
+                string json = File.ReadAllText(GracePresetsPath);
+                var presets = JsonSerializer.Deserialize<List<GracePresetTemplate>>(json);
+
+                return presets?.ToDictionary(p => p.Name) ?? new Dictionary<string, GracePresetTemplate>();
+            }
+            catch
+            {
+                return new Dictionary<string, GracePresetTemplate>();
+            }
+        }
+
+        public static void SaveGracePresets(Dictionary<string, GracePresetTemplate> presets)
+        {
+            try
+            {
+                string directory = Path.GetDirectoryName(GracePresetsPath);
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string json = JsonSerializer.Serialize(presets.Values.ToList(), options);
+                File.WriteAllText(GracePresetsPath, json);
+            }
+            catch
+            {
+                // Silent fail or log
+            }
+        }
     }
 }

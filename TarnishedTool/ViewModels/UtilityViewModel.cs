@@ -29,7 +29,6 @@ namespace TarnishedTool.ViewModels
         private readonly IEzStateService _ezStateService;
         private readonly IPlayerService _playerService;
         private readonly HotkeyManager _hotkeyManager;
-        private readonly IEmevdService _emevdService;
         private readonly PlayerViewModel _playerViewModel;
         private readonly IDlcService _dlcService;
         private readonly ISpEffectService _spEffectService;
@@ -40,15 +39,13 @@ namespace TarnishedTool.ViewModels
         private readonly List<ShopCommand> _allShops;
 
         public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
-            IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager,
-            IEmevdService emevdService, PlayerViewModel playerViewModel, IDlcService dlcService,
+            IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager, PlayerViewModel playerViewModel, IDlcService dlcService,
             ISpEffectService spEffectService, IFlaskService flaskService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
-            _emevdService = emevdService;
             _playerViewModel = playerViewModel;
             _dlcService = dlcService;
             _spEffectService = spEffectService;

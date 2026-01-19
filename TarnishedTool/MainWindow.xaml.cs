@@ -84,7 +84,7 @@ namespace TarnishedTool
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService,
                     hotkeyManager, utilityService, eventLogReader);
             UtilityViewModel utilityViewModel = new UtilityViewModel(utilityService, _stateService, ezStateService,
-                playerService, hotkeyManager, emevdService, playerViewModel, _dlcService, spEffectService,
+                playerService, hotkeyManager, playerViewModel, _dlcService, spEffectService,
                 flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
@@ -137,7 +137,7 @@ namespace TarnishedTool
         private bool _hasPublishedFadedIn;
         private bool _hasCheckedPatch;
         private DateTime? _attachedTime;
-        
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (_memoryService.IsAttached)
@@ -146,13 +146,13 @@ namespace TarnishedTool
                 IsAttachedText.Foreground = (SolidColorBrush)Application.Current.Resources["AttachedBrush"];
 
                 LaunchGameButton.IsEnabled = false;
-                
+
                 if (!_attachedTime.HasValue)
                 {
                     _attachedTime = DateTime.Now;
                     return;
                 }
-                
+
                 if ((DateTime.Now - _attachedTime.Value).TotalSeconds < 2)
                     return;
 
@@ -162,7 +162,7 @@ namespace TarnishedTool
                     {
                         _aobScanner.DoFallbackScan();
                     }
-                    
+
 #if DEBUG
                     Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
 #endif

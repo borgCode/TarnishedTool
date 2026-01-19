@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TarnishedTool.Core;
@@ -7,6 +8,7 @@ using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels
 {
@@ -16,9 +18,13 @@ namespace TarnishedTool.ViewModels
         private readonly IEventService _eventService;
         private readonly IDlcService _dlcService;
         private readonly IEmevdService _emevdService;
+        
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
+
+        private SearchableGroupedCollection<string, Grace> _gracesForPresetWindow;
+        private Dictionary<string, GracePresetTemplate> _customGracePresets;
         
         private readonly List<long> _baseGameMaps;
         private readonly List<long> _dlcMaps;
@@ -45,6 +51,14 @@ namespace TarnishedTool.ViewModels
                 DataLoader.GetBossWarps(),
                 (bossWarp, search) => bossWarp.Name.ToLower().Contains(search) ||
                                       bossWarp.MainArea.ToLower().Contains(search));
+            
+            _gracesForPresetWindow = new SearchableGroupedCollection<string, Grace>(
+                Graces.AllItems
+                    .Select(g => g.Clone())
+                    .GroupBy(g => g.MainArea)
+                    .ToDictionary(g => g.Key, g => g.ToList()),
+                (grace, search) => grace.Name.ToLower().Contains(search) ||
+                                   grace.MainArea.ToLower().Contains(search));
 
             GraceWarpCommand = new DelegateCommand(GraceWarp);
             UnlockMainGameGracesCommand = new DelegateCommand(UnlockMainGameGraces);
@@ -54,13 +68,16 @@ namespace TarnishedTool.ViewModels
             UnlockDlcMapsCommand = new DelegateCommand(UnlockDlcMaps);
             UnlockBaseArGracesCommand = new DelegateCommand(UnlockBaseArGraces);
             UnlockDlcArGracesCommand = new DelegateCommand(UnlockDlcArGraces);
+            OpenGracePresetWindowCommand = new DelegateCommand(OpenGracePresetWindow);
+            
+            _customGracePresets = DataLoader.LoadGracePresets();
+            
             
             _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
             _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
             _baseArGraces = DataLoader.GetSimpleList("ArBaseGraces", long.Parse);
             _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", long.Parse);
         }
-
         
         #region Commands
 
@@ -72,6 +89,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UnlockDlcMapsCommand { get; set; }
         public ICommand UnlockBaseArGracesCommand { get; set; }
         public ICommand UnlockDlcArGracesCommand { get; set; }
+        public ICommand OpenGracePresetWindowCommand { get; set; }
 
         #endregion
 
@@ -224,6 +242,18 @@ namespace TarnishedTool.ViewModels
             foreach (var dlcArGrace in _dlcArGraces)
             {
                 _eventService.SetEvent(dlcArGrace, true);
+            }
+        }
+        
+        private void OpenGracePresetWindow()
+        {
+            var window = new GracePresetWindow(
+                _gracesForPresetWindow,
+                _customGracePresets);
+
+            if (window.ShowDialog() == true)
+            {
+                DataLoader.SaveGracePresets(_customGracePresets);
             }
         }
 
