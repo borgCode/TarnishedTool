@@ -60,7 +60,7 @@ namespace TarnishedTool.ViewModels
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
-            stateService.Subscribe(State.GameStart, OnGameStart);
+            stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
             stateService.Subscribe(State.FadedIn, OnFadedIn);
 
             SetRfbsCommand = new DelegateCommand(SetRfbs);
@@ -746,7 +746,7 @@ namespace TarnishedTool.ViewModels
             _playerTick.Stop();
         }
 
-        private void OnGameStart()
+        private void OnNewGameStart()
         {
             if (!IsAutoSetNewGameSevenEnabled) return;
             SetNewGame(7);

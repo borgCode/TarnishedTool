@@ -1,22 +1,18 @@
-﻿<Window x:Class="TarnishedTool.Views.Windows.CreateLoadoutWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns:converters="clr-namespace:TarnishedTool.Converters"
-        xmlns:controls="clr-namespace:TarnishedTool.Controls"
-        Background="{StaticResource BackgroundBrush}"
-        Foreground="{StaticResource TextBrush}"
-        BorderBrush="{StaticResource BorderBrush}"
-        Title="Custom Loadouts" Height="600" Width="1000"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        ResizeMode="NoResize">
-
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <converters:GreaterThanZeroVisibilityConverter x:Key="GreaterThanZeroVisibilityConverter" />
-        <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
-    </Window.Resources>
+﻿<local:TopmostWindow x:Class="TarnishedTool.Views.Windows.GracePresetWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
+                     xmlns:controls="clr-namespace:TarnishedTool.Controls"
+                     mc:Ignorable="d"
+                     Title="GracePresetWindow" Height="500" Width="900"
+                     Background="{StaticResource BackgroundBrush}"
+                     Foreground="{StaticResource TextBrush}"
+                     BorderBrush="{StaticResource BorderBrush}"
+                     WindowStyle="None"
+                     AllowsTransparency="True"
+                     ResizeMode="NoResize">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,13 +20,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <controls:TitleBar Title="Custom Loadouts" />
+        <controls:TitleBar Title="Grace Presets" />
 
         <Grid Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0"
@@ -46,10 +41,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0"
-                               Text="Loadout:"
+                               Text="Preset:"
                                VerticalAlignment="Center"
                                Margin="0,0,5,0" />
 
@@ -74,15 +72,35 @@
                     <Button Grid.Column="4"
                             Content="Delete"
                             Command="{Binding DeleteLoadoutCommand}"
+                            Padding="10,3"
+                            Margin="0,0,5,0" />
+
+                    <Button Grid.Column="5"
+                            Content="Import"
+                            Command="{Binding ImportLoadoutCommand}"
+                            Padding="10,3"
+                            Margin="0,0,5,0" />
+
+                    <Button Grid.Column="6"
+                            Content="Export"
+                            Command="{Binding ExportLoadoutCommand}"
                             Padding="10,3" />
+
+                    <CheckBox Grid.Column="7"
+                              x:Name="AlwaysOnTopCheckBox"
+                              Content="Always on Top"
+                              HorizontalAlignment="Right"
+                              Margin="10,0,0,0"
+                              Checked="AlwaysOnTopCheckBox_Checked"
+                              Unchecked="AlwaysOnTopCheckBox_Unchecked" />
                 </Grid>
             </Border>
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="170" />
+                    <ColumnDefinition Width="250" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="220" />
+                    <ColumnDefinition Width="250" />
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
@@ -92,11 +110,11 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Categories" Margin="0,0,0,5" />
+                    <TextBlock Grid.Row="0" Text="Areas" Margin="0,0,0,5" />
 
                     <ListBox Grid.Row="1"
-                             ItemsSource="{Binding ItemSelection.Categories}"
-                             SelectedItem="{Binding ItemSelection.SelectedCategory}"
+                             ItemsSource="{Binding Graces.Groups}"
+                             SelectedItem="{Binding Graces.SelectedGroup}"
                              BorderThickness="1"
                              BorderBrush="#333">
                         <ListBox.ItemContainerStyle>
@@ -125,62 +143,12 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    
-                    <StackPanel Grid.Row="2" Margin="0,10,0,0">
-                        <Grid Margin="0,0,0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Quantity:"
-                                       VerticalAlignment="Center"
-                                       Margin="0,0,5,0" />
-                            <xctk:IntegerUpDown Grid.Column="1"
-                                                Value="{Binding ItemSelection.SelectedQuantity}"
-                                                Minimum="1"
-                                                Maximum="{Binding ItemSelection.MaxQuantity}"
-                                                IsEnabled="{Binding ItemSelection.QuantityEnabled}"
-                                                Increment="1" />
-                        </Grid>
 
-                        <StackPanel
-                            Visibility="{Binding ItemSelection.ShowWeaponOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Grid Margin="0,0,0,5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Upgrade:"
-                                           VerticalAlignment="Center"
-                                           Margin="0,0,5,0" />
-                                <xctk:IntegerUpDown Grid.Column="1"
-                                                    Value="{Binding ItemSelection.SelectedUpgrade}"
-                                                    Minimum="0"
-                                                    Maximum="{Binding ItemSelection.MaxUpgradeLevel}"
-                                                    IsEnabled="{Binding ItemSelection.CanUpgrade}"
-                                                    Increment="1" />
-                            </Grid>
-
-                            <StackPanel
-                                Visibility="{Binding ItemSelection.ShowAowOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBlock Text="Ash of War:" Margin="0,0,0,5" />
-                                <ComboBox ItemsSource="{Binding ItemSelection.AvailableAshesOfWar}"
-                                          SelectedItem="{Binding ItemSelection.SelectedAshOfWar}"
-                                          DisplayMemberPath="Name"
-                                          Margin="0,0,0,5" />
-
-                                <TextBlock Text="Affinity:" Margin="0,0,0,5" />
-                                <ComboBox ItemsSource="{Binding ItemSelection.AvailableAffinities}"
-                                          SelectedItem="{Binding ItemSelection.SelectedAffinity}"
-                                          Margin="0,0,0,5" />
-                            </StackPanel>
-                        </StackPanel>
-
-                        <Button Content="Add To Loadout"
-                                Command="{Binding AddItemCommand}"
-                                Height="25"
-                                Margin="0,10,0,0" />
-                    </StackPanel>
+                    <Button Grid.Row="2"
+                            Content="Add to Preset"
+                            Click="AddToPreset_Click"
+                            Height="25"
+                            Margin="0,10,0,0" />
                 </Grid>
 
                 <Grid Grid.Column="1" Margin="10,0">
@@ -190,7 +158,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBox Grid.Row="0"
-                             Text="{Binding ItemSelection.SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             Text="{Binding Graces.SearchText, UpdateSourceTrigger=PropertyChanged}"
                              HorizontalAlignment="Right"
                              Width="150"
                              Height="25"
@@ -210,7 +178,7 @@
                                                       VerticalScrollBarVisibility="Hidden"
                                                       VerticalAlignment="Center"
                                                       Margin="5,0,0,0" />
-                                        <TextBlock Text="Search items..."
+                                        <TextBlock Text="Search graces..."
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Left"
                                                    Margin="5,0,0,0"
@@ -237,6 +205,13 @@
                                         </TextBlock>
                                     </Grid>
                                 </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter TargetName="border" Property="BorderBrush"
+                                                Value="{StaticResource AccentBrush}" />
+                                        <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </TextBox.Template>
                     </TextBox>
@@ -244,18 +219,22 @@
                     <Border Grid.Row="1"
                             BorderThickness="1"
                             BorderBrush="#333">
-                        <ListView ItemsSource="{Binding ItemSelection.Items}"
-                                  SelectedItem="{Binding ItemSelection.SelectedItem}"
-                                  VirtualizingPanel.IsVirtualizing="True"
-                                  VirtualizingPanel.VirtualizationMode="Recycling"
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                  BorderThickness="0">
+                        <ListView
+                            x:Name="AddGraceListView"
+                            ItemsSource="{Binding Graces.Items}"
+                            SelectedItem="{Binding Graces.SelectedItem}"
+                            SelectionMode="Extended"
+                            VirtualizingPanel.IsVirtualizing="True"
+                            VirtualizingPanel.VirtualizationMode="Recycling"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            BorderThickness="0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
-                                    <EventSetter Event="MouseDoubleClick" Handler="Item_MouseDoubleClick" />
+                                    <EventSetter Event="MouseDoubleClick" Handler="Grace_MouseDoubleClick" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="Padding" Value="8,4" />
                                     <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
                                     <Setter Property="BorderThickness" Value="0" />
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -289,17 +268,20 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
+                                        <Grid.Resources>
+                                            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                                        </Grid.Resources>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                         <TextBlock Grid.Column="1"
-                                                   Text="{Binding CategoryName}"
-                                                   Foreground="#888888"
+                                                   Text="{Binding MainArea}"
+                                                   Foreground="#ceccca"
                                                    FontStyle="Italic"
                                                    Margin="10,0,0,0"
-                                                   Visibility="{Binding DataContext.ItemSelection.IsSearchActive, 
+                                                   Visibility="{Binding DataContext.Graces.IsSearchActive, 
                                                        RelativeSource={RelativeSource AncestorType=Window}, 
                                                        Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </Grid>
@@ -316,15 +298,30 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Text="Current Loadout Items" Margin="0,0,0,5" />
+                    <Grid Grid.Row="0" Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Preset Graces" VerticalAlignment="Center" />
+
+                        <TextBox Grid.Column="1"
+                                 Text="{Binding PresetGracesSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="120"
+                                 VerticalContentAlignment="Center"
+                                 Height="30"
+                                 HorizontalAlignment="Right"/>
+                    </Grid>
 
                     <ListView Grid.Row="1"
-                              ItemsSource="{Binding CurrentLoadoutItems}"
-                              SelectedItem="{Binding SelectedLoadoutItem}"
+                              ItemsSource="{Binding FilteredCurrentLoadoutGraces}"
+                              SelectedItem="{Binding SelectedLoadoutGrace}"
                               BorderThickness="1"
                               BorderBrush="#333">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
+                                <EventSetter Event="MouseDoubleClick" Handler="AddedGrace_MouseDoubleClick" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="Padding" Value="8,4" />
                                 <Setter Property="Background" Value="Transparent" />
@@ -361,21 +358,10 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding ItemName}" />
-                                        <TextBlock Text=" x" Margin="3,0,0,0" />
-                                        <TextBlock Text="{Binding Quantity}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal"
-                                                Visibility="{Binding AshOfWarName, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Collapsed}">
-                                        <TextBlock Text="{Binding AffinityName}" Foreground="#888888" FontSize="11" />
-                                        <TextBlock Text=" / " Foreground="#888888" FontSize="11" />
-                                        <TextBlock Text="{Binding AshOfWarName}" Foreground="#888888" FontSize="11" />
-                                    </StackPanel>
-                                    <TextBlock Text="{Binding Upgrade, StringFormat='+{0}'}"
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding MainArea}"
                                                Foreground="#888888"
-                                               FontSize="11"
-                                               Visibility="{Binding Upgrade, Converter={StaticResource GreaterThanZeroVisibilityConverter}, FallbackValue=Collapsed}" />
+                                               FontSize="11" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -383,7 +369,7 @@
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
                         <Button Content="Remove"
-                                Command="{Binding RemoveItemCommand}"
+                                Command="{Binding RemoveGraceCommand}"
                                 Padding="10,3"
                                 Margin="0,0,10,0" />
                         <Button Content="Save &amp; Close"
@@ -394,4 +380,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Window>
+</local:TopmostWindow>

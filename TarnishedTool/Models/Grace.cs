@@ -7,5 +7,7 @@
         public string Name { get; set; }
         public long GraceEntityId { get; set; }
         public int FlagId { get; set; }
+
+        public Grace Clone() => (Grace)MemberwiseClone();
     }
 }
