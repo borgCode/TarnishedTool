@@ -83,4 +83,11 @@ public partial class GracePresetWindow : TopmostWindow
         Close();
     }
 
+    private void AddedGrace_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (DataContext is GracePresetViewModel vm && vm.RemoveGraceCommand.CanExecute(null))
+        {
+            vm.RemoveGraceCommand.Execute(null);
+        }
+    }
 }

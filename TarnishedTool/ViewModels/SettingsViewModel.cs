@@ -37,7 +37,7 @@ public class SettingsViewModel : BaseViewModel
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         stateService.Subscribe(State.Attached, OnGameAttached);
-        stateService.Subscribe(State.GameStart, OnGameStart);
+        stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
 
 
         var groupedHotkeys = new Dictionary<string, List<HotkeyBindingViewModel>>
@@ -410,7 +410,7 @@ public class SettingsViewModel : BaseViewModel
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
     }
 
-    private void OnGameStart()
+    private void OnNewGameStart()
     {
         if (!IsHotkeyReminderEnabled) return;
         if (!IsEnableHotkeysEnabled) return;

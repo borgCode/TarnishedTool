@@ -170,6 +170,7 @@ public class GracePresetViewModel : BaseViewModel
 
         var entry = new GracePresetEntry
         {
+            IsDlc = Graces.SelectedItem.IsDlc,
             Name = Graces.SelectedItem.Name,
             FlagId = Graces.SelectedItem.FlagId,
             MainArea = Graces.SelectedItem.MainArea

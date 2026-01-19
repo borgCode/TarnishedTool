@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
         xmlns:controls="clr-namespace:TarnishedTool.Controls"
         mc:Ignorable="d"
-        Title="GracePresetWindow" Height="500" Width="700"
+        Title="GracePresetWindow" Height="500" Width="900"
         Background="{StaticResource BackgroundBrush}"
         Foreground="{StaticResource TextBrush}"
         BorderBrush="{StaticResource BorderBrush}"
@@ -27,8 +27,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
-            <!-- Top Bar: Loadout Management -->
+            
             <Border Grid.Row="0"
                     BorderThickness="1"
                     BorderBrush="#333"
@@ -82,16 +81,14 @@
                               Unchecked="AlwaysOnTopCheckBox_Unchecked" />
                 </Grid>
             </Border>
-
-            <!-- Main Content -->
+            
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="250" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="250" />
                 </Grid.ColumnDefinitions>
-
-                <!-- Left Panel: Areas -->
+                
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -139,8 +136,7 @@
                             Height="25"
                             Margin="0,10,0,0" />
                 </Grid>
-
-                <!-- Middle Panel: Graces List -->
+                
                 <Grid Grid.Column="1" Margin="10,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -277,8 +273,7 @@
                         </ListView>
                     </Border>
                 </Grid>
-
-                <!-- Right Panel: Current Preset Graces -->
+                
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -295,6 +290,7 @@
                               BorderBrush="#333">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
+                                <EventSetter Event="MouseDoubleClick" Handler="AddedGrace_MouseDoubleClick" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="Padding" Value="8,4" />
                                 <Setter Property="Background" Value="Transparent" />

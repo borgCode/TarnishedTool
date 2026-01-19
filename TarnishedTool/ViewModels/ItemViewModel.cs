@@ -26,7 +26,7 @@ public class ItemViewModel : BaseViewModel
 
     private readonly List<Item> _allItems;
 
-    private Dictionary<string, LoadoutTemplate> _customLoadoutTemplates;
+    private readonly Dictionary<string, LoadoutTemplate> _customLoadoutTemplates;
     public ObservableCollection<KeyValuePair<string, uint>> EquipTypes { get; } = new()
     {
         new("Accessory", 0x20000000),
@@ -48,7 +48,7 @@ public class ItemViewModel : BaseViewModel
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
         stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
-        stateService.Subscribe(State.GameStart, OnGameStart);
+        stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
 
         _itemsByCategory = LoadItemData();
         _allAshesOfWar = DataLoader.GetAshOfWars();
@@ -185,7 +185,7 @@ public class ItemViewModel : BaseViewModel
         ItemSelection.SetDlcAvailable(hasDlc);
     }
     
-    private void OnGameStart()
+    private void OnNewGameStart()
     {
         if (!AutoSpawnEnabled || SelectedAutoSpawnWeapon == null) return;
         _itemService.SpawnItem(SelectedAutoSpawnWeapon.Id, 1, -1, false, 1);

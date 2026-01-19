@@ -236,7 +236,7 @@ namespace TarnishedTool
         {
             var igt = _memoryService.ReadUInt32(
                 (IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Igt);
-            if (igt < 5000) _stateService.Publish(State.GameStart);
+            if (igt < 5000) _stateService.Publish(State.OnNewGameStart);
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)

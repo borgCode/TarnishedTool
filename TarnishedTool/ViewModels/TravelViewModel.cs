@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,14 +19,13 @@ namespace TarnishedTool.ViewModels
         private readonly IEventService _eventService;
         private readonly IDlcService _dlcService;
         private readonly IEmevdService _emevdService;
-        
 
         public SearchableGroupedCollection<string, Grace> Graces { get; }
         public SearchableGroupedCollection<string, BossWarp> Bosses { get; }
 
         private SearchableGroupedCollection<string, Grace> _gracesForPresetWindow;
         private Dictionary<string, GracePresetTemplate> _customGracePresets;
-        
+
         private readonly List<long> _baseGameMaps;
         private readonly List<long> _dlcMaps;
         private readonly List<long> _baseArGraces;
@@ -42,6 +42,7 @@ namespace TarnishedTool.ViewModels
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
+            stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
 
             Graces = new SearchableGroupedCollection<string, Grace>(
                 DataLoader.GetGraces(),
@@ -51,7 +52,7 @@ namespace TarnishedTool.ViewModels
                 DataLoader.GetBossWarps(),
                 (bossWarp, search) => bossWarp.Name.ToLower().Contains(search) ||
                                       bossWarp.MainArea.ToLower().Contains(search));
-            
+
             _gracesForPresetWindow = new SearchableGroupedCollection<string, Grace>(
                 Graces.AllItems
                     .Select(g => g.Clone())
@@ -69,15 +70,19 @@ namespace TarnishedTool.ViewModels
             UnlockBaseArGracesCommand = new DelegateCommand(UnlockBaseArGraces);
             UnlockDlcArGracesCommand = new DelegateCommand(UnlockDlcArGraces);
             OpenGracePresetWindowCommand = new DelegateCommand(OpenGracePresetWindow);
-            
+            UnlockPresetGracesCommand = new DelegateCommand(UnlockGracePreset);
+
             _customGracePresets = DataLoader.LoadGracePresets();
-            
-            
+            _gracePresets = new ObservableCollection<string>(_customGracePresets.Keys);
+            SelectedGracePreset = _gracePresets.FirstOrDefault();
+
+
             _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
             _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
             _baseArGraces = DataLoader.GetSimpleList("ArBaseGraces", long.Parse);
             _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", long.Parse);
         }
+
         
         #region Commands
 
@@ -90,6 +95,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UnlockBaseArGracesCommand { get; set; }
         public ICommand UnlockDlcArGracesCommand { get; set; }
         public ICommand OpenGracePresetWindowCommand { get; set; }
+        public ICommand UnlockPresetGracesCommand { get; set; }
 
         #endregion
 
@@ -118,7 +124,7 @@ namespace TarnishedTool.ViewModels
             get => _isRestOnWarpEnabled;
             set => SetProperty(ref _isRestOnWarpEnabled, value);
         }
-        
+
         private bool _isShowAllGracesEnabled;
 
         public bool IsShowAllGracesEnabled
@@ -130,7 +136,7 @@ namespace TarnishedTool.ViewModels
                 _travelService.ToggleShowAllGraces(_isShowAllGracesEnabled);
             }
         }
-        
+
         private bool _isShowAllMapsEnabled;
 
         public bool IsShowAllMapsEnabled
@@ -143,7 +149,6 @@ namespace TarnishedTool.ViewModels
             }
         }
 
-        
         private bool _isNoMapAcquiredPopupsEnabled;
 
         public bool IsNoMapAcquiredPopupsEnabled
@@ -156,6 +161,29 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private ObservableCollection<string> _gracePresets;
+
+        public ObservableCollection<string> GracePresets
+        {
+            get => _gracePresets;
+            private set => SetProperty(ref _gracePresets, value);
+        }
+
+        private string _selectedGracePreset;
+
+        public string SelectedGracePreset
+        {
+            get => _selectedGracePreset;
+            set => SetProperty(ref _selectedGracePreset, value);
+        }
+        
+        private bool _isAutoUnlockPresetEnabled;
+
+        public bool IsAutoUnlockPresetEnabled
+        {
+            get => _isAutoUnlockPresetEnabled;
+            set => SetProperty(ref _isAutoUnlockPresetEnabled, value);
+        }
 
         #endregion
 
@@ -210,7 +238,7 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(grace.FlagId, true);
             }
         }
-        
+
         private void UnlockBaseGameMaps()
         {
             foreach (var baseGameMap in _baseGameMaps)
@@ -226,7 +254,7 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(dlcMap, true);
             }
         }
-        
+
         private void UnlockBaseArGraces()
         {
             _eventService.SetEvent(Event.SeeUndergroundGraces, true);
@@ -244,7 +272,7 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(dlcArGrace, true);
             }
         }
-        
+
         private void OpenGracePresetWindow()
         {
             var window = new GracePresetWindow(
@@ -253,8 +281,44 @@ namespace TarnishedTool.ViewModels
 
             if (window.ShowDialog() == true)
             {
-                DataLoader.SaveGracePresets(_customGracePresets);
+                RefreshGracePresets();
             }
+        }
+
+        private void RefreshGracePresets()
+        {
+            _gracePresets.Clear();
+            foreach (var name in _customGracePresets.Keys)
+            {
+                _gracePresets.Add(name);
+            }
+
+            if (string.IsNullOrEmpty(SelectedGracePreset) || !_customGracePresets.ContainsKey(SelectedGracePreset))
+            {
+                SelectedGracePreset = _gracePresets.FirstOrDefault();
+            }
+
+            DataLoader.SaveGracePresets(_customGracePresets);
+        }
+
+        private void UnlockGracePreset()
+        {
+            var preset = _customGracePresets[SelectedGracePreset];
+            
+            foreach (var gracePresetEntry in preset.Graces)
+            {
+                if (gracePresetEntry.IsDlc && !IsDlcAvailable) continue;
+                _eventService.SetEvent(gracePresetEntry.FlagId, true);
+            }
+            
+            _eventService.SetEvent(Event.SeeUndergroundGraces, true);
+            if (IsDlcAvailable) _eventService.SetEvent(Event.SeeDlcGraces, true);
+        }
+        
+        private void OnNewGameStart()
+        {
+            if (!IsAutoUnlockPresetEnabled || SelectedGracePreset == null) return;
+            UnlockGracePreset();
         }
 
         #endregion
