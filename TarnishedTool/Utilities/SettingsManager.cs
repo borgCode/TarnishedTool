@@ -46,7 +46,11 @@ public class SettingsManager
     public bool HotkeyReminder { get; set; }
     public bool EnableUpdateChecks { get; set; } = true;
     public string SaveCustomHp { get; set; } = "";
-    
+    public double GraceImportWindowLeft { get; set; }
+    public double GraceImportWindowTop { get; set; }
+    public double GracePresetWindowLeft { get; set; }
+    public double GracePresetWindowTop { get; set; }
+    public bool GracePresetWindowAlwaysOnTop { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -97,6 +101,11 @@ public class SettingsManager
                 $"EnableUpdateChecks={EnableUpdateChecks}",
                 $"HotkeyReminder={HotkeyReminder}",
                 $"SaveCustomHp={SaveCustomHp}",
+                $"GraceImportWindowLeft={GraceImportWindowLeft}",
+                $"GraceImportWindowTop={GraceImportWindowTop}",
+                $"GracePresetWindowLeft={GracePresetWindowLeft}",
+                $"GracePresetWindowTop={GracePresetWindowTop}",
+                $"GracePresetWindowAlwaysOnTop={GracePresetWindowAlwaysOnTop}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -264,6 +273,26 @@ public class SettingsManager
                                 break;
                             case "SaveCustomHp":
                                 settings.SaveCustomHp = value;
+                                break;
+                            case "GraceImportWindowLeft":
+                                double.TryParse(value, out double giwl);
+                                settings.GraceImportWindowLeft = giwl;
+                                break;
+                            case "GraceImportWindowTop":
+                                double.TryParse(value, out double giwt);
+                                settings.GraceImportWindowTop = giwt;
+                                break;
+                            case "GracePresetWindowLeft":
+                                double.TryParse(value, out double gpwl);
+                                settings.GracePresetWindowLeft = gpwl;
+                                break;
+                            case "GracePresetWindowTop":
+                                double.TryParse(value, out double gpwt);
+                                settings.GracePresetWindowTop = gpwt;
+                                break;
+                            case "GracePresetWindowAlwaysOnTop":
+                                bool.TryParse(value, out bool gpwalop);
+                                settings.GracePresetWindowAlwaysOnTop = gpwalop;
                                 break;
                                 
                         }

@@ -11,7 +11,7 @@ public enum State
     FadedIn,
     NotLoaded,
     FirstLoaded,
-    GameStart,
+    OnNewGameStart,
     AppClosing,
     AppStart,
     EventTabActivated
