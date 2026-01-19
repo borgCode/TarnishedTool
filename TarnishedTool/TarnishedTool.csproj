@@ -216,6 +216,8 @@
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
+        <Compile Include="ViewModels\GraceImportItem.cs" />
+        <Compile Include="ViewModels\GraceImportPresetSelectionViewModel.cs" />
         <Compile Include="ViewModels\GracePresetViewModel.cs" />
         <Compile Include="ViewModels\HotkeyBindingViewModel.cs" />
         <Compile Include="ViewModels\ItemSelectionViewModel.cs" />
@@ -267,6 +269,9 @@
         <Compile Include="Views\Windows\EventLogWindow.xaml.cs">
           <DependentUpon>EventLogWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\GraceImportPresentSelectionWindow.xaml.cs">
+          <DependentUpon>GraceImportPresentSelectionWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\GracePresetWindow.xaml.cs">
           <DependentUpon>GracePresetWindow.xaml</DependentUpon>
         </Compile>
@@ -307,6 +312,7 @@
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
+        <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
         <Page Include="Views\Windows\ShopSelectorWindow.xaml" />

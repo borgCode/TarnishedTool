@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels;
 
@@ -37,6 +40,8 @@ public class GracePresetViewModel : BaseViewModel
         DeleteLoadoutCommand = new DelegateCommand(DeleteLoadout);
         AddGraceCommand = new DelegateCommand(AddGrace);
         RemoveGraceCommand = new DelegateCommand(RemoveGrace);
+        ImportLoadoutCommand = new DelegateCommand(ImportLoadout);
+        ExportLoadoutCommand = new DelegateCommand(ExportLoadout);
     }
 
     #region Commands
@@ -46,6 +51,8 @@ public class GracePresetViewModel : BaseViewModel
     public ICommand DeleteLoadoutCommand { get; }
     public ICommand AddGraceCommand { get; }
     public ICommand RemoveGraceCommand { get; }
+    public ICommand ImportLoadoutCommand { get; }
+    public ICommand ExportLoadoutCommand { get; }
 
     #endregion
 
@@ -186,6 +193,169 @@ public class GracePresetViewModel : BaseViewModel
 
         SelectedLoadout.Graces.Remove(SelectedLoadoutGrace);
         CurrentLoadoutGraces.Remove(SelectedLoadoutGrace);
+    }
+
+    private void ImportLoadout()
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*",
+            Title = "Import Grace Presets"
+        };
+
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            string json = File.ReadAllText(dialog.FileName);
+            var presets = JsonSerializer.Deserialize<List<GracePresetTemplate>>(json);
+
+            if (presets == null || presets.Count == 0)
+            {
+                MsgBox.Show("No presets found in file.");
+                return;
+            }
+
+            var selectionWindow = new GraceImportPresentSelectionWindow(presets, _customPresetTemplates);
+            if (selectionWindow.ShowDialog() != true) return;
+
+            var selectedPresets = selectionWindow.ViewModel.GetSelectedPresets();
+            var conflictResolution = selectionWindow.ViewModel.SelectedConflictResolution;
+
+            int imported = 0;
+            int skipped = 0;
+
+            foreach (var preset in selectedPresets)
+            {
+                if (string.IsNullOrWhiteSpace(preset.Name))
+                {
+                    skipped++;
+                    continue;
+                }
+
+                if (_customPresetTemplates.ContainsKey(preset.Name))
+                {
+                    switch (conflictResolution)
+                    {
+                        case ConflictResolution.Skip:
+                            skipped++;
+                            continue;
+
+                        case ConflictResolution.Overwrite:
+                            var existing = _customLoadouts.FirstOrDefault(l => l.Name == preset.Name);
+                            if (existing != null)
+                            {
+                                int index = _customLoadouts.IndexOf(existing);
+                                _customLoadouts.RemoveAt(index);
+                                _customLoadouts.Insert(index, preset);
+                            }
+
+                            _customPresetTemplates[preset.Name] = preset;
+                            imported++;
+                            break;
+
+                        case ConflictResolution.Rename:
+                            string newName = GenerateUniqueName(preset.Name);
+                            preset.Name = newName;
+                            _customPresetTemplates[newName] = preset;
+                            _customLoadouts.Add(preset);
+                            imported++;
+                            break;
+                    }
+                }
+                else
+                {
+                    _customPresetTemplates[preset.Name] = preset;
+                    _customLoadouts.Add(preset);
+                    imported++;
+                }
+            }
+
+            if (imported > 0)
+            {
+                SelectedLoadout = _customLoadouts.Last();
+            }
+
+            string message = $"Imported {imported} preset{(imported != 1 ? "s" : "")}";
+            if (skipped > 0)
+                message += $" ({skipped} skipped)";
+
+            MsgBox.Show(message);
+        }
+        catch (Exception ex)
+        {
+            MsgBox.Show($"Failed to import presets: {ex.Message}");
+        }
+    }
+
+    private string GenerateUniqueName(string baseName)
+    {
+        string newName = baseName;
+        int counter = 2;
+
+        while (_customPresetTemplates.ContainsKey(newName))
+        {
+            newName = $"{baseName} ({counter})";
+            counter++;
+        }
+
+        return newName;
+    }
+
+    private void ExportLoadout()
+    {
+        if (_customLoadouts.Count == 0)
+        {
+            MsgBox.Show("No presets to export.");
+            return;
+        }
+
+        var dialog = new Microsoft.Win32.SaveFileDialog
+        {
+            Filter = "JSON files (*.json)|*.json",
+            Title = "Export Grace Presets",
+            FileName = "GracePresets.json"
+        };
+
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(_customLoadouts.ToList(), options);
+            File.WriteAllText(dialog.FileName, json);
+            MsgBox.Show($"Exported {_customLoadouts.Count} preset{(_customLoadouts.Count != 1 ? "s" : "")}.");
+        }
+        catch (Exception ex)
+        {
+            MsgBox.Show($"Failed to export presets: {ex.Message}");
+        }
+    }
+    
+    #endregion
+
+    #region Public Methods
+
+    public void AddGraces(List<Grace> graces)
+    {
+        if (SelectedLoadout == null) return;
+
+        foreach (var grace in graces)
+        {
+            if (SelectedLoadout.Graces.Any(g => g.FlagId == grace.FlagId))
+                continue;
+
+            var entry = new GracePresetEntry
+            {
+                IsDlc = grace.IsDlc,
+                Name = grace.Name,
+                FlagId = grace.FlagId,
+                MainArea = grace.MainArea
+            };
+
+            SelectedLoadout.Graces.Add(entry);
+            CurrentLoadoutGraces.Add(entry);
+        }
     }
 
     #endregion

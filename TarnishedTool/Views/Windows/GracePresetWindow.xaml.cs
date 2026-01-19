@@ -1,12 +1,13 @@
 ﻿// 
 
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using TarnishedTool.Models;
+using TarnishedTool.Utilities;
 using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Views.Windows;
@@ -30,6 +31,17 @@ public partial class GracePresetWindow : TopmostWindow
         {
             Application.Current.MainWindow.Closing += (_, _) => Close();
         }
+        
+        Loaded += (s, e) =>
+        {
+            if (SettingsManager.Default.GracePresetWindowLeft > 0)
+                Left = SettingsManager.Default.GracePresetWindowLeft;
+        
+            if (SettingsManager.Default.GracePresetWindowTop > 0)
+                Top = SettingsManager.Default.GracePresetWindowTop;
+            
+            AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.GracePresetWindowAlwaysOnTop;
+        };
     }
 
     private string ShowInputDialog(string prompt, string defaultValue)
@@ -89,5 +101,12 @@ public partial class GracePresetWindow : TopmostWindow
         {
             vm.RemoveGraceCommand.Execute(null);
         }
+    }
+    
+    private void AddToPreset_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = (GracePresetViewModel)DataContext;
+        var selected = AddGraceListView.SelectedItems.Cast<Grace>().ToList();
+        vm.AddGraces(selected);
     }
 }
