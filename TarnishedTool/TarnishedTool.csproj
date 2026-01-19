@@ -130,7 +130,6 @@
         <Compile Include="Enums\GameVersion.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\State.cs" />
-        <Compile Include="Enums\WeatherType.cs" />
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
         <Compile Include="GameIds\EzState.cs" />
