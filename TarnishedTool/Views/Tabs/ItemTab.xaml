@@ -172,6 +172,35 @@
                           TextSearch.TextPath="Name"
 
                           Margin="0,5,0,0" />
+                <Grid>
+                <CheckBox Grid.Column="2"
+                          Margin="0,20,0,0"
+                              Content="Spawn loadout at start"
+                              IsChecked="{Binding AutoLoadoutSpawnEnabled}"
+                              VerticalAlignment="Center" />
+
+                    <Border Grid.Column="3"
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="139,20,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Automatically spawns the selected loadout when starting a new game."
+                            ToolTipService.InitialShowDelay="100">
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
+                </Grid>
+                <ComboBox ItemsSource="{Binding Loadouts}"
+                          SelectedItem="{Binding SelectedLoadoutName}"
+                          IsEnabled="{Binding AutoLoadoutSpawnEnabled}"
+
+                          Margin="0,5,0,0" />
             </StackPanel>
         </Grid>
 

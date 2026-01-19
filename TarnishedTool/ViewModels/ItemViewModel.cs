@@ -142,6 +142,14 @@ public class ItemViewModel : BaseViewModel
         set => SetProperty(ref _selectedAutoSpawnWeapon, value);
     }
     
+    private bool _autoLoadoutSpawnEnabled;
+    
+    public bool AutoLoadoutSpawnEnabled
+    {
+        get => _autoLoadoutSpawnEnabled;
+        set => SetProperty(ref _autoLoadoutSpawnEnabled, value);
+    }    
+    
     private List<Item> _weaponList;
 
     public List<Item> WeaponList
@@ -189,6 +197,9 @@ public class ItemViewModel : BaseViewModel
     {
         if (!AutoSpawnEnabled || SelectedAutoSpawnWeapon == null) return;
         _itemService.SpawnItem(SelectedAutoSpawnWeapon.Id, 1, -1, false, 1);
+        
+        if (!AutoLoadoutSpawnEnabled || string.IsNullOrEmpty(SelectedLoadoutName)) return;
+        SpawnLoadout();
     }
 
     private Dictionary<string, List<Item>> LoadItemData()
