@@ -23,6 +23,9 @@ namespace TarnishedTool.ViewModels
         private readonly IUtilityService _utilityService;
         private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
+        
+        public IEnumerable<WeatherType> WeatherTypes => (WeatherType[])Enum.GetValues(typeof(WeatherType));
+
 
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
@@ -64,6 +67,7 @@ namespace TarnishedTool.ViewModels
             SetMorningCommand = new DelegateCommand(SetMorning);
             SetNoonCommand = new DelegateCommand(SetNoon);
             SetNightCommand = new DelegateCommand(SetNight);
+            SetWeatherCommand = new DelegateCommand(SetWeather);
 
             _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", int.Parse);
             _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", int.Parse);
@@ -88,6 +92,7 @@ namespace TarnishedTool.ViewModels
         public ICommand SetMorningCommand { get; set; }
         public ICommand SetNoonCommand { get; set; }
         public ICommand SetNightCommand { get; set; }
+        public ICommand SetWeatherCommand { get; set; }
 
         #endregion
 
@@ -236,6 +241,14 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private WeatherType _selectedWeatherType;
+
+        public WeatherType SelectedWeatherType
+        {
+            get => _selectedWeatherType;
+            set => SetProperty(ref _selectedWeatherType,value);
+        }
+
         #endregion
 
         #region Private Methods
@@ -365,6 +378,7 @@ namespace TarnishedTool.ViewModels
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
+        private void SetWeather() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType));
 
         private void OpenEventLogWindow()
         {

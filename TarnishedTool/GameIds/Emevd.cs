@@ -65,6 +65,13 @@ public static class Emevd
             4,
             (byte)20, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
         );
+        public static EmevdCommand SetWeather(Enums.WeatherType type) => new(
+            2003,
+            68,
+            (sbyte)type,
+            (float)-1,(byte)1
+        );   
+
         
         public static EmevdCommand ForcePlaybackAnimation(uint entityId, int animationId) => new(
             2003,

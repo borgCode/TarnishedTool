@@ -141,8 +141,10 @@ namespace TarnishedTool.Services
 
         public void ToggleTargetNoDamage(bool isFreezeHealthEnabled)
         {
+
             var bitFlags = GetChrDataPtr() + ChrIns.ChrDataFlags;
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
+            
         }
 
         public bool IsNoDamageEnabled() 
@@ -223,6 +225,32 @@ namespace TarnishedTool.Services
 
         public int GetNpcThinkParamId() =>
             memoryService.ReadInt32(GetAiThinkPtr() + (int)ChrIns.AiThinkOffsets.NpcThinkParamId);
+
+        public int GetNpcChrId() => 
+            memoryService.ReadInt32((IntPtr)GetTargetChrIns() + ChrIns.ChrId);
+
+        public void ToggleNoHeal(bool isNoHealEnabled)
+        {
+            var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoHeal;
+            if (isNoHealEnabled)
+            {
+                var hook = Hooks.NoHeal;
+                var codeBytes = AsmLoader.GetAsmBytes("NoHeal");
+                var target = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
+                AsmHelper.WriteRelativeOffsets(codeBytes,[
+                (code.ToInt64() + 5, target.ToInt64(), 7, 5+3), 
+                (code.ToInt64() + 0x24, hook + 6, 5, 0x24+1)
+                ]);
+                memoryService.WriteBytes(code, codeBytes);
+                hookManager.InstallHook(code.ToInt64(), hook, new byte[]
+                    { 0x89, 0x81, 0x38, 0x01, 0x00, 0x00 });
+            }
+            else
+            {
+                hookManager.UninstallHook(code.ToInt64());
+            }
+        }
+        
 
         public int GetResistance(int offset) =>
             memoryService.ReadInt32(GetChrResistPtr() + offset);

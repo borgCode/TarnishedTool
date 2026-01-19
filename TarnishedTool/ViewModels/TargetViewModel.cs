@@ -14,6 +14,10 @@ namespace TarnishedTool.ViewModels
 {
     public class TargetViewModel : BaseViewModel
     {
+        private const int MaleniaChrId = 2120;
+        private const int DeathKnightChrId = 5070;
+        private const int AncestorSpiritChrId =4670;
+
         private readonly DispatcherTimer _targetTick;
 
         private bool _customHpHasBeenSet;
@@ -78,7 +82,7 @@ namespace TarnishedTool.ViewModels
             _targetTick.Tick += TargetTick;
         }
 
-        
+
         #region Commands
 
         public ICommand SetHpCommand { get; set; }
@@ -573,6 +577,9 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _isFreezeHealthEnabled, value);
                 _targetService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
+                _targetService.ToggleNoHeal(_isFreezeHealthEnabled);
+
+  
             }
         }
 
@@ -731,6 +738,7 @@ namespace TarnishedTool.ViewModels
             ForceAct = 0;
             AreOptionsEnabled = false;
             IsDisableAllExceptTargetEnabled = false;
+            _targetService.ToggleNoHeal(false);
             _enemyService.UnhookForceAct();
         }
 
@@ -872,27 +880,28 @@ namespace TarnishedTool.ViewModels
             {
                 if (CustomHp > MaxHealth)
                     CustomHp = MaxHealth;
-                
+
                 _targetService.SetHp(CustomHp.Value);
             }
         }
+
 /* hp percentage test */
         private (int? value, string error) parseCustomHp()
         {
             var input = CustomHp?.Trim();
             if (string.IsNullOrEmpty(input))
                 return (null, "Please enter a Value");
-            
+
             if (input.EndsWith("%"))
             {
                 if (double.TryParse(input.TrimEnd('%'), out var percent))
                     return ((int)(percent / 100.0 * MaxHealth), null);
                 return (null, "Invalid percentage format");
             }
-            
+
             if (int.TryParse(input, out var absolute))
                 return (absolute, null);
-            
+
             return (null, "Enter a number or percentage (e.g. 545 or 40%)");
         }
 
@@ -929,6 +938,7 @@ namespace TarnishedTool.ViewModels
                 }
 
                 IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
+                _targetService.ToggleNoHeal(IsFreezeHealthEnabled);
                 _currentTargetChrIns = chrIns;
                 MaxPoise = _targetService.GetMaxPoise();
 
@@ -1170,7 +1180,7 @@ namespace TarnishedTool.ViewModels
             _spEffectsWindow.Close();
             _spEffectsWindow = null;
         }
-        
+
         private void ResetPosition()
         {
             var entityId = _targetService.GetEntityId();

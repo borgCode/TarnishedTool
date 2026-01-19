@@ -41,4 +41,6 @@ public interface ITargetService
     float[] GetDefenses();
     float GetDist();
     uint GetEntityId();
+    int GetNpcChrId();
+    void ToggleNoHeal(bool isNoHealEnabled);
 }

@@ -1071,6 +1071,23 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 51                      push   rcx
+        ///48 8b 49 08             mov    rcx,QWORD PTR [rcx+0x8]
+        ///48 3b 0d 00 00 00 00    cmp    rcx,QWORD PTR [rip+0x0]        
+        ///75 06                   jne    14 &lt;normal&gt;
+        ///8b 81 88 09 00 00       mov    eax,DWORD PTR [rcx+0x988]
+        ///000000000014 &lt;normal&gt;:
+        ///59                      pop    rcx
+        ///89 81 38 01 00 00       mov    DWORD PTR [rcx+0x138],eax
+        ///e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; .
+        /// </summary>
+        internal static string NoHeal {
+            get {
+                return ResourceManager.GetString("NoHeal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 4c 8b 74 24 70          mov    r14,QWORD PTR [rsp+0x70]
         ///50                      push   rax
         ///51                      push   rcx

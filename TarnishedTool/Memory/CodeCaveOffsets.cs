@@ -83,6 +83,8 @@ namespace TarnishedTool.Memory
         public const int EventLogCode = 0x1E40; //0x39
         public const int EventLogBuffer = 0x1E80; //0x1000
         
+        public const int NoHeal = 0x2F00;
+
 
     }
 }
