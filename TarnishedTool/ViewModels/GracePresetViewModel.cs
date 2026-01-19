@@ -82,6 +82,7 @@ public class GracePresetViewModel : BaseViewModel
                 {
                     CurrentLoadoutGraces.Add(grace);
                 }
+                OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
             }
         }
     }
@@ -101,6 +102,24 @@ public class GracePresetViewModel : BaseViewModel
         get => _selectedLoadoutGrace;
         set => SetProperty(ref _selectedLoadoutGrace, value);
     }
+    
+    private string _presetGracesSearchText = "";
+    public string PresetGracesSearchText
+    {
+        get => _presetGracesSearchText;
+        set
+        {
+            if (SetProperty(ref _presetGracesSearchText, value))
+                OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
+        }
+    }
+    
+    public IEnumerable<GracePresetEntry> FilteredCurrentLoadoutGraces =>
+        string.IsNullOrWhiteSpace(PresetGracesSearchText)
+            ? CurrentLoadoutGraces
+            : CurrentLoadoutGraces.Where(g => 
+                g.Name.IndexOf(PresetGracesSearchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                g.MainArea.IndexOf(PresetGracesSearchText, StringComparison.OrdinalIgnoreCase) >= 0);
 
     #endregion
 
@@ -185,6 +204,7 @@ public class GracePresetViewModel : BaseViewModel
 
         SelectedLoadout.Graces.Add(entry);
         CurrentLoadoutGraces.Add(entry);
+        OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces)); 
     }
 
     private void RemoveGrace()
@@ -193,6 +213,7 @@ public class GracePresetViewModel : BaseViewModel
 
         SelectedLoadout.Graces.Remove(SelectedLoadoutGrace);
         CurrentLoadoutGraces.Remove(SelectedLoadoutGrace);
+        OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
     }
 
     private void ImportLoadout()
@@ -356,6 +377,8 @@ public class GracePresetViewModel : BaseViewModel
             SelectedLoadout.Graces.Add(entry);
             CurrentLoadoutGraces.Add(entry);
         }
+        
+        OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
     }
 
     #endregion
