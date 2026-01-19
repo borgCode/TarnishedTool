@@ -195,8 +195,10 @@ public class ItemViewModel : BaseViewModel
     
     private void OnNewGameStart()
     {
-        if (!AutoSpawnEnabled || SelectedAutoSpawnWeapon == null) return;
-        _itemService.SpawnItem(SelectedAutoSpawnWeapon.Id, 1, -1, false, 1);
+        if (AutoSpawnEnabled && SelectedAutoSpawnWeapon != null)
+        {
+            _itemService.SpawnItem(SelectedAutoSpawnWeapon.Id, 1, -1, false, 1);
+        }
         
         if (!AutoLoadoutSpawnEnabled || string.IsNullOrEmpty(SelectedLoadoutName)) return;
         SpawnLoadout();
