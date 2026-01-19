@@ -9,7 +9,7 @@ namespace TarnishedTool.Memory
     public class HookManager
     {
         private readonly MemoryService _memoryService;
-        private readonly Dictionary<long, HookData> _hookRegistry = new Dictionary<long, HookData>();
+        private readonly Dictionary<long, HookData> _hookRegistry = new();
 
         private class HookData
         {
@@ -23,7 +23,7 @@ namespace TarnishedTool.Memory
             _memoryService = memoryService;
         }
 
-        public long InstallHook(long codeLoc, long origin, byte[] originalBytes)
+        public void InstallHook(long codeLoc, long origin, byte[] originalBytes)
         {
             byte[] hookBytes = GetHookBytes(originalBytes.Length, codeLoc, origin);
             _memoryService.WriteBytes((IntPtr)origin, hookBytes);
@@ -33,7 +33,6 @@ namespace TarnishedTool.Memory
                 OriginAddr = origin,
                 OriginalBytes = originalBytes
             };
-            return codeLoc;
         }
 
         private byte[] GetHookBytes(int originalBytesLength, long target, long origin)

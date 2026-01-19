@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using TarnishedTool.Core;
@@ -24,9 +25,7 @@ namespace TarnishedTool.ViewModels
         private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
         
-        public IEnumerable<WeatherType> WeatherTypes => (WeatherType[])Enum.GetValues(typeof(WeatherType));
-
-
+        
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
 
@@ -71,6 +70,8 @@ namespace TarnishedTool.ViewModels
 
             _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", int.Parse);
             _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", int.Parse);
+
+            SelectedWeatherType = WeatherTypes.FirstOrDefault();
 
             RegisterHotkeys();
 
@@ -241,9 +242,11 @@ namespace TarnishedTool.ViewModels
             }
         }
 
-        private WeatherType _selectedWeatherType;
+        public IReadOnlyList<Weather> WeatherTypes { get; } = DataLoader.GetWeatherTypes().ToList();
+        
+        private Weather _selectedWeatherType;
 
-        public WeatherType SelectedWeatherType
+        public Weather SelectedWeatherType
         {
             get => _selectedWeatherType;
             set => SetProperty(ref _selectedWeatherType,value);
@@ -378,7 +381,7 @@ namespace TarnishedTool.ViewModels
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
-        private void SetWeather() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType));
+        private void SetWeather() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType.Type));
 
         private void OpenEventLogWindow()
         {

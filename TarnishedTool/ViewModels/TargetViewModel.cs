@@ -14,13 +14,10 @@ namespace TarnishedTool.ViewModels
 {
     public class TargetViewModel : BaseViewModel
     {
-        private const int MaleniaChrId = 2120;
-        private const int DeathKnightChrId = 5070;
-        private const int AncestorSpiritChrId =4670;
 
         private readonly DispatcherTimer _targetTick;
 
-        private bool _customHpHasBeenSet;
+        private bool _customHpHasBeenSet = true;
 
         private long _currentTargetChrIns;
 

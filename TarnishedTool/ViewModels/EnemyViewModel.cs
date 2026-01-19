@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -50,7 +49,7 @@ public class EnemyViewModel : BaseViewModel
     private const int EldenStarsActIdx = 22;
     private DateTime _ebLastExecuted = DateTime.MinValue;
     private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
-
+    
     public SearchableGroupedCollection<string, BossRevive> BossRevives { get; }
 
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
@@ -90,8 +89,7 @@ public class EnemyViewModel : BaseViewModel
             DataLoader.GetBossRevives(),
             (bossRevive, search) => bossRevive.BossName.ToLower().Contains(search) ||
                                     bossRevive.Area.ToLower().Contains(search));
-
-        _acts = new ObservableCollection<Act>(DataLoader.GetEbActs());
+        
         SelectedAct = Acts.FirstOrDefault();
 
         RegisterHotkeys();
@@ -299,15 +297,9 @@ public class EnemyViewModel : BaseViewModel
             else RemoveLionSpEffects(LionMinibossEntityId);
         }
     }
-
-    private ObservableCollection<Act> _acts;
-
-    public ObservableCollection<Act> Acts
-    {
-        get => _acts;
-        set => SetProperty(ref _acts, value);
-    }
-
+    
+    public IReadOnlyList<Act> Acts { get; } = DataLoader.GetEbActs().ToList();
+    
     private Act _selectedAct;
 
     public Act SelectedAct

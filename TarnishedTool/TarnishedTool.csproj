@@ -130,7 +130,6 @@
         <Compile Include="Enums\GameVersion.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\State.cs" />
-        <Compile Include="Enums\WeatherType.cs" />
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
         <Compile Include="GameIds\EzState.cs" />
@@ -180,6 +179,7 @@
         <Compile Include="Models\SpEffectEntry.cs" />
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
+        <Compile Include="Models\Weather.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />
