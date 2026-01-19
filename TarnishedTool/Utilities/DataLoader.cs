@@ -486,5 +486,23 @@ namespace TarnishedTool.Utilities
                 // Silent fail or log
             }
         }
+
+        public static List<Weather> GetWeatherTypes()
+        {
+                List<Weather> weathers= new List<Weather>();
+                string csvData = Resources.WeatherTypes;
+                if (string.IsNullOrWhiteSpace(csvData)) return weathers;
+
+                using StringReader reader = new StringReader(csvData);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(',');
+                    sbyte weatherType = sbyte.Parse(parts[0], NumberStyles.Number, CultureInfo.InvariantCulture);
+                    string name = parts[1];
+                    weathers.Add(new Weather(weatherType, name));
+                }
+                return weathers;
+            }
     }
 }

@@ -4786,4 +4786,15 @@ e9 00 00 00 00          jmp    39 &lt;_main+0x39&gt;</value>
 89 81 38 01 00 00       mov    DWORD PTR [rcx+0x138],eax
 e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
   </data>
+  <data name="WeatherTypes" xml:space="preserve">
+    <value>0,Default
+1,Rainy
+2,Snowy
+3,Windy rain
+4,Foggy
+6,Flat clouds
+12,Windy puffy clouds
+15,Rainy heavy fog
+17,Scattered rain</value>
+  </data>
 </root>

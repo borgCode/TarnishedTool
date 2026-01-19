@@ -178,6 +178,7 @@
         <Compile Include="Models\SpEffectEntry.cs" />
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
+        <Compile Include="Models\Weather.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />

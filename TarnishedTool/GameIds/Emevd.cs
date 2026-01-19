@@ -65,10 +65,10 @@ public static class Emevd
             4,
             (byte)20, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
         );
-        public static EmevdCommand SetWeather(Enums.WeatherType type) => new(
+        public static EmevdCommand SetWeather(sbyte type) => new(
             2003,
             68,
-            (sbyte)type,
+            type,
             (float)-1,(byte)1
         );   
 

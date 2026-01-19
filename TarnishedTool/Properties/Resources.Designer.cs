@@ -1432,5 +1432,22 @@ namespace TarnishedTool.Properties {
                 return ResourceManager.GetString("Weapons", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0,Default
+        ///1,Rainy
+        ///2,Snowy
+        ///3,Windy rain
+        ///4,Foggy
+        ///6,Flat clouds
+        ///12,Windy puffy clouds
+        ///15,Rainy heavy fog
+        ///17,Scattered rain.
+        /// </summary>
+        internal static string WeatherTypes {
+            get {
+                return ResourceManager.GetString("WeatherTypes", resourceCulture);
+            }
+        }
     }
 }
