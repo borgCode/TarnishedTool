@@ -20,7 +20,7 @@ namespace TarnishedTool.ViewModels
 
         private readonly DispatcherTimer _targetTick;
 
-        private bool _customHpHasBeenSet;
+        private bool _customHpHasBeenSet = true;
 
         private long _currentTargetChrIns;
 
