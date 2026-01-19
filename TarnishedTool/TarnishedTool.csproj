@@ -211,6 +211,7 @@
         <Compile Include="Utilities\UpDownHelper.cs" />
         <Compile Include="Utilities\User32.cs" />
         <Compile Include="Utilities\VersionChecker.cs" />
+        <Compile Include="ViewModels\AdvancedViewModel.cs" />
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
@@ -230,6 +231,9 @@
         <Compile Include="ViewModels\PlayerViewModel.cs" />
         <Compile Include="ViewModels\TravelViewModel.cs" />
         <Compile Include="ViewModels\UtilityViewModel.cs" />
+        <Compile Include="Views\Tabs\AdvancedTab.xaml.cs">
+          <DependentUpon>AdvancedTab.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Tabs\EnemyTab.xaml.cs">
           <DependentUpon>EnemyTab.xaml</DependentUpon>
         </Compile>
@@ -299,6 +303,7 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Page Include="Views\Tabs\AdvancedTab.xaml" />
         <Page Include="Views\Tabs\EnemyTab.xaml" />
         <Page Include="Views\Tabs\ItemTab.xaml" />
         <Page Include="Views\Tabs\SettingsTab.xaml" />
