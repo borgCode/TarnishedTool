@@ -37,11 +37,11 @@ Includes:
   by [thefifthmatt](https://github.com/thefifthmatt)
 - [Smithbox](https://github.com/vawser/Smithbox) - For looking at different game params and maps
   by [vawser](https://github.com/vawser)
-- [DarkScript3](https://github.com/AinTunez/DarkScript3) – For looking at EMEVD files  
-  by [AinTunez](https://github.com/AinTunez)
+- [DarkScript3](https://github.com/AinTunez/DarkScript3) – For looking at EMEVD files by [AinTunez](https://github.com/AinTunez)
 - [ERAiAPI](https://eladidu.github.io/readable-ds-lua/index.html) - Documentation for Elden Ring AI
   by [ElaDiDu](https://github.com/ElaDiDu)
 - [Recycle](https://www.youtube.com/@1recyclebin1) - For helping with providing a huge amount of ids, the app icon and testing in general.
 - [Marshaal](https://www.twitch.tv/marshaal04) - For help with all the boss warp locations.
 - [Oppai](https://www.youtube.com/channel/UCFfKUbX6L8a3IO4fbWEIlYw) - For providing lists of graces needed for All Remembrances runs.
 - [Bender](https://www.twitch.tv/benderzgreat) - For lots of thorough testing and feedback
+- [axd1x8a](https://github.com/axd1x8a), [nex3](https://github.com/nex3) and [ndahn](https://github.com/ndahn) - For working on Elden Ring's ParamDefs and [vawser](https://github.com/vawser) for both working on the ParamDefs as well as giving permissions to borrow them from [Smithbox](https://github.com/vawser/Smithbox).
