@@ -87,6 +87,7 @@ namespace TarnishedTool
                 playerService, hotkeyManager, playerViewModel, _dlcService, spEffectService,
                 flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
+            AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
 
             var playerTab = new PlayerTab(playerViewModel);
@@ -96,7 +97,9 @@ namespace TarnishedTool
             var utilityTab = new UtilityTab(utilityViewModel);
             var itemTab = new ItemTab(itemViewModel);
             var eventTab = new EventTab(eventViewModel);
+            var advancedTab = new AdvancedTab(advancedViewModel);
             var settingsTab = new SettingsTab(settingsViewModel);
+            
 
 
             MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
@@ -106,6 +109,7 @@ namespace TarnishedTool
             MainTabControl.Items.Add(new TabItem { Header = "Utility", Content = utilityTab });
             MainTabControl.Items.Add(new TabItem { Header = "Event", Content = eventTab });
             MainTabControl.Items.Add(new TabItem { Header = "Items", Content = itemTab });
+            MainTabControl.Items.Add(new TabItem { Header = "Advanced", Content = advancedTab });
             MainTabControl.Items.Add(new TabItem { Header = "Settings", Content = settingsTab });
 
             MainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
