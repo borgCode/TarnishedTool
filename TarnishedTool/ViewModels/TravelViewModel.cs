@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -77,10 +78,10 @@ namespace TarnishedTool.ViewModels
             SelectedGracePreset = _gracePresets.FirstOrDefault();
 
 
-            _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", long.Parse);
-            _dlcMaps = DataLoader.GetSimpleList("DLCMaps", long.Parse);
-            _baseArGraces = DataLoader.GetSimpleList("ArBaseGraces", long.Parse);
-            _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", long.Parse);
+            _baseGameMaps = DataLoader.GetSimpleList("BaseGameMaps", s => long.Parse(s, CultureInfo.InvariantCulture));
+            _dlcMaps = DataLoader.GetSimpleList("DLCMaps", s => long.Parse(s, CultureInfo.InvariantCulture));
+            _baseArGraces = DataLoader.GetSimpleList("ArBaseGraces", s => long.Parse(s, CultureInfo.InvariantCulture));
+            _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", s => long.Parse(s, CultureInfo.InvariantCulture));
         }
 
         

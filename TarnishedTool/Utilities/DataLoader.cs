@@ -142,11 +142,11 @@ namespace TarnishedTool.Utilities
 
                 weapons.Add(new Weapon
                 {
-                    Id = int.Parse(parts[0]),
+                    Id = int.Parse(parts[0], CultureInfo.InvariantCulture),
                     Name = parts[1],
-                    WeaponType = ushort.Parse(parts[2]),
-                    GemMountType = byte.Parse(parts[3]),
-                    UpgradeType = byte.Parse(parts[4]),
+                    WeaponType = ushort.Parse(parts[2], CultureInfo.InvariantCulture),
+                    GemMountType = byte.Parse(parts[3], CultureInfo.InvariantCulture),
+                    UpgradeType = byte.Parse(parts[4], CultureInfo.InvariantCulture),
                     CategoryName = "Weapons",
                     StackSize = 1,
                     MaxStorage = 1
@@ -176,11 +176,11 @@ namespace TarnishedTool.Utilities
 
                     items.Add(new Item
                     {
-                        IsDlc = byte.Parse(parts[0]) == 1,
+                        IsDlc = byte.Parse(parts[0], CultureInfo.InvariantCulture) == 1,
                         Id = Convert.ToInt32(parts[1], 16),
                         Name = parts[2],
-                        StackSize = int.Parse(parts[3]),
-                        MaxStorage = int.Parse(parts[4]),
+                        StackSize = int.Parse(parts[3], CultureInfo.InvariantCulture),
+                        MaxStorage = int.Parse(parts[4], CultureInfo.InvariantCulture),
                         CategoryName = category
                     });
                 }
@@ -209,13 +209,13 @@ namespace TarnishedTool.Utilities
 
                     items.Add(new EventItem
                     {
-                        IsDlc = byte.Parse(parts[0]) == 1,
+                        IsDlc = byte.Parse(parts[0], CultureInfo.InvariantCulture) == 1,
                         Id = Convert.ToInt32(parts[1], 16),
                         Name = parts[2],
-                        StackSize = int.Parse(parts[3]),
-                        MaxStorage = int.Parse(parts[4]),
-                        NeedsEvent = byte.Parse(parts[5]) == 1,
-                        EventId = int.Parse(parts[6]),
+                        StackSize = int.Parse(parts[3], CultureInfo.InvariantCulture),
+                        MaxStorage = int.Parse(parts[4], CultureInfo.InvariantCulture),
+                        NeedsEvent = byte.Parse(parts[5], CultureInfo.InvariantCulture) == 1,
+                        EventId = int.Parse(parts[6], CultureInfo.InvariantCulture),
                         CategoryName = category
                     });
                 }
@@ -241,7 +241,7 @@ namespace TarnishedTool.Utilities
 
                 aowList.Add(new AshOfWar
                 {
-                    Id = int.Parse(parts[0]),
+                    Id = int.Parse(parts[0], CultureInfo.InvariantCulture),
                     Name = parts[1],
                     AvailableAffinities = affinity,
                     WeaponTypeFlags = HexStringToByteArray(parts[3])
@@ -304,7 +304,7 @@ namespace TarnishedTool.Utilities
                 string[] parts = line.Split(',');
 
                 string area = parts[1];
-                var blockId = uint.Parse(parts[5]);
+                var blockId = uint.Parse(parts[5], CultureInfo.InvariantCulture);
                 
                 BossRevive boss = new BossRevive
                 {
@@ -319,7 +319,7 @@ namespace TarnishedTool.Utilities
                     Position = ParsePosition(blockId, parts[8], parts[9]),
                     PositionFirstEncounter = ParsePosition(blockId, parts[10], parts[11]),
                     ShouldSetNight = bool.Parse(parts[12]),
-                    BossBlockId = uint.Parse(parts[13])
+                    BossBlockId = uint.Parse(parts[13], CultureInfo.InvariantCulture),
                 };
 
                 if (!bossRevives.ContainsKey(area))
@@ -348,7 +348,7 @@ namespace TarnishedTool.Utilities
             {
                 if (!string.IsNullOrWhiteSpace(part))
                 {
-                    idsList.Add(uint.Parse(part));
+                    idsList.Add(uint.Parse(part, CultureInfo.InvariantCulture));
                 }
             }
 
@@ -365,7 +365,7 @@ namespace TarnishedTool.Utilities
             foreach (string entry in flagEntries)
             {
                 string[] pair = entry.Split(':');
-                if (pair.Length == 2 && int.TryParse(pair[0], out int eventId))
+                if (pair.Length == 2 && int.TryParse(pair[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int eventId))
                 {
                     flags.Add(new BossFlag
                     {
@@ -415,10 +415,10 @@ namespace TarnishedTool.Utilities
             while ((line = reader.ReadLine()) != null)
             {
                 string[] parts = line.Split(',');
-                bool isDlc = byte.Parse(parts[0]) == 1;
+                bool isDlc = byte.Parse(parts[0], CultureInfo.InvariantCulture) == 1;
                 var name = parts[1];
-                var commandId = int.Parse(parts[2]);
-                int[] @params = parts.Skip(3).Select(int.Parse).ToArray();
+                var commandId = int.Parse(parts[2], CultureInfo.InvariantCulture);
+                int[] @params = parts.Skip(3).Select(p => int.Parse(p, CultureInfo.InvariantCulture)).ToArray();
     
                 var command = new EzState.TalkCommand(commandId, @params);
                 var shopCommand = new ShopCommand(isDlc, name, command);

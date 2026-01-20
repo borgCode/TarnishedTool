@@ -1,6 +1,7 @@
 ﻿// 
 
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace TarnishedTool.Utilities;
@@ -42,7 +43,7 @@ public class SettingsManager
     public bool RememberGameSpeed { get; set; }
     public float GameSpeed { get; set; }
     public bool IsNoClipKeyboardDisabled { get; set; }
-    public bool BlockHotkeysFromGame  { get; set; }
+    public bool BlockHotkeysFromGame { get; set; }
     public bool HotkeyReminder { get; set; }
     public bool EnableUpdateChecks { get; set; } = true;
     public string SaveCustomHp { get; set; } = "";
@@ -65,46 +66,46 @@ public class SettingsManager
 
             var lines = new[]
             {
-                $"DefenseWindowLeft={DefenseWindowLeft}",
-                $"DefenseWindowTop={DefenseWindowTop}",
+                $"DefenseWindowLeft={DefenseWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"DefenseWindowTop={DefenseWindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"DefensesAlwaysOnTop={DefensesAlwaysOnTop}",
-                $"AttackInfoWindowLeft={AttackInfoWindowLeft}",
-                $"AttackInfoWindowTop={AttackInfoWindowTop}",
+                $"AttackInfoWindowLeft={AttackInfoWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"AttackInfoWindowTop={AttackInfoWindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"AtkInfoAlwaysOnTop={AtkInfoAlwaysOnTop}",
-                $"TargetSpEffectWindowLeft={TargetSpEffectWindowLeft}",
-                $"TargetSpEffectWindowTop={TargetSpEffectWindowTop}",
+                $"TargetSpEffectWindowLeft={TargetSpEffectWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"TargetSpEffectWindowTop={TargetSpEffectWindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"TargetSpEffectAlwaysOnTop={TargetSpEffectAlwaysOnTop}",
-                $"TargetSpEffectWindowLeft={EventLogWindowLeft}",
-                $"TargetSpEffectWindowTop={EventLogWindowTop}",
-                $"TargetSpEffectAlwaysOnTop={EventLogWindowAlwaysOnTop}",
-                $"WindowLeft={WindowLeft}",
-                $"WindowTop={WindowTop}",
+                $"EventLogWindowLeft={EventLogWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"EventLogWindowTop={EventLogWindowTop.ToString(CultureInfo.InvariantCulture)}",
+                $"EventLogWindowAlwaysOnTop={EventLogWindowAlwaysOnTop}",
+                $"WindowLeft={WindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"WindowTop={WindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"AlwaysOnTop={AlwaysOnTop}",
                 $"StutterFix={StutterFix}",
                 $"DisableAchievements={DisableAchievements}",
                 $"NoLogo={NoLogo}",
                 $"MuteMusic={MuteMusic}",
-                $"ResistancesWindowScaleX={ResistancesWindowScaleX}",
-                $"ResistancesWindowScaleY={ResistancesWindowScaleY}",
-                $"ResistancesWindowOpacity={ResistancesWindowOpacity}",
-                $"ResistancesWindowWidth={ResistancesWindowWidth}",
-                $"ResistancesWindowLeft={ResistancesWindowLeft}",
-                $"ResistancesWindowTop={ResistancesWindowTop}",
+                $"ResistancesWindowScaleX={ResistancesWindowScaleX.ToString(CultureInfo.InvariantCulture)}",
+                $"ResistancesWindowScaleY={ResistancesWindowScaleY.ToString(CultureInfo.InvariantCulture)}",
+                $"ResistancesWindowOpacity={ResistancesWindowOpacity.ToString(CultureInfo.InvariantCulture)}",
+                $"ResistancesWindowWidth={ResistancesWindowWidth.ToString(CultureInfo.InvariantCulture)}",
+                $"ResistancesWindowLeft={ResistancesWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"ResistancesWindowTop={ResistancesWindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"HotkeyActionIds={HotkeyActionIds}",
                 $"EnableHotkeys={EnableHotkeys}",
                 $"RememberPlayerSpeed={RememberPlayerSpeed}",
-                $"PlayerSpeed={PlayerSpeed}",
+                $"PlayerSpeed={PlayerSpeed.ToString(CultureInfo.InvariantCulture)}",
                 $"RememberGameSpeed={RememberGameSpeed}",
-                $"GameSpeed={GameSpeed}",
+                $"GameSpeed={GameSpeed.ToString(CultureInfo.InvariantCulture)}",
                 $"IsNoClipKeyboardDisabled={IsNoClipKeyboardDisabled}",
                 $"BlockHotkeysFromGame={BlockHotkeysFromGame}",
                 $"EnableUpdateChecks={EnableUpdateChecks}",
                 $"HotkeyReminder={HotkeyReminder}",
                 $"SaveCustomHp={SaveCustomHp}",
-                $"GraceImportWindowLeft={GraceImportWindowLeft}",
-                $"GraceImportWindowTop={GraceImportWindowTop}",
-                $"GracePresetWindowLeft={GracePresetWindowLeft}",
-                $"GracePresetWindowTop={GracePresetWindowTop}",
+                $"GraceImportWindowLeft={GraceImportWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"GraceImportWindowTop={GraceImportWindowTop.ToString(CultureInfo.InvariantCulture)}",
+                $"GracePresetWindowLeft={GracePresetWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"GracePresetWindowTop={GracePresetWindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"GracePresetWindowAlwaysOnTop={GracePresetWindowAlwaysOnTop}",
             };
 
@@ -135,11 +136,13 @@ public class SettingsManager
                         switch (key)
                         {
                             case "DefenseWindowLeft":
-                                double.TryParse(value, out double dwl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double dwl);
                                 settings.DefenseWindowLeft = dwl;
                                 break;
                             case "DefenseWindowTop":
-                                double.TryParse(value, out double dwt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double dwt);
                                 settings.DefenseWindowTop = dwt;
                                 break;
                             case "DefensesAlwaysOnTop":
@@ -147,11 +150,13 @@ public class SettingsManager
                                 settings.DefensesAlwaysOnTop = daot;
                                 break;
                             case "AttackInfoWindowLeft":
-                                double.TryParse(value, out double aiwl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double aiwl);
                                 settings.AttackInfoWindowLeft = aiwl;
                                 break;
                             case "AttackInfoWindowTop":
-                                double.TryParse(value, out double aiwt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double aiwt);
                                 settings.AttackInfoWindowTop = aiwt;
                                 break;
                             case "AtkInfoAlwaysOnTop":
@@ -159,11 +164,13 @@ public class SettingsManager
                                 settings.AtkInfoAlwaysOnTop = aiaot;
                                 break;
                             case "TargetSpEffectWindowLeft":
-                                double.TryParse(value, out double tsewl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double tsewl);
                                 settings.TargetSpEffectWindowLeft = tsewl;
                                 break;
                             case "TargetSpEffectWindowTop":
-                                double.TryParse(value, out double tsewt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double tsewt);
                                 settings.TargetSpEffectWindowTop = tsewt;
                                 break;
                             case "TargetSpEffectAlwaysOnTop":
@@ -171,11 +178,13 @@ public class SettingsManager
                                 settings.TargetSpEffectAlwaysOnTop = tseaot;
                                 break;
                             case "EventLogWindowLeft":
-                                double.TryParse(value, out double elwl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double elwl);
                                 settings.EventLogWindowLeft = elwl;
                                 break;
                             case "EventLogWindowTop":
-                                double.TryParse(value, out double elwt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double elwt);
                                 settings.EventLogWindowTop = elwt;
                                 break;
                             case "EventLogWindowAlwaysOnTop":
@@ -183,11 +192,11 @@ public class SettingsManager
                                 settings.EventLogWindowAlwaysOnTop = elwaot;
                                 break;
                             case "WindowLeft":
-                                double.TryParse(value, out double wl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double wl);
                                 settings.WindowLeft = wl;
                                 break;
                             case "WindowTop":
-                                double.TryParse(value, out double wt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double wt);
                                 settings.WindowTop = wt;
                                 break;
                             case "AlwaysOnTop":
@@ -211,27 +220,33 @@ public class SettingsManager
                                 settings.MuteMusic = mm;
                                 break;
                             case "ResistancesWindowScaleX":
-                                double.TryParse(value, out double rwx);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double rwx);
                                 settings.ResistancesWindowScaleX = rwx;
                                 break;
                             case "ResistancesWindowScaleY":
-                                double.TryParse(value, out double rwy);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double rwy);
                                 settings.ResistancesWindowScaleY = rwy;
                                 break;
                             case "ResistancesWindowOpacity":
-                                double.TryParse(value, out double rwo);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double rwo);
                                 settings.ResistancesWindowOpacity = rwo;
                                 break;
                             case "ResistancesWindowLeft":
-                                double.TryParse(value, out double rwl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double rwl);
                                 settings.ResistancesWindowLeft = rwl;
                                 break;
                             case "ResistancesWindowTop":
-                                double.TryParse(value, out double rwt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double rwt);
                                 settings.ResistancesWindowTop = rwt;
                                 break;
                             case "ResistancesWindowWidth":
-                                double.TryParse(value, out double rww);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double rww);
                                 settings.ResistancesWindowWidth = rww;
                                 break;
                             case "HotkeyActionIds": settings.HotkeyActionIds = value; break;
@@ -244,7 +259,7 @@ public class SettingsManager
                                 settings.RememberPlayerSpeed = rps;
                                 break;
                             case "PlayerSpeed":
-                                float.TryParse(value, out float ps);
+                                float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out float ps);
                                 settings.PlayerSpeed = ps;
                                 break;
                             case "RememberGameSpeed":
@@ -252,7 +267,7 @@ public class SettingsManager
                                 settings.RememberGameSpeed = rgs;
                                 break;
                             case "GameSpeed":
-                                float.TryParse(value, out float gs);
+                                float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out float gs);
                                 settings.GameSpeed = gs;
                                 break;
                             case "IsNoClipKeyboardDisabled":
@@ -275,26 +290,29 @@ public class SettingsManager
                                 settings.SaveCustomHp = value;
                                 break;
                             case "GraceImportWindowLeft":
-                                double.TryParse(value, out double giwl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double giwl);
                                 settings.GraceImportWindowLeft = giwl;
                                 break;
                             case "GraceImportWindowTop":
-                                double.TryParse(value, out double giwt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double giwt);
                                 settings.GraceImportWindowTop = giwt;
                                 break;
                             case "GracePresetWindowLeft":
-                                double.TryParse(value, out double gpwl);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double gpwl);
                                 settings.GracePresetWindowLeft = gpwl;
                                 break;
                             case "GracePresetWindowTop":
-                                double.TryParse(value, out double gpwt);
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double gpwt);
                                 settings.GracePresetWindowTop = gpwt;
                                 break;
                             case "GracePresetWindowAlwaysOnTop":
                                 bool.TryParse(value, out bool gpwalop);
                                 settings.GracePresetWindowAlwaysOnTop = gpwalop;
                                 break;
-                                
                         }
                     }
                 }

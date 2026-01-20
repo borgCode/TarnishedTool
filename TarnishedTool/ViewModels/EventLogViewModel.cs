@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -152,7 +153,7 @@ public class EventLogViewModel : BaseViewModel
     
     private void AddToExclude()
     {
-        if (!uint.TryParse(EventIdToExclude, out uint eventId))
+        if (!uint.TryParse(EventIdToExclude, NumberStyles.Integer, CultureInfo.InvariantCulture, out uint eventId))
         {
             MsgBox.Show("Not a valid format for an event ID, should be a number.");
             return; 
@@ -198,7 +199,7 @@ public class EventLogViewModel : BaseViewModel
             var lines = File.ReadAllLines(dialog.FileName);
             foreach (var line in lines)
             {
-                if (uint.TryParse(line.Trim(), out uint eventId) && !_excludedEventIds.Contains(eventId))
+           if (uint.TryParse(line.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out uint eventId) && !_excludedEventIds.Contains(eventId))
                     _excludedEventIds.Add(eventId);
             }
         }
@@ -215,7 +216,7 @@ public class EventLogViewModel : BaseViewModel
     
         if (dialog.ShowDialog() == true)
         {
-            File.WriteAllLines(dialog.FileName, _excludedEventIds.Select(id => id.ToString()));
+            File.WriteAllLines(dialog.FileName, _excludedEventIds.Select(id => id.ToString(CultureInfo.InvariantCulture)));
         }
     }
     

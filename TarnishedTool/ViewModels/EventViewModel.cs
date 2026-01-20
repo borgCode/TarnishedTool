@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -68,8 +69,8 @@ namespace TarnishedTool.ViewModels
             SetNightCommand = new DelegateCommand(SetNight);
             SetWeatherCommand = new DelegateCommand(SetWeather);
 
-            _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", int.Parse);
-            _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", int.Parse);
+            _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
+            _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
 
             SelectedWeatherType = WeatherTypes.FirstOrDefault();
 
@@ -316,7 +317,7 @@ namespace TarnishedTool.ViewModels
 
             string trimmedFlagId = SetFlagId.Trim();
 
-            if (!long.TryParse(trimmedFlagId, out long flagIdValue) || flagIdValue <= 0)
+            if (!long.TryParse(trimmedFlagId, NumberStyles.Integer, CultureInfo.InvariantCulture, out long flagIdValue) || flagIdValue <= 0)
                 return;
 
             _eventService.SetEvent(flagIdValue, FlagStateIndex == 0);
@@ -325,7 +326,7 @@ namespace TarnishedTool.ViewModels
         private void GetEvent()
         {
             if (string.IsNullOrWhiteSpace(GetFlagId)) return;
-            if (!long.TryParse(GetFlagId.Trim(), out long flagIdValue) || flagIdValue <= 0) return;
+            if (!long.TryParse(GetFlagId.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out long flagIdValue) || flagIdValue <= 0) return;
 
             var isOn = _eventService.GetEvent(flagIdValue);
             (EventStatusText, EventStatusColor) = isOn ? ("True", OnColor) : ("False", OffColor);

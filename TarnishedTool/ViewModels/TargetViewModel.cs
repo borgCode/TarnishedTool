@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -891,12 +892,12 @@ namespace TarnishedTool.ViewModels
 
             if (input.EndsWith("%"))
             {
-                if (double.TryParse(input.TrimEnd('%'), out var percent))
+                if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
                     return ((int)(percent / 100.0 * MaxHealth), null);
                 return (null, "Invalid percentage format");
             }
 
-            if (int.TryParse(input, out var absolute))
+            if (int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out var absolute))
                 return (absolute, null);
 
             return (null, "Enter a number or percentage (e.g. 545 or 40%)");
@@ -1049,7 +1050,7 @@ namespace TarnishedTool.ViewModels
 
             for (int i = 0; i < parts.Length; i++)
             {
-                if (!int.TryParse(parts[i], out int act) || act < 0 || act > 99)
+                if (!int.TryParse(parts[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out int act) || act < 0 || act > 99)
                 {
                     MsgBox.Show("Invalid act: " + parts[i]);
                     return;

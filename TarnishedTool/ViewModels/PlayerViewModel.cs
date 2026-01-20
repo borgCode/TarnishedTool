@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Input;
 using System.Windows.Threading;
 using TarnishedTool.Core;
@@ -867,12 +868,12 @@ namespace TarnishedTool.ViewModels
 
             if (input.EndsWith("%"))
             {
-                if (double.TryParse(input.TrimEnd('%'), out var percent))
+                if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
                     return ((int)(percent / 100.0 * CurrentMaxHp), null);
                 return (null, "Invalid percentage format");
             }
 
-            if (int.TryParse(input, out var absolute))
+            if (int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out var absolute))
                 return (absolute, null);
 
             return (null, "Enter a number or percentage (e.g. 545 or 40%)");
@@ -950,14 +951,14 @@ namespace TarnishedTool.ViewModels
 
         private void ApplySpEffect()
         {
-            if (!uint.TryParse(ApplySpEffectId, out uint spEffectId)) return;
+            if (!uint.TryParse(ApplySpEffectId, NumberStyles.Integer, CultureInfo.InvariantCulture, out uint spEffectId)) return;
             var playerIns = _playerService.GetPlayerIns();
             _spEffectService.ApplySpEffect(playerIns, spEffectId);
         }
 
         private void RemoveSpEffect()
         {
-            if (!uint.TryParse(RemoveSpEffectId, out uint spEffectId)) return;
+            if (!uint.TryParse(RemoveSpEffectId, NumberStyles.Integer, CultureInfo.InvariantCulture, out uint spEffectId)) return;
             var playerIns = _playerService.GetPlayerIns();
             _spEffectService.RemoveSpEffect(playerIns, spEffectId);
         }

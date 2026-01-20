@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -375,7 +376,7 @@ public class ItemViewModel : BaseViewModel
     
     private void SpawnWithEquipId()
     {
-        if (!uint.TryParse(EquipId.Trim(), out uint equipId))
+        if (!uint.TryParse(EquipId.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out uint equipId))
         {
             MsgBox.Show("Invalid Equip ID");
             return;

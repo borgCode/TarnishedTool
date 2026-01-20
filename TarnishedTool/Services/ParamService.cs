@@ -53,7 +53,29 @@ public class ParamService(MemoryService memoryService) : IParamService
         return IntPtr.Zero;
     }
 
-    
+    public void PrintAllParamTableNames()
+    {
+        var soloParamRepo = memoryService.ReadInt64(SoloParamRepositoryImp.Base);
+
+        for (int tableIndex = 0; tableIndex < 0xC2; tableIndex++)
+        {
+            var tableBase = soloParamRepo + tableIndex * 0x48;
+
+            var capacity = memoryService.ReadInt32((IntPtr)(tableBase + 0x80));
+            if (capacity <= 0) continue;
+            
+            var paramResCap = memoryService.ReadInt64((IntPtr)(tableBase + 0x88));
+            if (paramResCap == 0) continue;
+
+            var namePtr = memoryService.ReadInt64((IntPtr)(paramResCap + 0x18));
+            if (namePtr == 0) continue;
+
+            var name = memoryService.ReadString((IntPtr)namePtr);
+        
+            Console.WriteLine($"[{tableIndex}] {name}");
+        }
+    }
+
     public void WriteInt32(IntPtr row, int offset, int value) => memoryService.WriteInt32(row + offset, value);
     
     public void WriteFloat(IntPtr row, int offset, float value) => memoryService.WriteFloat(row + offset, value);
