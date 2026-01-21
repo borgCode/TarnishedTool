@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         mc:Ignorable="d"
         
-        Title="DefenseWindow" Height="275" Width="250">
+        Title="DefenseWindow" Height="285" Width="250">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
@@ -74,8 +74,8 @@
             <TextBlock Grid.Row="6" Grid.Column="0" Text="Lightning:" FontSize="14" Margin="0,0,0,5" />
             <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding LightningDefense, StringFormat={}{0:F1}%}" FontSize="14" Margin="0,0,0,5" />
 
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="Holy:" FontSize="14" />
-            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding HolyDefense, StringFormat={}{0:F1}%}" FontSize="14" />
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="Holy:" FontSize="14" Margin="0,0,0,5"/>
+            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding HolyDefense, StringFormat={}{0:F1}%}" FontSize="14" Margin="0,0,0,5"/>
             
         </Grid>
     </Grid>
