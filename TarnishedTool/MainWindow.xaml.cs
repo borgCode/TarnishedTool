@@ -67,6 +67,7 @@ namespace TarnishedTool
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
             IEventLogReader eventLogReader = new EventLogReader(_memoryService);
+            IParamRepository paramRepository = new ParamRepository();
 
             _dlcService = new DlcService(_memoryService);
 
@@ -87,7 +88,7 @@ namespace TarnishedTool
                 playerService, hotkeyManager, playerViewModel, _dlcService, spEffectService,
                 flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
-            AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService);
+            AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService, paramService, paramRepository);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
 
             var playerTab = new PlayerTab(playerViewModel);

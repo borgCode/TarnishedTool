@@ -39,6 +39,12 @@ namespace TarnishedTool.Services
             var bytes = ReadBytes(addr, 2);
             return BitConverter.ToUInt16(bytes, 0);
         }
+        
+        public short ReadInt16(nint addr)
+        {
+            var bytes = ReadBytes(addr, 2);
+            return BitConverter.ToInt16(bytes, 0);
+        }
 
         public uint ReadUInt32(IntPtr addr)
         {
@@ -123,7 +129,8 @@ namespace TarnishedTool.Services
             WriteBytes(addr, bytes);
         }
 
-        public void WriteUInt16(IntPtr addr, short val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteInt16(IntPtr addr, short val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        public void WriteUInt16(IntPtr addr, ushort val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteInt32(IntPtr addr, int val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteUInt32(IntPtr addr, uint val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteInt64(nint addr, long val) => WriteBytes(addr, BitConverter.GetBytes(val));

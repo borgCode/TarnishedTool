@@ -144,6 +144,7 @@
         <Compile Include="Interfaces\IFlaskService.cs" />
         <Compile Include="Interfaces\IItemService.cs" />
         <Compile Include="Interfaces\IMemoryService.cs" />
+        <Compile Include="Interfaces\IParamRepository.cs" />
         <Compile Include="Interfaces\IParamService.cs" />
         <Compile Include="Interfaces\IPlayerService.cs" />
         <Compile Include="Interfaces\IReminderService.cs" />
@@ -171,8 +172,11 @@
         <Compile Include="Models\GracePresetTemplate.cs" />
         <Compile Include="Models\Item.cs" />
         <Compile Include="Models\ItemTemplate.cs" />
+        <Compile Include="Models\LoadedParam.cs" />
         <Compile Include="Models\LoadoutTemplate.cs" />
         <Compile Include="Models\MapLocation.cs" />
+        <Compile Include="Models\ParamEntry.cs" />
+        <Compile Include="Models\ParamFieldDef.cs" />
         <Compile Include="Models\Position.cs" />
         <Compile Include="Models\PosWithHurtbox.cs" />
         <Compile Include="Models\ShopCommand.cs" />
@@ -188,6 +192,7 @@
         <Compile Include="Services\EzStateService.cs" />
         <Compile Include="Services\FlaskService.cs" />
         <Compile Include="Services\ItemService.cs" />
+        <Compile Include="Services\ParamRepository.cs" />
         <Compile Include="Services\ParamService.cs" />
         <Compile Include="Services\ReminderService.cs" />
         <Compile Include="Services\SettingsService.cs" />

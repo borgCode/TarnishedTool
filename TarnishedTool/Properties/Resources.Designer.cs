@@ -1106,6 +1106,72 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;iconId&quot;,
+        ///    &quot;Description&quot;: &quot;Icon ID (When -1, no icon is required)&quot;,
+        ///    &quot;DataType&quot;: &quot;s32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Icon ID&quot;,
+        ///    &quot;DefaultValue&quot;: -1,
+        ///    &quot;Minimum&quot;: -1.0,
+        ///    &quot;Maximum&quot;: 999999.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;conditionHp&quot;,
+        ///    &quot;Description&quot;: &quot;Set what percentage of maxHP the remaining HP will be activated&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Trigger at HP Below %&quot;,
+        ///    &quot;DefaultValue&quot;: -1,
+        ///    &quot;Minim [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_SpEffectParam {
+            get {
+                return ResourceManager.GetString("Param_SpEffectParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,
+        ///2,
+        ///3,
+        ///4,[Item] Tarnished&apos;s Furled Finger - Create Summon Sign
+        ///5,
+        ///6,
+        ///7,[Item] Finger Severer - Return to World
+        ///8,
+        ///9,
+        ///10,[Item] Duelist&apos;s Furled Finger - Create Invasion Sign
+        ///11,[Item] Festering/Bloody Finger - Attempt Invasion
+        ///12,
+        ///13,
+        ///14,
+        ///15,
+        ///16,[Item] Recusant Finger - Attempt Invasion
+        ///17,
+        ///18,
+        ///20,Message appraise HP restoration
+        ///21,
+        ///22,
+        ///23,Animation Offset +10k - Unknown
+        ///24,
+        ///25,
+        ///26,Stake of Marika
+        ///27,
+        ///28,[Item] Taunter&apos;s Tongue - Icon
+        ///29,
+        ///30,HKS - Unk Throw Def Inv [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_SpEffect {
+            get {
+                return ResourceManager.GetString("ParamEntries_SpEffect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,40000295,Academy Magic Pot,10,600
         ///0,40000E1A,Acid Spraymist,10, 600
         ///0,40000262,Albinauric Pot,10,600

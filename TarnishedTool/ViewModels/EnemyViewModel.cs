@@ -321,7 +321,6 @@ public class EnemyViewModel : BaseViewModel
             _shouldSetNight = false;
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
         }
-        _paramService.PrintAllParamTableNames();
     }
 
     private void OnGameNotLoaded()
