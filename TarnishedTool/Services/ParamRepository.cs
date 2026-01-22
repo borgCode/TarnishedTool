@@ -89,13 +89,7 @@ public class ParamRepository : IParamRepository
         _cache[param] = loaded;
         return loaded;
     }
-
-    private int CalculateRowSize(IReadOnlyList<ParamFieldDef> fields)
-    {
-        var lastField = fields[fields.Count - 1];
-        return lastField.Offset + GetTypeSize(lastField.DataType);
-    }
-
+    
     private List<ParamFieldDef> LoadFieldDefs(string paramName)
     {
         string json = Resources.ResourceManager.GetString($"Param_{paramName}");
@@ -128,42 +122,67 @@ public class ParamRepository : IParamRepository
 
         return entries;
     }
+    
+    private int CalculateRowSize(IReadOnlyList<ParamFieldDef> fields)
+    {
+        var lastField = fields[fields.Count - 1];
+        return lastField.Offset + GetTypeSize(lastField);  // Pass the whole field
+    }
+    
 
     private void CalculateOffsets(List<ParamFieldDef> fields)
     {
         int offset = 0;
         int bitPos = 0;
+        int bitFieldSize = 0;  // Size of current bitfield type in bytes
 
         foreach (var field in fields)
         {
             if (field.BitWidth.HasValue)
             {
+                int bitLimit = GetBitLimit(field.DataType);
+                int typeSize = GetBaseTypeSize(field.DataType);
+            
+                // Start new bitfield if: first bitfield, different size type, or would overflow
+                if (bitPos == 0 || typeSize != bitFieldSize || bitPos + field.BitWidth.Value > bitLimit)
+                {
+                    if (bitPos > 0)
+                    {
+                        offset += bitFieldSize;  // Advance by previous bitfield's type size
+                    }
+                    bitPos = 0;
+                    bitFieldSize = typeSize;
+                }
+
                 field.Offset = offset;
                 field.BitPos = bitPos;
                 bitPos += field.BitWidth.Value;
-
-                if (bitPos >= 8)
-                {
-                    offset++;
-                    bitPos = 0;
-                }
             }
             else
             {
                 if (bitPos > 0)
                 {
-                    offset++;
+                    offset += bitFieldSize;  // Finish the bitfield
                     bitPos = 0;
+                    bitFieldSize = 0;
                 }
 
                 field.Offset = offset;
                 field.BitPos = null;
-                offset += GetTypeSize(field.DataType);
+                offset += GetTypeSize(field);
             }
         }
     }
 
-    private int GetTypeSize(string type) => type switch
+    private int GetBitLimit(string type) => type switch
+    {
+        "s8" or "u8" or "dummy8" => 8,
+        "s16" or "u16" => 16,
+        "s32" or "u32" => 32,
+        _ => 8
+    };
+
+    private int GetBaseTypeSize(string type) => type switch
     {
         "s8" or "u8" or "dummy8" => 1,
         "s16" or "u16" => 2,
@@ -171,4 +190,10 @@ public class ParamRepository : IParamRepository
         "s64" or "u64" or "f64" => 8,
         _ => 1
     };
+
+    private int GetTypeSize(ParamFieldDef field)
+    {
+        int baseSize = GetBaseTypeSize(field.DataType);
+        return baseSize * (field.ArrayLength ?? 1);
+    }
 }
