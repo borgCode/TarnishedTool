@@ -1,5 +1,6 @@
 ﻿// 
 
+using TarnishedTool.Core;
 using TarnishedTool.Models;
 
 namespace TarnishedTool.ViewModels;
@@ -17,6 +18,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public int Offset => field.Offset;
     
     public string FullName => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})";
+    
 
     private object _value;
 
@@ -27,9 +29,28 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         {
             if (SetProperty(ref _value, value))
             {
-                parent.WriteFieldValue(field, value);
+                _value = ClampValue(_value);
+                parent.WriteFieldValue(field, _value);
             }
         }
+    }
+
+    private object ClampValue(object val)
+    {
+        if (val == null)
+            return val;
+
+        return field.DataType switch
+        {
+            "f32" => ((float)val).Clamp(field.Minimum ?? float.MinValue, field.Maximum ?? float.MaxValue),
+            "s32" => ((int)val).Clamp((int?)field.Minimum ?? int.MinValue, (int?)field.Maximum ?? int.MaxValue),
+            "u32" => ((uint)val).Clamp((uint?)field.Minimum ?? uint.MinValue, (uint?)field.Maximum ?? uint.MaxValue),
+            "s16" => ((short)val).Clamp((short?)field.Minimum ?? short.MinValue, (short?)field.Maximum ?? short.MaxValue),
+            "u16" => ((ushort)val).Clamp((ushort?)field.Minimum ?? ushort.MinValue, (ushort?)field.Maximum ?? ushort.MaxValue),
+            "s8"  => ((sbyte)val).Clamp((sbyte?)field.Minimum ?? sbyte.MinValue, (sbyte?)field.Maximum ?? sbyte.MaxValue),
+            "u8" or "dummy8" => ((byte)val).Clamp((byte?)field.Minimum ?? byte.MinValue, (byte?)field.Maximum ?? byte.MaxValue),
+            _ => val
+        };
     }
     
     public string ValueText

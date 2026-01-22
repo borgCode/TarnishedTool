@@ -77,30 +77,7 @@ public class ParamService(MemoryService memoryService) : IParamService
         }
     }
 
-    public object ReadField(IntPtr row, ParamFieldDef field)
-    {
-        IntPtr addr = row + field.Offset;
-
-        if (field.BitWidth.HasValue)
-        {
-            byte raw = memoryService.ReadUInt8(addr);
-            int mask = (1 << field.BitWidth.Value) - 1;
-            return (raw >> field.BitPos.Value) & mask;
-        }
-
-        return field.DataType switch
-        {
-            "f32" => memoryService.ReadFloat(addr),
-            "s32" => memoryService.ReadInt32(addr),
-            "u32" => memoryService.ReadUInt32(addr),
-            "s16" => memoryService.ReadInt16(addr),
-            "u16" => memoryService.ReadUInt16(addr),
-            "s8" => (sbyte)memoryService.ReadUInt8(addr),
-            "u8" or "dummy8" => memoryService.ReadUInt8(addr),
-            _ => 0
-        };
-    }
-
+    
     public void WriteField(IntPtr row, ParamFieldDef field, object value)
     {
         IntPtr addr = row + field.Offset;
@@ -110,7 +87,10 @@ public class ParamService(MemoryService memoryService) : IParamService
             byte current = memoryService.ReadUInt8(addr);
             int mask = (1 << field.BitWidth.Value) - 1;
             int shifted = mask << field.BitPos.Value;
-            int newVal = Convert.ToInt32(value) & mask;
+            
+            int newVal = value is bool b ? (b ? 1 : 0) : Convert.ToInt32(value);
+            newVal &= mask;
+        
             byte result = (byte)((current & ~shifted) | (newVal << field.BitPos.Value));
             memoryService.WriteUInt8(addr, result);
             return;
@@ -138,7 +118,11 @@ public class ParamService(MemoryService memoryService) : IParamService
         {
             byte raw = data[field.Offset];
             int mask = (1 << field.BitWidth.Value) - 1;
-            return (raw >> field.BitPos.Value) & mask;
+            int value =  (raw >> field.BitPos.Value) & mask;
+            if (field.BitWidth.Value == 1)
+                return value != 0;
+        
+            return value;
         }
 
         return field.DataType switch
