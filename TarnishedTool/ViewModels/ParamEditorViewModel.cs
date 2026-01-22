@@ -11,7 +11,7 @@ using TarnishedTool.Models;
 
 namespace TarnishedTool.ViewModels;
 
-public class ParamEditorViewModel : BaseViewModel
+public sealed class ParamEditorViewModel : BaseViewModel
 {
     private readonly IParamRepository _paramRepository;
     private readonly IParamService _paramService;
@@ -33,8 +33,9 @@ public class ParamEditorViewModel : BaseViewModel
                 entry.Parent.ToString().Contains(search) ||
                 (entry.Name?.ToLower().Contains(search) ?? false)
         );
-
+        
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
+
     }
 
     #region Commands
@@ -93,7 +94,7 @@ public class ParamEditorViewModel : BaseViewModel
         
         _currentRowPtr = IntPtr.Zero;
         _currentRowData = null;
-        
+
     }
 
     private void OnEntryChanged()

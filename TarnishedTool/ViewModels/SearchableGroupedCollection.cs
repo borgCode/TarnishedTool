@@ -130,4 +130,9 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             _allItems.Where(item => _matchesSearch(item, searchLower)));
         SelectedItem = Items.FirstOrDefault();
     }
+    
+    public void Initialize()
+    {
+        SelectedGroup = _groups.FirstOrDefault();
+    }
 }
