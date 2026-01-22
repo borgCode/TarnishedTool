@@ -30,12 +30,19 @@ public class ParamEditorViewModel : BaseViewModel
             _paramRepository.GetAllEntriesByParam(),
             (entry, search) =>
                 entry.Id.ToString().Contains(search) ||
+                entry.Parent.ToString().Contains(search) ||
                 (entry.Name?.ToLower().Contains(search) ?? false)
         );
 
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
     }
 
+    #region Commands
+
+    
+
+    #endregion
+    
     #region Properties
 
     public SearchableGroupedCollection<Param, ParamEntry> ParamEntries { get; }
@@ -126,7 +133,6 @@ public class ParamEditorViewModel : BaseViewModel
 
     #endregion
     
-
     #region Public Methods
 
     public object ReadFieldValue(ParamFieldDef field)
