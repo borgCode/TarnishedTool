@@ -20,12 +20,12 @@ public class ParamRepository : IParamRepository
 
     private readonly Dictionary<Param, (int TableIndex, int SlotIndex)> _paramLocations = new()
     {
-        // ["AtkParam_Npc"] = (7, 0),
-        // ["AtkParam_PC"] = (8, 0),
-        // ["BehaviorParam"] = (12, 0),
-        // ["BehaviorParam_PC"] = (13, 0),
-        // ["BuddyParam"] = (134, 0),
-        //bullet
+        [AtkParam_Npc] = (7, 0),
+        [AtkParam_PC] = (8, 0),
+        [BehaviorParam] = (12, 0),
+        [BehaviorParam_PC] = (13, 0),
+        [BuddyParam] = (128, 0),
+        [Bullet] = (10, 0),
         [CalcCorrectGraph] = (30, 0),
         [CharaInitParam] = (23, 0),
         [EquipParamAccessory] = (2, 0),
@@ -34,6 +34,12 @@ public class ParamRepository : IParamRepository
         [EquipParamProtector] = (1, 0),
         [EquipParamWeapon] = (0, 0),
         [GameAreaParam] = (29, 0),
+        [ItemLotParam_enemy] = (20, 0),
+        [ItemLotParam_map] = (21, 0),
+        [Magic] = (14,0),
+        [NpcParam] = (6,0),
+        [NpcThinkParam] = (9,0),
+        [ResistCorrectParam] = (174, 0),
         [SpEffectParam] = (15, 0),
         [SwordArtsParam] = (82, 0),
     };
@@ -50,13 +56,13 @@ public class ParamRepository : IParamRepository
     public Dictionary<Param, List<ParamEntry>> GetAllEntriesByParam()
     {
         var result = new Dictionary<Param, List<ParamEntry>>();
-    
+
         foreach (Param p in EnumUtil.GetValues<Param>())
         {
             var loaded = GetParam(p);
             result[p] = loaded.Entries.ToList();
         }
-    
+
         return result;
     }
 
@@ -67,7 +73,8 @@ public class ParamRepository : IParamRepository
 
         var (tableIndex, slotIndex) = GetLocation(param);
         var paramName = param.ToString();
-        var fields = LoadFieldDefs(paramName);
+        var baseName = paramName.Split('_')[0];
+        var fields = LoadFieldDefs(baseName);
 
         var loaded = new LoadedParam
         {
@@ -88,7 +95,7 @@ public class ParamRepository : IParamRepository
         var lastField = fields[fields.Count - 1];
         return lastField.Offset + GetTypeSize(lastField.DataType);
     }
-    
+
     private List<ParamFieldDef> LoadFieldDefs(string paramName)
     {
         string json = Resources.ResourceManager.GetString($"Param_{paramName}");
@@ -106,7 +113,7 @@ public class ParamRepository : IParamRepository
 
         var entries = new List<ParamEntry>();
         using var reader = new StringReader(csv);
-        
+
         reader.ReadLine();
 
         while (reader.ReadLine() is { } line)
