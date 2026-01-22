@@ -60,6 +60,10 @@ public class ParamRepository : IParamRepository
         foreach (Param p in EnumUtil.GetValues<Param>())
         {
             var loaded = GetParam(p);
+            foreach (var entry in loaded.Entries)
+            {
+                entry.Parent = p;
+            }
             result[p] = loaded.Entries.ToList();
         }
 
@@ -126,7 +130,7 @@ public class ParamRepository : IParamRepository
     private int CalculateRowSize(IReadOnlyList<ParamFieldDef> fields)
     {
         var lastField = fields[fields.Count - 1];
-        return lastField.Offset + GetTypeSize(lastField);  // Pass the whole field
+        return lastField.Offset + GetTypeSize(lastField); 
     }
     
 
@@ -134,7 +138,7 @@ public class ParamRepository : IParamRepository
     {
         int offset = 0;
         int bitPos = 0;
-        int bitFieldSize = 0;  // Size of current bitfield type in bytes
+        int bitFieldSize = 0; 
 
         foreach (var field in fields)
         {
@@ -142,13 +146,12 @@ public class ParamRepository : IParamRepository
             {
                 int bitLimit = GetBitLimit(field.DataType);
                 int typeSize = GetBaseTypeSize(field.DataType);
-            
-                // Start new bitfield if: first bitfield, different size type, or would overflow
+                
                 if (bitPos == 0 || typeSize != bitFieldSize || bitPos + field.BitWidth.Value > bitLimit)
                 {
                     if (bitPos > 0)
                     {
-                        offset += bitFieldSize;  // Advance by previous bitfield's type size
+                        offset += bitFieldSize;  
                     }
                     bitPos = 0;
                     bitFieldSize = typeSize;
@@ -162,7 +165,7 @@ public class ParamRepository : IParamRepository
             {
                 if (bitPos > 0)
                 {
-                    offset += bitFieldSize;  // Finish the bitfield
+                    offset += bitFieldSize; 
                     bitPos = 0;
                     bitFieldSize = 0;
                 }

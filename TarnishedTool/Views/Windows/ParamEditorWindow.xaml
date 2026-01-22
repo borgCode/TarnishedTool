@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:converters="clr-namespace:TarnishedTool.Converters"
         xmlns:controls="clr-namespace:TarnishedTool.Controls"
+        xmlns:tarnishedTool="clr-namespace:TarnishedTool"
         mc:Ignorable="d"
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None"
@@ -82,6 +83,11 @@
                          Height="25"
                          Width="200"
                          Margin="0,0,0,5">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="3" />
+                        </Style>
+                    </TextBox.Resources>
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
                             <Border x:Name="border"
@@ -96,7 +102,7 @@
                                                   VerticalScrollBarVisibility="Hidden"
                                                   VerticalAlignment="Center"
                                                   Margin="5,0,0,0" />
-                                    <TextBlock Text="Search entries..."
+                                    <TextBlock Text="Search params..."
                                                VerticalAlignment="Center"
                                                Margin="5,0,0,0"
                                                Foreground="Gray"
@@ -178,25 +184,40 @@
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="{Binding Id}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding HasName}" Value="True">
-                                                    <Setter Property="Text">
-                                                        <Setter.Value>
-                                                            <MultiBinding StringFormat="{}{0}: {1}">
-                                                                <Binding Path="Id" />
-                                                                <Binding Path="Name" />
-                                                            </MultiBinding>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="{Binding Id}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasName}" Value="True">
+                                                        <Setter Property="Text">
+                                                            <Setter.Value>
+                                                                <MultiBinding StringFormat="{}{0}: {1}">
+                                                                    <Binding Path="Id" />
+                                                                    <Binding Path="Name" />
+                                                                </MultiBinding>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding ParentName}"
+                                               Foreground="#ceccca"
+                                               FontStyle="Italic"
+                                               Margin="10,0,0,0"
+                                               Visibility="{Binding DataContext.ParamEntries.IsSearchActive, 
+                                           RelativeSource={RelativeSource AncestorType=Window}, 
+                                           Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -314,7 +335,7 @@
                                                Text="{Binding FullName}"
                                                VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis"
-                                               Margin="0, 0, 10, 0"/>
+                                               Margin="0, 0, 10, 0" />
 
                                     <ContentControl Grid.Column="1"
                                                     Content="{Binding}">
@@ -324,6 +345,7 @@
                                                     <Setter.Value>
                                                         <DataTemplate>
                                                             <TextBox
+                                                                tarnishedTool:TextBoxBehavior.CommitOnEnter="True"
                                                                 Text="{Binding ValueText,
                                                              UpdateSourceTrigger=LostFocus}"
                                                                 Background="#2D2D2D" />

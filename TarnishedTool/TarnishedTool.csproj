@@ -205,6 +205,7 @@
         <Compile Include="Services\StateService.cs" />
         <Compile Include="Services\TravelService.cs" />
         <Compile Include="Services\UtilityService.cs" />
+        <Compile Include="TextBoxBehavior.cs" />
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\EnumUtil.cs" />
