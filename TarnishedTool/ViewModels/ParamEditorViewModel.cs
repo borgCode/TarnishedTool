@@ -86,6 +86,7 @@ public class ParamEditorViewModel : BaseViewModel
         
         _currentRowPtr = IntPtr.Zero;
         _currentRowData = null;
+        
     }
 
     private void OnEntryChanged()

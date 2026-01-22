@@ -9,7 +9,7 @@
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None"
         AllowsTransparency="True"
-        Height="700" Width="1800">
+        Height="700" Width="1400">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -80,6 +80,7 @@
                 <TextBox Grid.Row="0"
                          Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
                          Height="25"
+                         Width="200"
                          Margin="0,0,0,5">
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
@@ -202,7 +203,6 @@
                 </Border>
             </Grid>
 
-            <!-- Right Column: Field Editor -->
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -306,32 +306,38 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="300" />
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="450" />
+                                        <ColumnDefinition Width="200" />
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
-                                               Text="{Binding DisplayName}"
+                                               Text="{Binding FullName}"
                                                VerticalAlignment="Center"
-                                               TextTrimming="CharacterEllipsis" />
+                                               TextTrimming="CharacterEllipsis"
+                                               Margin="0, 0, 10, 0"/>
 
-                                    <!-- Value input: Checkbox for bitfield, TextBox otherwise -->
-                                    <ContentControl Grid.Column="1" VerticalAlignment="Center">
+                                    <ContentControl Grid.Column="1"
+                                                    Content="{Binding}">
                                         <ContentControl.Style>
                                             <Style TargetType="ContentControl">
-                                                <Setter Property="Content">
+                                                <Setter Property="ContentTemplate">
                                                     <Setter.Value>
-                                                        <TextBox Text="{Binding Value, UpdateSourceTrigger=LostFocus}"
-                                                                 Width="100"
-                                                                 Height="22" />
+                                                        <DataTemplate>
+                                                            <TextBox
+                                                                Text="{Binding ValueText,
+                                                             UpdateSourceTrigger=LostFocus}"
+                                                                Background="#2D2D2D" />
+                                                        </DataTemplate>
                                                     </Setter.Value>
                                                 </Setter>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsBitfield}" Value="True">
-                                                        <Setter Property="Content">
+                                                        <Setter Property="ContentTemplate">
                                                             <Setter.Value>
-                                                                <CheckBox IsChecked="{Binding Value}" />
+                                                                <DataTemplate>
+                                                                    <CheckBox IsChecked="{Binding Value}"
+                                                                              Background="#2D2D2D" />
+                                                                </DataTemplate>
                                                             </Setter.Value>
                                                         </Setter>
                                                     </DataTrigger>
@@ -339,11 +345,6 @@
                                             </Style>
                                         </ContentControl.Style>
                                     </ContentControl>
-
-                                    <TextBlock Grid.Column="2"
-                                               Text="{Binding DataType}"
-                                               Foreground="#888"
-                                               VerticalAlignment="Center" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

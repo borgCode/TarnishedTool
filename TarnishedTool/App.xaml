@@ -119,6 +119,7 @@
 
         <Style TargetType="CheckBox">
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
             <Setter Property="Margin" Value="0,2" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -133,7 +134,7 @@
                                     BorderThickness="1"
                                     Width="16"
                                     Height="16"
-                                    Background="{StaticResource ControlBackgroundBrush}"
+                                    Background="{TemplateBinding Background}"
                                     CornerRadius="2">
                                 <Path x:Name="checkMark"
                                       Data="M1,5 L4,9 L9,1"
@@ -500,7 +501,7 @@
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         </Style>
-        
+
         <Style TargetType="wpfTool:DoubleUpDown" xmlns:wpfTool="http://schemas.xceed.com/wpf/xaml/toolkit">
             <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
@@ -589,7 +590,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="SliderButtonStyle" TargetType="RepeatButton">
             <Setter Property="SnapsToDevicePixels" Value="true" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -755,7 +756,7 @@
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         </Style>
-        
+
         <Style x:Key="TitleBarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />

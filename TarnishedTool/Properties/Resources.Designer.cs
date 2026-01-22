@@ -1108,6 +1108,110 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
+        ///    &quot;InternalName&quot;: &quot;hit0_Radius&quot;,
+        ///    &quot;Description&quot;: &quot;Sphere, capsule radius&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Hit 0: Radius&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: 0.0,
+        ///    &quot;Maximum&quot;: 100.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;hit1_Radius&quot;,
+        ///    &quot;Description&quot;: &quot;Sphere, capsule radius&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Hit 1: Radius&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: 0.0,
+        ///    &quot;Maximum&quot;: 100.0
+        ///  },
+        ///  {
+        ///    &quot;InternalNam [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_AtkParam {
+            get {
+                return ResourceManager.GetString("Param_AtkParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;variationId&quot;,
+        ///    &quot;Description&quot;: &quot;Used when calculating the ID for attack parameters. It is not used directly on the actual machine.&quot;,
+        ///    &quot;DataType&quot;: &quot;s32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Behavior Variation ID&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: 0.0,
+        ///    &quot;Maximum&quot;: 999999999.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;behaviorJudgeId&quot;,
+        ///    &quot;Description&quot;: &quot;Used when calculating the ID for attack parameters. This ID matches the action judgment ID entered in TimeActE [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_BehaviorParam {
+            get {
+                return ResourceManager.GetString("Param_BehaviorParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_BuddyParam {
+            get {
+                return ResourceManager.GetString("Param_BuddyParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;atkId_Bullet&quot;,
+        ///    &quot;Description&quot;: &quot;Register each attack parameter ID.  Attack type / Attack material / Physical attack power / Magic attack power / Stamina attack power / Knockback distance.&quot;,
+        ///    &quot;DataType&quot;: &quot;s32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;AtkParam ID&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: -1.0,
+        ///    &quot;Maximum&quot;: 999999999.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;sfxId_Bullet&quot;,
+        ///    &quot;Description&quot;: &quot;Enter the SFX ID for [Bullet]. -1 does not occur.&quot;,
+        ///    &quot;DataTy [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_Bullet {
+            get {
+                return ResourceManager.GetString("Param_Bullet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
         ///    &quot;InternalName&quot;: &quot;stageMaxVal0&quot;,
         ///    &quot;Description&quot;: &quot;Stat Level Cap corresponds to the level of a certain stat&quot;,
         ///    &quot;DataType&quot;: &quot;f32&quot;,
@@ -1328,6 +1432,142 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
+        ///    &quot;InternalName&quot;: &quot;lotItemId01&quot;,
+        ///    &quot;Description&quot;: &quot;Item ID that can be obtained&quot;,
+        ///    &quot;DataType&quot;: &quot;s32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;1 - Item ID&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: -1.0,
+        ///    &quot;Maximum&quot;: 999999999.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;lotItemId02&quot;,
+        ///    &quot;Description&quot;: &quot;Item ID that can be obtained&quot;,
+        ///    &quot;DataType&quot;: &quot;s32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;2 - Item ID&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: -1.0,
+        ///    &quot;Maximum&quot;: 999999999.0
+        ///  },        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_ItemLotParam {
+            get {
+                return ResourceManager.GetString("Param_ItemLotParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: null,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: null,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: n [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_Magic {
+            get {
+                return ResourceManager.GetString("Param_Magic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_NpcParam {
+            get {
+                return ResourceManager.GetString("Param_NpcParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_NpcThinkParam {
+            get {
+                return ResourceManager.GetString("Param_NpcThinkParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;addPoint1&quot;,
+        ///    &quot;Description&quot;: &quot;A value that is added to the resistance value after the abnormal condition is activated once.&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Additional Resistance - First Activation&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: -999.99,
+        ///    &quot;Maximum&quot;: 999.99
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;addPoint2&quot;,
+        ///    &quot;Description&quot;: &quot;A value that is added to the resistance value after the abnormal condition is activated twice.&quot;,
+        ///    &quot;Da [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_ResistCorrectParam {
+            get {
+                return ResourceManager.GetString("Param_ResistCorrectParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
         ///    &quot;InternalName&quot;: &quot;iconId&quot;,
         ///    &quot;Description&quot;: &quot;Icon ID (When -1, no icon is required)&quot;,
         ///    &quot;DataType&quot;: &quot;s32&quot;,
@@ -1377,6 +1617,391 @@ namespace TarnishedTool.Properties {
         internal static string Param_SwordArtsParam {
             get {
                 return ResourceManager.GetString("Param_SwordArtsParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,Impact
+        ///1,
+        ///2,Blood Loss - Bullet
+        ///4,
+        ///5,
+        ///10,
+        ///11,
+        ///12,
+        ///13,
+        ///14,
+        ///15,
+        ///16,
+        ///17,
+        ///18,
+        ///19,
+        ///20,[AOW] Chilling Mist Bullet
+        ///21,[AOW] Hoarfrost Stomp Bullet
+        ///22,
+        ///23,
+        ///24,
+        ///25,
+        ///26,
+        ///101,
+        ///102,
+        ///103,
+        ///104,
+        ///105,
+        ///106,
+        ///107,
+        ///200,
+        ///201,
+        ///202,
+        ///900,
+        ///901,
+        ///1020,
+        ///1052,
+        ///2000,
+        ///3000,
+        ///3001,
+        ///3002,
+        ///3003,
+        ///3004,
+        ///3010,
+        ///3011,
+        ///3012,
+        ///3013,
+        ///3020,
+        ///3021,
+        ///3022,
+        ///3023,
+        ///3030,
+        ///3031,
+        ///3032,
+        ///3033,
+        ///3040,
+        ///3041,
+        ///3042,
+        ///3043,
+        ///3050,
+        ///3051,
+        ///3052,
+        ///3053,
+        ///3060,
+        ///3061,
+        ///3062,
+        ///3070,
+        ///3071,
+        ///3072,
+        ///3073,
+        ///30 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_AtkParam_Npc {
+            get {
+                return ResourceManager.GetString("ParamEntries_AtkParam_Npc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,Impact: Oppose
+        ///1,Impact: No Target
+        ///2,Impact: Oppose and Self
+        ///3,Impact: Oppose and Friendly
+        ///5,
+        ///6,Flask of Crimson Tears Bullet
+        ///7,Phantom Great Rune Bullet
+        ///8,
+        ///9,
+        ///10,
+        ///11,
+        ///20,[AOW] Chilling Mist Bullet
+        ///21,[AOW] Hoarfrost Stomp Bullet
+        ///40,
+        ///41,
+        ///42,
+        ///43,
+        ///44,
+        ///101,
+        ///200,
+        ///201,
+        ///202,
+        ///203,
+        ///204,
+        ///205,
+        ///206,
+        ///210,
+        ///211,
+        ///212,
+        ///213,
+        ///220,
+        ///221,
+        ///222,
+        ///300,
+        ///301,
+        ///302,
+        ///303,
+        ///304,
+        ///305,
+        ///306,
+        ///307,
+        ///310,
+        ///311,
+        ///312,
+        ///313,
+        ///320,
+        ///321,
+        ///322,
+        ///550,Base Behavior - Jump Attack Attack
+        ///560,
+        ///561,
+        ///8 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_AtkParam_PC {
+            get {
+                return ResourceManager.GetString("ParamEntries_AtkParam_PC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///5,
+        ///7,
+        ///12,
+        ///13,
+        ///15,
+        ///16,
+        ///17,
+        ///50,
+        ///101,
+        ///102,
+        ///201,
+        ///202,
+        ///203,
+        ///206,
+        ///207,
+        ///208,
+        ///211,
+        ///212,
+        ///221,
+        ///222,
+        ///231,
+        ///232,
+        ///236,
+        ///237,
+        ///311,
+        ///312,
+        ///321,
+        ///322,
+        ///331,
+        ///332,
+        ///336,
+        ///337,
+        ///900,
+        ///901,
+        ///1000,
+        ///1001,
+        ///1010,
+        ///1011,
+        ///1020,
+        ///1040,
+        ///1045,
+        ///1050,
+        ///1051,
+        ///1052,
+        ///1060,
+        ///1070,
+        ///1071,
+        ///1080,
+        ///1090,
+        ///1100,
+        ///1120,
+        ///1130,
+        ///1131,
+        ///1132,
+        ///1140,
+        ///1150,
+        ///1160,
+        ///1170,
+        ///1180,
+        ///1181,
+        ///1182,
+        ///1190,
+        ///1990,
+        ///2000,
+        ///2100,
+        ///2105,
+        ///2150,
+        ///2160,
+        ///3000,
+        ///3001,
+        ///3002,
+        ///3003,
+        ///3004,
+        ///3010,
+        ///3011,
+        ///3012,
+        ///3013,
+        ///3020 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_BehaviorParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_BehaviorParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///10,
+        ///11,
+        ///30,
+        ///100,
+        ///400,
+        ///401,
+        ///402,
+        ///403,
+        ///404,
+        ///405,
+        ///406,
+        ///410,
+        ///411,
+        ///412,
+        ///413,
+        ///420,
+        ///421,
+        ///422,
+        ///442,
+        ///500,
+        ///501,
+        ///502,
+        ///503,
+        ///504,
+        ///505,
+        ///506,
+        ///507,
+        ///510,
+        ///511,
+        ///512,
+        ///513,
+        ///520,
+        ///521,
+        ///522,
+        ///530,
+        ///531,
+        ///540,
+        ///541,
+        ///542,
+        ///550,Base Behavior - Jump Attack
+        ///560,
+        ///561,
+        ///600,
+        ///601,
+        ///602,
+        ///900,
+        ///1000,
+        ///1010,
+        ///1500,Flask of Crimson Tears
+        ///1501,Flask of Crimson Tears +1
+        ///1502,Flask of Crimson Tears +2
+        ///1503,Flask of Crimson Tears +3
+        ///1504,Flask of Crimson Tears +4
+        ///1505,Flask of Crimson Tears  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_BehaviorParam_PC {
+            get {
+                return ResourceManager.GetString("ParamEntries_BehaviorParam_PC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///20000000,Black Knife Tiche
+        ///20100000,Banished Knight Oleg
+        ///20200000,Banished Knight Engvall
+        ///20228000,
+        ///20229000,
+        ///20230000,
+        ///20300000,Fanged Imps
+        ///20300001,Fanged Imps
+        ///20400000,Latenna the Albinauric
+        ///20500000,Nomad
+        ///20600000,Nightmaiden &amp; Swordstress
+        ///20600001,Nightmaiden &amp; Swordstress
+        ///20700000,Mimic Tear
+        ///20700001,Mimic Tear
+        ///20800000,Crystalian
+        ///20900000,Ancestral Follower
+        ///21000000,Winged Misbegotten
+        ///21100000,Albinauric Ashes
+        ///21100001,Albinauric Ashes
+        ///21200000,Skeletal Militiaman
+        ///212 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_BuddyParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_BuddyParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,Smithscript Spear - Bullet 
+        ///1,
+        ///2,
+        ///3,
+        ///4,
+        ///10,
+        ///65,
+        ///66,
+        ///67,
+        ///68,
+        ///69,
+        ///70,
+        ///110,Impact
+        ///111,Impact
+        ///126,
+        ///127,
+        ///128,
+        ///129,
+        ///130,Rainbow Stone
+        ///131,Rainbow Stone [Hit]
+        ///132,Rainbow Stone [Hit]
+        ///148,
+        ///150,
+        ///151,
+        ///155,
+        ///156,
+        ///157,
+        ///158,
+        ///250,
+        ///251,
+        ///252,
+        ///253,
+        ///254,
+        ///255,
+        ///256,
+        ///260,
+        ///261,
+        ///300,
+        ///304,
+        ///370,
+        ///380,
+        ///385,
+        ///430,
+        ///431,
+        ///900,Deathbed Dress - Ally HP Restore
+        ///950,
+        ///1000,Blood Loss - Bullet
+        ///1005,Poison/Scarlet Rot - Bullet
+        ///1010,
+        ///1020,Madness - Bullet
+        ///1100,[Torrent] Bullet
+        ///1101,
+        ///15 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_Bullet {
+            get {
+                return ResourceManager.GetString("ParamEntries_Bullet", resourceCulture);
             }
         }
         
@@ -1710,6 +2335,45 @@ namespace TarnishedTool.Properties {
         ///   Looks up a localized string similar to ID,Name
         ///0,
         ///1,
+        ///2,
+        ///3,
+        ///4,[Item] Tarnished&apos;s Furled Finger - Create Summon Sign
+        ///5,
+        ///6,
+        ///7,[Item] Finger Severer - Return to World
+        ///8,
+        ///9,
+        ///10,[Item] Duelist&apos;s Furled Finger - Create Invasion Sign
+        ///11,[Item] Festering/Bloody Finger - Attempt Invasion
+        ///12,
+        ///13,
+        ///14,
+        ///15,
+        ///16,[Item] Recusant Finger - Attempt Invasion
+        ///17,
+        ///18,
+        ///20,Message appraise HP restoration
+        ///21,
+        ///22,
+        ///23,Animation Offset +10k - Unknown
+        ///24,
+        ///25,
+        ///26,Stake of Marika
+        ///27,
+        ///28,[Item] Taunter&apos;s Tongue - Icon
+        ///29,
+        ///30,HKS - Unk Throw Def Inv [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_ItemLotParam_enemy {
+            get {
+                return ResourceManager.GetString("ParamEntries_ItemLotParam_enemy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,
         ///2,Flask of Crimson Tears
         ///100,
         ///200,
@@ -1746,6 +2410,31 @@ namespace TarnishedTool.Properties {
         internal static string ParamEntries_ItemLotParam_map {
             get {
                 return ResourceManager.GetString("ParamEntries_ItemLotParam_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///4000,[Sorcery] Glintstone Pebble
+        ///4001,[Sorcery] Great Glintstone Shard
+        ///4010,[Sorcery] Swift Glintstone Shard
+        ///4020,[Sorcery] Glintstone Cometshard
+        ///4021,[Sorcery] Comet
+        ///4030,[Sorcery] Shard Spiral
+        ///4040,[Sorcery] Glintstone Stars
+        ///4050,[Sorcery] Star Shower
+        ///4060,[Sorcery] Crystal Barrage
+        ///4070,[Sorcery] Glintstone Arc
+        ///4080,[Sorcery] Cannon of Haima
+        ///4090,[Sorcery] Crystal Burst
+        ///4100,[Sorcery] Shatter Earth
+        ///4110,[Sorcery] Rock Blaster
+        ///4120,[Sorcery] Gavel of Haima
+        ///4130,[Sorcery] Terra Magic [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_Magic {
+            get {
+                return ResourceManager.GetString("ParamEntries_Magic", resourceCulture);
             }
         }
         
