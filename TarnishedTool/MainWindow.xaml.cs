@@ -90,6 +90,7 @@ namespace TarnishedTool
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService, paramService, paramRepository);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
+            
 
             var playerTab = new PlayerTab(playerViewModel);
             var travelTab = new TravelTab(travelViewModel);

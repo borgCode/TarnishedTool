@@ -129,6 +129,7 @@
         <Compile Include="Enums\Affinity.cs" />
         <Compile Include="Enums\GameVersion.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
+        <Compile Include="Enums\Param.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
@@ -206,6 +207,7 @@
         <Compile Include="Services\UtilityService.cs" />
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
+        <Compile Include="Utilities\EnumUtil.cs" />
         <Compile Include="Utilities\PatchManager.cs" />
         <Compile Include="Utilities\PositionUtils.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
@@ -222,12 +224,14 @@
         <Compile Include="ViewModels\CreateLoadoutViewModel.cs" />
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
+        <Compile Include="ViewModels\FieldValueViewModel.cs" />
         <Compile Include="ViewModels\GraceImportItem.cs" />
         <Compile Include="ViewModels\GraceImportPresetSelectionViewModel.cs" />
         <Compile Include="ViewModels\GracePresetViewModel.cs" />
         <Compile Include="ViewModels\HotkeyBindingViewModel.cs" />
         <Compile Include="ViewModels\ItemSelectionViewModel.cs" />
         <Compile Include="ViewModels\ItemViewModel.cs" />
+        <Compile Include="ViewModels\ParamEditorViewModel.cs" />
         <Compile Include="ViewModels\SearchableGroupedCollection.cs" />
         <Compile Include="ViewModels\SettingsViewModel.cs" />
         <Compile Include="ViewModels\SpEffectViewModel.cs" />
@@ -284,6 +288,9 @@
         <Compile Include="Views\Windows\GracePresetWindow.xaml.cs">
           <DependentUpon>GracePresetWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\ParamEditorWindow.xaml.cs">
+          <DependentUpon>ParamEditorWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\ResistancesWindow.xaml.cs">
           <DependentUpon>ResistancesWindow.xaml</DependentUpon>
         </Compile>
@@ -324,6 +331,7 @@
         <Page Include="Views\Windows\EventLogWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
+        <Page Include="Views\Windows\ParamEditorWindow.xaml" />
         <Page Include="Views\Windows\ResistancesWindow.xaml" />
         <Page Include="Views\Windows\ShopSelectorWindow.xaml" />
         <Page Include="Views\Windows\SpEffectsWindow.xaml" />

@@ -1108,6 +1108,226 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
+        ///    &quot;InternalName&quot;: &quot;stageMaxVal0&quot;,
+        ///    &quot;Description&quot;: &quot;Stat Level Cap corresponds to the level of a certain stat&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Threshold Point [0]&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: 0.0,
+        ///    &quot;Maximum&quot;: 999.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;stageMaxVal1&quot;,
+        ///    &quot;Description&quot;: &quot;Stage cap corresponds to the level of a certain stat&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Threshold Point [1]&quot;,
+        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_CalcCorrectGraph {
+            get {
+                return ResourceManager.GetString("Param_CalcCorrectGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;baseRec_mp&quot;,
+        ///    &quot;Description&quot;: &quot;Time until MP recovers 1 point (first decimal place)&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Base FP Recovery Time&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: 0.0,
+        ///    &quot;Maximum&quot;: 999.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;baseRec_sp&quot;,
+        ///    &quot;Description&quot;: &quot;Time to recover 1 point of stamina (first decimal place)&quot;,
+        ///    &quot;DataType&quot;: &quot;f32&quot;,
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;Base Stamina Recovery Time&quot;,
+        ///    &quot;Defaul [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_CharaInitParam {
+            get {
+                return ResourceManager.GetString("Param_CharaInitParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_EquipParamAccessory {
+            get {
+                return ResourceManager.GetString("Param_EquipParamAccessory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_EquipParamGem {
+            get {
+                return ResourceManager.GetString("Param_EquipParamGem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_EquipParamGoods {
+            get {
+                return ResourceManager.GetString("Param_EquipParamGoods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_EquipParamProtector {
+            get {
+                return ResourceManager.GetString("Param_EquipParamProtector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_EquipParamWeapon {
+            get {
+                return ResourceManager.GetString("Param_EquipParamWeapon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_GameAreaParam {
+            get {
+                return ResourceManager.GetString("Param_GameAreaParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
         ///    &quot;InternalName&quot;: &quot;iconId&quot;,
         ///    &quot;Description&quot;: &quot;Icon ID (When -1, no icon is required)&quot;,
         ///    &quot;DataType&quot;: &quot;s32&quot;,
@@ -1129,6 +1349,550 @@ namespace TarnishedTool.Properties {
         internal static string Param_SpEffectParam {
             get {
                 return ResourceManager.GetString("Param_SpEffectParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
+        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
+        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;BitWidth&quot;: 1,
+        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: 1.0
+        ///  },
+        ///  {
+        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;,
+        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
+        ///    &quot;BitWidth&quot;: 7,
+        ///    &quot;DisplayName&quot;: &quot;&quot;,
+        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;Minimum&quot;: null,
+        ///    &quot;Maximum&quot;: null [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Param_SwordArtsParam {
+            get {
+                return ResourceManager.GetString("Param_SwordArtsParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,Default
+        ///1,Heavy
+        ///2,Keen
+        ///3,
+        ///4,Magic / Fire / Lightning / Holy
+        ///5,
+        ///6,
+        ///7,Occult
+        ///8,Quality
+        ///9,
+        ///10,
+        ///11,
+        ///12,Catalyst -
+        ///13,
+        ///14,Catalyst - Demi-Human Queen&apos;s Staff
+        ///15,Catalyst -
+        ///16,Catalyst -
+        ///50,
+        ///51,
+        ///100,HP Scaling - Vigor
+        ///101,FP Scaling - Mind
+        ///102,Soul Level - Defence
+        ///103,
+        ///104,Stamina - Endurance
+        ///110,Resistance: Poison - Soul Level
+        ///111,Resistance: Scarlet Rot - Soul Level
+        ///112,Resistance: Blood Loss - Soul Level
+        ///113,Resistance: Frostbite - Soul Level
+        ///114,Resistance: Sleep - Soul  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_CalcCorrectGraph {
+            get {
+                return ResourceManager.GetString("ParamEntries_CalcCorrectGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///10,
+        ///11,
+        ///12,
+        ///13,
+        ///20,
+        ///21,
+        ///22,
+        ///23,
+        ///2400,Gift - None
+        ///2401,Gift - Crimson Amber Medallion
+        ///2402,Gift - Lands Between Rune
+        ///2403,Gift - Golden Seed
+        ///2404,Gift - Fanged Imp Ashes
+        ///2405,Gift - Cracked Pot
+        ///2406,Gift - Stonesword Key
+        ///2407,Gift - Bewitching Branch
+        ///2408,Gift - Boiled Prawn
+        ///2409,Gift - Shabriri&apos;s Woe
+        ///3000,Class - Vagabond
+        ///3001,Class - Warrior
+        ///3002,Class - Hero
+        ///3003,Class - Bandit
+        ///3004,Class - Astrologer
+        ///3005,Class - Prophet
+        ///3006,Class - Confessor
+        ///3007,Class - Samurai
+        ///3008, [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_CharaInitParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_CharaInitParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///1000,Crimson Amber Medallion
+        ///1001,Crimson Amber Medallion +1
+        ///1002,Crimson Amber Medallion +2
+        ///1010,Cerulean Amber Medallion
+        ///1011,Cerulean Amber Medallion +1
+        ///1012,Cerulean Amber Medallion +2
+        ///1020,Viridian Amber Medallion
+        ///1021,Viridian Amber Medallion +1
+        ///1022,Viridian Amber Medallion +2
+        ///1030,Arsenal Charm
+        ///1031,Arsenal Charm +1
+        ///1032,Great-Jar&apos;s Arsenal
+        ///1040,Erdtree&apos;s Favor
+        ///1041,Erdtree&apos;s Favor +1
+        ///1042,Erdtree&apos;s Favor +2
+        ///1050,Radagon&apos;s Scarseal
+        ///1051,Radagon&apos;s Soreseal
+        ///1060,Starscourge H [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_EquipParamAccessory {
+            get {
+                return ResourceManager.GetString("ParamEntries_EquipParamAccessory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///10,test gem 1
+        ///20,test gem 2
+        ///30,test gem 3
+        ///40,Ash of War: Lion&apos;s Claw
+        ///41,Ash of War: Lion&apos;s Claw
+        ///80,Ash of War: Lion&apos;s Claw
+        ///81,Ash of War: Lion&apos;s Claw
+        ///82,Ash of War: Lion&apos;s Claw
+        ///83,Ash of War: Lion&apos;s Claw
+        ///84,Ash of War: Lion&apos;s Claw
+        ///85,Ash of War: Lion&apos;s Claw
+        ///86,Ash of War: Lion&apos;s Claw
+        ///87,Ash of War: Lion&apos;s Claw
+        ///88,Ash of War: Lion&apos;s Claw
+        ///89,Ash of War: Lion&apos;s Claw
+        ///90,Ash of War: Lion&apos;s Claw
+        ///100,Ash of War: Lion&apos;s Claw
+        ///101,Ash of War: Impaling Thrust
+        ///102,Ash of War: Piercing Fang
+        ///1 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_EquipParamGem {
+            get {
+                return ResourceManager.GetString("ParamEntries_EquipParamGem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///10,
+        ///11,
+        ///12,
+        ///13,
+        ///14,
+        ///15,
+        ///16,
+        ///20,
+        ///21,
+        ///22,
+        ///23,
+        ///24,
+        ///25,
+        ///26,
+        ///27,
+        ///28,
+        ///29,
+        ///30,
+        ///31,
+        ///35,
+        ///40,
+        ///41,
+        ///42,
+        ///43,
+        ///44,
+        ///60,
+        ///61,
+        ///62,
+        ///63,
+        ///64,
+        ///65,
+        ///66,
+        ///67,
+        ///68,
+        ///69,
+        ///70,
+        ///71,
+        ///72,
+        ///73,
+        ///74,
+        ///75,
+        ///76,
+        ///77,
+        ///78,
+        ///79,
+        ///90,
+        ///91,
+        ///92,
+        ///93,
+        ///94,
+        ///98,
+        ///99,
+        ///100,Tarnished&apos;s Furled Finger
+        ///101,Duelist&apos;s Furled Finger
+        ///102,Bloody Finger
+        ///103,Finger Severer
+        ///104,White Cipher Ring
+        ///105,Blue Cipher Ring
+        ///106,Tarnished&apos;s Wizened Finger
+        ///107,Phantom Bloody Finger
+        ///108,Taunter&apos;s Tongue
+        ///109,Small Gold [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_EquipParamGoods {
+            get {
+                return ResourceManager.GetString("ParamEntries_EquipParamGoods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///1000,Type 1
+        ///1100,Type 2
+        ///1200,Type 3
+        ///1300,Type 4
+        ///1400,Type 5
+        ///1500,Type 6
+        ///1600,Type 7
+        ///1700,Type 8
+        ///1800,Type 9
+        ///1900,Type 10
+        ///2000,Type 11
+        ///2100,Type 12
+        ///2200,Type 13
+        ///2300,Type 14
+        ///2400,Type 15
+        ///2500,Type 16
+        ///2600,Type 17
+        ///2700,Type 18
+        ///2800,Type 19
+        ///2900,Type 20
+        ///3000,Type 1
+        ///3100,Type 2
+        ///3200,Type 3
+        ///3300,Type 4
+        ///3400,Type 5
+        ///3500,Type 6
+        ///3600,Type 7
+        ///3700,Type 8
+        ///3800,Type 9
+        ///3900,Type 10
+        ///4000,Type 11
+        ///4100,Type 12
+        ///4200,Type 13
+        ///4300,Type 14
+        ///4400,Type 15
+        ///4500,Type 16
+        ///4600,Type 17
+        ///470 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_EquipParamProtector {
+            get {
+                return ResourceManager.GetString("ParamEntries_EquipParamProtector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///1000,
+        ///1100,
+        ///1200,
+        ///1210,
+        ///1220,
+        ///1230,
+        ///1240,
+        ///1250,
+        ///1260,
+        ///1400,
+        ///1410,
+        ///1420,
+        ///1430,
+        ///1500,
+        ///1600,
+        ///1700,
+        ///1800,
+        ///1900,
+        ///2000,
+        ///2100,
+        ///2200,
+        ///11000,
+        ///12000,
+        ///13000,
+        ///100000,
+        ///100100,
+        ///100200,
+        ///100300,
+        ///100400,
+        ///100500,
+        ///100600,
+        ///100700,
+        ///100800,
+        ///100900,
+        ///101000,
+        ///110000,Unarmed
+        ///170000,Throwing Dagger
+        ///171000,Bone Dart
+        ///172000,Poisonbone Dart
+        ///173000,Kukri
+        ///174000,Crystal Dart
+        ///175000,Fan Daggers
+        ///176000,Ruin Fragment
+        ///183000,Explosive Stone
+        ///183100,Explosive Stone Clump
+        ///184000,Poisoned Ston [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_EquipParamWeapon {
+            get {
+                return ResourceManager.GetString("ParamEntries_EquipParamWeapon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,
+        ///9999991,
+        ///9999992,
+        ///10000800,[Stormveil Castle] Godrick the Grafted
+        ///10000850,[Stormveil Castle] Margit the Fell Omen
+        ///10010800,[Chapel of Anticipation] Grafted Scion
+        ///11000800,[Leyndell- Royal Capital] Morgott- the Omen King
+        ///11000850,[Leyndell- Royal Capital] Godfrey- First Elden Lord
+        ///11050800,[Leyndell Ashen Capital] Hoarah Loux
+        ///11050850,[Leyndell Ashen Capital] Sir Gideon Ofnir
+        ///12010800,[Ainsel River] Dragonkin Soldier of Nokstella
+        ///12010850,[Ainsel River] Dragonkin Soldier (Lake of  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_GameAreaParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_GameAreaParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,
+        ///2,Flask of Crimson Tears
+        ///100,
+        ///200,
+        ///300,
+        ///310,
+        ///2000,Flask of Crimson Tears
+        ///2001,Flask of Cerulean Tears
+        ///2010,Roped Fire Pot
+        ///2020,
+        ///2230,Small Golden Effigy
+        ///2520,
+        ///2700,Flask of Wondrous Physick
+        ///2900,
+        ///2910,
+        ///3000,
+        ///3010,
+        ///3020,
+        ///3030,
+        ///3040,
+        ///4820,Baldachin&apos;s Blessing
+        ///4900,Mending Rune of Perfect Order
+        ///4910,Mending Rune of the Death-Prince
+        ///4920,Mending Rune of the Fell Curse
+        ///5000,Oil Pot
+        ///5010,Small Golden Effigy
+        ///5020,
+        ///5030,
+        ///5040,Immunizing Cured Meat
+        ///5200,
+        ///5210,
+        ///5220,
+        ///52 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_ItemLotParam_map {
+            get {
+                return ResourceManager.GetString("ParamEntries_ItemLotParam_map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,Human
+        ///100,
+        ///540,
+        ///541,
+        ///542,
+        ///1000,
+        ///9999,
+        ///1000000,BuddyStone
+        ///1002000,Patrol Dummy
+        ///1100000,Caravan Dummy
+        ///1200000,Bullet Dummy
+        ///1200020,Bullet Dummy
+        ///1200030,Bullet Dummy
+        ///1200041,Bullet Dummy
+        ///1200090,
+        ///1200100,Bullet Dummy
+        ///1300000,Balloon Dummy
+        ///10000000,Bonfire
+        ///10000100,Talk Dummy
+        ///10001000,BuddyStone
+        ///10003000,Talk Dummy
+        ///10003100,Talk Dummy
+        ///10004000,
+        ///10005000,Talk Dummy
+        ///10006000,
+        ///10006050,Talk Dummy
+        ///10100000,Talk Dummy
+        ///20100000,Blaidd the Half-Wolf
+        ///20101000,Blaidd the Half-W [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_NpcParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_NpcParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,
+        ///2,
+        ///10,
+        ///11,
+        ///20,
+        ///50,
+        ///100,
+        ///540,
+        ///541,
+        ///542,
+        ///9998,
+        ///9999,
+        ///1000000,
+        ///1000100,Horned Bairn
+        ///1000101,
+        ///1000102,
+        ///1001000,
+        ///1002000,
+        ///1003000,
+        ///1004000,
+        ///1004001,
+        ///1005000,
+        ///1006000,
+        ///1007000,
+        ///1200000,
+        ///1200100,
+        ///1200199,
+        ///1300000,
+        ///10005000,
+        ///20100000,Blaidd the Half-Wolf
+        ///20108000,Blaidd the Half-Wolf
+        ///20108500,Baleful Shadow
+        ///20109000,Blaidd the Half-Wolf
+        ///20109500,Blaidd the Half-Wolf
+        ///20300000,Rennala Queen of the Full Moon
+        ///20300100,Rennala Queen of the Full Moon
+        ///20310000,Rennala Qu [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_NpcThinkParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_NpcThinkParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///100,
+        ///1000,
+        ///1001,
+        ///1002,
+        ///1003,
+        ///1004,
+        ///1005,
+        ///1010,
+        ///2000,
+        ///2001,
+        ///2002,
+        ///2003,
+        ///2004,
+        ///2005,
+        ///2010,
+        ///3000,
+        ///3001,
+        ///3002,
+        ///3003,
+        ///3004,
+        ///3005,
+        ///3010,
+        ///4000,
+        ///4001,
+        ///4002,
+        ///4003,
+        ///4004,
+        ///4005,
+        ///4010,
+        ///5000,
+        ///5001,
+        ///5002,
+        ///5003,
+        ///5004,
+        ///5005,
+        ///5010,
+        ///6000,
+        ///6001,
+        ///6002,
+        ///6003,
+        ///6004,
+        ///6005,
+        ///6010,
+        ///7000,
+        ///7001,
+        ///7002,
+        ///7003,
+        ///7004,
+        ///7005,
+        ///7010,
+        ///.
+        /// </summary>
+        internal static string ParamEntries_ResistCorrectParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_ResistCorrectParam", resourceCulture);
             }
         }
         
@@ -1165,9 +1929,47 @@ namespace TarnishedTool.Properties {
         ///29,
         ///30,HKS - Unk Throw Def Inv [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ParamEntries_SpEffect {
+        internal static string ParamEntries_SpEffectParam {
             get {
-                return ResourceManager.GetString("ParamEntries_SpEffect", resourceCulture);
+                return ResourceManager.GetString("ParamEntries_SpEffectParam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID,Name
+        ///0,
+        ///1,
+        ///10,No Skill
+        ///100,Lion&apos;s Claw
+        ///101,Impaling Thrust
+        ///102,Piercing Fang
+        ///103,Spinning Slash
+        ///104,%null%
+        ///105,Charge Forth
+        ///106,Stamp (Upward Cut)
+        ///107,Stamp (Sweep)
+        ///108,Blood Tax
+        ///109,Repeating Thrust
+        ///110,Wild Strikes
+        ///111,Spinning Strikes
+        ///112,Double Slash
+        ///113,Prelate&apos;s Charge
+        ///114,Unsheathe
+        ///115,Square Off
+        ///116,Giant Hunt
+        ///117,Torch Attack
+        ///118,Loretta&apos;s Slash
+        ///119,Poison Moth Flight
+        ///120,Spinning Weapon
+        ///121,%null%
+        ///122,Storm Assault
+        ///123,Stormcaller
+        ///124,Sword Dance
+        ///125,Spinning Chain        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ParamEntries_SwordArtsParam {
+            get {
+                return ResourceManager.GetString("ParamEntries_SwordArtsParam", resourceCulture);
             }
         }
         

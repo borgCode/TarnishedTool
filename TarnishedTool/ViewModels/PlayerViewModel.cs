@@ -16,7 +16,6 @@ namespace TarnishedTool.ViewModels
     public class PlayerViewModel : BaseViewModel
     {
         private int _currentRuneLevel;
-// fixing value getting saved but not being able to set hp until re-input
         private bool _customHpHasBeenSet = !string.IsNullOrWhiteSpace(SettingsManager.Default.SaveCustomHp);
 
         private float _playerDesiredSpeed = -1f;

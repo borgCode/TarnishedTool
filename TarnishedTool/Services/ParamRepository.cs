@@ -5,41 +5,68 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Properties;
+using TarnishedTool.Utilities;
+using static TarnishedTool.Enums.Param;
 
 namespace TarnishedTool.Services;
 
 public class ParamRepository : IParamRepository
 {
-    private readonly Dictionary<string, LoadedParam> _cache = new();
+    private readonly Dictionary<Param, LoadedParam> _cache = new();
 
-    private readonly Dictionary<string, (int TableIndex, int SlotIndex)> _paramLocations = new()
+    private readonly Dictionary<Param, (int TableIndex, int SlotIndex)> _paramLocations = new()
     {
-        ["AtkParam_Npc"] = (7, 0),
-        ["AtkParam_PC"] = (8, 0),
-        ["BehaviorParam"] = (12, 0),
-        ["BehaviorParam_PC"] = (13, 0),
-        ["BuddyParam"] = (134, 0),
-        ["SpEffectParam"] = (15, 0),
+        // ["AtkParam_Npc"] = (7, 0),
+        // ["AtkParam_PC"] = (8, 0),
+        // ["BehaviorParam"] = (12, 0),
+        // ["BehaviorParam_PC"] = (13, 0),
+        // ["BuddyParam"] = (134, 0),
+        //bullet
+        [CalcCorrectGraph] = (30, 0),
+        [CharaInitParam] = (23, 0),
+        [EquipParamAccessory] = (2, 0),
+        [EquipParamGem] = (154, 0),
+        [EquipParamGoods] = (3, 0),
+        [EquipParamProtector] = (1, 0),
+        [EquipParamWeapon] = (0, 0),
+        [GameAreaParam] = (29, 0),
+        [SpEffectParam] = (15, 0),
+        [SwordArtsParam] = (82, 0),
     };
 
-    public IReadOnlyList<string> AvailableParams => _paramLocations.Keys.ToList();
+    public IReadOnlyList<Param> AvailableParams => _paramLocations.Keys.ToList();
 
-    public (int TableIndex, int SlotIndex) GetLocation(string paramName)
+    public (int TableIndex, int SlotIndex) GetLocation(Param param)
     {
-        if (_paramLocations.TryGetValue(paramName, out var location))
+        if (_paramLocations.TryGetValue(param, out var location))
             return location;
-        throw new ArgumentException($"Unknown param: {paramName}");
+        throw new ArgumentException($"Unknown param: {param}");
     }
 
-    public LoadedParam GetParam(string paramName)
+    public Dictionary<Param, List<ParamEntry>> GetAllEntriesByParam()
     {
-        if (_cache.TryGetValue(paramName, out var cached))
+        var result = new Dictionary<Param, List<ParamEntry>>();
+    
+        foreach (Param p in EnumUtil.GetValues<Param>())
+        {
+            var loaded = GetParam(p);
+            result[p] = loaded.Entries.ToList();
+        }
+    
+        return result;
+    }
+
+    public LoadedParam GetParam(Param param)
+    {
+        if (_cache.TryGetValue(param, out var cached))
             return cached;
 
-        var (tableIndex, slotIndex) = GetLocation(paramName);
+        var (tableIndex, slotIndex) = GetLocation(param);
+        var paramName = param.ToString();
         var fields = LoadFieldDefs(paramName);
 
         var loaded = new LoadedParam
@@ -52,7 +79,7 @@ public class ParamRepository : IParamRepository
             RowSize = CalculateRowSize(fields)
         };
 
-        _cache[paramName] = loaded;
+        _cache[param] = loaded;
         return loaded;
     }
 
