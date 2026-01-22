@@ -37,9 +37,8 @@ namespace TarnishedTool.ViewModels
         private readonly IEmevdService _emevdService;
         private readonly IDlcService _dlcService;
         private readonly IEzStateService _ezStateService;
-
-        private readonly SpEffectViewModel _spEffectViewModel = new();
-        private SpEffectsWindow _spEffectsWindow;
+        
+        
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
@@ -74,10 +73,7 @@ namespace TarnishedTool.ViewModels
             GiveRunesCommand = new DelegateCommand(GiveRunes);
             ApplyRuneArcCommand = new DelegateCommand(ApplyRuneArc);
             RestCommand = new DelegateCommand(Rest);
-
-            ApplySpEffectCommand = new DelegateCommand(ApplySpEffect);
-            RemoveSpEffectCommand = new DelegateCommand(RemoveSpEffect);
-            AboutSpEffectsCommand = new DelegateCommand(ShowAboutSpEffects);
+            
 
             ApplyPrefs();
 
@@ -102,9 +98,7 @@ namespace TarnishedTool.ViewModels
         public ICommand ApplyRuneArcCommand { get; set; }
         public ICommand RestCommand { get; set; }
 
-        public ICommand ApplySpEffectCommand { get; set; }
-        public ICommand RemoveSpEffectCommand { get; set; }
-        public ICommand AboutSpEffectsCommand { get; set; }
+
 
         #endregion
 
@@ -587,39 +581,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-
-        private string _applySpEffectId;
-
-        public string ApplySpEffectId
-        {
-            get => _applySpEffectId;
-            set => SetProperty(ref _applySpEffectId, value);
-        }
-
-        private string _removeSpEffectId;
-
-        public string RemoveSpEffectId
-        {
-            get => _removeSpEffectId;
-            set => SetProperty(ref _removeSpEffectId, value);
-        }
-
-        private bool _isSpEffectWindowOpen;
-
-        public bool IsSpEffectWindowOpen
-        {
-            get => _isSpEffectWindowOpen;
-            set
-            {
-                if (SetProperty(ref _isSpEffectWindowOpen, value))
-                {
-                    if (_isSpEffectWindowOpen)
-                    {
-                        OpenSpEffectsWindow();
-                    }
-                }
-            }
-        }
+        
 
         private bool _isRememberSpeedEnabled;
 
@@ -783,8 +745,6 @@ namespace TarnishedTool.ViewModels
                 () => SetSpeed(Math.Min(10, PlayerSpeed + 0.25f)));
             _hotkeyManager.RegisterAction(HotkeyActions.DecreasePlayerSpeed,
                 () => SetSpeed(Math.Max(0, PlayerSpeed - 0.25f)));
-            _hotkeyManager.RegisterAction(HotkeyActions.ApplySpEffect, () => SafeExecute(ApplySpEffect));
-            _hotkeyManager.RegisterAction(HotkeyActions.RemoveSpEffect, () => SafeExecute(RemoveSpEffect));
             _hotkeyManager.RegisterAction(HotkeyActions.RuneArc, () => SafeExecute(ApplyRuneArc));
             _hotkeyManager.RegisterAction(HotkeyActions.Rest, () => SafeExecute(Rest));
             _hotkeyManager.RegisterAction(HotkeyActions.PlayerSetCustomHp, SetCustomHp);
@@ -809,12 +769,6 @@ namespace TarnishedTool.ViewModels
             SpiritAsh = _playerService.GetSpiritAsh();
             CurrentAnimation = _playerService.GetCurrentAnimation();
             if (ShowPlayerLocation) MapLocation = _playerService.GetMapLocation();
-
-            if (IsSpEffectWindowOpen)
-            {
-                var spEffects = _spEffectService.GetActiveSpEffectList(_playerService.GetPlayerIns());
-                _spEffectViewModel.RefreshEffects(spEffects);
-            }
 
             if (_currentRuneLevel == newRuneLevel) return;
             RuneLevel = newRuneLevel;
@@ -947,35 +901,7 @@ namespace TarnishedTool.ViewModels
             if (IsResetWorldIncluded) _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.FadeOutAndPassTime(true));
             else _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
         }
-
-        private void ApplySpEffect()
-        {
-            if (!uint.TryParse(ApplySpEffectId, NumberStyles.Integer, CultureInfo.InvariantCulture, out uint spEffectId)) return;
-            var playerIns = _playerService.GetPlayerIns();
-            _spEffectService.ApplySpEffect(playerIns, spEffectId);
-        }
-
-        private void RemoveSpEffect()
-        {
-            if (!uint.TryParse(RemoveSpEffectId, NumberStyles.Integer, CultureInfo.InvariantCulture, out uint spEffectId)) return;
-            var playerIns = _playerService.GetPlayerIns();
-            _spEffectService.RemoveSpEffect(playerIns, spEffectId);
-        }
-
-        private void OpenSpEffectsWindow()
-        {
-            _spEffectsWindow = new SpEffectsWindow
-            {
-                DataContext = _spEffectViewModel,
-                Title = "Player Active Special Effects"
-            };
-            _spEffectsWindow.Closed += (s, e) =>
-            {
-                _spEffectsWindow = null;
-                IsSpEffectWindowOpen = false;
-            };
-            _spEffectsWindow.Show();
-        }
+        
 
         private void ApplyPrefs()
         {
@@ -993,13 +919,7 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(NewGameEventIds[i], i == activeIndex);
             }
         }
-
-        private void ShowAboutSpEffects()
-        {
-            MsgBox.Show(
-                "To put it simply Special Effects are effects that get applied to every entity in the game in order to achieve a specific goal in mind, that goal can quite literally be anything the devs have in mind. For example you can lock the player in a certain area, activate the effect of a talisman after the player equips it, apply a buff to the player. You can can also force a boss to follow up a specific move after an attack or trigger an entire phase through it. spEffects also control the hp and damage scaling of enemies and many more things that it's hard to explain in a small info box. If you want to learn about this I would recommend you check out Smithbox by Vawser and slowly get a grasp on how things work as most things are annotated thanks to the community effort so it will be a little easier to navigate.",
-                "About Special Effects");
-        }
+        
 
         #endregion
     }
