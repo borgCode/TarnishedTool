@@ -111,7 +111,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public void RefreshValue()
     {
         _value = parent.ReadFieldValue(field);
-        _vanillaValue ??= _value; 
+        _vanillaValue = parent.ReadVanillaFieldValue(field);
         OnPropertyChanged(nameof(Value));
         OnPropertyChanged(nameof(ValueText));
         OnPropertyChanged(nameof(VanillaValue));

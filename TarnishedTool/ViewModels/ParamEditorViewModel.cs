@@ -16,6 +16,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private readonly IParamRepository _paramRepository;
     private readonly IParamService _paramService;
     
+    private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
+    
+    
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
@@ -106,6 +109,8 @@ public sealed class ParamEditorViewModel : BaseViewModel
             return;
         }
 
+        var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
+        
         _currentRowPtr = _paramService.GetParamRow(
             _currentParam.TableIndex,
             _currentParam.SlotIndex,
@@ -115,6 +120,11 @@ public sealed class ParamEditorViewModel : BaseViewModel
         if (_currentRowPtr != IntPtr.Zero)
         {
             _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
+            
+            if (!_vanillaData.ContainsKey(key))
+            {
+                _vanillaData[key] = (byte[])_currentRowData.Clone();
+            }
         }
         
         foreach (var field in _fields)
@@ -148,6 +158,16 @@ public sealed class ParamEditorViewModel : BaseViewModel
         
         _paramService.WriteField(_currentRowPtr, field, value);
         _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
+    }
+    
+    public object ReadVanillaFieldValue(ParamFieldDef field)
+    {
+        var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
+        if (_vanillaData.TryGetValue(key, out var vanillaBytes))
+        {
+            return _paramService.ReadFieldFromBytes(vanillaBytes, field);
+        }
+        return null;
     }
 
     #endregion
