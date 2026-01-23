@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Input;
-using System.Windows.Threading;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
-using TarnishedTool.Views.Windows;
 using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.ViewModels
@@ -23,9 +21,7 @@ namespace TarnishedTool.ViewModels
         private const float Epsilon = 0.0001f;
 
         private bool _pauseUpdates = true;
-
-        private readonly DispatcherTimer _playerTick;
-
+        
         private readonly IPlayerService _playerService;
 
         private readonly CharacterState _saveState1 = new();
@@ -37,14 +33,13 @@ namespace TarnishedTool.ViewModels
         private readonly IEmevdService _emevdService;
         private readonly IDlcService _dlcService;
         private readonly IEzStateService _ezStateService;
-        
-        
+        private readonly IGameTickService _gameTickService;
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
-            IDlcService dlcService, IEzStateService ezStateService)
+            IDlcService dlcService, IEzStateService ezStateService, IGameTickService gameTickService)
         {
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
@@ -53,6 +48,7 @@ namespace TarnishedTool.ViewModels
             _emevdService = emevdService;
             _dlcService = dlcService;
             _ezStateService = ezStateService;
+            _gameTickService = gameTickService;
 
             RegisterHotkeys();
 
@@ -76,12 +72,6 @@ namespace TarnishedTool.ViewModels
             
 
             ApplyPrefs();
-
-            _playerTick = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(64)
-            };
-            _playerTick.Tick += PlayerTick;
         }
 
         #region Commands
@@ -671,7 +661,7 @@ namespace TarnishedTool.ViewModels
             AreOptionsEnabled = true;
             
             LoadStats();
-            _playerTick.Start();
+            _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
@@ -705,7 +695,7 @@ namespace TarnishedTool.ViewModels
         private void OnGameNotLoaded()
         {
             AreOptionsEnabled = false;
-            _playerTick.Stop();
+            _gameTickService.Unsubscribe(PlayerTick);
         }
 
         private void OnNewGameStart()
@@ -757,7 +747,7 @@ namespace TarnishedTool.ViewModels
             action();
         }
 
-        private void PlayerTick(object sender, EventArgs e)
+        private void PlayerTick()
         {
             if (_pauseUpdates) return;
 

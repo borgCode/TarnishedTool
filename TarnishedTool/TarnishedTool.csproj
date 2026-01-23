@@ -136,6 +136,7 @@
         <Compile Include="GameIds\Event.cs" />
         <Compile Include="GameIds\EzState.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
+        <Compile Include="Interfaces\IGameTickService.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IDlcService.cs" />
         <Compile Include="Interfaces\IEmevdService.cs" />
@@ -193,6 +194,7 @@
         <Compile Include="Services\EventLogReader.cs" />
         <Compile Include="Services\EzStateService.cs" />
         <Compile Include="Services\FlaskService.cs" />
+        <Compile Include="Services\GameTickService.cs" />
         <Compile Include="Services\ItemService.cs" />
         <Compile Include="Services\ParamRepository.cs" />
         <Compile Include="Services\ParamService.cs" />

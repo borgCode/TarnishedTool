@@ -10,7 +10,7 @@
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None"
         AllowsTransparency="True"
-        Height="700" Width="1400">
+        Height="700" Width="1500">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -144,6 +144,7 @@
                               SelectedItem="{Binding ParamEntries.SelectedItem}"
                               VirtualizingPanel.IsVirtualizing="True"
                               VirtualizingPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               BorderThickness="0">
                         <ListView.ItemContainerStyle>
@@ -227,6 +228,7 @@
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -285,10 +287,23 @@
                     </TextBox.Template>
                 </TextBox>
 
-                <Border Grid.Row="1" BorderThickness="1" BorderBrush="#333">
+                <Grid Grid.Row="1" Margin="0,0,17,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                
+                    <TextBlock Grid.Column="0" Text="Name" FontWeight="SemiBold" Padding="8,4" />
+                    <TextBlock Grid.Column="1" Text="Current Value" FontWeight="SemiBold" Padding="8,4" />
+                    <TextBlock Grid.Column="2" Text="Vanilla Value" FontWeight="SemiBold" Padding="8,4" />
+
+                </Grid>
+                <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
                     <ListView ItemsSource="{Binding FieldsView}"
                               VirtualizingPanel.IsVirtualizing="True"
                               VirtualizingPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
                               BorderThickness="0">
                         <ListView.ItemContainerStyle>
@@ -327,8 +342,9 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="450" />
-                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="150" />
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
@@ -367,6 +383,11 @@
                                             </Style>
                                         </ContentControl.Style>
                                     </ContentControl>
+                                    <TextBlock Grid.Column="2"
+                                               Text="{Binding VanillaValueText}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="#888" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

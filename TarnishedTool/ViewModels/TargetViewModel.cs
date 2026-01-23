@@ -16,8 +16,6 @@ namespace TarnishedTool.ViewModels
     public class TargetViewModel : BaseViewModel
     {
 
-        private readonly DispatcherTimer _targetTick;
-
         private bool _customHpHasBeenSet = true;
 
         private long _currentTargetChrIns;
@@ -43,13 +41,14 @@ namespace TarnishedTool.ViewModels
         private readonly HotkeyManager _hotkeyManager;
         private readonly ISpEffectService _spEffectService;
         private readonly IEmevdService _emevdService;
+        private readonly IGameTickService _gameTickService;
 
         private DateTime _forceActSequenceLastExecuted = DateTime.MinValue;
         private static readonly TimeSpan ForceActSequenceCooldown = TimeSpan.FromSeconds(2);
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
             IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService,
-            IEmevdService emevdService)
+            IEmevdService emevdService, IGameTickService gameTickService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
@@ -60,6 +59,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager = hotkeyManager;
             _spEffectService = spEffectService;
             _emevdService = emevdService;
+            _gameTickService = gameTickService;
             RegisterHotkeys();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -71,13 +71,6 @@ namespace TarnishedTool.ViewModels
             ForActSequenceCommand = new DelegateCommand(ForceActSequence);
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
             ResetPositionCommand = new DelegateCommand(ResetPosition);
-
-
-            _targetTick = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(64)
-            };
-            _targetTick.Tick += TargetTick;
         }
 
 
@@ -121,12 +114,12 @@ namespace TarnishedTool.ViewModels
                 if (value)
                 {
                     _targetService.ToggleTargetHook(true);
-                    _targetTick.Start();
+                    _gameTickService.Subscribe(TargetTick);
                     ShowAllResistances = true;
                 }
                 else
                 {
-                    _targetTick.Stop();
+                    _gameTickService.Unsubscribe(TargetTick);
                     IsRepeatActEnabled = false;
                     ShowAllResistances = false;
                     IsResistancesWindowOpen = false;
@@ -722,7 +715,7 @@ namespace TarnishedTool.ViewModels
             if (IsTargetOptionsEnabled)
             {
                 _targetService.ToggleTargetHook(true);
-                _targetTick.Start();
+                _gameTickService.Subscribe(TargetTick);
             }
 
             _targetService.ToggleTargetAi(false);
@@ -731,7 +724,7 @@ namespace TarnishedTool.ViewModels
 
         private void OnGameNotLoaded()
         {
-            _targetTick.Stop();
+            _gameTickService.Unsubscribe(TargetTick);
             LastAct = 0;
             ForceAct = 0;
             AreOptionsEnabled = false;
@@ -903,7 +896,7 @@ namespace TarnishedTool.ViewModels
             return (null, "Enter a number or percentage (e.g. 545 or 40%)");
         }
 
-        private void TargetTick(object sender, EventArgs e)
+        private void TargetTick()
         {
             if (!IsTargetValid())
             {

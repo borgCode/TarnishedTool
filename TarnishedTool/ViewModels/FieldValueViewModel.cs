@@ -16,6 +16,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public float? Maximum => field.Maximum;
     public bool IsBitfield => field.BitWidth.HasValue;
     public int Offset => field.Offset;
+    public string VanillaValueText => FormatValue(_vanillaValue);
     
     public string FullName => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})";
     
@@ -34,6 +35,10 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
             }
         }
     }
+    
+    private object _vanillaValue;
+
+    public object VanillaValue => _vanillaValue;
 
     private object ClampValue(object val)
     {
@@ -74,6 +79,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
             _ => val.ToString()
         };
     }
+    
 
     private bool TryParseValue(string text, out object result)
     {
@@ -105,8 +111,11 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public void RefreshValue()
     {
         _value = parent.ReadFieldValue(field);
+        _vanillaValue ??= _value; 
         OnPropertyChanged(nameof(Value));
         OnPropertyChanged(nameof(ValueText));
+        OnPropertyChanged(nameof(VanillaValue));
+        OnPropertyChanged(nameof(VanillaValueText));
     }
 
     #endregion
