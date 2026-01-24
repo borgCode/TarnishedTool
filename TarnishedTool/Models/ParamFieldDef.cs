@@ -13,7 +13,6 @@ public class ParamFieldDef
     public int? BitWidth { get; set; }
     public string DisplayName { get; set; }
     
-    public int DefaultValue { get; set; }
     public double? Minimum { get; set; }
     public double? Maximum { get; set; }
     public int Offset { get; set; }

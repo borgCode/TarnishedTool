@@ -1114,7 +1114,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;Hit 0: Radius&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: 0,
         ///    &quot;Maximum&quot;: 100
         ///  },
@@ -1125,9 +1125,9 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;Hit 1: Radius&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: 0,
-        ///    [rest of string was truncated]&quot;;.
+        ///    &quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_AtkParam {
             get {
@@ -1144,13 +1144,13 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;Behavior Variation ID&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: 0,
         ///    &quot;Maximum&quot;: 999999999
         ///  },
         ///  {
         ///    &quot;InternalName&quot;: &quot;behaviorJudgeId&quot;,
-        ///    &quot;Description&quot;: &quot;Used when calculating the ID for attack parameters. This ID matches the action judgment  [rest of string was truncated]&quot;;.
+        ///    &quot;Description&quot;: &quot;Used when calculating the ID for attack parameters. This ID matches the action judgment I [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_BehaviorParam {
             get {
@@ -1161,24 +1161,19 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;InternalName&quot;: &quot;disableParam_NT&quot;,
-        ///    &quot;Description&quot;: &quot;Parameters marked with  are excluded in the NT version package.&quot;,
-        ///    &quot;DataType&quot;: &quot;u8&quot;,
+        ///    &quot;InternalName&quot;: &quot;atkId_Bullet&quot;,
+        ///    &quot;Description&quot;: &quot;Register each attack parameter ID.  Attack type / Attack material / Physical attack power / Magic attack power / Stamina attack power / Knockback distance.&quot;,
+        ///    &quot;DataType&quot;: &quot;s32&quot;,
         ///    &quot;ArrayLength&quot;: null,
-        ///    &quot;BitWidth&quot;: 1,
-        ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
-        ///    &quot;Minimum&quot;: null,
-        ///    &quot;Maximum&quot;: 1
+        ///    &quot;BitWidth&quot;: null,
+        ///    &quot;DisplayName&quot;: &quot;AtkParam ID&quot;,
+        ///    &quot;EnumType&quot;: null,
+        ///    &quot;Minimum&quot;: -1,
+        ///    &quot;Maximum&quot;: 999999999
         ///  },
         ///  {
-        ///    &quot;InternalName&quot;: &quot;disableParamReserve1&quot;,
-        ///    &quot;Description&quot;: &quot;&quot;,
-        ///    &quot;DataType&quot;: &quot;dummy8&quot;,
-        ///    &quot;ArrayLength&quot;: null,
-        ///    &quot;BitWidth&quot;: 7,
-        ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;InternalName&quot;: &quot;sfxId_Bullet&quot;,
+        ///    &quot;Description&quot;: &quot;Enter the SFX ID for [Bullet]. -1 does not  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_BuddyParam {
             get {
@@ -1218,7 +1213,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;Threshold Point [0]&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: 0,
         ///    &quot;Maximum&quot;: 999
         ///  },
@@ -1228,7 +1223,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;DataType&quot;: &quot;f32&quot;,
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
-        ///    &quot;Displ [rest of string was truncated]&quot;;.
+        ///    &quot;Displa [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_CalcCorrectGraph {
             get {
@@ -1245,7 +1240,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;Base FP Recovery Time&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: 0,
         ///    &quot;Maximum&quot;: 999
         ///  },
@@ -1255,7 +1250,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;DataType&quot;: &quot;f32&quot;,
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
-        ///    &quot;DisplayN [rest of string was truncated]&quot;;.
+        ///    &quot;DisplayNa [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_CharaInitParam {
             get {
@@ -1272,7 +1267,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1283,7 +1278,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_EquipParamAccessory {
             get {
@@ -1300,7 +1295,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1311,7 +1306,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_EquipParamGem {
             get {
@@ -1328,7 +1323,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1339,7 +1334,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_EquipParamGoods {
             get {
@@ -1356,7 +1351,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1367,7 +1362,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_EquipParamProtector {
             get {
@@ -1384,7 +1379,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1395,7 +1390,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_EquipParamWeapon {
             get {
@@ -1440,7 +1435,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;1 - Item ID&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: -1,
         ///    &quot;Maximum&quot;: 999999999
         ///  },
@@ -1451,8 +1446,8 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;2 - Item ID&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
-        ///    &quot;Mi [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;: null,
+        ///    &quot;Mini [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_ItemLotParam {
             get {
@@ -1469,7 +1464,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1480,7 +1475,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_Magic {
             get {
@@ -1497,7 +1492,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1508,7 +1503,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_NpcParam {
             get {
@@ -1525,7 +1520,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1536,7 +1531,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_NpcThinkParam {
             get {
@@ -1576,7 +1571,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
         ///    &quot;DisplayName&quot;: &quot;Icon ID&quot;,
-        ///    &quot;DefaultValue&quot;: -1,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: -1,
         ///    &quot;Maximum&quot;: 999999
         ///  },
@@ -1586,7 +1581,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;DataType&quot;: &quot;f32&quot;,
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: null,
-        ///    &quot;DisplayName&quot;: &quot;Trigger at H [rest of string was truncated]&quot;;.
+        ///    &quot;DisplayName&quot;: &quot;Trigger at HP  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_SpEffectParam {
             get {
@@ -1603,7 +1598,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 1,
         ///    &quot;DisplayName&quot;: &quot;Disable Param - Network Test&quot;,
-        ///    &quot;DefaultValue&quot;: 0,
+        ///    &quot;EnumType&quot;: null,
         ///    &quot;Minimum&quot;: null,
         ///    &quot;Maximum&quot;: 1
         ///  },
@@ -1614,7 +1609,7 @@ namespace TarnishedTool.Properties {
         ///    &quot;ArrayLength&quot;: null,
         ///    &quot;BitWidth&quot;: 7,
         ///    &quot;DisplayName&quot;: &quot;&quot;,
-        ///    &quot;DefaultVal [rest of string was truncated]&quot;;.
+        ///    &quot;EnumType&quot;:  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Param_SwordArtsParam {
             get {
