@@ -26,6 +26,8 @@ public class ItemViewModel : BaseViewModel
 
     private readonly List<Item> _allItems;
 
+    private readonly Dictionary<string, Type> enumsType;
+
     private readonly Dictionary<string, LoadoutTemplate> _customLoadoutTemplates;
 
     public ItemSelectionViewModel ItemSelection { get; }

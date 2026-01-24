@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Input;
 using TarnishedTool.Core;
@@ -23,6 +24,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
+    
+    private readonly Dictionary<string, Type> _enumTypes = new ();
+    
 
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
@@ -43,7 +47,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 entry.Parent.ToString().Contains(search) ||
                 (entry.Name?.ToLower().Contains(search) ?? false)
         );
-
+        
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
 
         RestoreSelectedEntryCommand = new DelegateCommand(RestoreSelectedEntry);
@@ -56,6 +60,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         OnParamChanged();
     }
 
+    
     #region Commands
 
     public ICommand RestoreSelectedEntryCommand { get; set; }

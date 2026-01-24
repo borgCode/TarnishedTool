@@ -1,6 +1,8 @@
+﻿// 
+
 namespace TarnishedTool.Enums.ParamEnums.CharaInitParam;
 
-public enum NpcDrawType : sbyte
+public enum VowType
 {
-    Type = 0
+    Type0 = 0
 }
