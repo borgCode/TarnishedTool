@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BULLET_ATTACH_EFFECT_TYPE : byte
+public enum BulletAttachEffectType : byte
 {
     None = 0,
     Force = 1,

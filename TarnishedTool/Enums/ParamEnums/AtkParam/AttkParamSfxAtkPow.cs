@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum ATKPARAM_SFX_ATK_POW : sbyte
+public enum AttkParamSfxAtkPow : sbyte
 {
     Small = 0,
     Medium = 1,

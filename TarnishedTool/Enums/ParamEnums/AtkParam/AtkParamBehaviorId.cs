@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum ATKPARAM_BEHAVIOR_ID
+public enum AtkParamBehaviorId : byte
 {
     None = 0,
     ContinuousAttack = 1,

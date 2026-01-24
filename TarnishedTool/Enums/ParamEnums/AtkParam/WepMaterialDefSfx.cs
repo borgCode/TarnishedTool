@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum WEP_MATERIAL_DEF_SFX : ushort
+public enum WepMaterialDefSfx : ushort
 {
     Type0 = 0,
     Type50 = 50,

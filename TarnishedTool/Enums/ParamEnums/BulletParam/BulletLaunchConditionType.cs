@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BULLET_LAUNCH_CONDITION_TYPE : byte
+public enum BulletLaunchConditionType : byte
 {
     Always = 0,
     Hit_water = 1,

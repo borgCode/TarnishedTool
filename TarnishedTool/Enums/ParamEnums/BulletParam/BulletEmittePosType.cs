@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BULLET_EMITTE_POS_TYPE : byte
+public enum BulletEmittePosType : byte
 {
     Default = 0,
     ShooterAndRandomCreateRadius = 1,

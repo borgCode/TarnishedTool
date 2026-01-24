@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BehaviorParam;
 
-public enum BEHAVIOR_CATEGORY : byte
+public enum BehaviorCategory : byte
 {
     NoCategory = 0,
     PCRight_Hand = 1,

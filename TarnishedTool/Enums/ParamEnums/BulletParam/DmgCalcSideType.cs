@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum DMG_CALC_SIDE_TYPE : byte
+public enum DmgCalcSideType : byte
 {
     Type0 = 0
 }

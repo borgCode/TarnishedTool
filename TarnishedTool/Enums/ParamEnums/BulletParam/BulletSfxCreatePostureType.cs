@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BULLET_SFX_CREATE_POSTURE_TYPE : sbyte
+public enum BulletSfxCreatePostureType : sbyte
 {
     Parent = 0,
     Global_Y_Axis = 1,

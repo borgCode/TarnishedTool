@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BULLET_BALLISTIC_CALC_TYPE : byte
+public enum BulletBallisticCalcType : byte
 {
     EmitsForward = 0,
     EmitsBackward = 1

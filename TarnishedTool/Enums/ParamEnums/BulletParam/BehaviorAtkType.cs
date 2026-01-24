@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BEHAVIOR_ATK_TYPE : byte
+public enum BehaviorAtkType : byte
 {
     Slash = 0,
     Strike = 1,

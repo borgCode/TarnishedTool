@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BehaviorParam;
 
-public enum BEHAVIOR_REF_TYPE : byte
+public enum BehaviorRefType : byte
 {
     Attack = 0,
     Bullet = 1,

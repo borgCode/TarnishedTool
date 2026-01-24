@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum ATK_PARAM_MAP_HIT : byte
+public enum AtkParamMapHit : byte
 {
     Normal = 0,
     Precision= 1,

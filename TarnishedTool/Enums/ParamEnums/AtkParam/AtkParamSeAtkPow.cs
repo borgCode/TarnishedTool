@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum ATKPARAM_SE_ATK_POW
+public enum AtkParamSeAtkPow
 {
     Small = 0,
     Large = 1,

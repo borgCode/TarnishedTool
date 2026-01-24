@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum ATK_PATAM_THROWFLAG_TYPE : byte
+public enum AtkPatamThrowflagType : byte
 {
     None = 0,
     ThrowTransition = 1,

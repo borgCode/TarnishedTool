@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
-public enum BULLET_FOLLOW_TYPE : byte
+public enum BulletFollowType : byte
 {
     Do_not_follow = 0,
     Follow_shooter = 1,

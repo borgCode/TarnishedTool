@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.BehaviorParam;
 
-public enum STATE_BEHAVIOR_TYPE : byte
+public enum StateBehaviorType : byte
 {
     None = 0,
     Player = 1,
