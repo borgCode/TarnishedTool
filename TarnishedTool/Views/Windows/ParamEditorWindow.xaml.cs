@@ -1,7 +1,11 @@
 ﻿// 
 
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Views.Windows;
 
@@ -39,5 +43,21 @@ public partial class ParamEditorWindow : TopmostWindow
         SettingsManager.Default.ParamEditorWindowTop = Top;
         SettingsManager.Default.ParamEditorWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
         SettingsManager.Default.Save();
+    }
+
+    private void PinnedItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is ListViewItem item && item.DataContext is ParamEntry entry)
+        {
+            ((ParamEditorViewModel)DataContext).NavigateToPinnedCommand.Execute(entry);
+        }
+    }
+
+    private void UnpinMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (PinnedListView.SelectedItem is ParamEntry entry)
+        {
+            ((ParamEditorViewModel)DataContext).TogglePinCommand.Execute(entry);
+        }
     }
 }
