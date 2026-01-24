@@ -158,6 +158,24 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private void OnParamChanged()
     {
         _currentParam = _paramRepository.GetParam(ParamEntries.SelectedGroup);
+        
+        foreach (var field in _currentParam.Fields)
+        {
+            if (field.EnumType == null) continue;
+
+            if (_enumTypes.TryGetValue(field.EnumType, out var enumType))
+            {
+                foreach (var enumVal in Enum.GetValues(enumType))
+                {
+                    Console.WriteLine(enumVal);
+                }
+            }
+            
+            
+        }
+
+        
+
 
         _fields = _currentParam.Fields
             .Where(field => !field.InternalName.ToLower().Contains("pad"))
@@ -285,6 +303,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
         ParamEntries.SelectedGroup = entry.Parent;
         ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == entry.Id);
+        
     }
     
         private void PopulateEnumTypes()
