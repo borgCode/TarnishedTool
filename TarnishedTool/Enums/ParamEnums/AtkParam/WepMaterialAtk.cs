@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum WEP_MATERIAL_ATK : byte
+public enum WepMaterialAtk : byte
 {
     Type0 = 0,
     Type1 = 1,

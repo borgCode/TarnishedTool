@@ -1,6 +1,6 @@
-namespace TarnishedTool.Enums;
+namespace TarnishedTool.Enums.ParamEnums.AtkParam;
 
-public enum ATK_PARAM_HIT_SOURCE : byte
+public enum AtkParamHitSource : byte
 {
     Weapon = 0,
     Body = 1,

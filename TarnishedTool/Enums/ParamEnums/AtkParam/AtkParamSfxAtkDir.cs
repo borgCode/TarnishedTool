@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums;
 
-public enum ATKPARAM_SFX_ATK_DIR
+public enum AtkParamSfxAtkDir
 {
     Front = 0,
     Top = 1,
