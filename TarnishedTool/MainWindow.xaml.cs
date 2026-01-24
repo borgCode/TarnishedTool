@@ -34,8 +34,7 @@ namespace TarnishedTool
             _memoryService = new MemoryService();
             _memoryService.StartAutoAttach();
             InitializeComponent();
-
-
+            
             if (SettingsManager.Default.WindowLeft != 0 || SettingsManager.Default.WindowTop != 0)
             {
                 Left = SettingsManager.Default.WindowLeft;
@@ -72,7 +71,6 @@ namespace TarnishedTool
 
             _dlcService = new DlcService(_memoryService);
 
-
             PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager,
                 eventService, spEffectService, emevdService, _dlcService, ezStateService, gameTickService);
             TravelViewModel travelViewModel =
@@ -93,7 +91,6 @@ namespace TarnishedTool
                 paramService, paramRepository, spEffectService, playerService, hotkeyManager, gameTickService, reminderService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
             
-
             var playerTab = new PlayerTab(playerViewModel);
             var travelTab = new TravelTab(travelViewModel);
             var enemyTab = new EnemyTab(enemyViewModel);
@@ -104,8 +101,6 @@ namespace TarnishedTool
             var advancedTab = new AdvancedTab(advancedViewModel);
             var settingsTab = new SettingsTab(settingsViewModel);
             
-
-
             MainTabControl.Items.Add(new TabItem { Header = "Player", Content = playerTab });
             MainTabControl.Items.Add(new TabItem { Header = "Travel", Content = travelTab });
             MainTabControl.Items.Add(new TabItem { Header = "Enemies", Content = enemyTab });

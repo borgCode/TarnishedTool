@@ -143,19 +143,6 @@ public class AdvancedViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         if (IsSpEffectWindowOpen) _gameTickService.Subscribe(SpEffectsTick);
-
-        // Parallel.ForEach(param.Entries, entry =>
-        // {
-        //     IntPtr row = _paramService.GetParamRow(param.TableIndex, param.SlotIndex, entry.Id);
-        //     if (row == IntPtr.Zero) return;
-        //
-        //     byte[] data = _paramService.ReadRow(row, param.RowSize);
-        //
-        //     foreach (var field in param.Fields)
-        //     {
-        //         _ = _paramService.ReadFieldFromBytes(data, field);
-        //     }
-        // });
     }
 
     private void RegisterHotkeys()

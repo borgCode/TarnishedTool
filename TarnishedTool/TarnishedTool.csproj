@@ -117,11 +117,13 @@
         <Compile Include="Converters\BooleanAndConverter.cs" />
         <Compile Include="Converters\BooleanOrConverter.cs" />
         <Compile Include="Converters\BoolToBorderBrushConverter.cs" />
+        <Compile Include="Converters\CountToVisibilityConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
         <Compile Include="Converters\ImmuneFillConverter.cs" />
         <Compile Include="Converters\InverseBooleanConverter.cs" />
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
         <Compile Include="Converters\LogEntryToBrushConverter.cs" />
+        <Compile Include="Converters\ParamEntryToDisplayTextConverter.cs" />
         <Compile Include="Converters\SpellIdToVisibilityConverter.cs" />
         <Compile Include="Converters\StringToVisibilityConverter.cs" />
         <Compile Include="Converters\Vector3ToStringConverter.cs" />

@@ -52,6 +52,9 @@ public class SettingsManager
     public double GracePresetWindowLeft { get; set; }
     public double GracePresetWindowTop { get; set; }
     public bool GracePresetWindowAlwaysOnTop { get; set; }
+    public double ParamEditorWindowLeft { get; set; }
+    public double ParamEditorWindowTop { get; set; }
+    public bool ParamEditorWindowAlwaysOnTop { get; set; }
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
@@ -107,6 +110,9 @@ public class SettingsManager
                 $"GracePresetWindowLeft={GracePresetWindowLeft.ToString(CultureInfo.InvariantCulture)}",
                 $"GracePresetWindowTop={GracePresetWindowTop.ToString(CultureInfo.InvariantCulture)}",
                 $"GracePresetWindowAlwaysOnTop={GracePresetWindowAlwaysOnTop}",
+                $"ParamEditorWindowLeft={ParamEditorWindowLeft.ToString(CultureInfo.InvariantCulture)}",
+                $"ParamEditorWindowTop={ParamEditorWindowTop.ToString(CultureInfo.InvariantCulture)}",
+                $"ParamEditorWindowAlwaysOnTop={ParamEditorWindowAlwaysOnTop}",
             };
 
             File.WriteAllLines(SettingsPath, lines);
@@ -312,6 +318,20 @@ public class SettingsManager
                             case "GracePresetWindowAlwaysOnTop":
                                 bool.TryParse(value, out bool gpwalop);
                                 settings.GracePresetWindowAlwaysOnTop = gpwalop;
+                                break;
+                            case "ParamEditorWindowLeft":
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double pewl);
+                                settings.ParamEditorWindowLeft = pewl;
+                                break;
+                            case "ParamEditorWindowTop":
+                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
+                                    out double pewt);
+                                settings.ParamEditorWindowTop = pewt;
+                                break;
+                            case "ParamEditorWindowAlwaysOnTop":
+                                bool.TryParse(value, out bool pewalop);
+                                settings.ParamEditorWindowAlwaysOnTop = pewalop;
                                 break;
                         }
                     }

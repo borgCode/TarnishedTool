@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -21,7 +22,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
-
+    
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
@@ -46,13 +47,19 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
         RestoreSelectedEntryCommand = new DelegateCommand(RestoreSelectedEntry);
         RestoreAllEntriesCommand = new DelegateCommand(RestoreAllEntries);
+        TogglePinCommand = new DelegateCommand<ParamEntry>(TogglePin);
+        NavigateToPinnedCommand = new DelegateCommand<ParamEntry>(NavigateToEntry);
+        
+        OnParamChanged();
     }
 
     #region Commands
 
     public ICommand RestoreSelectedEntryCommand { get; set; }
     public ICommand RestoreAllEntriesCommand { get; set; }
-
+    public ICommand TogglePinCommand { get; set; }
+    public ICommand NavigateToPinnedCommand { get; set; }
+    
     #endregion
 
     #region Properties
@@ -101,6 +108,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
             }
         }
     }
+    
+    private readonly ObservableCollection<ParamEntry> _pinnedEntries = new();
+    public ObservableCollection<ParamEntry> PinnedEntries => _pinnedEntries;
 
     #endregion
 
@@ -204,8 +214,50 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     private void RestoreAllEntries()
     {
+        foreach (var key in _modifiedEntries.ToList())
+        {
+            if (!_vanillaData.TryGetValue(key, out var vanilla))
+                continue;
+        
+            var rowPtr = _paramService.GetParamRow(
+                _paramRepository.GetParam(key.Item1).TableIndex,
+                _paramRepository.GetParam(key.Item1).SlotIndex,
+                key.Item2
+            );
+        
+            if (rowPtr != IntPtr.Zero)
+                _paramService.WriteRow(rowPtr, vanilla);
+        }
+    
+        _modifiedEntries.Clear();
+        IsSelectedEntryModified = false;
+        OnPropertyChanged(nameof(HasAnyModified));
+    
+        foreach (var field in _fields)
+        {
+            field.RefreshValue();
+        }
     }
-
+    
+    private void TogglePin(ParamEntry entry)
+    {
+        if (entry == null) return;
+    
+        var existing = _pinnedEntries.FirstOrDefault(e => e.Parent == entry.Parent && e.Id == entry.Id);
+        if (existing != null)
+            _pinnedEntries.Remove(existing);
+        else
+            _pinnedEntries.Add(entry);
+    }
+    
+    private void NavigateToEntry(ParamEntry entry)
+    {
+        if (entry == null) return;
+    
+        ParamEntries.SelectedGroup = entry.Parent;
+        ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == entry.Id);
+    }
+    
     #endregion
 
     #region Public Methods
@@ -252,6 +304,12 @@ public sealed class ParamEditorViewModel : BaseViewModel
     {
         return _modifiedEntries.Contains((param, entryId));
     }
+    
+    public bool IsPinned(ParamEntry entry)
+    {
+        return _pinnedEntries.Any(e => e.Parent == entry.Parent && e.Id == entry.Id);
+    }
+
 
     #endregion
 }

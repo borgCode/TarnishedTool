@@ -28,6 +28,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         _items = new ObservableCollection<TItem>();
         
         SelectedGroup = _groups.FirstOrDefault();
+        UpdateItemsList();
     }
 
     private ObservableCollection<TGroup> _groups;
@@ -116,7 +117,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
 
     #region Private Methods
 
-    private void UpdateItemsList()
+    public void UpdateItemsList()
     {
         if (SelectedGroup == null || !_groupedItems.ContainsKey(SelectedGroup))
         {
@@ -167,6 +168,8 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         else
             UpdateItemsList();
     }
+    
+    
     
     #endregion
     

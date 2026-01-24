@@ -189,7 +189,6 @@ public class ParamRepository : IParamRepository
         "s8" or "u8" or "dummy8" => 1,
         "s16" or "u16" => 2,
         "s32" or "u32" or "f32" => 4,
-        "s64" or "u64" or "f64" => 8,
         _ => 1
     };
 

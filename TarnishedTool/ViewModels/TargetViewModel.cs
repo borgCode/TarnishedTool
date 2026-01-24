@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Threading;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
@@ -15,7 +14,6 @@ namespace TarnishedTool.ViewModels
 {
     public class TargetViewModel : BaseViewModel
     {
-
         private bool _customHpHasBeenSet = true;
 
         private long _currentTargetChrIns;
@@ -72,7 +70,6 @@ namespace TarnishedTool.ViewModels
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
             ResetPositionCommand = new DelegateCommand(ResetPosition);
         }
-
 
         #region Commands
 
@@ -569,8 +566,6 @@ namespace TarnishedTool.ViewModels
                 SetProperty(ref _isFreezeHealthEnabled, value);
                 _targetService.ToggleTargetNoDamage(_isFreezeHealthEnabled);
                 _targetService.ToggleNoHeal(_isFreezeHealthEnabled);
-
-  
             }
         }
 
@@ -885,7 +880,8 @@ namespace TarnishedTool.ViewModels
 
             if (input.EndsWith("%"))
             {
-                if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
+                if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture,
+                        out var percent))
                     return ((int)(percent / 100.0 * MaxHealth), null);
                 return (null, "Invalid percentage format");
             }
@@ -914,8 +910,9 @@ namespace TarnishedTool.ViewModels
                 int npcThinkParamId = _targetService.GetNpcThinkParamId();
                 int chrId = _targetService.GetNpcChrId();
                 uint npcParamId = _targetService.GetNpcParamId();
-                Console.WriteLine($@"EntityId: {entityId} NpcThinkParamId: {npcThinkParamId} NpcParamId: {npcParamId} ChrId: {chrId}");
-                
+                Console.WriteLine(
+                    $@"EntityId: {entityId} NpcThinkParamId: {npcThinkParamId} NpcParamId: {npcParamId} ChrId: {chrId}");
+
 #endif
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
@@ -1049,7 +1046,8 @@ namespace TarnishedTool.ViewModels
 
             for (int i = 0; i < parts.Length; i++)
             {
-                if (!int.TryParse(parts[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out int act) || act < 0 || act > 99)
+                if (!int.TryParse(parts[i], NumberStyles.Integer, CultureInfo.InvariantCulture, out int act) ||
+                    act < 0 || act > 99)
                 {
                     MsgBox.Show("Invalid act: " + parts[i]);
                     return;
