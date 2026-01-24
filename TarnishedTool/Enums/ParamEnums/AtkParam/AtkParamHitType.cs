@@ -1,9 +1,13 @@
+using System.ComponentModel;
+
 namespace TarnishedTool.Enums;
 
 public enum AtkParamHitType : byte
 {
-    Normal_tip = 0,
+    [Description("Normal Tip")]
+    NormalTip = 0,
     Middle = 1,
     Root = 2,
+    [Description("Map Collision Detection")]
     MapCollisionDetection = 3
 }

@@ -1,18 +1,26 @@
-namespace TarnishedTool.Enums;
+using System.ComponentModel;
 
-public enum AtkParamBehaviorId : byte
+namespace TarnishedTool.Enums.ParamEnums.AtkParam;
+
+public enum AtkParamBehaviorId
 {
     None = 0,
+    [Description("Continuous Attack")]
     ContinuousAttack = 1,
-    Superhugeblowout = 2,
-    Delayeddamagereaction = 3,
-    DamageonlyFE = 4,
-    Smallstaggerguarantee = 5,
-    Unknown_6 = 6,
-    Unknown_7 = 7,
-    Unknown_8 = 8,
-    Unknown_9 = 9,
+    [Description("Super Huge Blowout")]
+    SuperHugeBlowout = 2,
+    [Description("Delayed Damage Reaction")]
+    DelayedDamageReaction = 3,
+    [Description("Damage Only FE")]
+    DamageOnlyFE = 4,
+    [Description("Small Stagger Guarantee")]
+    SmallStaggerGuarantee = 5,
+    Unknown6 = 6,
+    Unknown7 = 7,
+    Unknown8 = 8,
+    Unknown9 = 9,
+    [Description("Start Grab")]
     StartGrab = 10,
+    [Description("Finish Grab")]
     FinishGrab = 11
-
 }

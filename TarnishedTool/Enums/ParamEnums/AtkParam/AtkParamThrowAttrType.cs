@@ -1,6 +1,6 @@
 namespace TarnishedTool.Enums.ParamEnums.AtkParam;
 
-public enum AtkParamGuardRangeType : byte
+public enum AtkParamThrowAttrType : byte
 {
     Type0 = 0,
     Type1 = 1

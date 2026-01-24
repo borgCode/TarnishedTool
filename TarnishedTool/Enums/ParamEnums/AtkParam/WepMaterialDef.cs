@@ -1,4 +1,4 @@
-namespace TarnishedTool.Enums;
+namespace TarnishedTool.Enums.ParamEnums.AtkParam;
 
 public enum WepMaterialDef : ushort
 {

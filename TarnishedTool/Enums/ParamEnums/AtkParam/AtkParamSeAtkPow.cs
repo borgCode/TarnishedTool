@@ -1,9 +1,12 @@
-namespace TarnishedTool.Enums;
+using System.ComponentModel;
+
+namespace TarnishedTool.Enums.ParamEnums.AtkParam;
 
 public enum AtkParamSeAtkPow
 {
     Small = 0,
     Large = 1,
-    Extra_Large = 2
+    [Description("Extra Large")] 
+    ExtraLarge = 2
 
 }
