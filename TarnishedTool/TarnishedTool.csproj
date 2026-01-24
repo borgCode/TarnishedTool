@@ -131,6 +131,49 @@
         <Compile Include="Enums\GameVersion.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
         <Compile Include="Enums\Param.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATKPARAM_BEHAVIOR_ID.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATKPARAM_GUARD_RANGE_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATKPARAM_SE_ATK_POW.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATKPARAM_SFX_ATK_DIR.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATKPARAM_SFX_ATK_POW.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATKPARAM_THROWATTR_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATK_PARAM_HIT_SOURCE.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATK_PARAM_HIT_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATK_PARAM_MAP_HIT.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\ATK_PATAM_THROWFLAG_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\BEHAVIOR_ATK_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\WEP_MATERIAL_ATK.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\WEP_MATERIAL_DEF.cs" />
+        <Compile Include="Enums\ParamEnums\AtkParam\WEP_MATERIAL_DEF_SFX.cs" />
+        <Compile Include="Enums\ParamEnums\BehaviorParam\BEHAVIOR_CATEGORY.cs" />
+        <Compile Include="Enums\ParamEnums\BehaviorParam\BEHAVIOR_REF_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BehaviorParam\STATE_BEHAVIOR_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BuddyParam\BUDDY_PC_FOLLOW_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BEHAVIOR_ATK_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_ATTACH_EFFECT_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_BALLISTIC_CALC_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_EMITTE_POS_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_FOLLOW_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_LAUNCH_CONDITION_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_SFX_CREATE_POSTURE_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BULLET_SFX_DELETE_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\DMG_CALC_SIDE_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\WEP_MATERIAL_ATK.cs" />
+        <Compile Include="Enums\ParamEnums\CharaInitParam\NPC_DRAW_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\CharaInitParam\NPC_TYPE.cs" />
+        <Compile Include="Enums\ParamEnums\EquipParamAccessory.cs" />
+        <Compile Include="Enums\ParamEnums\EquipParamGem.cs" />
+        <Compile Include="Enums\ParamEnums\EquipParamGoods.cs" />
+        <Compile Include="Enums\ParamEnums\EquipParamProtector.cs" />
+        <Compile Include="Enums\ParamEnums\EquipParamWeapon.cs" />
+        <Compile Include="Enums\ParamEnums\GameAreaParam.cs" />
+        <Compile Include="Enums\ParamEnums\ItemLotParam.cs" />
+        <Compile Include="Enums\ParamEnums\MagicParam.cs" />
+        <Compile Include="Enums\ParamEnums\NpcParam.cs" />
+        <Compile Include="Enums\ParamEnums\NpcThinkParam.cs" />
+        <Compile Include="Enums\ParamEnums\ResistCorrectParam.cs" />
+        <Compile Include="Enums\ParamEnums\SpEffect.cs" />
+        <Compile Include="Enums\ParamEnums\SwordArtsParam.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
@@ -367,9 +410,6 @@
     <ItemGroup>
       <Resource Include="Assets\icon.ico" />
       <Content Include="FodyWeavers.xml" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Enums\ParamEnums\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />

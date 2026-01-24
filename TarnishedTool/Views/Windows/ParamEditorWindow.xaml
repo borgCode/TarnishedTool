@@ -222,7 +222,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ContextMenu>
-                            <ContextMenu>
+                            <ContextMenu >
                                 <MenuItem Header="Unpin" Click="UnpinMenuItem_Click" />
                             </ContextMenu>
                         </ListView.ContextMenu>
