@@ -4,6 +4,6 @@ public enum StateBehaviorType : byte
 {
     None = 0,
     Player = 1,
-    NPC_1 = 2,
-    NPC_2 = 3
+    Npc1 = 2,
+    Npc2 = 3
 }

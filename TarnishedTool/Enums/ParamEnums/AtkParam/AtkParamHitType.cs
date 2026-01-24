@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace TarnishedTool.Enums;
+namespace TarnishedTool.Enums.ParamEnums.AtkParam;
 
 public enum AtkParamHitType : byte
 {

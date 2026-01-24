@@ -141,8 +141,6 @@
         <Compile Include="Enums\ParamEnums\AtkParam\AtkParamHitType.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\AtkParamMapHit.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\AtkParamThrowFlagType.cs" />
-        <Compile Include="Enums\ParamEnums\AtkParam\AtkPatamThrowflagType.cs" />
-        <Compile Include="Enums\ParamEnums\AtkParam\AttkParamSfxAtkPow.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\BehaviorAtkType.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\WepMaterialAtk.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\WepMaterialDef.cs" />
@@ -154,7 +152,7 @@
         <Compile Include="Enums\ParamEnums\BulletParam\BehaviorAtkType.cs" />
         <Compile Include="Enums\ParamEnums\BulletParam\BulletAttachEffectType.cs" />
         <Compile Include="Enums\ParamEnums\BulletParam\BulletBallisticCalcType.cs" />
-        <Compile Include="Enums\ParamEnums\BulletParam\BulletEmittePosType.cs" />
+        <Compile Include="Enums\ParamEnums\BulletParam\BulletEmitterPosType.cs" />
         <Compile Include="Enums\ParamEnums\BulletParam\BulletFollowType.cs" />
         <Compile Include="Enums\ParamEnums\BulletParam\BulletLaunchConditionType.cs" />
         <Compile Include="Enums\ParamEnums\BulletParam\BulletSfxCreatePostureType.cs" />

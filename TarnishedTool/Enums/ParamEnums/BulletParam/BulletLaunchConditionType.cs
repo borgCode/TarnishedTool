@@ -1,15 +1,22 @@
+using System.ComponentModel;
+
 namespace TarnishedTool.Enums.ParamEnums.BulletParam;
 
 public enum BulletLaunchConditionType : byte
 {
     Always = 0,
-    Hit_water = 1,
-    Hit_water_or_swamp = 2,
-    Didnt_hit_enemy = 3,
-    Hit_enemy = 4,
+    [Description("Hit Water")]
+    HitWater = 1,
+    [Description("Hit Water Or Swamp")]
+    HitWaterOrSwamp = 2,
+    [Description("Didn't Hit Enemy")]
+    DidntHitEnemy = 3,
+    [Description("Hit Enemy")]
+    HitEnemy = 4,
     Unknown = 5,
-    Absorbed_Bullet = 6,
+    [Description("Absorbed Bullet")]
+    AbsorbedBullet = 6,
     Expired = 254,
-    Hit_ground_or_enemy = 255
-
+    [Description("Hit Ground Or Enemy")]
+    HitGroundOrEnemy = 255
 }
