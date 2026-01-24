@@ -1,6 +1,7 @@
 ﻿// 
 
 using System;
+using System.Diagnostics;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using static TarnishedTool.Memory.Offsets;
@@ -42,6 +43,7 @@ public class ParamService(MemoryService memoryService) : IParamService
             if (id == rowId)
             {
                 var dataOffset = memoryService.ReadInt64((IntPtr)(descriptorBase + mid * 0x18 + 0x08));
+                Debug.WriteLine(paramData + dataOffset);
                 return (IntPtr)(paramData + dataOffset);
             }
         
@@ -51,6 +53,7 @@ public class ParamService(MemoryService memoryService) : IParamService
                 high = mid - 1;
         }
     
+        Debug.WriteLine("Not found");
         return IntPtr.Zero;
     }
 

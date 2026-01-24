@@ -15,9 +15,7 @@
 
     <windows:TopmostWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <converters:StringToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
-        <converters:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
     </windows:TopmostWindow.Resources>
     <Grid>
 

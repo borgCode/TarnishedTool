@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -111,6 +112,8 @@ public sealed class ParamEditorViewModel : BaseViewModel
     
     private readonly ObservableCollection<ParamEntry> _pinnedEntries = new();
     public ObservableCollection<ParamEntry> PinnedEntries => _pinnedEntries;
+    
+    public bool HasPinnedEntries => _pinnedEntries.Count > 0;
 
     #endregion
 
@@ -161,7 +164,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
             _currentParam.SlotIndex,
             ParamEntries.SelectedItem.Id
         );
-
+        
         if (_currentRowPtr != IntPtr.Zero)
         {
             _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
@@ -248,6 +251,8 @@ public sealed class ParamEditorViewModel : BaseViewModel
             _pinnedEntries.Remove(existing);
         else
             _pinnedEntries.Add(entry);
+        
+        OnPropertyChanged(nameof(HasPinnedEntries));
     }
     
     private void NavigateToEntry(ParamEntry entry)

@@ -2335,36 +2335,23 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to ID,Name
-        ///0,
-        ///1,
-        ///2,
-        ///3,
-        ///4,[Item] Tarnished&apos;s Furled Finger - Create Summon Sign
-        ///5,
-        ///6,
-        ///7,[Item] Finger Severer - Return to World
-        ///8,
-        ///9,
-        ///10,[Item] Duelist&apos;s Furled Finger - Create Invasion Sign
-        ///11,[Item] Festering/Bloody Finger - Attempt Invasion
-        ///12,
-        ///13,
-        ///14,
-        ///15,
-        ///16,[Item] Recusant Finger - Attempt Invasion
-        ///17,
-        ///18,
-        ///20,Message appraise HP restoration
-        ///21,
-        ///22,
-        ///23,Animation Offset +10k - Unknown
-        ///24,
-        ///25,
-        ///26,Stake of Marika
-        ///27,
-        ///28,[Item] Taunter&apos;s Tongue - Icon
-        ///29,
-        ///30,HKS - Unk Throw Def Inv [rest of string was truncated]&quot;;.
+        ///0,Head
+        ///1,Neutralizing Boluses
+        ///2,Flask of Crimson Tears +5- Flask of Crimson Tears +5- Flask of Crimson Tears +6- Flask of Crimson Tears +6- Flask of Crimson Tears +11- Flask of Crimson Tears- Flask of Crimson Tears
+        ///10,Neutralizing Boluses
+        ///20,Old Fang
+        ///30,Miranda&apos;s Prayer
+        ///40,Golden Seed
+        ///50,Ancient Dragon Smithing Stone
+        ///60,Neutralizing Boluses
+        ///70,Neutralizing Boluses
+        ///80,Neutralizing Boluses
+        ///90,Neutralizing Boluses
+        ///100,Neutralizing Boluses
+        ///110,Neutralizing Boluses
+        ///22200000,
+        ///30100000,
+        ///30 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParamEntries_ItemLotParam_enemy {
             get {
