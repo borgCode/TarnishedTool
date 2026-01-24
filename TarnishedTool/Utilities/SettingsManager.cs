@@ -1,8 +1,11 @@
 ﻿// 
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 
 namespace TarnishedTool.Utilities;
 
@@ -30,8 +33,10 @@ public class SettingsManager
     public bool DisableAchievements { get; set; }
     public bool NoLogo { get; set; }
     public bool MuteMusic { get; set; }
-    public double ResistancesWindowScaleX { get; set; } = 1.0;
-    public double ResistancesWindowScaleY { get; set; } = 1.0;
+    [DefaultValue(1.0)] 
+    public double ResistancesWindowScaleX { get; set; }
+    [DefaultValue(1.0)] 
+    public double ResistancesWindowScaleY { get; set; }
     public double ResistancesWindowOpacity { get; set; }
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
@@ -45,7 +50,8 @@ public class SettingsManager
     public bool IsNoClipKeyboardDisabled { get; set; }
     public bool BlockHotkeysFromGame { get; set; }
     public bool HotkeyReminder { get; set; }
-    public bool EnableUpdateChecks { get; set; } = true;
+    [DefaultValue(true)] 
+    public bool EnableUpdateChecks { get; set; }
     public string SaveCustomHp { get; set; } = "";
     public double GraceImportWindowLeft { get; set; }
     public double GraceImportWindowTop { get; set; }
@@ -62,52 +68,20 @@ public class SettingsManager
     {
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath));
+            Directory.CreateDirectory(Path.GetDirectoryName(SettingsPath)!);
+            var lines = new List<string>();
 
-            var lines = new[]
+            foreach (var prop in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                $"DefenseWindowLeft={DefenseWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"DefenseWindowTop={DefenseWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"DefensesAlwaysOnTop={DefensesAlwaysOnTop}",
-                $"AttackInfoWindowLeft={AttackInfoWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"AttackInfoWindowTop={AttackInfoWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"AtkInfoAlwaysOnTop={AtkInfoAlwaysOnTop}",
-                $"TargetSpEffectWindowLeft={TargetSpEffectWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"TargetSpEffectWindowTop={TargetSpEffectWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"TargetSpEffectAlwaysOnTop={TargetSpEffectAlwaysOnTop}",
-                $"EventLogWindowLeft={EventLogWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"EventLogWindowTop={EventLogWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"EventLogWindowAlwaysOnTop={EventLogWindowAlwaysOnTop}",
-                $"WindowLeft={WindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"WindowTop={WindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"AlwaysOnTop={AlwaysOnTop}",
-                $"StutterFix={StutterFix}",
-                $"DisableAchievements={DisableAchievements}",
-                $"NoLogo={NoLogo}",
-                $"MuteMusic={MuteMusic}",
-                $"ResistancesWindowScaleX={ResistancesWindowScaleX.ToString(CultureInfo.InvariantCulture)}",
-                $"ResistancesWindowScaleY={ResistancesWindowScaleY.ToString(CultureInfo.InvariantCulture)}",
-                $"ResistancesWindowOpacity={ResistancesWindowOpacity.ToString(CultureInfo.InvariantCulture)}",
-                $"ResistancesWindowWidth={ResistancesWindowWidth.ToString(CultureInfo.InvariantCulture)}",
-                $"ResistancesWindowLeft={ResistancesWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"ResistancesWindowTop={ResistancesWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"HotkeyActionIds={HotkeyActionIds}",
-                $"EnableHotkeys={EnableHotkeys}",
-                $"RememberPlayerSpeed={RememberPlayerSpeed}",
-                $"PlayerSpeed={PlayerSpeed.ToString(CultureInfo.InvariantCulture)}",
-                $"RememberGameSpeed={RememberGameSpeed}",
-                $"GameSpeed={GameSpeed.ToString(CultureInfo.InvariantCulture)}",
-                $"IsNoClipKeyboardDisabled={IsNoClipKeyboardDisabled}",
-                $"BlockHotkeysFromGame={BlockHotkeysFromGame}",
-                $"EnableUpdateChecks={EnableUpdateChecks}",
-                $"HotkeyReminder={HotkeyReminder}",
-                $"SaveCustomHp={SaveCustomHp}",
-                $"GraceImportWindowLeft={GraceImportWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"GraceImportWindowTop={GraceImportWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"GracePresetWindowLeft={GracePresetWindowLeft.ToString(CultureInfo.InvariantCulture)}",
-                $"GracePresetWindowTop={GracePresetWindowTop.ToString(CultureInfo.InvariantCulture)}",
-                $"GracePresetWindowAlwaysOnTop={GracePresetWindowAlwaysOnTop}",
-            };
+                var value = prop.GetValue(this);
+                var stringValue = value switch
+                {
+                    double d => d.ToString(CultureInfo.InvariantCulture),
+                    float f => f.ToString(CultureInfo.InvariantCulture),
+                    _ => value?.ToString() ?? ""
+                };
+                lines.Add($"{prop.Name}={stringValue}");
+            }
 
             File.WriteAllLines(SettingsPath, lines);
         }
@@ -121,206 +95,51 @@ public class SettingsManager
     {
         var settings = new SettingsManager();
 
-        if (File.Exists(SettingsPath))
+        foreach (var prop in typeof(SettingsManager).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
-            try
-            {
-                foreach (var line in File.ReadAllLines(SettingsPath))
-                {
-                    var parts = line.Split(new[] { '=' }, 2);
-                    if (parts.Length == 2)
-                    {
-                        var key = parts[0];
-                        var value = parts[1];
+            var defaultAttr = prop.GetCustomAttribute<DefaultValueAttribute>();
+            if (defaultAttr != null)
+                prop.SetValue(settings, defaultAttr.Value);
+        }
 
-                        switch (key)
-                        {
-                            case "DefenseWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double dwl);
-                                settings.DefenseWindowLeft = dwl;
-                                break;
-                            case "DefenseWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double dwt);
-                                settings.DefenseWindowTop = dwt;
-                                break;
-                            case "DefensesAlwaysOnTop":
-                                bool.TryParse(value, out bool daot);
-                                settings.DefensesAlwaysOnTop = daot;
-                                break;
-                            case "AttackInfoWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double aiwl);
-                                settings.AttackInfoWindowLeft = aiwl;
-                                break;
-                            case "AttackInfoWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double aiwt);
-                                settings.AttackInfoWindowTop = aiwt;
-                                break;
-                            case "AtkInfoAlwaysOnTop":
-                                bool.TryParse(value, out bool aiaot);
-                                settings.AtkInfoAlwaysOnTop = aiaot;
-                                break;
-                            case "TargetSpEffectWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double tsewl);
-                                settings.TargetSpEffectWindowLeft = tsewl;
-                                break;
-                            case "TargetSpEffectWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double tsewt);
-                                settings.TargetSpEffectWindowTop = tsewt;
-                                break;
-                            case "TargetSpEffectAlwaysOnTop":
-                                bool.TryParse(value, out bool tseaot);
-                                settings.TargetSpEffectAlwaysOnTop = tseaot;
-                                break;
-                            case "EventLogWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double elwl);
-                                settings.EventLogWindowLeft = elwl;
-                                break;
-                            case "EventLogWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double elwt);
-                                settings.EventLogWindowTop = elwt;
-                                break;
-                            case "EventLogWindowAlwaysOnTop":
-                                bool.TryParse(value, out bool elwaot);
-                                settings.EventLogWindowAlwaysOnTop = elwaot;
-                                break;
-                            case "WindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double wl);
-                                settings.WindowLeft = wl;
-                                break;
-                            case "WindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double wt);
-                                settings.WindowTop = wt;
-                                break;
-                            case "AlwaysOnTop":
-                                bool.TryParse(value, out bool aot);
-                                settings.AlwaysOnTop = aot;
-                                break;
-                            case "StutterFix":
-                                bool.TryParse(value, out bool sf);
-                                settings.StutterFix = sf;
-                                break;
-                            case "DisableAchievements":
-                                bool.TryParse(value, out bool da);
-                                settings.DisableAchievements = da;
-                                break;
-                            case "NoLogo":
-                                bool.TryParse(value, out bool nl);
-                                settings.NoLogo = nl;
-                                break;
-                            case "MuteMusic":
-                                bool.TryParse(value, out bool mm);
-                                settings.MuteMusic = mm;
-                                break;
-                            case "ResistancesWindowScaleX":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double rwx);
-                                settings.ResistancesWindowScaleX = rwx;
-                                break;
-                            case "ResistancesWindowScaleY":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double rwy);
-                                settings.ResistancesWindowScaleY = rwy;
-                                break;
-                            case "ResistancesWindowOpacity":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double rwo);
-                                settings.ResistancesWindowOpacity = rwo;
-                                break;
-                            case "ResistancesWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double rwl);
-                                settings.ResistancesWindowLeft = rwl;
-                                break;
-                            case "ResistancesWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double rwt);
-                                settings.ResistancesWindowTop = rwt;
-                                break;
-                            case "ResistancesWindowWidth":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double rww);
-                                settings.ResistancesWindowWidth = rww;
-                                break;
-                            case "HotkeyActionIds": settings.HotkeyActionIds = value; break;
-                            case "EnableHotkeys":
-                                bool.TryParse(value, out bool eh);
-                                settings.EnableHotkeys = eh;
-                                break;
-                            case "RememberPlayerSpeed":
-                                bool.TryParse(value, out bool rps);
-                                settings.RememberPlayerSpeed = rps;
-                                break;
-                            case "PlayerSpeed":
-                                float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out float ps);
-                                settings.PlayerSpeed = ps;
-                                break;
-                            case "RememberGameSpeed":
-                                bool.TryParse(value, out bool rgs);
-                                settings.RememberGameSpeed = rgs;
-                                break;
-                            case "GameSpeed":
-                                float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out float gs);
-                                settings.GameSpeed = gs;
-                                break;
-                            case "IsNoClipKeyboardDisabled":
-                                bool.TryParse(value, out bool inkd);
-                                settings.IsNoClipKeyboardDisabled = inkd;
-                                break;
-                            case "BlockHotkeysFromGame":
-                                bool.TryParse(value, out bool bhfg);
-                                settings.BlockHotkeysFromGame = bhfg;
-                                break;
-                            case "EnableUpdateChecks":
-                                bool.TryParse(value, out bool euc);
-                                settings.EnableUpdateChecks = euc;
-                                break;
-                            case "HotkeyReminder":
-                                bool.TryParse(value, out bool hr);
-                                settings.HotkeyReminder = hr;
-                                break;
-                            case "SaveCustomHp":
-                                settings.SaveCustomHp = value;
-                                break;
-                            case "GraceImportWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double giwl);
-                                settings.GraceImportWindowLeft = giwl;
-                                break;
-                            case "GraceImportWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double giwt);
-                                settings.GraceImportWindowTop = giwt;
-                                break;
-                            case "GracePresetWindowLeft":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double gpwl);
-                                settings.GracePresetWindowLeft = gpwl;
-                                break;
-                            case "GracePresetWindowTop":
-                                double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture,
-                                    out double gpwt);
-                                settings.GracePresetWindowTop = gpwt;
-                                break;
-                            case "GracePresetWindowAlwaysOnTop":
-                                bool.TryParse(value, out bool gpwalop);
-                                settings.GracePresetWindowAlwaysOnTop = gpwalop;
-                                break;
-                        }
-                    }
-                }
-            }
-            catch
+        if (!File.Exists(SettingsPath))
+            return settings;
+
+        try
+        {
+            var props = new Dictionary<string, PropertyInfo>();
+            foreach (var prop in typeof(SettingsManager).GetProperties(BindingFlags.Public | BindingFlags.Instance))
+                props[prop.Name] = prop;
+
+            foreach (var line in File.ReadAllLines(SettingsPath))
             {
-                // Return default settings on error
+                var parts = line.Split(['='], 2);
+                if (parts.Length != 2) continue;
+
+                var key = parts[0];
+                var value = parts[1];
+
+                if (!props.TryGetValue(key, out var prop)) continue;
+
+                object parsed = prop.PropertyType switch
+                {
+                    { } t when t == typeof(double) =>
+                        double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var d) ? d : 0.0,
+                    { } t when t == typeof(float) =>
+                        float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var f) ? f : 0f,
+                    { } t when t == typeof(bool) =>
+                        bool.TryParse(value, out var b) && b,
+                    { } t when t == typeof(string) => value,
+                    _ => null
+                };
+
+                if (parsed != null)
+                    prop.SetValue(settings, parsed);
             }
+        }
+        catch
+        {
+            // Return default settings on error
         }
 
         return settings;
