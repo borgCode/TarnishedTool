@@ -10,8 +10,10 @@ using System.Windows.Data;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
+using TarnishedTool.Enums.ParamEnums.AtkParam;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
+using TarnishedTool.Utilities;
 using static TarnishedTool.ViewModels.SearchableGroupedCollection<TarnishedTool.Enums.Param,TarnishedTool.Models.ParamEntry>;
 
 namespace TarnishedTool.ViewModels;
@@ -21,13 +23,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private readonly IParamRepository _paramRepository;
     private readonly IParamService _paramService;
     private readonly IReminderService _reminderService;
-
+    private readonly Dictionary<string, Type> _enumTypes = new();
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
-    
-    private readonly Dictionary<string, Type> _enumTypes = new ();
-    
-
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
@@ -47,20 +45,23 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 entry.Parent.ToString().Contains(search) ||
                 (entry.Name?.ToLower().Contains(search) ?? false)
         );
-        
+
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
 
         RestoreSelectedEntryCommand = new DelegateCommand(RestoreSelectedEntry);
         RestoreAllEntriesCommand = new DelegateCommand(RestoreAllEntries);
         TogglePinCommand = new DelegateCommand<ParamEntry>(TogglePin);
         NavigateToPinnedCommand = new DelegateCommand<ParamEntry>(NavigateToEntry);
+        PopulateEnumTypes();
+            
+     //   PrintEnums();
         
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
 
         OnParamChanged();
     }
 
-    
+
     #region Commands
 
     public ICommand RestoreSelectedEntryCommand { get; set; }
@@ -285,6 +286,36 @@ public sealed class ParamEditorViewModel : BaseViewModel
         ParamEntries.SelectedGroup = entry.Parent;
         ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == entry.Id);
     }
+    
+        private void PopulateEnumTypes()
+        {
+            var enumTypes = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => t.IsEnum && t.Namespace?.StartsWith("TarnishedTool.Enums.ParamEnums") == true);
+
+
+        foreach (var type in enumTypes)
+            _enumTypes.Add(type.Name, type);
+        
+    }
+
+/* Debugging
+        private void PrintEnums()
+        {
+            Console.WriteLine("Enums");
+            foreach (var enumType in _enumTypes)
+            {
+                Console.WriteLine($"{enumType.Key}:");
+
+                foreach (var enumVal in Enum.GetValues(enumType.Value))
+                {
+                    Console.WriteLine($"{enumVal}");
+                }
+            }
+            Console.WriteLine();
+        }
+            
+*/
 
     #endregion
 

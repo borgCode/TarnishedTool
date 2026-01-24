@@ -1,5 +1,7 @@
 ﻿// 
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using TarnishedTool.Core;
 using TarnishedTool.Models;
@@ -19,8 +21,10 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public int Offset => field.Offset;
     public string VanillaValueText => FormatValue(_vanillaValue);
     public bool IsModified => !Equals(_value, _vanillaValue);
-    
     public string FullName => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})";
+    
+    
+    
     
 
     private object _value;

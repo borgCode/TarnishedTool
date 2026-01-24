@@ -52822,7 +52822,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 0: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit1_hitType",
@@ -52833,7 +52834,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 1: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit2_hitType",
@@ -52844,7 +52846,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 2: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit3_hitType",
@@ -52855,7 +52858,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 3: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hti0_Priority",
@@ -54010,7 +54014,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 4: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit5_hitType",
@@ -54021,7 +54026,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 5: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit6_hitType",
@@ -54032,7 +54038,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 6: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit7_hitType",
@@ -54043,7 +54050,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 7: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit8_hitType",
@@ -54054,7 +54062,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 8: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit9_hitType",
@@ -54065,7 +54074,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 9: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit10_hitType",
@@ -54076,7 +54086,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 10: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit11_hitType",
@@ -54087,7 +54098,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 11: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit12_hitType",
@@ -54098,7 +54110,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 12: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit13_hitType",
@@ -54109,7 +54122,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 13: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit14_hitType",
@@ -54120,7 +54134,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 14: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hit15_hitType",
@@ -54131,7 +54146,8 @@ e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; </value>
     "DisplayName": "Hit 15: Hit Type",
     "DefaultValue": 0,
     "Minimum": null,
-    "Maximum": null
+    "Maximum": null,
+    "EnumType": "AtkParamHitType"
   },
   {
     "InternalName": "hti4_Priority",
