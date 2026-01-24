@@ -140,4 +140,6 @@ public class ParamService(MemoryService memoryService) : IParamService
     
     public void SetBit(IntPtr row, int offset, int mask, bool setValue) => 
         memoryService.SetBitValue(row + offset, mask, setValue);
+
+    public void WriteRow(IntPtr row, byte[] data) => memoryService.WriteBytes(row, data);
 }

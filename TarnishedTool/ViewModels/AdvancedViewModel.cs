@@ -27,7 +27,8 @@ public class AdvancedViewModel : BaseViewModel
 
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
-        IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService)
+        IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
+        IReminderService reminderService)
     {
         _itemService = itemService;
         _spEffectService = spEffectService;
@@ -48,7 +49,7 @@ public class AdvancedViewModel : BaseViewModel
 
         SelectedEquipType = EquipTypes[0].Value;
 
-        _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService);
+        _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
     }
 
     #region Commands

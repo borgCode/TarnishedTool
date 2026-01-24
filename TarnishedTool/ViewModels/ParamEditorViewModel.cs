@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Input;
+using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
@@ -15,19 +17,22 @@ public sealed class ParamEditorViewModel : BaseViewModel
 {
     private readonly IParamRepository _paramRepository;
     private readonly IParamService _paramService;
-    
+    private readonly IReminderService _reminderService;
+
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
-    
+
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
     private byte[] _currentRowData;
 
-    public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService)
+    public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
+        IReminderService reminderService)
     {
         _paramRepository = paramRepository;
         _paramService = paramService;
+        _reminderService = reminderService;
 
         ParamEntries = new SearchableGroupedCollection<Param, ParamEntry>(
             _paramRepository.GetAllEntriesByParam(),
@@ -36,26 +41,30 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 entry.Parent.ToString().Contains(search) ||
                 (entry.Name?.ToLower().Contains(search) ?? false)
         );
-        
+
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
 
+        RestoreSelectedEntryCommand = new DelegateCommand(RestoreSelectedEntry);
+        RestoreAllEntriesCommand = new DelegateCommand(RestoreAllEntries);
     }
 
     #region Commands
 
-    
+    public ICommand RestoreSelectedEntryCommand { get; set; }
+    public ICommand RestoreAllEntriesCommand { get; set; }
 
     #endregion
-    
+
     #region Properties
 
     public SearchableGroupedCollection<Param, ParamEntry> ParamEntries { get; }
-    
+
     private ICollectionView _fieldsView;
-    
+
     public ICollectionView FieldsView => _fieldsView;
 
     private string _fieldSearchText;
+
     public string FieldSearchText
     {
         get => _fieldSearchText;
@@ -65,8 +74,19 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 _fieldsView?.Refresh();
         }
     }
-    
+
+    private bool _isSelectedEntryModified;
+
+    public bool IsSelectedEntryModified
+    {
+        get => _isSelectedEntryModified;
+        set => SetProperty(ref _isSelectedEntryModified, value);
+    }
+
+    public bool HasAnyModified => _modifiedEntries.Any();
+
     private bool _showModifiedEntriesOnly;
+
     public bool ShowModifiedEntriesOnly
     {
         get => _showModifiedEntriesOnly;
@@ -102,7 +122,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private void OnParamChanged()
     {
         _currentParam = _paramRepository.GetParam(ParamEntries.SelectedGroup);
-        
+
         _fields = _currentParam.Fields
             .Select(f => new FieldValueViewModel(f, this))
             .ToList();
@@ -110,10 +130,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
         _fieldsView = CollectionViewSource.GetDefaultView(_fields);
         _fieldsView.Filter = FilterField;
         OnPropertyChanged(nameof(FieldsView));
-        
+
         _currentRowPtr = IntPtr.Zero;
         _currentRowData = null;
-
     }
 
     private void OnEntryChanged()
@@ -126,7 +145,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         }
 
         var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
-        
+
         _currentRowPtr = _paramService.GetParamRow(
             _currentParam.TableIndex,
             _currentParam.SlotIndex,
@@ -136,31 +155,59 @@ public sealed class ParamEditorViewModel : BaseViewModel
         if (_currentRowPtr != IntPtr.Zero)
         {
             _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
-            
+
             if (!_vanillaData.ContainsKey(key))
             {
                 _vanillaData[key] = (byte[])_currentRowData.Clone();
             }
         }
+
+        foreach (var field in _fields)
+        {
+            field.RefreshValue();
+        }
         
+        IsSelectedEntryModified = IsEntryModified(ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
+    }
+
+    private bool FilterField(object obj)
+    {
+        if (string.IsNullOrEmpty(FieldSearchText)) return true;
+
+        var field = (FieldValueViewModel)obj;
+        return field.DisplayName.ToLower().Contains(FieldSearchText) ||
+               field.InternalName.ToLower().Contains(FieldSearchText);
+    }
+
+    private void RestoreSelectedEntry()
+    {
+        if (_currentRowPtr == IntPtr.Zero || ParamEntries.SelectedItem == null)
+            return;
+    
+        var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
+    
+        if (!_vanillaData.TryGetValue(key, out var vanilla))
+            return;
+        
+        _paramService.WriteRow(_currentRowPtr, vanilla);
+        _currentRowData = (byte[])vanilla.Clone();
+        
+        _modifiedEntries.Remove(key);
+        IsSelectedEntryModified = false;
+        OnPropertyChanged(nameof(HasAnyModified));
+    
         foreach (var field in _fields)
         {
             field.RefreshValue();
         }
     }
 
-    private bool FilterField(object obj)
+    private void RestoreAllEntries()
     {
-        if (string.IsNullOrEmpty(FieldSearchText)) return true;
-        
-        var field = (FieldValueViewModel)obj;
-        return field.DisplayName.ToLower().Contains(FieldSearchText) ||
-               field.InternalName.ToLower().Contains(FieldSearchText);
     }
-    
 
     #endregion
-    
+
     #region Public Methods
 
     public object ReadFieldValue(ParamFieldDef field)
@@ -172,21 +219,24 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public void WriteFieldValue(ParamFieldDef field, object value)
     {
         if (_currentRowPtr == IntPtr.Zero) return;
-    
+        _reminderService.TrySetReminder();
         _paramService.WriteField(_currentRowPtr, field, value);
         _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
-    
+
         var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
-    
+
         if (_vanillaData.TryGetValue(key, out var vanilla))
         {
             if (_currentRowData.SequenceEqual(vanilla))
                 _modifiedEntries.Remove(key);
             else
                 _modifiedEntries.Add(key);
+
+            IsSelectedEntryModified = _modifiedEntries.Contains(key);
+            OnPropertyChanged(nameof(HasAnyModified));
         }
     }
-    
+
     public object ReadVanillaFieldValue(ParamFieldDef field)
     {
         var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
@@ -194,14 +244,14 @@ public sealed class ParamEditorViewModel : BaseViewModel
         {
             return _paramService.ReadFieldFromBytes(vanillaBytes, field);
         }
+
         return null;
     }
-    
+
     public bool IsEntryModified(Param param, uint entryId)
     {
         return _modifiedEntries.Contains((param, entryId));
     }
 
     #endregion
-
 }

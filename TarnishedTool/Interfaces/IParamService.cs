@@ -13,4 +13,5 @@ public interface IParamService
     public object ReadFieldFromBytes(byte[] data, ParamFieldDef field);
     void WriteField(IntPtr row, ParamFieldDef field, object value);
     void SetBit(IntPtr row, int offset, int mask, bool setValue);
+    void WriteRow(IntPtr row, byte[] data);
 }

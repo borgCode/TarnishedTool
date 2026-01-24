@@ -17,6 +17,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public bool IsBitfield => field.BitWidth.HasValue;
     public int Offset => field.Offset;
     public string VanillaValueText => FormatValue(_vanillaValue);
+    public bool IsModified => !Equals(_value, _vanillaValue);
     
     public string FullName => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})";
     
@@ -32,6 +33,8 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
             {
                 _value = ClampValue(_value);
                 parent.WriteFieldValue(field, _value);
+                OnPropertyChanged(nameof(IsModified));
+                OnPropertyChanged(nameof(ValueText));
             }
         }
     }
@@ -116,6 +119,7 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         OnPropertyChanged(nameof(ValueText));
         OnPropertyChanged(nameof(VanillaValue));
         OnPropertyChanged(nameof(VanillaValueText));
+        OnPropertyChanged(nameof(IsModified));
     }
 
     #endregion

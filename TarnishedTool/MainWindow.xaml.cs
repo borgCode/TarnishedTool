@@ -90,7 +90,7 @@ namespace TarnishedTool
                 flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService,
-                paramService, paramRepository, spEffectService, playerService, hotkeyManager, gameTickService);
+                paramService, paramRepository, spEffectService, playerService, hotkeyManager, gameTickService, reminderService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
             
 
