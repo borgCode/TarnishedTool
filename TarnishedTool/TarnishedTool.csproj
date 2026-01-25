@@ -127,6 +127,7 @@
         <Compile Include="Converters\Vector3ToStringConverter.cs" />
         <Compile Include="Core\DelegateCommand.cs" />
         <Compile Include="Core\MathUtil.cs" />
+        <Compile Include="Core\NavigationHistory.cs" />
         <Compile Include="Enums\Affinity.cs" />
         <Compile Include="Enums\GameVersion.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />

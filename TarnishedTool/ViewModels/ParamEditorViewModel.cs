@@ -10,11 +10,10 @@ using System.Windows.Data;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
-using TarnishedTool.Enums.ParamEnums.AtkParam;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
-using TarnishedTool.Utilities;
-using static TarnishedTool.ViewModels.SearchableGroupedCollection<TarnishedTool.Enums.Param,TarnishedTool.Models.ParamEntry>;
+using static TarnishedTool.ViewModels.SearchableGroupedCollection<TarnishedTool.Enums.Param,
+    TarnishedTool.Models.ParamEntry>;
 
 namespace TarnishedTool.ViewModels;
 
@@ -30,6 +29,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
     private byte[] _currentRowData;
+    
+    private NavigationHistory<(Param, uint)> _history;
+    private bool _isNavigatingHistory;
 
     public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
         IReminderService reminderService)
@@ -52,22 +54,28 @@ public sealed class ParamEditorViewModel : BaseViewModel
         RestoreAllEntriesCommand = new DelegateCommand(RestoreAllEntries);
         TogglePinCommand = new DelegateCommand<ParamEntry>(TogglePin);
         NavigateToPinnedCommand = new DelegateCommand<ParamEntry>(NavigateToEntry);
-        PopulateEnumTypes();
-            
-     //   PrintEnums();
+        NavigateBackCommand = new DelegateCommand(NavigateBack);
+        NavigateForwardCommand = new DelegateCommand(NavigateForward);
         
+        
+        PopulateEnumTypes();
+
+        //   PrintEnums();
+
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
 
         OnParamChanged();
     }
 
-
+    
     #region Commands
 
     public ICommand RestoreSelectedEntryCommand { get; set; }
     public ICommand RestoreAllEntriesCommand { get; set; }
     public ICommand TogglePinCommand { get; set; }
     public ICommand NavigateToPinnedCommand { get; set; }
+    public ICommand NavigateBackCommand { get; set; }
+    public ICommand NavigateForwardCommand { get; set; }
 
     #endregion
 
@@ -137,6 +145,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public ObservableCollection<ParamEntry> PinnedEntries => _pinnedEntries;
 
     public bool HasPinnedEntries => _pinnedEntries.Count > 0;
+    
+    public bool CanGoBack => _history?.CanGoBack ?? false;
+    public bool CanGoForward => _history?.CanGoForward ?? false;
 
     #endregion
 
@@ -156,32 +167,33 @@ public sealed class ParamEditorViewModel : BaseViewModel
     }
 
     private void OnParamChanged()
-    {                                   
+    {
         _currentParam = _paramRepository.GetParam(ParamEntries.SelectedGroup);
 
         _fields = _currentParam.Fields
             .Where(field => !field.InternalName.ToLower().Contains("pad"))
             .Select(f =>
+            {
+                var vm = new FieldValueViewModel(f, this);
+
+                if (!string.IsNullOrEmpty(f.EnumType) && _enumTypes.TryGetValue(f.EnumType, out var enumType))
                 {
-                    
-                    var vm = new FieldValueViewModel(f, this);
-                    
-                    if (!string.IsNullOrEmpty(f.EnumType) && _enumTypes.TryGetValue(f.EnumType, out var enumType))
+                    var enumValues = new List<EnumValueItem>();
+                    foreach (var enumValue in Enum.GetValues(enumType))
                     {
-                        var enumValues = new List<EnumValueItem>();
-                        foreach (var enumValue in Enum.GetValues(enumType))
+                        enumValues.Add(new EnumValueItem
                         {
-                            enumValues.Add(new EnumValueItem
-                            {
-                                Name = enumValue.ToString(),
-                                Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
-                            });
-                        }
-                        vm.SetEnumValues(enumValues);
+                            Name = enumValue.ToString(),
+                            Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
+                        });
                     }
-                    return vm;
-                })
-                .ToList();
+
+                    vm.SetEnumValues(enumValues);
+                }
+
+                return vm;
+            })
+            .ToList();
 
         _fieldsView = CollectionViewSource.GetDefaultView(_fields);
         _fieldsView.Filter = FilterField;
@@ -224,6 +236,23 @@ public sealed class ParamEditorViewModel : BaseViewModel
         }
 
         IsSelectedEntryModified = IsEntryModified(ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
+
+        
+        if (!_isNavigatingHistory)
+        {
+            if (_history == null)
+                _history = new NavigationHistory<(Param, uint)>(key);
+            else
+                _history.Navigate(key);
+
+            NotifyNavigationChanged();
+        }
+    }
+
+    private void NotifyNavigationChanged()
+    {
+        OnPropertyChanged(nameof(CanGoBack));
+        OnPropertyChanged(nameof(CanGoForward));
     }
 
     private bool FilterField(object obj)
@@ -304,38 +333,48 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
         ParamEntries.SelectedGroup = entry.Parent;
         ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == entry.Id);
-        
     }
-    
-        private void PopulateEnumTypes()
-        {
-            var enumTypes = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => t.IsEnum && t.Namespace?.StartsWith("TarnishedTool.Enums.ParamEnums") == true);
+
+    private void PopulateEnumTypes()
+    {
+        var enumTypes = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => t.IsEnum && t.Namespace?.StartsWith("TarnishedTool.Enums.ParamEnums") == true);
 
 
         foreach (var type in enumTypes)
             _enumTypes.Add(type.Name, type);
+    }
+    
+    private void NavigateBack()
+    {
+        if (_history == null || !_history.CanGoBack) return;
+    
+        _isNavigatingHistory = true;
+        var (param, id) = _history.GoBack();
+        NavigateToParamEntry(param, id);
+        _isNavigatingHistory = false;
         
+        NotifyNavigationChanged();
     }
 
-/* Debugging
-        private void PrintEnums()
-        {
-            Console.WriteLine("Enums");
-            foreach (var enumType in _enumTypes)
-            {
-                Console.WriteLine($"{enumType.Key}:");
+    private void NavigateForward()
+    {
+        if (_history == null || !_history.CanGoForward) return;
+    
+        _isNavigatingHistory = true;
+        var (param, id) = _history.GoForward();
+        NavigateToParamEntry(param, id);
+        _isNavigatingHistory = false;
+        
+        NotifyNavigationChanged();
+    }
 
-                foreach (var enumVal in Enum.GetValues(enumType.Value))
-                {
-                    Console.WriteLine($"{enumVal}");
-                }
-            }
-            Console.WriteLine();
-        }
-            
-*/
+    private void NavigateToParamEntry(Param param, uint id)
+    {
+        ParamEntries.SelectedGroup = param;
+        ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == id);
+    }
 
     #endregion
 

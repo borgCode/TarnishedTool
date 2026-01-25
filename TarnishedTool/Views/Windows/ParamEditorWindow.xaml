@@ -63,12 +63,31 @@
             <Grid Grid.Column="0" Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+                
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    
+                    <Button 
+                        Content="Back"
+                        Margin="0,0,10,5"
+                        Command="{Binding NavigateBackCommand}"
+                        IsEnabled="{Binding CanGoBack}"
+                        ></Button>
+                    <Button 
+                        Content="Forward" 
+                        Margin="0,0,0,5"
+                        Command="{Binding NavigateForwardCommand}"
+                        IsEnabled="{Binding CanGoForward}"
+                        ></Button>
+                    
+                </StackPanel>
+                
 
-                <TextBlock Grid.Row="0" Text="Params" Margin="0,0,0,5" />
+                <TextBlock Grid.Row="1" Text="Params" Margin="0,0,0,5" />
 
-                <ListBox Grid.Row="1"
+                <ListBox Grid.Row="2"
                          ItemsSource="{Binding ParamEntries.Groups}"
                          SelectedItem="{Binding ParamEntries.SelectedGroup}"
                          BorderThickness="1"
