@@ -142,6 +142,7 @@
         <Compile Include="Interfaces\IEventService.cs" />
         <Compile Include="Interfaces\IEzStateService.cs" />
         <Compile Include="Interfaces\IFlaskService.cs" />
+        <Compile Include="Interfaces\IGameTickService.cs" />
         <Compile Include="Interfaces\IItemService.cs" />
         <Compile Include="Interfaces\IMemoryService.cs" />
         <Compile Include="Interfaces\IParamService.cs" />
@@ -187,6 +188,7 @@
         <Compile Include="Services\EventLogReader.cs" />
         <Compile Include="Services\EzStateService.cs" />
         <Compile Include="Services\FlaskService.cs" />
+        <Compile Include="Services\GameTickService.cs" />
         <Compile Include="Services\ItemService.cs" />
         <Compile Include="Services\ParamService.cs" />
         <Compile Include="Services\ReminderService.cs" />

@@ -34,8 +34,7 @@ namespace TarnishedTool
             _memoryService = new MemoryService();
             _memoryService.StartAutoAttach();
             InitializeComponent();
-
-
+            
             if (SettingsManager.Default.WindowLeft != 0 || SettingsManager.Default.WindowTop != 0)
             {
                 Left = SettingsManager.Default.WindowLeft;
@@ -67,19 +66,20 @@ namespace TarnishedTool
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
             IEventLogReader eventLogReader = new EventLogReader(_memoryService);
+            
+            IGameTickService gameTickService = new GameTickService(_stateService);
 
             _dlcService = new DlcService(_memoryService);
 
-
             PlayerViewModel playerViewModel = new PlayerViewModel(playerService, _stateService, hotkeyManager,
-                eventService, spEffectService, emevdService, _dlcService, ezStateService);
+                eventService, spEffectService, emevdService, _dlcService, ezStateService, gameTickService);
             TravelViewModel travelViewModel =
                 new TravelViewModel(travelService, eventService, _stateService, _dlcService, emevdService);
             EnemyViewModel enemyViewModel = new EnemyViewModel(enemyService, _stateService, hotkeyManager, emevdService,
                 _dlcService, spEffectService, paramService, playerService, eventService, reminderService,
                 travelService);
             TargetViewModel targetViewModel = new TargetViewModel(targetService, _stateService, enemyService,
-                attackInfoService, hotkeyManager, spEffectService, emevdService);
+                attackInfoService, hotkeyManager, spEffectService, emevdService, gameTickService);
             EventViewModel eventViewModel =
                 new EventViewModel(eventService, _stateService, itemService, _dlcService, ezStateService, emevdService,
                     hotkeyManager, utilityService, eventLogReader);
@@ -87,9 +87,10 @@ namespace TarnishedTool
                 playerService, hotkeyManager, playerViewModel, _dlcService, spEffectService,
                 flaskService);
             ItemViewModel itemViewModel = new ItemViewModel(itemService, _dlcService, _stateService, eventService);
-            AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService);
+            AdvancedViewModel advancedViewModel = new AdvancedViewModel(itemService, _stateService, eventService,
+                paramService, spEffectService, playerService, hotkeyManager, gameTickService, reminderService);
             SettingsViewModel settingsViewModel = new SettingsViewModel(settingsService, hotkeyManager, _stateService);
-
+            
             var playerTab = new PlayerTab(playerViewModel);
             var travelTab = new TravelTab(travelViewModel);
             var enemyTab = new EnemyTab(enemyViewModel);

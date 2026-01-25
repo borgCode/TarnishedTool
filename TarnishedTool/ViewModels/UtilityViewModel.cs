@@ -22,6 +22,7 @@ namespace TarnishedTool.ViewModels
         private const float Epsilon = 0.0001f;
 
         private bool _wasNoDeathEnabled;
+        private bool _wasTorrentNoDeathEnabled;
 
         private ShopSelectorWindow _shopSelectorWindow;
 
@@ -140,14 +141,21 @@ namespace TarnishedTool.ViewModels
                 if (_isNoClipEnabled)
                 {
                     _utilityService.WriteNoClipSpeed(NoClipSpeed);
+                    
                     _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
                     _playerViewModel.IsNoDeathEnabled = true;
+                    
+                    _wasTorrentNoDeathEnabled = _playerViewModel.IsTorrentNoDeathEnabled;
+                    _playerViewModel.IsTorrentNoDeathEnabled = true;
+
                     _utilityService.ToggleNoClip(_isNoClipEnabled, IsNoClipKeyboardDisableEnabled);
                 }
                 else
                 {
                     _utilityService.ToggleNoClip(_isNoClipEnabled, IsNoClipKeyboardDisableEnabled);
+                    
                     _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
+                    _playerViewModel.IsTorrentNoDeathEnabled = _wasTorrentNoDeathEnabled;
                 }
             }
         }

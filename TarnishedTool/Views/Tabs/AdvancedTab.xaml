@@ -10,14 +10,95 @@
     
     
     <Grid>
-        <Border BorderThickness="1"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Margin="0,5,0,0"
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3"
+                    Padding="5">
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock Text="Player's Special Effects"
+                                   FontWeight="SemiBold" />
+
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Apply or remove Special effects by ID"
+                                ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="10,5,0,0">
+                            <TextBlock Text="ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <TextBox Width="100" Text="{Binding ApplySpEffectId}" Margin="0,0,10,0" />
+
+                            <Button Content="Apply"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Padding="10,3"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding ApplySpEffectCommand}" />
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="10,5,0,0">
+                            <TextBlock Text="ID:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <TextBox Width="100" Text="{Binding RemoveSpEffectId}" Margin="0,0,10,0" />
+
+                            <Button Content="Remove"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Padding="10,3"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding RemoveSpEffectCommand}" />
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="0" Grid.Column="1"
+                                  HorizontalAlignment="Right"
+                                  IsChecked="{Binding IsSpEffectWindowOpen}"
+                                  Content="Show active special effects"
+                                  Margin="0,0,10,0" />
+
+                        <Button Grid.Row="1" Grid.Column="1" Content="About Special Effects"
+                                Width="150"
+                                Height="25"
+                                Padding="10,3"
+                                Margin="10,0,0,0"
+                                Command="{Binding AboutSpEffectsCommand}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        <Border Grid.Row="1" BorderThickness="1"
                 BorderBrush="#333"
                 CornerRadius="3"
                 Padding="10"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Margin="10,20,0,00"
-                MaxWidth="500">
+                Margin="0,10,0,10"
+                
+                >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -29,7 +110,7 @@
                             HorizontalAlignment="Left"
                             Margin="0,0,0,15">
                     <TextBlock Text="Spawn with Equip Param ID" 
-                               FontWeight="Bold"
+                               FontWeight="SemiBold"
                                 />
                     <Border Background="#3498db" 
                             CornerRadius="10" 
@@ -50,13 +131,15 @@
                 
                 <StackPanel Grid.Row="1" 
                             Orientation="Horizontal"
-                            HorizontalAlignment="Center">
+                            >
                     <ComboBox ItemsSource="{Binding EquipTypes}"
                               DisplayMemberPath="Key"
                               SelectedValuePath="Value"
                               Width="100"
                               Height="35"
                               VerticalContentAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="43,0,86.5,0"
                               SelectedValue="{Binding SelectedEquipType}" />
 
                     <TextBlock Text="Equip ID:"
@@ -65,23 +148,65 @@
                                FontSize="14"
                                Margin="15,0,5,0"
                                VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
                                TextAlignment="Right" />
 
                     <TextBox Text="{Binding EquipId}"
                              Height="35" 
                              Width="100" 
                              FontSize="14"
+                             Margin="10,0,0,0"
                              VerticalContentAlignment="Center"
+                             HorizontalAlignment="Center"
                              MaxLength="8" />
 
                     <Button Content="Spawn"
                             Command="{Binding SpawnWithEquipIdCommand}"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="15,0,0,0"
+                            HorizontalAlignment="Right"
                             Height="35"
                             Width="80" />
                 </StackPanel>
             </Grid>
+        </Border>
+        <Border Grid.Row="2" 
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3"
+                    
+                    Padding="5">
+            <StackPanel Grid.Row="2" Margin="5">
+                <TextBlock
+                    Text="Param Patcher"
+                    FontWeight="SemiBold"
+                    TextAlignment="Left" 
+                    />
+                 <Border Background="#3498db" 
+                            CornerRadius="10" 
+                            Width="12" 
+                            Height="12" 
+                            Margin="0,-15,400,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ToolTip="Modify the game params temporarily, effects last until you restart the game or revert all values to default."
+                            ToolTipService.InitialShowDelay="100">
+                        <TextBlock Text="i" 
+                                   Foreground="White" 
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" 
+                                   FontWeight="Bold" 
+                                   FontSize="10" />
+                 </Border>
+                <Button Content="Initialize Param Patcher"
+                    Command="{Binding OpenParamEditorCommand}"
+                    VerticalAlignment="Center"
+                    MaxWidth="250"
+                    Margin="0,5,0,0"
+                    Height="50"
+                    >
+                </Button>
+            </StackPanel>
         </Border>
     </Grid>
 
