@@ -156,31 +156,32 @@ public sealed class ParamEditorViewModel : BaseViewModel
     }
 
     private void OnParamChanged()
-    {
+    {                                   
         _currentParam = _paramRepository.GetParam(ParamEntries.SelectedGroup);
-        
-        foreach (var field in _currentParam.Fields)
-        {
-            if (field.EnumType == null) continue;
-
-            if (_enumTypes.TryGetValue(field.EnumType, out var enumType))
-            {
-                foreach (var enumVal in Enum.GetValues(enumType))
-                {
-                    Console.WriteLine(enumVal);
-                }
-            }
-            
-            
-        }
-
-        
-
 
         _fields = _currentParam.Fields
             .Where(field => !field.InternalName.ToLower().Contains("pad"))
-            .Select(f => new FieldValueViewModel(f, this))
-            .ToList();
+            .Select(f =>
+                {
+                    
+                    var vm = new FieldValueViewModel(f, this);
+                    
+                    if (!string.IsNullOrEmpty(f.EnumType) && _enumTypes.TryGetValue(f.EnumType, out var enumType))
+                    {
+                        var enumValues = new List<EnumValueItem>();
+                        foreach (var enumValue in Enum.GetValues(enumType))
+                        {
+                            enumValues.Add(new EnumValueItem
+                            {
+                                Name = enumValue.ToString(),
+                                Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
+                            });
+                        }
+                        vm.SetEnumValues(enumValues);
+                    }
+                    return vm;
+                })
+                .ToList();
 
         _fieldsView = CollectionViewSource.GetDefaultView(_fields);
         _fieldsView.Filter = FilterField;

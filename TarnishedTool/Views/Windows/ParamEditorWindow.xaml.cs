@@ -14,26 +14,24 @@ public partial class ParamEditorWindow : TopmostWindow
     public ParamEditorWindow()
     {
         InitializeComponent();
-        
+
         if (Application.Current.MainWindow != null)
         {
             Application.Current.MainWindow.Closing += (sender, args) => { Close(); };
         }
-        
+
         Loaded += (s, e) =>
         {
             if (SettingsManager.Default.ParamEditorWindowLeft > 0)
                 Left = SettingsManager.Default.ParamEditorWindowLeft;
-        
+
             if (SettingsManager.Default.ParamEditorWindowTop > 0)
                 Top = SettingsManager.Default.ParamEditorWindowTop;
-            
+
             AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.ParamEditorWindowAlwaysOnTop;
         };
-        
-        
     }
-    
+
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);
@@ -58,6 +56,34 @@ public partial class ParamEditorWindow : TopmostWindow
         if (PinnedListView.SelectedItem is ParamEntry entry)
         {
             ((ParamEditorViewModel)DataContext).TogglePinCommand.Execute(entry);
+        }
+    }
+
+    private void EnumTextBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+    {
+        if (sender is TextBox textBox && textBox.ContextMenu != null)
+        {
+            var contextMenu = textBox.ContextMenu;
+
+            
+            contextMenu.RemoveHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
+            contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
+        }
+    }
+
+    private void EnumMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (e.OriginalSource is MenuItem menuItem)
+        {
+            var value = menuItem.Tag;
+
+            if (sender is ContextMenu contextMenu && contextMenu.PlacementTarget is TextBox textBox)
+            {
+                if (textBox.DataContext is FieldValueViewModel fieldVm)
+                {
+                    fieldVm.ValueText = value?.ToString() ?? "";
+                }
+            }
         }
     }
 }

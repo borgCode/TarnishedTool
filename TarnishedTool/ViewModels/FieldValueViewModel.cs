@@ -23,7 +23,15 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public bool IsModified => !Equals(_value, _vanillaValue);
     public string FullName => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})";
     
+    public bool HasEnum => field.EnumType != null && EnumValues != null;
     
+    private IReadOnlyList<EnumValueItem> _enumValues;
+
+    public IReadOnlyList<EnumValueItem> EnumValues
+    {
+        get => _enumValues;
+        set => SetProperty(ref _enumValues, value);
+    }
     
     
 
@@ -127,6 +135,13 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         OnPropertyChanged(nameof(VanillaValue));
         OnPropertyChanged(nameof(VanillaValueText));
         OnPropertyChanged(nameof(IsModified));
+    }
+    
+    
+    public void SetEnumValues(IReadOnlyList<EnumValueItem> values)
+    {
+        EnumValues = values;
+        OnPropertyChanged(nameof(EnumValues)); 
     }
 
     #endregion

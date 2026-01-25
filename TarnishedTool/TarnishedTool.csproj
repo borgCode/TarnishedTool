@@ -275,6 +275,7 @@
         <Compile Include="Models\BossRevive.cs" />
         <Compile Include="Models\BossWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
+        <Compile Include="Models\EnumValueItem.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\Grace.cs" />

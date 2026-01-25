@@ -17,27 +17,27 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
         <Style TargetType="ContextMenu">
-            <Setter Property="Background" Value="#2D2D2D"/>
-            <Setter Property="BorderBrush" Value="#333"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#2D2D2D" />
+            <Setter Property="BorderBrush" Value="#333" />
+            <Setter Property="BorderThickness" Value="1" />
         </Style>
 
         <Style TargetType="MenuItem">
-            <Setter Property="Background" Value="#2D2D2D"/>
-            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-            <Setter Property="Padding" Value="20,6"/>
+            <Setter Property="Background" Value="#2D2D2D" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="Padding" Value="20,6" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="MenuItem">
-                        <Border x:Name="Border" 
+                        <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 Padding="{TemplateBinding Padding}"
                                 MinWidth="120">
-                            <ContentPresenter ContentSource="Header"/>
+                            <ContentPresenter ContentSource="Header" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}"/>
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -222,7 +222,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                         <ListView.ContextMenu>
-                            <ContextMenu >
+                            <ContextMenu>
                                 <MenuItem Header="Unpin" Click="UnpinMenuItem_Click" />
                             </ContextMenu>
                         </ListView.ContextMenu>
@@ -242,8 +242,7 @@
                             <ContextMenu>
                                 <MenuItem Header="Pin"
                                           Command="{Binding TogglePinCommand}"
-                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"
- />
+                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.ItemContainerStyle>
@@ -498,8 +497,72 @@
                                                         <DataTemplate>
                                                             <TextBox
                                                                 tarnishedTool:TextBoxBehavior.CommitOnEnter="True"
-                                                                Text="{Binding ValueText,
-                                                             UpdateSourceTrigger=LostFocus}" />
+                                                                Text="{Binding ValueText, UpdateSourceTrigger=LostFocus}"
+                                                                ContextMenuOpening="EnumTextBox_ContextMenuOpening">
+                                                                <TextBox.Style>
+                                                                    <Style TargetType="TextBox"
+                                                                           BasedOn="{StaticResource {x:Type TextBox}}">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding HasEnum}"
+                                                                                    Value="True">
+                                                                                <Setter Property="ContextMenu">
+                                                                                    <Setter.Value>
+                                                                                        <ContextMenu
+                                                                                            ItemsSource="{Binding EnumValues}">
+                                                                                            <ContextMenu.ItemContainerStyle>
+                                                                                                <Style
+                                                                                                    TargetType="MenuItem">
+                                                                                                    <Setter
+                                                                                                        Property="Header"
+                                                                                                        Value="{Binding DisplayText}" />
+                                                                                                    <Setter
+                                                                                                        Property="Background"
+                                                                                                        Value="#2D2D2D" />
+                                                                                                    <Setter
+                                                                                                        Property="Foreground"
+                                                                                                        Value="{StaticResource TextBrush}" />
+                                                                                                    <Setter
+                                                                                                        Property="Padding"
+                                                                                                        Value="20,6" />
+                                                                                                    <Setter
+                                                                                                        Property="Tag"
+                                                                                                        Value="{Binding Value}" />
+                                                                                                    <Setter
+                                                                                                        Property="Template">
+                                                                                                        <Setter.Value>
+                                                                                                            <ControlTemplate
+                                                                                                                TargetType="MenuItem">
+                                                                                                                <Border
+                                                                                                                    x:Name="Border"
+                                                                                                                    Background="{TemplateBinding Background}"
+                                                                                                                    Padding="{TemplateBinding Padding}"
+                                                                                                                    MinWidth="150">
+                                                                                                                    <ContentPresenter
+                                                                                                                        ContentSource="Header" />
+                                                                                                                </Border>
+                                                                                                                <ControlTemplate.Triggers>
+                                                                                                                    <Trigger
+                                                                                                                        Property="IsHighlighted"
+                                                                                                                        Value="True">
+                                                                                                                        <Setter
+                                                                                                                            TargetName="Border"
+                                                                                                                            Property="Background"
+                                                                                                                            Value="{StaticResource AccentBrush}" />
+                                                                                                                    </Trigger>
+                                                                                                                </ControlTemplate.Triggers>
+                                                                                                            </ControlTemplate>
+                                                                                                        </Setter.Value>
+                                                                                                    </Setter>
+                                                                                                </Style>
+                                                                                            </ContextMenu.ItemContainerStyle>
+                                                                                        </ContextMenu>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBox.Style>
+                                                            </TextBox>
                                                         </DataTemplate>
                                                     </Setter.Value>
                                                 </Setter>
