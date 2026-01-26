@@ -799,6 +799,8 @@ namespace TarnishedTool.Memory
             public static IntPtr IsWhistleDisabled;
             public static IntPtr IsWorldPaused;
             public static IntPtr GetItemChance;
+            public static IntPtr FpsCap;
+            
         }
 
         private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -2715,6 +2717,36 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0xD49CF0,
                 _ => 0
             };
+            
+            Patches.FpsCap = moduleBase + Version switch
+            {
+                Version1_2_0 => 0xDFEF5F,
+                Version1_2_1 => 0xDFEFAF,
+                Version1_2_2 => 0xDFF3BF,
+                Version1_2_3 => 0xDFFE9F,
+                Version1_3_0 => 0xE081CF,
+                Version1_3_1 => 0xE07F6F,
+                Version1_3_2 => 0xE07F4F,
+                Version1_4_0 => 0xDE8C5F,
+                Version1_4_1 => 0xDE8B6F,
+                Version1_5_0 => 0xDF094F,
+                Version1_6_0 => 0xDF6F7F,
+                Version1_7_0 => 0xDFA6BF,
+                Version1_8_0 => 0xE4167F,
+                Version1_8_1 => 0xE4165F,
+                Version1_9_0 => 0xE4438F,
+                Version1_9_1 => 0xE4449F,
+                Version2_0_0 => 0xE4474F,
+                Version2_0_1 => 0xE4482F,
+                Version2_2_0 => 0xE826BD,
+                Version2_2_3 => 0xE826DD,
+                Version2_3_0 => 0xE82BCD,
+                Version2_4_0 or Version2_5_0 => 0xE82B2D,
+                Version2_6_0 => 0xE82AFD,
+                Version2_6_1 => 0xE82B5D,
+                _ => 0
+            };
+
 
 
 #if DEBUG
@@ -2763,6 +2795,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Patches.IsWorldPaused: 0x{Patches.IsWorldPaused.ToInt64():X}");
             Console.WriteLine($@"Patches.GetItemChance: 0x{Patches.GetItemChance.ToInt64():X}");
             Console.WriteLine($@"Patches.GetShopEvent: 0x{Patches.GetShopEvent.ToInt64():X}");
+            Console.WriteLine($@"Patches.FpsCap: 0x{Patches.FpsCap.ToInt64():X}");
 
             Console.WriteLine($@"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
             Console.WriteLine($@"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");

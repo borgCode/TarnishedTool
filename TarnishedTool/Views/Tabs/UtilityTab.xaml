@@ -117,11 +117,21 @@
                         </Border>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-
                         <CheckBox Content="100% Drop"
                                   IsChecked="{Binding IsGuaranteedDropEnabled}"
-
                                   VerticalAlignment="Center" />
+                        
+                        <TextBlock Margin="15,0,0,0" Text="Set FPS cap"></TextBlock>
+                        <xctk:IntegerUpDown
+                            Margin="5,0,0,0"
+                            Value="{Binding Fps}"
+                            TextAlignment="Center"
+                            Width="100"
+                            Minimum="1"
+                            Maximum="1000"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            BorderBrush="#3F3F46"
+                            ></xctk:IntegerUpDown>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

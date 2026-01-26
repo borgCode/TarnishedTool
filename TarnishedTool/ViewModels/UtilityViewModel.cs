@@ -243,6 +243,20 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
+        
+        private int _fps;
+
+        public int Fps
+        {
+            get => _fps;
+            set
+            {
+                if (SetProperty(ref _fps, value))
+                {
+                    _utilityService.SetFps(_fps);
+                }
+            }
+        }
 
         private bool _isRememberSpeedEnabled;
 
@@ -593,6 +607,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = true;
             GameSpeed = _utilityService.GetSpeed();
+            Fps = _utilityService.GetFps();
             if (IsDungeonWarpEnabled)
             {
                 var playerIns = _playerService.GetPlayerIns();

@@ -166,6 +166,13 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8((IntPtr)worldChrManDbg + WorldChrManDbg.PoiseBarsFlag, isEnabled ? 1 : 0);
         }
 
+        public void SetFps(int fps) =>
+            memoryService.WriteFloat(Patches.FpsCap + 0x3, 1f / fps);
+
+        public int GetFps() =>
+            (int)Math.Round(1f / memoryService.ReadFloat(Patches.FpsCap + 0x3));
+            
+
         private void WriteJumpIntercept(IntPtr jumpInterceptCode)
         {
             var bytes = AsmLoader.GetAsmBytes("NoClip_JumpHook");
