@@ -4,19 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
-using TarnishedTool.Enums.ParamEnums.AtkParam;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using static TarnishedTool.ViewModels.SearchableGroupedCollection<TarnishedTool.Enums.Param,TarnishedTool.Models.ParamEntry>;
-using TarnishedTool.Services;
 
 namespace TarnishedTool.ViewModels;
 
@@ -25,7 +22,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private readonly IParamRepository _paramRepository;
     private readonly IParamService _paramService;
     private readonly IReminderService _reminderService;
-    private CustomRowNamesService _customRowNamesService;
     private readonly Dictionary<string, Type> _enumTypes = new();
     private readonly Dictionary<(Param, uint), byte[]> _vanillaData = new();
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
@@ -34,36 +30,37 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private IntPtr _currentRowPtr;
     private byte[] _currentRowData;
     
+    private Dictionary<string, Dictionary<uint, string>> _customNames;
+    
 
     public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
-        IReminderService reminderService, CustomRowNamesService customRowNamesService)
+        IReminderService reminderService)
     {
         _paramRepository = paramRepository;
         _paramService = paramService;
         _reminderService = reminderService;
-        
-        // new stuff I added
-        _customRowNamesService = customRowNamesService; // load service
-        _customRowNamesService.Load(); // read the json derulo file
 
-        var entriesByParam = _paramRepository.GetAllEntriesByParam(); // get all entries from the params
 
-        foreach (var paramsAndEntries in entriesByParam) // loop through every param category
+        _customNames = _paramRepository.LoadCustomNames();
+
+        var entriesByParam = _paramRepository.GetAllEntriesByParam();
+
+        foreach (var paramEntry in _customNames)
         {
-            var paramName = paramsAndEntries.Key.ToString(); // get the param name
-            foreach (var entry in paramsAndEntries.Value) //loop through the rows (I hope)
+            if (entriesByParam.TryGetValue((Param)Enum.Parse(typeof(Param), paramEntry.Key), out var entries))
             {
-                var customName = _customRowNamesService.GetCustomRowNames(paramName, entry.Id); // custom name check
-                if (customName != null) // if it has one use it
+                var entryLookup = entries.ToDictionary(e => e.Id);
+                foreach (var rowEntry in paramEntry.Value)
                 {
-                    entry.CustomName =  customName;
+                    if (entryLookup.TryGetValue(rowEntry.Key, out var entry))
+                    {
+                        entry.CustomName = rowEntry.Value;
+                    }
                 }
             }
         }
-
         ParamEntries = new SearchableGroupedCollection<Param, ParamEntry>(
             entriesByParam,
-            //_paramRepository.GetAllEntriesByParam(), [Noting down original stuff in case I majorly fucked up]
             (entry, search) =>
                 entry.Id.ToString().Contains(search) ||
                 entry.Parent.ToString().Contains(search) ||
@@ -442,28 +439,33 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     public void ApplyCustomName(ParamEntry entry, string newName)
     {
-        if (entry == null) return; // safety check
+        if (entry == null) return;
 
-        var paramName = entry.Parent.ToString(); // get param  category name
+        var paramName = entry.Parent.ToString();
 
-        if (string.IsNullOrWhiteSpace(newName)) // check if anything was written
+        if (string.IsNullOrWhiteSpace(newName))
         {
-            if (_customRowNamesService.HasCustomRowNames(paramName,
-                    entry.Id)) // if nothing was written restore original name instead 
+            if (_customNames.TryGetValue(paramName, out var dict))
             {
-                _customRowNamesService.SetCustomRowNames(paramName, entry.Id, null);
+                dict.Remove(entry.Id);
+                if (dict.Count == 0)
+                    _customNames.Remove(paramName);
             }
-
             entry.CustomName = null;
         }
-        else // if user did input something
+        else
         {
-            _customRowNamesService.SetCustomRowNames(paramName, entry.Id, newName); // save new name and reload view
+            if (!_customNames.TryGetValue(paramName, out var dict))
+            {
+                dict = new Dictionary<uint, string>();
+                _customNames[paramName] = dict;
+            }
+            dict[entry.Id] = newName;
             entry.CustomName = newName;
         }
 
-        _customRowNamesService.Save();
-        OnPropertyChanged(nameof(ParamEntries.SelectedItem)); // refresh UI on change
+        _paramRepository.SaveCustomNames(_customNames);
+        OnPropertyChanged(nameof(ParamEntries.SelectedItem));
     }
 
     #endregion

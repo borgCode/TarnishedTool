@@ -296,7 +296,6 @@
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
-        <Compile Include="Services\CustomRowNamesService.cs" />
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />
         <Compile Include="Services\EnemyService.cs" />
