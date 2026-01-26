@@ -256,6 +256,8 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         _groupedItems[group].Remove(item);
         _allItems.Remove(item);
         
+        Items.Remove(item);
+    
         if (_groupedItems[group].Count == 0)
         {
             _groupedItems.Remove(group);
@@ -266,13 +268,10 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
                 SelectedGroup = _groups.FirstOrDefault();
             }
         }
-        else if (EqualityComparer<TGroup>.Default.Equals(SelectedGroup, group))
+    
+        if (EqualityComparer<TItem>.Default.Equals(SelectedItem, item))
         {
-            Items.Remove(item);
-            if (EqualityComparer<TItem>.Default.Equals(SelectedItem, item))
-            {
-                SelectedItem = Items.FirstOrDefault();
-            }
+            SelectedItem = Items.FirstOrDefault();
         }
     }
 
