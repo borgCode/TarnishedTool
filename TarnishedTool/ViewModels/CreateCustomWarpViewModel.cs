@@ -25,18 +25,18 @@ public class CreateCustomWarpViewModel : BaseViewModel
     private const byte DlcCatacombsStart = 40;
     private const byte DlcCatacombsEnd = 43;
 
-    private Action<BlockWarp> _onWarpCreated;
+    private Action<CustomWarpChange> _onChange;
 
     public CreateCustomWarpViewModel(
         Dictionary<string, List<BlockWarp>> customWarps,
         bool areOptionsEnabled,
         IStateService stateService,
         IPlayerService playerService,
-        IGameTickService gameTickService, Action<BlockWarp> onWarpCreated)
+        IGameTickService gameTickService, Action<CustomWarpChange> onChange)
     {
         _playerService = playerService;
         _gameTickService = gameTickService;
-        _onWarpCreated = onWarpCreated;
+        _onChange = onChange;
 
         CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
             customWarps,
@@ -52,12 +52,14 @@ public class CreateCustomWarpViewModel : BaseViewModel
 
         SavePositionCommand = new DelegateCommand(SavePosition);
         ImportWarpsCommand = new DelegateCommand(ImportWarps);
+        DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
     }
 
     #region Commands
 
     public ICommand SavePositionCommand { get; }
     public ICommand ImportWarpsCommand { get; }
+    public ICommand DeleteCategoryCommand { get; }
 
     #endregion
 
@@ -134,7 +136,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
         };
 
         CustomWarps.Add(category, warp);
-        _onWarpCreated?.Invoke(warp);
+        _onChange?.Invoke(new WarpAdded(warp));
     }
 
     private bool IsCurrentBlockDlc()
@@ -195,7 +197,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
                             CustomWarps.AddRange(category, warps);
                             foreach (var warp in warps)
                             {
-                                _onWarpCreated?.Invoke(warp);
+                                _onChange?.Invoke(new WarpAdded(warp));
                             }
 
                             imported++;
@@ -211,7 +213,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
                             CustomWarps.AddRange(newName, warps);
                             foreach (var warp in warps)
                             {
-                                _onWarpCreated?.Invoke(warp);
+                                _onChange?.Invoke(new WarpAdded(warp));
                             }
 
                             imported++;
@@ -223,7 +225,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
                     CustomWarps.AddRange(category, warps);
                     foreach (var warp in warps)
                     {
-                        _onWarpCreated?.Invoke(warp);
+                        _onChange?.Invoke(new WarpAdded(warp));
                     }
 
                     imported++;
@@ -254,6 +256,27 @@ public class CreateCustomWarpViewModel : BaseViewModel
         }
 
         return newName;
+    }
+
+    private void DeleteCategory()
+    {
+        var category = CustomWarps.SelectedGroup;
+        CustomWarps.RemoveGroup(category);
+        _onChange?.Invoke(new CategoryDeleted(category));
+    }
+    
+
+    #endregion
+
+    #region Public Methods
+
+    public void DeleteWarps(IEnumerable<BlockWarp> warps)
+    {
+        foreach (var warp in warps)
+        {
+            CustomWarps.Remove(warp.MainArea, warp);
+            _onChange?.Invoke(new WarpDeleted(warp.MainArea, warp));
+        }
     }
 
     #endregion

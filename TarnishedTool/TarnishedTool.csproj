@@ -165,6 +165,7 @@
         <Compile Include="Models\BossRevive.cs" />
         <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
+        <Compile Include="Models\CustomWarpChange.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\Grace.cs" />

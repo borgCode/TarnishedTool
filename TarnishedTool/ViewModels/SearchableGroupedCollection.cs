@@ -248,6 +248,33 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             SelectedGroup = _groups.FirstOrDefault();
         }
     }
+    
+    public void Remove(TGroup group, TItem item)
+    {
+        if (!_groupedItems.ContainsKey(group)) return;
+
+        _groupedItems[group].Remove(item);
+        _allItems.Remove(item);
+        
+        if (_groupedItems[group].Count == 0)
+        {
+            _groupedItems.Remove(group);
+            _groups.Remove(group);
+
+            if (EqualityComparer<TGroup>.Default.Equals(SelectedGroup, group))
+            {
+                SelectedGroup = _groups.FirstOrDefault();
+            }
+        }
+        else if (EqualityComparer<TGroup>.Default.Equals(SelectedGroup, group))
+        {
+            Items.Remove(item);
+            if (EqualityComparer<TItem>.Default.Equals(SelectedItem, item))
+            {
+                SelectedItem = Items.FirstOrDefault();
+            }
+        }
+    }
 
     #endregion
 }

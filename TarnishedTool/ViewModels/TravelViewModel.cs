@@ -31,7 +31,7 @@ namespace TarnishedTool.ViewModels
 
         private SearchableGroupedCollection<string, Grace> _gracesForPresetWindow;
         private Dictionary<string, GracePresetTemplate> _customGracePresets;
-        
+
         CreateCustomWarpWindow _createCustomWarpWindow;
 
         private readonly List<long> _baseGameMaps;
@@ -64,7 +64,7 @@ namespace TarnishedTool.ViewModels
                 DataLoader.GetBossWarps(),
                 (bossWarp, search) => bossWarp.Name.ToLower().Contains(search) ||
                                       bossWarp.MainArea.ToLower().Contains(search));
-            
+
             CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
                 DataLoader.LoadCustomWarps(),
                 (customWarp, search) => customWarp.Name.ToLower().Contains(search) ||
@@ -90,7 +90,7 @@ namespace TarnishedTool.ViewModels
             UnlockPresetGracesCommand = new DelegateCommand(UnlockGracePreset);
             CustomWarpCommand = new DelegateCommand(CustomWarp);
             OpenCreateCustomWarpCommand = new DelegateCommand(OpenCreateCustomWarp);
-            
+
 
             _customGracePresets = DataLoader.LoadGracePresets();
             _gracePresets = new ObservableCollection<string>(_customGracePresets.Keys);
@@ -103,7 +103,6 @@ namespace TarnishedTool.ViewModels
             _dlcArGraces = DataLoader.GetSimpleList("ArDlcGraces", s => long.Parse(s, CultureInfo.InvariantCulture));
         }
 
-        
         #region Commands
 
         public ICommand GraceWarpCommand { get; set; }
@@ -146,7 +145,7 @@ namespace TarnishedTool.ViewModels
             get => _isRestOnWarpEnabled;
             set => SetProperty(ref _isRestOnWarpEnabled, value);
         }
-        
+
         private bool _isRestOnCustomWarpEnabled;
 
         public bool IsRestOnCustomWarpEnabled
@@ -206,7 +205,7 @@ namespace TarnishedTool.ViewModels
             get => _selectedGracePreset;
             set => SetProperty(ref _selectedGracePreset, value);
         }
-        
+
         private bool _isAutoUnlockPresetEnabled;
 
         public bool IsAutoUnlockPresetEnabled
@@ -248,7 +247,7 @@ namespace TarnishedTool.ViewModels
                 if (IsRestOnWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
             });
         }
-        
+
         private void CustomWarp()
         {
             if (CustomWarps.SelectedItem.IsDlc && !IsDlcAvailable) return;
@@ -344,23 +343,23 @@ namespace TarnishedTool.ViewModels
         private void UnlockGracePreset()
         {
             var preset = _customGracePresets[SelectedGracePreset];
-            
+
             foreach (var gracePresetEntry in preset.Graces)
             {
                 if (gracePresetEntry.IsDlc && !IsDlcAvailable) continue;
                 _eventService.SetEvent(gracePresetEntry.FlagId, true);
             }
-            
+
             _eventService.SetEvent(Event.SeeUndergroundGraces, true);
             if (IsDlcAvailable) _eventService.SetEvent(Event.SeeDlcGraces, true);
         }
-        
+
         private void OnNewGameStart()
         {
             if (!IsAutoUnlockPresetEnabled || SelectedGracePreset == null) return;
             UnlockGracePreset();
         }
-        
+
         private void OpenCreateCustomWarp()
         {
             if (_createCustomWarpWindow != null && _createCustomWarpWindow.IsVisible)
@@ -368,7 +367,7 @@ namespace TarnishedTool.ViewModels
                 _createCustomWarpWindow.Activate();
                 return;
             }
-            
+
             var clonedWarps = CustomWarps.GroupedItems.ToDictionary(
                 kvp => kvp.Key,
                 kvp => kvp.Value.Select(w => new BlockWarp
@@ -379,23 +378,38 @@ namespace TarnishedTool.ViewModels
                     Position = new Position(w.Position.BlockId, w.Position.Coords, w.Position.Angle)
                 }).ToList()
             );
-            
+
             _createCustomWarpWindow = new CreateCustomWarpWindow(
                 clonedWarps,
                 AreOptionsEnabled,
                 _stateService,
                 _playerService,
                 _gameTickService,
-                OnCustomWarpCreated
+                OnCustomWarpChanged
             );
 
             _createCustomWarpWindow.Closed += (_, _) => _createCustomWarpWindow = null;
             _createCustomWarpWindow.Show();
         }
 
-        private void OnCustomWarpCreated(BlockWarp warp)
+        private void OnCustomWarpChanged(CustomWarpChange change)
         {
-            CustomWarps.Add(warp.MainArea, warp);
+            switch (change)
+            {
+                case WarpAdded(var warp):
+                    CustomWarps.Add(warp.MainArea, warp);
+                    break;
+                case WarpDeleted(var category, var warp):
+                    var original = CustomWarps.GroupedItems[category]
+                        .FirstOrDefault(w => w.Name == warp.Name && w.MainArea == warp.MainArea);
+                    if (original != null)
+                        CustomWarps.Remove(category, original);
+                    break;
+                case CategoryDeleted(var category):
+                    CustomWarps.RemoveGroup(category);
+                    break;
+            }
+
             DataLoader.SaveCustomWarps(CustomWarps.GroupedItems);
         }
 
