@@ -277,6 +277,8 @@ public class CreateCustomWarpViewModel : BaseViewModel
             CustomWarps.Remove(warp.MainArea, warp);
             _onChange?.Invoke(new WarpDeleted(warp.MainArea, warp));
         }
+        
+        CustomWarps.SelectedItem = null;
     }
 
     #endregion
