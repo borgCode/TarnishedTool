@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Input;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
@@ -48,15 +47,5 @@ public partial class CreateCustomWarpWindow : TopmostWindow
             
             AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.CreateCustomWarpWindowAlwaysOnTop;
         };
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        throw new System.NotImplementedException();
     }
 }

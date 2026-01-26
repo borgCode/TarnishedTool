@@ -191,7 +191,6 @@
                             BorderThickness="0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
-                                    <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="Padding" Value="8,4" />
                                     <Setter Property="Background" Value="Transparent" />
@@ -260,10 +259,10 @@
                     </Grid.RowDefinitions>
 
 
-                    <TextBlock Text="Current Position" VerticalAlignment="Center" />
+                    <TextBlock Text="Current Position" FontFamily="Bold" FontSize="14"  VerticalAlignment="Center" />
                     
                     <Grid Grid.Row="1">
-                        <StackPanel Visibility="{Binding AreOptionsEnabled, Converter={StaticResource BoolToVisibility}}">
+                        <StackPanel Margin="20,20,0,0" Visibility="{Binding AreOptionsEnabled, Converter={StaticResource BoolToVisibility}}">
                             <controls:CoordinateDisplay DataContext="{Binding MapLocation}" />
                         </StackPanel>
                         

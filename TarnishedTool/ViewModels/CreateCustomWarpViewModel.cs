@@ -103,7 +103,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
     {
         var results = MsgBox.ShowInputs(new[]
         {
-            new InputField("category", "Category"),
+            new InputField("category", "Category", CustomWarps.SelectedGroup),
             new InputField("name", "Warp Name"),
         }, "New Custom Warp");
 
