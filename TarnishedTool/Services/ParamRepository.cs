@@ -70,6 +70,7 @@ public class ParamRepository : IParamRepository
         return result;
     }
 
+    
     public LoadedParam GetParam(Param param)
     {
         if (_cache.TryGetValue(param, out var cached))
@@ -197,5 +198,28 @@ public class ParamRepository : IParamRepository
     {
         int baseSize = GetBaseTypeSize(field.DataType);
         return baseSize * (field.ArrayLength ?? 1);
+    }
+    
+    private readonly string _customRowNamesFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "TarnishedTool",
+        "CustomRowNamesPath.json");
+    
+    
+    
+    public Dictionary<string, Dictionary<uint, string>> LoadCustomNames()
+    {
+        if (File.Exists(_customRowNamesFilePath))
+        {
+            var json = File.ReadAllText(_customRowNamesFilePath);
+            return JsonSerializer.Deserialize<Dictionary<string, Dictionary<uint, string>>>(json);
+        }
+        return new Dictionary<string, Dictionary<uint, string>>();
+    }
+    
+    public void SaveCustomNames(Dictionary<string, Dictionary<uint, string>> customNames)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(_customRowNamesFilePath)!);
+        var json = JsonSerializer.Serialize(customNames);
+        File.WriteAllText(_customRowNamesFilePath, json);
     }
 }

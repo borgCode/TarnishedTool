@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Input;
 using TarnishedTool.Core;
+using TarnishedTool.Enums;
 using TarnishedTool.Models;
 
 namespace TarnishedTool.ViewModels;
@@ -21,7 +23,21 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
     public int Offset => field.Offset;
     public string VanillaValueText => FormatValue(_vanillaValue);
     public bool IsModified => !Equals(_value, _vanillaValue);
-    public string FullName => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})";
+
+    public string FullName
+    {
+        get
+        {
+            return parent.ParamFieldDisplayMode switch
+            {
+                Enums.ParamFieldDisplayMode.OffsetNameInternal => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})",
+                Enums.ParamFieldDisplayMode.NameInternal => $"{field.DisplayName} ({field.InternalName})",
+                Enums.ParamFieldDisplayMode.NameOnly => field.DisplayName,
+                Enums.ParamFieldDisplayMode.OffsetInternal => $"0x{Offset:X}  ({field.InternalName})",
+                _ => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})"
+            };
+        }
+    }
     
     public bool HasEnum => field.EnumType != null && EnumValues != null;
     
@@ -33,8 +49,6 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         set => SetProperty(ref _enumValues, value);
     }
     
-    
-
     private object _value;
 
     public object Value
@@ -119,9 +133,9 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         }
         catch { return false; }
     }
-
+    
     #endregion
-
+    
     #region Public Methods
 
     public void RefreshValue()

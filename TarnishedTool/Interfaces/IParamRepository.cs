@@ -12,5 +12,7 @@ public interface IParamRepository
     LoadedParam GetParam(Param param);
     (int TableIndex, int SlotIndex) GetLocation(Param paramName);
     public Dictionary<Param, List<ParamEntry>> GetAllEntriesByParam();
+    public Dictionary<string, Dictionary<uint, string>> LoadCustomNames();
+    public void SaveCustomNames(Dictionary<string, Dictionary<uint, string>> customNames);
 
 }

@@ -116,6 +116,8 @@
         </Compile>
         <Compile Include="Converters\BooleanAndConverter.cs" />
         <Compile Include="Converters\BooleanOrConverter.cs" />
+        <Compile Include="Converters\BoolToGridLengthConverter.cs" />
+        <Compile Include="Converters\BoolToShowHideConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
         <Compile Include="Converters\ImmuneFillConverter.cs" />
         <Compile Include="Converters\InverseBooleanConverter.cs" />
@@ -239,6 +241,7 @@
         <Compile Include="Enums\ParamEnums\SpEffect\StateInfo.cs" />
         <Compile Include="Enums\ParamEnums\SwordArtsParam\SwordArtsRefStatusType.cs" />
         <Compile Include="Enums\ParamEnums\SwordArtsParam\SwordArtsShieldIconType.cs" />
+        <Compile Include="Enums\ParamFieldDisplayMode.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
@@ -321,6 +324,7 @@
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\EnumUtil.cs" />
+        <Compile Include="Utilities\InputBox.cs" />
         <Compile Include="Utilities\PatchManager.cs" />
         <Compile Include="Utilities\PositionUtils.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
@@ -386,6 +390,9 @@
         <Compile Include="Views\Windows\CreateLoadoutWindow.xaml.cs">
           <DependentUpon>CreateLoadoutWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\CustomInputBox.xaml.cs">
+          <DependentUpon>CustomInputBox.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\CustomMessageBox.xaml.cs">
           <DependentUpon>CustomMessageBox.xaml</DependentUpon>
         </Compile>
@@ -439,6 +446,7 @@
         <Page Include="Views\Tabs\UtilityTab.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CreateLoadoutWindow.xaml" />
+        <Page Include="Views\Windows\CustomInputBox.xaml" />
         <Page Include="Views\Windows\CustomMessageBox.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />

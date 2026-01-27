@@ -12,6 +12,7 @@ using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
+using TarnishedTool.Utilities;
 using static TarnishedTool.ViewModels.SearchableGroupedCollection<TarnishedTool.Enums.Param,
     TarnishedTool.Models.ParamEntry>;
 
@@ -33,6 +34,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private NavigationHistory<(Param, uint)> _history;
     private bool _isNavigatingHistory;
 
+    private Dictionary<string, Dictionary<uint, string>> _customNames;
+
+
     public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
         IReminderService reminderService)
     {
@@ -40,12 +44,31 @@ public sealed class ParamEditorViewModel : BaseViewModel
         _paramService = paramService;
         _reminderService = reminderService;
 
+
+        _customNames = _paramRepository.LoadCustomNames();
+
+        var entriesByParam = _paramRepository.GetAllEntriesByParam();
+
+        foreach (var paramEntry in _customNames)
+        {
+            if (entriesByParam.TryGetValue((Param)Enum.Parse(typeof(Param), paramEntry.Key), out var entries))
+            {
+                var entryLookup = entries.ToDictionary(e => e.Id);
+                foreach (var rowEntry in paramEntry.Value)
+                {
+                    if (entryLookup.TryGetValue(rowEntry.Key, out var entry))
+                    {
+                        entry.CustomName = rowEntry.Value;
+                    }
+                }
+            }
+        }
         ParamEntries = new SearchableGroupedCollection<Param, ParamEntry>(
-            _paramRepository.GetAllEntriesByParam(),
+            entriesByParam,
             (entry, search) =>
                 entry.Id.ToString().Contains(search) ||
                 entry.Parent.ToString().Contains(search) ||
-                (entry.Name?.ToLower().Contains(search) ?? false)
+                (entry.DisplayName?.ToLower().Contains(search) ?? false)
         );
 
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
@@ -56,16 +79,49 @@ public sealed class ParamEditorViewModel : BaseViewModel
         NavigateToPinnedCommand = new DelegateCommand<ParamEntry>(NavigateToEntry);
         NavigateBackCommand = new DelegateCommand(NavigateBack);
         NavigateForwardCommand = new DelegateCommand(NavigateForward);
-        
-        
+        RenameRowCommand = new DelegateCommand<ParamEntry>(RenameRow);
+        ToggleVanillaValuesCommand = new DelegateCommand(ToggleVanillaValues);
+        CycleParamFieldDisplayModeCommand = new DelegateCommand(CycleParamFieldDisplayMode);
         PopulateEnumTypes();
 
         //   PrintEnums();
 
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
+
+        OnParamChanged();
+        
+        if (Enum.TryParse<ParamFieldDisplayMode>(SettingsManager.Default.ParamFieldDisplayMode, out var savedMode))
+        {
+            _paramFieldDisplayMode = savedMode;
+        }
+        else
+        {
+            _paramFieldDisplayMode = ParamFieldDisplayMode.OffsetNameInternal;
+        }
     }
 
-    
+    // Renaming command
+    private ParamEntry _entryToRename;
+    public ParamEntry EntryToRename
+    {
+        get => _entryToRename;
+        set => SetProperty(ref _entryToRename, value);
+    }
+
+    private void RenameRow(ParamEntry entry)
+    {
+        if (entry == null) return;
+        var newName = InputBox.Show(
+            $"Rename Row {entry.Id}",
+            entry.CustomName ?? entry.DisplayName
+        );
+        if (newName != null)
+        {
+            ApplyCustomName(entry, newName);
+        }
+    }
+
+
     #region Commands
 
     public ICommand RestoreSelectedEntryCommand { get; set; }
@@ -74,6 +130,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public ICommand NavigateToPinnedCommand { get; set; }
     public ICommand NavigateBackCommand { get; set; }
     public ICommand NavigateForwardCommand { get; set; }
+    public ICommand RenameRowCommand { get; set; }
+    public ICommand ToggleVanillaValuesCommand { get; set; }
+    public ICommand CycleParamFieldDisplayModeCommand { get; set; }
 
     #endregion
 
@@ -124,6 +183,15 @@ public sealed class ParamEditorViewModel : BaseViewModel
         }
     }
 
+    private bool _showVanillaValues = true;
+
+    public bool ShowVanillaValues
+    {
+        get => _showVanillaValues;
+        set => SetProperty(ref _showVanillaValues, value);
+    }
+
+
     private bool _isSearchAllParamsEnabled;
 
     public bool IsSearchAllParamsEnabled
@@ -147,6 +215,21 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public bool CanGoBack => _history?.CanGoBack ?? false;
     public bool CanGoForward => _history?.CanGoForward ?? false;
 
+    private ParamFieldDisplayMode _paramFieldDisplayMode;
+
+    public ParamFieldDisplayMode ParamFieldDisplayMode
+    {
+        get => _paramFieldDisplayMode;
+        set
+        {
+            if (SetProperty(ref _paramFieldDisplayMode, value))
+            {
+                SettingsManager.Default.ParamFieldDisplayMode = value.ToString();
+                SettingsManager.Default.Save();
+                _fieldsView?.Refresh();
+            }
+        }
+    }
     #endregion
 
     #region Private Methods
@@ -185,7 +268,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
                             Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
                         });
                     }
-
                     vm.SetEnumValues(enumValues);
                 }
 
@@ -343,6 +425,23 @@ public sealed class ParamEditorViewModel : BaseViewModel
         foreach (var type in enumTypes)
             _enumTypes.Add(type.Name, type);
     }
+    /* Debugging
+        private void PrintEnums()
+        {
+            Console.WriteLine("Enums");
+            foreach (var enumType in _enumTypes)
+            {
+                Console.WriteLine($"{enumType.Key}:");
+
+                foreach (var enumVal in Enum.GetValues(enumType.Value))
+                {
+                    Console.WriteLine($"{enumVal}");
+                }
+            }
+            Console.WriteLine();
+        }
+
+*/    
     
     private void NavigateBack()
     {
@@ -373,6 +472,24 @@ public sealed class ParamEditorViewModel : BaseViewModel
         ParamEntries.SelectedGroup = param;
         ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == id);
     }
+
+    private void ToggleVanillaValues()
+    {
+        ShowVanillaValues = !ShowVanillaValues;
+    }
+
+    private void CycleParamFieldDisplayMode()
+    {
+        ParamFieldDisplayMode = ParamFieldDisplayMode switch
+        {
+            ParamFieldDisplayMode.OffsetNameInternal => ParamFieldDisplayMode.NameInternal,
+            ParamFieldDisplayMode.NameInternal => ParamFieldDisplayMode.NameOnly,
+            ParamFieldDisplayMode.NameOnly => ParamFieldDisplayMode.OffsetInternal,
+            ParamFieldDisplayMode.OffsetInternal => ParamFieldDisplayMode.OffsetNameInternal,
+            _ => ParamFieldDisplayMode.OffsetNameInternal
+        };
+    }
+
 
     #endregion
 
@@ -432,5 +549,43 @@ public sealed class ParamEditorViewModel : BaseViewModel
         OnEntryChanged();
     }
 
+        public void ApplyCustomName(ParamEntry entry, string newName)
+    {
+        if (entry == null) return;
+
+        var paramName = entry.Parent.ToString();
+
+        if (string.IsNullOrWhiteSpace(newName))
+        {
+            if (_customNames.TryGetValue(paramName, out var dict))
+            {
+                dict.Remove(entry.Id);
+                if (dict.Count == 0)
+                    _customNames.Remove(paramName);
+            }
+            entry.CustomName = null;
+        }
+        else
+        {
+            if (!_customNames.TryGetValue(paramName, out var dict))
+            {
+                dict = new Dictionary<uint, string>();
+                _customNames[paramName] = dict;
+            }
+            dict[entry.Id] = newName;
+            entry.CustomName = newName;
+        }
+
+        _paramRepository.SaveCustomNames(_customNames);
+
+        // "refresh" pinned stuff after a rename
+        var pinnedEntry = _pinnedEntries.FirstOrDefault(p => p.Id == entry.Id && p.Parent == entry.Parent);
+        if (pinnedEntry != null)
+        {
+            var index = _pinnedEntries.IndexOf(pinnedEntry);
+            _pinnedEntries.RemoveAt(index);
+            _pinnedEntries.Insert(index, pinnedEntry);
+        }
+    }
     #endregion
 }
