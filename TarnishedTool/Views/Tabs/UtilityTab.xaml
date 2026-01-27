@@ -476,6 +476,11 @@
                             Command="{Binding OpenMirrorCommand}"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="0,10,10,0"/>
+                        <CheckBox
+                            Content="No Upgrade Cost"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            IsChecked="{Binding IsNoUpgradeCostEnabled}"
+                            Margin="0,10,10,0"/>
                     </WrapPanel>
                 </TabItem>
 

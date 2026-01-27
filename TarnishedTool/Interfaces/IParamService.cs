@@ -1,6 +1,7 @@
 ﻿// 
 
 using System;
+using System.Collections.Generic;
 using TarnishedTool.Models;
 
 namespace TarnishedTool.Interfaces;
@@ -14,4 +15,7 @@ public interface IParamService
     void WriteField(IntPtr row, ParamFieldDef field, object value);
     void SetBit(IntPtr row, int offset, int mask, bool setValue);
     void WriteRow(IntPtr row, byte[] data);
+    void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value);
+    List<byte[]> ReadFieldFromAllRows(int tableIndex, int slotIndex, int offset, int size);
+    void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values);
 }

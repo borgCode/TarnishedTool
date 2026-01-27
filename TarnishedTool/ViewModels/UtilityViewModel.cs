@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -34,14 +35,26 @@ namespace TarnishedTool.ViewModels
         private readonly IDlcService _dlcService;
         private readonly ISpEffectService _spEffectService;
         private readonly IFlaskService _flaskService;
+        private readonly IParamService _paramService;
+
+        public const int MaterialId01Offset = 0x0;
+        public const int ItemNum01Offset = 0x20;
+        private List<byte[]>? _originalMaterialIds;
+        private List<byte[]>? _originalItemNums;
+
+        public const int ReinforcePriceRateOffset = 0x68;
+        public const int BaseChangePriceRateOffset = 0x6C;
+        private List<byte[]>? _originalReinforcePriceRate;
+        private List<byte[]>? _originalBaseChangePriceRate;
 
         private static readonly uint[] DisableGraceWarpIds = [4270, 4271, 4272, 4282, 4286, 4288];
 
         private readonly List<ShopCommand> _allShops;
 
         public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
-            IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager, PlayerViewModel playerViewModel, IDlcService dlcService,
-            ISpEffectService spEffectService, IFlaskService flaskService)
+            IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager,
+            PlayerViewModel playerViewModel, IDlcService dlcService,
+            ISpEffectService spEffectService, IFlaskService flaskService, IParamService paramService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
@@ -51,6 +64,7 @@ namespace TarnishedTool.ViewModels
             _dlcService = dlcService;
             _spEffectService = spEffectService;
             _flaskService = flaskService;
+            _paramService = paramService;
 
             stateService.Subscribe(State.AppStart, OnAppStart);
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -85,12 +99,12 @@ namespace TarnishedTool.ViewModels
             RegisterHotkeys();
             ApplyPrefs();
         }
-        
+
         #region Commands
 
         public ICommand SaveCommand { get; set; }
         public ICommand TriggerNgCycleCommand { get; set; }
-        
+
         public ICommand OpenLevelUpCommand { get; set; }
         public ICommand OpenAllotCommand { get; set; }
         public ICommand AttunementCommand { get; set; }
@@ -141,10 +155,10 @@ namespace TarnishedTool.ViewModels
                 if (_isNoClipEnabled)
                 {
                     _utilityService.WriteNoClipSpeed(NoClipSpeed);
-                    
+
                     _wasNoDeathEnabled = _playerViewModel.IsNoDeathEnabled;
                     _playerViewModel.IsNoDeathEnabled = true;
-                    
+
                     _wasTorrentNoDeathEnabled = _playerViewModel.IsTorrentNoDeathEnabled;
                     _playerViewModel.IsTorrentNoDeathEnabled = true;
 
@@ -153,7 +167,7 @@ namespace TarnishedTool.ViewModels
                 else
                 {
                     _utilityService.ToggleNoClip(_isNoClipEnabled, IsNoClipKeyboardDisableEnabled);
-                    
+
                     _playerViewModel.IsNoDeathEnabled = _wasNoDeathEnabled;
                     _playerViewModel.IsTorrentNoDeathEnabled = _wasTorrentNoDeathEnabled;
                 }
@@ -174,7 +188,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private bool _isNoClipKeyboardDisableEnabled;
 
         public bool IsNoClipKeyboardDisableEnabled
@@ -187,7 +201,7 @@ namespace TarnishedTool.ViewModels
                 {
                     _utilityService.ToggleNoclipKeyboardHook(_isNoClipKeyboardDisableEnabled);
                 }
-                
+
                 SettingsManager.Default.IsNoClipKeyboardDisabled = _isNoClipKeyboardDisableEnabled;
                 SettingsManager.Default.Save();
             }
@@ -243,7 +257,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private int _fps;
 
         public int Fps
@@ -306,7 +320,7 @@ namespace TarnishedTool.ViewModels
                 _utilityService.ToggleFreeCam(_isFreeCamEnabled);
             }
         }
-        
+
         private bool _isPlayerMovementEnabled;
 
         public bool IsPlayerMovementEnabled
@@ -331,7 +345,7 @@ namespace TarnishedTool.ViewModels
                 _utilityService.ToggleFreezeWorld(_isFreezeWorldEnabled);
             }
         }
-        
+
         private bool _isGuaranteedDropEnabled;
 
         public bool IsGuaranteedDropEnabled
@@ -366,7 +380,6 @@ namespace TarnishedTool.ViewModels
                 if (!SetProperty(ref _isDrawLowHitEnabled, value)) return;
                 _utilityService.SetColDrawMode(_isDrawLowHitEnabled ? ColDrawMode : 0);
                 _utilityService.ToggleDrawLowHit(_isDrawLowHitEnabled);
-                
             }
         }
 
@@ -407,7 +420,7 @@ namespace TarnishedTool.ViewModels
                 _utilityService.ToggleDrawRagdolls(_isDrawRagdollEnabled);
             }
         }
-        
+
         private bool _isDrawPoiseBarsEnabled;
 
         public bool IsDrawPoiseBarsEnabled
@@ -421,6 +434,7 @@ namespace TarnishedTool.ViewModels
                 {
                     _utilityService.PatchDebugFont();
                 }
+
                 _utilityService.ToggleDrawPoiseBars(_isDrawPoiseBarsEnabled);
             }
         }
@@ -568,7 +582,7 @@ namespace TarnishedTool.ViewModels
             get => _isIncreasingCharges;
             set => SetProperty(ref _isIncreasingCharges, value);
         }
-        
+
         private const float FastGameSpeed = 7f;
         private bool _is7xSpeedActive;
 
@@ -588,6 +602,72 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private bool _isNoUpgradeCostEnabled;
+
+        public bool IsNoUpgradeCostEnabled
+        {
+            get => _isNoUpgradeCostEnabled;
+            set
+            {
+                if (!SetProperty(ref _isNoUpgradeCostEnabled, value)) return;
+
+                _ = Task.Run(() =>
+                {
+                    var (equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex) =
+                        ParamIndices.All["EquipMtrlSetParam"];
+                    var (reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex) =
+                        ParamIndices.All["ReinforceParamWeapon"];
+
+                    if (_isNoUpgradeCostEnabled)
+                    {
+                        _originalMaterialIds ??= _paramService.ReadFieldFromAllRows(equipMtrlSetParamTableIndex,
+                            equipMtrlSetParamSlotIndex, MaterialId01Offset, sizeof(int));
+
+                        _originalItemNums ??= _paramService.ReadFieldFromAllRows(equipMtrlSetParamTableIndex,
+                            equipMtrlSetParamSlotIndex, ItemNum01Offset, sizeof(int));
+
+                        _originalReinforcePriceRate ??= _paramService.ReadFieldFromAllRows(
+                            reinforceParamWeaponTableIndex,
+                            reinforceParamWeaponSlotIndex, ReinforcePriceRateOffset, sizeof(float));
+
+                        _originalBaseChangePriceRate ??= _paramService.ReadFieldFromAllRows(
+                            reinforceParamWeaponTableIndex,
+                            reinforceParamWeaponSlotIndex, BaseChangePriceRateOffset, sizeof(float));
+
+                        _paramService.WriteFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
+                            MaterialId01Offset,
+                            BitConverter.GetBytes(-1));
+                        _paramService.WriteFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
+                            ItemNum01Offset,
+                            BitConverter.GetBytes(-1));
+                        _paramService.WriteFieldToAllRows(reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex,
+                            ReinforcePriceRateOffset,
+                            BitConverter.GetBytes(0f));
+                        _paramService.WriteFieldToAllRows(reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex,
+                            BaseChangePriceRateOffset,
+                            BitConverter.GetBytes(0f));
+                    }
+                    else
+                    {
+                        _paramService.RestoreFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
+                            MaterialId01Offset,
+                            _originalMaterialIds);
+                        _paramService.RestoreFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
+                            ItemNum01Offset,
+                            _originalItemNums);
+                        _paramService.RestoreFieldToAllRows(reinforceParamWeaponTableIndex,
+                            reinforceParamWeaponSlotIndex,
+                            ReinforcePriceRateOffset,
+                            _originalReinforcePriceRate);
+                        _paramService.RestoreFieldToAllRows(reinforceParamWeaponTableIndex,
+                            reinforceParamWeaponSlotIndex,
+                            BaseChangePriceRateOffset,
+                            _originalBaseChangePriceRate);
+                    }
+                });
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -597,7 +677,7 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Private Methods
-        
+
         private void OnAppStart()
         {
             IsNoClipKeyboardDisableEnabled = SettingsManager.Default.IsNoClipKeyboardDisabled;
@@ -616,24 +696,25 @@ namespace TarnishedTool.ViewModels
                     _spEffectService.RemoveSpEffect(playerIns, disableGraceWarpId);
                 }
             }
-            
+
             if (IsDrawHitboxEnabled) _utilityService.ToggleDrawHitbox(true);
             if (IsDrawPoiseBarsEnabled)
             {
                 _utilityService.PatchDebugFont();
                 _utilityService.ToggleDrawPoiseBars(true);
             }
-            
+
             if (IsDrawMapTiles1Enabled) _utilityService.ToggleDrawMapTiles1(true);
             if (IsDrawMapTiles2Enabled)
             {
                 _utilityService.PatchDebugFont();
                 _utilityService.ToggleDrawMapTiles2(true);
             }
+
             if (IsHideCharactersEnabled) _utilityService.ToggleHideChr(true);
             if (IsHideMapEnabled) _utilityService.ToggleHideMap(true);
             if (IsDrawRagdollsEnabled) _utilityService.ToggleDrawRagdolls(true);
-            
+
             _ezStateService.RequestNewNpcTalk();
         }
 
@@ -665,7 +746,7 @@ namespace TarnishedTool.ViewModels
                 _utilityService.PatchDebugFont();
                 _utilityService.TogglePlayerSound(true);
             }
-            
+
             if (IsDrawMiniMapEnabled)
             {
                 _utilityService.PatchDebugFont();
@@ -680,7 +761,7 @@ namespace TarnishedTool.ViewModels
             
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
-        
+
         private void OnFadedIn()
         {
             if (IsDrawLowHitEnabled)
@@ -688,7 +769,7 @@ namespace TarnishedTool.ViewModels
                 _utilityService.ToggleDrawLowHit(true);
                 _utilityService.SetColDrawMode(ColDrawMode);
             }
-            
+
             if (IsDrawHighHitEnabled)
             {
                 _utilityService.ToggleDrawHighHit(true);
@@ -718,7 +799,8 @@ namespace TarnishedTool.ViewModels
                 () => SetSpeed(Math.Max(0.5f, GameSpeed - 0.50f)));
 
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreeCam, () => IsFreeCamEnabled = !IsFreeCamEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreezeWorld, () => IsFreezeWorldEnabled = !IsFreezeWorldEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreezeWorld,
+                () => IsFreezeWorldEnabled = !IsFreezeWorldEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.MoveCamToPlayer, () =>
             {
                 if (!IsFreeCamEnabled) return;
@@ -748,8 +830,10 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Upgrade, () => SafeExecute(OpenUpgrade));
             _hotkeyManager.RegisterAction(HotkeyActions.Sell, () => SafeExecute(OpenSell));
             _hotkeyManager.RegisterAction(HotkeyActions.Rebirth, () => SafeExecute(OpenRebirth));
-            _hotkeyManager.RegisterAction(HotkeyActions.UpgradeFlask, () => SafeExecuteIfNotBusy(UpgradeFlask, IsUpgradingFlask));
-            _hotkeyManager.RegisterAction(HotkeyActions.IncreaseFlaskCharges, () => SafeExecuteIfNotBusy(IncreaseCharges, IsIncreasingCharges));
+            _hotkeyManager.RegisterAction(HotkeyActions.UpgradeFlask,
+                () => SafeExecuteIfNotBusy(UpgradeFlask, IsUpgradingFlask));
+            _hotkeyManager.RegisterAction(HotkeyActions.IncreaseFlaskCharges,
+                () => SafeExecuteIfNotBusy(IncreaseCharges, IsIncreasingCharges));
             _hotkeyManager.RegisterAction(HotkeyActions.OpenShopWindow, OpenShopSelector);
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleFreeCamPlayerMovement, () =>
             {
@@ -758,13 +842,12 @@ namespace TarnishedTool.ViewModels
             });
             _hotkeyManager.RegisterAction(HotkeyActions.DrawPoiseBars,
                 () => IsDrawPoiseBarsEnabled = !IsDrawPoiseBarsEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.Set30Fps,() => SafeExecute(() => Fps = 30));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set60Fps,() => SafeExecute(() => Fps = 60));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set90Fps,() => SafeExecute(() => Fps = 90));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps,() => SafeExecute(() => Fps = 120));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps,() => SafeExecute(() => Fps = 180));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps,() => SafeExecute(() => Fps = 240));
-            
+            _hotkeyManager.RegisterAction(HotkeyActions.Set30Fps, () => SafeExecute(() => Fps = 30));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set60Fps, () => SafeExecute(() => Fps = 60));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set90Fps, () => SafeExecute(() => Fps = 90));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps, () => SafeExecute(() => Fps = 120));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps, () => SafeExecute(() => Fps = 180));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => SafeExecute(() => Fps = 240));
         }
 
         private void SafeExecute(Action action)
@@ -772,7 +855,7 @@ namespace TarnishedTool.ViewModels
             if (!AreOptionsEnabled) return;
             action();
         }
-        
+
         private void SafeExecuteIfNotBusy(Action action, bool isBusy)
         {
             if (!AreOptionsEnabled || isBusy) return;
@@ -809,7 +892,6 @@ namespace TarnishedTool.ViewModels
             return Math.Abs(a - b) < Epsilon;
         }
 
-        
         private void OpenLevelUp() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.LevelUp);
         private void OpenAllot() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenAllot);
 
