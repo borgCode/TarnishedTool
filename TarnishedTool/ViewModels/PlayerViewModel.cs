@@ -777,9 +777,11 @@ namespace TarnishedTool.ViewModels
 
         private void TryApplyHot()
         {
-            if (CurrentHp >= CurrentMaxHp) return;
-            int hpToSet = CurrentHp + 50;
-            if (hpToSet >= CurrentMaxHp) hpToSet = CurrentMaxHp;
+            int currentHp = _playerService.GetCurrentHp();
+            int maxHp = _playerService.GetMaxHp();
+
+            if (currentHp >= maxHp) return;
+            int hpToSet = Math.Min(currentHp + (int)(maxHp * 0.033), maxHp);
             _playerService.SetHp(hpToSet);
         }
 
