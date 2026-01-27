@@ -758,6 +758,12 @@ namespace TarnishedTool.ViewModels
             });
             _hotkeyManager.RegisterAction(HotkeyActions.DrawPoiseBars,
                 () => IsDrawPoiseBarsEnabled = !IsDrawPoiseBarsEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.Set30Fps,() => SafeExecute(() => Fps = 30));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set60Fps,() => SafeExecute(() => Fps = 60));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set90Fps,() => SafeExecute(() => Fps = 90));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps,() => SafeExecute(() => Fps = 120));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps,() => SafeExecute(() => Fps = 180));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps,() => SafeExecute(() => Fps = 240));
             
         }
 

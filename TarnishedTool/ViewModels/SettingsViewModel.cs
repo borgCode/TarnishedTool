@@ -148,7 +148,13 @@ public class SettingsViewModel : BaseViewModel
                 new("Rebirth", HotkeyActions.Rebirth),
                 new("Upgrade Flask", HotkeyActions.UpgradeFlask),
                 new("Increase Flask Charges", HotkeyActions.IncreaseFlaskCharges),
-                new("Open Shop Window", HotkeyActions.OpenShopWindow)
+                new("Open Shop Window", HotkeyActions.OpenShopWindow),
+                new("Set 30 FPS", HotkeyActions.Set30Fps),
+                new("Set 60 FPS", HotkeyActions.Set60Fps),
+                new("Set 90 FPS", HotkeyActions.Set90Fps),
+                new("Set 120 FPS", HotkeyActions.Set120Fps),
+                new("Set 180 FPS", HotkeyActions.Set180Fps),
+                new("Set 240 FPS", HotkeyActions.Set240Fps),
             ],
 
             ["Event"] =

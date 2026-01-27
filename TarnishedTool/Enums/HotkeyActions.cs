@@ -102,5 +102,11 @@ public enum HotkeyActions
     MoveCamToPlayer,
     MovePlayerToCam,
     ToggleFreeCamPlayerMovement,
+    Set30Fps,
+    Set60Fps,
+    Set90Fps,
+    Set120Fps,
+    Set180Fps,
+    Set240Fps,
     DrawEvent,
 }
