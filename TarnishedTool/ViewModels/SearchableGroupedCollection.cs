@@ -185,9 +185,17 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
     }
     
     public void SetSearchScope(SearchScopes scope) => SearchScope = scope;
-    
-    
-    
+    public void Refresh()
+    {
+        if (_isSearchActive)
+        {
+            ApplyFilter();
+        }
+        else
+        {
+            UpdateItemsList();
+        }
+    }
     #endregion
     
 }

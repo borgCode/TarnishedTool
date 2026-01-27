@@ -1,18 +1,35 @@
 ﻿// 
 
+using TarnishedTool.Core;
 using TarnishedTool.Enums;
+using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Models;
 
-public record ParamEntry(uint Id, string Name)
+public class ParamEntry : BaseViewModel
 {
+    public ParamEntry(uint id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
     public bool HasName => !string.IsNullOrEmpty(DisplayName);
-    public string Name { get; } = Name;
-    public uint Id { get; } = Id;
-    public Param Parent { get; set; } 
+    public string Name { get; }
+    public uint Id { get; }
+    public Param Parent { get; set; }
     public string ParentName => Parent.ToString();
-    public string CustomName { get; set; }
-    public string DisplayName => CustomName ?? Name; 
-    // note for self: public string display name is always custom name unless custom name is empty then its default name
-    
+    private string _customName;
+    public string CustomName
+    {
+        get => _customName;
+        set
+        {
+            if (SetProperty(ref _customName, value))
+            {
+                OnPropertyChanged(nameof(DisplayName));
+                OnPropertyChanged(nameof(HasName));
+            }
+        }
+    }
+    public string DisplayName => CustomName ?? Name;
 }

@@ -15,7 +15,7 @@ public class ParamEntryToDisplayTextConverter : IValueConverter
             return string.Empty;
             
         return entry.HasName 
-            ? $"{entry.Parent}: {entry.Name}" 
+            ? $"{entry.Parent}: {entry.Id} - {entry.DisplayName}" 
             : $"{entry.Parent}: {entry.Id}";
     }
 

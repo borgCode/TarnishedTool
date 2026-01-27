@@ -16,6 +16,8 @@
     <windows:TopmostWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
+        <converters:BoolToShowHideConverter x:Key="BoolToShowHideConverter" />
+        <converters:BoolToGridLengthConverter x:Key="BoolToGridLengthConverter" />
         <Style TargetType="ContextMenu">
             <Setter Property="Background" Value="#2D2D2D" />
             <Setter Property="BorderBrush" Value="#333" />
@@ -113,7 +115,7 @@
                         <TextBox
                             Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
                             Height="25"
-                            Width="200"
+                            Width="250"
                             Margin="20,0,0,5">
                             <TextBox.Resources>
                                 <Style TargetType="Border">
@@ -237,8 +239,8 @@
                               VirtualizingPanel.VirtualizationMode="Recycling"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                               ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              BorderThickness="0">
-                        <!-- Surely this time!! -->
+                              BorderThickness="0"
+                              AlternationCount="2">
                         <ListView.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Pin"
@@ -271,6 +273,13 @@
                                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                             </Border>
                                             <ControlTemplate.Triggers>
+                                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                    <Setter TargetName="Border" Property="Background"
+                                                            Value="Transparent" />
+                                                </Trigger>
+                                                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                    <Setter TargetName="Border" Property="Background" Value="#1A1A1A" />
+                                                </Trigger>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter TargetName="Border" Property="Background"
                                                             Value="{StaticResource AccentBrush}" />
@@ -303,7 +312,6 @@
                                                                 <MultiBinding StringFormat="{}{0}: {1}">
                                                                     <Binding Path="Id" />
                                                                     <Binding Path="DisplayName" />
-                                                                    <!-- come back text in case I fuck up -->
                                                                 </MultiBinding>
                                                             </Setter.Value>
                                                         </Setter>
@@ -344,7 +352,8 @@
                     <TextBox Grid.Column="0"
                              Text="{Binding FieldSearchText, UpdateSourceTrigger=PropertyChanged}"
                              Height="25"
-                             Margin="0,0,0,5">
+                             Width="250"
+                             Margin="0,0,100,5">
                         <TextBox.Template>
                             <ControlTemplate TargetType="TextBox">
                                 <Border x:Name="border"
@@ -395,10 +404,20 @@
                             </ControlTemplate>
                         </TextBox.Template>
                     </TextBox>
-                    <Button Grid.Column="1" Content="Restore vanilla values"
-                            Margin="15,0,0,5"
-                            IsEnabled="{Binding IsSelectedEntryModified}"
-                            Command="{Binding RestoreSelectedEntryCommand}" />
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="15,0,0,5">
+                        <Button Content="Restore vanilla values"
+                                Margin="-105,0,10,0"
+                                IsEnabled="{Binding IsSelectedEntryModified}"
+                                Command="{Binding RestoreSelectedEntryCommand}" />
+                        <Button
+                            Margin="0,0,10,0"
+                            Width="115"
+                            Content="{Binding ShowVanillaValues, Converter={StaticResource BoolToShowHideConverter}}"
+                            Command="{Binding ToggleVanillaValuesCommand}" />
+                        <Button Content="Switch View"
+                                Command="{Binding CycleParamFieldDisplayModeCommand}"
+                                ToolTip="Cycle field name display mode" />
+                    </StackPanel>
 
                     <CheckBox Grid.Column="2"
                               x:Name="AlwaysOnTopCheckBox"
@@ -413,12 +432,17 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="150" />
-                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition
+                            Width="{Binding ShowVanillaValues, Converter={StaticResource BoolToGridLengthConverter}}" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" Text="Name" FontWeight="SemiBold" Padding="8,4" />
                     <TextBlock Grid.Column="1" Text="Current Value" FontWeight="SemiBold" Padding="8,4" />
-                    <TextBlock Grid.Column="2" Text="Vanilla Value" FontWeight="SemiBold" Padding="8,4" />
+                    <TextBlock Grid.Column="2"
+                               Text="Vanilla Value"
+                               FontWeight="SemiBold"
+                               Padding="8,4"
+                               Visibility="{Binding ShowVanillaValues, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                 </Grid>
                 <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
@@ -466,7 +490,8 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="150" />
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition
+                                            Width="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToGridLengthConverter}}" />
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"
@@ -590,7 +615,8 @@
                                                Text="{Binding VanillaValueText}"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
-                                               Foreground="#888" />
+                                               Foreground="#888"
+                                               Visibility="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

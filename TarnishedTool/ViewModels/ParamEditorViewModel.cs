@@ -29,9 +29,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private List<FieldValueViewModel> _fields;
     private IntPtr _currentRowPtr;
     private byte[] _currentRowData;
-    
+
     private Dictionary<string, Dictionary<uint, string>> _customNames;
-    
+
 
     public ParamEditorViewModel(IParamRepository paramRepository, IParamService paramService,
         IReminderService reminderService)
@@ -65,7 +65,6 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 entry.Id.ToString().Contains(search) ||
                 entry.Parent.ToString().Contains(search) ||
                 (entry.DisplayName?.ToLower().Contains(search) ?? false)
-                //(entry.Name?.ToLower().Contains(search) ?? false) [Noting down original stuff in case I majorly fucked up]
         );
 
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;
@@ -75,13 +74,24 @@ public sealed class ParamEditorViewModel : BaseViewModel
         TogglePinCommand = new DelegateCommand<ParamEntry>(TogglePin);
         NavigateToPinnedCommand = new DelegateCommand<ParamEntry>(NavigateToEntry);
         RenameRowCommand = new DelegateCommand<ParamEntry>(RenameRow);
+        ToggleVanillaValuesCommand = new DelegateCommand(ToggleVanillaValues);
+        CycleParamFieldDisplayModeCommand = new DelegateCommand(CycleParamFieldDisplayMode);
         PopulateEnumTypes();
-            
-     //   PrintEnums();
-        
+
+        //   PrintEnums();
+
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
 
         OnParamChanged();
+        
+        if (Enum.TryParse<ParamFieldDisplayMode>(SettingsManager.Default.ParamFieldDisplayMode, out var savedMode))
+        {
+            _paramFieldDisplayMode = savedMode;
+        }
+        else
+        {
+            _paramFieldDisplayMode = ParamFieldDisplayMode.OffsetNameInternal;
+        }
     }
 
     // Renaming command
@@ -96,9 +106,9 @@ public sealed class ParamEditorViewModel : BaseViewModel
     {
         if (entry == null) return;
         var newName = InputBox.Show(
-                $"Rename Row {entry.Id}",
-                entry.CustomName ?? entry.DisplayName
-            );
+            $"Rename Row {entry.Id}",
+            entry.CustomName ?? entry.DisplayName
+        );
         if (newName != null)
         {
             ApplyCustomName(entry, newName);
@@ -113,6 +123,8 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public ICommand TogglePinCommand { get; set; }
     public ICommand NavigateToPinnedCommand { get; set; }
     public ICommand RenameRowCommand { get; set; }
+    public ICommand ToggleVanillaValuesCommand { get; set; }
+    public ICommand CycleParamFieldDisplayModeCommand { get; set; }
 
     #endregion
 
@@ -163,7 +175,13 @@ public sealed class ParamEditorViewModel : BaseViewModel
         }
     }
 
-    
+    private bool _showVanillaValues = true;
+
+    public bool ShowVanillaValues
+    {
+        get => _showVanillaValues;
+        set => SetProperty(ref _showVanillaValues, value);
+    }
 
 
     private bool _isSearchAllParamsEnabled;
@@ -186,6 +204,21 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     public bool HasPinnedEntries => _pinnedEntries.Count > 0;
 
+    private ParamFieldDisplayMode _paramFieldDisplayMode;
+
+    public ParamFieldDisplayMode ParamFieldDisplayMode
+    {
+        get => _paramFieldDisplayMode;
+        set
+        {
+            if (SetProperty(ref _paramFieldDisplayMode, value))
+            {
+                SettingsManager.Default.ParamFieldDisplayMode = value.ToString();
+                SettingsManager.Default.Save();
+                _fieldsView?.Refresh();
+            }
+        }
+    }
     #endregion
 
     #region Private Methods
@@ -204,32 +237,32 @@ public sealed class ParamEditorViewModel : BaseViewModel
     }
 
     private void OnParamChanged()
-    {                                   
+    {
         _currentParam = _paramRepository.GetParam(ParamEntries.SelectedGroup);
 
         _fields = _currentParam.Fields
             .Where(field => !field.InternalName.ToLower().Contains("pad"))
             .Select(f =>
+            {
+                var vm = new FieldValueViewModel(f, this);
+
+                if (!string.IsNullOrEmpty(f.EnumType) && _enumTypes.TryGetValue(f.EnumType, out var enumType))
                 {
-                    
-                    var vm = new FieldValueViewModel(f, this);
-                    
-                    if (!string.IsNullOrEmpty(f.EnumType) && _enumTypes.TryGetValue(f.EnumType, out var enumType))
+                    var enumValues = new List<EnumValueItem>();
+                    foreach (var enumValue in Enum.GetValues(enumType))
                     {
-                        var enumValues = new List<EnumValueItem>();
-                        foreach (var enumValue in Enum.GetValues(enumType))
+                        enumValues.Add(new EnumValueItem
                         {
-                            enumValues.Add(new EnumValueItem
-                            {
-                                Name = enumValue.ToString(),
-                                Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
-                            });
-                        }
-                        vm.SetEnumValues(enumValues);
+                            Name = enumValue.ToString(),
+                            Value = Convert.ChangeType(enumValue, Enum.GetUnderlyingType(enumType))
+                        });
                     }
-                    return vm;
-                })
-                .ToList();
+                    vm.SetEnumValues(enumValues);
+                }
+
+                return vm;
+            })
+            .ToList();
 
         _fieldsView = CollectionViewSource.GetDefaultView(_fields);
         _fieldsView.Filter = FilterField;
@@ -352,19 +385,17 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
         ParamEntries.SelectedGroup = entry.Parent;
         ParamEntries.SelectedItem = ParamEntries.Items.FirstOrDefault(e => e.Id == entry.Id);
-        
     }
-    
-        private void PopulateEnumTypes()
-        {
-            var enumTypes = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => t.IsEnum && t.Namespace?.StartsWith("TarnishedTool.Enums.ParamEnums") == true);
+
+    private void PopulateEnumTypes()
+    {
+        var enumTypes = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => t.IsEnum && t.Namespace?.StartsWith("TarnishedTool.Enums.ParamEnums") == true);
 
 
         foreach (var type in enumTypes)
             _enumTypes.Add(type.Name, type);
-        
     }
 
 /* Debugging
@@ -382,8 +413,24 @@ public sealed class ParamEditorViewModel : BaseViewModel
             }
             Console.WriteLine();
         }
-            
+
 */
+    private void ToggleVanillaValues()
+    {
+        ShowVanillaValues = !ShowVanillaValues;
+    }
+
+    private void CycleParamFieldDisplayMode()
+    {
+        ParamFieldDisplayMode = ParamFieldDisplayMode switch
+        {
+            ParamFieldDisplayMode.OffsetNameInternal => ParamFieldDisplayMode.NameInternal,
+            ParamFieldDisplayMode.NameInternal => ParamFieldDisplayMode.NameOnly,
+            ParamFieldDisplayMode.NameOnly => ParamFieldDisplayMode.OffsetInternal,
+            ParamFieldDisplayMode.OffsetInternal => ParamFieldDisplayMode.OffsetNameInternal,
+            _ => ParamFieldDisplayMode.OffsetNameInternal
+        };
+    }
 
     #endregion
 
@@ -465,8 +512,16 @@ public sealed class ParamEditorViewModel : BaseViewModel
         }
 
         _paramRepository.SaveCustomNames(_customNames);
-        OnPropertyChanged(nameof(ParamEntries.SelectedItem));
+
+        // "refresh" pinned stuff after a rename
+        var pinnedEntry = _pinnedEntries.FirstOrDefault(p => p.Id == entry.Id && p.Parent == entry.Parent);
+        if (pinnedEntry != null)
+        {
+            var index = _pinnedEntries.IndexOf(pinnedEntry);
+            _pinnedEntries.RemoveAt(index);
+            _pinnedEntries.Insert(index, pinnedEntry);
+        }
     }
 
-    #endregion
+#endregion
 }
