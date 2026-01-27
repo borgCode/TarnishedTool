@@ -644,6 +644,36 @@
                     </Grid>
                 </Grid>
             </Border>
+            <Border Grid.Row="6" Margin="0,15,0,0">
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Orientation="Vertical">
+                        <Button
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Command="{Binding SetRuneLevelOneCommand}"
+                            Margin="10,10,0,0"
+                            Content="Set Rune Level 1">
+                        </Button>
+                        
+                        <Button 
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Command="{Binding SetMaxLevelCommand}"
+                            Margin="10,10,0,0"
+                            Content="Set Max Level">
+                        </Button>
+                    </StackPanel>
+                    
+                </Grid>
+              
+                
+                    
+            </Border>
         </Grid>
     </ScrollViewer>
 </UserControl>
