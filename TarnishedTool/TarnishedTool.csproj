@@ -246,6 +246,7 @@
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
         <Compile Include="GameIds\EzState.cs" />
+        <Compile Include="GameIds\ParamIndicies.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IDlcService.cs" />
