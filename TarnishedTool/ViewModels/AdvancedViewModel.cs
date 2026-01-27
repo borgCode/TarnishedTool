@@ -14,17 +14,21 @@ namespace TarnishedTool.ViewModels;
 public class AdvancedViewModel : BaseViewModel
 {
     private readonly IItemService _itemService;
+    private readonly ParamEditorViewModel _paramEditorViewModel;
     private readonly ISpEffectService _spEffectService;
     private readonly SpEffectViewModel _spEffectViewModel = new();
     private SpEffectsWindow _spEffectsWindow;
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
-    
+
+    private ParamEditorWindow _paramEditorWindow;
 
     private readonly IPlayerService _playerService;
+    
+    private bool _hasNotifiedInitialOpen;
 
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
-        IParamService paramService, ISpEffectService spEffectService,
+        IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
         IReminderService reminderService)
     {
@@ -40,12 +44,14 @@ public class AdvancedViewModel : BaseViewModel
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
         SpawnWithEquipIdCommand = new DelegateCommand(SpawnWithEquipId);
+        OpenParamEditorCommand = new DelegateCommand(OpenParamEditor);
         ApplySpEffectCommand = new DelegateCommand(ApplySpEffect);
         RemoveSpEffectCommand = new DelegateCommand(RemoveSpEffect);
         AboutSpEffectsCommand = new DelegateCommand(ShowAboutSpEffects);
 
         SelectedEquipType = EquipTypes[0].Value;
-        
+
+        _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
     }
 
     #region Commands
@@ -110,7 +116,7 @@ public class AdvancedViewModel : BaseViewModel
     }
     
     private bool _isSpEffectWindowOpen;
-
+    
     public bool IsSpEffectWindowOpen
     {
         get => _isSpEffectWindowOpen;
@@ -171,6 +177,27 @@ public class AdvancedViewModel : BaseViewModel
         _itemService.SpawnItem((int)itemId, 1, -1, false, 1);
     }
 
+    private void OpenParamEditor()
+    {
+        if (_paramEditorWindow != null && _paramEditorWindow.IsVisible)
+        {
+            _paramEditorWindow.Activate();
+            return;
+        }
+
+        _paramEditorWindow = new ParamEditorWindow
+        {
+            DataContext = _paramEditorViewModel
+        };
+
+        _paramEditorWindow.Closed += (_, _) => _paramEditorWindow = null;
+        _paramEditorWindow.Show();
+        if (!_hasNotifiedInitialOpen)
+        {
+            _paramEditorViewModel.NotifyInitialWindowOpened();
+            _hasNotifiedInitialOpen = true;
+        }
+    }
     
     private void OpenSpEffectsWindow()
     {

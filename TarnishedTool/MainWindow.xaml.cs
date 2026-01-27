@@ -34,7 +34,7 @@ namespace TarnishedTool
             _memoryService = new MemoryService();
             _memoryService.StartAutoAttach();
             InitializeComponent();
-
+            
             if (SettingsManager.Default.WindowLeft != 0 || SettingsManager.Default.WindowTop != 0)
             {
                 Left = SettingsManager.Default.WindowLeft;
@@ -66,7 +66,7 @@ namespace TarnishedTool
             IFlaskService flaskService = new FlaskService(ezStateService, _memoryService);
             IParamService paramService = new ParamService(_memoryService);
             IEventLogReader eventLogReader = new EventLogReader(_memoryService);
-
+            IParamRepository paramRepository = new ParamRepository();
             IGameTickService gameTickService = new GameTickService(_stateService);
 
             _dlcService = new DlcService(_memoryService);
@@ -113,7 +113,7 @@ namespace TarnishedTool
 
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(
                 itemService, _stateService, eventService,
-                paramService, spEffectService, playerService,
+                paramService, paramRepository, spEffectService, playerService,
                 hotkeyManager, gameTickService, reminderService
             );
 
