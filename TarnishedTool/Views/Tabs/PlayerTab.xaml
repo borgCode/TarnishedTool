@@ -213,6 +213,9 @@
                     <CheckBox Content="Infinite FP"
                               IsChecked="{Binding IsInfiniteFpEnabled}"
                               Margin="0,2" />
+                    <CheckBox Content="Heal over time"
+                              IsChecked="{Binding IsHotEnabled}"
+                              Margin="0,2" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">

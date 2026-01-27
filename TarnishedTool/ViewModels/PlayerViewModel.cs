@@ -126,7 +126,6 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _currentMaxHp, value);
         }
         
-// save custom hp throughout sessions, maybe I should've made it a toggle
         private string _customHp = SettingsManager.Default.SaveCustomHp;
         
         public string CustomHp
@@ -140,6 +139,14 @@ namespace TarnishedTool.ViewModels
                     
                 }
             }
+        }
+        
+        private bool _isHotEnabled;
+
+        public bool IsHotEnabled
+        {
+            get => _isHotEnabled;
+            set => SetProperty(ref _isHotEnabled, value);
         }
 
         private bool _isSetRfbsOnLoadEnabled;
@@ -751,6 +758,8 @@ namespace TarnishedTool.ViewModels
         {
             if (_pauseUpdates) return;
 
+            if (IsHotEnabled) TryApplyHot();
+
             CurrentHp = _playerService.GetCurrentHp();
             CurrentMaxHp = _playerService.GetMaxHp();
             PlayerSpeed = _playerService.GetSpeed();
@@ -764,6 +773,16 @@ namespace TarnishedTool.ViewModels
             RuneLevel = newRuneLevel;
             _currentRuneLevel = newRuneLevel;
             LoadStats();
+        }
+
+        private void TryApplyHot()
+        {
+            int currentHp = _playerService.GetCurrentHp();
+            int maxHp = _playerService.GetMaxHp();
+
+            if (currentHp >= maxHp) return;
+            int hpToSet = Math.Min(currentHp + (int)(maxHp * 0.033), maxHp);
+            _playerService.SetHp(hpToSet);
         }
 
         private void LoadStats()
