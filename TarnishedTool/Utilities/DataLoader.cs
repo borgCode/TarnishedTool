@@ -15,23 +15,22 @@ namespace TarnishedTool.Utilities
 {
     public static class DataLoader
     {
-        
         private static readonly string GracePresetsPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "TarnishedTool",
             "GracePresets.json");
-        
+
         private static readonly string LoadoutsPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "TarnishedTool",
             "CustomLoadouts.json");
-        
+
         private static readonly string CustomWarpsPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "TarnishedTool",
             "CustomWarps.json");
-        
-        
+
+
         public static Dictionary<string, List<Grace>> GetGraces()
         {
             Dictionary<string, List<Grace>> graceDict = new Dictionary<string, List<Grace>>();
@@ -314,7 +313,7 @@ namespace TarnishedTool.Utilities
             if (string.IsNullOrWhiteSpace(csvData)) return bossRevives;
 
             using StringReader reader = new StringReader(csvData);
-            reader.ReadLine(); 
+            reader.ReadLine();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
@@ -322,7 +321,7 @@ namespace TarnishedTool.Utilities
 
                 string area = parts[1];
                 var blockId = uint.Parse(parts[5], CultureInfo.InvariantCulture);
-                
+
                 BossRevive boss = new BossRevive
                 {
                     IsDlc = bool.Parse(parts[0]),
@@ -336,14 +335,14 @@ namespace TarnishedTool.Utilities
                     Position = ParsePosition(blockId, parts[8], parts[9]),
                     PositionFirstEncounter = ParsePosition(blockId, parts[10], parts[11]),
                     ShouldSetNight = bool.Parse(parts[12]),
-                    BossBlockId = uint.Parse(parts[13], CultureInfo.InvariantCulture),
+                    BossBlockIds = ParseBossBlockIds(parts[13]),
                 };
 
                 if (!bossRevives.ContainsKey(area))
                 {
                     bossRevives[area] = new List<BossRevive>();
                 }
-                
+
                 bossRevives[area].Add(boss);
             }
 
@@ -356,11 +355,33 @@ namespace TarnishedTool.Utilities
             {
                 return new List<uint>();
             }
-    
+
             string[] parts = npcParamIds.Split('|');
-    
+
             List<uint> idsList = new List<uint>();
-    
+
+            foreach (var part in parts)
+            {
+                if (!string.IsNullOrWhiteSpace(part))
+                {
+                    idsList.Add(uint.Parse(part, CultureInfo.InvariantCulture));
+                }
+            }
+
+            return idsList;
+        }
+
+        private static List<uint> ParseBossBlockIds(string bossBlockIds)
+        {
+            if (string.IsNullOrWhiteSpace(bossBlockIds))
+            {
+                return new List<uint>();
+            }
+
+            string[] parts = bossBlockIds.Split('|');
+
+            List<uint> idsList = new List<uint>();
+
             foreach (var part in parts)
             {
                 if (!string.IsNullOrWhiteSpace(part))
@@ -376,13 +397,14 @@ namespace TarnishedTool.Utilities
         {
             var flags = new List<BossFlag>();
             if (string.IsNullOrWhiteSpace(flagData)) return flags;
-            
+
             string[] flagEntries = flagData.Split('|');
-    
+
             foreach (string entry in flagEntries)
             {
                 string[] pair = entry.Split(':');
-                if (pair.Length == 2 && int.TryParse(pair[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out int eventId))
+                if (pair.Length == 2 && int.TryParse(pair[0], NumberStyles.Integer, CultureInfo.InvariantCulture,
+                        out int eventId))
                 {
                     flags.Add(new BossFlag
                     {
@@ -394,7 +416,7 @@ namespace TarnishedTool.Utilities
 
             return flags;
         }
-        
+
         private static Position ParsePosition(uint blockId, string coordData, string rotationData)
         {
             return new Position(
@@ -403,22 +425,22 @@ namespace TarnishedTool.Utilities
                 string.IsNullOrWhiteSpace(rotationData) ? 0f : float.Parse(rotationData, CultureInfo.InvariantCulture)
             );
         }
-        
+
         private static Vector3 ParseCoords(string coordData)
         {
             if (string.IsNullOrWhiteSpace(coordData))
             {
                 return new Vector3();
             }
-    
+
             string[] parts = coordData.Split('|');
             float[] coords = new float[parts.Length];
-    
+
             for (int i = 0; i < parts.Length; i++)
             {
                 coords[i] = float.Parse(parts[i], CultureInfo.InvariantCulture);
             }
-            
+
             return new Vector3(coords[0], coords[1], coords[2]);
         }
 
@@ -436,12 +458,12 @@ namespace TarnishedTool.Utilities
                 var name = parts[1];
                 var commandId = int.Parse(parts[2], CultureInfo.InvariantCulture);
                 int[] @params = parts.Skip(3).Select(p => int.Parse(p, CultureInfo.InvariantCulture)).ToArray();
-    
+
                 var command = new EzState.TalkCommand(commandId, @params);
                 var shopCommand = new ShopCommand(isDlc, name, command);
                 shops.Add(shopCommand);
             }
-            
+
             return shops;
         }
 
@@ -462,7 +484,7 @@ namespace TarnishedTool.Utilities
 
             return items;
         }
-        
+
         public static Dictionary<string, LoadoutTemplate> LoadCustomLoadouts()
         {
             try
@@ -472,7 +494,7 @@ namespace TarnishedTool.Utilities
 
                 string json = File.ReadAllText(LoadoutsPath);
                 var loadouts = JsonSerializer.Deserialize<List<LoadoutTemplate>>(json);
-        
+
                 return loadouts?.ToDictionary(l => l.Name) ?? new Dictionary<string, LoadoutTemplate>();
             }
             catch
@@ -498,7 +520,7 @@ namespace TarnishedTool.Utilities
                 // Silent fail or log
             }
         }
-        
+
         public static Dictionary<string, GracePresetTemplate> LoadGracePresets()
         {
             try
@@ -534,23 +556,25 @@ namespace TarnishedTool.Utilities
                 // Silent fail or log
             }
         }
+
         public static List<Weather> GetWeatherTypes()
         {
-                List<Weather> weathers= new List<Weather>();
-                string csvData = Resources.WeatherTypes;
-                if (string.IsNullOrWhiteSpace(csvData)) return weathers;
+            List<Weather> weathers = new List<Weather>();
+            string csvData = Resources.WeatherTypes;
+            if (string.IsNullOrWhiteSpace(csvData)) return weathers;
 
-                using StringReader reader = new StringReader(csvData);
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    string[] parts = line.Split(',');
-                    sbyte weatherType = sbyte.Parse(parts[0], NumberStyles.Number, CultureInfo.InvariantCulture);
-                    string name = parts[1];
-                    weathers.Add(new Weather(weatherType, name));
-                }
-                return weathers;
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+                sbyte weatherType = sbyte.Parse(parts[0], NumberStyles.Number, CultureInfo.InvariantCulture);
+                string name = parts[1];
+                weathers.Add(new Weather(weatherType, name));
             }
+
+            return weathers;
+        }
 
         public static Dictionary<string, List<BlockWarp>> LoadCustomWarps()
         {
@@ -561,8 +585,8 @@ namespace TarnishedTool.Utilities
 
                 string json = File.ReadAllText(CustomWarpsPath);
                 var options = new JsonSerializerOptions { IncludeFields = true };
-        
-                return JsonSerializer.Deserialize<Dictionary<string, List<BlockWarp>>>(json, options) 
+
+                return JsonSerializer.Deserialize<Dictionary<string, List<BlockWarp>>>(json, options)
                        ?? new Dictionary<string, List<BlockWarp>>();
             }
             catch
@@ -579,12 +603,12 @@ namespace TarnishedTool.Utilities
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
 
-                var options = new JsonSerializerOptions 
-                { 
+                var options = new JsonSerializerOptions
+                {
                     WriteIndented = true,
-                    IncludeFields = true 
+                    IncludeFields = true
                 };
-                
+
                 string json = JsonSerializer.Serialize(warps, options);
                 File.WriteAllText(CustomWarpsPath, json);
             }

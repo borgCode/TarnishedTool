@@ -40,7 +40,7 @@ public class EnemyViewModel : BaseViewModel
     public const int NpcParamTableIndex = 6;
     public const int NpcParamSlotIndex = 0;
     public static readonly BitFlag InitializeDead = new(0x14D, 1 << 3);
-    
+
     private bool _shouldSetNight;
 
     public const int PhaseTransitionCooldownSpEffectId = 20011216;
@@ -49,7 +49,7 @@ public class EnemyViewModel : BaseViewModel
     private const int EldenStarsActIdx = 22;
     private DateTime _ebLastExecuted = DateTime.MinValue;
     private static readonly TimeSpan EbCooldownDuration = TimeSpan.FromSeconds(2);
-    
+
     public SearchableGroupedCollection<string, BossRevive> BossRevives { get; }
 
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
@@ -89,7 +89,7 @@ public class EnemyViewModel : BaseViewModel
             DataLoader.GetBossRevives(),
             (bossRevive, search) => bossRevive.BossName.ToLower().Contains(search) ||
                                     bossRevive.Area.ToLower().Contains(search));
-        
+
         SelectedAct = Acts.FirstOrDefault();
 
         RegisterHotkeys();
@@ -297,9 +297,9 @@ public class EnemyViewModel : BaseViewModel
             else RemoveLionSpEffects(LionMinibossEntityId);
         }
     }
-    
+
     public IReadOnlyList<Act> Acts { get; } = DataLoader.GetEbActs().ToList();
-    
+
     private Act _selectedAct;
 
     public Act SelectedAct
@@ -357,8 +357,9 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.AllTargetingView,
             () => { IsTargetingViewEnabled = !IsTargetingViewEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.ForceEbActSequence, () => SafeExecute(ForceEbActSequence));
-        _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBoss,() => SafeExecute(ReviveBoss));
-        _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBossFirstEncounter,() => SafeExecute(ReviveBossFirstEncounter));
+        _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBoss, () => SafeExecute(ReviveBoss));
+        _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBossFirstEncounter,
+            () => SafeExecute(ReviveBossFirstEncounter));
     }
 
     private void SafeExecute(Action action)
@@ -440,10 +441,13 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: false);
-        if (_playerService.GetBlockId() != bossRevive.BlockId && _playerService.GetBlockId() != bossRevive.BossBlockId) return;
-        
+        var playerBlockId = _playerService.GetBlockId();
+        if (playerBlockId != bossRevive.BlockId &&
+            (bossRevive.BossBlockIds == null || !bossRevive.BossBlockIds.Contains(playerBlockId)))
+            return;
+
         if (bossRevive.ShouldSetNight) _shouldSetNight = true;
-        
+
         _ = Task.Run(() => _travelService.WarpToBlockId(bossRevive.Position));
     }
 
@@ -451,10 +455,13 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
         SetBossFlags(bossRevive, isFirstEncounter: true);
-        if (_playerService.GetBlockId() != bossRevive.BlockId && _playerService.GetBlockId() != bossRevive.BossBlockId) return;
-        
+        var playerBlockId = _playerService.GetBlockId();
+        if (playerBlockId != bossRevive.BlockId &&
+            (bossRevive.BossBlockIds == null || !bossRevive.BossBlockIds.Contains(playerBlockId)))
+            return;
+
         if (bossRevive.ShouldSetNight) _shouldSetNight = true;
-        
+
         _ = Task.Run(() => _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter));
     }
 
@@ -462,7 +469,7 @@ public class EnemyViewModel : BaseViewModel
     {
         foreach (var bossRevive in BossRevives.AllItems)
             SetBossFlags(bossRevive, isFirstEncounter: false);
-        
+
         _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
     }
 
