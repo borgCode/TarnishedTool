@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Timers;
 using TarnishedTool.Interfaces;
@@ -136,6 +138,21 @@ namespace TarnishedTool.Services
         public void WriteInt64(nint addr, long val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteFloat(IntPtr addr, float val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteDouble(IntPtr addr, double val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        
+        public T Read<T>(IntPtr addr) where T : unmanaged
+        {
+            int size = Unsafe.SizeOf<T>();
+            var bytes = ReadBytes(addr, size);
+            return MemoryMarshal.Read<T>(bytes);
+        }
+
+        public void Write<T>(IntPtr addr, T value) where T : unmanaged
+        {
+            int size = Unsafe.SizeOf<T>();
+            var bytes = new byte[size];
+            MemoryMarshal.Write(bytes, ref value);
+            WriteBytes(addr, bytes);
+        }
 
 
         public void WriteString(IntPtr addr, string value, int maxLength = 32)

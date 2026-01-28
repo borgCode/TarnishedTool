@@ -51,4 +51,7 @@ public interface IMemoryService
 
     void StartAutoAttach();
     void StopAutoAttach();
+
+    T Read<T>(IntPtr addr) where T : unmanaged;
+    void Write<T>(IntPtr addr, T value) where T : unmanaged;
 }

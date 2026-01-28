@@ -35,6 +35,12 @@ public class ParamService(MemoryService memoryService) : IParamService
 
         return IntPtr.Zero;
     }
+    
+    public T Read<T>(IntPtr row, int offset) where T : unmanaged 
+        => memoryService.Read<T>(row + offset);
+
+    public void Write<T>(IntPtr row, int offset, T value) where T : unmanaged 
+        => memoryService.Write<T>(row + offset, value);
 
     public void PrintAllParamTableNames()
     {

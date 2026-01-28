@@ -25,12 +25,8 @@ namespace TarnishedTool.ViewModels
 
         private readonly IPlayerService _playerService;
         private readonly IParamService _paramService;
+
         
-        private float _originalDeathTimeOffset0;
-        private float _originalDeathTimeOffset4;
-        private bool _hasDeathTimeOrigin;
-
-
         private readonly CharacterState _saveState1 = new();
         private readonly CharacterState _saveState2 = new();
 
@@ -43,6 +39,12 @@ namespace TarnishedTool.ViewModels
         private readonly IGameTickService _gameTickService;
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
+        
+        private const uint MenuCommonParamRowId = 0;
+        private const int DeathTimeOffset0 = 0x0; 
+        private const int DeathTimeOffset4 = 0x4; 
+        private const float OriginalDeathTime0x0 = 3.8f;
+        private const float OriginalDeathTime0x4 = 3.3f;
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
@@ -81,8 +83,6 @@ namespace TarnishedTool.ViewModels
 
             SetMaxLevelCommand = new DelegateCommand(SetMaxLevel);
             SetRuneLevelOneCommand = new DelegateCommand(SetRuneLevelOne);
-            
-            ToggleFasterDeathCommand = new DelegateCommand(() => IsFasterDeathEnabled = !IsFasterDeathEnabled);
 
             ApplyPrefs();
         }
@@ -103,7 +103,6 @@ namespace TarnishedTool.ViewModels
 
         public ICommand SetMaxLevelCommand { get; set; }
         public ICommand SetRuneLevelOneCommand { get; set; }
-        public ICommand ToggleFasterDeathCommand { get; set; }
 
         #endregion
 
@@ -695,6 +694,7 @@ namespace TarnishedTool.ViewModels
             _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
+            
         }
 
         private void OnFadedIn()
@@ -720,6 +720,7 @@ namespace TarnishedTool.ViewModels
             if (IsNoRuneArcLossEnabled) _playerService.ToggleNoRuneArcLoss(true);
             if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
             if (IsNoTimePassOnDeathEnabled) _playerService.ToggleNoTimePassOnDeath(true);
+            if (IsFasterDeathEnabled) ApplyFasterDeath(true);
             _pauseUpdates = false;
         }
 
@@ -977,53 +978,16 @@ namespace TarnishedTool.ViewModels
 
         private void ApplyFasterDeath(bool enabled)
         {
-            var (menuCommonParamTableIndex, menuCommonParamSlotIndex) =
-                ParamIndices.All["MenuCommonParam"];
+            var (tableIndex, slotIndex) = ParamIndices.All["MenuCommonParam"];
+    
+            IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, MenuCommonParamRowId);
+            if (row == IntPtr.Zero) return;
 
-            const uint MenuCommonParamRowId = 0;
-            const int DeathTimeOffset0 = 0x0; 
-            const int DeathTimeOffset4 = 0x4; 
-
-            IntPtr rowPtr = _paramService.GetParamRow(
-                menuCommonParamTableIndex,
-                menuCommonParamSlotIndex,
-                MenuCommonParamRowId
-            );
-
-            if (rowPtr == IntPtr.Zero) return;
-
-            var field1 = new ParamFieldDef { Offset = DeathTimeOffset0, DataType = "f32" };
-            var field2 = new ParamFieldDef { Offset = DeathTimeOffset4, DataType = "f32" };
-
-            if (enabled)
-            {
-                
-                if (!_hasDeathTimeOrigin)
-                {
-                    var rowData = _paramService.ReadRow(rowPtr, 0x8); 
-                    _originalDeathTimeOffset0 = BitConverter.ToSingle(rowData, DeathTimeOffset0);
-                    _originalDeathTimeOffset4 = BitConverter.ToSingle(rowData, DeathTimeOffset4);
-                    _hasDeathTimeOrigin = true;
-                }
-                
-                _paramService.WriteField(rowPtr, field1, 0f);
-                _paramService.WriteField(rowPtr, field2, 0f);
-            }
-            else
-            {
-                
-                if (_hasDeathTimeOrigin)
-                {
-                    _paramService.WriteField(rowPtr, field1, _originalDeathTimeOffset0);
-                    _paramService.WriteField(rowPtr, field2, _originalDeathTimeOffset4);
-                }
-                else
-                {
-                    // backup restore values
-                    _paramService.WriteField(rowPtr, field1, 3.8f);
-                    _paramService.WriteField(rowPtr, field2, 3.3f);
-                }
-            }
+            float val0 = enabled ? 0f : OriginalDeathTime0x0;
+            float val4 = enabled ? 0f : OriginalDeathTime0x4;
+    
+            _paramService.Write(row, DeathTimeOffset0, val0);
+            _paramService.Write(row, DeathTimeOffset4, val4);
         }
 
         #endregion

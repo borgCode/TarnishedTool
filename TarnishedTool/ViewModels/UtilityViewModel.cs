@@ -92,7 +92,6 @@ namespace TarnishedTool.ViewModels
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
-            NoUpgradeCostCommand = new DelegateCommand(() => IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -124,7 +123,6 @@ namespace TarnishedTool.ViewModels
         public ICommand UpgradeFlaskCommand { get; }
         public ICommand IncreaseChargesCommand { get; }
         public ICommand OpenMirrorCommand { get; }
-        public ICommand NoUpgradeCostCommand { get; set; }
 
         #endregion
 
@@ -760,7 +758,7 @@ namespace TarnishedTool.ViewModels
                 _utilityService.PatchDebugFont();
                 _utilityService.ToggleDrawTilesOnMap(true);
             }
-            
+
             IsDlcAvailable = _dlcService.IsDlcAvailable;
         }
 
@@ -850,7 +848,8 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps, () => SafeExecute(() => Fps = 120));
             _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps, () => SafeExecute(() => Fps = 180));
             _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => SafeExecute(() => Fps = 240));
-            _hotkeyManager.RegisterAction(HotkeyActions.NoUpgradeCost, () => { IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.NoUpgradeCost,
+                () => SafeExecute(() => { IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled; }));
         }
 
         private void SafeExecute(Action action)
