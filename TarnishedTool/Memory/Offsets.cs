@@ -307,6 +307,7 @@ namespace TarnishedTool.Memory
                 {
                     public const int GoalLife = 0x28;
                     public const int SubGoalContainer = 0x30;
+                    public const int SubGoalCount = 0x58;
                     public const int InlineParams = 0x60;
                     public const int ExtraParamsBegin = 0x88;
                     public const int ExtraParamsEnd = 0x90;
@@ -329,6 +330,12 @@ namespace TarnishedTool.Memory
                     public const int Buckets = 0x08; 
                     public const int MapSize = 0x10; 
                     public const int BlockSize = 2;  
+                }
+
+                public static class GoalScriptOffsets
+                {
+                    public const int GoalName = 0x10;
+                    public const int GoalNameCapacity = 0x28;
                 }
                 
             }
