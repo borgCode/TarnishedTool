@@ -282,6 +282,7 @@ namespace TarnishedTool.Memory
             public static class AiThinkOffsets
             {
                 public const int NpcThinkParamId = 0x28;
+                public const int TopGoal = 0x60;
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
 
@@ -300,6 +301,36 @@ namespace TarnishedTool.Memory
                         or Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0xE9B2,
                     _ => 0xE9C2,
                 };
+
+
+                public static class Goal
+                {
+                    public const int GoalLife = 0x28;
+                    public const int SubGoalContainer = 0x30;
+                    public const int InlineParams = 0x60;
+                    public const int ExtraParamsBegin = 0x88;
+                    public const int ExtraParamsEnd = 0x90;
+                    public const int GoalId = 0xA0;
+                    public const int GoalScript = 0xA8;
+                    public const int TurnTime = 0x150;
+                }
+                
+                public static class SubGoalContainerOffsets
+                {
+                    // Pointer chain: *(*(*(SubGoalContainer + 0x08))) -> DequeInternal
+                    public const int DequeHandle = 0x08;
+                    public const int StartIdx = 0x20;
+                    public const int Count = 0x28;
+                }
+    
+                // DequeInternal structure (after triple deref)
+                public static class DequeInternalOffsets
+                {
+                    public const int Buckets = 0x08; 
+                    public const int MapSize = 0x10; 
+                    public const int BlockSize = 2;  
+                }
+                
             }
 
             public enum TargetingSystemOffsets

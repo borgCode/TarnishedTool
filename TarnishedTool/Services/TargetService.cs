@@ -328,7 +328,7 @@ namespace TarnishedTool.Services
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.ChrSuperArmorModule], true);
 
-        private IntPtr GetAiThinkPtr() =>
+        public IntPtr GetAiThinkPtr() =>
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
 

@@ -1,5 +1,7 @@
 ﻿// 
 
+using System;
+
 namespace TarnishedTool.Interfaces;
 
 public interface ITargetService
@@ -44,4 +46,5 @@ public interface ITargetService
     int GetNpcChrId();
     uint GetNpcParamId();
     void ToggleNoHeal(bool isNoHealEnabled);
+    IntPtr GetAiThinkPtr();
 }
