@@ -327,9 +327,9 @@ namespace TarnishedTool.Memory
                 // DequeInternal structure (after triple deref)
                 public static class DequeInternalOffsets
                 {
-                    public const int Buckets = 0x08; 
-                    public const int MapSize = 0x10; 
-                    public const int BlockSize = 2;  
+                    public const int BlockMap = 0x08; 
+                    public const int MapCapacity  = 0x10;
+                    public const int BlockSize = 2;
                 }
 
                 public static class GoalScriptOffsets
