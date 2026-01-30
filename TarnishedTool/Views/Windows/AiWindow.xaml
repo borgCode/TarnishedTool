@@ -33,7 +33,7 @@
         
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Content="Warp to selected enemy" Command="{Binding WarpToSelectedCommand}"></Button>
-            <Button Content="Test Open Goal Window for selected" Command="{Binding WarpToSelectedCommand}"></Button>
+            <Button Content="Test Open Goal Window for selected" Command="{Binding OpenGoalWindowForSelectedCommand}"></Button>
         </StackPanel>
     </Grid>
 </windows:TopmostWindow>

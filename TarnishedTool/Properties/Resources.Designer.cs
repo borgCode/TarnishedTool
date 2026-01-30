@@ -775,15 +775,15 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to GoalId,Name,ParamNames
-        ///0,UndefinedGoalNotification,Life
-        ///1,Normal,Life
-        ///3,WalkAround,Life;Radius;Walk;EnemyReactDist;IsWalkAroundFreePoint
-        ///4,BackToHome,Life;EnemyReactDist;ForceBattleGoalOnHit;Unused_3;Unused_4;MoveTarget
-        ///5,NonBattleAct,Life;EnemyReactDist;ReactToEnemy;Run;TurnTarget;HomeStopDist;StandbyGoalId;ForceBattleGoalOnHit
-        ///100,TopGoal,Life
-        ///2000,Wait,Life;Target
-        ///2001,Turn,Life;TurnTarget;StopAngleWidth;GuardStateId;OnGuardResult;GuardSuccessOnEnd
-        ///2002,TurnAround,Life;MoveTarget;DirectionStart; [rest of string was truncated]&quot;;.
+        ///0,UndefinedGoalNotification
+        ///1,Normal
+        ///3,WalkAround,Radius;Walk;EnemyReactDist;IsWalkAroundFreePoint
+        ///4,BackToHome,EnemyReactDist;ForceBattleGoalOnHit;Unused_3;Unused_4;MoveTarget
+        ///5,NonBattleAct,EnemyReactDist;ReactToEnemy;Run;TurnTarget;HomeStopDist;StandbyGoalId;ForceBattleGoalOnHit
+        ///100,TopGoal
+        ///2000,Wait,Target
+        ///2001,Turn,TurnTarget;StopAngleWidth;GuardStateId;OnGuardResult;GuardSuccessOnEnd
+        ///2002,TurnAround,MoveTarget;DirectionStart;StopAngleWidth;Walk;SuccessOnEnd;GuardStateId [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GoalInfo {
             get {

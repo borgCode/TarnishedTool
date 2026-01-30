@@ -120,6 +120,7 @@
         <Compile Include="Converters\BoolToShowHideConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
         <Compile Include="Converters\ImmuneFillConverter.cs" />
+        <Compile Include="Converters\IndentConverter.cs" />
         <Compile Include="Converters\InverseBooleanConverter.cs" />
         <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
         <Compile Include="Converters\LogEntryToBrushConverter.cs" />

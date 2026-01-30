@@ -1,5 +1,6 @@
 ﻿// 
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -7,10 +8,10 @@ namespace TarnishedTool.ViewModels;
 
 public class GoalViewModel : BaseViewModel
 {
+    public int GoalId { get; set; }
     private string _name;
     private float _life;
     private float _turnTime;
-    private ObservableCollection<GoalParamViewModel> _params;
     private ObservableCollection<GoalViewModel> _children;
     private int _indentLevel;
 
@@ -36,11 +37,7 @@ public class GoalViewModel : BaseViewModel
 
     public bool HasTurnTime => TurnTime > 0;
 
-    public ObservableCollection<GoalParamViewModel> Params
-    {
-        get => _params;
-        set => SetProperty(ref _params, value);
-    }
+    public List<GoalParamViewModel> Params { get; set; }
 
     public bool HasParams => Params?.Count > 0;
 
@@ -59,6 +56,7 @@ public class GoalViewModel : BaseViewModel
     public string FormattedParams => Params != null 
         ? string.Join(", ", Params.Select(p => $"{p.Label}:{p.Value:F1}")) 
         : string.Empty;
+    
 
     #endregion
 }

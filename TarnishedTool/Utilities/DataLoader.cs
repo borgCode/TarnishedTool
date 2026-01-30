@@ -633,12 +633,13 @@ namespace TarnishedTool.Utilities
                 if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
 
                 string[] parts = line.Split(',');
-                if (parts.Length < 3) continue;
 
                 int goalId = int.Parse(parts[0], CultureInfo.InvariantCulture);
                 string name = parts[1];
         
-                List<string> paramNames = parts[2].Split(';').ToList();
+                List<string> paramNames = parts.Length > 2 && !string.IsNullOrEmpty(parts[2])
+                    ? parts[2].Split(';').ToList()
+                    : new List<string>();
 
                 goalInfos[goalId] = new GoalInfo
                 {

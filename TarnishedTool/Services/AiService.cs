@@ -12,7 +12,7 @@ namespace TarnishedTool.Services;
 public class AiService(MemoryService memoryService) : IAiService
 {
     public const int ChrInsEntrySize = 0x8;
-    
+
     #region Public Methods
 
     public List<ChrInsEntry> GetNearbyChrInsEntries()
@@ -52,20 +52,76 @@ public class AiService(MemoryService memoryService) : IAiService
     public Position GetChrInsPos(IntPtr chrIns)
     {
         var blockId = memoryService.Read<uint>(chrIns + ChrIns.BlockId);
-        
+
         var worldBlockInfo = FindWorldBlockInfoByBlockId(blockId);
-        
+
         Vector3 blockInfoPos = memoryService.Read<Vector3>(worldBlockInfo + 0x70);
         Vector3 chrInsLocalPos = GetChrInsLocalPos(chrIns);
-        
+
         return new Position(blockId, Vector3.Subtract(chrInsLocalPos, blockInfoPos), 0);
     }
 
     public Vector3 GetChrInsLocalPos(IntPtr chrIns) =>
         memoryService.Read<Vector3>(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
-    public nint GetTopGoal(nint chrIns) => 
+    public nint GetTopGoal(nint chrIns) =>
         memoryService.Read<nint>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TopGoal);
+
+    public GoalIns GetGoalInfo(nint goalPtr)
+    {
+        var goalId = memoryService.Read<int>(goalPtr + ChrIns.AiThinkOffsets.Goal.GoalId);
+        var life = memoryService.Read<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.GoalLife);
+        var turnTime = memoryService.Read<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.TurnTime);
+        var goalParams = ReadGoalParams(goalPtr);
+
+        return new GoalIns
+        {
+            GoalId = goalId,
+            Life = life,
+            TurnTime = turnTime,
+            Params = goalParams
+        };
+    }
+
+    public bool HasSubGoals(nint topGoal) =>
+        memoryService.Read<int>(topGoal + ChrIns.AiThinkOffsets.Goal.SubGoalCount) > 0;
+
+    public List<nint> GetSubGoals(nint goalPtr)
+    {
+        List<nint> childGoals = new List<nint>();
+
+        var subGoalContainer = goalPtr + ChrIns.AiThinkOffsets.Goal.SubGoalContainer;
+        var startIdx =
+            memoryService.Read<ulong>(subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.StartIdx);
+        var count =
+            memoryService.Read<ulong>(subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.Count);
+
+        var dequeHandle = memoryService.FollowPointers(
+            subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.DequeHandle,
+            [0, 0, 0], true);
+        var blockMap = memoryService.Read<nint>(dequeHandle + ChrIns.AiThinkOffsets.DequeInternalOffsets.BlockMap);
+        var mapCapacity =
+            memoryService.Read<ulong>(dequeHandle + ChrIns.AiThinkOffsets.DequeInternalOffsets.MapCapacity);
+
+        if (blockMap == IntPtr.Zero || mapCapacity == 0) return childGoals;
+
+        var endIdx = startIdx + count;
+
+        for (ulong i = startIdx; i < endIdx; i++)
+        {
+            var blockIdx = (i >> 1) & (mapCapacity - 1);
+            var slotIndex = (int)(i & 1);
+
+            var block = memoryService.Read<nint>(blockMap + (nint)(blockIdx * 8));
+            if (block == IntPtr.Zero) continue;
+
+            var childGoal = memoryService.Read<nint>(block + slotIndex * 8);
+            if (childGoal == IntPtr.Zero) continue;
+            childGoals.Add(childGoal);
+        }
+
+        return childGoals;
+    }
 
     #endregion
 
@@ -83,7 +139,7 @@ public class AiService(MemoryService memoryService) : IAiService
 
     private IntPtr GetChrInsFlagsPtr(IntPtr chrIns) =>
         memoryService.FollowPointers(chrIns, [ChrIns.Flags], false, false);
-    
+
     private IntPtr GetChrPhysicsPtr(IntPtr chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrPhysicsModule], true, false);
 
@@ -124,6 +180,27 @@ public class AiService(MemoryService memoryService) : IAiService
         }
 
         return IntPtr.Zero;
+    }
+
+    private float[] ReadGoalParams(nint goalPtr)
+    {
+        var baseParams = memoryService.ReadArray<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.InlineParams, 8);
+        var extraBegin = memoryService.Read<nint>(goalPtr + ChrIns.AiThinkOffsets.Goal.ExtraParamsBegin);
+        var extraEnd = memoryService.Read<nint>(goalPtr + ChrIns.AiThinkOffsets.Goal.ExtraParamsEnd);
+
+        if (extraBegin == 0) return baseParams;
+
+        var extraCount = (int)(extraEnd - extraBegin) / 4;
+
+        if (extraCount <= 0) return baseParams;
+
+        var extraParams = memoryService.ReadArray<float>(extraBegin, extraCount);
+
+        var result = new float[8 + extraCount];
+        baseParams.CopyTo(result, 0);
+        extraParams.CopyTo(result, 8);
+
+        return result;
     }
 
     #endregion

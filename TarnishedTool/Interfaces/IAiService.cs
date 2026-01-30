@@ -18,4 +18,7 @@ public interface IAiService
     Position GetChrInsPos(IntPtr chrIns);
     Vector3 GetChrInsLocalPos(IntPtr chrIns);
     nint GetTopGoal(nint chrIns);
+    GoalIns GetGoalInfo(nint goalPtr);
+    bool HasSubGoals(nint topGoal);
+    List<nint> GetSubGoals(nint goalPtr);
 }

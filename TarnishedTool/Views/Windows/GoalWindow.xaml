@@ -4,9 +4,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
+        xmlns:converters="clr-namespace:TarnishedTool.Converters"
         mc:Ignorable="d"
+        Style="{StaticResource DefaultWindowStyle}"
+        WindowStyle="None"
+        AllowsTransparency="True"
         Title="GoalWindow" Height="450" Width="800">
+    <Window.Resources>
+        <converters:IndentConverter x:Key="IndentConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </Window.Resources>
     <Grid>
-        
+        <ItemsControl ItemsSource="{Binding FlatGoals}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="["/>
+                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="]"/>
+                            <TextBlock Text="{Binding Life, StringFormat=' life:{0:F2}'}"/>
+                            <TextBlock Text="{Binding TurnTime, StringFormat=' TurnTime:{0:F1}'}" 
+                                       Visibility="{Binding HasTurnTime, Converter={StaticResource BoolToVis}}"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding FormattedParams, StringFormat='  Params: {0}'}"
+                                   Visibility="{Binding HasParams, Converter={StaticResource BoolToVis}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

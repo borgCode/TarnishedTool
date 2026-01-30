@@ -145,6 +145,13 @@ namespace TarnishedTool.Services
             var bytes = ReadBytes(addr, size);
             return MemoryMarshal.Read<T>(bytes);
         }
+        
+        public T[] ReadArray<T>(IntPtr addr, int count) where T : unmanaged
+        {
+            int size = Unsafe.SizeOf<T>() * count;
+            var bytes = ReadBytes(addr, size);
+            return MemoryMarshal.Cast<byte, T>(bytes).ToArray();
+        }
 
         public void Write<T>(IntPtr addr, T value) where T : unmanaged
         {
