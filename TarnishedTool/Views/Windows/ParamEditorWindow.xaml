@@ -252,7 +252,8 @@
 
 
                 <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
-                    <ListView x:Name="EntriesListView" ItemsSource="{Binding ParamEntries.Items}"
+                    <ListView x:Name="EntriesListView" 
+                              ItemsSource="{Binding ParamEntries.Items}"
                               SelectedItem="{Binding ParamEntries.SelectedItem}"
                               SelectionChanged="EntriesListView_SelectionChanged"
                               VirtualizingPanel.IsVirtualizing="True"
@@ -271,6 +272,11 @@
                                           CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                             </ContextMenu>
                         </ListView.ContextMenu>
+                        <ListBox.InputBindings>
+                            <KeyBinding Command="ApplicationCommands.SelectAll"
+                                        Modifiers="Ctrl"
+                                        Key="A" />
+                        </ListBox.InputBindings>  
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />

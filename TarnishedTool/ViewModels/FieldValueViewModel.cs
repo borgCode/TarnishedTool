@@ -30,10 +30,10 @@ public class FieldValueViewModel(ParamFieldDef field, ParamEditorViewModel paren
         {
             return parent.ParamFieldDisplayMode switch
             {
-                Enums.ParamFieldDisplayMode.OffsetNameInternal => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})",
-                Enums.ParamFieldDisplayMode.NameInternal => $"{field.DisplayName} ({field.InternalName})",
-                Enums.ParamFieldDisplayMode.NameOnly => field.DisplayName,
-                Enums.ParamFieldDisplayMode.OffsetInternal => $"0x{Offset:X}  ({field.InternalName})",
+                ParamFieldDisplayMode.OffsetNameInternal => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})",
+                ParamFieldDisplayMode.NameInternal => $"{field.DisplayName} ({field.InternalName})",
+                ParamFieldDisplayMode.NameOnly => field.DisplayName,
+                ParamFieldDisplayMode.OffsetInternal => $"0x{Offset:X}  ({field.InternalName})",
                 _ => $"0x{Offset:X}  {field.DisplayName} ({field.InternalName})"
             };
         }

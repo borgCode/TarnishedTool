@@ -1,5 +1,7 @@
 ﻿// 
 
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,6 +16,20 @@ public partial class ParamEditorWindow : TopmostWindow
     public ParamEditorWindow()
     {
         InitializeComponent();
+        
+        CommandBindings.Add(new CommandBinding(ApplicationCommands.SelectAll, (s, e) =>
+        {
+            EntriesListView.SelectAll();
+        }));
+        
+        CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, (s, e) =>
+        {
+            var selectedItems = EntriesListView.SelectedItems
+                .Cast<ParamEntry>()
+                .Select(x => $"{x.Id}: {x.DisplayName}");
+        
+            Clipboard.SetText(string.Join(Environment.NewLine, selectedItems));
+        }));
 
         if (Application.Current.MainWindow != null)
         {
