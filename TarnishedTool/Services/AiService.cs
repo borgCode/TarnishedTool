@@ -64,10 +64,8 @@ public class AiService(MemoryService memoryService) : IAiService
     public Vector3 GetChrInsLocalPos(IntPtr chrIns) =>
         memoryService.Read<Vector3>(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
-    public nint GetTopGoal(nint chrIns)
-    {
-        throw new NotImplementedException();
-    }
+    public nint GetTopGoal(nint chrIns) => 
+        memoryService.Read<nint>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TopGoal);
 
     #endregion
 

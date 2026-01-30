@@ -9,6 +9,7 @@ using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels;
 
@@ -33,6 +34,7 @@ internal class AiWindowViewModel : BaseViewModel
         _goalInfos = DataLoader.LoadGoalInfo();
 
         WarpToSelectedCommand = new DelegateCommand(WarpToSelected);
+        OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow);
     }
     
     #region Commands
@@ -130,6 +132,14 @@ internal class AiWindowViewModel : BaseViewModel
     {
         var targetPosition = _aiService.GetChrInsPos(SelectedChrInsEntry.ChrIns);
         _playerService.MoveToPosition(targetPosition);
+    }
+    
+    private void OpenGoalWindow()
+    {
+        var window = new GoalWindow();
+        var vm = new GoalWindowViewModel(_aiService, _gameTickService, _goalInfos, SelectedChrInsEntry.ChrIns);
+        window.DataContext = vm;
+        window.Show();
     }
 
     #endregion

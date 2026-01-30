@@ -44,7 +44,7 @@ public class GoalWindowViewModel : BaseViewModel
     
     private void UpdateGoalTree(nint goalPtr)
     {
-
+        
     }
 
     #endregion

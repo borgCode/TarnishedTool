@@ -775,6 +775,7 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to GoalId,Name,ParamNames
+        ///0,UndefinedGoalNotification,Life
         ///1,Normal,Life
         ///3,WalkAround,Life;Radius;Walk;EnemyReactDist;IsWalkAroundFreePoint
         ///4,BackToHome,Life;EnemyReactDist;ForceBattleGoalOnHit;Unused_3;Unused_4;MoveTarget
@@ -782,7 +783,7 @@ namespace TarnishedTool.Properties {
         ///100,TopGoal,Life
         ///2000,Wait,Life;Target
         ///2001,Turn,Life;TurnTarget;StopAngleWidth;GuardStateId;OnGuardResult;GuardSuccessOnEnd
-        ///2002,TurnAround,Life;MoveTarget;DirectionStart;StopAngleWidth;Walk;SuccessOnEnd;G [rest of string was truncated]&quot;;.
+        ///2002,TurnAround,Life;MoveTarget;DirectionStart; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GoalInfo {
             get {
