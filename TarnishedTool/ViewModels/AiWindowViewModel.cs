@@ -19,6 +19,7 @@ internal class AiWindowViewModel : BaseViewModel
     private readonly IStateService _stateService;
     private readonly IGameTickService _gameTickService;
     private readonly IPlayerService _playerService;
+    private readonly IChrInsService _chrInsService;
 
     private readonly Dictionary<int, string> _chrNames;
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
@@ -28,12 +29,13 @@ internal class AiWindowViewModel : BaseViewModel
     private const int MaxGoalWindows = 4;
 
     public AiWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
-        IPlayerService playerService)
+        IPlayerService playerService, IChrInsService chrInsService)
     {
         _aiService = aiService;
         _stateService = stateService;
         _gameTickService = gameTickService;
         _playerService = playerService;
+        _chrInsService = chrInsService;
 
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
@@ -71,12 +73,12 @@ internal class AiWindowViewModel : BaseViewModel
             SetProperty(ref _selectedChrInsEntry, value);
             if (previousSelectedChrInsEntry != null)
             {
-                _aiService.SetSelected(previousSelectedChrInsEntry.ChrIns, false);
+                _chrInsService.SetSelected(previousSelectedChrInsEntry.ChrIns, false);
             }
 
             if (value != null)
             {
-                _aiService.SetSelected(_selectedChrInsEntry.ChrIns, true);
+                _chrInsService.SetSelected(_selectedChrInsEntry.ChrIns, true);
             }
             
         } 
@@ -98,12 +100,12 @@ internal class AiWindowViewModel : BaseViewModel
 
     private void ChrInsEntriesTick()
     {
-        var entries = _aiService.GetNearbyChrInsEntries();
+        var entries = _chrInsService.GetNearbyChrInsEntries();
         var seenHandles = new HashSet<long>();
 
         foreach (var entry in entries)
         {
-            long handle = _aiService.GetHandleByChrIns(entry.ChrIns);
+            long handle = _chrInsService.GetHandleByChrIns(entry.ChrIns);
 
             seenHandles.Add(handle);
             if (_entriesByHandle.TryGetValue(handle, out _))
@@ -115,12 +117,12 @@ internal class AiWindowViewModel : BaseViewModel
 
             if (entry.NpcThinkParamId == 0) continue;
             
-            entry.ChrId = _aiService.GetChrIdByChrIns(entry.ChrIns);
+            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
 
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
 
             entry.Handle = handle;
-            entry.NpcParamId = _aiService.GetNpcParamIdByChrIns(entry.ChrIns);
+            entry.NpcParamId = _chrInsService.GetNpcParamIdByChrIns(entry.ChrIns);
 
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);
@@ -138,7 +140,7 @@ internal class AiWindowViewModel : BaseViewModel
     
     private void WarpToSelected()
     {
-        var targetPosition = _aiService.GetChrInsPos(SelectedChrInsEntry.ChrIns);
+        var targetPosition = _chrInsService.GetChrInsPos(SelectedChrInsEntry.ChrIns);
         _playerService.MoveToPosition(targetPosition);
     }
     

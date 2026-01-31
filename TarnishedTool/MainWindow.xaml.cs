@@ -69,6 +69,7 @@ namespace TarnishedTool
             IParamRepository paramRepository = new ParamRepository();
             IGameTickService gameTickService = new GameTickService(_stateService);
             IAiService aiService = new AiService(_memoryService);
+            IChrInsService chrInsService = new ChrInsService(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
@@ -116,7 +117,7 @@ namespace TarnishedTool
                 itemService, _stateService, eventService,
                 paramService, paramRepository, spEffectService, playerService,
                 hotkeyManager, gameTickService, reminderService, aiService,
-                utilityService
+                utilityService, chrInsService
             );
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(
