@@ -25,6 +25,7 @@ public class AdvancedViewModel : BaseViewModel
     private readonly IGameTickService _gameTickService;
     
     private readonly IUtilityService _utilityService;
+    private readonly IChrInsService _chrInsService;
     private readonly AiWindowViewModel _aiWindowViewModel;
     private AiWindow _aiWindow;
 
@@ -37,7 +38,8 @@ public class AdvancedViewModel : BaseViewModel
     public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
-        IReminderService reminderService, IAiService aiService, IUtilityService utilityService)
+        IReminderService reminderService, IAiService aiService, IUtilityService utilityService,
+        IChrInsService chrInsService)
     {
         _itemService = itemService;
         _spEffectService = spEffectService;
@@ -45,6 +47,7 @@ public class AdvancedViewModel : BaseViewModel
         _hotkeyManager = hotkeyManager;
         _gameTickService = gameTickService;
         _utilityService = utilityService;
+        _chrInsService = chrInsService;
 
         RegisterHotkeys();
 
@@ -61,7 +64,7 @@ public class AdvancedViewModel : BaseViewModel
         SelectedEquipType = EquipTypes[0].Value;
 
         _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
-        _aiWindowViewModel = new AiWindowViewModel(aiService, stateService, gameTickService, playerService);
+        _aiWindowViewModel = new AiWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService);
     }
 
     
