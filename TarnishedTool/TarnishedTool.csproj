@@ -251,6 +251,7 @@
         <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAiService.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
+        <Compile Include="Interfaces\IChrInsService.cs" />
         <Compile Include="Interfaces\IDlcService.cs" />
         <Compile Include="Interfaces\IEmevdService.cs" />
         <Compile Include="Interfaces\IEnemyService.cs" />
@@ -308,6 +309,7 @@
         <Compile Include="Models\Weather.cs" />
         <Compile Include="Services\AiService.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
+        <Compile Include="Services\ChrInsService.cs" />
         <Compile Include="Services\DlcService.cs" />
         <Compile Include="Services\EmevdService.cs" />
         <Compile Include="Services\EnemyService.cs" />
