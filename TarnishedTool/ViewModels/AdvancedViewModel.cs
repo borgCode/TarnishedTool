@@ -27,8 +27,8 @@ public class AdvancedViewModel : BaseViewModel
     
     private readonly IUtilityService _utilityService;
     private readonly IChrInsService _chrInsService;
-    private readonly AiWindowViewModel _aiWindowViewModel;
-    private AiWindow _aiWindow;
+    private readonly ChrInsWindowViewModel _chrInsWindowViewModel;
+    private ChrInsWindow _chrInsWindow;
 
     private ParamEditorWindow _paramEditorWindow;
 
@@ -65,7 +65,7 @@ public class AdvancedViewModel : BaseViewModel
         SelectedEquipType = EquipTypes[0].Value;
 
         _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
-        _aiWindowViewModel = new AiWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService);
+        _chrInsWindowViewModel = new ChrInsWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService);
     }
 
     
@@ -269,26 +269,26 @@ public class AdvancedViewModel : BaseViewModel
     
     private void OpenAiWindow()
     {
-        if (_aiWindow != null && _aiWindow.IsVisible)
+        if (_chrInsWindow != null && _chrInsWindow.IsVisible)
         {
-            _aiWindow.Activate();
+            _chrInsWindow.Activate();
             return;
         }
         
-        _aiWindow = new AiWindow
+        _chrInsWindow = new ChrInsWindow
         {
-            DataContext = _aiWindowViewModel,
+            DataContext = _chrInsWindowViewModel,
             Title = "AI"
         };
-        _aiWindow.Closed += (s, e) =>
+        _chrInsWindow.Closed += (s, e) =>
         {
-            _aiWindow = null;
-            _aiWindowViewModel.NotifyWindowClosed();
+            _chrInsWindow = null;
+            _chrInsWindowViewModel.NotifyWindowClosed();
         };
 
         _utilityService.PatchDebugFont();
-        _aiWindow.Show();
-        _aiWindowViewModel.NotifyWindowOpen();
+        _chrInsWindow.Show();
+        _chrInsWindowViewModel.NotifyWindowOpen();
     }
 
     #endregion

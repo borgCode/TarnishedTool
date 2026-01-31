@@ -6,9 +6,9 @@ using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Views.Windows;
 
-public partial class AiWindow : TopmostWindow
+public partial class ChrInsWindow : TopmostWindow
 {
-    public AiWindow()
+    public ChrInsWindow()
     {
         InitializeComponent();
         
@@ -33,7 +33,7 @@ public partial class AiWindow : TopmostWindow
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);
-        var vm = (AiWindowViewModel)DataContext;
+        var vm = (ChrInsWindowViewModel)DataContext;
         vm.ClearSelected();
 
         SettingsManager.Default.AiWindowWindowLeft = Left;

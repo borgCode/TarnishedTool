@@ -14,7 +14,7 @@ using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels;
 
-internal class AiWindowViewModel : BaseViewModel
+internal class ChrInsWindowViewModel : BaseViewModel
 {
     private readonly IAiService _aiService;
     private readonly IStateService _stateService;
@@ -29,7 +29,7 @@ internal class AiWindowViewModel : BaseViewModel
     private readonly Dictionary<nint, GoalWindow> _openGoalWindows = new();
     private const int MaxGoalWindows = 4;
 
-    public AiWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
+    public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
         IPlayerService playerService, IChrInsService chrInsService)
     {
         _aiService = aiService;
@@ -42,7 +42,6 @@ internal class AiWindowViewModel : BaseViewModel
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
         
         
-
         WarpToSelectedCommand = new DelegateCommand(WarpToSelected, () => SelectedChrInsEntry != null);
         OpenGoalWindowForSelectedCommand = new DelegateCommand(OpenGoalWindow, () => SelectedChrInsEntry != null);
     }
@@ -142,8 +141,7 @@ internal class AiWindowViewModel : BaseViewModel
             }
 
             entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
-
-            if (entry.NpcThinkParamId == 0) continue;
+            
             
             entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
 
@@ -195,6 +193,16 @@ internal class AiWindowViewModel : BaseViewModel
         window.Closed += (_, _) => _openGoalWindows.Remove(chrIns);
         _openGoalWindows[chrIns] = window;
         window.Show();
+    }
+    
+    private void OnChrInsEntryOptionChanged(ChrInsEntry entry, string propertyName)
+    {
+        switch (propertyName)
+        {
+            // case nameof(ChrInsEntry.SomeOption):
+            //     _chrInsService.SetSomeOption(entry.ChrIns, entry.SomeOption);
+            //     break;
+        }
     }
 
     #endregion

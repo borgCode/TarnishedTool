@@ -1,0 +1,69 @@
+﻿<windows:TopmostWindow x:Class="TarnishedTool.Views.Windows.ChrInsWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:controls="clr-namespace:TarnishedTool.Controls"
+                       xmlns:windows="clr-namespace:TarnishedTool.Views.Windows"
+                       mc:Ignorable="d"
+                       Style="{StaticResource DefaultWindowStyle}"
+                       WindowStyle="None"
+                       AllowsTransparency="True"
+                       Title="AiWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <controls:TitleBar Grid.Row="0" Title="TBD" />
+        <Grid Grid.Row="1">
+            <CheckBox
+                x:Name="AlwaysOnTopCheckBox"
+                HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Checked="AlwaysOnTopCheckBox_Checked"
+                Unchecked="AlwaysOnTopCheckBox_Unchecked">
+                Always on Top
+            </CheckBox>
+
+        </Grid>
+
+        <ListBox Grid.Row="2"
+                 ItemsSource="{Binding ChrInsEntries}"
+                 SelectedItem="{Binding SelectedChrInsEntry}"
+                 VirtualizingPanel.IsVirtualizing="True"
+                 VirtualizingPanel.VirtualizationMode="Recycling">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Expander Header="{Binding Display}">
+                        <StackPanel Margin="20,5,0,5">
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <CheckBox Content="Some Option 1"
+                                          IsChecked="{Binding todo}" />
+                                <CheckBox Content="Some Option 2"
+                                          IsChecked="{Binding todo2}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                <Button Content="Warp"
+                                        Command="{Binding DataContext.WarpToEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        CommandParameter="{Binding}"
+                                        Margin="0,0,5,0" />
+                                <Button Content="Open Goals"
+                                        Command="{Binding DataContext.OpenGoalWindowForEntryCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        CommandParameter="{Binding}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Content="Warp to selected enemy" Command="{Binding WarpToSelectedCommand}"></Button>
+            <Button Content="Test Open Goal Window for selected" Command="{Binding OpenGoalWindowForSelectedCommand}"></Button>
+        </StackPanel>
+    </Grid>
+</windows:TopmostWindow>
