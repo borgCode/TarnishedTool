@@ -2,30 +2,40 @@
 
 using System;
 using System.Collections.Generic;
+using System.Windows.Threading;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
 using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class AiService(MemoryService memoryService) : IAiService
+public class AiService : IAiService
 {
     public const int NumOfLuaTimers = 16;
     public const int NumOfLuaNumbers = 64;
-    
+    private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromMilliseconds(8) };
+    private readonly MemoryService _memoryService;
+    private readonly List<Action> _subscribers = new();
+
+    public AiService(MemoryService memoryService)
+    {
+        _memoryService = memoryService;
+        _timer.Tick += InterruptTick;
+    }
+
     #region Public Methods
 
     public int GetNpcThinkParamIdByChrIns(IntPtr chrIns) =>
-        memoryService.Read<int>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.NpcThinkParamId);
+        _memoryService.Read<int>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.NpcThinkParamId);
 
     public nint GetTopGoal(nint chrIns) =>
-        memoryService.Read<nint>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TopGoal);
+        _memoryService.Read<nint>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TopGoal);
 
     public GoalIns GetGoalInfo(nint goalPtr)
     {
-        var goalId = memoryService.Read<int>(goalPtr + ChrIns.AiThinkOffsets.Goal.GoalId);
-        var life = memoryService.Read<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.GoalLife);
-        var turnTime = memoryService.Read<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.TurnTime);
+        var goalId = _memoryService.Read<int>(goalPtr + ChrIns.AiThinkOffsets.Goal.GoalId);
+        var life = _memoryService.Read<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.GoalLife);
+        var turnTime = _memoryService.Read<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.TurnTime);
         var goalParams = ReadGoalParams(goalPtr);
 
         return new GoalIns
@@ -38,7 +48,7 @@ public class AiService(MemoryService memoryService) : IAiService
     }
 
     public bool HasSubGoals(nint topGoal) =>
-        memoryService.Read<int>(topGoal + ChrIns.AiThinkOffsets.Goal.SubGoalCount) > 0;
+        _memoryService.Read<int>(topGoal + ChrIns.AiThinkOffsets.Goal.SubGoalCount) > 0;
 
     public List<nint> GetSubGoals(nint goalPtr)
     {
@@ -46,16 +56,16 @@ public class AiService(MemoryService memoryService) : IAiService
 
         var subGoalContainer = goalPtr + ChrIns.AiThinkOffsets.Goal.SubGoalContainer;
         var startIdx =
-            memoryService.Read<ulong>(subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.StartIdx);
+            _memoryService.Read<ulong>(subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.StartIdx);
         var count =
-            memoryService.Read<ulong>(subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.Count);
+            _memoryService.Read<ulong>(subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.Count);
 
-        var dequeHandle = memoryService.FollowPointers(
+        var dequeHandle = _memoryService.FollowPointers(
             subGoalContainer + ChrIns.AiThinkOffsets.SubGoalContainerOffsets.DequeHandle,
             [0, 0, 0], true);
-        var blockMap = memoryService.Read<nint>(dequeHandle + ChrIns.AiThinkOffsets.DequeInternalOffsets.BlockMap);
+        var blockMap = _memoryService.Read<nint>(dequeHandle + ChrIns.AiThinkOffsets.DequeInternalOffsets.BlockMap);
         var mapCapacity =
-            memoryService.Read<ulong>(dequeHandle + ChrIns.AiThinkOffsets.DequeInternalOffsets.MapCapacity);
+            _memoryService.Read<ulong>(dequeHandle + ChrIns.AiThinkOffsets.DequeInternalOffsets.MapCapacity);
 
         if (blockMap == IntPtr.Zero || mapCapacity == 0) return childGoals;
 
@@ -66,10 +76,10 @@ public class AiService(MemoryService memoryService) : IAiService
             var blockIdx = (i >> 1) & (mapCapacity - 1);
             var slotIndex = (int)(i & 1);
 
-            var block = memoryService.Read<nint>(blockMap + (nint)(blockIdx * 8));
+            var block = _memoryService.Read<nint>(blockMap + (nint)(blockIdx * 8));
             if (block == IntPtr.Zero) continue;
 
-            var childGoal = memoryService.Read<nint>(block + slotIndex * 8);
+            var childGoal = _memoryService.Read<nint>(block + slotIndex * 8);
             if (childGoal == IntPtr.Zero) continue;
             childGoals.Add(childGoal);
         }
@@ -78,43 +88,59 @@ public class AiService(MemoryService memoryService) : IAiService
     }
 
     public float[] GetLuaTimers(nint chrIns) =>
-        memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaTimersArray, NumOfLuaTimers); 
-    
+        _memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaTimersArray, NumOfLuaTimers);
+
     public float[] GetLuaNumbers(nint chrIns) =>
-        memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers);
+        _memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers);
 
     public List<SpEffectObserve> GetSpEffectObserveList(nint chrIns)
     {
         List<SpEffectObserve> spEffectObserveList = [];
         var spEffectObserveComponent = GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.SpEffectObserveComp;
-        var head = memoryService.Read<nint>(spEffectObserveComponent + ChrIns.AiThinkOffsets.SpEffectObserve.Head);
-        var next = memoryService.Read<nint>(head + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Next);
+        var head = _memoryService.Read<nint>(spEffectObserveComponent + ChrIns.AiThinkOffsets.SpEffectObserve.Head);
+        var next = _memoryService.Read<nint>(head + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Next);
 
         while (next != head)
         {
-            var target = memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Target);
-            var spEffectId = memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.SpEffectId);
-            
+            var target = _memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Target);
+            var spEffectId = _memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.SpEffectId);
+
             spEffectObserveList.Add(new SpEffectObserve(target, spEffectId));
-            
-            next = memoryService.Read<nint>(next);
+
+            next = _memoryService.Read<nint>(next);
         }
 
         return spEffectObserveList;
     }
 
+    public nint GetAiThinkPtr(nint chrIns) =>
+        _memoryService.FollowPointers(chrIns, [..ChrIns.AiThink], true, false);
+
+    public void RegisterInterruptListener(Action callBack)
+    {
+        if (_subscribers.Contains(callBack)) return;
+        _subscribers.Add(callBack);
+        if (_subscribers.Count == 1) _timer.Start();
+    }
+
+    public void UnregisterInterruptListener(Action callBack)
+    {
+        _subscribers.Remove(callBack);
+        if (_subscribers.Count == 0) _timer.Stop();
+    }
+
+    public ulong GetInterrupts(nint aiThink) =>
+        _memoryService.Read<ulong>(aiThink + ChrIns.AiThinkOffsets.Interrupts);
+    
     #endregion
 
     #region Private Methods
 
-    private nint GetAiThinkPtr(IntPtr chrIns) =>
-        memoryService.FollowPointers(chrIns, [..ChrIns.AiThink], true, false);
-
     private float[] ReadGoalParams(nint goalPtr)
     {
-        var baseParams = memoryService.ReadArray<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.InlineParams, 8);
-        var extraBegin = memoryService.Read<nint>(goalPtr + ChrIns.AiThinkOffsets.Goal.ExtraParamsBegin);
-        var extraEnd = memoryService.Read<nint>(goalPtr + ChrIns.AiThinkOffsets.Goal.ExtraParamsEnd);
+        var baseParams = _memoryService.ReadArray<float>(goalPtr + ChrIns.AiThinkOffsets.Goal.InlineParams, 8);
+        var extraBegin = _memoryService.Read<nint>(goalPtr + ChrIns.AiThinkOffsets.Goal.ExtraParamsBegin);
+        var extraEnd = _memoryService.Read<nint>(goalPtr + ChrIns.AiThinkOffsets.Goal.ExtraParamsEnd);
 
         if (extraBegin == 0) return baseParams;
 
@@ -122,13 +148,19 @@ public class AiService(MemoryService memoryService) : IAiService
 
         if (extraCount <= 0) return baseParams;
 
-        var extraParams = memoryService.ReadArray<float>(extraBegin, extraCount);
+        var extraParams = _memoryService.ReadArray<float>(extraBegin, extraCount);
 
         var result = new float[8 + extraCount];
         baseParams.CopyTo(result, 0);
         extraParams.CopyTo(result, 8);
 
         return result;
+    }
+
+    private void InterruptTick(object sender, EventArgs e)
+    {
+        foreach (var subscriber in _subscribers)
+            subscriber();
     }
 
     #endregion

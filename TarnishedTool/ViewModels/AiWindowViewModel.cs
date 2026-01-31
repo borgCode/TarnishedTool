@@ -15,17 +15,22 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     private readonly IGameTickService _gameTickService;
     private readonly Dictionary<int, GoalInfo> _goalDict;
     private readonly Dictionary<int, string> _aiTargetEnums;
+    private readonly Dictionary<int, string> _aiInterruptEnums;
     private readonly nint _chrIns;
+    private readonly nint _aiThink;
 
     public AiWindowViewModel(IAiService aiService, IGameTickService gameTickService,
-        Dictionary<int, GoalInfo> goalDict, nint chrIns, Dictionary<int, string> aiTargetEnums)
+        Dictionary<int, GoalInfo> goalDict, nint chrIns, Dictionary<int, string> aiTargetEnums,
+        Dictionary<int, string> aiInterruptEnums, nint aiThink)
     {
         _aiService = aiService;
         _gameTickService = gameTickService;
         _goalDict = goalDict;
         _chrIns = chrIns;
         _aiTargetEnums = aiTargetEnums;
-        
+        _aiInterruptEnums = aiInterruptEnums;
+        _aiThink = aiThink;
+
         _gameTickService.Subscribe(UpdateTick);
     }
 
@@ -65,6 +70,10 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         set => SetProperty(ref _isShowLuaNumbersEnabled, value);
     }
 
+    public LuaNumberViewModel[] LuaNumbers { get; } = Enumerable.Range(0, 64)
+        .Select(i => new LuaNumberViewModel { Index = i })
+        .ToArray();
+
     private bool _isShowLuaTimersEnabled;
 
     public bool IsShowLuaTimersEnabled
@@ -72,14 +81,27 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         get => _isShowLuaTimersEnabled;
         set => SetProperty(ref _isShowLuaTimersEnabled, value);
     }
-    
+
     public LuaTimerViewModel[] LuaTimers { get; } = Enumerable.Range(0, 16)
         .Select(i => new LuaTimerViewModel { Index = i })
         .ToArray();
-    public LuaNumberViewModel[] LuaNumbers { get; } = Enumerable.Range(0, 64)
-        .Select(i => new LuaNumberViewModel { Index = i })
-        .ToArray();
 
+    private bool _isShowInterruptsEnabled;
+
+    public bool IsShowInterruptsEnabled
+    {
+        get => _isShowInterruptsEnabled;
+        set
+        {
+            if (!SetProperty(ref _isShowInterruptsEnabled, value)) return;
+            if (_isShowInterruptsEnabled) _aiService.RegisterInterruptListener(UpdateInterrupt);
+            else _aiService.UnregisterInterruptListener(UpdateInterrupt);
+           
+        }
+    }
+    
+    public ObservableCollection<string> InterruptHistory { get; } = new();
+    
     #endregion
 
     #region Private Methods
@@ -94,10 +116,8 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
 
         if (IsShowLuaNumbersEnabled) UpdateLuaNumbers();
         if (IsShowLuaTimersEnabled) UpdateLuaTimers();
-
     }
 
-    
     private void UpdateGoalTree(nint goalPtr)
     {
         var topGoal = _aiService.GetGoalInfo(goalPtr);
@@ -203,7 +223,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         foreach (var descendant in FlattenTree(child))
             yield return descendant;
     }
-    
+
     private void UpdateLuaNumbers()
     {
         var numbers = _aiService.GetLuaNumbers(_chrIns);
@@ -223,7 +243,21 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
             LuaTimers[i].Value = timers[i];
         }
     }
-
+    
+    
+    private ulong _lastInterrupts;
+    private void UpdateInterrupt()
+    {
+        ulong interrupts = _aiService.GetInterrupts(_aiThink);
+        var newInterrupts = interrupts & ~_lastInterrupts; 
+        _lastInterrupts = interrupts;
+        
+        for (int i = 0; i < 64; i++)
+        {
+            if ((newInterrupts & (1UL << i)) != 0 && _aiInterruptEnums.TryGetValue(i, out var name))
+                InterruptHistory.Add(name);
+        }
+    }
 
     #endregion
 
@@ -232,6 +266,8 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     public void Dispose()
     {
         _gameTickService.Unsubscribe(UpdateTick);
+        if (_isShowInterruptsEnabled)
+            _aiService.UnregisterInterruptListener(UpdateInterrupt);
     }
 
     #endregion

@@ -22,8 +22,9 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
     private readonly Dictionary<int, string> _chrNames;
     private readonly Dictionary<int, string> _aiTargetEnums;
+    private readonly Dictionary<int, string> _aiInterruptEnums;
     private readonly Dictionary<int, GoalInfo> _goalInfos;
-    
+
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
 
     private readonly Dictionary<nint, AiWindow> _openAiWindows = new();
@@ -41,13 +42,11 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
         _aiTargetEnums = DataLoader.GetSimpleDict("AiTargetEnum", int.Parse, s => s);
-        
-        
+        _aiInterruptEnums = DataLoader.GetSimpleDict("AiInterruptEnum", int.Parse, s => s);
     }
-    
+
     #region Commands
-    
-    
+
     #endregion
 
     #region Properties
@@ -68,11 +67,11 @@ internal class ChrInsWindowViewModel : BaseViewModel
         get => _selectedChrInsEntry;
         set
         {
-            if (_selectedChrInsEntry == value) return; 
-    
+            if (_selectedChrInsEntry == value) return;
+
             var previous = _selectedChrInsEntry;
             SetProperty(ref _selectedChrInsEntry, value);
-    
+
             if (previous != null)
                 _chrInsService.SetSelected(previous.ChrIns, false);
 
@@ -91,20 +90,19 @@ internal class ChrInsWindowViewModel : BaseViewModel
         var entries = _chrInsService.GetNearbyChrInsEntries()
             .Where(e => _aiService.GetNpcThinkParamIdByChrIns(e.ChrIns) != 0)
             .ToList();
-        
+
         foreach (var entry in entries)
         {
-            var position =  _chrInsService.GetChrInsMapCoords(entry.ChrIns);
-           Console.WriteLine(position.Coords);
-            
+            var position = _chrInsService.GetChrInsMapCoords(entry.ChrIns);
+            Console.WriteLine(position.Coords);
+
             entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
-            
-            
+
+
             entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
-        
+
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
         }
-        
     }
 
     private void OnGameNotLoaded()
@@ -114,7 +112,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
         {
             window.Close();
         }
-        
     }
 
     private void ChrInsEntriesTick()
@@ -136,7 +133,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             entry.OnCommandExecuted = HandleEntryCommand;
             entry.OnExpanded = HandleEntryExpanded;
             entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
-            
+
             entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
 
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
@@ -157,13 +154,12 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ChrInsEntries.Remove(entry);
         }
     }
-    
-    
+
     private void OpenAiWindow(ChrInsEntry entry)
     {
         if (entry == null) return;
         var chrIns = entry.ChrIns;
-    
+
         if (_openAiWindows.TryGetValue(chrIns, out var existing))
         {
             existing.Activate();
@@ -175,15 +171,16 @@ internal class ChrInsWindowViewModel : BaseViewModel
             MsgBox.Show("Only four AI windows can be open at once, close one to open another", "Too many AI windows");
             return;
         }
-        
+
         var window = new AiWindow();
-        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, chrIns, _aiTargetEnums);
+        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, chrIns, _aiTargetEnums,
+            _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns));
         window.DataContext = vm;
         window.Closed += (_, _) => _openAiWindows.Remove(chrIns);
         _openAiWindows[chrIns] = window;
         window.Show();
     }
-    
+
     private void HandleEntryOptionChanged(ChrInsEntry entry, string propertyName, bool value)
     {
         switch (propertyName)
@@ -194,17 +191,16 @@ internal class ChrInsWindowViewModel : BaseViewModel
             case nameof(ChrInsEntry.IsTargetViewEnabled):
                 //TODO
                 break;
-         
         }
     }
-    
+
     private void HandleEntryCommand(ChrInsEntry entry, string commandName)
     {
         switch (commandName)
         {
             case nameof(ChrInsEntry.WarpCommand):
                 var targetPosition = _chrInsService.GetChrInsMapCoords(entry.ChrIns);
-                
+
                 //TODO offset a bit to not end up inside big enemies
                 _playerService.MoveToPosition(targetPosition);
                 break;
@@ -213,7 +209,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
                 break;
         }
     }
-    
+
     private void HandleEntryExpanded(ChrInsEntry entry)
     {
         entry.IsAiDisabled = _chrInsService.IsAiDisabled(entry.ChrIns);
@@ -238,13 +234,11 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _stateService.Unsubscribe(State.NotLoaded, OnGameNotLoaded);
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
     }
-    
+
     public void ClearSelected()
     {
         SelectedChrInsEntry = null;
     }
 
     #endregion
-
-    
 }

@@ -292,6 +292,7 @@ namespace TarnishedTool.Memory
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
                 public const int SpEffectObserveComp = 0xDBF0;
+                public const int Interrupts = 0xE9B0;
 
                 public static int ForceAct => Version switch
                 {

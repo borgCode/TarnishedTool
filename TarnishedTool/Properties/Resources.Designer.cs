@@ -61,6 +61,36 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Value,Name
+        ///0,INTERUPT_First
+        ///0,INTERUPT_FindEnemy
+        ///1,INTERUPT_FindAttack
+        ///2,INTERUPT_Damaged
+        ///3,INTERUPT_Damaged_Stranger
+        ///4,INTERUPT_FindMissile
+        ///5,INTERUPT_SuccessGuard
+        ///6,INTERUPT_MissSwing
+        ///7,INTERUPT_GuardBegin
+        ///8,INTERUPT_GuardFinish
+        ///9,INTERUPT_GuardBreak
+        ///10,INTERUPT_Shoot
+        ///11,INTERUPT_ShootReady
+        ///12,INTERUPT_UseItem
+        ///13,INTERUPT_EnterBattleArea
+        ///14,INTERUPT_LeaveBattleArea
+        ///15,INTERUPT_CANNOT_MOVE
+        ///16,INTERUPT_Inside_ObserveArea
+        ///17,INTERUPT_ReboundByOpponentGuard
+        ///18,INTERUPT_ForgetTarget
+        ///19,INT [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AiInterruptEnum {
+            get {
+                return ResourceManager.GetString("AiInterruptEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value,Name
         ///-2,TARGET_NONE
         ///-1,TARGET_SELF
         ///0,TARGET_ENE_0

@@ -30,6 +30,7 @@
                 <ColumnDefinition Width="500" />
                 <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="150" />
 
             </Grid.ColumnDefinitions>
 
@@ -90,6 +91,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
+            
+            <CheckBox Grid.Row="0" Grid.Column="3"
+                      Content="Show Lua Numbers"
+                      IsChecked="{Binding IsShowInterruptsEnabled}" />
+           
 
         </Grid>
 

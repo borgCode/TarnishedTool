@@ -16,4 +16,8 @@ public interface IAiService
     float[] GetLuaTimers(nint chrIns);
     float[] GetLuaNumbers(nint chrIns);
     List<SpEffectObserve> GetSpEffectObserveList(nint chrIns);
+    nint GetAiThinkPtr(nint chrIns);
+    void RegisterInterruptListener(Action callBack);
+    void UnregisterInterruptListener(Action callBack);
+    ulong GetInterrupts(nint aiThink);
 }
