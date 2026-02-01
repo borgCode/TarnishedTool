@@ -33,10 +33,8 @@ public class SettingsManager
     public bool DisableAchievements { get; set; }
     public bool NoLogo { get; set; }
     public bool MuteMusic { get; set; }
-    [DefaultValue(1.0)] 
-    public double ResistancesWindowScaleX { get; set; }
-    [DefaultValue(1.0)] 
-    public double ResistancesWindowScaleY { get; set; }
+    [DefaultValue(1.0)] public double ResistancesWindowScaleX { get; set; }
+    [DefaultValue(1.0)] public double ResistancesWindowScaleY { get; set; }
     public double ResistancesWindowOpacity { get; set; }
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
@@ -50,8 +48,7 @@ public class SettingsManager
     public bool IsNoClipKeyboardDisabled { get; set; }
     public bool BlockHotkeysFromGame { get; set; }
     public bool HotkeyReminder { get; set; }
-    [DefaultValue(true)] 
-    public bool EnableUpdateChecks { get; set; }
+    [DefaultValue(true)] public bool EnableUpdateChecks { get; set; }
     public string SaveCustomHp { get; set; } = "";
     public double GraceImportWindowLeft { get; set; }
     public double GraceImportWindowTop { get; set; }
@@ -64,14 +61,14 @@ public class SettingsManager
     public double ParamEditorWindowLeft { get; set; }
     public double ParamEditorWindowTop { get; set; }
     public bool ParamEditorWindowAlwaysOnTop { get; set; }
-    [DefaultValue("OffsetNameInternal")]
-    public string ParamFieldDisplayMode { get; set; }
+    [DefaultValue("OffsetNameInternal")] public string ParamFieldDisplayMode { get; set; }
     public double AiWindowWindowLeft { get; set; }
     public double AiWindowWindowTop { get; set; }
     public bool AiWindowAlwaysOnTop { get; set; }
+    public double ParamEditorWindowWidth { get; set; }
+    public double ParamEditorWindowHeight { get; set; }
 
-    
-    
+
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         "TarnishedTool",

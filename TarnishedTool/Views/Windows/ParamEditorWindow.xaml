@@ -11,8 +11,11 @@
                        Style="{StaticResource DefaultWindowStyle}"
                        WindowStyle="None"
                        AllowsTransparency="True"
-                       Height="700" Width="1600">
+                       Height="700" Width="1600"
+                       ResizeMode="CanResizeWithGrip">
 
+
+    
     <windows:TopmostWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
@@ -57,9 +60,9 @@
         <controls:TitleBar Title="Param Editor" />
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="700" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="147" MinWidth="147" />
+                <ColumnDefinition Width="*" MinWidth="400" />
+                <ColumnDefinition Width="1.05*" MinWidth="500" />
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Margin="0,0,10,0">
@@ -68,24 +71,24 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                
+
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    
-                    <Button 
+
+                    <Button
                         Content="Back"
                         Margin="0,0,10,5"
                         Command="{Binding NavigateBackCommand}"
-                        IsEnabled="{Binding CanGoBack}"
-                        ></Button>
-                    <Button 
-                        Content="Forward" 
+                        IsEnabled="{Binding CanGoBack}">
+                    </Button>
+                    <Button
+                        Content="Forward"
                         Margin="0,0,0,5"
                         Command="{Binding NavigateForwardCommand}"
-                        IsEnabled="{Binding CanGoForward}"
-                        ></Button>
-                    
+                        IsEnabled="{Binding CanGoForward}">
+                    </Button>
+
                 </StackPanel>
-                
+
 
                 <TextBlock Grid.Row="1" Text="Params" Margin="0,0,0,5" />
 
@@ -130,7 +133,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <StackPanel Orientation="Horizontal">
+                    <WrapPanel Orientation="Horizontal">
                         <TextBox
                             Text="{Binding ParamEntries.SearchText, UpdateSourceTrigger=PropertyChanged}"
                             Height="25"
@@ -202,7 +205,7 @@
                             IsChecked="{Binding IsSearchAllParamsEnabled}" />
 
                         <Button Content="Restore All Params" Margin="15,0,0,5" />
-                    </StackPanel>
+                    </WrapPanel>
 
                 </Grid>
 
@@ -252,7 +255,7 @@
 
 
                 <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
-                    <ListView x:Name="EntriesListView" 
+                    <ListView x:Name="EntriesListView"
                               ItemsSource="{Binding ParamEntries.Items}"
                               SelectedItem="{Binding ParamEntries.SelectedItem}"
                               SelectionChanged="EntriesListView_SelectionChanged"
@@ -276,7 +279,7 @@
                             <KeyBinding Command="ApplicationCommands.SelectAll"
                                         Modifiers="Ctrl"
                                         Key="A" />
-                        </ListBox.InputBindings>  
+                        </ListBox.InputBindings>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -370,88 +373,89 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="350" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0"
-                             Text="{Binding FieldSearchText, UpdateSourceTrigger=PropertyChanged}"
-                             Height="25"
-                             Width="250"
-                             Margin="0,0,100,5">
-                        <TextBox.Template>
-                            <ControlTemplate TargetType="TextBox">
-                                <Border x:Name="border"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="3">
-                                    <Grid>
-                                        <ScrollViewer x:Name="PART_ContentHost"
-                                                      Focusable="false"
-                                                      HorizontalScrollBarVisibility="Hidden"
-                                                      VerticalScrollBarVisibility="Hidden"
-                                                      VerticalAlignment="Center"
-                                                      Margin="5,0,0,0" />
-                                        <TextBlock Text="Search fields..."
-                                                   VerticalAlignment="Center"
-                                                   Margin="5,0,0,0"
-                                                   Foreground="Gray"
-                                                   IsHitTestVisible="False">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                    <Style.Triggers>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition
-                                                                    Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                                    Value="" />
-                                                                <Condition
-                                                                    Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
-                                                                    Value="False" />
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsKeyboardFocused" Value="True">
-                                        <Setter TargetName="border" Property="BorderBrush"
-                                                Value="{StaticResource AccentBrush}" />
-                                        <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </TextBox.Template>
-                    </TextBox>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="15,0,0,5">
-                        <Button Content="Restore vanilla values"
-                                Margin="-105,0,10,0"
-                                IsEnabled="{Binding IsSelectedEntryModified}"
-                                Command="{Binding RestoreSelectedEntryCommand}" />
-                        <Button
-                            Margin="0,0,10,0"
-                            Width="115"
-                            Content="{Binding ShowVanillaValues, Converter={StaticResource BoolToShowHideConverter}}"
-                            Command="{Binding ToggleVanillaValuesCommand}" />
-                        <Button Content="Switch View"
-                                Command="{Binding CycleParamFieldDisplayModeCommand}"
-                                ToolTip="Cycle field name display mode" />
-                    </StackPanel>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <WrapPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBox Grid.Column="0"
+                                 Text="{Binding FieldSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="25"
+                                 Width="250"
+                                 Margin="0,0,100,5">
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Border x:Name="border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="3">
+                                        <Grid>
+                                            <ScrollViewer x:Name="PART_ContentHost"
+                                                          Focusable="false"
+                                                          HorizontalScrollBarVisibility="Hidden"
+                                                          VerticalScrollBarVisibility="Hidden"
+                                                          VerticalAlignment="Center"
+                                                          Margin="5,0,0,0" />
+                                            <TextBlock Text="Search fields..."
+                                                       VerticalAlignment="Center"
+                                                       Margin="5,0,0,0"
+                                                       Foreground="Gray"
+                                                       IsHitTestVisible="False">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition
+                                                                        Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                        Value="" />
+                                                                    <Condition
+                                                                        Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                                        Value="False" />
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsKeyboardFocused" Value="True">
+                                            <Setter TargetName="border" Property="BorderBrush"
+                                                    Value="{StaticResource AccentBrush}" />
+                                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="15,0,0,5">
+                            <Button Content="Restore vanilla values"
+                                    Margin="-105,0,10,0"
+                                    IsEnabled="{Binding IsSelectedEntryModified}"
+                                    Command="{Binding RestoreSelectedEntryCommand}" />
+                            <Button
+                                Margin="0,0,10,0"
+                                Width="115"
+                                Content="{Binding ShowVanillaValues, Converter={StaticResource BoolToShowHideConverter}}"
+                                Command="{Binding ToggleVanillaValuesCommand}" />
+                            <Button Content="Switch View"
+                                    Command="{Binding CycleParamFieldDisplayModeCommand}"
+                                    ToolTip="Cycle field name display mode" />
+                        </StackPanel>
 
-                    <CheckBox Grid.Column="2"
-                              x:Name="AlwaysOnTopCheckBox"
-                              Content="Always on Top"
-                              HorizontalAlignment="Right"
-                              Margin="30,0,0,5"
-                              Checked="AlwaysOnTopCheckBox_Checked"
-                              Unchecked="AlwaysOnTopCheckBox_Unchecked" />
+                        <CheckBox Grid.Column="2"
+                                  x:Name="AlwaysOnTopCheckBox"
+                                  Content="Always on Top"
+                                  HorizontalAlignment="Right"
+                                  Margin="30,0,0,5"
+                                  Checked="AlwaysOnTopCheckBox_Checked"
+                                  Unchecked="AlwaysOnTopCheckBox_Unchecked" />
+                    </WrapPanel>
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="0,0,17,0">
@@ -472,181 +476,189 @@
 
                 </Grid>
                 <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
-                    <ListView ItemsSource="{Binding FieldsView}"
-                              VirtualizingPanel.IsVirtualizing="True"
-                              VirtualizingPanel.VirtualizationMode="Recycling"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                              BorderThickness="0">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="Padding" Value="8,6" />
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="ListViewItem">
-                                            <Border x:Name="Border"
-                                                    Background="{TemplateBinding Background}"
-                                                    BorderBrush="#222"
-                                                    BorderThickness="0,0,0,1"
-                                                    SnapsToDevicePixels="true">
-                                                <ContentPresenter
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    Margin="{TemplateBinding Padding}"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="Border" Property="Background"
-                                                            Value="{StaticResource AccentBrush}" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="150" />
-                                        <ColumnDefinition
-                                            Width="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToGridLengthConverter}}" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock Grid.Column="0"
-                                               Text="{Binding FullName}"
-                                               VerticalAlignment="Center"
-                                               TextTrimming="CharacterEllipsis"
-                                               Margin="0, 0, 10, 0" />
-
-                                    <ContentControl Grid.Column="1"
-                                                    Content="{Binding}">
-                                        <ContentControl.Template>
-                                            <ControlTemplate TargetType="ContentControl">
-                                                <Border BorderThickness="3,0,0,0" Padding="5,0,0,0">
-                                                    <Border.Style>
-                                                        <Style TargetType="Border">
-                                                            <Setter Property="BorderBrush" Value="Transparent" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding IsModified}"
-                                                                             Value="True">
-                                                                    <Setter Property="BorderBrush" Value="#DCDCAA" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Border.Style>
-                                                    <ContentPresenter />
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto">
+                        <ListView ItemsSource="{Binding FieldsView}"
+                                  VirtualizingPanel.IsVirtualizing="True"
+                                  VirtualizingPanel.VirtualizationMode="Recycling"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                  BorderThickness="0">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Padding" Value="8,6" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+                                    <Setter Property="BorderThickness" Value="0" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border x:Name="Border"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="#222"
+                                                        BorderThickness="0,0,0,1"
+                                                        SnapsToDevicePixels="true">
+                                                    <ContentPresenter
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        Margin="{TemplateBinding Padding}"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                                 </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="Border" Property="Background"
+                                                                Value="{StaticResource AccentBrush}" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
-                                        </ContentControl.Template>
-                                        <ContentControl.Style>
-                                            <Style TargetType="ContentControl">
-                                                <Setter Property="ContentTemplate">
-                                                    <Setter.Value>
-                                                        <DataTemplate>
-                                                            <TextBox
-                                                                tarnishedTool:TextBoxBehavior.CommitOnEnter="True"
-                                                                Text="{Binding ValueText, UpdateSourceTrigger=LostFocus}"
-                                                                ContextMenuOpening="EnumTextBox_ContextMenuOpening">
-                                                                <TextBox.Style>
-                                                                    <Style TargetType="TextBox"
-                                                                           BasedOn="{StaticResource {x:Type TextBox}}">
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding HasEnum}"
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid MinWidth="500">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" MinWidth="200" />
+                                            <ColumnDefinition Width="150" MinWidth="150" />
+                                            <ColumnDefinition
+                                                Width="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToGridLengthConverter}}"
+                                                MinWidth="150" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding FullName}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left"
+                                                   TextWrapping="Wrap"
+                                                   MaxHeight="60"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0, 0, 10, 0" />
+
+                                        <ContentControl Grid.Column="1"
+                                                        Content="{Binding}">
+                                            <ContentControl.Template>
+                                                <ControlTemplate TargetType="ContentControl">
+                                                    <Border BorderThickness="3,0,0,0" Padding="5,0,0,0">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsModified}"
+                                                                            Value="True">
+                                                                        <Setter Property="BorderBrush" Value="#DCDCAA" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <ContentPresenter />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </ContentControl.Template>
+                                            <ContentControl.Style>
+                                                <Style TargetType="ContentControl">
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <TextBox
+                                                                    tarnishedTool:TextBoxBehavior.CommitOnEnter="True"
+                                                                    Text="{Binding ValueText, UpdateSourceTrigger=LostFocus}"
+                                                                    ContextMenuOpening="EnumTextBox_ContextMenuOpening">
+                                                                    <TextBox.Style>
+                                                                        <Style TargetType="TextBox"
+                                                                               BasedOn="{StaticResource {x:Type TextBox}}">
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger
+                                                                                    Binding="{Binding HasEnum}"
                                                                                     Value="True">
-                                                                                <Setter Property="ContextMenu">
-                                                                                    <Setter.Value>
-                                                                                        <ContextMenu
-                                                                                            ItemsSource="{Binding EnumValues}">
-                                                                                            <ContextMenu.ItemContainerStyle>
-                                                                                                <Style
-                                                                                                    TargetType="MenuItem">
-                                                                                                    <Setter
-                                                                                                        Property="Header"
-                                                                                                        Value="{Binding DisplayText}" />
-                                                                                                    <Setter
-                                                                                                        Property="Background"
-                                                                                                        Value="#2D2D2D" />
-                                                                                                    <Setter
-                                                                                                        Property="Foreground"
-                                                                                                        Value="{StaticResource TextBrush}" />
-                                                                                                    <Setter
-                                                                                                        Property="Padding"
-                                                                                                        Value="20,6" />
-                                                                                                    <Setter
-                                                                                                        Property="Tag"
-                                                                                                        Value="{Binding Value}" />
-                                                                                                    <Setter
-                                                                                                        Property="Template">
-                                                                                                        <Setter.Value>
-                                                                                                            <ControlTemplate
-                                                                                                                TargetType="MenuItem">
-                                                                                                                <Border
-                                                                                                                    x:Name="Border"
-                                                                                                                    Background="{TemplateBinding Background}"
-                                                                                                                    Padding="{TemplateBinding Padding}"
-                                                                                                                    MinWidth="150">
-                                                                                                                    <ContentPresenter
-                                                                                                                        ContentSource="Header" />
-                                                                                                                </Border>
-                                                                                                                <ControlTemplate.Triggers>
-                                                                                                                    <Trigger
-                                                                                                                        Property="IsHighlighted"
-                                                                                                                        Value="True">
-                                                                                                                        <Setter
-                                                                                                                            TargetName="Border"
-                                                                                                                            Property="Background"
-                                                                                                                            Value="{StaticResource AccentBrush}" />
-                                                                                                                    </Trigger>
-                                                                                                                </ControlTemplate.Triggers>
-                                                                                                            </ControlTemplate>
-                                                                                                        </Setter.Value>
-                                                                                                    </Setter>
-                                                                                                </Style>
-                                                                                            </ContextMenu.ItemContainerStyle>
-                                                                                        </ContextMenu>
-                                                                                    </Setter.Value>
-                                                                                </Setter>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </TextBox.Style>
-                                                            </TextBox>
-                                                        </DataTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsBitfield}" Value="True">
-                                                        <Setter Property="ContentTemplate">
-                                                            <Setter.Value>
-                                                                <DataTemplate>
-                                                                    <CheckBox IsChecked="{Binding Value}"
-                                                                              Background="#2D2D2D" />
-                                                                </DataTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ContentControl.Style>
-                                    </ContentControl>
-                                    <TextBlock Grid.Column="2"
-                                               Text="{Binding VanillaValueText}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Foreground="#888"
-                                               Visibility="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                                                                    <Setter Property="ContextMenu">
+                                                                                        <Setter.Value>
+                                                                                            <ContextMenu
+                                                                                                ItemsSource="{Binding EnumValues}">
+                                                                                                <ContextMenu.ItemContainerStyle>
+                                                                                                    <Style
+                                                                                                        TargetType="MenuItem">
+                                                                                                        <Setter
+                                                                                                            Property="Header"
+                                                                                                            Value="{Binding DisplayText}" />
+                                                                                                        <Setter
+                                                                                                            Property="Background"
+                                                                                                            Value="#2D2D2D" />
+                                                                                                        <Setter
+                                                                                                            Property="Foreground"
+                                                                                                            Value="{StaticResource TextBrush}" />
+                                                                                                        <Setter
+                                                                                                            Property="Padding"
+                                                                                                            Value="20,6" />
+                                                                                                        <Setter
+                                                                                                            Property="Tag"
+                                                                                                            Value="{Binding Value}" />
+                                                                                                        <Setter
+                                                                                                            Property="Template">
+                                                                                                            <Setter.Value>
+                                                                                                                <ControlTemplate
+                                                                                                                    TargetType="MenuItem">
+                                                                                                                    <Border
+                                                                                                                        x:Name="Border"
+                                                                                                                        Background="{TemplateBinding Background}"
+                                                                                                                        Padding="{TemplateBinding Padding}"
+                                                                                                                        MinWidth="150">
+                                                                                                                        <ContentPresenter
+                                                                                                                            ContentSource="Header" />
+                                                                                                                    </Border>
+                                                                                                                    <ControlTemplate.Triggers>
+                                                                                                                        <Trigger
+                                                                                                                            Property="IsHighlighted"
+                                                                                                                            Value="True">
+                                                                                                                            <Setter
+                                                                                                                                TargetName="Border"
+                                                                                                                                Property="Background"
+                                                                                                                                Value="{StaticResource AccentBrush}" />
+                                                                                                                        </Trigger>
+                                                                                                                    </ControlTemplate.Triggers>
+                                                                                                                </ControlTemplate>
+                                                                                                            </Setter.Value>
+                                                                                                        </Setter>
+                                                                                                    </Style>
+                                                                                                </ContextMenu.ItemContainerStyle>
+                                                                                            </ContextMenu>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBox.Style>
+                                                                </TextBox>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsBitfield}" Value="True">
+                                                            <Setter Property="ContentTemplate">
+                                                                <Setter.Value>
+                                                                    <DataTemplate>
+                                                                        <CheckBox IsChecked="{Binding Value}"
+                                                                                Background="#2D2D2D" />
+                                                                    </DataTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ContentControl.Style>
+                                        </ContentControl>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{Binding VanillaValueText}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Foreground="#888"
+                                                   Visibility="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </ScrollViewer>
                 </Border>
             </Grid>
         </Grid>

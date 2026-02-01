@@ -16,18 +16,16 @@ public partial class ParamEditorWindow : TopmostWindow
     public ParamEditorWindow()
     {
         InitializeComponent();
-        
-        CommandBindings.Add(new CommandBinding(ApplicationCommands.SelectAll, (s, e) =>
-        {
-            EntriesListView.SelectAll();
-        }));
-        
+
+        CommandBindings.Add(new CommandBinding(ApplicationCommands.SelectAll,
+            (s, e) => { EntriesListView.SelectAll(); }));
+
         CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, (s, e) =>
         {
             var selectedItems = EntriesListView.SelectedItems
                 .Cast<ParamEntry>()
                 .Select(x => $"{x.Id}: {x.DisplayName}");
-        
+
             Clipboard.SetText(string.Join(Environment.NewLine, selectedItems));
         }));
 
@@ -44,6 +42,12 @@ public partial class ParamEditorWindow : TopmostWindow
             if (SettingsManager.Default.ParamEditorWindowTop > 0)
                 Top = SettingsManager.Default.ParamEditorWindowTop;
 
+            if (SettingsManager.Default.ParamEditorWindowWidth > 0)
+                Width = SettingsManager.Default.ParamEditorWindowWidth;
+
+            if (SettingsManager.Default.ParamEditorWindowHeight > 0)
+                Height = SettingsManager.Default.ParamEditorWindowHeight;
+
             AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.ParamEditorWindowAlwaysOnTop;
         };
     }
@@ -55,6 +59,8 @@ public partial class ParamEditorWindow : TopmostWindow
 
         SettingsManager.Default.ParamEditorWindowLeft = Left;
         SettingsManager.Default.ParamEditorWindowTop = Top;
+        SettingsManager.Default.ParamEditorWindowWidth = Width; 
+        SettingsManager.Default.ParamEditorWindowHeight = Height;
         SettingsManager.Default.ParamEditorWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
         SettingsManager.Default.Save();
     }
@@ -81,7 +87,7 @@ public partial class ParamEditorWindow : TopmostWindow
         {
             var contextMenu = textBox.ContextMenu;
 
-            
+
             contextMenu.RemoveHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
             contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
         }
