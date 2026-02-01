@@ -15,7 +15,6 @@
                        ResizeMode="CanResizeWithGrip">
 
 
-    
     <windows:TopmostWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
@@ -60,11 +59,13 @@
         <controls:TitleBar Title="Param Editor" />
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="147" MinWidth="147" />
-                <ColumnDefinition Width="*" MinWidth="400" />
-                <ColumnDefinition Width="1.05*" MinWidth="500" />
+                <ColumnDefinition Width="147" MinWidth="147" /> <!-- Param Categories-->
+                <ColumnDefinition Width="*" MinWidth="400" /> <!-- Rows View -->
+                <ColumnDefinition Width="5" /> <!-- Splitter Column -->
+                <ColumnDefinition Width="1.05*" MinWidth="500" /> <!-- Fields View-->
             </Grid.ColumnDefinitions>
 
+            <!-- Param Categories-->
             <Grid Grid.Column="0" Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -125,6 +126,7 @@
                 </ListBox>
             </Grid>
 
+            <!-- Rows View -->
             <Grid Grid.Column="1" Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -364,8 +366,18 @@
                     </ListView>
                 </Border>
             </Grid>
+            <!-- Splitter Column -->
+            <GridSplitter Grid.Column="2"
+                          VerticalAlignment="Stretch"
+                          Width="3"
+                          Background="#333"
+                          ShowsPreview="False"
+                          HorizontalAlignment="Center"
+                          Margin="-6,0,3,0">
+            </GridSplitter>
 
-            <Grid Grid.Column="2">
+            <!-- Fields View-->
+            <Grid Grid.Column="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -476,6 +488,7 @@
 
                 </Grid>
                 <Border Grid.Row="2" BorderThickness="1" BorderBrush="#333">
+                    <Grid Grid.IsSharedSizeScope="True">
                         <ListView ItemsSource="{Binding FieldsView}"
                                   VirtualizingPanel.IsVirtualizing="True"
                                   VirtualizingPanel.VirtualizationMode="Recycling"
@@ -518,23 +531,39 @@
                                 <DataTemplate>
                                     <Grid MinWidth="500">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" MinWidth="200" />
-                                            <ColumnDefinition Width="150" MinWidth="150" />
+                                            <ColumnDefinition Width="*" MinWidth="150" MaxWidth="400" />
+                                            <!-- Names Column -->
+                                            <ColumnDefinition Width="5" SharedSizeGroup="SplitterColumn"/>
+                                            <!-- Fields Splitter Column -->
+                                            <ColumnDefinition Width="120" MinWidth="120" SharedSizeGroup="CurrentColumn"/>
+                                            <!-- Current Values Column -->
                                             <ColumnDefinition
                                                 Width="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToGridLengthConverter}}"
-                                                MinWidth="150" />
+                                                SharedSizeGroup="CurrentColumn"/>
+                                            <!-- Vanilla Values Column -->
                                         </Grid.ColumnDefinitions>
 
+                                        <!-- Names Column -->
                                         <TextBlock Grid.Column="0"
                                                    Text="{Binding FullName}"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Left"
                                                    TextWrapping="Wrap"
-                                                   MaxHeight="60"
                                                    TextTrimming="CharacterEllipsis"
+                                                   MaxHeight="45"
                                                    Margin="0, 0, 10, 0" />
 
-                                        <ContentControl Grid.Column="1"
+                                        <!-- Fields Splitter Column -->
+                                        <GridSplitter Grid.Column="1"
+                                                      VerticalAlignment="Stretch"
+                                                      Width="3"
+                                                      Background="#333"
+                                                      ShowsPreview="False"
+                                                      HorizontalAlignment="Center"
+                                                      Margin="-6,0,3,0">
+                                        </GridSplitter>
+                                        <!-- Current Values Column -->
+                                        <ContentControl Grid.Column="2" HorizontalAlignment="Center"
                                                         Content="{Binding}">
                                             <ContentControl.Template>
                                                 <ControlTemplate TargetType="ContentControl">
@@ -558,11 +587,12 @@
                                                 <Style TargetType="ContentControl">
                                                     <Setter Property="ContentTemplate">
                                                         <Setter.Value>
+                                                            <!-- Current Value Text Box -->
                                                             <DataTemplate>
-                                                                <TextBox
-                                                                    tarnishedTool:TextBoxBehavior.CommitOnEnter="True"
-                                                                    Text="{Binding ValueText, UpdateSourceTrigger=LostFocus}"
-                                                                    ContextMenuOpening="EnumTextBox_ContextMenuOpening">
+                                                                <TextBox Width="100" MaxHeight="45"
+                                                                         tarnishedTool:TextBoxBehavior.CommitOnEnter="True"
+                                                                         Text="{Binding ValueText, UpdateSourceTrigger=LostFocus}"
+                                                                         ContextMenuOpening="EnumTextBox_ContextMenuOpening">
                                                                     <TextBox.Style>
                                                                         <Style TargetType="TextBox"
                                                                                BasedOn="{StaticResource {x:Type TextBox}}">
@@ -637,7 +667,8 @@
                                                                 <Setter.Value>
                                                                     <DataTemplate>
                                                                         <CheckBox IsChecked="{Binding Value}"
-                                                                                Background="#2D2D2D" />
+                                                                                Background="#2D2D2D"
+                                                                                HorizontalAlignment="Center" />
                                                                     </DataTemplate>
                                                                 </Setter.Value>
                                                             </Setter>
@@ -646,16 +677,19 @@
                                                 </Style>
                                             </ContentControl.Style>
                                         </ContentControl>
-                                        <TextBlock Grid.Column="2"
+                                        <!-- Vanilla Values Column -->
+                                        <TextBlock Grid.Column="3"
                                                    Text="{Binding VanillaValueText}"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Center"
                                                    Foreground="#888"
+                                                   Width="100" MaxHeight="45"
                                                    Visibility="{Binding DataContext.ShowVanillaValues, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>
