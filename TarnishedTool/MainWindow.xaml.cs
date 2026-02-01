@@ -50,6 +50,7 @@ namespace TarnishedTool
 
             IParamService paramService = new ParamService(_memoryService);
             IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
+            IChrInsService chrInsService = new ChrInsService(_memoryService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
             IPlayerService playerService =
                 new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService);
@@ -57,7 +58,7 @@ namespace TarnishedTool
             IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService =
-                new TargetService(_memoryService, hookManager, playerService, reminderService);
+                new TargetService(_memoryService, hookManager, playerService, reminderService, chrInsService);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
@@ -69,7 +70,6 @@ namespace TarnishedTool
             IParamRepository paramRepository = new ParamRepository();
             IGameTickService gameTickService = new GameTickService(_stateService);
             IAiService aiService = new AiService(_memoryService);
-            IChrInsService chrInsService = new ChrInsService(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 

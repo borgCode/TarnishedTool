@@ -3,9 +3,8 @@
 using System;
 using System.Windows.Input;
 using TarnishedTool.Core;
-using TarnishedTool.ViewModels;
 
-namespace TarnishedTool.Models;
+namespace TarnishedTool.ViewModels;
 
 public class ChrInsEntry(nint chrIns) : BaseViewModel
 {
@@ -58,6 +57,45 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
             if (SetProperty(ref _isTargetViewEnabled, value))
             {
                 OnOptionChanged.Invoke(this, nameof(IsTargetViewEnabled), value);
+            }
+        }
+    }
+    
+    private bool _isNoAttackEnabled;
+    public bool IsNoAttackEnabled
+    {
+        get => _isNoAttackEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoAttackEnabled, value))
+            {
+                OnOptionChanged.Invoke(this, nameof(_isNoAttackEnabled), value);
+            }
+        }
+    }
+    
+    private bool _isNoMoveEnabled;
+    public bool IsNoMoveEnabled
+    {
+        get => _isNoMoveEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoMoveEnabled, value))
+            {
+                OnOptionChanged.Invoke(this, nameof(_isNoMoveEnabled), value);
+            }
+        }
+    }
+
+    private bool _isNoDamageEnabled;
+    public bool IsNoDamageEnabled
+    {
+        get => _isNoDamageEnabled;
+        set
+        {
+            if (SetProperty(ref _isNoDamageEnabled, value))
+            {
+                OnOptionChanged.Invoke(this, nameof(_isNoDamageEnabled), value);
             }
         }
     }

@@ -30,6 +30,8 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly Dictionary<nint, AiWindow> _openAiWindows = new();
     private const int MaxAiWindows = 4;
 
+    public const int DummyChrId = 1000;
+
     public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
         IPlayerService playerService, IChrInsService chrInsService)
     {
@@ -124,23 +126,19 @@ internal class ChrInsWindowViewModel : BaseViewModel
             long handle = _chrInsService.GetHandleByChrIns(entry.ChrIns);
 
             seenHandles.Add(handle);
-            if (_entriesByHandle.TryGetValue(handle, out _))
-            {
-                continue;
-            }
-
+            if (_entriesByHandle.TryGetValue(handle, out _)) continue;
+            
+            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
+            if (entry.ChrId == DummyChrId) continue;
+            
             entry.OnOptionChanged = HandleEntryOptionChanged;
             entry.OnCommandExecuted = HandleEntryCommand;
             entry.OnExpanded = HandleEntryExpanded;
             entry.NpcThinkParamId = _aiService.GetNpcThinkParamIdByChrIns(entry.ChrIns);
-
-            entry.ChrId = _chrInsService.GetChrIdByChrIns(entry.ChrIns);
-
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
-
             entry.Handle = handle;
             entry.NpcParamId = _chrInsService.GetNpcParamIdByChrIns(entry.ChrIns);
-
+            
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);
         }
@@ -154,7 +152,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ChrInsEntries.Remove(entry);
         }
     }
-
     private void OpenAiWindow(ChrInsEntry entry)
     {
         if (entry == null) return;
@@ -189,7 +186,16 @@ internal class ChrInsWindowViewModel : BaseViewModel
                 _chrInsService.ToggleTargetAi(entry.ChrIns, value);
                 break;
             case nameof(ChrInsEntry.IsTargetViewEnabled):
-                //TODO
+                _chrInsService.ToggleTargetView(entry.ChrIns, value);
+                break;
+            case nameof(ChrInsEntry.IsNoAttackEnabled):
+                _chrInsService.ToggleNoAttack(entry.ChrIns, value);
+                break;
+            case nameof(ChrInsEntry.IsNoMoveEnabled):
+                _chrInsService.ToggleNoMove(entry.ChrIns, value);
+                break;
+            case nameof(ChrInsEntry.IsNoDamageEnabled):
+                _chrInsService.ToggleNoDamage(entry.ChrIns, value);
                 break;
         }
     }
@@ -213,8 +219,10 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private void HandleEntryExpanded(ChrInsEntry entry)
     {
         entry.IsAiDisabled = _chrInsService.IsAiDisabled(entry.ChrIns);
-        // entry.IsTargetViewEnabled = _chrInsService.IsTargetViewEnabled(entry.ChrIns);
-        // entry.IsAiDisabled = _chrInsService.IsAiDisabled(entry.ChrIns);
+        entry.IsTargetViewEnabled = _chrInsService.IsTargetViewEnabled(entry.ChrIns);
+        entry.IsNoAttackEnabled = _chrInsService.IsNoAttackEnabled(entry.ChrIns);
+        entry.IsNoMoveEnabled = _chrInsService.IsNoMoveEnabled(entry.ChrIns);
+        entry.IsNoDamageEnabled = _chrInsService.IsNoDamageEnabled(entry.ChrIns);
     }
 
     #endregion

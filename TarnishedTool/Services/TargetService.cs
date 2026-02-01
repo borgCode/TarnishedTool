@@ -12,7 +12,8 @@ namespace TarnishedTool.Services
         MemoryService memoryService,
         HookManager hookManager,
         IPlayerService playerService,
-        IReminderService reminderService)
+        IReminderService reminderService,
+        IChrInsService chrInsService)
         : ITargetService
     {
         public void ToggleTargetHook(bool isEnabled)
@@ -141,7 +142,6 @@ namespace TarnishedTool.Services
 
         public void ToggleTargetNoDamage(bool isFreezeHealthEnabled)
         {
-
             var bitFlags = GetChrDataPtr() + ChrIns.ChrDataFlags;
             memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
             
