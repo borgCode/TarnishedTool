@@ -78,7 +78,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         {
             if (SetProperty(ref _isNoAttackEnabled, value))
             {
-                OnOptionChanged.Invoke(this, nameof(_isNoAttackEnabled), value);
+                OnOptionChanged.Invoke(this, nameof(IsNoAttackEnabled), value);
             }
         }
     }
@@ -91,7 +91,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         {
             if (SetProperty(ref _isNoMoveEnabled, value))
             {
-                OnOptionChanged.Invoke(this, nameof(_isNoMoveEnabled), value);
+                OnOptionChanged.Invoke(this, nameof(IsNoMoveEnabled), value);
             }
         }
     }
@@ -104,7 +104,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         {
             if (SetProperty(ref _isNoDamageEnabled, value))
             {
-                OnOptionChanged.Invoke(this, nameof(_isNoDamageEnabled), value);
+                OnOptionChanged.Invoke(this, nameof(IsNoDamageEnabled), value);
             }
         }
     }
