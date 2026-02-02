@@ -11,7 +11,7 @@ namespace TarnishedTool.Services;
 
 public class SpEffectService(MemoryService memoryService, IReminderService reminderService) : ISpEffectService
 {
-    public void ApplySpEffect(long chrIns, uint spEffectId)
+    public void ApplySpEffect(nint chrIns, uint spEffectId)
     {
         var bytes = AsmLoader.GetAsmBytes("SetSpEffect");
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
@@ -23,9 +23,9 @@ public class SpEffectService(MemoryService memoryService, IReminderService remin
         memoryService.AllocateAndExecute(bytes);
     }
 
-    public void RemoveSpEffect(long chrIns, uint spEffectId)
+    public void RemoveSpEffect(nint chrIns, uint spEffectId)
     {
-        var specialEffect = memoryService.ReadInt64((IntPtr)chrIns + ChrIns.SpecialEffect);
+        var specialEffect = memoryService.ReadInt64(chrIns + ChrIns.SpecialEffect);
         var bytes = AsmLoader.GetAsmBytes("RemoveSpEffect");
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
@@ -37,9 +37,9 @@ public class SpEffectService(MemoryService memoryService, IReminderService remin
         
     }
 
-    public bool HasSpEffect(long chrIns, uint spEffectId)
+    public bool HasSpEffect(nint chrIns, uint spEffectId)
     {
-        var specialEffect = memoryService.ReadInt64((IntPtr)chrIns + ChrIns.SpecialEffect);
+        var specialEffect = memoryService.ReadInt64(chrIns + ChrIns.SpecialEffect);
         var current = (IntPtr) memoryService.ReadInt64((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
         
         while (current != IntPtr.Zero)
@@ -50,11 +50,11 @@ public class SpEffectService(MemoryService memoryService, IReminderService remin
         return false;
     }
 
-    public List<SpEffectEntry> GetActiveSpEffectList(long chrIns)
+    public List<SpEffectEntry> GetActiveSpEffectList(nint chrIns)
     {
         reminderService.TrySetReminder();
         var spEffectList = new List<SpEffectEntry>();
-        var specialEffect = memoryService.ReadInt64((IntPtr)chrIns + ChrIns.SpecialEffect);
+        var specialEffect = memoryService.ReadInt64(chrIns + ChrIns.SpecialEffect);
         var current = (IntPtr) memoryService.ReadInt64((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
         
         while (current != IntPtr.Zero)

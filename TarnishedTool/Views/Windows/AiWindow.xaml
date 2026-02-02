@@ -9,7 +9,7 @@
         Style="{StaticResource DefaultWindowStyle}"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="GoalWindow" Height="450" Width="1000">
+        Title="GoalWindow" Height="800" Width="1200">
     <Window.Resources>
         <converters:IndentConverter x:Key="IndentConverter" />
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -21,24 +21,31 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:TitleBar Grid.Row="0" Title="AI Info" />
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
                 <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="500" />
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="150" />
-
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Row="0" Grid.ColumnSpan="4">
+                <TextBlock HorizontalAlignment="Center" Text="{Binding ChrIns.Display}"></TextBlock>
+                
+            </Grid>
 
-            <CheckBox Grid.Row="0" Grid.Column="0"
+            <CheckBox Grid.Row="1" Grid.Column="0"
                       Content="Show Goals"
                       IsChecked="{Binding IsShowGoalsEnabled}" />
 
-            <ItemsControl Grid.Row="1" Grid.Column="0"
+            <ItemsControl Grid.Row="2" Grid.Column="0"
                           ItemsSource="{Binding FlatGoals}"
                           Visibility="{Binding IsShowGoalsEnabled, Converter={StaticResource BoolToVis}}">
 
@@ -53,17 +60,34 @@
                                 <TextBlock Text="{Binding TurnTime, StringFormat=' TurnTime:{0:F1}'}"
                                            Visibility="{Binding HasTurnTime, Converter={StaticResource BoolToVis}}" />
                             </StackPanel>
-                            <TextBlock Text="{Binding FormattedParams, StringFormat='  Params: {0}'}"
+                            <TextBlock Text="{Binding FormattedParams}"
                                        Visibility="{Binding HasParams, Converter={StaticResource BoolToVis}}" />
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            
+            <CheckBox Grid.Row="1" Grid.Column="1"
+                      Content="Show Cooltimes"
+                      IsChecked="{Binding IsShowCoolTimesEnabled}" />
+            <ItemsControl Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" ItemsSource="{Binding CoolTimes}"
+                          Visibility="{Binding IsShowCoolTimesEnabled, Converter={StaticResource BoolToVis}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="Animation ID: "/><Run Text="{Binding AnimationId}"/>
+                            <Run Text=" Last used: "/><Run Text="{Binding TimeSinceLastAttack, StringFormat=F2}"/>
+                            <Run Text=" Cooldown: "/><Run Text="{Binding Cooldown, StringFormat=F2}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
 
-            <CheckBox Grid.Row="0" Grid.Column="1"
+            <CheckBox Grid.Row="1" Margin="10,0,0,0" Grid.Column="2"
                       Content="Show Lua Timers"
                       IsChecked="{Binding IsShowLuaTimersEnabled}" />
-            <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding LuaTimers}"
+            <ItemsControl Grid.Row="2" Grid.RowSpan="2" Grid.Column="2" Margin="10,0,0,0" ItemsSource="{Binding LuaTimers}"
                           Visibility="{Binding IsShowLuaTimersEnabled, Converter={StaticResource BoolToVis}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -75,10 +99,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <CheckBox Grid.Row="0" Grid.Column="2"
+            <CheckBox Grid.Row="1" Grid.Column="3"
+                      Margin="10,0,0,0"
                       Content="Show Lua Numbers"
                       IsChecked="{Binding IsShowLuaNumbersEnabled}" />
-            <ScrollViewer Grid.Row="1" Grid.Column="2" MaxHeight="350"
+            <ScrollViewer Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" MaxHeight="350" Margin="10,0,0,0"
+                          VerticalAlignment="Top"
                           Visibility="{Binding IsShowLuaNumbersEnabled, Converter={StaticResource BoolToVis}}">
                 <ItemsControl ItemsSource="{Binding LuaNumbers}">
                     <ItemsControl.ItemTemplate>
@@ -92,11 +118,47 @@
                 </ItemsControl>
             </ScrollViewer>
             
-            <CheckBox Grid.Row="0" Grid.Column="3"
-                      Content="Show Lua Numbers"
-                      IsChecked="{Binding IsShowInterruptsEnabled}" />
-           
-
+            <Grid Grid.Row="3" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="0" Grid.Column="0"
+                          Content="Show Special Effect Observers"
+                          IsChecked="{Binding IsShowSpEffectObservesEnabled}" />
+                
+                <ItemsControl Grid.Row="1"  Grid.Column="0" ItemsSource="{Binding SpEffectObserves}"
+                              Visibility="{Binding IsShowSpEffectObservesEnabled, Converter={StaticResource BoolToVis}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="Target: "/><Run Text="{Binding TargetName}"/>
+                                <Run Text=" Special Effect ID: "/><Run Text="{Binding SpEffectId}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <CheckBox Grid.Row="0" Grid.Column="1"
+                          Content="Show Interrupts"
+                          IsChecked="{Binding IsShowInterruptsEnabled}" />
+                
+                <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding InterruptHistory}"
+                              Visibility="{Binding IsShowInterruptsEnabled, Converter={StaticResource BoolToVis}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </Grid>
+            
+            
         </Grid>
 
     </Grid>

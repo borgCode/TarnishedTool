@@ -61,6 +61,57 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to Value,Name
+        ///0,AI_DIR_TYPE_CENTER
+        ///1,AI_DIR_TYPE_F
+        ///2,AI_DIR_TYPE_B
+        ///3,AI_DIR_TYPE_L
+        ///4,AI_DIR_TYPE_R
+        ///10,AI_DIR_TYPE_FL
+        ///11,AI_DIR_TYPE_FR
+        ///12,AI_DIR_TYPE_BL
+        ///13,AI_DIR_TYPE_BR
+        ///5,AI_DIR_TYPE_ToF
+        ///6,AI_DIR_TYPE_ToB
+        ///7,AI_DIR_TYPE_ToL
+        ///8,AI_DIR_TYPE_ToR
+        ///9,AI_DIR_TYPE_Top
+        ///14,AI_DIR_TYPE_ToFL
+        ///15,AI_DIR_TYPE_ToFR
+        ///16,AI_DIR_TYPE_ToBL
+        ///17,AI_DIR_TYPE_ToBR.
+        /// </summary>
+        internal static string AiDirTypeEnum {
+            get {
+                return ResourceManager.GetString("AiDirTypeEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value,Name
+        ///-1,GOAL_RESULT_Failed
+        ///0,GOAL_RESULT_Continue
+        ///1,GOAL_RESULT_Success.
+        /// </summary>
+        internal static string AiGoalResultEnum {
+            get {
+                return ResourceManager.GetString("AiGoalResultEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value,Name
+        ///1,GUARD_GOAL_DESIRE_RET_Success
+        ///2,GUARD_GOAL_DESIRE_RET_Continue
+        ///3,GUARD_GOAL_DESIRE_RET_Failed.
+        /// </summary>
+        internal static string AiGuardGoalEnum {
+            get {
+                return ResourceManager.GetString("AiGuardGoalEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value,Name
         ///0,INTERUPT_First
         ///0,INTERUPT_FindEnemy
         ///1,INTERUPT_FindAttack
@@ -874,13 +925,14 @@ namespace TarnishedTool.Properties {
         ///   Looks up a localized string similar to GoalId,Name,ParamNames
         ///0,UndefinedGoalNotification
         ///1,Normal
-        ///3,WalkAround,Radius;Walk;EnemyReactDist;IsWalkAroundFreePoint
-        ///4,BackToHome,EnemyReactDist;ForceBattleGoalOnHit;Unused_3;Unused_4;MoveTarget
-        ///5,NonBattleAct,EnemyReactDist;ReactToEnemy;Run;TurnTarget;HomeStopDist;StandbyGoalId;ForceBattleGoalOnHit
+        ///2,Stay,EnemyReactDist:float;TurnTarget:target
+        ///3,WalkAround,Radius:float;Walk:bool;EnemyReactDist:float;IsWalkAroundFreePoint:bool
+        ///4,BackToHome,EnemyReactDist:float;ForceBattleGoalOnHit:bool;Unused_3:float;Unused_4:float;MoveTarget:target
+        ///5,NonBattleAct,EnemyReactDist:float;ReactToEnemy:bool;Run:bool;TurnTarget:target;HomeStopDist:float:float;StandbyGoalId:int;ForceBattleGoalOnHit:bool
         ///100,TopGoal
-        ///2000,Wait,Target
-        ///2001,Turn,TurnTarget;StopAngleWidth;GuardStateId;OnGuardResult;GuardSuccessOnEnd
-        ///2002,TurnAround,MoveTarget;DirectionStart;StopAngleWidth;Walk;SuccessOnEnd;GuardStateId [rest of string was truncated]&quot;;.
+        ///1000,If,CodeNo:int
+        ///1100,WaitCancelTiming
+        ///2 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GoalInfo {
             get {

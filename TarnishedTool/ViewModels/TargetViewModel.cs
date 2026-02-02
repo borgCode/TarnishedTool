@@ -1017,12 +1017,12 @@ namespace TarnishedTool.ViewModels
 
             if (health > maxHealth * 1.5) return false;
 
-            var position = _targetService.GetPosition();
+            var position = _targetService.GetLocalCoords();
 
-            if (float.IsNaN(position[0]) || float.IsNaN(position[1]) || float.IsNaN(position[2]))
+            if (float.IsNaN(position.X) || float.IsNaN(position.Y) || float.IsNaN(position.Z))
                 return false;
 
-            if (Math.Abs(position[0]) > 10000 || Math.Abs(position[1]) > 10000 || Math.Abs(position[2]) > 10000)
+            if (Math.Abs(position.X) > 10000 || Math.Abs(position.Y) > 10000 || Math.Abs(position.Z) > 10000)
                 return false;
 
             return true;

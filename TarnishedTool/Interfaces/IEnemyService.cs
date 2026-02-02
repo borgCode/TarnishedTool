@@ -4,7 +4,6 @@ namespace TarnishedTool.Interfaces;
 
 public interface IEnemyService
 {
-    nint GetChrInsByEntityId(uint entityId);
     void ToggleNoDeath(bool isEnabled);
     void ToggleNoDamage(bool isEnabled);
     void ToggleNoHit(bool isEnabled);

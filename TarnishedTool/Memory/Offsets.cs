@@ -292,6 +292,7 @@ namespace TarnishedTool.Memory
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
                 public const int SpEffectObserveComp = 0xDBF0;
+                public const int AiAttackComp = 0xDF10;
                 public const int Interrupts = 0xE9B0;
 
                 public static int ForceAct => Version switch
@@ -357,6 +358,19 @@ namespace TarnishedTool.Memory
                     public const int Prev = 0x8;
                     public const int Target = 0x18;
                     public const int SpEffectId = 0x1C;
+                }
+
+                public static class AttackComp
+                {
+                    public const int CoolTimeCount = 0x14;
+                    public const int CoolTimeList = 0x18;
+                }
+
+                public static class CoolTimeItem
+                {
+                    public const int AnimationId = 0x0;
+                    public const int TimeSinceLastAttack = 0x4;
+                    public const int Cooldown = 0x8;
                 }
                 
             }

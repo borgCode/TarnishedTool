@@ -53,9 +53,23 @@ public class GoalViewModel : BaseViewModel
         set => SetProperty(ref _indentLevel, value);
     }
     
-    public string FormattedParams => Params != null 
-        ? string.Join(", ", Params.Select(p => $"{p.Label}:{p.Value:F1}")) 
-        : string.Empty;
+    public string FormattedParams
+    {
+        get
+        {
+            if (Params == null)
+                return string.Empty;
+        
+            const int paramsPerRow = 4;
+        
+            var chunks = Params
+                .Select((p, i) => new { Formatted = $"  {p.Label}:{p.Value:F1}", Index = i })
+                .GroupBy(x => x.Index / paramsPerRow)
+                .Select(g => string.Join(", ", g.Select(x => x.Formatted)));
+        
+            return string.Join("\n", chunks);
+        }
+    }
     
 
     #endregion

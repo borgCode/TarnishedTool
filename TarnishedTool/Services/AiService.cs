@@ -17,6 +17,8 @@ public class AiService : IAiService
     private readonly MemoryService _memoryService;
     private readonly List<Action> _subscribers = new();
 
+    public const int CoolTimeListStride = 0x14;
+
     public AiService(MemoryService memoryService)
     {
         _memoryService = memoryService;
@@ -25,11 +27,9 @@ public class AiService : IAiService
 
     #region Public Methods
 
-    public int GetNpcThinkParamIdByChrIns(IntPtr chrIns) =>
-        _memoryService.Read<int>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.NpcThinkParamId);
-
-    public nint GetTopGoal(nint chrIns) =>
-        _memoryService.Read<nint>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TopGoal);
+    
+    public nint GetTopGoal(nint aiThink) =>
+        _memoryService.Read<nint>(aiThink + ChrIns.AiThinkOffsets.TopGoal);
 
     public GoalIns GetGoalInfo(nint goalPtr)
     {
@@ -87,16 +87,16 @@ public class AiService : IAiService
         return childGoals;
     }
 
-    public float[] GetLuaTimers(nint chrIns) =>
-        _memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaTimersArray, NumOfLuaTimers);
+    public float[] GetLuaTimers(nint aiThink) =>
+        _memoryService.ReadArray<float>(aiThink + ChrIns.AiThinkOffsets.LuaTimersArray, NumOfLuaTimers);
 
-    public float[] GetLuaNumbers(nint chrIns) =>
-        _memoryService.ReadArray<float>(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers);
+    public float[] GetLuaNumbers(nint aiThink) =>
+        _memoryService.ReadArray<float>(aiThink + ChrIns.AiThinkOffsets.LuaNumbersArray, NumOfLuaNumbers);
 
-    public List<SpEffectObserve> GetSpEffectObserveList(nint chrIns)
+    public List<SpEffectObserve> GetSpEffectObserveList(nint aiThink)
     {
         List<SpEffectObserve> spEffectObserveList = [];
-        var spEffectObserveComponent = GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.SpEffectObserveComp;
+        var spEffectObserveComponent = aiThink + ChrIns.AiThinkOffsets.SpEffectObserveComp;
         var head = _memoryService.Read<nint>(spEffectObserveComponent + ChrIns.AiThinkOffsets.SpEffectObserve.Head);
         var next = _memoryService.Read<nint>(head + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Next);
 
@@ -131,7 +131,27 @@ public class AiService : IAiService
 
     public ulong GetInterrupts(nint aiThink) =>
         _memoryService.Read<ulong>(aiThink + ChrIns.AiThinkOffsets.Interrupts);
-    
+
+    public List<CoolTimeEntry> GetCoolTimeItemList(nint aiThink)
+    {
+        var attackComp = aiThink + ChrIns.AiThinkOffsets.AiAttackComp;
+        var coolTimeCount = _memoryService.Read<int>(attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeCount);
+        if (coolTimeCount == 0) return new List<CoolTimeEntry>();
+
+        var coolTimeList = new List<CoolTimeEntry>();
+        var listStart = attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeList;
+        for (var i = 0; i < coolTimeCount; i++)
+        {
+            var animationId = _memoryService.Read<int>(listStart + i * CoolTimeListStride);
+            var timeSinceLastAttack = _memoryService.Read<float>(
+                listStart + ChrIns.AiThinkOffsets.CoolTimeItem.TimeSinceLastAttack + i * CoolTimeListStride);
+            var coolDown = _memoryService.Read<float>(
+                listStart + ChrIns.AiThinkOffsets.CoolTimeItem.Cooldown + i * CoolTimeListStride);
+            coolTimeList.Add(new CoolTimeEntry(animationId, timeSinceLastAttack, coolDown));
+        }
+        return coolTimeList;
+    }
+
     #endregion
 
     #region Private Methods

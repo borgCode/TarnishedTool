@@ -1,20 +1,21 @@
 ﻿// 
 
 using System;
+using System.Numerics;
 
 namespace TarnishedTool.Interfaces;
 
 public interface ITargetService
 {
     void ToggleTargetHook(bool isEnabled);
-    long GetTargetChrIns();
+    nint GetTargetChrIns();
     void SetHp(int hp);
     int GetCurrentHp();
     int GetMaxHp();
     float GetCurrentPoise();
     float GetMaxPoise();
     float GetPoiseTimer();
-    float[] GetPosition();
+    Vector3 GetLocalCoords();
     float GetSpeed();
     void SetSpeed(float speed);
     void ToggleTargetAi(bool isDisableTargetAiEnabled);
@@ -29,10 +30,9 @@ public interface ITargetService
     void ToggleRepeatAct(bool isRepeatActEnabled);
     bool IsTargetRepeating();
     int GetCurrentAnimation();
-    void SetAnimation(int animationId);
     void ToggleTargetingView(bool isTargetingViewEnabled);
     bool IsTargetViewEnabled();
-    void ToggleTargetNoDamage(bool isFreezeHealthEnabled);
+    void ToggleTargetNoDamage(bool isNoDamageEnabled);
     bool IsNoDamageEnabled();
     void ToggleNoStagger(bool isEnabled);
     void KillAllBesidesTarget();
