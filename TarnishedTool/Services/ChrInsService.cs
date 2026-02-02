@@ -41,7 +41,7 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
 
         return entries;
     }
-    
+
     public int GetChrId(nint chrIns) =>
         memoryService.Read<int>(chrIns + ChrIns.ChrId);
 
@@ -242,6 +242,9 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
             false, false);
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
     }
+
+    public uint GetBlockId(nint chrIns) =>
+        memoryService.Read<uint>(chrIns + ChrIns.BlockId);
 
     #endregion
 

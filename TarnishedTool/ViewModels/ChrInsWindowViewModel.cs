@@ -3,8 +3,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
@@ -23,8 +25,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly Dictionary<int, string> _aiInterruptEnums;
 
     private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
-    
-    
+
     private readonly Dictionary<int, GoalInfo> _goalInfos;
 
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
@@ -32,7 +33,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly Dictionary<nint, AiWindow> _openAiWindows = new();
     private const int MaxAiWindows = 4;
 
-    public const int DummyChrId = 1000;
+    public static readonly int[] DummyChrIds = [100, 1000];
 
     public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
         IPlayerService playerService, IChrInsService chrInsService)
@@ -59,7 +60,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ["guardresult"] = aiGuardGoalEnums
         };
     }
-    
+
     #region Properties
 
     private ObservableCollection<ChrInsEntry> _chrInsEntries = new();
@@ -113,16 +114,43 @@ internal class ChrInsWindowViewModel : BaseViewModel
     {
         var entries = _chrInsService.GetNearbyChrInsEntries();
         var seenHandles = new HashSet<long>();
+        var playerBlockId = _playerService.GetBlockId();
+        byte playerArea = (byte)((playerBlockId >> 24) & 0xFF);
+        var playerAbsolute = PositionUtils.ToAbsolute(_playerService.GetPlayerPos(), playerBlockId);
 
         foreach (var entry in entries)
         {
             long handle = _chrInsService.GetHandleByChrIns(entry.ChrIns);
 
+
             seenHandles.Add(handle);
-            if (_entriesByHandle.TryGetValue(handle, out _)) continue;
-            
+            if (_entriesByHandle.TryGetValue(handle, out var existingEntry))
+            {
+                if (existingEntry.NpcThinkParamId == 0)
+                    existingEntry.NpcThinkParamId = _chrInsService.GetNpcThinkParamId(entry.ChrIns);
+                if (existingEntry.EntityId == 0)
+                    existingEntry.EntityId = _chrInsService.GetEntityId(entry.ChrIns);
+                
+                if (existingEntry.IsExpanded)
+                {
+                    var entryBlockId = _chrInsService.GetBlockId(existingEntry.ChrIns);
+                    byte entryArea = (byte)((entryBlockId >> 24) & 0xFF);
+    
+                    if (playerArea != entryArea)
+                    {
+                        existingEntry.Distance = -1f;
+                    }
+                    else
+                    {
+                        var entryAbsolute = PositionUtils.ToAbsolute(_chrInsService.GetLocalCoords(existingEntry.ChrIns), entryBlockId);
+                        existingEntry.Distance = Vector3.Distance(playerAbsolute, entryAbsolute);
+                    }
+                }
+                continue;
+            }
+
             entry.ChrId = _chrInsService.GetChrId(entry.ChrIns);
-            if (entry.ChrId == DummyChrId) continue;
+            if (DummyChrIds.Contains(entry.ChrId)) continue;
             
             var instanceId = _chrInsService.GetChrInstanceId(entry.ChrIns);
             entry.InternalName = $@"c{entry.ChrId}_{instanceId}";
@@ -134,7 +162,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             entry.EntityId = _chrInsService.GetEntityId(entry.ChrIns);
             entry.Handle = handle;
             entry.NpcParamId = _chrInsService.GetNpcParamId(entry.ChrIns);
-            
+
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);
         }
@@ -148,6 +176,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ChrInsEntries.Remove(entry);
         }
     }
+
     private void OpenAiWindow(ChrInsEntry entry)
     {
         if (entry == null) return;
@@ -240,11 +269,15 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _stateService.Unsubscribe(State.Loaded, OnGameLoaded);
         _stateService.Unsubscribe(State.NotLoaded, OnGameNotLoaded);
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
-    }
 
-    public void ClearSelected()
-    {
+        foreach (var window in _openAiWindows.Values.ToList())
+        {
+            window.Close();
+        }
+
         SelectedChrInsEntry = null;
+        _entriesByHandle.Clear();
+        ChrInsEntries.Clear();
     }
 
     #endregion

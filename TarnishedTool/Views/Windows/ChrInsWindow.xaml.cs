@@ -33,9 +33,7 @@ public partial class ChrInsWindow : TopmostWindow
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);
-        var vm = (ChrInsWindowViewModel)DataContext;
-        vm.ClearSelected();
-
+        
         SettingsManager.Default.AiWindowWindowLeft = Left;
         SettingsManager.Default.AiWindowWindowTop = Top;
         SettingsManager.Default.AiWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
