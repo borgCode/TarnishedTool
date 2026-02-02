@@ -14,12 +14,12 @@ public class AiService : IAiService
     public const int NumOfLuaTimers = 16;
     public const int NumOfLuaNumbers = 64;
     private readonly DispatcherTimer _timer = new() { Interval = TimeSpan.FromMilliseconds(8) };
-    private readonly MemoryService _memoryService;
+    private readonly IMemoryService _memoryService;
     private readonly List<Action> _subscribers = new();
 
     public const int CoolTimeListStride = 0x14;
 
-    public AiService(MemoryService memoryService)
+    public AiService(IMemoryService memoryService)
     {
         _memoryService = memoryService;
         _timer.Tick += InterruptTick;
@@ -152,6 +152,14 @@ public class AiService : IAiService
         return coolTimeList;
     }
 
+    public int GetMainScriptGoalId(nint aiThink)
+    {
+        var topGoalChildGoalIdPtr = _memoryService.FollowPointers(
+            aiThink + ChrIns.AiThinkOffsets.TopGoal,
+            [ChrIns.AiThinkOffsets.Goal.ChildGoal, ChrIns.AiThinkOffsets.Goal.GoalId], false);
+        return _memoryService.Read<int>(topGoalChildGoalIdPtr);
+    }
+    
     #endregion
 
     #region Private Methods

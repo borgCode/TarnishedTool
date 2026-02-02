@@ -12,7 +12,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class ChrInsService(MemoryService memoryService) : IChrInsService
+public class ChrInsService(IMemoryService memoryService) : IChrInsService
 {
     public const int ChrInsEntrySize = 0x8;
 
@@ -41,20 +41,26 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
 
         return entries;
     }
-
-    public int GetChrId(IntPtr chrIns) =>
+    
+    public int GetChrId(nint chrIns) =>
         memoryService.Read<int>(chrIns + ChrIns.ChrId);
 
-    public uint GetNpcParamId(IntPtr chrIns) =>
+    public uint GetNpcParamId(nint chrIns) =>
         memoryService.Read<uint>(chrIns + ChrIns.NpcParamId);
 
-    public long GetHandleByChrIns(IntPtr chrIns) =>
+    public long GetHandleByChrIns(nint chrIns) =>
         memoryService.Read<long>(chrIns + ChrIns.Handle);
+
+    public int GetChrInstanceId(nint chrIns)
+    {
+        var instanceIdPtr = memoryService.FollowPointers(GetChrDataPtr(chrIns), ChrIns.InstanceId, false, false);
+        return memoryService.Read<int>(instanceIdPtr);
+    }
 
     public void SetSelected(nint chrIns, bool isSelected) =>
         memoryService.SetBitValue(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.SelectedEntity, isSelected);
 
-    public Position GetChrInsMapCoords(IntPtr chrIns)
+    public Position GetChrInsMapCoords(nint chrIns)
     {
         var blockId = memoryService.Read<uint>(chrIns + ChrIns.BlockId);
 
@@ -65,17 +71,17 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
         return new Position(blockId, mapCoords, 0);
     }
 
-    public Vector3 GetLocalCoords(IntPtr chrIns) =>
+    public Vector3 GetLocalCoords(nint chrIns) =>
         memoryService.Read<Vector3>(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords);
 
-    public void ToggleTargetAi(IntPtr chrIns, bool isDisableTargetAiEnabled) =>
+    public void ToggleTargetAi(nint chrIns, bool isDisableTargetAiEnabled) =>
         memoryService.SetBitValue(GetChrCtrlFlagsPtr(chrIns) + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit,
             isDisableTargetAiEnabled);
 
-    public bool IsAiDisabled(IntPtr chrIns) =>
+    public bool IsAiDisabled(nint chrIns) =>
         memoryService.IsBitSet(GetChrCtrlFlagsPtr(chrIns) + ChrIns.DisableAi.Offset, ChrIns.DisableAi.Bit);
 
-    public void ToggleTargetView(IntPtr chrIns, bool isTargetViewEnabled)
+    public void ToggleTargetView(nint chrIns, bool isTargetViewEnabled)
     {
         var targetingSystem =
             memoryService.ReadInt64(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TargetingSystem);
@@ -84,7 +90,7 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
             isTargetViewEnabled);
     }
 
-    public bool IsTargetViewEnabled(IntPtr chrIns)
+    public bool IsTargetViewEnabled(nint chrIns)
     {
         var targetingSystem =
             memoryService.ReadInt64(GetAiThinkPtr(chrIns) + ChrIns.AiThinkOffsets.TargetingSystem);
@@ -96,13 +102,13 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
     public void ToggleNoAttack(nint chrIns, bool isEnabled) =>
         memoryService.SetBitValue(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.NoAttack, isEnabled);
 
-    public bool IsNoAttackEnabled(IntPtr chrIns) =>
+    public bool IsNoAttackEnabled(nint chrIns) =>
         memoryService.IsBitSet(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.NoAttack);
 
     public void ToggleNoMove(nint chrIns, bool isEnabled) =>
         memoryService.SetBitValue(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.NoMove, isEnabled);
 
-    public bool IsNoMoveEnabled(IntPtr chrIns) =>
+    public bool IsNoMoveEnabled(nint chrIns) =>
         memoryService.IsBitSet(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.NoMove);
 
     public void ToggleNoDamage(nint chrIns, bool isEnabled)
@@ -111,7 +117,7 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
         memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
     }
 
-    public bool IsNoDamageEnabled(IntPtr chrIns)
+    public bool IsNoDamageEnabled(nint chrIns)
     {
         var bitFlags = GetChrDataPtr(chrIns) + ChrIns.ChrDataFlags;
         return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
@@ -139,7 +145,7 @@ public class ChrInsService(MemoryService memoryService) : IChrInsService
         memoryService.Read<float>(GetChrBehaviorPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);
 
     public void SetSpeed(nint chrIns, float speed) =>
-        memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
+        memoryService.Write(GetChrBehaviorPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
 
     public float[] GetDefenses(nint chrIns)
     {

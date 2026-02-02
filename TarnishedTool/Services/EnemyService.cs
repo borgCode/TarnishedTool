@@ -6,7 +6,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class EnemyService(MemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
+public class EnemyService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
 {
     private const int MaxNumOfActs = 10;
 

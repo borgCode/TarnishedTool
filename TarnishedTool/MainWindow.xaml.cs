@@ -22,7 +22,7 @@ namespace TarnishedTool
     /// </summary>
     public partial class MainWindow
     {
-        private readonly MemoryService _memoryService;
+        private readonly IMemoryService _memoryService;
         private readonly IStateService _stateService;
         private readonly IDlcService _dlcService;
         private readonly AoBScanner _aobScanner;
@@ -201,7 +201,7 @@ namespace TarnishedTool
                     }
 
 #if DEBUG
-                    Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+                    Console.WriteLine($@"Base: 0x{(long)_memoryService.BaseAddress:X}");
 #endif
                     _hasCheckedPatch = true;
                 }

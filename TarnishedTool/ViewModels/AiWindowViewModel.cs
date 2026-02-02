@@ -34,9 +34,10 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         _aiThink = aiThink;
 
         _enumDicts.TryGetValue("target", out var targetEnums);
-        _aiTargetEnums = targetEnums; 
-        
-        
+        _aiTargetEnums = targetEnums;
+
+        _goalDict.TryGetValue(_aiService.GetMainScriptGoalId(aiThink), out var goalInfo);
+        if (goalInfo != null) ScriptName = goalInfo.GoalName;
 
         _gameTickService.Subscribe(UpdateTick);
     }
@@ -130,6 +131,14 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     }
     
     public ObservableCollection<string> InterruptHistory { get; } = new();
+
+    private string _scriptName;
+    public string ScriptName 
+    {
+        get => _scriptName;
+        set => SetProperty(ref _scriptName, value);
+    }
+    
     
     #endregion
 

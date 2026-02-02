@@ -217,6 +217,8 @@ namespace TarnishedTool.Memory
                 MaxSp = 0x158,
             }
 
+            public static readonly int[] InstanceId = [0x28, 0x8];
+
             public static int ChrDataFlags => Version switch
             {
                 Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
@@ -314,6 +316,7 @@ namespace TarnishedTool.Memory
 
                 public static class Goal
                 {
+                    public const int ChildGoal = 0x10;
                     public const int GoalLife = 0x28;
                     public const int SubGoalContainer = 0x30;
                     public const int SubGoalCount = 0x58;
@@ -809,6 +812,15 @@ namespace TarnishedTool.Memory
             }
         }
 
+
+        public static class WorldAiManagerImp
+        {
+            public static IntPtr Base;
+            
+            public static readonly int[] LuaState = [0x6938, 0xB8, 0x28];
+        }
+        
+
         public static class Hooks
         {
             public static long UpdateCoords;
@@ -859,6 +871,7 @@ namespace TarnishedTool.Memory
             public static long NpcEzStateTalkCtor;
             public static long EzStateEnvQueryImplCtor;
             public static long LocalToMapCoords;
+            public static long LuaDoString;
         }
 
         public static class Patches
@@ -1411,8 +1424,26 @@ namespace TarnishedTool.Memory
                     or Version2_6_1 => 0x3D661A0,
                 _ => 0
             };
-
-
+            
+            WorldAiManagerImp.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x3C4C768,
+                Version1_2_1 => 0x3C4C788,
+                Version1_2_2 => 0x3C4C7A8,
+                Version1_2_3 => 0x3C4F7D8,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x3C61328,
+                Version1_4_0 or Version1_4_1 => 0x3C045E8,
+                Version1_5_0 => 0x3C1C4A8,
+                Version1_6_0 => 0x3C2D6B8,
+                Version1_7_0 => 0x3C48088,
+                Version1_8_0 or Version1_8_1 => 0x3CD5F00,
+                Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CD9338,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 => 0x3D624E8,
+                Version2_2_3 or Version2_3_0 => 0x3D62508,
+                _ => 0
+            };
+            
 
             // Functions
             Functions.GraceWarp = moduleBase.ToInt64() + Version switch
@@ -1915,6 +1946,36 @@ namespace TarnishedTool.Memory
                 Version2_6_0 or Version2_6_1 => 0x61E350,
                 _ => 0
             };
+            
+            Functions.LuaDoString = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x1F78EB0,
+                Version1_2_1 => 0x1F78F00,
+                Version1_2_2 => 0x1F793A0,
+                Version1_2_3 => 0x1F7A6E0,
+                Version1_3_0 => 0x1F83E40,
+                Version1_3_1 => 0x1F83BE0,
+                Version1_3_2 => 0x1F83BC0,
+                Version1_4_0 => 0x1F6B830,
+                Version1_4_1 => 0x1F6B740,
+                Version1_5_0 => 0x1F799A0,
+                Version1_6_0 => 0x1F83B00,
+                Version1_7_0 => 0x1F910D0,
+                Version1_8_0 => 0x1FDD6D0,
+                Version1_8_1 => 0x1FDD6B0,
+                Version1_9_0 => 0x1FE03A0,
+                Version1_9_1 => 0x1FE04B0,
+                Version2_0_0 => 0x1FE0760,
+                Version2_0_1 => 0x1FE0840,
+                Version2_2_0 => 0x20260C0,
+                Version2_2_3 => 0x20260E0,
+                Version2_3_0 => 0x2026980,
+                Version2_4_0 or Version2_5_0 => 0x20269C0,
+                Version2_6_0 => 0x2026990,
+                Version2_6_1 => 0x20269F0,
+                _ => 0
+            };
+
 
 
             // Hooks

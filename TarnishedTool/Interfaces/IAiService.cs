@@ -20,4 +20,5 @@ public interface IAiService
     void UnregisterInterruptListener(Action callBack);
     ulong GetInterrupts(nint aiThink);
     List<CoolTimeEntry> GetCoolTimeItemList(nint aiThink);
+    int GetMainScriptGoalId(nint aiThink);
 }

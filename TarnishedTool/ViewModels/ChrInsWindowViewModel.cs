@@ -1,6 +1,5 @@
 ﻿// 
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,10 +21,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
     private readonly Dictionary<int, string> _chrNames;
     private readonly Dictionary<int, string> _aiInterruptEnums;
-    private readonly Dictionary<int, string> _aiTargetEnums;
-    private readonly Dictionary<int, string> _aiGoalResulEnums;
-    private readonly Dictionary<int, string> _aiGuardGoalEnums;
-    private readonly Dictionary<int, string> _aiDirTypeEnums;
 
     private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
     
@@ -50,25 +45,21 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
-        _aiTargetEnums = DataLoader.GetSimpleDict("AiTargetEnum", int.Parse, s => s);
+        var aiTargetEnums = DataLoader.GetSimpleDict("AiTargetEnum", int.Parse, s => s);
         _aiInterruptEnums = DataLoader.GetSimpleDict("AiInterruptEnum", int.Parse, s => s);
-        _aiGoalResulEnums = DataLoader.GetSimpleDict("AiGoalResultEnum", int.Parse, s => s);
-        _aiGuardGoalEnums = DataLoader.GetSimpleDict("AiGuardGoalEnum", int.Parse, s => s);
-        _aiDirTypeEnums = DataLoader.GetSimpleDict("AiDirTypeEnum", int.Parse, s => s);
+        var aiGoalResulEnums = DataLoader.GetSimpleDict("AiGoalResultEnum", int.Parse, s => s);
+        var aiGuardGoalEnums = DataLoader.GetSimpleDict("AiGuardGoalEnum", int.Parse, s => s);
+        var aiDirTypeEnums = DataLoader.GetSimpleDict("AiDirTypeEnum", int.Parse, s => s);
 
         _enumDicts = new Dictionary<string, Dictionary<int, string>>
         {
-            ["target"] = _aiTargetEnums,
-            ["dirtype"] = _aiDirTypeEnums,
-            ["goalresult"] = _aiGoalResulEnums,
-            ["guardresult"] = _aiGuardGoalEnums
+            ["target"] = aiTargetEnums,
+            ["dirtype"] = aiDirTypeEnums,
+            ["goalresult"] = aiGoalResulEnums,
+            ["guardresult"] = aiGuardGoalEnums
         };
     }
-
-    #region Commands
-
-    #endregion
-
+    
     #region Properties
 
     private ObservableCollection<ChrInsEntry> _chrInsEntries = new();
@@ -107,22 +98,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private void OnGameLoaded()
     {
         _gameTickService.Subscribe(ChrInsEntriesTick);
-        var entries = _chrInsService.GetNearbyChrInsEntries()
-            .Where(e => _chrInsService.GetNpcThinkParamId(e.ChrIns) != 0)
-            .ToList();
-
-        foreach (var entry in entries)
-        {
-            var position = _chrInsService.GetChrInsMapCoords(entry.ChrIns);
-            Console.WriteLine(position.Coords);
-
-            entry.NpcThinkParamId = _chrInsService.GetNpcThinkParamId(entry.ChrIns);
-
-
-            entry.ChrId = _chrInsService.GetChrId(entry.ChrIns);
-
-            entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
-        }
     }
 
     private void OnGameNotLoaded()
@@ -149,11 +124,14 @@ internal class ChrInsWindowViewModel : BaseViewModel
             entry.ChrId = _chrInsService.GetChrId(entry.ChrIns);
             if (entry.ChrId == DummyChrId) continue;
             
+            var instanceId = _chrInsService.GetChrInstanceId(entry.ChrIns);
+            entry.InternalName = $@"c{entry.ChrId}_{instanceId}";
             entry.OnOptionChanged = HandleEntryOptionChanged;
             entry.OnCommandExecuted = HandleEntryCommand;
             entry.OnExpanded = HandleEntryExpanded;
             entry.NpcThinkParamId = _chrInsService.GetNpcThinkParamId(entry.ChrIns);
             entry.Name = _chrNames.TryGetValue(entry.ChrId, out var chrName) ? chrName : "Unknown";
+            entry.EntityId = _chrInsService.GetEntityId(entry.ChrIns);
             entry.Handle = handle;
             entry.NpcParamId = _chrInsService.GetNpcParamId(entry.ChrIns);
             
@@ -230,6 +208,9 @@ internal class ChrInsWindowViewModel : BaseViewModel
                 break;
             case nameof(ChrInsEntry.OpenAiWindowCommand):
                 OpenAiWindow(entry);
+                break;
+            case nameof(ChrInsEntry.KillChrCommand):
+                _chrInsService.SetHp(entry.ChrIns, 0);
                 break;
         }
     }

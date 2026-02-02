@@ -16,10 +16,10 @@ public class ReminderService : IReminderService
     private const string ReminderText = "Tarnished Tool Active";
 
     private bool _hasDoneReminder;
-    private readonly MemoryService _memoryService;
+    private readonly IMemoryService _memoryService;
     private readonly HookManager _hookManager;
 
-    public ReminderService(MemoryService memoryService, HookManager hookManager, IStateService stateService)
+    public ReminderService(IMemoryService memoryService, HookManager hookManager, IStateService stateService)
     {
         _memoryService = memoryService;
         _hookManager = hookManager;

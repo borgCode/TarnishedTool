@@ -6,7 +6,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class DlcService(MemoryService memoryService) : IDlcService
+public class DlcService(IMemoryService memoryService) : IDlcService
 {
     
     public void CheckDlc()

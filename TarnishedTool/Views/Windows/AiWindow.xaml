@@ -35,10 +35,10 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
+
             <Grid Grid.Row="0" Grid.ColumnSpan="4">
-                <TextBlock HorizontalAlignment="Center" Text="{Binding ChrIns.Display}"></TextBlock>
-                
+                <TextBlock HorizontalAlignment="Center" Text="{Binding ChrIns.AiWindowDisplay}" />
+
             </Grid>
 
             <CheckBox Grid.Row="1" Grid.Column="0"
@@ -66,28 +66,29 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            
+
             <CheckBox Grid.Row="1" Grid.Column="1"
                       Content="Show Cooltimes"
                       IsChecked="{Binding IsShowCoolTimesEnabled}" />
-            <ItemsControl Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" ItemsSource="{Binding CoolTimes}"
+            <ItemsControl Grid.Row="2" Grid.Column="1" ItemsSource="{Binding CoolTimes}"
                           Visibility="{Binding IsShowCoolTimesEnabled, Converter={StaticResource BoolToVis}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
-                            <Run Text="Animation ID: "/><Run Text="{Binding AnimationId}"/>
-                            <Run Text=" Last used: "/><Run Text="{Binding TimeSinceLastAttack, StringFormat=F2}"/>
-                            <Run Text=" Cooldown: "/><Run Text="{Binding Cooldown, StringFormat=F2}"/>
+                            <Run Text="Animation ID: " /><Run Text="{Binding AnimationId}" />
+                            <Run Text=" Last used: " /><Run Text="{Binding TimeSinceLastAttack, StringFormat=F2}" />
+                            <Run Text=" Cooldown: " /><Run Text="{Binding Cooldown, StringFormat=F2}" />
                         </TextBlock>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            
+
 
             <CheckBox Grid.Row="1" Margin="10,0,0,0" Grid.Column="2"
                       Content="Show Lua Timers"
                       IsChecked="{Binding IsShowLuaTimersEnabled}" />
-            <ItemsControl Grid.Row="2" Grid.RowSpan="2" Grid.Column="2" Margin="10,0,0,0" ItemsSource="{Binding LuaTimers}"
+            <ItemsControl Grid.Row="2" Grid.Column="2" Margin="10,0,0,0"
+                          ItemsSource="{Binding LuaTimers}"
                           Visibility="{Binding IsShowLuaTimersEnabled, Converter={StaticResource BoolToVis}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -103,7 +104,7 @@
                       Margin="10,0,0,0"
                       Content="Show Lua Numbers"
                       IsChecked="{Binding IsShowLuaNumbersEnabled}" />
-            <ScrollViewer Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" MaxHeight="350" Margin="10,0,0,0"
+            <ScrollViewer Grid.Row="2" Grid.Column="3" MaxHeight="350" Margin="10,0,0,0"
                           VerticalAlignment="Top"
                           Visibility="{Binding IsShowLuaNumbersEnabled, Converter={StaticResource BoolToVis}}">
                 <ItemsControl ItemsSource="{Binding LuaNumbers}">
@@ -117,7 +118,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            
+
             <Grid Grid.Row="3" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
@@ -130,35 +131,62 @@
                 <CheckBox Grid.Row="0" Grid.Column="0"
                           Content="Show Special Effect Observers"
                           IsChecked="{Binding IsShowSpEffectObservesEnabled}" />
-                
-                <ItemsControl Grid.Row="1"  Grid.Column="0" ItemsSource="{Binding SpEffectObserves}"
+
+                <ItemsControl Grid.Row="1" Grid.Column="0" ItemsSource="{Binding SpEffectObserves}"
                               Visibility="{Binding IsShowSpEffectObservesEnabled, Converter={StaticResource BoolToVis}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
-                                <Run Text="Target: "/><Run Text="{Binding TargetName}"/>
-                                <Run Text=" Special Effect ID: "/><Run Text="{Binding SpEffectId}"/>
+                                <Run Text="Target: " /><Run Text="{Binding TargetName}" />
+                                <Run Text=" Special Effect ID: " /><Run Text="{Binding SpEffectId}" />
                             </TextBlock>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
                 <CheckBox Grid.Row="0" Grid.Column="1"
                           Content="Show Interrupts"
                           IsChecked="{Binding IsShowInterruptsEnabled}" />
-                
+
                 <ItemsControl Grid.Row="1" Grid.Column="1" ItemsSource="{Binding InterruptHistory}"
                               Visibility="{Binding IsShowInterruptsEnabled, Converter={StaticResource BoolToVis}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}"/>
+                            <TextBlock Text="{Binding}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
             </Grid>
             
-            
+            <Grid Grid.Row="3" Grid.Column="3">
+                <WrapPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Inject Script"></Button>
+                        
+                        <Border Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Inject a modified lua script for the AI, must be the script for "
+                                ToolTipService.InitialShowDelay="100">
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                    </StackPanel>
+    
+                   
+                    
+                </WrapPanel>
+                
+            </Grid>
+
         </Grid>
 
     </Grid>

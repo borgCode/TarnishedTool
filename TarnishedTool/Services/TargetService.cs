@@ -8,7 +8,7 @@ using static TarnishedTool.Memory.Offsets;
 namespace TarnishedTool.Services
 {
     public class TargetService(
-        MemoryService memoryService,
+        IMemoryService memoryService,
         HookManager hookManager,
         IPlayerService playerService,
         IReminderService reminderService,

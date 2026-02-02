@@ -12,7 +12,7 @@ using static TarnishedTool.Memory.Offsets;
 namespace TarnishedTool.Services
 {
     public class PlayerService(
-        MemoryService memoryService,
+        IMemoryService memoryService,
         HookManager hookManager,
         ITravelService travelService,
         IReminderService reminderService,

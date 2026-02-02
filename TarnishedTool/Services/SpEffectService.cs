@@ -9,7 +9,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class SpEffectService(MemoryService memoryService, IReminderService reminderService) : ISpEffectService
+public class SpEffectService(IMemoryService memoryService, IReminderService reminderService) : ISpEffectService
 {
     public void ApplySpEffect(nint chrIns, uint spEffectId)
     {

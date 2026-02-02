@@ -21,18 +21,18 @@ public interface IMemoryService
     int ReadInt32(nint addr);
     long ReadInt64(nint addr);
     float ReadFloat(nint addr);
-    double ReadDouble(nint addr);
     string ReadString(nint addr, int maxLength = 32);
     Vector3 ReadVector3(IntPtr address);
     byte[] ReadBytes(nint addr, int size);
 
+    T[] ReadArray<T>(IntPtr addr, int count) where T : unmanaged;
+    T Read<T>(IntPtr addr) where T : unmanaged;
+    void Write<T>(IntPtr addr, T value) where T : unmanaged;
+
     void WriteUInt8(nint addr, int val);
-    void WriteInt16(nint addr, short val);
     void WriteInt32(nint addr, int val);
     void WriteUInt32(IntPtr addr, uint val);
-    void WriteInt64(nint addr, long val);
     void WriteFloat(nint addr, float val);
-    void WriteDouble(nint addr, double val);
     void WriteString(nint addr, string value, int maxLength = 32);
     void WriteVector3(IntPtr address, Vector3 value);
     void WriteBytes(IntPtr addr, byte[] val);
@@ -47,11 +47,11 @@ public interface IMemoryService
     void AllocateAndExecute(byte[] shellcode);
     void AllocCodeCave();
 
+    nint AllocateMem(uint size);
+    void FreeMem(nint addr);
+
     public IntPtr GetProcAddress(string moduleName, string procName);
 
     void StartAutoAttach();
     void StopAutoAttach();
-
-    T Read<T>(IntPtr addr) where T : unmanaged;
-    void Write<T>(IntPtr addr, T value) where T : unmanaged;
 }

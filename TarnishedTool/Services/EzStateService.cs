@@ -9,7 +9,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class EzStateService(MemoryService memoryService) : IEzStateService
+public class EzStateService(IMemoryService memoryService) : IEzStateService
 {
     private bool _npcTalkCreated;
     
@@ -107,13 +107,13 @@ public class EzStateService(MemoryService memoryService) : IEzStateService
             switch (arg.TypeTag)
             {
                 case TypeInt:
-                    memoryService.WriteInt32(stackBase + offset, (int)arg.Value);
+                    memoryService.Write(stackBase + offset, (int)arg.Value);
                     break;
                 case TypeFloat:
-                    memoryService.WriteFloat(stackBase + offset, (float)arg.Value);
+                    memoryService.Write(stackBase + offset, (float)arg.Value);
                     break;
                 case TypeObject:
-                    memoryService.WriteInt64(stackBase + offset, (long)arg.Value);
+                    memoryService.Write(stackBase + offset, (long)arg.Value);
                     break;
             }
 

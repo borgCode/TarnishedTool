@@ -3,12 +3,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using TarnishedTool.Interfaces;
 using TarnishedTool.Services;
 using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Memory
 {
-    public class AoBScanner(MemoryService memoryService)
+    public class AoBScanner(IMemoryService memoryService)
     {
         
 
@@ -169,7 +170,7 @@ namespace TarnishedTool.Memory
 
 
 #if DEBUG
-            var baseAddr = memoryService.BaseAddress.ToInt64();
+            var baseAddr = memoryService.BaseAddress;
             
             Console.WriteLine($@"WorldChrMan.Base: 0x{WorldChrMan.Base.ToInt64():X} (base+0x{WorldChrMan.Base.ToInt64() - baseAddr:X})");
             Console.WriteLine($@"FieldArea.Base: 0x{FieldArea.Base.ToInt64():X} (base+0x{FieldArea.Base.ToInt64() - baseAddr:X})");

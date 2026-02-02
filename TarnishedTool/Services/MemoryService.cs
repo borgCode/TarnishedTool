@@ -15,7 +15,7 @@ namespace TarnishedTool.Services
         public bool IsAttached { get; private set; }
         public Process? TargetProcess { get; private set; }
         public IntPtr ProcessHandle { get; private set; } = IntPtr.Zero;
-        public IntPtr BaseAddress { get; private set; }
+        public nint BaseAddress { get; private set; }
         public int ModuleMemorySize { get; private set; }
 
         private const int ProcessVmRead = 0x0010;
@@ -23,6 +23,13 @@ namespace TarnishedTool.Services
         private const int ProcessVmOperation = 0x0008;
         private const int ProcessQueryInformation = 0x0400;
         private const int AttachCheckInterval = 2000; //MS
+
+        private const uint MemRelease = 0x00008000;
+        
+        private const uint CodeCaveSize = 0x5000;
+        private const int CodeCaveSearchStart = 0x40000000;
+        private const int CodeCaveSearchEnd = 0x30000;
+        private const int CodeCaveSearchStep = 0x10000;
 
         private const string ProcessName = "eldenring";
         private bool _disposed;
@@ -42,12 +49,7 @@ namespace TarnishedTool.Services
             return BitConverter.ToUInt16(bytes, 0);
         }
         
-        public short ReadInt16(nint addr)
-        {
-            var bytes = ReadBytes(addr, 2);
-            return BitConverter.ToInt16(bytes, 0);
-        }
-
+        
         public uint ReadUInt32(IntPtr addr)
         {
             var bytes = ReadBytes(addr, 4);
@@ -77,13 +79,7 @@ namespace TarnishedTool.Services
             var bytes = ReadBytes(addr, 4);
             return BitConverter.ToSingle(bytes, 0);
         }
-
-        public double ReadDouble(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 8);
-            return BitConverter.ToDouble(bytes, 0);
-        }
-
+        
         public string ReadString(IntPtr addr, int maxLength = 32)
         {
             var bytes = ReadBytes(addr, maxLength * 2);
@@ -130,14 +126,10 @@ namespace TarnishedTool.Services
             var bytes = new[] { (byte)val };
             WriteBytes(addr, bytes);
         }
-
-        public void WriteInt16(IntPtr addr, short val) => WriteBytes(addr, BitConverter.GetBytes(val));
-        public void WriteUInt16(IntPtr addr, ushort val) => WriteBytes(addr, BitConverter.GetBytes(val));
+        
         public void WriteInt32(IntPtr addr, int val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteUInt32(IntPtr addr, uint val) => WriteBytes(addr, BitConverter.GetBytes(val));
-        public void WriteInt64(nint addr, long val) => WriteBytes(addr, BitConverter.GetBytes(val));
         public void WriteFloat(IntPtr addr, float val) => WriteBytes(addr, BitConverter.GetBytes(val));
-        public void WriteDouble(IntPtr addr, double val) => WriteBytes(addr, BitConverter.GetBytes(val));
         
         public T Read<T>(IntPtr addr) where T : unmanaged
         {
@@ -254,19 +246,17 @@ namespace TarnishedTool.Services
 
             if (!executionSuccess) return;
 
-            Kernel32.VirtualFreeEx(ProcessHandle, allocatedMemory, 0, 0x8000);
+            Kernel32.VirtualFreeEx(ProcessHandle, allocatedMemory, 0, MemRelease);
         }
 
         public void AllocCodeCave()
         {
-            IntPtr searchRangeStart = BaseAddress - 0x40000000;
-            IntPtr searchRangeEnd = BaseAddress - 0x30000;
-            uint codeCaveSize = 0x5000;
-            IntPtr allocatedMemory;
+            nint searchRangeStart = BaseAddress - CodeCaveSearchStart;
+            nint searchRangeEnd = BaseAddress - CodeCaveSearchEnd;
 
-            for (IntPtr addr = searchRangeEnd; addr.ToInt64() > searchRangeStart.ToInt64(); addr -= 0x10000)
+            for (nint addr = searchRangeEnd; addr > searchRangeStart; addr -= CodeCaveSearchStep)
             {
-                allocatedMemory = Kernel32.VirtualAllocEx(ProcessHandle, addr, codeCaveSize);
+                var allocatedMemory = Kernel32.VirtualAllocEx(ProcessHandle, addr, CodeCaveSize);
 
                 if (allocatedMemory != IntPtr.Zero)
                 {
@@ -275,6 +265,10 @@ namespace TarnishedTool.Services
                 }
             }
         }
+
+        public nint AllocateMem(uint size) => Kernel32.VirtualAllocEx(ProcessHandle, IntPtr.Zero, size);
+
+        public void FreeMem(nint addr) => Kernel32.VirtualFreeEx(ProcessHandle, addr, 0, MemRelease);
 
         public IntPtr GetProcAddress(string moduleName, string procName)
         {

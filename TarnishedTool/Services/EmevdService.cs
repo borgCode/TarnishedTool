@@ -8,7 +8,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class EmevdService(MemoryService memoryService) : IEmevdService
+public class EmevdService(IMemoryService memoryService) : IEmevdService
 {
     public void ExecuteEmevdCommand(EmevdCommand command)
     {
