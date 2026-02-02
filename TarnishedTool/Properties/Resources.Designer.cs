@@ -1253,15 +1253,17 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 51                      push   rcx
-        ///48 8b 49 08             mov    rcx,QWORD PTR [rcx+0x8]
-        ///48 3b 0d 00 00 00 00    cmp    rcx,QWORD PTR [rip+0x0]        
-        ///75 06                   jne    14 &lt;normal&gt;
-        ///8b 81 88 09 00 00       mov    eax,DWORD PTR [rcx+0x988]
-        ///000000000014 &lt;normal&gt;:
-        ///59                      pop    rcx
+        ///   Looks up a localized string similar to 53                      push   rbx
+        ///48 8b 59 08             mov    rbx,QWORD PTR [rcx+0x8]
+        ///48 3b 1d 00 00 00 00    cmp    rbx,QWORD PTR [rip+0x0]
+        ///75 0f                   jne    1d &lt;normal&gt;
+        ///83 b9 38 01 00 00 00    cmp    DWORD PTR [rcx+0x138],0x0
+        ///74 06                   je     1d &lt;normal&gt;
+        ///8b 81 38 01 00 00       mov    eax,DWORD PTR [rcx+0x138]
+        ///00000000001d &lt;normal&gt;:
+        ///5b                      pop    rbx
         ///89 81 38 01 00 00       mov    DWORD PTR [rcx+0x138],eax
-        ///e9 00 00 00 00          jmp    20 &lt;normal+0xc&gt; .
+        ///e9 00 00 00 00          jmp    29 &lt;normal+ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NoHeal {
             get {
