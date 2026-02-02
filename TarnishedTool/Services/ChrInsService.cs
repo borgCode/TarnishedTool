@@ -145,7 +145,7 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         memoryService.Read<float>(GetChrBehaviorPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);
 
     public void SetSpeed(nint chrIns, float speed) =>
-        memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
+        memoryService.Write(GetChrBehaviorPtr(chrIns) + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
 
     public float[] GetDefenses(nint chrIns)
     {

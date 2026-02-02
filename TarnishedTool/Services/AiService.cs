@@ -152,6 +152,14 @@ public class AiService : IAiService
         return coolTimeList;
     }
 
+    public int GetMainScriptGoalId(nint aiThink)
+    {
+        var topGoalChildGoalIdPtr = _memoryService.FollowPointers(
+            aiThink + ChrIns.AiThinkOffsets.TopGoal,
+            [ChrIns.AiThinkOffsets.Goal.ChildGoal, ChrIns.AiThinkOffsets.Goal.GoalId], false);
+        return _memoryService.Read<int>(topGoalChildGoalIdPtr);
+    }
+    
     #endregion
 
     #region Private Methods

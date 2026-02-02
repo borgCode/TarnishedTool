@@ -316,6 +316,7 @@ namespace TarnishedTool.Memory
 
                 public static class Goal
                 {
+                    public const int ChildGoal = 0x10;
                     public const int GoalLife = 0x28;
                     public const int SubGoalContainer = 0x30;
                     public const int SubGoalCount = 0x58;
