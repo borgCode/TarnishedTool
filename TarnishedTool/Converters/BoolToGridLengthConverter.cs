@@ -11,10 +11,10 @@ namespace TarnishedTool.Converters
         {
             if (value is bool show && show)
             {
-                return new GridLength(150, GridUnitType.Pixel); // Fixed 150px when visible
+                return new GridLength(130, GridUnitType.Pixel); // Fixed when visible
             }
 
-            return new GridLength(0); // Hidden
+            return new GridLength(0, GridUnitType.Pixel); // Hidden
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
