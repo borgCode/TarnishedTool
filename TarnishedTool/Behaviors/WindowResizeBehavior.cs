@@ -139,7 +139,7 @@ namespace TarnishedTool.Behaviors
                 mmi.ptMinTrackSize.x = (int)(window.MinWidth * dpi.DpiScaleX);
                 mmi.ptMinTrackSize.y = (int)(window.MinHeight * dpi.DpiScaleY);
 
-                // Optional: also respect MaxWidth / MaxHeight if set
+               
                 if (!double.IsInfinity(window.MaxWidth))
                     mmi.ptMaxTrackSize.x = (int)(window.MaxWidth * dpi.DpiScaleX);
 
