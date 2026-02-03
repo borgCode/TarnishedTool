@@ -84,7 +84,7 @@ namespace TarnishedTool.Behaviors
             int windowWidth = rect.Right - rect.Left;
             int windowHeight = rect.Bottom - rect.Top;
 
-            // Check for corners first (larger hit area for corners)
+            // Check for corners
             if (relativeX < resizeBorder && relativeY < resizeBorder)
                 return (IntPtr)Httopleft;
             if (relativeX > windowWidth - resizeBorder && relativeY < resizeBorder)
@@ -121,11 +121,11 @@ namespace TarnishedTool.Behaviors
                 var workArea = monitorInfo.rcWork;
                 var monitorArea = monitorInfo.rcMonitor;
 
-                // Maximized window position (taskbar-aware)
+                // Maximized window position
                 mmi.ptMaxPosition.x = Math.Abs(workArea.Left - monitorArea.Left);
                 mmi.ptMaxPosition.y = Math.Abs(workArea.Top - monitorArea.Top);
 
-                // Maximized window size (taskbar-aware)
+                // Maximized window size 
                 mmi.ptMaxSize.x = Math.Abs(workArea.Right - workArea.Left);
                 mmi.ptMaxSize.y = Math.Abs(workArea.Bottom - workArea.Top);
             }
@@ -138,8 +138,7 @@ namespace TarnishedTool.Behaviors
 
                 mmi.ptMinTrackSize.x = (int)(window.MinWidth * dpi.DpiScaleX);
                 mmi.ptMinTrackSize.y = (int)(window.MinHeight * dpi.DpiScaleY);
-
-               
+                
                 if (!double.IsInfinity(window.MaxWidth))
                     mmi.ptMaxTrackSize.x = (int)(window.MaxWidth * dpi.DpiScaleX);
 
