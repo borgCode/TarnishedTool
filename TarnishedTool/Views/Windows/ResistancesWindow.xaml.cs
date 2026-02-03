@@ -11,35 +11,35 @@ public partial class ResistancesWindow : Window
 {
     private double _scaleMultiplier = 1.0;
     private double _backgroundOpacity = 0.5;
-    
+
     public ResistancesWindow()
     {
         InitializeComponent();
-        
+
         MouseLeftButtonDown += (s, e) => DragMove();
         Background = new SolidColorBrush(
             Color.FromArgb(128, 0, 0, 0));
-        
+
         Loaded += (s, e) =>
         {
             if (SettingsManager.Default.ResistancesWindowLeft > 0)
                 Left = SettingsManager.Default.ResistancesWindowLeft;
-        
+
             if (SettingsManager.Default.ResistancesWindowTop > 0)
                 Top = SettingsManager.Default.ResistancesWindowTop;
-        
+
             if (SettingsManager.Default.ResistancesWindowScaleX > 0)
             {
                 _scaleMultiplier = SettingsManager.Default.ResistancesWindowScaleX;
                 ContentScale.ScaleX = _scaleMultiplier;
                 ContentScale.ScaleY = _scaleMultiplier;
             }
-            
+
             if (SettingsManager.Default.ResistancesWindowOpacity > 0)
                 _backgroundOpacity = SettingsManager.Default.ResistancesWindowOpacity;
-        
+
             UpdateBackground();
-            
+
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
             User32.SetTopmost(hwnd);
 
@@ -47,8 +47,6 @@ public partial class ResistancesWindow : Window
             {
                 Application.Current.MainWindow.Closing += (sender, args) => { Close(); };
             }
-                
-                
         };
         ContentRendered += (s, e) =>
         {
@@ -58,13 +56,16 @@ public partial class ResistancesWindow : Window
             }
         };
     }
-    
+
     private void UpdateBackground()
     {
         Background = new SolidColorBrush(
             Color.FromArgb((byte)(_backgroundOpacity * 255), 0, 0, 0));
+
+        MainBorder.Background = new SolidColorBrush(
+            Color.FromArgb((byte)(_backgroundOpacity * 255), 0, 0, 0));
     }
-    
+
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         if (DataContext is TargetViewModel viewModel)
@@ -74,7 +75,7 @@ public partial class ResistancesWindow : Window
 
         Close();
     }
-        
+
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);
@@ -86,7 +87,7 @@ public partial class ResistancesWindow : Window
         SettingsManager.Default.ResistancesWindowWidth = Width;
         SettingsManager.Default.Save();
     }
-    
+
     private void CycleOpacity_Click(object sender, RoutedEventArgs e)
     {
         _backgroundOpacity = _backgroundOpacity >= 0.9 ? 0.3 : _backgroundOpacity + 0.2;

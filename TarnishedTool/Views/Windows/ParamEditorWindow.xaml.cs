@@ -56,10 +56,10 @@ public partial class ParamEditorWindow : TopmostWindow
     {
         base.OnClosing(e);
 
-
+        // Save window position and size
         SettingsManager.Default.ParamEditorWindowLeft = Left;
         SettingsManager.Default.ParamEditorWindowTop = Top;
-        SettingsManager.Default.ParamEditorWindowWidth = Width; 
+        SettingsManager.Default.ParamEditorWindowWidth = Width;
         SettingsManager.Default.ParamEditorWindowHeight = Height;
         SettingsManager.Default.ParamEditorWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
         SettingsManager.Default.Save();
@@ -81,30 +81,19 @@ public partial class ParamEditorWindow : TopmostWindow
         }
     }
 
-    private void EnumTextBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-    {
-        if (sender is TextBox textBox && textBox.ContextMenu != null)
-        {
-            var contextMenu = textBox.ContextMenu;
-
-
-            contextMenu.RemoveHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
-            contextMenu.AddHandler(MenuItem.ClickEvent, new RoutedEventHandler(EnumMenuItem_Click));
-        }
-    }
-
     private void EnumMenuItem_Click(object sender, RoutedEventArgs e)
     {
-        if (e.OriginalSource is MenuItem menuItem)
-        {
-            var value = menuItem.Tag;
+        if (sender is not MenuItem menuItem) return;
 
-            if (sender is ContextMenu contextMenu && contextMenu.PlacementTarget is TextBox textBox)
+        var value = menuItem.Tag;
+
+        // Navigate up to find the ContextMenu and then the TextBox
+        var contextMenu = menuItem.Parent as ContextMenu;
+        if (contextMenu?.PlacementTarget is TextBox textBox)
+        {
+            if (textBox.DataContext is FieldValueViewModel fieldVm)
             {
-                if (textBox.DataContext is FieldValueViewModel fieldVm)
-                {
-                    fieldVm.ValueText = value?.ToString() ?? "";
-                }
+                fieldVm.ValueText = value?.ToString() ?? "";
             }
         }
     }

@@ -1,0 +1,59 @@
+<UserControl x:Class="TarnishedTool.Controls.TitleBarWithMaximize"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="30">
+    <Border Background="{StaticResource TitleBarBrush}"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="0,0,0,1"
+            MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Image Source="pack://application:,,,/Assets/icon.ico"
+                   Width="16" Height="16"
+                   Margin="5,0,5,0"
+                   VerticalAlignment="Center" />
+
+            <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       FontWeight="SemiBold"
+                       Foreground="{StaticResource TextBrush}" />
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Content="—" Width="46" Height="30" Click="MinimizeButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}" />
+                <Button x:Name="MaximizeButton" Width="46" Height="30" Click="MaximizeButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                    <Grid Width="16" Height="16">
+                        <!-- Square -->
+                        <Path x:Name="MaximizeIcon"
+                              Data="M1,1 H11 V11 H1 Z"
+                              Stroke="{StaticResource TextBrush}"
+                              StrokeThickness="1.2"
+                              Fill="Transparent"
+                              Height="10"
+                              Width="10"
+                              Stretch="Uniform" />
+                        <!-- Two Squares -->
+                        <Path x:Name="RestoreIcon"
+                              Data="M3,1 H11 V9 H3 Z M1,3 H9 V11 H1 Z" 
+                              Stroke="{StaticResource TextBrush}"
+                              StrokeThickness="1.2"
+                              Fill="Transparent"
+                              Height="10"
+                              Width="10"
+                              Stretch="Uniform"
+                              Visibility="Collapsed" />
+                    </Grid>
+                </Button>
+                <Button Content="✕" Width="46" Height="30" Click="CloseButton_Click"
+                        Style="{StaticResource TitleBarCloseButtonStyle}" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

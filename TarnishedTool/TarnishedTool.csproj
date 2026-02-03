@@ -108,11 +108,16 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="Behaviors\TextBoxBehavior.cs" />
+        <Compile Include="Behaviors\WindowResizeBehavior.cs" />
         <Compile Include="Controls\CoordinateDisplay.xaml.cs">
           <DependentUpon>CoordinateDisplay.xaml</DependentUpon>
         </Compile>
         <Compile Include="Controls\Titlebar.xaml.cs">
           <DependentUpon>Titlebar.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Controls\TitleBarWithMaximize.xaml.cs">
+          <DependentUpon>TitleBarWithMaximize.xaml</DependentUpon>
         </Compile>
         <Compile Include="Converters\BooleanAndConverter.cs" />
         <Compile Include="Converters\BooleanOrConverter.cs" />
@@ -331,7 +336,6 @@
         <Compile Include="Services\StateService.cs" />
         <Compile Include="Services\TravelService.cs" />
         <Compile Include="Services\UtilityService.cs" />
-        <Compile Include="TextBoxBehavior.cs" />
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\EnumUtil.cs" />
@@ -452,6 +456,7 @@
         <Compile Include="Views\Windows\TopmostWindow.cs" />
         <Page Include="Controls\CoordinateDisplay.xaml" />
         <Page Include="Controls\Titlebar.xaml" />
+        <Page Include="Controls\TitleBarWithMaximize.xaml" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>

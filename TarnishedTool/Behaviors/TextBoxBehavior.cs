@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace TarnishedTool;
+namespace TarnishedTool.Behaviors;
 
 public static class TextBoxBehavior
 {
