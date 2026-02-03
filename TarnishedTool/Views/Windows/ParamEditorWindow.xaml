@@ -655,7 +655,7 @@
                                                                 <DataTemplate>
                                                                     <CheckBox IsChecked="{Binding Value}"
                                                                             Background="#2D2D2D"
-                                                                            HorizontalAlignment="Left" />
+                                                                            HorizontalAlignment="Center" />
                                                                 </DataTemplate>
                                                             </Setter.Value>
                                                         </Setter>
