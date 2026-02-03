@@ -17,26 +17,22 @@ public interface IMemoryService
     long ReadInt64(nint addr);
     string ReadString(nint addr, int maxLength = 32);
     byte[] ReadBytes(nint addr, int size);
+    public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true);
 
     T[] ReadArray<T>(IntPtr addr, int count) where T : unmanaged;
     T Read<T>(IntPtr addr) where T : unmanaged;
     string HexDump(nint addr, int size);
-    
-    void Write<T>(IntPtr addr, T value) where T : unmanaged;
 
-    void WriteUInt8(nint addr, int val);
-    void WriteInt32(nint addr, int val);
-    void WriteFloat(nint addr, float val);
+    void Write<T>(IntPtr addr, T value) where T : unmanaged;
+    void Write(IntPtr addr, bool value);
     void WriteString(nint addr, string value, int maxLength = 32);
-    void WriteVector3(IntPtr address, Vector3 value);
     void WriteBytes(IntPtr addr, byte[] val);
 
     void SetBitValue(nint addr, int flagMask, bool setValue);
     bool IsBitSet(nint addr, int flagMask);
 
     void RunThread(nint address, uint timeout = uint.MaxValue);
-    
-    public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true);
+
     void AllocateAndExecute(byte[] shellcode);
     void AllocCodeCave();
 

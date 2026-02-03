@@ -12,34 +12,34 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
     
     public void ToggleNoDeath(bool isEnabled) =>
-        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoDeath, isEnabled ? 1 : 0);
+        memoryService.Write(ChrDbgFlags.Base + ChrDbgFlags.AllNoDeath, isEnabled);
 
     public void ToggleNoDamage(bool isEnabled) =>
-        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoDamage, isEnabled ? 1 : 0);
+        memoryService.Write(ChrDbgFlags.Base + ChrDbgFlags.AllNoDamage, isEnabled);
 
     public void ToggleNoHit(bool isEnabled) =>
-        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoHit, isEnabled ? 1 : 0);
+        memoryService.Write(ChrDbgFlags.Base + ChrDbgFlags.AllNoHit, isEnabled);
 
     public void ToggleNoAttack(bool isEnabled)
     {
         reminderService.TrySetReminder();
-        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoAttack, isEnabled ? 1 : 0);
+        memoryService.Write(ChrDbgFlags.Base + ChrDbgFlags.AllNoAttack, isEnabled);
     }
 
     public void ToggleNoMove(bool isEnabled)
     {
         reminderService.TrySetReminder();
-        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoMove, isEnabled ? 1 : 0);
+        memoryService.Write(ChrDbgFlags.Base + ChrDbgFlags.AllNoMove, isEnabled);
     }
 
     public void ToggleDisableAi(bool isEnabled)
     {
         reminderService.TrySetReminder();
-        memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllDisableAi, isEnabled ? 1 : 0);
+        memoryService.Write(ChrDbgFlags.Base + ChrDbgFlags.AllDisableAi, isEnabled);
     }
 
     public void ToggleTargetingView(bool isTargetingViewEnabled) =>
-        memoryService.WriteUInt8(TargetView.Base, isTargetingViewEnabled ? 1 : 0);
+        memoryService.Write(TargetView.Base, isTargetingViewEnabled);
 
     public void ToggleReducedTargetingView(bool isTargetingViewEnabled)
     {
@@ -47,7 +47,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         if (isTargetingViewEnabled)
         {
             var maxDist = CodeCaveOffsets.Base + (int)CodeCaveOffsets.TargetView.MaxDist;
-            memoryService.WriteFloat(maxDist, 100.0f * 100.0f);
+            memoryService.Write(maxDist, 100.0f * 100.0f);
             var codeBytes = AsmLoader.GetAsmBytes("ReduceTargetView");
             var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
             var hook = Hooks.BlueTargetView;
@@ -74,7 +74,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
     public void SetTargetViewMaxDist(float reducedTargetViewDistance)
     {
         var maxDist = CodeCaveOffsets.Base + (int)CodeCaveOffsets.TargetView.MaxDist;
-        memoryService.WriteFloat(maxDist, reducedTargetViewDistance * reducedTargetViewDistance);
+        memoryService.Write(maxDist, reducedTargetViewDistance * reducedTargetViewDistance);
     }
 
     public void ToggleRykardMega(bool isRykardNoMegaEnabled)
@@ -106,15 +106,15 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
         for (int i = 0; i < actSequence.Length; i++)
         {
-            memoryService.WriteInt32(actsArr + 0x4 * i, actSequence[i]);
+            memoryService.Write(actsArr + 0x4 * i, actSequence[i]);
         }
 
         for (int i = actSequence.Length; i < MaxNumOfActs + 1; i++)
         {
-            memoryService.WriteInt32(actsArr + 0x4 * i, 0);
+            memoryService.Write(actsArr + 0x4 * i, 0);
         }
 
-        memoryService.WriteInt32(currentIdx, 0);
+        memoryService.Write(currentIdx, 0);
 
         var bytes = AsmLoader.GetAsmBytes("ForceActSequence");
 
@@ -134,9 +134,9 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         });
 
         memoryService.WriteBytes(code, bytes);
-        memoryService.WriteInt32(code + 0x9 + 3, npcThinkParamId);
+        memoryService.Write(code + 0x9 + 3, npcThinkParamId);
 
-        memoryService.WriteUInt8(shouldRunFlag, 1);
+        memoryService.Write(shouldRunFlag, (byte)1);
 
         hookManager.InstallHook(code.ToInt64(), hookLoc, originalBytes);
     }
@@ -158,7 +158,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x36);
             Array.Copy(bytes, 0, codeBytes, 0x31 + 1, 4);
             memoryService.WriteBytes(code, codeBytes);
-            memoryService.WriteInt32(code + 0x4, lionEntityId);
+            memoryService.Write(code + 0x4, lionEntityId);
             hookManager.InstallHook(code.ToInt64(), hook, [0xF3, 0x0F, 0x59, 0x71, 0x08]);
         }
         else
@@ -168,5 +168,5 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
     }
 
     public void ToggleDrawNavigationRoute(bool isDrawNavigationRouteEnabled) => 
-        memoryService.WriteUInt8(DrawPathing.Base, isDrawNavigationRouteEnabled ? 1 : 0);
+        memoryService.Write(DrawPathing.Base, isDrawNavigationRouteEnabled);
 }

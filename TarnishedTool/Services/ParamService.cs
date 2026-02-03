@@ -100,7 +100,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
             newVal &= mask;
         
             byte result = (byte)((current & ~shifted) | (newVal << field.BitPos.Value));
-            memoryService.WriteUInt8(addr, result);
+            memoryService.Write(addr, result);
             return;
         }
 

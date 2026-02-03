@@ -1,5 +1,6 @@
 ﻿// 
 
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using TarnishedTool.Models;
@@ -48,4 +49,5 @@ public interface IChrInsService
     nint ChrInsByEntityId(uint entityId);
     void ToggleNoDeath(nint chrIns, bool isEnabled);
     uint GetBlockId(nint chrIns);
+    void ToggleNoGravity(IntPtr chrIns, bool isEnabled);
 }

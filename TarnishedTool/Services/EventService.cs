@@ -45,15 +45,15 @@ namespace TarnishedTool.Services
 
         public void ToggleDrawEvents(bool isEnabled)
         {
-            var ptr = memoryService.ReadInt64(CSDbgEvent.Base) + CSDbgEvent.DrawEvent;
-            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+            var ptr = memoryService.Read<nint>(CSDbgEvent.Base) + CSDbgEvent.DrawEvent;
+            memoryService.Write(ptr, isEnabled);
         }
 
         public void ToggleDisableEvents(bool isEnabled)
         {
             reminderService.TrySetReminder();
-            var ptr = memoryService.ReadInt64(CSDbgEvent.Base) + CSDbgEvent.DisableEvent;
-            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+            var ptr = memoryService.Read<nint>(CSDbgEvent.Base) + CSDbgEvent.DisableEvent;
+            memoryService.Write(ptr, isEnabled);
         }
 
         public bool AreAllEventsTrue(long[] eventToCheck) => eventToCheck.All(GetEvent);

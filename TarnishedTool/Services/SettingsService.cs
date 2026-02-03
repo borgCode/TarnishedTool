@@ -10,12 +10,10 @@ namespace TarnishedTool.Services;
 public class SettingsService(IMemoryService memoryService, HookManager hookManager) : ISettingsService
 {
     public void Quitout() =>
-        memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ShouldQuitout, 1);
+        memoryService.Write((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
 
     public void ToggleStutterFix(bool isEnabled) =>
-        memoryService.WriteUInt8(
-            (IntPtr)memoryService.ReadInt64(UserInputManager.Base) + UserInputManager.SteamInputEnum,
-            isEnabled ? 1 : 0);
+        memoryService.Write(memoryService.Read<nint>(UserInputManager.Base) + UserInputManager.SteamInputEnum, isEnabled);
 
     public void ToggleDisableAchievements(bool isEnabled)
     {
@@ -23,7 +21,7 @@ public class SettingsService(IMemoryService memoryService, HookManager hookManag
             CSTrophy.CSTrophyPlatformImp_forSteam,
             CSTrophy.IsAwardAchievementEnabled
         ], false);
-        memoryService.WriteUInt8(isAwardAchievementsEnabledFlag, isEnabled ? 0 : 1);
+        memoryService.Write(isAwardAchievementsEnabledFlag, isEnabled);
     }
 
     public void ToggleNoLogo(bool isEnabled) =>
@@ -31,7 +29,8 @@ public class SettingsService(IMemoryService memoryService, HookManager hookManag
 
     public void ToggleMuteMusic(bool isMuteMusicEnabled)
     {
-        var optionsPtr = memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Options);
-        memoryService.WriteUInt8((IntPtr) optionsPtr + (int)GameDataMan.OptionsOffsets.Music, 0);
+        var optionsPtr =
+            memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Options);
+        memoryService.Write((IntPtr)optionsPtr + (int)GameDataMan.OptionsOffsets.Music, (byte)0);
     }
 }

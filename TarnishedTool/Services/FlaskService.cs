@@ -121,7 +121,7 @@ public class FlaskService(IEzStateService ezStateService, IMemoryService memoryS
     {
         var ptr = memoryService.FollowPointers(MenuMan.Base,
             [MenuMan.PopupMenu, (int)MenuMan.PopupMenuOffsets.DialogResult], false);
-        memoryService.WriteInt32(ptr, -1);
+        memoryService.Write(ptr, -1);
     }
 
     private async Task<DialogResult> WaitForDialogResult(CancellationToken ct, int timeoutMs = 30000)

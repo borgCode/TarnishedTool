@@ -246,6 +246,9 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public uint GetBlockId(nint chrIns) =>
         memoryService.Read<uint>(chrIns + ChrIns.BlockId);
 
+    public void ToggleNoGravity(IntPtr chrIns, bool isEnabled) =>
+        memoryService.Write(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.NoGravity, isEnabled);
+
     #endregion
 
     #region Private Methods

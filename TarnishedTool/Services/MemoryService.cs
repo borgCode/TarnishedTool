@@ -81,14 +81,6 @@ namespace TarnishedTool.Services
             return array;
         }
 
-        public void WriteUInt8(IntPtr addr, int val)
-        {
-            var bytes = new[] { (byte)val };
-            WriteBytes(addr, bytes);
-        }
-        
-        public void WriteInt32(IntPtr addr, int val) => WriteBytes(addr, BitConverter.GetBytes(val));
-        public void WriteFloat(IntPtr addr, float val) => WriteBytes(addr, BitConverter.GetBytes(val));
         
         public T Read<T>(IntPtr addr) where T : unmanaged
         {
@@ -134,6 +126,9 @@ namespace TarnishedTool.Services
             MemoryMarshal.Write(bytes, ref value);
             WriteBytes(addr, bytes);
         }
+        
+        public void Write(IntPtr addr, bool value) => 
+            Write(addr, value ? (byte)1 : (byte)0);
 
 
         public void WriteString(IntPtr addr, string value, int maxLength = 32)
@@ -144,15 +139,6 @@ namespace TarnishedTool.Services
             WriteBytes(addr, bytes);
         }
         
-        public void WriteVector3(IntPtr address, Vector3 value)
-        {
-            byte[] coordBytes = new byte[12];
-            Buffer.BlockCopy(BitConverter.GetBytes(value.X), 0, coordBytes, 0, 4);
-            Buffer.BlockCopy(BitConverter.GetBytes(value.Y), 0, coordBytes, 4, 4);
-            Buffer.BlockCopy(BitConverter.GetBytes(value.Z), 0, coordBytes, 8, 4);
-            WriteBytes(address, coordBytes);
-        }
-
         public void WriteBytes(IntPtr addr, byte[] val)
         {
             Kernel32.WriteProcessMemory(ProcessHandle, addr, val, val.Length, 0);
@@ -167,7 +153,7 @@ namespace TarnishedTool.Services
                 modifiedByte = (byte)(currentByte | flagMask);
             else
                 modifiedByte = (byte)(currentByte & ~flagMask);
-            WriteUInt8(addr, modifiedByte);
+            Write(addr, modifiedByte);
         }
 
         public bool IsBitSet(IntPtr addr, int flagMask)
