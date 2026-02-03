@@ -6,7 +6,6 @@ using System.Linq;
 using System.Numerics;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
-using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
@@ -20,6 +19,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly IGameTickService _gameTickService;
     private readonly IPlayerService _playerService;
     private readonly IChrInsService _chrInsService;
+    private readonly ISpEffectService _spEffectService;
 
     private readonly Dictionary<int, string> _chrNames;
     private readonly Dictionary<int, string> _aiInterruptEnums;
@@ -31,18 +31,19 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
 
     private readonly Dictionary<nint, AiWindow> _openAiWindows = new();
-    private const int MaxAiWindows = 4;
+    private const int MaxAiWindows = 3;
 
     public static readonly int[] DummyChrIds = [100, 1000];
 
     public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
-        IPlayerService playerService, IChrInsService chrInsService)
+        IPlayerService playerService, IChrInsService chrInsService, ISpEffectService spEffectService)
     {
         _aiService = aiService;
         _stateService = stateService;
         _gameTickService = gameTickService;
         _playerService = playerService;
         _chrInsService = chrInsService;
+        _spEffectService = spEffectService;
 
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
@@ -192,13 +193,13 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
         if (_openAiWindows.Count >= MaxAiWindows)
         {
-            MsgBox.Show("Only four AI windows can be open at once, close one to open another", "Too many AI windows");
+            MsgBox.Show("Only 3 AI windows can be open at once, close one to open another", "Too many AI windows");
             return;
         }
 
         var window = new AiWindow();
         var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, entry, _enumDicts,
-            _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns));
+            _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns), _spEffectService);
         window.DataContext = vm;
         window.Closed += (_, _) => _openAiWindows.Remove(chrIns);
         _openAiWindows[chrIns] = window;

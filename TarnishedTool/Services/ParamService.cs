@@ -55,10 +55,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
         return IntPtr.Zero;
     }
-
-    public T Read<T>(nint row, int offset) where T : unmanaged 
-        => memoryService.Read<T>(row + offset);
-
+    
     public void Write<T>(nint row, int offset, T value) where T : unmanaged 
         => memoryService.Write<T>(row + offset, value);
 

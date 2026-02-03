@@ -70,7 +70,7 @@ public class AdvancedViewModel : BaseViewModel
         SelectedEquipType = EquipTypes[0].Value;
 
         _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
-        _chrInsWindowViewModel = new ChrInsWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService);
+        _chrInsWindowViewModel = new ChrInsWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService, spEffectService);
     }
 
     
