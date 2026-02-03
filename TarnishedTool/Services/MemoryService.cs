@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -96,6 +97,29 @@ namespace TarnishedTool.Services
             return MemoryMarshal.Read<T>(bytes);
         }
         
+        public string HexDump(nint addr, int size)
+        {
+            var data = ReadBytes(addr, size);
+            return HexDump(data);
+        }
+        
+        private string HexDump(byte[] data, int? maxBytes = null)
+        {
+            int bytesToDump = maxBytes.HasValue ? Math.Min(maxBytes.Value, data.Length) : data.Length;
+            var sb = new StringBuilder();
+    
+            for (int i = 0; i < bytesToDump; i += 16)
+            {
+                int lineLength = Math.Min(16, bytesToDump - i);
+                string hex = BitConverter.ToString(data, i, lineLength).Replace("-", " ");
+                string ascii = new string(data.Skip(i).Take(lineLength)
+                    .Select(b => b >= 32 && b < 127 ? (char)b : '.').ToArray());
+                sb.AppendLine($"{i:X4}: {hex,-48} {ascii}");
+            }
+    
+            return sb.ToString();
+        }
+
         public T[] ReadArray<T>(IntPtr addr, int count) where T : unmanaged
         {
             int size = Unsafe.SizeOf<T>() * count;

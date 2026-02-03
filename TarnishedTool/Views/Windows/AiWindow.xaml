@@ -159,33 +159,33 @@
 
             </Grid>
             
-            <Grid Grid.Row="3" Grid.Column="3">
-                <WrapPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Inject Script"></Button>
-                        
-                        <Border Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Inject a modified lua script for the AI, must be the script for "
-                                ToolTipService.InitialShowDelay="100">
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
-                    </StackPanel>
-    
-                   
-                    
-                </WrapPanel>
-                
-            </Grid>
+            <!-- <Grid Grid.Row="3" Grid.Column="3"> -->
+            <!--     <WrapPanel> -->
+            <!--         <StackPanel Orientation="Horizontal"> -->
+            <!--             <Button Content="Inject Script"></Button> -->
+            <!--              -->
+            <!--             <Border Background="#3498db" -->
+            <!--                     CornerRadius="10" -->
+            <!--                     Width="12" -->
+            <!--                     Height="12" -->
+            <!--                     Margin="5,0,0,0" -->
+            <!--                     VerticalAlignment="Center" -->
+            <!--                     ToolTip="Inject a modified lua script for the AI, must be the script for " -->
+            <!--                     ToolTipService.InitialShowDelay="100"> -->
+            <!--                 <TextBlock Text="i" -->
+            <!--                            Foreground="White" -->
+            <!--                            HorizontalAlignment="Center" -->
+            <!--                            VerticalAlignment="Center" -->
+            <!--                            FontWeight="Bold" -->
+            <!--                            FontSize="10" /> -->
+            <!--             </Border> -->
+            <!--         </StackPanel> -->
+            <!-- -->
+            <!--         -->
+            <!--          -->
+            <!--     </WrapPanel> -->
+            <!--      -->
+            <!-- </Grid> -->
 
         </Grid>
 

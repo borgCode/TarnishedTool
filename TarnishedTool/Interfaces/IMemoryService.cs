@@ -20,6 +20,7 @@ public interface IMemoryService
 
     T[] ReadArray<T>(IntPtr addr, int count) where T : unmanaged;
     T Read<T>(IntPtr addr) where T : unmanaged;
+    string HexDump(nint addr, int size);
     
     void Write<T>(IntPtr addr, T value) where T : unmanaged;
 

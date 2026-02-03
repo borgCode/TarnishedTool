@@ -2,9 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Threading;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
+using TarnishedTool.Utilities;
 using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
@@ -159,7 +161,33 @@ public class AiService : IAiService
             [ChrIns.AiThinkOffsets.Goal.ChildGoal, ChrIns.AiThinkOffsets.Goal.GoalId], false);
         return _memoryService.Read<int>(topGoalChildGoalIdPtr);
     }
-    
+
+    public void InjectAiScript(byte[] script)
+    {
+        var bytes = AsmLoader.GetAsmBytes("LuaDoString");
+        var luaState = _memoryService.FollowPointers(WorldAiManagerImp.Base, WorldAiManagerImp.LuaState, true);
+        
+        int bytesToDump = Math.Min(100, script.Length);
+        for (int i = 0; i < bytesToDump; i += 16)
+        {
+            int lineLength = Math.Min(16, bytesToDump - i);
+            string hex = BitConverter.ToString(script, i, lineLength).Replace("-", " ");
+            string ascii = new string(script.Skip(i).Take(lineLength)
+                .Select(b => b >= 32 && b < 127 ? (char)b : '.').ToArray());
+            Console.WriteLine($"{i:X4}: {hex,-48} {ascii}");
+        }
+        
+        var scriptPtr = _memoryService.AllocateMem((uint)script.Length);
+        _memoryService.WriteBytes(scriptPtr, script);
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+        (luaState, 0x0 + 2),
+        (scriptPtr, 0xA + 2),
+        (Functions.LuaDoString, 0x14 + 2)
+        ]);
+        _memoryService.AllocateAndExecute(bytes);
+        _memoryService.FreeMem(scriptPtr);
+    }
+
     #endregion
 
     #region Private Methods
