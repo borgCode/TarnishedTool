@@ -111,17 +111,11 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public bool IsNoMoveEnabled(nint chrIns) =>
         memoryService.IsBitSet(GetChrInsFlagsPtr(chrIns), (int)ChrIns.ChrInsFlags.NoMove);
 
-    public void ToggleNoDamage(nint chrIns, bool isEnabled)
-    {
-        var bitFlags = GetChrDataPtr(chrIns) + ChrIns.ChrDataFlags;
-        memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
-    }
+    public void ToggleNoDamage(nint chrIns, bool isEnabled) => 
+        memoryService.SetBitValue(GetChrDataFlags(chrIns), (int)ChrIns.ChrDataBitFlags.NoDamage, isEnabled);
 
-    public bool IsNoDamageEnabled(nint chrIns)
-    {
-        var bitFlags = GetChrDataPtr(chrIns) + ChrIns.ChrDataFlags;
-        return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage);
-    }
+    public bool IsNoDamageEnabled(nint chrIns) =>
+        memoryService.IsBitSet(GetChrDataFlags(chrIns), (int)ChrIns.ChrDataBitFlags.NoDamage);
 
     public void SetHp(nint chrIns, int health) =>
         memoryService.Write(GetChrDataPtr(chrIns) + (int)ChrIns.ChrDataOffsets.Health, health);
@@ -194,13 +188,8 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public void SetLocalCoords(nint chrIns, Vector3 pos) =>
         memoryService.Write(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
 
-    public bool IsNoDeathEnabled(nint chrIns)
-    {
-        var bitFlags = memoryService.FollowPointers(chrIns,
-            [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
-            false, false);
-        return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath);
-    }
+    public bool IsNoDeathEnabled(nint chrIns) =>
+        memoryService.IsBitSet(GetChrDataFlags(chrIns), (int)ChrIns.ChrDataBitFlags.NoDeath);
 
     public IntPtr ChrInsByHandle(int handle)
     {
@@ -222,26 +211,21 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
 
     public nint ChrInsByEntityId(uint entityId)
     {
-        var lookedUpChrIns = CodeCaveOffsets.Base + CodeCaveOffsets.LookedUpChrIns;
-        var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+        nint lookedUpChrIns = CodeCaveOffsets.Base + CodeCaveOffsets.LookedUpChrIns;
+        var worldChrMan = memoryService.Read<nint>(WorldChrMan.Base);
         var bytes = AsmLoader.GetAsmBytes("GetChrIns");
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (worldChrMan, 0x0 + 2),
             (Functions.GetChrInsByEntityId, 0x19 + 2),
-            (lookedUpChrIns.ToInt64(), 0x25 + 2)
+            (lookedUpChrIns, 0x25 + 2)
         ]);
         Array.Copy(BitConverter.GetBytes(entityId), 0, bytes, 0x13 + 2, 4);
         memoryService.AllocateAndExecute(bytes);
         return memoryService.Read<nint>(lookedUpChrIns);
     }
 
-    public void ToggleNoDeath(nint chrIns, bool isEnabled)
-    {
-        var bitFlags = memoryService.FollowPointers(chrIns,
-            [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
-            false, false);
-        memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
-    }
+    public void ToggleNoDeath(nint chrIns, bool isEnabled) =>
+        memoryService.SetBitValue(GetChrDataFlags(chrIns), (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
 
     public uint GetBlockId(nint chrIns) =>
         memoryService.Read<uint>(chrIns + ChrIns.BlockId);
@@ -289,6 +273,9 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
 
     private nint GetChrTimeActPtr(nint chrIns) =>
         memoryService.FollowPointers(chrIns, [..ChrIns.ChrTimeActModule], true, false);
+
+    private nint GetChrDataFlags(nint chrIns) =>
+        memoryService.FollowPointers(chrIns, [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags], false, false);
 
     private PosWithHurtbox GetPosWithHurtbox(nint chrIns)
     {

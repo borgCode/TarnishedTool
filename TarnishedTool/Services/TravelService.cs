@@ -109,7 +109,7 @@ namespace TarnishedTool.Services
             hookManager.InstallHook(warpCode.ToInt64(), coordHook, [0x0F, 0x11, 0x80, 0xA0, 0x0A, 0x00, 0x00]);
             hookManager.InstallHook(angleCode.ToInt64(), angleHook, [0x0F, 0x11, 0x80, 0xB0, 0x0A, 0x00, 0x00]);
 
-            var isFadedPtr = (IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsFading;
+            var isFadedPtr = memoryService.Read<nint>(MenuMan.Base) + MenuMan.IsFading;
             var fadeBit = (byte)MenuMan.FadeBitFlags.IsFadeScreen;
 
             WaitForCondition(() => memoryService.IsBitSet(isFadedPtr, fadeBit));

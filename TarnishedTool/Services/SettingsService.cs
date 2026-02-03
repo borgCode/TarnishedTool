@@ -10,7 +10,7 @@ namespace TarnishedTool.Services;
 public class SettingsService(IMemoryService memoryService, HookManager hookManager) : ISettingsService
 {
     public void Quitout() =>
-        memoryService.Write((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
+        memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
 
     public void ToggleStutterFix(bool isEnabled) =>
         memoryService.Write(memoryService.Read<nint>(UserInputManager.Base) + UserInputManager.SteamInputEnum, isEnabled);
@@ -30,7 +30,7 @@ public class SettingsService(IMemoryService memoryService, HookManager hookManag
     public void ToggleMuteMusic(bool isMuteMusicEnabled)
     {
         var optionsPtr =
-            memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Options);
-        memoryService.Write((IntPtr)optionsPtr + (int)GameDataMan.OptionsOffsets.Music, (byte)0);
+            memoryService.Read<nint>(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.Options);
+        memoryService.Write(optionsPtr + (int)GameDataMan.OptionsOffsets.Music, (byte)0);
     }
 }

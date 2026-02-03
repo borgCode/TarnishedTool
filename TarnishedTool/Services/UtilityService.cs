@@ -13,10 +13,10 @@ namespace TarnishedTool.Services
         public const float DefaultNoClipSpeedScale = 0.2f;
 
         public void ForceSave() =>
-            memoryService.Write((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ForceSave, (byte)1);
+            memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ForceSave, (byte)1);
 
         public void TriggerNewNgCycle() =>
-            memoryService.Write((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ShouldStartNewGame, (byte)1);
+            memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldStartNewGame, (byte)1);
 
         public void ToggleCombatMap(bool isEnabled)
         {
@@ -163,8 +163,8 @@ namespace TarnishedTool.Services
 
         public void ToggleDrawPoiseBars(bool isEnabled)
         {
-            var worldChrManDbg = memoryService.ReadInt64(WorldChrManDbg.Base);
-            memoryService.Write((IntPtr)worldChrManDbg + WorldChrManDbg.PoiseBarsFlag, isEnabled);
+            var worldChrManDbg = memoryService.Read<nint>(WorldChrManDbg.Base);
+            memoryService.Write(worldChrManDbg + WorldChrManDbg.PoiseBarsFlag, isEnabled);
         }
 
         public void SetFps(int fps) =>
@@ -186,10 +186,10 @@ namespace TarnishedTool.Services
         }
 
         public float GetSpeed() =>
-            memoryService.Read<float>((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed);
+            memoryService.Read<float>(memoryService.Read<nint>(CSFlipperImp.Base) + CSFlipperImp.GameSpeed);
 
         public void SetSpeed(float speed) =>
-            memoryService.Write((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed,
+            memoryService.Write(memoryService.Read<nint>(CSFlipperImp.Base) + CSFlipperImp.GameSpeed,
                 speed);
 
         public void ToggleFreeCam(bool isEnabled)
@@ -240,7 +240,7 @@ namespace TarnishedTool.Services
             memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
 
         public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
-            memoryService.Write((IntPtr)memoryService.ReadInt64(DamageManager.Base) + DamageManager.HitboxView,
+            memoryService.Write(memoryService.Read<nint>(DamageManager.Base) + DamageManager.HitboxView,
                 isDrawHitboxEnabled);
 
         public void ToggleDrawRagdolls(bool isEnabled) =>

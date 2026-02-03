@@ -14,7 +14,7 @@ namespace TarnishedTool.Services
         {
             var bytes = AsmLoader.GetAsmBytes("SetEvent");
             AsmHelper.WriteAbsoluteAddresses(bytes, [
-                (memoryService.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
+                (memoryService.Read<nint>(VirtualMemFlag.Base), 0x4 + 2 ),
                 (eventId, 0xE + 2),
                 (flagValue ? 1 : 0, 0x18 + 2),
                 (Functions.SetEvent, 0x22 + 2)
@@ -27,7 +27,7 @@ namespace TarnishedTool.Services
             var result = CodeCaveOffsets.Base + CodeCaveOffsets.GetEventResult;
             var bytes = AsmLoader.GetAsmBytes("GetEvent");
             AsmHelper.WriteAbsoluteAddresses(bytes, [
-                (memoryService.ReadInt64(VirtualMemFlag.Base), 0x0 + 2),
+                (memoryService.Read<nint>(VirtualMemFlag.Base), 0x0 + 2),
                 (flagId, 0xA + 2),
                 (Functions.GetEvent, 0x18 + 2),
                 (result.ToInt64(), 0x28 + 2)

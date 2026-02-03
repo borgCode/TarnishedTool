@@ -12,8 +12,8 @@ public class StateService(IMemoryService memoryService) : IStateService
 
     public bool IsLoaded()
     {
-        var worldChrman = memoryService.ReadInt64(Offsets.WorldChrMan.Base);
-        return memoryService.ReadInt64((IntPtr)worldChrman + Offsets.WorldChrMan.PlayerIns) != 0;
+        var worldChrman = memoryService.Read<nint>(Offsets.WorldChrMan.Base);
+        return memoryService.Read<nint>(worldChrman + Offsets.WorldChrMan.PlayerIns) != 0;
     }
 
     public void Publish(State eventType)

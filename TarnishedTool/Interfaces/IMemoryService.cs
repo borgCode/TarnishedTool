@@ -13,8 +13,6 @@ public interface IMemoryService
     public nint BaseAddress { get; }
     public int ModuleMemorySize { get; }
     
-    ulong ReadUInt64(nint addr);
-    long ReadInt64(nint addr);
     string ReadString(nint addr, int maxLength = 32);
     byte[] ReadBytes(nint addr, int size);
     public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true);

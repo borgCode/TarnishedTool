@@ -10,7 +10,7 @@ namespace TarnishedTool.Services;
 
 public class ParamService(IMemoryService memoryService) : IParamService
 {
-    public IntPtr GetParamRow(int tableIndex, int slotIndex, uint rowId)
+    public nint GetParamRow(int tableIndex, int slotIndex, uint rowId)
     {
         var data = GetParamData(tableIndex, slotIndex);
         if (data is not var (paramData, rowCount, descriptorBase)) return IntPtr.Zero;
@@ -19,11 +19,11 @@ public class ParamService(IMemoryService memoryService) : IParamService
         while (low <= high)
         {
             int mid = (low + high) >> 1;
-            var id = memoryService.Read<uint>((IntPtr)(descriptorBase + mid * 0x18));
+            var id = memoryService.Read<uint>(descriptorBase + mid * 0x18);
 
             if (id == rowId)
             {
-                var dataOffset = memoryService.ReadInt64((IntPtr)(descriptorBase + mid * 0x18 + 0x08));
+                var dataOffset = memoryService.Read<uint>(descriptorBase + mid * 0x18 + 0x08);
                 return paramData + (int)dataOffset;
             }
 
@@ -33,15 +33,15 @@ public class ParamService(IMemoryService memoryService) : IParamService
                 high = mid - 1;
         }
 
-        return IntPtr.Zero;
+        return 0;
     }
 
-    public IntPtr GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset)
+    public nint GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset)
     {
         var data = GetParamData(tableIndex, slotIndex);
-        if (data is not var (paramData, rowCount, descriptorBase)) return IntPtr.Zero;
+        if (data is not var (paramData, rowCount, descriptorBase)) return 0;
 
-        var descriptors = memoryService.ReadBytes((IntPtr)descriptorBase, rowCount * 0x18);
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
 
         for (int i = 0; i < rowCount; i++)
         {
@@ -56,39 +56,39 @@ public class ParamService(IMemoryService memoryService) : IParamService
         return IntPtr.Zero;
     }
 
-    public T Read<T>(IntPtr row, int offset) where T : unmanaged 
+    public T Read<T>(nint row, int offset) where T : unmanaged 
         => memoryService.Read<T>(row + offset);
 
-    public void Write<T>(IntPtr row, int offset, T value) where T : unmanaged 
+    public void Write<T>(nint row, int offset, T value) where T : unmanaged 
         => memoryService.Write<T>(row + offset, value);
 
     public void PrintAllParamTableNames()
     {
-        var soloParamRepo = memoryService.ReadInt64(SoloParamRepositoryImp.Base);
+        var soloParamRepo = memoryService.Read<nint>(SoloParamRepositoryImp.Base);
 
         for (int tableIndex = 0; tableIndex < 0xC2; tableIndex++)
         {
             var tableBase = soloParamRepo + tableIndex * 0x48;
 
-            var capacity = memoryService.Read<int>((IntPtr)(tableBase + 0x80));
+            var capacity = memoryService.Read<int>(tableBase + 0x80);
             if (capacity <= 0) continue;
             
-            var paramResCap = memoryService.ReadInt64((IntPtr)(tableBase + 0x88));
+            var paramResCap = memoryService.Read<nint>(tableBase + 0x88);
             if (paramResCap == 0) continue;
 
-            var namePtr = memoryService.ReadInt64((IntPtr)(paramResCap + 0x18));
+            var namePtr = memoryService.Read<nint>(paramResCap + 0x18);
             if (namePtr == 0) continue;
 
-            var name = memoryService.ReadString((IntPtr)namePtr);
+            var name = memoryService.ReadString(namePtr);
         
             Console.WriteLine($"[{tableIndex}] {name}");
         }
     }
 
     
-    public void WriteField(IntPtr row, ParamFieldDef field, object value)
+    public void WriteField(nint row, ParamFieldDef field, object value)
     {
-        IntPtr addr = row + field.Offset;
+        nint addr = row + field.Offset;
 
         if (field.BitWidth.HasValue)
         {
@@ -115,7 +115,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
         }
     }
     
-    public byte[] ReadRow(IntPtr row, int size)
+    public byte[] ReadRow(nint row, int size)
     {
         return memoryService.ReadBytes(row, size);
     }
@@ -146,10 +146,10 @@ public class ParamService(IMemoryService memoryService) : IParamService
         };
     }
     
-    public void SetBit(IntPtr row, int offset, int mask, bool setValue) => 
+    public void SetBit(nint row, int offset, int mask, bool setValue) => 
         memoryService.SetBitValue(row + offset, mask, setValue);
 
-    public void WriteRow(IntPtr row, byte[] data) => memoryService.WriteBytes(row, data);
+    public void WriteRow(nint row, byte[] data) => memoryService.WriteBytes(row, data);
     
     public void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value)
     {
@@ -158,7 +158,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
         for (int i = 0; i < rowCount; i++)
         {
-            var dataOffset = memoryService.ReadInt64((IntPtr)(descriptorBase + i * 0x18 + 0x08));
+            var dataOffset = memoryService.Read<nint>(descriptorBase + i * 0x18 + 0x08);
             memoryService.WriteBytes(paramData + (int)dataOffset + offset, value);
         }
     }
@@ -172,7 +172,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
         for (int i = 0; i < rowCount; i++)
         {
-            var dataOffset = memoryService.ReadInt64((IntPtr)(descriptorBase + i * 0x18 + 0x08));
+            var dataOffset = memoryService.Read<nint>(descriptorBase + i * 0x18 + 0x08);
             var bytes = memoryService.ReadBytes(paramData + (int)dataOffset + offset, size);
             result.Add(bytes);
         }
@@ -189,35 +189,35 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
         for (int i = 0; i < rowCount && i < values.Count; i++)
         {
-            var dataOffset = memoryService.ReadInt64((IntPtr)(descriptorBase + i * 0x18 + 0x08));
+            var dataOffset = memoryService.Read<nint>((descriptorBase + i * 0x18 + 0x08));
             memoryService.WriteBytes(paramData + (int)dataOffset + offset, values[i]);
         }
     }
     
-    private (IntPtr paramData, int rowCount, long descriptorBase)? GetParamData(int tableIndex, int slotIndex)
+    private (nint paramData, int rowCount, nint descriptorBase)? GetParamData(int tableIndex, int slotIndex)
     {
         if (tableIndex < 0 || tableIndex >= 0xC2) return null;
 
-        var soloParamRepo = memoryService.ReadInt64(SoloParamRepositoryImp.Base);
+        var soloParamRepo = memoryService.Read<nint>(SoloParamRepositoryImp.Base);
         if (soloParamRepo == 0) return null;
 
         var tableBase = soloParamRepo + tableIndex * 0x48;
 
-        var capacity = memoryService.Read<int>((IntPtr)(tableBase + 0x80));
+        var capacity = memoryService.Read<int>(tableBase + 0x80);
         if (slotIndex < 0 || slotIndex >= capacity) return null;
 
-        var paramResCap = memoryService.ReadInt64((IntPtr)(tableBase + 0x88 + slotIndex * 8));
+        var paramResCap = memoryService.Read<nint>(tableBase + 0x88 + slotIndex * 8);
         if (paramResCap == 0) return null;
 
-        var ptr1 = memoryService.ReadInt64((IntPtr)(paramResCap + 0x80));
+        var ptr1 = memoryService.Read<nint>(paramResCap + 0x80);
         if (ptr1 == 0) return null;
 
-        var paramData = memoryService.ReadInt64((IntPtr)(ptr1 + 0x80));
+        var paramData = memoryService.Read<nint>(ptr1 + 0x80);
         if (paramData == 0) return null;
 
-        var rowCount = memoryService.Read<ushort>((IntPtr)(paramData + 0x0A));
+        var rowCount = memoryService.Read<ushort>(paramData + 0x0A);
         var descriptorBase = paramData + 0x40;
 
-        return ((IntPtr)paramData, rowCount, descriptorBase);
+        return (paramData, rowCount, descriptorBase);
     }
 }

@@ -11,7 +11,7 @@ public class DlcService(IMemoryService memoryService) : IDlcService
     
     public void CheckDlc()
     {
-        var flags = memoryService.ReadInt64(CsDlcImp.Base) + CsDlcImp.ByteFlags;
+        var flags = memoryService.Read<nint>(CsDlcImp.Base) + CsDlcImp.ByteFlags;
         IsDlcAvailable = memoryService.Read<byte>((IntPtr)flags + (int)CsDlcImp.Flags.DlcCheck) == 1;
     }
 

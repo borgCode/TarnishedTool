@@ -399,17 +399,16 @@ namespace TarnishedTool.Services
         }
 
         public void SetNewGame(int value) =>
-            memoryService.Write((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame, value);
+            memoryService.Write(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.NewGame, value);
 
         public int GetNewGame() =>
-            memoryService.Read<int>((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.NewGame);
+            memoryService.Read<int>(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.NewGame);
 
         public void GiveRunes(int runes)
         {
             var bytes = AsmLoader.GetAsmBytes("GiveRunes");
             var playerGameData =
-                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) +
-                                        GameDataMan.PlayerGameData);
+                memoryService.Read<nint>(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.PlayerGameData);
             AsmHelper.WriteAbsoluteAddresses(bytes, new[]
             {
                 (playerGameData, 0x0 + 2),
@@ -468,12 +467,8 @@ namespace TarnishedTool.Services
             memoryService.Write(gameData + offset, newValue);
         }
 
-        public long GetHandle()
-        {
-            var playerIns =
-                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
-            return memoryService.ReadInt64((IntPtr)playerIns + WorldChrMan.PlayerInsOffsets.Handle);
-        }
+        public long GetHandle() =>
+            memoryService.Read<long>(GetPlayerIns() + WorldChrMan.PlayerInsOffsets.Handle);
 
         public void ToggleNoGravity(bool isEnabled)
         {

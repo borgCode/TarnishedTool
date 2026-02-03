@@ -382,16 +382,17 @@ namespace TarnishedTool.Memory
 
             foreach (var jump in chain)
             {
-                IntPtr instructionAddress = IntPtr.Add(currentAddress, jump.Offset);
+                nint instructionAddress = currentAddress + jump.Offset;
 
                 currentAddress = jump.Type switch
                 {
-                    AddressJump.JumpType.Relative32 => IntPtr.Add(
-                        instructionAddress,
-                        memoryService.Read<int>(IntPtr.Add(instructionAddress, jump.ImmediatePosition)) + jump.InstructionLength),
+                    AddressJump.JumpType.Relative32 => 
+                        instructionAddress 
+                        + memoryService.Read<int>(instructionAddress + jump.ImmediatePosition) 
+                        + jump.InstructionLength,
 
-                    AddressJump.JumpType.Absolute64 => new IntPtr(
-                        memoryService.ReadInt64(IntPtr.Add(instructionAddress, jump.ImmediatePosition))),
+                    AddressJump.JumpType.Absolute64 => 
+                        memoryService.Read<nint>(instructionAddress + jump.ImmediatePosition),
 
                     _ => throw new ArgumentOutOfRangeException()
                 };

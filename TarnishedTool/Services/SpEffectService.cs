@@ -25,7 +25,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
 
     public void RemoveSpEffect(nint chrIns, uint spEffectId)
     {
-        var specialEffect = memoryService.ReadInt64(chrIns + ChrIns.SpecialEffect);
+        var specialEffect = memoryService.Read<nint>(chrIns + ChrIns.SpecialEffect);
         var bytes = AsmLoader.GetAsmBytes("RemoveSpEffect");
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
@@ -39,13 +39,13 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
 
     public bool HasSpEffect(nint chrIns, uint spEffectId)
     {
-        var specialEffect = memoryService.ReadInt64(chrIns + ChrIns.SpecialEffect);
-        var current = (IntPtr) memoryService.ReadInt64((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
+        var specialEffect = memoryService.Read<nint>(chrIns + ChrIns.SpecialEffect);
+        var current = memoryService.Read<nint>(specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
         
         while (current != IntPtr.Zero)
         {
             if (memoryService.Read<uint>(current + (int)ChrIns.SpEffectEntry.Id) == spEffectId) return true;
-            current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpEffectEntry.Next);
+            current = memoryService.Read<nint>(current + (int)ChrIns.SpEffectEntry.Next);
         }
         return false;
     }
@@ -54,18 +54,18 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
     {
         reminderService.TrySetReminder();
         var spEffectList = new List<SpEffectEntry>();
-        var specialEffect = memoryService.ReadInt64(chrIns + ChrIns.SpecialEffect);
-        var current = (IntPtr) memoryService.ReadInt64((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
+        var specialEffect = memoryService.Read<nint>(chrIns + ChrIns.SpecialEffect);
+        var current = (IntPtr) memoryService.Read<nint>((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
         
         while (current != IntPtr.Zero)
         {
             int id = memoryService.Read<int>(current + (int)ChrIns.SpEffectEntry.Id);
             float timeLeft = memoryService.Read<float>(current + (int)ChrIns.SpEffectEntry.TimeLeft);
             float duration = memoryService.Read<float>(current + (int)ChrIns.SpEffectEntry.Duration);
-            var paramData = memoryService.ReadInt64(current);
-            ushort stateInfo = memoryService.Read<ushort>((IntPtr) paramData + (int)ChrIns.SpEffectParamData.StateInfo);
+            var paramData = memoryService.Read<nint>(current);
+            ushort stateInfo = memoryService.Read<ushort>(paramData + (int)ChrIns.SpEffectParamData.StateInfo);
             spEffectList.Add(new SpEffectEntry(id, timeLeft, duration, stateInfo));
-            current = (IntPtr)memoryService.ReadInt64(current + (int)ChrIns.SpEffectEntry.Next);
+            current = memoryService.Read<nint>(current + (int)ChrIns.SpEffectEntry.Next);
         }
         
         return spEffectList;

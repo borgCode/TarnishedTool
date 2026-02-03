@@ -36,19 +36,7 @@ namespace TarnishedTool.Services
         private bool _disposed;
 
         private Timer _autoAttachTimer;
-
         
-        public ulong ReadUInt64(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 8);
-            return BitConverter.ToUInt64(bytes, 0);
-        }
-        
-        public long ReadInt64(IntPtr addr)
-        {
-            var bytes = ReadBytes(addr, 8);
-            return BitConverter.ToInt64(bytes, 0);
-        }
         
         public string ReadString(IntPtr addr, int maxLength = 32)
         {
@@ -185,19 +173,19 @@ namespace TarnishedTool.Services
             return waitResult == 0;
         }
 
-        public IntPtr FollowPointers(IntPtr baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true)
+        public nint FollowPointers(nint baseAddress, int[] offsets, bool readFinalPtr, bool derefBase = true)
         {
-            ulong ptr = derefBase ? ReadUInt64(baseAddress) : (ulong)baseAddress;
+            nint ptr = derefBase ? Read<nint>(baseAddress) : baseAddress;
 
             for (int i = 0; i < offsets.Length - 1; i++)
             {
-                ptr = ReadUInt64((IntPtr)ptr + offsets[i]);
+                ptr = Read<nint>(ptr + offsets[i]);
             }
 
-            IntPtr finalAddress = (IntPtr)ptr + offsets[offsets.Length - 1];
+            nint finalAddress = ptr + offsets[offsets.Length - 1];
 
             if (readFinalPtr)
-                return (IntPtr)ReadUInt64(finalAddress);
+                return Read<nint>(finalAddress);
 
             return finalAddress;
         }

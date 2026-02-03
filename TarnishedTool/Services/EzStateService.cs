@@ -131,7 +131,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
             TypeTag = typeTag,
             IntValue = memoryService.Read<int>(resultAddr),
             FloatValue = memoryService.Read<float>(resultAddr),
-            PtrValue = memoryService.ReadInt64(resultAddr)
+            PtrValue = memoryService.Read<nint>(resultAddr)
         };
     }
     

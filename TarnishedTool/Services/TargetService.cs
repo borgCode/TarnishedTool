@@ -120,9 +120,9 @@ namespace TarnishedTool.Services
 
         public void KillAllBesidesTarget()
         {
-            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+            var worldChrMan = memoryService.Read<nint>(WorldChrMan.Base);
             var lockedTarget =
-                memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
+                memoryService.Read<nint>(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
             var bytes = AsmLoader.GetAsmBytes("KillAll");
 
             AsmHelper.WriteImmediateDwords(bytes, [
