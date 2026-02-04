@@ -238,7 +238,9 @@
                             Content="Search All Params"
                             IsChecked="{Binding IsSearchAllParamsEnabled}" />
 
-                        <Button Content="Restore All Params" Margin="15,0,0,5" />
+                        <Button Content="Restore All Params" Margin="15,0,0,5" 
+                                Command="{Binding RestoreAllEntriesCommand}"
+                                IsEnabled="{Binding HasAnyModified}"/>
                     </WrapPanel>
 
                 </Grid>
