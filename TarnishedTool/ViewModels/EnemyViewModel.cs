@@ -81,6 +81,7 @@ public class EnemyViewModel : BaseViewModel
         SetLionMiniBossDeathblightPhaseCommand = new DelegateCommand(ForceLionMiniBossDeathblightPhase);
         SetLionMiniBossFrostPhaseCommand = new DelegateCommand(ForceLionMiniBossFrostPhase);
         SetLionMiniBossWindPhaseCommand = new DelegateCommand(ForceLionMiniBossWindPhase);
+        SetLionMiniBossLightningPhaseCommand = new DelegateCommand(ForceLionMiniBossLightningPhase);
 
         ReviveBossCommand = new DelegateCommand(ReviveBoss);
         ReviveBossFirstEncounterCommand = new DelegateCommand(ReviveBossFirstEncounter);
@@ -106,6 +107,7 @@ public class EnemyViewModel : BaseViewModel
     public ICommand SetLionMiniBossDeathblightPhaseCommand { get; set; }
     public ICommand SetLionMiniBossFrostPhaseCommand { get; set; }
     public ICommand SetLionMiniBossWindPhaseCommand { get; set; }
+    public ICommand SetLionMiniBossLightningPhaseCommand { get; set; }
 
     public ICommand ReviveBossCommand { get; set; }
     public ICommand ReviveBossFirstEncounterCommand { get; set; }
@@ -437,6 +439,13 @@ public class EnemyViewModel : BaseViewModel
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
             Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, WindAnimationId));
+    }
+    
+    private void ForceLionMiniBossLightningPhase()
+    {
+        _reminderService.TrySetReminder();
+        _emevdService.ExecuteEmevdCommand(
+            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, LightningAnimationId));
     }
 
     private void ReviveBoss()

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
@@ -137,6 +138,7 @@ public class AiService : IAiService
     public List<CoolTimeEntry> GetCoolTimeItemList(nint aiThink)
     {
         var attackComp = aiThink + ChrIns.AiThinkOffsets.AiAttackComp;
+   
         var coolTimeCount = _memoryService.Read<int>(attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeCount);
         if (coolTimeCount == 0) return new List<CoolTimeEntry>();
 
@@ -144,6 +146,8 @@ public class AiService : IAiService
         var listStart = attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeList;
         for (var i = 0; i < coolTimeCount; i++)
         {
+      
+     
             var animationId = _memoryService.Read<int>(listStart + i * CoolTimeListStride);
             var timeSinceLastAttack = _memoryService.Read<float>(
                 listStart + ChrIns.AiThinkOffsets.CoolTimeItem.TimeSinceLastAttack + i * CoolTimeListStride);
@@ -166,16 +170,6 @@ public class AiService : IAiService
     {
         var bytes = AsmLoader.GetAsmBytes("LuaDoString");
         var luaState = _memoryService.FollowPointers(WorldAiManagerImp.Base, WorldAiManagerImp.LuaState, true);
-        
-        int bytesToDump = Math.Min(100, script.Length);
-        for (int i = 0; i < bytesToDump; i += 16)
-        {
-            int lineLength = Math.Min(16, bytesToDump - i);
-            string hex = BitConverter.ToString(script, i, lineLength).Replace("-", " ");
-            string ascii = new string(script.Skip(i).Take(lineLength)
-                .Select(b => b >= 32 && b < 127 ? (char)b : '.').ToArray());
-            Console.WriteLine($"{i:X4}: {hex,-48} {ascii}");
-        }
         
         var scriptPtr = _memoryService.AllocateMem((uint)script.Length);
         _memoryService.WriteBytes(scriptPtr, script);
