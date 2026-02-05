@@ -293,9 +293,30 @@ namespace TarnishedTool.Memory
                 public const int LuaNumbersArray = 0x6CC;
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
-                public const int SpEffectObserveComp = 0xDBF0;
-                public const int AiAttackComp = 0xDF10;
-                public const int Interrupts = 0xE9B0;
+                
+                public static int SpEffectObserveComp => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
+                        or Version1_3_2
+                        or Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0xDBE0,
+                    _ => 0xDBF0,
+                };
+
+                public static int AiAttackComp => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
+                        or Version1_3_2
+                        or Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0xDF00,
+                    _ => 0xDF10,
+                };
+
+                public static int Interrupts => Version switch
+                {
+                    Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
+                        or Version1_3_2
+                        or Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0xE9A0,
+                    _ => 0xE9B0,
+                };
 
                 public static int ForceAct => Version switch
                 {
