@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:TitleBar Grid.Row="0" Title="TBD" />
@@ -29,8 +30,66 @@
 
         </Grid>
 
-        <ListBox Grid.Row="2"
-                 ItemsSource="{Binding ChrInsEntries}"
+        <TextBox Grid.Row="2"
+                 Text="{Binding ChrInsSearchText, UpdateSourceTrigger=PropertyChanged}"
+                 Height="25"
+                 MinWidth="150"
+                 Width="250"
+                 MaxWidth="500"
+                 Margin="0,0,15,5">
+            <TextBox.Template>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Focusable="false"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"
+                                          VerticalAlignment="Center"
+                                          Margin="5,0,0,0" />
+                            <TextBlock Text="Search nearby characters..."
+                                       VerticalAlignment="Center"
+                                       Margin="5,0,0,0"
+                                       Foreground="Gray"
+                                       IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition
+                                                        Binding="{Binding Path=Text, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                        Value="" />
+                                                    <Condition
+                                                        Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                                                        Value="False" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush"
+                                    Value="{StaticResource AccentBrush}" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+
+        <ListBox Grid.Row="3"
+                 ItemsSource="{Binding ChrInsView}"
                  SelectedItem="{Binding SelectedChrInsEntry}"
                  VirtualizingPanel.IsVirtualizing="True"
                  VirtualizingPanel.VirtualizationMode="Recycling">
@@ -71,14 +130,14 @@
                                             Margin="5,0,0,0" />
                                 </StackPanel>
                             </StackPanel>
-                            
+
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
                                 <TextBlock FontSize="16" Text="Dist:" Margin="40,10,0,0" />
-                                <TextBlock Text="{Binding Distance, StringFormat={}{0:F2}}"  FontSize="16"
+                                <TextBlock Text="{Binding Distance, StringFormat={}{0:F2}}" FontSize="16"
                                            TextAlignment="Right" Margin="5,10,0,0" />
-                                
+
                             </StackPanel>
-                            
+
                             <TextBox Grid.Column="2"
                                      Margin="10,0,0,0"
                                      Text="{Binding ChrInsIds, Mode=OneWay}"
@@ -87,8 +146,8 @@
                                      BorderThickness="0"
                                      TextWrapping="Wrap"
                                      IsTabStop="False"
-                                     Focusable="True"/>
-                            
+                                     Focusable="True" />
+
                         </Grid>
                     </Expander>
                 </DataTemplate>

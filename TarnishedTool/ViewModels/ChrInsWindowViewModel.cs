@@ -2,8 +2,10 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Data;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
@@ -34,6 +36,8 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private const int MaxAiWindows = 3;
 
     public static readonly int[] DummyChrIds = [100, 1000];
+    
+    
 
     public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
         IPlayerService playerService, IChrInsService chrInsService, ISpEffectService spEffectService)
@@ -60,6 +64,9 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ["goalresult"] = aiGoalResulEnums,
             ["guardresult"] = aiGuardGoalEnums
         };
+        
+        _chrInsView = (ListCollectionView)CollectionViewSource.GetDefaultView(ChrInsEntries);
+        _chrInsView.Filter = ChrInsFilter;
     }
 
     #region Properties
@@ -90,6 +97,20 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
             if (value != null)
                 _chrInsService.SetSelected(value.ChrIns, true);
+        }
+    }
+    
+    private readonly ListCollectionView _chrInsView;
+    public ICollectionView ChrInsView => _chrInsView;
+    
+    private string _chrInsSearchText;
+    public string ChrInsSearchText
+    {
+        get => _chrInsSearchText;
+        set
+        {
+            if (SetProperty(ref _chrInsSearchText, value))
+                _chrInsView.Refresh();
         }
     }
 
@@ -254,6 +275,17 @@ internal class ChrInsWindowViewModel : BaseViewModel
         entry.IsNoAttackEnabled = _chrInsService.IsNoAttackEnabled(entry.ChrIns);
         entry.IsNoMoveEnabled = _chrInsService.IsNoMoveEnabled(entry.ChrIns);
         entry.IsNoDamageEnabled = _chrInsService.IsNoDamageEnabled(entry.ChrIns);
+    }
+    
+    private bool ChrInsFilter(object obj)
+    {
+        if (obj is not ChrInsEntry e) return false;
+        if (string.IsNullOrWhiteSpace(ChrInsSearchText)) return true;
+
+        var s = ChrInsSearchText.ToLowerInvariant();
+        return (e.Name?.ToLowerInvariant().Contains(s) ?? false)
+               || (e.InternalName?.ToLowerInvariant().Contains(s) ?? false)
+               || e.ChrId.ToString().Contains(s);
     }
 
     
