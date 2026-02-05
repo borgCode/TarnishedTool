@@ -6,26 +6,11 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class EnemyService(MemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
+public class EnemyService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEnemyService
 {
     private const int MaxNumOfActs = 10;
 
-    public nint GetChrInsByEntityId(uint entityId)
-    {
-        var lookedUpChrIns = CodeCaveOffsets.Base + CodeCaveOffsets.LookedUpChrIns;
-        var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
-        var bytes = AsmLoader.GetAsmBytes("GetChrIns");
-        AsmHelper.WriteAbsoluteAddresses(bytes, new[]
-        {
-            (worldChrMan, 0x0 + 2),
-            (Functions.GetChrInsByEntityId, 0x19 + 2),
-            (lookedUpChrIns.ToInt64(), 0x25 + 2)
-        });
-        Array.Copy(BitConverter.GetBytes(entityId), 0, bytes, 0x13 + 2, 4);
-        memoryService.AllocateAndExecute(bytes);
-        return (IntPtr)memoryService.ReadInt64(lookedUpChrIns);
-    }
-
+    
     public void ToggleNoDeath(bool isEnabled) =>
         memoryService.WriteUInt8(ChrDbgFlags.Base + ChrDbgFlags.AllNoDeath, isEnabled ? 1 : 0);
 

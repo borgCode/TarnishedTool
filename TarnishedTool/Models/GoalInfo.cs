@@ -7,5 +7,5 @@ namespace TarnishedTool.Models;
 public class GoalInfo
 {
     public string GoalName { get; set; }
-    public List<string> ParamNames { get; set; }
+    public List<GoalParamDef> ParamNames { get; set; }
 }

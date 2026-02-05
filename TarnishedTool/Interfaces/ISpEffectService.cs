@@ -7,8 +7,8 @@ namespace TarnishedTool.Interfaces;
 
 public interface ISpEffectService
 {
-    void ApplySpEffect(long chrIns, uint spEffectId);
-    void RemoveSpEffect(long chrIns, uint spEffectId);
-    bool HasSpEffect(long chrIns, uint spEffectId);
-    List<SpEffectEntry> GetActiveSpEffectList(long chrIns);
+    void ApplySpEffect(nint chrIns, uint spEffectId);
+    void RemoveSpEffect(nint chrIns, uint spEffectId);
+    bool HasSpEffect(nint chrIns, uint spEffectId);
+    List<SpEffectEntry> GetActiveSpEffectList(nint chrIns);
 }

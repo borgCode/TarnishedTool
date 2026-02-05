@@ -8,7 +8,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class AttackInfoService(MemoryService memoryService, HookManager hookManager) : IAttackInfoService
+public class AttackInfoService(IMemoryService memoryService, HookManager hookManager) : IAttackInfoService
 {
     private int _lastProcessedId;
 

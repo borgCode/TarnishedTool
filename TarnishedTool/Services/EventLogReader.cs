@@ -9,7 +9,7 @@ using TarnishedTool.Models;
 
 namespace TarnishedTool.Services;
 
-public class EventLogReader(MemoryService memoryService) : IEventLogReader, IDisposable
+public class EventLogReader(IMemoryService memoryService) : IEventLogReader, IDisposable
 {
     private DispatcherTimer _timer;
     private int _readIndex;

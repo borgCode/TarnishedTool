@@ -8,7 +8,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class TravelService(MemoryService memoryService, HookManager hookManager) : ITravelService
+    public class TravelService(IMemoryService memoryService, HookManager hookManager) : ITravelService
     {
         public void Warp(Grace grace)
         {

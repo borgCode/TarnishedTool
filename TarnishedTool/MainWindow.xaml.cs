@@ -22,7 +22,7 @@ namespace TarnishedTool
     /// </summary>
     public partial class MainWindow
     {
-        private readonly MemoryService _memoryService;
+        private readonly IMemoryService _memoryService;
         private readonly IStateService _stateService;
         private readonly IDlcService _dlcService;
         private readonly AoBScanner _aobScanner;
@@ -50,14 +50,15 @@ namespace TarnishedTool
 
             IParamService paramService = new ParamService(_memoryService);
             IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
+            IChrInsService chrInsService = new ChrInsService(_memoryService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
             IPlayerService playerService =
-                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService);
+                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService, chrInsService);
             IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
             IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService =
-                new TargetService(_memoryService, hookManager, playerService, reminderService);
+                new TargetService(_memoryService, hookManager, playerService, reminderService, chrInsService);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
             ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
             IEzStateService ezStateService = new EzStateService(_memoryService);
@@ -69,7 +70,6 @@ namespace TarnishedTool
             IParamRepository paramRepository = new ParamRepository();
             IGameTickService gameTickService = new GameTickService(_stateService);
             IAiService aiService = new AiService(_memoryService);
-            IChrInsService chrInsService = new ChrInsService(_memoryService);
 
             _dlcService = new DlcService(_memoryService);
 
@@ -88,7 +88,7 @@ namespace TarnishedTool
             EnemyViewModel enemyViewModel = new EnemyViewModel(
                 enemyService, _stateService, hotkeyManager, emevdService,
                 _dlcService, spEffectService, paramService, playerService,
-                eventService, reminderService, travelService
+                eventService, reminderService, travelService, chrInsService
             );
 
             TargetViewModel targetViewModel = new TargetViewModel(
@@ -201,7 +201,7 @@ namespace TarnishedTool
                     }
 
 #if DEBUG
-                    Console.WriteLine($@"Base: 0x{_memoryService.BaseAddress.ToInt64():X}");
+                    Console.WriteLine($@"Base: 0x{(long)_memoryService.BaseAddress:X}");
 #endif
                     _hasCheckedPatch = true;
                 }

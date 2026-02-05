@@ -288,13 +288,14 @@
         <Compile Include="Models\BossRevive.cs" />
         <Compile Include="Models\BlockWarp.cs" />
         <Compile Include="Models\CharacterState.cs" />
-        <Compile Include="Models\ChrInsEntry.cs" />
+        <Compile Include="Models\CoolTimeEntry.cs" />
         <Compile Include="Models\CustomWarpChange.cs" />
         <Compile Include="Models\EnumValueItem.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\GoalInfo.cs" />
         <Compile Include="Models\GoalIns.cs" />
+        <Compile Include="Models\GoalParamDef.cs" />
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\GracePresetEntry.cs" />
         <Compile Include="Models\GracePresetTemplate.cs" />
@@ -350,6 +351,7 @@
         <Compile Include="Utilities\User32.cs" />
         <Compile Include="Utilities\VersionChecker.cs" />
         <Compile Include="ViewModels\AdvancedViewModel.cs" />
+        <Compile Include="ViewModels\ChrInsEntry.cs" />
         <Compile Include="ViewModels\ChrInsWindowViewModel.cs" />
         <Compile Include="ViewModels\AttackInfoViewModel.cs" />
         <Compile Include="ViewModels\BaseViewModel.cs" />

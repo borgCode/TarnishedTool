@@ -12,11 +12,12 @@ using static TarnishedTool.Memory.Offsets;
 namespace TarnishedTool.Services
 {
     public class PlayerService(
-        MemoryService memoryService,
+        IMemoryService memoryService,
         HookManager hookManager,
         ITravelService travelService,
         IReminderService reminderService,
-        IParamService paramService) : IPlayerService
+        IParamService paramService,
+        IChrInsService chrInsService) : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
 
@@ -45,17 +46,10 @@ namespace TarnishedTool.Services
             return new MapLocation(blockId, localCoords, mapCoords, angle);
         }
 
-        public Vector3 GetPlayerPos() =>
-            memoryService.ReadVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
-
-        public void SetPlayerPos(Vector3 pos) =>
-            memoryService.WriteVector3(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
-
-        public Vector3 GetTorrentPos() =>
-            memoryService.ReadVector3(GetTorrentPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords);
-
-        public void SetTorrentPos(Vector3 pos) =>
-            memoryService.WriteVector3(GetTorrentPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.Coords, pos);
+        public Vector3 GetPlayerPos() => chrInsService.GetLocalCoords(GetPlayerIns());
+        public void SetPlayerPos(Vector3 pos) => chrInsService.SetLocalCoords(GetPlayerIns(), pos);
+        public Vector3 GetTorrentPos() => chrInsService.GetLocalCoords(GetTorrentChrIns());
+        public void SetTorrentPos(Vector3 pos) => chrInsService.SetLocalCoords(GetTorrentChrIns(), pos);
 
         public void SavePos(int index)
         {
@@ -137,7 +131,9 @@ namespace TarnishedTool.Services
             var coordsPtr = physicsPtr + (int)ChrIns.ChrPhysicsOffsets.Coords;
 
             bool wasPlayerNoDeathEnabled = IsChrDbgFlagEnabled(ChrDbgFlags.PlayerNoDeath);
+            bool wasPlayerNoDamageEnabled = chrInsService.IsNoDamageEnabled(GetPlayerIns());
             bool wasTorrentNoDeathEnabled = IsTorrentNoDeathEnabled();
+            bool wasTorrentNoDamageEnabled = chrInsService.IsNoDamageEnabled(GetTorrentChrIns());
             ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
             ToggleTorrentNoDeath(true);
 
@@ -154,20 +150,14 @@ namespace TarnishedTool.Services
             });
 
             ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, wasPlayerNoDeathEnabled);
+            chrInsService.ToggleNoDamage(GetPlayerIns(), wasPlayerNoDamageEnabled);
             ToggleTorrentNoDeath(wasTorrentNoDeathEnabled);
+            chrInsService.ToggleNoDamage(GetTorrentChrIns(), wasTorrentNoDamageEnabled);
         }
 
         private bool IsChrDbgFlagEnabled(int offset) => memoryService.Read<byte>(ChrDbgFlags.Base + offset) == 1;
-
-        private bool IsTorrentNoDeathEnabled()
-        {
-            var torrentChrIns = GetTorrentChrIns();
-            var bitFlags = memoryService.FollowPointers(torrentChrIns,
-                [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
-                false, false);
-            return memoryService.IsBitSet(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath);
-        }
-
+        private bool IsTorrentNoDeathEnabled() => chrInsService.IsNoDeathEnabled(GetTorrentChrIns());
+        
         private Vector3 LegacyConv(Position targetPosition)
         {
             var src = new byte[]
@@ -216,22 +206,14 @@ namespace TarnishedTool.Services
         private IntPtr GetTorrentChrIns()
         {
             var playerGameData =
-                memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.PlayerGameData);
+                memoryService.Read<nint>(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.PlayerGameData);
             var handle =
-                memoryService.ReadInt32((IntPtr)playerGameData + GameDataMan.TorrentHandle);
-            return ChrInsLookup(handle);
+                memoryService.Read<int>(playerGameData + GameDataMan.TorrentHandle);
+            return chrInsService.ChrInsByHandle(handle);
         }
-
-        public PosWithHurtbox GetPosWithHurtbox()
-        {
-            var physPtr = GetChrPhysicsPtr();
-            var position = memoryService.ReadVector3(physPtr + (int)ChrIns.ChrPhysicsOffsets.Coords);
-            var capsuleRadius = memoryService.ReadFloat(physPtr + (int)ChrIns.ChrPhysicsOffsets.HurtCapsuleRadius);
-            return new PosWithHurtbox(position, capsuleRadius);
-        }
-
-        public long GetPlayerIns() =>
-            memoryService.ReadInt64((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
+        
+        public nint GetPlayerIns() =>
+            memoryService.Read<nint>((IntPtr)memoryService.ReadInt64(WorldChrMan.Base) + WorldChrMan.PlayerIns);
 
         public uint GetBlockId()
         {
@@ -241,25 +223,19 @@ namespace TarnishedTool.Services
             return memoryService.ReadUInt32(playerIns + WorldChrMan.PlayerInsOffsets.CurrentBlockId);
         }
 
-        public void SetHp(int hp) =>
-            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, hp);
-
-        public int GetCurrentHp() =>
-            memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health);
-
-        public int GetMaxHp() =>
-            memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHealth);
-
+        public void SetHp(int hp) => chrInsService.SetHp(GetPlayerIns(), hp);
+        public int GetCurrentHp() => chrInsService.GetCurrentHp(GetPlayerIns());
+        public int GetMaxHp() => chrInsService.GetMaxHp(GetPlayerIns());
         public void SetFullHp()
         {
-            var full = memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHealth);
-            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, full);
+            var full = chrInsService.GetMaxHp(GetPlayerIns());
+            chrInsService.SetHp(GetPlayerIns(), full);
         }
 
         public void SetRfbs()
         {
-            var full = memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxHealth);
-            memoryService.WriteInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Health, (full * 20) / 100 - 1);
+            var full = chrInsService.GetMaxHp(GetPlayerIns());
+            chrInsService.SetHp(GetPlayerIns(), (full * 20) / 100 - 1);
         }
 
         public void SetFp(int fp) =>
@@ -274,11 +250,8 @@ namespace TarnishedTool.Services
         public int GetCurrentSp() =>
             memoryService.ReadInt32(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp);
 
-        public float GetSpeed() =>
-            memoryService.ReadFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed);
-
-        public void SetSpeed(float speed) =>
-            memoryService.WriteFloat(GetChrBehaviorPtr() + (int)ChrIns.ChrBehaviorOffsets.AnimSpeed, speed);
+        public float GetSpeed() => chrInsService.GetSpeed(GetPlayerIns());
+        public void SetSpeed(float speed) => chrInsService.SetSpeed(GetPlayerIns(), speed);
 
         public void ToggleInfinitePoise(bool isInfinitePoiseEnabled)
         {
@@ -351,11 +324,10 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8(ChrDbgFlags.Base + offset, isEnabled ? 1 : 0);
         }
 
-        public void ToggleNoDamage(bool isFreezeHealthEnabled)
+        public void ToggleNoDamage(bool isNoDamageEnabled)
         {
             reminderService.TrySetReminder();
-            var bitFlags = GetChrDataPtr() + ChrIns.ChrDataFlags;
-            memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDamage, isFreezeHealthEnabled);
+            chrInsService.ToggleNoDamage(GetPlayerIns(), isNoDamageEnabled);
         }
 
         public void ToggleNoHit(bool isNoHitEnabled)
@@ -509,15 +481,8 @@ namespace TarnishedTool.Services
             memoryService.WriteUInt8(GetChrPhysicsPtr() + (int)ChrIns.ChrPhysicsOffsets.NoGravity, isEnabled ? 1 : 0);
         }
 
-        public void ToggleTorrentNoDeath(bool isEnabled)
-        {
-            var torrentChrIns = GetTorrentChrIns();
-            var bitFlags = memoryService.FollowPointers(torrentChrIns,
-                [..ChrIns.ChrDataModule, ChrIns.ChrDataFlags],
-                false, false);
-            memoryService.SetBitValue(bitFlags, (int)ChrIns.ChrDataBitFlags.NoDeath, isEnabled);
-        }
-
+        public void ToggleTorrentNoDeath(bool isEnabled) => chrInsService.ToggleNoDeath(GetTorrentChrIns(), isEnabled);
+        
         public void SetScadu(int value) =>
             memoryService.WriteUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.Scadutree, value);
 
@@ -530,8 +495,7 @@ namespace TarnishedTool.Services
         public int GetSpiritAsh() =>
             memoryService.ReadUInt8(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
 
-        public int GetCurrentAnimation() =>
-            memoryService.ReadInt32(GetChrTimeActPtr() + (int)ChrIns.ChrTimeActOffsets.AnimationId);
+        public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetPlayerIns());
 
         public void ToggleTorrentAnywhere(bool isEnabled)
         {
@@ -547,10 +511,7 @@ namespace TarnishedTool.Services
                 memoryService.WriteBytes(Patches.IsWhistleDisabled, [0x0F, 0x95, 0xC0]);
             }
         }
-
-        public void SetWhistleEnabled() =>
-            memoryService.WriteUInt8(GetChrRidePtr() + (int)ChrIns.ChrRideOffsets.IsHorseWhistleDisabled, 0);
-
+        
         private int CalculateLevelUpCost(int nextLevel)
         {
             float baseLevel = nextLevel + BaseLevelOffset;
@@ -570,16 +531,10 @@ namespace TarnishedTool.Services
 
         private IntPtr GetChrPhysicsPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrPhysicsModule], true);
-
-        private IntPtr GetChrBehaviorPtr() =>
-            memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrBehaviorModule], true);
-
+        
         private IntPtr GetChrRidePtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrRideModule], true);
-
-        private IntPtr GetChrTimeActPtr() =>
-            memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ..ChrIns.ChrTimeActModule], true);
-
+        
         private IntPtr GetChrInsFlagsPtr() =>
             memoryService.FollowPointers(WorldChrMan.Base, [WorldChrMan.PlayerIns, ChrIns.Flags], false);
 
@@ -595,24 +550,6 @@ namespace TarnishedTool.Services
             var angle = memoryService.ReadFloat(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
 
             return new Position(currentBlockId, coords, angle);
-        }
-
-        private IntPtr ChrInsLookup(int handle)
-        {
-            int poolIndex = (handle >> 20) & 0xFF;
-            int slotIndex = handle & 0xFFFFF;
-
-            var worldChrMan = (IntPtr)memoryService.ReadInt64(WorldChrMan.Base);
-            var chrSet = (IntPtr)memoryService.ReadInt64(worldChrMan + WorldChrMan.ChrSetPool + poolIndex * 8);
-            var entriesBase = (IntPtr)memoryService.ReadInt64(chrSet + (int)WorldChrMan.ChrSetOffsets.ChrSetEntries);
-            var chrIns = (IntPtr)memoryService.ReadInt64(entriesBase + slotIndex * 16);
-
-#if DEBUG
-
-            Console.WriteLine($@"ChrIns looked up by handle: 0x{chrIns.ToInt64():X}");
-#endif
-
-            return chrIns;
         }
     }
 }

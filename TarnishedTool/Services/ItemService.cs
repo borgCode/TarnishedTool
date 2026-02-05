@@ -7,7 +7,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class ItemService(MemoryService memoryService) : IItemService
+public class ItemService(IMemoryService memoryService) : IItemService
 {
     public void SpawnItem(int itemId, int quantity, int aowId, bool isQuantityAdjustable, int maxQuantity)
     {

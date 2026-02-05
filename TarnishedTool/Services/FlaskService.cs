@@ -9,7 +9,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class FlaskService(IEzStateService ezStateService, MemoryService memoryService) : IFlaskService
+public class FlaskService(IEzStateService ezStateService, IMemoryService memoryService) : IFlaskService
 {
     public const int CrimsonFlaskBaseId = 1000;
     public const int GoldenSeedId = 10010;

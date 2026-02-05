@@ -6,7 +6,7 @@ using TarnishedTool.Memory;
 
 namespace TarnishedTool.Services;
 
-public class StateService(MemoryService memoryService) : IStateService
+public class StateService(IMemoryService memoryService) : IStateService
 {
     private readonly Dictionary<State, List<Action>> _eventHandlers = new();
 

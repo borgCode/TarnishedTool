@@ -7,7 +7,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class EventService(MemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEventService
+    public class EventService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IEventService
     {
         
         public void SetEvent(long eventId, bool flagValue)

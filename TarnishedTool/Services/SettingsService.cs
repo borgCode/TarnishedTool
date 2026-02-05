@@ -7,7 +7,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class SettingsService(MemoryService memoryService, HookManager hookManager) : ISettingsService
+public class SettingsService(IMemoryService memoryService, HookManager hookManager) : ISettingsService
 {
     public void Quitout() =>
         memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ShouldQuitout, 1);

@@ -8,7 +8,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class ParamService(MemoryService memoryService) : IParamService
+public class ParamService(IMemoryService memoryService) : IParamService
 {
     public IntPtr GetParamRow(int tableIndex, int slotIndex, uint rowId)
     {
@@ -106,12 +106,12 @@ public class ParamService(MemoryService memoryService) : IParamService
 
         switch (field.DataType)
         {
-            case "f32": memoryService.WriteFloat(addr, Convert.ToSingle(value)); break;
-            case "s32": memoryService.WriteInt32(addr, Convert.ToInt32(value)); break;
-            case "u32": memoryService.WriteUInt32(addr, Convert.ToUInt32(value)); break;
-            case "s16": memoryService.WriteInt16(addr, Convert.ToInt16(value)); break;
-            case "u16": memoryService.WriteUInt16(addr, Convert.ToUInt16(value)); break;
-            case "s8" or "u8" or "dummy8": memoryService.WriteUInt8(addr, Convert.ToByte(value)); break;
+            case "f32": memoryService.Write(addr, Convert.ToSingle(value)); break;
+            case "s32": memoryService.Write(addr, Convert.ToInt32(value)); break;
+            case "u32": memoryService.Write(addr, Convert.ToUInt32(value)); break;
+            case "s16": memoryService.Write(addr, Convert.ToInt16(value)); break;
+            case "u16": memoryService.Write(addr, Convert.ToUInt16(value)); break;
+            case "s8" or "u8" or "dummy8": memoryService.Write(addr, Convert.ToByte(value)); break;
         }
     }
     

@@ -636,21 +636,51 @@ namespace TarnishedTool.Utilities
 
                 int goalId = int.Parse(parts[0], CultureInfo.InvariantCulture);
                 string name = parts[1];
-        
-                List<string> paramNames = parts.Length > 2 && !string.IsNullOrEmpty(parts[2])
-                    ? parts[2].Split(';').ToList()
-                    : new List<string>();
+                
+                List<GoalParamDef> goalParams = new List<GoalParamDef>();
+                
+                if (parts.Length > 2 && !string.IsNullOrEmpty(parts[2]))
+                {
+                    var paramParts = parts[2].Split(';');
 
+                    foreach (var param in paramParts)
+                    {
+                        var segments = param.Split(':');
+                        var paramDef = ParseParamDef(segments);
+                        goalParams.Add(paramDef);
+                    }
+                    
+                }
+                
                 goalInfos[goalId] = new GoalInfo
                 {
                     GoalName = name,
-                    ParamNames = paramNames
+                    ParamNames = goalParams
                 };
             }
 
             return goalInfos;
         }
-        
+
+        private static GoalParamDef ParseParamDef(string[] segments)
+        {
+            var name = segments[0];
+
+            if (segments.Length == 1)
+                return new GoalParamDef(name, ParamType.Float, null);
+
+            var typeName = segments[1].ToLower();
+
+            return typeName switch
+            {
+                "int" => new GoalParamDef(name, ParamType.Int, null),
+                "uint" => new GoalParamDef(name, ParamType.UInt, null),
+                "bool" => new GoalParamDef(name, ParamType.Bool, null),
+                "float" => new GoalParamDef(name, ParamType.Float, null),
+                _ => new GoalParamDef(name, ParamType.Enum, typeName)
+            };
+        }
+
         public static Dictionary<TKey, TValue> GetSimpleDict<TKey, TValue>(
             string resourceName, 
             Func<string, TKey> keyParser, 

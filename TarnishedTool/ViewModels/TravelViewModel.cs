@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;

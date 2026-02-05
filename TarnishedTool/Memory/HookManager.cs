@@ -8,7 +8,7 @@ namespace TarnishedTool.Memory
 {
     public class HookManager
     {
-        private readonly MemoryService _memoryService;
+        private readonly IMemoryService _memoryService;
         private readonly Dictionary<long, HookData> _hookRegistry = new();
 
         private class HookData
@@ -18,7 +18,7 @@ namespace TarnishedTool.Memory
             public byte[] OriginalBytes { get; set; }
         }
 
-        public HookManager(MemoryService memoryService, IStateService stateService)
+        public HookManager(IMemoryService memoryService, IStateService stateService)
         {
             _memoryService = memoryService;
         }

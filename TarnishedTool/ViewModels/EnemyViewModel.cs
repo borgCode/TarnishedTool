@@ -25,6 +25,7 @@ public class EnemyViewModel : BaseViewModel
     private readonly IEventService _eventService;
     private readonly IReminderService _reminderService;
     private readonly ITravelService _travelService;
+    private readonly IChrInsService _chrInsService;
 
     public const uint LionMainBossEntityId = 20000800;
     public const int LionMainBossNpcParamId = 52100088;
@@ -55,7 +56,7 @@ public class EnemyViewModel : BaseViewModel
     public EnemyViewModel(IEnemyService enemyService, IStateService stateService, HotkeyManager hotkeyManager,
         IEmevdService emevdService, IDlcService dlcService, ISpEffectService spEffectService,
         IParamService paramService, IPlayerService playerService, IEventService eventService,
-        IReminderService reminderService, ITravelService travelService)
+        IReminderService reminderService, ITravelService travelService, IChrInsService chrInsService)
     {
         _enemyService = enemyService;
         _hotkeyManager = hotkeyManager;
@@ -67,6 +68,7 @@ public class EnemyViewModel : BaseViewModel
         _eventService = eventService;
         _reminderService = reminderService;
         _travelService = travelService;
+        _chrInsService = chrInsService;
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -379,7 +381,7 @@ public class EnemyViewModel : BaseViewModel
 
     private void ApplyLionSpEffects(uint entityId)
     {
-        var chrIns = _enemyService.GetChrInsByEntityId(entityId);
+        var chrIns = _chrInsService.ChrInsByEntityId(entityId);
         if (chrIns == IntPtr.Zero) return;
         _spEffectService.ApplySpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
         _spEffectService.ApplySpEffect(chrIns,
@@ -389,7 +391,7 @@ public class EnemyViewModel : BaseViewModel
 
     private void RemoveLionSpEffects(uint entityId)
     {
-        var chrIns = _enemyService.GetChrInsByEntityId(entityId);
+        var chrIns = _chrInsService.ChrInsByEntityId(entityId);
         if (chrIns == IntPtr.Zero) return;
         _spEffectService.RemoveSpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
         _spEffectService.RemoveSpEffect(chrIns, 20011237);

@@ -6,7 +6,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class UtilityService(MemoryService memoryService, HookManager hookManager, IPlayerService playerService)
+    public class UtilityService(IMemoryService memoryService, HookManager hookManager, IPlayerService playerService)
         : IUtilityService
     {
         public const float DefaultNoClipSpeedScale = 0.2f;

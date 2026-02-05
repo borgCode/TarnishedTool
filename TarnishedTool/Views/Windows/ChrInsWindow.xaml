@@ -36,31 +36,51 @@
                  VirtualizingPanel.VirtualizationMode="Recycling">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Expander Header="{Binding Display}"  IsExpanded="{Binding IsExpanded}">
-                        <StackPanel Margin="20,5,0,5">
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <CheckBox Content="Disable AI"
-                                          IsChecked="{Binding IsAiDisabled}" />
-                                <CheckBox Content="Targeting View"
-                                          IsChecked="{Binding IsTargetViewEnabled}" />
-                                <CheckBox Content="No Attack"
-                                          IsChecked="{Binding IsNoAttackEnabled}" />
-                                <CheckBox Content="No Move"
-                                          IsChecked="{Binding IsNoMoveEnabled}" />
-                                <CheckBox Content="No Damage"
-                                          IsChecked="{Binding IsNoDamageEnabled}" />
+                    <Expander IsExpanded="{Binding IsExpanded}">
+                        <Expander.Header>
+                            <TextBlock Text="{Binding ChrInsHeader}" />
+                        </Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Margin="20,5,0,5">
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <CheckBox Content="Disable AI"
+                                              IsChecked="{Binding IsAiDisabled}" />
+                                    <CheckBox Content="Targeting View"
+                                              IsChecked="{Binding IsTargetViewEnabled}"
+                                              Margin="5,0,0,0" />
+                                    <CheckBox Content="No Attack"
+                                              IsChecked="{Binding IsNoAttackEnabled}"
+                                              Margin="5,0,0,0" />
+                                    <CheckBox Content="No Move"
+                                              IsChecked="{Binding IsNoMoveEnabled}"
+                                              Margin="5,0,0,0" />
+                                    <CheckBox Content="No Damage"
+                                              IsChecked="{Binding IsNoDamageEnabled}"
+                                              Margin="5,0,0,0" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <Button Content="Warp" Command="{Binding WarpCommand}" />
+                                    <Button Content="Open Goals" Command="{Binding OpenAiWindowCommand}"
+                                            Margin="5,0,0,0" />
+                                    <Button Content="Kill" Command="{Binding KillChrCommand}"
+                                            Margin="5,0,0,0" />
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <Button Content="Warp" Command="{Binding WarpCommand}"
-                                        Margin="0,0,5,0" />
-                                <Button Content="Open Goals" Command="{Binding OpenAiWindowCommand}"/>
-                            </StackPanel>
-                        </StackPanel>
+                            <TextBlock Grid.Column="1"
+                                       Margin="10,0,0,0"
+                                       Text="{Binding ChrInsIds}">
+                            </TextBlock>
+                            
+                        </Grid>
                     </Expander>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
         </ListBox>
-        
+
     </Grid>
 </windows:TopmostWindow>
