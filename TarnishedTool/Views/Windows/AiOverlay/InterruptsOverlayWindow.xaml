@@ -8,12 +8,50 @@
         Title="InterruptsOverlayWindow" Height="200" Width="300">
     <aiOverlay:AiOverlayWindowBase.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        
+        <!-- Scroll Bar thingy -->
+        <Style x:Key="OverlayScrollBar" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Track Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Style>
+                                            <Style TargetType="{x:Type Thumb}">
+                                                <Setter Property="Background" Value="#ff944d"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                                            <Border Background="{TemplateBinding Background}" 
+                                                                    CornerRadius="4"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#ffc480"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Thumb.Style>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </aiOverlay:AiOverlayWindowBase.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,0">
@@ -21,21 +59,35 @@
                 <Button Content="◐" Width="24" Height="20" FontSize="14"
                         Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                         Click="CycleOpacity_Click" Cursor="Hand" ToolTip="Opacity" />
-        
-                <Button Content="✕" Width="16" Height="16" FontSize="8"
-                        Margin="4,0,0,0"
+                <TextBlock Text="Interrupts" VerticalAlignment="Center" Margin="5,2,0,0"/> 
+                <Button Content="✕" FontSize="12"
+                        Margin="195,0,0,0"
+                        HorizontalAlignment="Right"
                         Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                         Click="Close_Click" Cursor="Hand" />
             </StackPanel>
         </Grid>
 
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding InterruptHistory}"
+        <ScrollViewer Grid.Row="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Margin="5,5,5,10"
+                      Background="Transparent"
                       Visibility="{Binding IsShowInterruptsEnabled, Converter={StaticResource BoolToVis}}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource OverlayScrollBar}"/>
+            </ScrollViewer.Resources>
+            <ItemsControl ItemsSource="{Binding InterruptHistory}" Margin="5,5,5,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#ffa733" 
+                                BorderThickness="0,0,0,1" 
+                                Padding="5,8,5,8">
+                            <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </aiOverlay:AiOverlayWindowBase>

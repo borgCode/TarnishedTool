@@ -10,12 +10,50 @@
         Title="LuaTimersOverlayWindow" Height="450" Width="300">
     <aiOverlay:AiOverlayWindowBase.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        
+        <!-- Scroll Bar thingy -->
+        <Style x:Key="OverlayScrollBar" TargetType="{x:Type ScrollBar}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Track Name="PART_Track" IsDirectionReversed="True">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Style>
+                                            <Style TargetType="{x:Type Thumb}">
+                                                <Setter Property="Background" Value="#ff944d"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Thumb}">
+                                                            <Border Background="{TemplateBinding Background}" 
+                                                                    CornerRadius="4"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="#ffc480"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Thumb.Style>
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </aiOverlay:AiOverlayWindowBase.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,0">
@@ -23,25 +61,37 @@
                 <Button Content="◐" Width="24" Height="20" FontSize="14"
                         Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                         Click="CycleOpacity_Click" Cursor="Hand" ToolTip="Opacity" />
-        
-                <Button Content="✕" Width="16" Height="16" FontSize="8"
-                        Margin="4,0,0,0"
+                <TextBlock Text="Lua Timers" VerticalAlignment="Center" Margin="5,2,0,0"/> 
+                <Button Content="✕" FontSize="12"
+                        Margin="190,0,0,0"
                         Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                         Click="Close_Click" Cursor="Hand" />
             </StackPanel>
         </Grid>
 
-        <ItemsControl Grid.Row="1" Margin="10,0,0,0"
-                      ItemsSource="{Binding LuaTimers}"
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Margin="5,5,5,10"
+                      Background="Transparent"
                       Visibility="{Binding IsShowLuaTimersEnabled, Converter={StaticResource BoolToVis}}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Index}" Width="30" />
-                        <TextBlock Text="{Binding Value}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            <ScrollViewer.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource OverlayScrollBar}"/>
+            </ScrollViewer.Resources>
+            <ItemsControl ItemsSource="{Binding LuaTimers}" Margin="5,5,5,0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#ff944d" 
+                                BorderThickness="0,0,0,1" 
+                                Padding="5,8,5,8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Index}" Width="40" FontWeight="SemiBold" Foreground="#CCFFFFFF"/>
+                                <TextBlock Text="{Binding Value}" Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </aiOverlay:AiOverlayWindowBase>

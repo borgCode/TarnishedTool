@@ -7,7 +7,7 @@
                                xmlns:converters="clr-namespace:TarnishedTool.Converters"
                                xmlns:aiOverlay="clr-namespace:TarnishedTool.Views.Windows.AiOverlay"
                                mc:Ignorable="d"
-                               Title="GoalsOverlayWindow" Height="300" Width="650">
+                               Title="GoalsOverlayWindow" Height="320" Width="650">
     <aiOverlay:AiOverlayWindowBase.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:IndentConverter x:Key="IndentConverter" />
@@ -16,7 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,0">
@@ -24,34 +24,52 @@
                 <Button Content="◐" Width="24" Height="20" FontSize="14"
                         Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                         Click="CycleOpacity_Click" Cursor="Hand" ToolTip="Opacity" />
-        
-                <Button Content="✕" Width="16" Height="16" FontSize="8"
-                        Margin="4,0,0,0"
+                <TextBlock Text="Goals" VerticalAlignment="Center" Margin="5,2,0,0"/> 
+                <Button Content="✕" FontSize="12"
+                        Margin="568,0,0,0"
+                        HorizontalAlignment="Right"
                         Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                         Click="Close_Click" Cursor="Hand" />
             </StackPanel>
         </Grid>
 
-        <ItemsControl Grid.Row="1"
-                      ItemsSource="{Binding FlatGoals}"
-                      Visibility="{Binding IsShowGoalsEnabled, Converter={StaticResource BoolToVis}}">
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="14" Text="[" />
-                            <TextBlock FontSize="14" Text="{Binding Name}" />
-                            <TextBlock FontSize="14" Text="]" />
-                            <TextBlock FontSize="14" Text="{Binding Life, StringFormat=' life:{0:F2}'}" />
-                            <TextBlock FontSize="14" Text="{Binding TurnTime, StringFormat=' TurnTime:{0:F1}'}"
-                                       Visibility="{Binding HasTurnTime, Converter={StaticResource BoolToVis}}" />
-                        </StackPanel>
-                        <TextBlock FontSize="14" Text="{Binding FormattedParams}"
-                                   Visibility="{Binding HasParams, Converter={StaticResource BoolToVis}}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Grid Grid.Row="1"
+              Margin="5,5,5,10"
+              Visibility="{Binding IsShowGoalsEnabled, Converter={StaticResource BoolToVis}}">
+            <ItemsControl ItemsSource="{Binding FlatGoals}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#ff944d" 
+                                BorderThickness="0,0,0,1" 
+                                Padding="5,6,5,6"
+                                Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontSize="13" Text="[" Foreground="#ffc480"/>
+                                    <TextBlock FontSize="13" Text="{Binding Name}" FontWeight="SemiBold"/>
+                                    <TextBlock FontSize="13" Text="]" Foreground="#ffc480"/>
+                                    <TextBlock FontSize="13" Margin="8,0,0,0">
+                                        <Run Text="life:" Foreground="#ffc480"/>
+                                        <Run Text="{Binding Life, StringFormat=F2, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock FontSize="13" 
+                                               Margin="8,0,0,0"
+                                               Visibility="{Binding HasTurnTime, Converter={StaticResource BoolToVis}}">
+                                        <Run Text="TurnTime:" Foreground="#ffc480"/>
+                                        <Run Text="{Binding TurnTime, StringFormat=F1, Mode=OneWay}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock FontSize="12" 
+                                           Text="{Binding FormattedParams}"
+                                           Margin="0,3,0,0"
+                                           Foreground="#CCFFFFFF"
+                                           TextWrapping="Wrap"
+                                           Visibility="{Binding HasParams, Converter={StaticResource BoolToVis}}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </Grid>
 </aiOverlay:AiOverlayWindowBase>
