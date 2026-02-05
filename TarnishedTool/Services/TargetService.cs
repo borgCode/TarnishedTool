@@ -67,22 +67,22 @@ namespace TarnishedTool.Services
         public bool IsNoMoveEnabled() => chrInsService.IsNoMoveEnabled(GetTargetChrIns());
 
         public void ForceAct(int act) =>
-            memoryService.WriteUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct, act);
+            memoryService.Write(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct, (byte)act);
 
         public int GetLastAct() =>
-            memoryService.ReadUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.LastAct);
+            memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.LastAct);
 
         public int GetForceAct() =>
-            memoryService.ReadUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct);
+            memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct);
 
         public void ToggleRepeatAct(bool isRepeatActEnabled)
         {
             var ptr = GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct;
-            memoryService.WriteUInt8(ptr, isRepeatActEnabled ? memoryService.ReadUInt8(ptr + 1) : 0);
+            memoryService.Write(ptr, isRepeatActEnabled ? memoryService.Read<byte>(ptr + 1) : (byte)0);
         }
 
         public bool IsTargetRepeating() =>
-            memoryService.ReadUInt8(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct) != 0;
+            memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct) != 0;
 
         public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetTargetChrIns());
         
@@ -120,9 +120,9 @@ namespace TarnishedTool.Services
 
         public void KillAllBesidesTarget()
         {
-            var worldChrMan = memoryService.ReadInt64(WorldChrMan.Base);
+            var worldChrMan = memoryService.Read<nint>(WorldChrMan.Base);
             var lockedTarget =
-                memoryService.ReadInt64(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
+                memoryService.Read<nint>(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
             var bytes = AsmLoader.GetAsmBytes("KillAll");
 
             AsmHelper.WriteImmediateDwords(bytes, [

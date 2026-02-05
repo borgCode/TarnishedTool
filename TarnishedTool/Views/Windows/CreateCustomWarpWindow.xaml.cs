@@ -60,4 +60,15 @@ public partial class CreateCustomWarpWindow : TopmostWindow
             vm.DeleteWarps(itemsToDelete);
         }
     }
+    
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    {
+        base.OnClosing(e);
+
+
+        SettingsManager.Default.CreateCustomWarpWindowLeft = Left;
+        SettingsManager.Default.CreateCustomWarpWindowTop = Top;
+        SettingsManager.Default.CreateCustomWarpWindowAlwaysOnTop = AlwaysOnTopCheckBox.IsChecked ?? false;
+        SettingsManager.Default.Save();
+    }
 }

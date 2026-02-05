@@ -109,6 +109,13 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         }
     }
     
+    private float _distance;
+    public float Distance
+    {
+        get => _distance;
+        set => SetProperty(ref _distance, value);
+    }
+    
     private ICommand _warpCommand;
     public ICommand WarpCommand => _warpCommand ??= new DelegateCommand(() =>
     {
@@ -126,5 +133,5 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     {
         OnCommandExecuted?.Invoke(this, nameof(KillChrCommand));
     });
-
+    
 }

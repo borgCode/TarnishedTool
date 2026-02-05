@@ -35,7 +35,7 @@ public class EventLogReader(IMemoryService memoryService) : IEventLogReader, IDi
     
     private void Poll(object sender, EventArgs e)
     {
-        var writeIndex = memoryService.ReadInt32(_writeIndexAddr);
+        var writeIndex = memoryService.Read<int>(_writeIndexAddr);
         if (writeIndex == _readIndex) return;
 
         var entries = new List<EventLogEntry>();
@@ -43,8 +43,8 @@ public class EventLogReader(IMemoryService memoryService) : IEventLogReader, IDi
         while (_readIndex != writeIndex)
         {
             var offset = _readIndex * 5;
-            var eventId = memoryService.ReadUInt32(_bufferAddr + offset);
-            var value = memoryService.ReadUInt8(_bufferAddr + offset + 4) != 0;
+            var eventId = memoryService.Read<uint>(_bufferAddr + offset);
+            var value = memoryService.Read<byte>(_bufferAddr + offset + 4) != 0;
             entries.Add(new EventLogEntry(eventId, value));
             
             _readIndex = (_readIndex + 1) & 511;

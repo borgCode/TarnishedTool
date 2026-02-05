@@ -1,0 +1,106 @@
+﻿<Window x:Class="TarnishedTool.Views.Windows.AiOverlay.AiOverlayToolbar"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Height="Auto" Width="Auto"
+        SizeToContent="WidthAndHeight"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ShowInTaskbar="False"
+        Background="#CC000000"
+        Topmost="True">
+
+    <Window.Resources>
+        <Style x:Key="OverlayCheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#CCFFFFFF"/>
+            <Setter Property="Margin" Value="5,3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="ToolbarButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#CCFFFFFF"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#44FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Border BorderBrush="#80333333" BorderThickness="1" CornerRadius="3" Margin="2">
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <DockPanel Grid.Row="0" Margin="0,0,0,8">
+                <TextBlock x:Name="EntityNameText" 
+                           Foreground="#FF9900" 
+                           FontWeight="Bold"
+                           FontSize="11"
+                           VerticalAlignment="Center">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="Black" Opacity="0.7"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </DockPanel>
+            
+            <WrapPanel Grid.Row="1" Orientation="Horizontal" MaxWidth="350">
+                <CheckBox x:Name="GoalsCheckBox" 
+                          Content="Goals" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+                <CheckBox x:Name="CoolTimesCheckBox" 
+                          Content="Cool Times" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+                <CheckBox x:Name="LuaTimersCheckBox" 
+                          Content="Lua Timers" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+                <CheckBox x:Name="LuaNumbersCheckBox" 
+                          Content="Lua Numbers" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+                <CheckBox x:Name="SpEffectObservesCheckBox" 
+                          Content="SpEffect Observers" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+                <CheckBox x:Name="InterruptsCheckBox" 
+                          Content="Interrupts" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+                <CheckBox x:Name="SpEffectsCheckBox" 
+                          Content="SpEffects" 
+                          Style="{StaticResource OverlayCheckBox}"
+                          Checked="CheckBox_Changed"
+                          Unchecked="CheckBox_Changed"/>
+            </WrapPanel>
+            
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
+                <Button Content="All On" 
+                        Style="{StaticResource ToolbarButton}"
+                        Click="AllOn_Click"/>
+                <Button Content="All Off" 
+                        Style="{StaticResource ToolbarButton}"
+                        Click="AllOff_Click"/>
+                <Rectangle Width="1" Fill="#44FFFFFF" Margin="8,2"/>
+                <Button Content="Exit Overlay Mode" 
+                        Style="{StaticResource ToolbarButton}"
+                        Foreground="#FF6666"
+                        Click="Exit_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -409,6 +409,31 @@
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\AiOverlay\AiOverlayToolbar.xaml.cs">
+          <DependentUpon>AiOverlayToolbar.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\AiOverlayWindowBase.cs" />
+        <Compile Include="Views\Windows\AiOverlay\CoolTimesOverlayWindow.xaml.cs">
+          <DependentUpon>CoolTimesOverlayWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\GoalsOverlayWindow.xaml.cs">
+          <DependentUpon>GoalsOverlayWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\InterruptsOverlayWindow.xaml.cs">
+          <DependentUpon>InterruptsOverlayWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\LuaNumbersOverlayWindow.xaml.cs">
+          <DependentUpon>LuaNumbersOverlayWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\LuaTimersOverlayWindow.xaml.cs">
+          <DependentUpon>LuaTimersOverlayWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\SpEffectObserversOverlayWindow.xaml.cs">
+          <DependentUpon>SpEffectObserversOverlayWindow.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\AiOverlay\SpEffectsOverlayWindow.xaml.cs">
+          <DependentUpon>SpEffectsOverlayWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\ChrInsWindow.xaml.cs">
           <DependentUpon>ChrInsWindow.xaml</DependentUpon>
         </Compile>
@@ -480,6 +505,14 @@
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
+        <Page Include="Views\Windows\AiOverlay\AiOverlayToolbar.xaml" />
+        <Page Include="Views\Windows\AiOverlay\CoolTimesOverlayWindow.xaml" />
+        <Page Include="Views\Windows\AiOverlay\GoalsOverlayWindow.xaml" />
+        <Page Include="Views\Windows\AiOverlay\InterruptsOverlayWindow.xaml" />
+        <Page Include="Views\Windows\AiOverlay\LuaNumbersOverlayWindow.xaml" />
+        <Page Include="Views\Windows\AiOverlay\LuaTimersOverlayWindow.xaml" />
+        <Page Include="Views\Windows\AiOverlay\SpEffectObserversOverlayWindow.xaml" />
+        <Page Include="Views\Windows\AiOverlay\SpEffectsOverlayWindow.xaml" />
         <Page Include="Views\Windows\ChrInsWindow.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />

@@ -38,44 +38,44 @@ public class ReminderService : IReminderService
         var (fmg, stringTable, count) = GetFmgData(0, MessageCategory);
         if (fmg == 0 || ReminderEntryIndex >= count) return;
 
-        var offset = _memoryService.ReadInt64(stringTable + ReminderEntryIndex * 8);
+        var offset = _memoryService.Read<nint>(stringTable + ReminderEntryIndex * 8);
         if (offset == 0) return;
 
         InstallHook();
 
-        _memoryService.WriteString((IntPtr)(fmg + offset), ReminderText, ReminderText.Length * 2);
+        _memoryService.WriteString(fmg + offset, ReminderText, ReminderText.Length * 2);
         _hasDoneReminder = true;
     }
 
-    private (long fmg, IntPtr stringTable, int count) GetFmgData(uint version, uint category)
+    private (nint fmg, nint stringTable, int count) GetFmgData(uint version, uint category)
     {
-        var msgRepo = _memoryService.ReadInt64(Offsets.MsgRepository.Base);
+        var msgRepo = _memoryService.Read<nint>(Offsets.MsgRepository.Base);
         if (msgRepo == 0) return (0, IntPtr.Zero, 0);
 
-        var versionCount = _memoryService.ReadUInt32((IntPtr)(msgRepo + 0x10));
-        var categoryCount = _memoryService.ReadUInt32((IntPtr)(msgRepo + 0x14));
+        var versionCount = _memoryService.Read<uint>(msgRepo + 0x10);
+        var categoryCount = _memoryService.Read<uint>(msgRepo + 0x14);
 
         if (version >= versionCount || category >= categoryCount) return (0, IntPtr.Zero, 0);
 
-        var versionsArray = _memoryService.ReadInt64((IntPtr)(msgRepo + 0x8));
-        var versionPtr = _memoryService.ReadInt64((IntPtr)(versionsArray + version * 8));
+        var versionsArray = _memoryService.Read<nint>(msgRepo + 0x8);
+        var versionPtr = _memoryService.Read<nint>((IntPtr)(versionsArray + version * 8));
         if (versionPtr == 0) return (0, IntPtr.Zero, 0);
 
-        var fmg = _memoryService.ReadInt64((IntPtr)(versionPtr + category * 8));
+        var fmg = _memoryService.Read<nint>((IntPtr)(versionPtr + category * 8));
         if (fmg == 0) return (0, IntPtr.Zero, 0);
 
-        var stringTable = _memoryService.ReadInt64((IntPtr)(fmg + 0x18));
-        var rangeCount = _memoryService.ReadInt32((IntPtr)(fmg + 0x0C));
+        var stringTable = _memoryService.Read<nint>(fmg + 0x18);
+        var rangeCount = _memoryService.Read<int>(fmg + 0x0C);
 
-        if (rangeCount <= 0) return (fmg, (IntPtr)stringTable, 0);
+        if (rangeCount <= 0) return (fmg, stringTable, 0);
 
         var lastDescBase = fmg + (rangeCount - 1) * 0x10;
-        var lastBaseIndex = _memoryService.ReadUInt32((IntPtr)(lastDescBase + 0x28));
-        var lastStart = _memoryService.ReadUInt32((IntPtr)(lastDescBase + 0x2C));
-        var lastEnd = _memoryService.ReadUInt32((IntPtr)(lastDescBase + 0x30));
+        var lastBaseIndex = _memoryService.Read<uint>(lastDescBase + 0x28);
+        var lastStart = _memoryService.Read<uint>(lastDescBase + 0x2C);
+        var lastEnd = _memoryService.Read<uint>(lastDescBase + 0x30);
         var totalEntries = (int)(lastBaseIndex + (lastEnd - lastStart + 1));
 
-        return (fmg, (IntPtr)stringTable, totalEntries);
+        return (fmg, stringTable, totalEntries);
     }
 
     private void InstallHook()

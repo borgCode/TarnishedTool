@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -24,9 +28,9 @@ public class AdvancedViewModel : BaseViewModel
     
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
-    
+    private readonly IAiService _aiService;
+
     private readonly IUtilityService _utilityService;
-    private readonly IChrInsService _chrInsService;
     private readonly ChrInsWindowViewModel _chrInsWindowViewModel;
     private ChrInsWindow _chrInsWindow;
 
@@ -36,7 +40,7 @@ public class AdvancedViewModel : BaseViewModel
     
     private bool _hasNotifiedInitialOpen;
 
-    public AdvancedViewModel(IItemService itemService, IStateService stateService, IEventService eventService,
+    public AdvancedViewModel(IItemService itemService, IStateService stateService,
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
         IReminderService reminderService, IAiService aiService, IUtilityService utilityService,
@@ -47,8 +51,8 @@ public class AdvancedViewModel : BaseViewModel
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
         _gameTickService = gameTickService;
+        _aiService = aiService;
         _utilityService = utilityService;
-        _chrInsService = chrInsService;
 
         RegisterHotkeys();
 
@@ -61,11 +65,12 @@ public class AdvancedViewModel : BaseViewModel
         RemoveSpEffectCommand = new DelegateCommand(RemoveSpEffect);
         AboutSpEffectsCommand = new DelegateCommand(ShowAboutSpEffects);
         OpenAiWindowCommand = new DelegateCommand(OpenAiWindow);
+        InjectScriptCommand = new DelegateCommand(InjectScript);
 
         SelectedEquipType = EquipTypes[0].Value;
 
         _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
-        _chrInsWindowViewModel = new ChrInsWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService);
+        _chrInsWindowViewModel = new ChrInsWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService, spEffectService);
     }
 
     
@@ -77,6 +82,7 @@ public class AdvancedViewModel : BaseViewModel
     public ICommand RemoveSpEffectCommand { get; set; }
     public ICommand AboutSpEffectsCommand { get; set; }
     public ICommand OpenAiWindowCommand { get; set; }
+    public ICommand InjectScriptCommand { get; set; }
 
     #endregion
 
@@ -290,6 +296,32 @@ public class AdvancedViewModel : BaseViewModel
         _chrInsWindow.Show();
         _chrInsWindowViewModel.NotifyWindowOpen();
     }
+    
+    private void InjectScript()
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "Lua files (*.lua)|*.lua",
+            Title = "Inject AI Script"
+        };
+        
+        if (dialog.ShowDialog() != true) return;
+        
+        if (!HasRegisterTableGoal(File.ReadLines(dialog.FileName).Take(5)))
+        {
+            MsgBox.Show("Did not find \"RegisterTableGoal\", please include that in the loaded file", "Invalid file");
+            return;
+        }
+        
+        var content = File.ReadAllText(dialog.FileName).Replace("\r\n", "\n");
+        var scriptWithNullTermination = Encoding.UTF8.GetBytes(content + '\0');
+
+        _aiService.InjectAiScript(scriptWithNullTermination);
+        
+    }
+    
+    private bool HasRegisterTableGoal(IEnumerable<string> firstLines) => 
+        firstLines.Any(line => line.Contains("RegisterTableGoal"));
 
     #endregion
 }

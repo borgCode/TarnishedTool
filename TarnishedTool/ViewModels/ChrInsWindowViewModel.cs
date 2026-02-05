@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
@@ -18,30 +19,31 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private readonly IGameTickService _gameTickService;
     private readonly IPlayerService _playerService;
     private readonly IChrInsService _chrInsService;
+    private readonly ISpEffectService _spEffectService;
 
     private readonly Dictionary<int, string> _chrNames;
     private readonly Dictionary<int, string> _aiInterruptEnums;
 
     private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
-    
-    
+
     private readonly Dictionary<int, GoalInfo> _goalInfos;
 
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
 
     private readonly Dictionary<nint, AiWindow> _openAiWindows = new();
-    private const int MaxAiWindows = 4;
+    private const int MaxAiWindows = 3;
 
-    public const int DummyChrId = 1000;
+    public static readonly int[] DummyChrIds = [100, 1000];
 
     public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
-        IPlayerService playerService, IChrInsService chrInsService)
+        IPlayerService playerService, IChrInsService chrInsService, ISpEffectService spEffectService)
     {
         _aiService = aiService;
         _stateService = stateService;
         _gameTickService = gameTickService;
         _playerService = playerService;
         _chrInsService = chrInsService;
+        _spEffectService = spEffectService;
 
         _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
@@ -59,7 +61,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ["guardresult"] = aiGuardGoalEnums
         };
     }
-    
+
     #region Properties
 
     private ObservableCollection<ChrInsEntry> _chrInsEntries = new();
@@ -113,17 +115,46 @@ internal class ChrInsWindowViewModel : BaseViewModel
     {
         var entries = _chrInsService.GetNearbyChrInsEntries();
         var seenHandles = new HashSet<long>();
+        var playerBlockId = _playerService.GetBlockId();
+        byte playerArea = (byte)((playerBlockId >> 24) & 0xFF);
+        var playerAbsolute = PositionUtils.ToAbsolute(_playerService.GetPlayerPos(), playerBlockId);
 
         foreach (var entry in entries)
         {
             long handle = _chrInsService.GetHandleByChrIns(entry.ChrIns);
 
+
             seenHandles.Add(handle);
-            if (_entriesByHandle.TryGetValue(handle, out _)) continue;
-            
+            if (_entriesByHandle.TryGetValue(handle, out var existingEntry))
+            {
+                if (existingEntry.NpcThinkParamId == 0)
+                    existingEntry.NpcThinkParamId = _chrInsService.GetNpcThinkParamId(entry.ChrIns);
+                if (existingEntry.EntityId == 0)
+                    existingEntry.EntityId = _chrInsService.GetEntityId(entry.ChrIns);
+
+                if (existingEntry.IsExpanded)
+                {
+                    var entryBlockId = _chrInsService.GetBlockId(existingEntry.ChrIns);
+                    byte entryArea = (byte)((entryBlockId >> 24) & 0xFF);
+
+                    if (playerArea != entryArea)
+                    {
+                        existingEntry.Distance = -1f;
+                    }
+                    else
+                    {
+                        var entryAbsolute =
+                            PositionUtils.ToAbsolute(_chrInsService.GetLocalCoords(existingEntry.ChrIns), entryBlockId);
+                        existingEntry.Distance = Vector3.Distance(playerAbsolute, entryAbsolute);
+                    }
+                }
+
+                continue;
+            }
+
             entry.ChrId = _chrInsService.GetChrId(entry.ChrIns);
-            if (entry.ChrId == DummyChrId) continue;
-            
+            if (DummyChrIds.Contains(entry.ChrId)) continue;
+
             var instanceId = _chrInsService.GetChrInstanceId(entry.ChrIns);
             entry.InternalName = $@"c{entry.ChrId}_{instanceId}";
             entry.OnOptionChanged = HandleEntryOptionChanged;
@@ -134,7 +165,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             entry.EntityId = _chrInsService.GetEntityId(entry.ChrIns);
             entry.Handle = handle;
             entry.NpcParamId = _chrInsService.GetNpcParamId(entry.ChrIns);
-            
+
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);
         }
@@ -148,6 +179,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             ChrInsEntries.Remove(entry);
         }
     }
+
     private void OpenAiWindow(ChrInsEntry entry)
     {
         if (entry == null) return;
@@ -161,13 +193,13 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
         if (_openAiWindows.Count >= MaxAiWindows)
         {
-            MsgBox.Show("Only four AI windows can be open at once, close one to open another", "Too many AI windows");
+            MsgBox.Show("Only 3 AI windows can be open at once, close one to open another", "Too many AI windows");
             return;
         }
 
         var window = new AiWindow();
         var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, entry, _enumDicts,
-            _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns));
+            _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns), _spEffectService, window);
         window.DataContext = vm;
         window.Closed += (_, _) => _openAiWindows.Remove(chrIns);
         _openAiWindows[chrIns] = window;
@@ -224,6 +256,8 @@ internal class ChrInsWindowViewModel : BaseViewModel
         entry.IsNoDamageEnabled = _chrInsService.IsNoDamageEnabled(entry.ChrIns);
     }
 
+    
+    
     #endregion
 
     #region Public Methods
@@ -240,11 +274,15 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _stateService.Unsubscribe(State.Loaded, OnGameLoaded);
         _stateService.Unsubscribe(State.NotLoaded, OnGameNotLoaded);
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
-    }
 
-    public void ClearSelected()
-    {
+        foreach (var window in _openAiWindows.Values.ToList())
+        {
+            window.Close();
+        }
+
         SelectedChrInsEntry = null;
+        _entriesByHandle.Clear();
+        ChrInsEntries.Clear();
     }
 
     #endregion

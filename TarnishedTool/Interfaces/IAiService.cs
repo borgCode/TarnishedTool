@@ -21,4 +21,5 @@ public interface IAiService
     ulong GetInterrupts(nint aiThink);
     List<CoolTimeEntry> GetCoolTimeItemList(nint aiThink);
     int GetMainScriptGoalId(nint aiThink);
+    void InjectAiScript(byte[] script);
 }

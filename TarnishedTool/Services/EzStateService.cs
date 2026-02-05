@@ -22,7 +22,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
         
         for (int i = 0; i < command.Params.Length; i++)
         {
-            memoryService.WriteInt32(paramsLoc + i * 4, command.Params[i]);
+            memoryService.Write(paramsLoc + i * 4, command.Params[i]);
         }
         
         var bytes = AsmLoader.GetAsmBytes("ExecuteTalkCommand");
@@ -95,9 +95,9 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
     
     private void BuildStack(nint stackBase, int commandId, EnvQueryParam[] args)
     {
-        memoryService.WriteInt32(stackBase, commandId);
-        memoryService.WriteInt32(stackBase + 0x08, TypeInt);
-        memoryService.WriteInt32(stackBase + 0x0C, 0);
+        memoryService.Write(stackBase, commandId);
+        memoryService.Write(stackBase + 0x08, TypeInt);
+        memoryService.Write(stackBase + 0x0C, 0);
         
         for (int i = 0; i < args.Length; i++)
         {
@@ -117,21 +117,21 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
                     break;
             }
 
-            memoryService.WriteInt32(stackBase + offset + 0x08, arg.TypeTag);
-            memoryService.WriteInt32(stackBase + offset + 0x0C, 0);
+            memoryService.Write(stackBase + offset + 0x08, arg.TypeTag);
+            memoryService.Write(stackBase + offset + 0x0C, 0);
         }
     }
     
     private EnvQueryResult ReadResult(nint resultAddr)
     {
-        var typeTag = memoryService.ReadInt32(resultAddr + 0x08);
+        var typeTag = memoryService.Read<int>(resultAddr + 0x08);
 
         return new EnvQueryResult
         {
             TypeTag = typeTag,
-            IntValue = memoryService.ReadInt32(resultAddr),
-            FloatValue = memoryService.ReadFloat(resultAddr),
-            PtrValue = memoryService.ReadInt64(resultAddr)
+            IntValue = memoryService.Read<int>(resultAddr),
+            FloatValue = memoryService.Read<float>(resultAddr),
+            PtrValue = memoryService.Read<nint>(resultAddr)
         };
     }
     

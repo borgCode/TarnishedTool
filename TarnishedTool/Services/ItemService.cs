@@ -16,13 +16,13 @@ public class ItemService(IMemoryService memoryService) : IItemService
         var itemStruct = CodeCaveOffsets.Base + CodeCaveOffsets.ItemSpawnStruct;
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.ItemSpawnCode;
         
-        memoryService.WriteUInt8(shouldAdjustQuantity, isQuantityAdjustable ? 1 : 0);
-        memoryService.WriteInt32(maxQuantityLoc, maxQuantity);
-        memoryService.WriteInt32(itemStruct + 0x40, 1);
-        memoryService.WriteInt32(itemStruct + 0x44, itemId);
-        memoryService.WriteInt32(itemStruct + 0x48, quantity);
-        memoryService.WriteInt32(itemStruct + 0x4C, -1);
-        memoryService.WriteInt32(itemStruct + 0x50, aowId);
+        memoryService.Write(shouldAdjustQuantity, isQuantityAdjustable);
+        memoryService.Write(maxQuantityLoc, maxQuantity);
+        memoryService.Write(itemStruct + 0x40, 1);
+        memoryService.Write(itemStruct + 0x44, itemId);
+        memoryService.Write(itemStruct + 0x48, quantity);
+        memoryService.Write(itemStruct + 0x4C, -1);
+        memoryService.Write(itemStruct + 0x50, aowId);
 
         var bytes = AsmLoader.GetAsmBytes("ItemSpawn");
         AsmHelper.WriteRelativeOffsets(bytes, new []

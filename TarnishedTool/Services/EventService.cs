@@ -13,13 +13,12 @@ namespace TarnishedTool.Services
         public void SetEvent(long eventId, bool flagValue)
         {
             var bytes = AsmLoader.GetAsmBytes("SetEvent");
-            AsmHelper.WriteAbsoluteAddresses(bytes, new []
-            {
-                (memoryService.ReadInt64(VirtualMemFlag.Base), 0x4 + 2 ),
+            AsmHelper.WriteAbsoluteAddresses(bytes, [
+                (memoryService.Read<nint>(VirtualMemFlag.Base), 0x4 + 2 ),
                 (eventId, 0xE + 2),
                 (flagValue ? 1 : 0, 0x18 + 2),
                 (Functions.SetEvent, 0x22 + 2)
-            });
+            ]);
             memoryService.AllocateAndExecute(bytes);
         }
 
@@ -27,16 +26,15 @@ namespace TarnishedTool.Services
         {
             var result = CodeCaveOffsets.Base + CodeCaveOffsets.GetEventResult;
             var bytes = AsmLoader.GetAsmBytes("GetEvent");
-            AsmHelper.WriteAbsoluteAddresses(bytes, new []
-            {
-                (memoryService.ReadInt64(VirtualMemFlag.Base), 0x0 + 2),
+            AsmHelper.WriteAbsoluteAddresses(bytes, [
+                (memoryService.Read<nint>(VirtualMemFlag.Base), 0x0 + 2),
                 (flagId, 0xA + 2),
                 (Functions.GetEvent, 0x18 + 2),
                 (result.ToInt64(), 0x28 + 2)
-            });
+            ]);
 
             memoryService.AllocateAndExecute(bytes);
-            return memoryService.ReadUInt8(result) == 1;
+            return memoryService.Read<byte>(result) == 1;
         }
 
         public void PatchEventEnable()
@@ -47,15 +45,15 @@ namespace TarnishedTool.Services
 
         public void ToggleDrawEvents(bool isEnabled)
         {
-            var ptr = memoryService.ReadInt64(CSDbgEvent.Base) + CSDbgEvent.DrawEvent;
-            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+            var ptr = memoryService.Read<nint>(CSDbgEvent.Base) + CSDbgEvent.DrawEvent;
+            memoryService.Write(ptr, isEnabled);
         }
 
         public void ToggleDisableEvents(bool isEnabled)
         {
             reminderService.TrySetReminder();
-            var ptr = memoryService.ReadInt64(CSDbgEvent.Base) + CSDbgEvent.DisableEvent;
-            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+            var ptr = memoryService.Read<nint>(CSDbgEvent.Base) + CSDbgEvent.DisableEvent;
+            memoryService.Write(ptr, isEnabled);
         }
 
         public bool AreAllEventsTrue(long[] eventToCheck) => eventToCheck.All(GetEvent);

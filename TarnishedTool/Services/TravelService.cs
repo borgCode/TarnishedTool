@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Threading;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
@@ -46,10 +47,10 @@ namespace TarnishedTool.Services
         }
 
         public void ToggleShowAllGraces(bool isEnabled) =>
-            memoryService.WriteUInt8(MapDebugFlags.Base + MapDebugFlags.ShowAllGraces, isEnabled ? 1 : 0);
+            memoryService.Write(MapDebugFlags.Base + MapDebugFlags.ShowAllGraces, isEnabled);
 
         public void ToggleShowAllMaps(bool isEnabled) =>
-            memoryService.WriteUInt8(MapDebugFlags.Base + MapDebugFlags.ShowAllMaps, isEnabled ? 1 : 0);
+            memoryService.Write(MapDebugFlags.Base + MapDebugFlags.ShowAllMaps, isEnabled);
 
         public void ToggleNoMapAcquiredPopups(bool isEnabled)
         {
@@ -85,9 +86,9 @@ namespace TarnishedTool.Services
             var targetAngle = CodeCaveOffsets.Base + CodeCaveOffsets.Angle;
             var warpCode = CodeCaveOffsets.Base + CodeCaveOffsets.WarpCode;
             var angleCode = CodeCaveOffsets.Base + CodeCaveOffsets.AngleCode;
-            memoryService.WriteVector3(targetCoords, position.Coords);
-            memoryService.WriteFloat(targetCoords + 0xC, 1f);
-            memoryService.WriteFloat(targetAngle + 0x4, position.Angle);
+            memoryService.Write(targetCoords, position.Coords);
+            memoryService.Write(targetCoords + 0xC, 1f);
+            memoryService.Write(targetAngle + 0x4, position.Angle);
 
             var bytes = AsmLoader.GetAsmBytes("WarpCoordWrite");
             AsmHelper.WriteRelativeOffsets(bytes, new[]
@@ -103,12 +104,12 @@ namespace TarnishedTool.Services
                 (angleCode.ToInt64() + 0xE, angleHook + 7, 5, 0xE + 1)
             });
             memoryService.WriteBytes(angleCode, bytes);
-            memoryService.WriteInt32(angleCode + 0x7 + 3, angleOffsetInStruct);
+            memoryService.Write(angleCode + 0x7 + 3, angleOffsetInStruct);
 
             hookManager.InstallHook(warpCode.ToInt64(), coordHook, [0x0F, 0x11, 0x80, 0xA0, 0x0A, 0x00, 0x00]);
             hookManager.InstallHook(angleCode.ToInt64(), angleHook, [0x0F, 0x11, 0x80, 0xB0, 0x0A, 0x00, 0x00]);
 
-            var isFadedPtr = (IntPtr)memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsFading;
+            var isFadedPtr = memoryService.Read<nint>(MenuMan.Base) + MenuMan.IsFading;
             var fadeBit = (byte)MenuMan.FadeBitFlags.IsFadeScreen;
 
             WaitForCondition(() => memoryService.IsBitSet(isFadedPtr, fadeBit));

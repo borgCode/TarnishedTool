@@ -10,7 +10,6 @@ public interface IParamService
 {
     IntPtr GetParamRow(int tableIndex, int slotIndex, uint rowId);
     IntPtr GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset);
-    T Read<T>(IntPtr row, int offset) where T : unmanaged;
     void Write<T>(IntPtr row, int offset, T value) where T : unmanaged;
     void PrintAllParamTableNames();
     public byte[] ReadRow(IntPtr row, int size);

@@ -48,4 +48,6 @@ public interface IChrInsService
     nint ChrInsByHandle(int handle);
     nint ChrInsByEntityId(uint entityId);
     void ToggleNoDeath(nint chrIns, bool isEnabled);
+    uint GetBlockId(nint chrIns);
+    void ToggleNoGravity(IntPtr chrIns, bool isEnabled);
 }

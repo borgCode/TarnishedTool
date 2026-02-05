@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -12,14 +13,14 @@ namespace TarnishedTool.Services
         public const float DefaultNoClipSpeedScale = 0.2f;
 
         public void ForceSave() =>
-            memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ForceSave, 1);
+            memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ForceSave, (byte)1);
 
         public void TriggerNewNgCycle() =>
-            memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(GameMan.Base) + GameMan.ShouldStartNewGame, 1);
+            memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldStartNewGame, (byte)1);
 
         public void ToggleCombatMap(bool isEnabled)
         {
-            memoryService.WriteUInt8(Patches.OpenMap, isEnabled ? 0xEB : 0x74);
+            memoryService.Write(Patches.OpenMap, isEnabled ? (byte)0xEB : (byte)0x74);
             memoryService.WriteBytes(Patches.CloseMap, isEnabled ? [0x90, 0x90, 0x90] : [0xff, 0x50, 0x60]);
         }
 
@@ -119,8 +120,8 @@ namespace TarnishedTool.Services
             var codeBytes = AsmLoader.GetAsmBytes("NoClip_UpdateCoords");
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
             var speedScale = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.SpeedScale;
-            
-            AsmHelper.WriteImmediateDwords(codeBytes, new []{(WorldChrMan.PlayerIns, 0xF + 3)});
+
+            AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0xF + 3) });
 
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
@@ -162,16 +163,15 @@ namespace TarnishedTool.Services
 
         public void ToggleDrawPoiseBars(bool isEnabled)
         {
-            var worldChrManDbg = memoryService.ReadInt64(WorldChrManDbg.Base);
-            memoryService.WriteUInt8((IntPtr)worldChrManDbg + WorldChrManDbg.PoiseBarsFlag, isEnabled ? 1 : 0);
+            var worldChrManDbg = memoryService.Read<nint>(WorldChrManDbg.Base);
+            memoryService.Write(worldChrManDbg + WorldChrManDbg.PoiseBarsFlag, isEnabled);
         }
 
         public void SetFps(int fps) =>
-            memoryService.WriteFloat(Patches.FpsCap + 0x3, 1f / fps);
+            memoryService.Write(Patches.FpsCap + 0x3, 1f / fps);
 
         public int GetFps() =>
-            (int)Math.Round(1f / memoryService.ReadFloat(Patches.FpsCap + 0x3));
-            
+            (int)Math.Round(1f / memoryService.Read<float>(Patches.FpsCap + 0x3));
 
         private void WriteJumpIntercept(IntPtr jumpInterceptCode)
         {
@@ -182,14 +182,14 @@ namespace TarnishedTool.Services
         public void WriteNoClipSpeed(float speedMultiplier)
         {
             var speedScale = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.SpeedScale;
-            memoryService.WriteFloat(speedScale, DefaultNoClipSpeedScale * speedMultiplier);
+            memoryService.Write(speedScale, DefaultNoClipSpeedScale * speedMultiplier);
         }
 
         public float GetSpeed() =>
-            memoryService.ReadFloat((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed);
+            memoryService.Read<float>(memoryService.Read<nint>(CSFlipperImp.Base) + CSFlipperImp.GameSpeed);
 
         public void SetSpeed(float speed) =>
-            memoryService.WriteFloat((IntPtr)memoryService.ReadInt64(CSFlipperImp.Base) + CSFlipperImp.GameSpeed,
+            memoryService.Write(memoryService.Read<nint>(CSFlipperImp.Base) + CSFlipperImp.GameSpeed,
                 speed);
 
         public void ToggleFreeCam(bool isEnabled)
@@ -199,19 +199,19 @@ namespace TarnishedTool.Services
             if (isEnabled)
             {
                 memoryService.WriteBytes(patchLoc, [0xB0, 0x01, 0xC3]);
-                memoryService.WriteUInt8(camMode, 1);
+                memoryService.Write(camMode, (byte)1);
             }
             else
             {
                 memoryService.WriteBytes(patchLoc, [0xEB, 0x80, 0xCC]);
-                memoryService.WriteUInt8(camMode, 0);
+                memoryService.Write(camMode, (byte)0);
             }
         }
 
         public void TogglePlayerMovementForFreeCam(bool isEnabled)
         {
             var camMode = memoryService.FollowPointers(FieldArea.Base, [FieldArea.GameRend, FieldArea.CamMode], false);
-            memoryService.WriteUInt8(camMode, isEnabled ? 3 : 1);
+            memoryService.Write(camMode, isEnabled ? (byte)3 : (byte)1);
         }
 
         public void MoveCamToPlayer()
@@ -219,12 +219,12 @@ namespace TarnishedTool.Services
             var playerLoc = playerService.IsRiding() ? playerService.GetTorrentPos() : playerService.GetPlayerPos();
 
             playerLoc.Y += 2.5f;
-            memoryService.WriteVector3(GetDbgCamCoordsPtr(), playerLoc);
+            memoryService.Write(GetDbgCamCoordsPtr(), playerLoc);
         }
 
         public void MovePlayerToCam()
         {
-            var cameraLoc = memoryService.ReadVector3(GetDbgCamCoordsPtr());
+            var cameraLoc = memoryService.Read<Vector3>(GetDbgCamCoordsPtr());
 
             if (playerService.IsRiding())
             {
@@ -240,24 +240,28 @@ namespace TarnishedTool.Services
             memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
 
         public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
-            memoryService.WriteUInt8((IntPtr)memoryService.ReadInt64(DamageManager.Base) + DamageManager.HitboxView,
-                isDrawHitboxEnabled ? 1 : 0);
+            memoryService.Write(memoryService.Read<nint>(DamageManager.Base) + DamageManager.HitboxView,
+                isDrawHitboxEnabled);
 
         public void ToggleDrawRagdolls(bool isEnabled) =>
-            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.Ragdoll, isEnabled ? 1 : 0);
+            memoryService.Write(WorldHitMan.Base + WorldHitMan.Ragdoll, isEnabled);
 
         public void ToggleDrawLowHit(bool isEnabled)
         {
-            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.LowHit, isEnabled ? 1 : 0);
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom, isEnabled ? 0 : 1);
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap, isEnabled ? 0 : 1);
+            memoryService.Write(WorldHitMan.Base + WorldHitMan.LowHit, isEnabled);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom,
+                isEnabled ? (byte)0 : (byte)1);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap,
+                isEnabled ? (byte)0 : (byte)1);
         }
 
         public void ToggleDrawHighHit(bool isEnabled)
         {
-            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.HighHit, isEnabled ? 1 : 0);
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom, isEnabled ? 0 : 1);
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap, isEnabled ? 0 : 1);
+            memoryService.Write(WorldHitMan.Base + WorldHitMan.HighHit, isEnabled);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom,
+                isEnabled ? (byte)0 : (byte)1);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap,
+                isEnabled ? (byte)0 : (byte)1);
         }
 
         public void ToggleFullShopLineup(bool isEnabled) =>
@@ -265,44 +269,48 @@ namespace TarnishedTool.Services
                 isEnabled ? [0xB0, 0x01, 0xC3, 0x90, 0x90, 0x90] : [0x40, 0x53, 0x48, 0x83, 0xEC, 0x40]);
 
         public void SetColDrawMode(int val) =>
-            memoryService.WriteUInt8(WorldHitMan.Base + WorldHitMan.Mode, (byte)val);
+            memoryService.Write(WorldHitMan.Base + WorldHitMan.Mode, (byte)val);
 
-        public void PatchDebugFont() => memoryService.WriteUInt8(Patches.DebugFont, 0xC3);
+        public void PatchDebugFont() => memoryService.Write(Patches.DebugFont, (byte)0xC3);
 
         public void TogglePlayerSound(bool isEnabled) =>
-            memoryService.WriteUInt8(Patches.PlayerSound, isEnabled ? 0x75 : 0x74);
+            memoryService.Write(Patches.PlayerSound, isEnabled ? (byte)0x75 : (byte)0x74);
 
         public void ToggleDrawMapTiles1(bool isEnabled)
         {
-            var ptr = memoryService.ReadInt64(FieldArea.Base) + FieldArea.DrawTiles1;
-            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+            var ptr = memoryService.Read<nint>(FieldArea.Base) + FieldArea.DrawTiles1;
+            memoryService.Write(ptr, isEnabled);
         }
 
         public void ToggleDrawMapTiles2(bool isEnabled)
         {
-            var ptr = memoryService.ReadInt64(FieldArea.Base) + FieldArea.DrawTiles2;
-            memoryService.WriteUInt8((IntPtr)ptr, isEnabled ? 1 : 0);
+            var ptr = memoryService.Read<nint>(FieldArea.Base) + FieldArea.DrawTiles2;
+            memoryService.Write(ptr, isEnabled);
         }
 
         public void ToggleDrawMiniMap(bool isEnabled)
         {
             var ptr = memoryService.FollowPointers(FieldArea.Base,
                 [FieldArea.WorldInfoOwner, FieldArea.WorldInfoOwnerOffsets.ShouldDrawMiniMap], false);
-            memoryService.WriteUInt8(ptr, isEnabled ? 1 : 0);
+            memoryService.Write(ptr, isEnabled);
         }
 
         public void ToggleHideChr(bool isEnabled) =>
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowChrs, isEnabled ? 0 : 1);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowChrs,
+                isEnabled ? (byte)0 : (byte)1);
 
         public void ToggleHideMap(bool isEnabled)
         {
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom, isEnabled ? 0 : 1);
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap, isEnabled ? 0 : 1);
-            memoryService.WriteUInt8(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap2, isEnabled ? 0 : 1);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowGeom,
+                isEnabled ? (byte)0 : (byte)1);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap,
+                isEnabled ? (byte)0 : (byte)1);
+            memoryService.Write(GroupMask.Base + (int)GroupMask.GroupMasks.ShouldShowMap2,
+                isEnabled ? (byte)0 : (byte)1);
         }
 
         public void ToggleDrawTilesOnMap(bool isEnabled) =>
-            memoryService.WriteUInt8(MapDebugFlags.Base + MapDebugFlags.ShowMapTiles, isEnabled ? 1 : 0);
+            memoryService.Write(MapDebugFlags.Base + MapDebugFlags.ShowMapTiles, isEnabled);
 
         private IntPtr GetDbgCamCoordsPtr() =>
             memoryService.FollowPointers(FieldArea.Base,

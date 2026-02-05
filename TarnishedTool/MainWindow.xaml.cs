@@ -114,7 +114,7 @@ namespace TarnishedTool
             );
 
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(
-                itemService, _stateService, eventService,
+                itemService, _stateService,
                 paramService, paramRepository, spEffectService, playerService,
                 hotkeyManager, gameTickService, reminderService, aiService,
                 utilityService, chrInsService
@@ -167,7 +167,6 @@ namespace TarnishedTool
         }
 
         private bool _loaded;
-        private bool _hasScanned;
         private bool _hasAllocatedMemory;
         private bool _appliedOneTimeFeatures;
         private bool _hasPublishedLoaded;
@@ -206,13 +205,7 @@ namespace TarnishedTool
                     _hasCheckedPatch = true;
                 }
 
-                if (!_hasScanned)
-                {
-                    _aobScanner.Scan();
-                    _hasScanned = true;
-                }
-
-
+                
                 if (!_hasAllocatedMemory)
                 {
                     _memoryService.AllocCodeCave();
@@ -251,7 +244,6 @@ namespace TarnishedTool
             }
             else
             {
-                _hasScanned = false;
                 _hasCheckedPatch = false;
                 _loaded = false;
                 _attachedTime = null;
@@ -267,12 +259,11 @@ namespace TarnishedTool
         }
 
         private bool IsFadedIn() =>
-            _memoryService.ReadUInt8((IntPtr)_memoryService.ReadInt64(MenuMan.Base) + MenuMan.IsFading) == 0;
+            _memoryService.Read<byte>(_memoryService.Read<nint>(MenuMan.Base) + MenuMan.IsFading) == 0;
 
         private void CheckIfGameStart()
         {
-            var igt = _memoryService.ReadUInt32(
-                (IntPtr)_memoryService.ReadInt64(GameDataMan.Base) + GameDataMan.Igt);
+            var igt = _memoryService.Read<uint>(_memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.Igt);
             if (igt < 5000) _stateService.Publish(State.OnNewGameStart);
         }
 

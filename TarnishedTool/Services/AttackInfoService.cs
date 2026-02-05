@@ -54,34 +54,34 @@ public class AttackInfoService(IMemoryService memoryService, HookManager hookMan
         for (int slot = 0; slot < StructCount; slot++)
         {
             var baseAddr = CodeCaveOffsets.Base + CodeCaveOffsets.AttackInfoStart + (slot * StructSize);
-            int writeComplete = memoryService.ReadInt32(baseAddr + 0x4);
+            int writeComplete = memoryService.Read<int>(baseAddr + 0x4);
             if (writeComplete != 1) continue;
 
-            int id = memoryService.ReadInt32(baseAddr);
+            int id = memoryService.Read<int>(baseAddr);
             if (id <= _lastProcessedId) continue;
 
             var info = new AttackInfo
             {
                 MyId = id,
-                RawPhysicalDamage = memoryService.ReadFloat(baseAddr + 0x8),
-                RawMagicDamage = memoryService.ReadFloat(baseAddr + 0xC),
-                RawFireDamage = memoryService.ReadFloat(baseAddr + 0x10),
-                RawLightningDamage = memoryService.ReadFloat(baseAddr + 0x14),
-                RawHolyDamage = memoryService.ReadFloat(baseAddr + 0x18),
-                PoiseDamage = memoryService.ReadFloat(baseAddr + 0x20),
-                PhysicalAttackType = (PhysicalAttackType)memoryService.ReadUInt8(baseAddr + 0x24),
-                TotalDamage = memoryService.ReadInt32(baseAddr + 0x28),
-                FireDamage = memoryService.ReadInt32(baseAddr + 0x2C),
-                MagicDamage = memoryService.ReadInt32(baseAddr + 0x30),
-                LightningDamage = memoryService.ReadInt32(baseAddr + 0x34),
-                HolyDamage = memoryService.ReadInt32(baseAddr + 0x38),
-                EnemyId = memoryService.ReadInt32(baseAddr + 0x3C)
+                RawPhysicalDamage = memoryService.Read<float>(baseAddr + 0x8),
+                RawMagicDamage = memoryService.Read<float>(baseAddr + 0xC),
+                RawFireDamage = memoryService.Read<float>(baseAddr + 0x10),
+                RawLightningDamage = memoryService.Read<float>(baseAddr + 0x14),
+                RawHolyDamage = memoryService.Read<float>(baseAddr + 0x18),
+                PoiseDamage = memoryService.Read<float>(baseAddr + 0x20),
+                PhysicalAttackType = (PhysicalAttackType)memoryService.Read<byte>(baseAddr + 0x24),
+                TotalDamage = memoryService.Read<int>(baseAddr + 0x28),
+                FireDamage = memoryService.Read<int>(baseAddr + 0x2C),
+                MagicDamage = memoryService.Read<int>(baseAddr + 0x30),
+                LightningDamage = memoryService.Read<int>(baseAddr + 0x34),
+                HolyDamage = memoryService.Read<int>(baseAddr + 0x38),
+                EnemyId = memoryService.Read<int>(baseAddr + 0x3C)
             };
             results.Add(info);
             if (id > _lastProcessedId)
                 _lastProcessedId = id;
 
-            memoryService.WriteInt32(baseAddr + 0x4, 0);
+            memoryService.Write(baseAddr + 0x4, 0);
         }
 
         results.Sort((a, b) => a.MyId.CompareTo(b.MyId));
