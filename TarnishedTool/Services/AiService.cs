@@ -103,7 +103,7 @@ public class AiService : IAiService
         var head = _memoryService.Read<nint>(spEffectObserveComponent + ChrIns.AiThinkOffsets.SpEffectObserve.Head);
         var next = _memoryService.Read<nint>(head + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Next);
 
-        while (next != head)
+        while (next != head && next != 0)
         {
             var target = _memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.Target);
             var spEffectId = _memoryService.Read<int>(next + ChrIns.AiThinkOffsets.SpEffectObserveEntry.SpEffectId);

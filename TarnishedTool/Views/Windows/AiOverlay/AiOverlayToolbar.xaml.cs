@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -33,12 +34,18 @@ public partial class AiOverlayToolbar : Window
         _overlayFactories = new()
         {
             [GoalsCheckBox] = () => new GoalsOverlayWindow(_viewModel, () => OnOverlayClosed(GoalsCheckBox)),
-            [CoolTimesCheckBox] = () => new CoolTimesOverlayWindow(_viewModel, () => OnOverlayClosed(CoolTimesCheckBox)),
-            [LuaTimersCheckBox] = () => new LuaTimersOverlayWindow(_viewModel, () => OnOverlayClosed(LuaTimersCheckBox)),
-            [LuaNumbersCheckBox] = () => new LuaNumbersOverlayWindow(_viewModel, () => OnOverlayClosed(LuaNumbersCheckBox)),
-            [SpEffectObservesCheckBox] = () => new SpEffectObserversOverlayWindow(_viewModel, () => OnOverlayClosed(SpEffectObservesCheckBox)),
-            [InterruptsCheckBox] = () => new InterruptsOverlayWindow(_viewModel, () => OnOverlayClosed(InterruptsCheckBox)),
-            [SpEffectsCheckBox] = () => new SpEffectsOverlayWindow(_viewModel, () => OnOverlayClosed(SpEffectsCheckBox)),
+            [CoolTimesCheckBox] =
+                () => new CoolTimesOverlayWindow(_viewModel, () => OnOverlayClosed(CoolTimesCheckBox)),
+            [LuaTimersCheckBox] =
+                () => new LuaTimersOverlayWindow(_viewModel, () => OnOverlayClosed(LuaTimersCheckBox)),
+            [LuaNumbersCheckBox] = () =>
+                new LuaNumbersOverlayWindow(_viewModel, () => OnOverlayClosed(LuaNumbersCheckBox)),
+            [SpEffectObservesCheckBox] = () =>
+                new SpEffectObserversOverlayWindow(_viewModel, () => OnOverlayClosed(SpEffectObservesCheckBox)),
+            [InterruptsCheckBox] = () =>
+                new InterruptsOverlayWindow(_viewModel, () => OnOverlayClosed(InterruptsCheckBox)),
+            [SpEffectsCheckBox] =
+                () => new SpEffectsOverlayWindow(_viewModel, () => OnOverlayClosed(SpEffectsCheckBox)),
         };
         _viewModelSetters = new()
         {
@@ -57,8 +64,8 @@ public partial class AiOverlayToolbar : Window
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         LoadSettings();
-        
-        
+
+
         IntPtr hwnd = new WindowInteropHelper(this).Handle;
         User32.SetTopmost(hwnd);
 
@@ -73,32 +80,31 @@ public partial class AiOverlayToolbar : Window
         foreach (var cb in _overlayFactories.Keys)
             if (cb.IsChecked == true)
                 OpenOverlay(cb);
-        
+
         if (Application.Current.MainWindow != null)
         {
             Application.Current.MainWindow.Closing += (sender, args) => { Close(); };
         }
-        
     }
 
     private void LoadSettings()
     {
         if (SettingsManager.Default.AiOverlayToolbarLeft > 0)
             Left = SettingsManager.Default.AiOverlayToolbarLeft;
-        
+
         if (SettingsManager.Default.AiOverlayToolbarTop > 0)
             Top = SettingsManager.Default.AiOverlayToolbarTop;
     }
-    
+
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);
-        
+
         SettingsManager.Default.AiOverlayToolbarLeft = Left;
         SettingsManager.Default.AiOverlayToolbarTop = Top;
         SettingsManager.Default.Save();
     }
-    
+
     private void CheckBox_Changed(object sender, RoutedEventArgs e)
     {
         if (sender is not CheckBox cb) return;
@@ -144,11 +150,16 @@ public partial class AiOverlayToolbar : Window
         foreach (var cb in _viewModelSetters.Keys) cb.IsChecked = false;
     }
 
-    private void Exit_Click(object sender, RoutedEventArgs e)
+    private void Exit_Click(object sender, RoutedEventArgs e) => Close();
+
+    protected override void OnClosed(EventArgs e)
     {
-        foreach (var overlay in _openOverlays.Values) overlay.Close();
+        base.OnClosed(e);
+
+        foreach (var overlay in _openOverlays.Values.ToList())
+            overlay.Close();
         _openOverlays.Clear();
+
         _onExit?.Invoke();
-        Close();
     }
 }
