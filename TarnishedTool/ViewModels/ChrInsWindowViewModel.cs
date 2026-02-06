@@ -8,63 +8,35 @@ using System.Numerics;
 using System.Windows.Data;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
-using TarnishedTool.Models;
 using TarnishedTool.Utilities;
-using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels;
 
 internal class ChrInsWindowViewModel : BaseViewModel
 {
-    private readonly IAiService _aiService;
     private readonly IStateService _stateService;
     private readonly IGameTickService _gameTickService;
     private readonly IPlayerService _playerService;
     private readonly IChrInsService _chrInsService;
-    private readonly ISpEffectService _spEffectService;
+    private readonly IAiWindowService _aiWindowService;
 
     private readonly Dictionary<int, string> _chrNames;
-    private readonly Dictionary<int, string> _aiInterruptEnums;
-
-    private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
-
-    private readonly Dictionary<int, GoalInfo> _goalInfos;
 
     private readonly Dictionary<long, ChrInsEntry> _entriesByHandle = new();
 
-    private readonly Dictionary<nint, AiWindow> _openAiWindows = new();
-    private const int MaxAiWindows = 3;
-
     public static readonly int[] DummyChrIds = [100, 1000];
-    
-    
 
-    public ChrInsWindowViewModel(IAiService aiService, IStateService stateService, IGameTickService gameTickService,
-        IPlayerService playerService, IChrInsService chrInsService, ISpEffectService spEffectService)
+    public ChrInsWindowViewModel(IStateService stateService, IGameTickService gameTickService,
+        IPlayerService playerService, IChrInsService chrInsService, IAiWindowService aiWindowService)
     {
-        _aiService = aiService;
         _stateService = stateService;
         _gameTickService = gameTickService;
         _playerService = playerService;
         _chrInsService = chrInsService;
-        _spEffectService = spEffectService;
+        _aiWindowService = aiWindowService;
 
-        _goalInfos = DataLoader.LoadGoalInfo();
         _chrNames = DataLoader.GetSimpleDict("ChrNames", int.Parse, s => s);
-        var aiTargetEnums = DataLoader.GetSimpleDict("AiTargetEnum", int.Parse, s => s);
-        _aiInterruptEnums = DataLoader.GetSimpleDict("AiInterruptEnum", int.Parse, s => s);
-        var aiGoalResulEnums = DataLoader.GetSimpleDict("AiGoalResultEnum", int.Parse, s => s);
-        var aiGuardGoalEnums = DataLoader.GetSimpleDict("AiGuardGoalEnum", int.Parse, s => s);
-        var aiDirTypeEnums = DataLoader.GetSimpleDict("AiDirTypeEnum", int.Parse, s => s);
 
-        _enumDicts = new Dictionary<string, Dictionary<int, string>>
-        {
-            ["target"] = aiTargetEnums,
-            ["dirtype"] = aiDirTypeEnums,
-            ["goalresult"] = aiGoalResulEnums,
-            ["guardresult"] = aiGuardGoalEnums
-        };
-        
         _chrInsView = (ListCollectionView)CollectionViewSource.GetDefaultView(ChrInsEntries);
         _chrInsView.Filter = ChrInsFilter;
     }
@@ -99,11 +71,12 @@ internal class ChrInsWindowViewModel : BaseViewModel
                 _chrInsService.SetSelected(value.ChrIns, true);
         }
     }
-    
+
     private readonly ListCollectionView _chrInsView;
     public ICollectionView ChrInsView => _chrInsView;
-    
+
     private string _chrInsSearchText;
+
     public string ChrInsSearchText
     {
         get => _chrInsSearchText;
@@ -126,10 +99,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private void OnGameNotLoaded()
     {
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
-        foreach (var window in _openAiWindows.Values.ToList())
-        {
-            window.Close();
-        }
+        _aiWindowService.CloseAllAiWindows(); 
     }
 
     private void ChrInsEntriesTick()
@@ -201,32 +171,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
         }
     }
 
-    private void OpenAiWindow(ChrInsEntry entry)
-    {
-        if (entry == null) return;
-        var chrIns = entry.ChrIns;
-
-        if (_openAiWindows.TryGetValue(chrIns, out var existing))
-        {
-            existing.Activate();
-            return;
-        }
-
-        if (_openAiWindows.Count >= MaxAiWindows)
-        {
-            MsgBox.Show("Only 3 AI windows can be open at once, close one to open another", "Too many AI windows");
-            return;
-        }
-
-        var window = new AiWindow();
-        var vm = new AiWindowViewModel(_aiService, _gameTickService, _goalInfos, entry, _enumDicts,
-            _aiInterruptEnums, _aiService.GetAiThinkPtr(chrIns), _spEffectService, window);
-        window.DataContext = vm;
-        window.Closed += (_, _) => _openAiWindows.Remove(chrIns);
-        _openAiWindows[chrIns] = window;
-        window.Show();
-    }
-
     private void HandleEntryOptionChanged(ChrInsEntry entry, string propertyName, bool value)
     {
         switch (propertyName)
@@ -258,7 +202,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
                 _playerService.MoveToPosition(targetPosition);
                 break;
             case nameof(ChrInsEntry.OpenAiWindowCommand):
-                OpenAiWindow(entry);
+                _aiWindowService.OpenAiWindow(entry);
                 break;
             case nameof(ChrInsEntry.KillChrCommand):
                 _chrInsService.SetHp(entry.ChrIns, 0);
@@ -274,7 +218,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
         entry.IsNoMoveEnabled = _chrInsService.IsNoMoveEnabled(entry.ChrIns);
         entry.IsNoDamageEnabled = _chrInsService.IsNoDamageEnabled(entry.ChrIns);
     }
-    
+
     private bool ChrInsFilter(object obj)
     {
         if (obj is not ChrInsEntry e) return false;
@@ -286,8 +230,6 @@ internal class ChrInsWindowViewModel : BaseViewModel
                || e.ChrId.ToString().Contains(s);
     }
 
-    
-    
     #endregion
 
     #region Public Methods
@@ -305,11 +247,8 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _stateService.Unsubscribe(State.NotLoaded, OnGameNotLoaded);
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
 
-        foreach (var window in _openAiWindows.Values.ToList())
-        {
-            window.Close();
-        }
-
+        _aiWindowService.CloseAllAiWindows();
+        
         SelectedChrInsEntry = null;
         _entriesByHandle.Clear();
         ChrInsEntries.Clear();

@@ -44,7 +44,7 @@ public class AdvancedViewModel : BaseViewModel
         IParamService paramService, IParamRepository paramRepository, ISpEffectService spEffectService,
         IPlayerService playerService, HotkeyManager hotkeyManager, IGameTickService gameTickService,
         IReminderService reminderService, IAiService aiService, IUtilityService utilityService,
-        IChrInsService chrInsService)
+        IChrInsService chrInsService, IAiWindowService aiWindowService)
     {
         _itemService = itemService;
         _spEffectService = spEffectService;
@@ -70,7 +70,7 @@ public class AdvancedViewModel : BaseViewModel
         SelectedEquipType = EquipTypes[0].Value;
 
         _paramEditorViewModel = new ParamEditorViewModel(paramRepository, paramService, reminderService);
-        _chrInsWindowViewModel = new ChrInsWindowViewModel(aiService, stateService, gameTickService, playerService, chrInsService, spEffectService);
+        _chrInsWindowViewModel = new ChrInsWindowViewModel(stateService, gameTickService, playerService, chrInsService, aiWindowService);
     }
 
     

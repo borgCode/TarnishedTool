@@ -16,7 +16,7 @@ namespace TarnishedTool.ViewModels
     {
         private bool _customHpHasBeenSet = true;
 
-        private long _currentTargetChrIns;
+        private nint _currentTargetChrIns;
 
         private float _targetDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
@@ -40,13 +40,14 @@ namespace TarnishedTool.ViewModels
         private readonly ISpEffectService _spEffectService;
         private readonly IEmevdService _emevdService;
         private readonly IGameTickService _gameTickService;
+        private readonly IAiWindowService _aiWindowService;
 
         private DateTime _forceActSequenceLastExecuted = DateTime.MinValue;
         private static readonly TimeSpan ForceActSequenceCooldown = TimeSpan.FromSeconds(2);
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
             IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService,
-            IEmevdService emevdService, IGameTickService gameTickService)
+            IEmevdService emevdService, IGameTickService gameTickService, IAiWindowService aiWindowService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
@@ -58,6 +59,7 @@ namespace TarnishedTool.ViewModels
             _spEffectService = spEffectService;
             _emevdService = emevdService;
             _gameTickService = gameTickService;
+            _aiWindowService = aiWindowService;
             RegisterHotkeys();
 
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -117,6 +119,7 @@ namespace TarnishedTool.ViewModels
                 else
                 {
                     _gameTickService.Unsubscribe(TargetTick);
+                    CloseTargetAiWindow();
                     IsRepeatActEnabled = false;
                     ShowAllResistances = false;
                     IsResistancesWindowOpen = false;
@@ -671,6 +674,21 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
+        
+        private bool _isShowAiInfoEnabled;
+
+        public bool IsShowAiInfoEnabled
+        {
+            get => _isShowAiInfoEnabled;
+            set
+            {
+                if (SetProperty(ref _isShowAiInfoEnabled, value))
+                {
+                    if (_isShowAiInfoEnabled) OpenAiWindow();
+                    else CloseTargetAiWindow();
+                }
+            }
+        }
 
         private float _dist;
 
@@ -726,6 +744,7 @@ namespace TarnishedTool.ViewModels
             IsDisableAllExceptTargetEnabled = false;
             _targetService.ToggleNoHeal(false);
             _enemyService.UnhookForceAct();
+            IsShowAiInfoEnabled = false;
         }
 
         private void RegisterHotkeys()
@@ -901,7 +920,7 @@ namespace TarnishedTool.ViewModels
             }
 
             IsValidTarget = true;
-            long chrIns = _targetService.GetTargetChrIns();
+            nint chrIns = _targetService.GetTargetChrIns();
             if (chrIns != _currentTargetChrIns)
             {
 #if DEBUG
@@ -935,6 +954,9 @@ namespace TarnishedTool.ViewModels
 
                 IsFreezeHealthEnabled = _targetService.IsNoDamageEnabled();
                 _targetService.ToggleNoHeal(IsFreezeHealthEnabled);
+
+                if (IsShowAiInfoEnabled) UpdateAiWindow(_currentTargetChrIns, chrIns);
+                    
                 _currentTargetChrIns = chrIns;
                 MaxPoise = _targetService.GetMaxPoise();
 
@@ -980,6 +1002,7 @@ namespace TarnishedTool.ViewModels
                 _spEffectViewModel.RefreshEffects(spEffects);
             }
         }
+        
 
         private void UpdateImmunities()
         {
@@ -1183,6 +1206,31 @@ namespace TarnishedTool.ViewModels
             var entityId = _targetService.GetEntityId();
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ResetCharacterPosition(entityId));
         }
+        
+        private void OpenAiWindow()
+        {
+            var chrInsEntry = CreateChrInsEntry(_currentTargetChrIns);
+            
+            _aiWindowService.OpenAiWindow(chrInsEntry);
+        }
+        
+        private void UpdateAiWindow(nint oldTarget, nint newTarget)
+        {
+            var newEntry = CreateChrInsEntry(newTarget);
+            _aiWindowService.UpdateAiWindow(oldTarget, newEntry);
+        }
+        
+        private ChrInsEntry CreateChrInsEntry(nint currentTargetChrIns)
+        {
+            return new ChrInsEntry(currentTargetChrIns)
+            {
+                ChrId = _targetService.GetNpcChrId(),
+                NpcParamId = _targetService.GetNpcParamId(),
+                NpcThinkParamId = _targetService.GetNpcThinkParamId(),
+                Name = "Current Target"
+            };
+        }
+        private void CloseTargetAiWindow() => _aiWindowService.CloseSpecificWindow(_currentTargetChrIns);
 
         #endregion
 

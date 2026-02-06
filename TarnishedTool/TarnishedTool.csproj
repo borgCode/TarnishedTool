@@ -255,6 +255,7 @@
         <Compile Include="GameIds\ParamIndicies.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAiService.cs" />
+        <Compile Include="Interfaces\IAiWindowService.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IChrInsService.cs" />
         <Compile Include="Interfaces\IDlcService.cs" />
@@ -315,6 +316,7 @@
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />
         <Compile Include="Services\AiService.cs" />
+        <Compile Include="Services\AiWindowService.cs" />
         <Compile Include="Services\AttackInfoService.cs" />
         <Compile Include="Services\ChrInsService.cs" />
         <Compile Include="Services\DlcService.cs" />

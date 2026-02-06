@@ -574,8 +574,17 @@
                                 </CheckBox.IsEnabled>
                             </CheckBox>
 
+                            <CheckBox Grid.Row="3" Grid.Column="0" Content="Show AI Info" Margin="0,2,0,2"
+                                      IsChecked="{Binding IsShowAiInfoEnabled}">
+                                <CheckBox.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </CheckBox.IsEnabled>
+                            </CheckBox>
                             
-                            <CheckBox Grid.Row="3" Grid.Column="0" Content="Repeat Last Act" Margin="0,2,0,2"
+                            <CheckBox Grid.Row="4" Grid.Column="0" Content="Repeat Last Act" Margin="0,2,0,2"
                                       IsChecked="{Binding IsRepeatActEnabled}">
                                 <CheckBox.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
