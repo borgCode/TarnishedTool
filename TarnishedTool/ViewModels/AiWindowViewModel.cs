@@ -21,7 +21,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     private readonly Dictionary<string, Dictionary<int, string>> _enumDicts;
     private readonly Dictionary<int, string> _aiTargetEnums;
     private readonly Dictionary<int, string> _aiInterruptEnums;
-    private readonly nint _aiThink;
+    private nint _aiThink;
     private readonly ISpEffectService _spEffectService;
     private readonly AiWindow _parentWindow;
     private AiOverlayToolbar _overlayToolbar;
@@ -62,7 +62,12 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
     
     #region Properties
 
-    public ChrInsEntry ChrInsEntry { get; }
+    private ChrInsEntry _chrInsEntry;
+    public ChrInsEntry ChrInsEntry 
+    { 
+        get => _chrInsEntry;
+        set => SetProperty(ref _chrInsEntry, value);
+    }
 
     private GoalViewModel _topGoal;
 
@@ -472,6 +477,24 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         if (_isShowInterruptsEnabled)
             _aiService.UnregisterInterruptListener(UpdateInterrupt);
     }
+    
+    public void UpdateTarget(ChrInsEntry newEntry)
+    {
+        ChrInsEntry = newEntry;
+        
+        _aiThink = _aiService.GetAiThinkPtr(newEntry.ChrIns);
+        
+        TopGoal = null;
+        InterruptHistory.Clear();
+        CoolTimes.Clear();
+        SpEffectObserves.Clear();
+        _lastInterrupts = 0;
+
+        _goalDict.TryGetValue(_aiService.GetMainScriptGoalId(_aiThink), out var goalInfo);
+        if (goalInfo != null) ScriptName = goalInfo.GoalName;
+    }
 
     #endregion
+
+    
 }
