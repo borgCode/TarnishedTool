@@ -35,7 +35,7 @@ This tool offers plenty of features such as:
 * No Clip (works with keyboard and mouse)
 * Free Cam.
 * Rendering Settings such as: Hitbox View, Event view, Sound view, Ragdolls, High/Low Hit, Map Tiles, and more.
-* Open various menus and shops from anywhere
+* Opening various menus and shops from anywhere.
 * Applying / Remove Special Effects as well as seeing active Special Effects on player
 * Item Spawn / Mass Spawn / Item preset creation (With the ability to spawn a loadout or a weapon on game start)
 * Changing Weather & Day Time.
