@@ -28,6 +28,7 @@ public class AdvancedViewModel : BaseViewModel
     
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
+    private readonly IReminderService _reminderService;
     private readonly IAiService _aiService;
 
     private readonly IUtilityService _utilityService;
@@ -51,6 +52,7 @@ public class AdvancedViewModel : BaseViewModel
         _playerService = playerService;
         _hotkeyManager = hotkeyManager;
         _gameTickService = gameTickService;
+        _reminderService = reminderService;
         _aiService = aiService;
         _utilityService = utilityService;
 
@@ -293,6 +295,7 @@ public class AdvancedViewModel : BaseViewModel
         };
 
         _utilityService.PatchDebugFont();
+        _reminderService.TrySetReminder();
         _chrInsWindow.Show();
         _chrInsWindowViewModel.NotifyWindowOpen();
     }
@@ -316,6 +319,7 @@ public class AdvancedViewModel : BaseViewModel
         var content = File.ReadAllText(dialog.FileName).Replace("\r\n", "\n");
         var scriptWithNullTermination = Encoding.UTF8.GetBytes(content + '\0');
 
+        _reminderService.TrySetReminder();
         _aiService.InjectAiScript(scriptWithNullTermination);
         
     }
