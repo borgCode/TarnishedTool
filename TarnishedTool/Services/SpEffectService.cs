@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using static TarnishedTool.Memory.Offsets;
@@ -11,6 +12,8 @@ namespace TarnishedTool.Services;
 
 public class SpEffectService(IMemoryService memoryService, IReminderService reminderService) : ISpEffectService
 {
+    private const int SpEffectEntrySize = 0x50;
+    
     public void ApplySpEffect(nint chrIns, uint spEffectId)
     {
         var bytes = AsmLoader.GetAsmBytes("SetSpEffect");
@@ -59,13 +62,18 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         
         while (current != IntPtr.Zero)
         {
-            int id = memoryService.Read<int>(current + (int)ChrIns.SpEffectEntry.Id);
-            float timeLeft = memoryService.Read<float>(current + (int)ChrIns.SpEffectEntry.TimeLeft);
-            float duration = memoryService.Read<float>(current + (int)ChrIns.SpEffectEntry.Duration);
-            var paramData = memoryService.Read<nint>(current);
+            var entry = new MemoryBlock(memoryService.ReadBytes(current, SpEffectEntrySize));
+    
+            int id = entry.Get<int>((int)ChrIns.SpEffectEntry.Id);
+            float timeLeft = entry.Get<float>((int)ChrIns.SpEffectEntry.TimeLeft);
+            float duration = entry.Get<float>((int)ChrIns.SpEffectEntry.Duration);
+            nint paramData = entry.Get<nint>(0);
+            nint next = entry.Get<nint>((int)ChrIns.SpEffectEntry.Next);
+    
             ushort stateInfo = memoryService.Read<ushort>(paramData + (int)ChrIns.SpEffectParamData.StateInfo);
+    
             spEffectList.Add(new SpEffectEntry(id, timeLeft, duration, stateInfo));
-            current = memoryService.Read<nint>(current + (int)ChrIns.SpEffectEntry.Next);
+            current = next;
         }
         
         return spEffectList;

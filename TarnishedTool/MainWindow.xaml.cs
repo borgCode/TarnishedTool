@@ -60,7 +60,7 @@ namespace TarnishedTool
             ITargetService targetService =
                 new TargetService(_memoryService, hookManager, playerService, reminderService, chrInsService);
             IEnemyService enemyService = new EnemyService(_memoryService, hookManager, reminderService);
-            ISettingsService settingsService = new SettingsService(_memoryService, hookManager);
+            ISettingsService settingsService = new SettingsService(_memoryService);
             IEzStateService ezStateService = new EzStateService(_memoryService);
             IItemService itemService = new ItemService(_memoryService);
             ISpEffectService spEffectService = new SpEffectService(_memoryService, reminderService);

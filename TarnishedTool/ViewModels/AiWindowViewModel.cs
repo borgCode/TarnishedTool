@@ -288,14 +288,15 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
 
         for (int i = 0; i < goal.Params.Length; i++)
         {
-            if (goal.Params[i] == 0) continue;
+            var hasDef = info != null && i < info.ParamNames.Count;
 
-            var paramDef = (info != null && i < info.ParamNames.Count)
+            if (!hasDef && goal.Params[i] == 0) continue;
+
+            var paramDef = hasDef
                 ? info.ParamNames[i]
                 : new GoalParamDef($"param{i}", ParamType.Float, null);
 
             var displayValue = FormatParamValue(paramDef, goal.Params[i]);
-
             yield return new GoalParamViewModel { Label = paramDef.Name, Value = displayValue };
         }
     }

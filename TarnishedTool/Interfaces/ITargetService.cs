@@ -2,6 +2,7 @@
 
 using System;
 using System.Numerics;
+using TarnishedTool.Models;
 
 namespace TarnishedTool.Interfaces;
 
@@ -38,7 +39,7 @@ public interface ITargetService
     void KillAllBesidesTarget();
     void ToggleDisableAllExceptTarget(bool isEnabled);
     int GetNpcThinkParamId();
-    int GetResistance(int offset);
+    ResistanceData GetAllResistances();
     bool[] GetImmunities();
     float[] GetDefenses();
     float GetDist();
