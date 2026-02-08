@@ -119,7 +119,10 @@ namespace TarnishedTool.ViewModels
                 else
                 {
                     _gameTickService.Unsubscribe(TargetTick);
-                    CloseTargetAiWindow();
+                    IsShowAiInfoEnabled = false;
+                    IsShowDefensesEnabled = false;
+                    IsShowAttackInfoEnabled = false;
+                    IsShowSpEffectEnabled = false;
                     IsRepeatActEnabled = false;
                     ShowAllResistances = false;
                     IsResistancesWindowOpen = false;
