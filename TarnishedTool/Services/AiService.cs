@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using static TarnishedTool.Memory.Offsets;
@@ -139,16 +140,18 @@ public class AiService : IAiService
         var coolTimeCount = _memoryService.Read<int>(attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeCount);
         if (coolTimeCount == 0) return new List<CoolTimeEntry>();
 
-        var coolTimeList = new List<CoolTimeEntry>();
         var listStart = attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeList;
+        var block = new MemoryBlock(_memoryService.ReadBytes(listStart, coolTimeCount * CoolTimeListStride));
+        
+        var coolTimeList = new List<CoolTimeEntry>(coolTimeCount);
         for (var i = 0; i < coolTimeCount; i++)
         {
-            var animationId = _memoryService.Read<int>(listStart + i * CoolTimeListStride);
-            var timeSinceLastAttack = _memoryService.Read<float>(
-                listStart + ChrIns.AiThinkOffsets.CoolTimeItem.TimeSinceLastAttack + i * CoolTimeListStride);
-            var coolDown = _memoryService.Read<float>(
-                listStart + ChrIns.AiThinkOffsets.CoolTimeItem.Cooldown + i * CoolTimeListStride);
-            coolTimeList.Add(new CoolTimeEntry(animationId, timeSinceLastAttack, coolDown));
+            var offset = i * CoolTimeListStride;
+            coolTimeList.Add(new CoolTimeEntry(
+                block.Get<int>(offset),
+                block.Get<float>(offset + ChrIns.AiThinkOffsets.CoolTimeItem.TimeSinceLastAttack),
+                block.Get<float>(offset + ChrIns.AiThinkOffsets.CoolTimeItem.Cooldown)
+            ));
         }
 
         return coolTimeList;

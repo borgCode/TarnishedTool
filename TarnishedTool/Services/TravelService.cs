@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using System.Threading;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;

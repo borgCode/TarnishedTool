@@ -1,13 +1,11 @@
 ﻿// 
 
-using System;
 using TarnishedTool.Interfaces;
-using TarnishedTool.Memory;
 using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class SettingsService(IMemoryService memoryService, HookManager hookManager) : ISettingsService
+public class SettingsService(IMemoryService memoryService) : ISettingsService
 {
     public void Quitout() =>
         memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
