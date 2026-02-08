@@ -26,6 +26,8 @@ namespace TarnishedTool.Services
         private const float LevelUpCostIncrease = 0.02f;
         private const float LevelUpIncreaseInterval = 92f;
         private const int BaseLevelOffset = 80;
+        
+        private const int StatsBlockSize = 0x20;
 
         private readonly Position[] _positions =
         [
@@ -175,14 +177,16 @@ namespace TarnishedTool.Services
                 tableIndex, slotIndex, src, 0x4);
 
 
-            var srcPosX = memoryService.Read<float>(row + 0x08);
-            var srcPosY = memoryService.Read<float>(row + 0x0C);
-            var srcPosZ = memoryService.Read<float>(row + 0x10);
-            var dstGridXNo = memoryService.Read<byte>(row + 0x15);
-            var dstGridZNo = memoryService.Read<byte>(row + 0x16);
-            var dstPosX = memoryService.Read<float>(row + 0x18);
-            var dstPosY = memoryService.Read<float>(row + 0x1C);
-            var dstPosZ = memoryService.Read<float>(row + 0x20);
+            var block = new MemoryBlock(memoryService.ReadBytes(row, 0x24));
+
+            var srcPosX = block.Get<float>(0x08);
+            var srcPosY = block.Get<float>(0x0C);
+            var srcPosZ = block.Get<float>(0x10);
+            var dstGridXNo = block.Get<byte>(0x15);
+            var dstGridZNo = block.Get<byte>(0x16);
+            var dstPosX = block.Get<float>(0x18);
+            var dstPosY = block.Get<float>(0x1C);
+            var dstPosZ = block.Get<float>(0x20);
 
 
             return new Vector3(
@@ -424,18 +428,21 @@ namespace TarnishedTool.Services
 
         public Stats GetStats()
         {
-            Stats stats = new Stats();
-            var gameData = GetGameDataPtr();
-            stats.Vigor = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Vigor);
-            stats.Mind = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Mind);
-            stats.Endurance = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Endurance);
-            stats.Strength = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Strength);
-            stats.Dexterity = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Dexterity);
-            stats.Intelligence =
-                memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Intelligence);
-            stats.Faith = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Faith);
-            stats.Arcane = memoryService.Read<int>(gameData + (int)GameDataMan.PlayerGameDataOffsets.Arcane);
-            return stats;
+            const int statsStart = (int)GameDataMan.PlayerGameDataOffsets.Vigor;
+            var ptr = GetGameDataPtr() + statsStart;
+            var block = new MemoryBlock(memoryService.ReadBytes(ptr, StatsBlockSize));
+
+            return new Stats
+            {
+                Vigor = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Vigor - statsStart),
+                Mind = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Mind - statsStart),
+                Endurance = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Endurance - statsStart),
+                Strength = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Strength - statsStart),
+                Dexterity = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Dexterity - statsStart),
+                Intelligence = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Intelligence - statsStart),
+                Faith = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Faith - statsStart),
+                Arcane = block.Get<int>((int)GameDataMan.PlayerGameDataOffsets.Arcane - statsStart),
+            };
         }
 
         public void SetStat(int offset, int newValue)
