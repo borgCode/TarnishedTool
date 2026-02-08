@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -83,5 +84,67 @@ public partial class CreateLoadoutWindow : Window
         {
             vm.AddItemCommand.Execute(null);
         }
+    }
+
+    private void AddToLoadout_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = (CreateLoadoutViewModel)DataContext;
+        var listView = FindItemsListView(this);
+        if (listView != null)
+        {
+            var selected = listView.SelectedItems.Cast<Item>().ToList();
+            foreach (var item in selected)
+            {
+                vm.ItemSelection.SelectedItem = item;
+                vm.AddItemCommand.Execute(null);
+            }
+        }
+    }
+
+    private void RemoveFromLoadout_Click(object sender, RoutedEventArgs e)
+    {
+        var vm = (CreateLoadoutViewModel)DataContext;
+        var listView = FindLoadoutItemsListView(this);
+        if (listView != null)
+        {
+            var selected = listView.SelectedItems.Cast<ItemTemplate>().ToList();
+            foreach (var item in selected)
+            {
+                vm.SelectedLoadoutItem = item;
+                vm.RemoveItemCommand.Execute(null);
+            }
+        }
+    }
+
+    private ListView FindItemsListView(DependencyObject parent)
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, i);
+            if (child is ListView listView && listView.ItemsSource == ((CreateLoadoutViewModel)DataContext).ItemSelection.Items)
+            {
+                return listView;
+            }
+
+            var result = FindItemsListView(child);
+            if (result != null) return result;
+        }
+        return null;
+    }
+
+    private ListView FindLoadoutItemsListView(DependencyObject parent)
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+        {
+            var child = VisualTreeHelper.GetChild(parent, i);
+            if (child is ListView listView && listView.ItemsSource == ((CreateLoadoutViewModel)DataContext).CurrentLoadoutItems)
+            {
+                return listView;
+            }
+
+            var result = FindLoadoutItemsListView(child);
+            if (result != null) return result;
+        }
+        return null;
     }
 }

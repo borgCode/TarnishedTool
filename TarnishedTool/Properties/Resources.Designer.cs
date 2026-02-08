@@ -462,6 +462,7 @@ namespace TarnishedTool.Properties {
         ///104
         ///105
         ///106
+        ///
         ///.
         /// </summary>
         internal static string BaseGestures {
@@ -679,10 +680,9 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 111
         ///112
-        ///113
         ///114
         ///115
-        ///116.
+        ///.
         /// </summary>
         internal static string DlcGestures {
             get {

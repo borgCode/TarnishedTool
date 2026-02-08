@@ -52,6 +52,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
 
         SavePositionCommand = new DelegateCommand(SavePosition);
         ImportWarpsCommand = new DelegateCommand(ImportWarps);
+        ExportWarpsCommand = new DelegateCommand(ExportWarps);
         DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
     }
 
@@ -59,6 +60,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
 
     public ICommand SavePositionCommand { get; }
     public ICommand ImportWarpsCommand { get; }
+    public ICommand ExportWarpsCommand { get; }
     public ICommand DeleteCategoryCommand { get; }
 
     #endregion
@@ -258,13 +260,50 @@ public class CreateCustomWarpViewModel : BaseViewModel
         return newName;
     }
 
+    private void ExportWarps()
+    {
+        if (CustomWarps.GroupedItems.Count == 0)
+        {
+            MsgBox.Show("No custom warps to export.");
+            return;
+        }
+
+        var dialog = new Microsoft.Win32.SaveFileDialog
+        {
+            Filter = "JSON files (*.json)|*.json",
+            Title = "Export Custom Warps",
+            FileName = "CustomWarps.json"
+        };
+
+        if (dialog.ShowDialog() != true) return;
+
+        try
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(CustomWarps.GroupedItems, options);
+            File.WriteAllText(dialog.FileName, json);
+
+            int totalWarps = 0;
+            foreach (var category in CustomWarps.GroupedItems.Values)
+            {
+                totalWarps += category.Count;
+            }
+
+            MsgBox.Show(
+                $"Exported {CustomWarps.GroupedItems.Count} category{(CustomWarps.GroupedItems.Count != 1 ? "s" : "")} ({totalWarps} warp{(totalWarps != 1 ? "s" : "")}).");
+        }
+        catch (Exception ex)
+        {
+            MsgBox.Show($"Failed to export warps: {ex.Message}");
+        }
+    }
+
     private void DeleteCategory()
     {
         var category = CustomWarps.SelectedGroup;
         CustomWarps.RemoveGroup(category);
         _onChange?.Invoke(new CategoryDeleted(category));
     }
-    
 
     #endregion
 
@@ -277,7 +316,7 @@ public class CreateCustomWarpViewModel : BaseViewModel
             CustomWarps.Remove(warp.MainArea, warp);
             _onChange?.Invoke(new WarpDeleted(warp.MainArea, warp));
         }
-        
+
         CustomWarps.SelectedItem = null;
     }
 

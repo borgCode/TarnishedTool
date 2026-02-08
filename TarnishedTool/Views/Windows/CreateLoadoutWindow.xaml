@@ -46,6 +46,8 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0"
@@ -74,6 +76,18 @@
                     <Button Grid.Column="4"
                             Content="Delete"
                             Command="{Binding DeleteLoadoutCommand}"
+                            Padding="10,3"
+                            Margin="0,0,5,0" />
+
+                    <Button Grid.Column="5"
+                            Content="Import"
+                            Command="{Binding ImportLoadoutCommand}"
+                            Padding="10,3"
+                            Margin="0,0,5,0" />
+
+                    <Button Grid.Column="6"
+                            Content="Export"
+                            Command="{Binding ExportLoadoutCommand}"
                             Padding="10,3" />
                 </Grid>
             </Border>
@@ -125,7 +139,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    
+
                     <StackPanel Grid.Row="2" Margin="0,10,0,0">
                         <Grid Margin="0,0,0,5">
                             <Grid.ColumnDefinitions>
@@ -177,7 +191,7 @@
                         </StackPanel>
 
                         <Button Content="Add To Loadout"
-                                Command="{Binding AddItemCommand}"
+                                Click="AddToLoadout_Click"
                                 Height="25"
                                 Margin="0,10,0,0" />
                     </StackPanel>
@@ -246,6 +260,7 @@
                             BorderBrush="#333">
                         <ListView ItemsSource="{Binding ItemSelection.Items}"
                                   SelectedItem="{Binding ItemSelection.SelectedItem}"
+                                  SelectionMode="Extended"
                                   VirtualizingPanel.IsVirtualizing="True"
                                   VirtualizingPanel.VirtualizationMode="Recycling"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -321,6 +336,7 @@
                     <ListView Grid.Row="1"
                               ItemsSource="{Binding CurrentLoadoutItems}"
                               SelectedItem="{Binding SelectedLoadoutItem}"
+                              SelectionMode="Extended"
                               BorderThickness="1"
                               BorderBrush="#333">
                         <ListView.ItemContainerStyle>
@@ -382,13 +398,15 @@
                     </ListView>
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
-                        <Button Content="Remove"
-                                Command="{Binding RemoveItemCommand}"
-                                Padding="10,3"
-                                Margin="0,0,10,0" />
-                        <Button Content="Save &amp; Close"
-                                Click="SaveButton_Click"
-                                Padding="10,3" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
+                            <Button Content="Remove"
+                                    Click="RemoveFromLoadout_Click"
+                                    Padding="10,3"
+                                    Margin="0,0,10,0" />
+                            <Button Content="Save &amp; Close"
+                                    Click="SaveButton_Click"
+                                    Padding="10,3" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Grid>
