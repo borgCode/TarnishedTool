@@ -2,8 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Models;
@@ -30,7 +28,6 @@ public class AiService : IAiService
 
     #region Public Methods
 
-    
     public nint GetTopGoal(nint aiThink) =>
         _memoryService.Read<nint>(aiThink + ChrIns.AiThinkOffsets.TopGoal);
 
@@ -138,7 +135,7 @@ public class AiService : IAiService
     public List<CoolTimeEntry> GetCoolTimeItemList(nint aiThink)
     {
         var attackComp = aiThink + ChrIns.AiThinkOffsets.AiAttackComp;
-   
+
         var coolTimeCount = _memoryService.Read<int>(attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeCount);
         if (coolTimeCount == 0) return new List<CoolTimeEntry>();
 
@@ -146,8 +143,6 @@ public class AiService : IAiService
         var listStart = attackComp + ChrIns.AiThinkOffsets.AttackComp.CoolTimeList;
         for (var i = 0; i < coolTimeCount; i++)
         {
-      
-     
             var animationId = _memoryService.Read<int>(listStart + i * CoolTimeListStride);
             var timeSinceLastAttack = _memoryService.Read<float>(
                 listStart + ChrIns.AiThinkOffsets.CoolTimeItem.TimeSinceLastAttack + i * CoolTimeListStride);
@@ -155,6 +150,7 @@ public class AiService : IAiService
                 listStart + ChrIns.AiThinkOffsets.CoolTimeItem.Cooldown + i * CoolTimeListStride);
             coolTimeList.Add(new CoolTimeEntry(animationId, timeSinceLastAttack, coolDown));
         }
+
         return coolTimeList;
     }
 
@@ -170,13 +166,13 @@ public class AiService : IAiService
     {
         var bytes = AsmLoader.GetAsmBytes("LuaDoString");
         var luaState = _memoryService.FollowPointers(WorldAiManagerImp.Base, WorldAiManagerImp.LuaState, true);
-        
+
         var scriptPtr = _memoryService.AllocateMem((uint)script.Length);
         _memoryService.WriteBytes(scriptPtr, script);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
-        (luaState, 0x0 + 2),
-        (scriptPtr, 0xA + 2),
-        (Functions.LuaDoString, 0x14 + 2)
+            (luaState, 0x0 + 2),
+            (scriptPtr, 0xA + 2),
+            (Functions.LuaDoString, 0x14 + 2)
         ]);
         _memoryService.AllocateAndExecute(bytes);
         _memoryService.FreeMem(scriptPtr);

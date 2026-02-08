@@ -8,7 +8,6 @@ using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Utilities;
 using TarnishedTool.Views.Windows;
-using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.ViewModels
 {
@@ -875,7 +874,7 @@ namespace TarnishedTool.ViewModels
         private void SetCustomHp()
         {
             if (!_customHpHasBeenSet) return;
-            var (CustomHp, error) = parseCustomHp();
+            var (CustomHp, error) = ParseCustomHp();
             if (CustomHp == null)
             {
                 MsgBox.Show(error, "Invalid Input");
@@ -889,9 +888,8 @@ namespace TarnishedTool.ViewModels
                 _targetService.SetHp(CustomHp.Value);
             }
         }
-
-/* hp percentage test */
-        private (int? value, string error) parseCustomHp()
+        
+        private (int? value, string error) ParseCustomHp()
         {
             var input = CustomHp?.Trim();
             if (string.IsNullOrEmpty(input))
@@ -976,16 +974,8 @@ namespace TarnishedTool.ViewModels
 
             Dist = _targetService.GetDist();
 
-            CurrentPoison = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.PoisonCurrent);
-            MaxPoison = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.PoisonMax);
-            CurrentRot = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.RotCurrent);
-            MaxRot = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.RotMax);
-            CurrentBleed = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.BleedCurrent);
-            MaxBleed = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.BleedMax);
-            CurrentFrost = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.FrostCurrent);
-            MaxFrost = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.FrostMax);
-            CurrentSleep = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.SleepCurrent);
-            MaxSleep = _targetService.GetResistance((int)ChrIns.ChrResistOffsets.SleepMax);
+            UpdateResistances();
+            
 
             if (IsShowAttackInfoEnabled)
             {
@@ -1002,7 +992,21 @@ namespace TarnishedTool.ViewModels
                 _spEffectViewModel.RefreshEffects(spEffects);
             }
         }
-        
+
+        private void UpdateResistances()
+        {
+            var resistData = _targetService.GetAllResistances();
+            CurrentPoison = resistData.PoisonCurrent;
+            MaxPoison = resistData.PoisonMax;
+            CurrentRot = resistData.RotCurrent;
+            MaxRot = resistData.RotMax;
+            CurrentBleed = resistData.BleedCurrent;
+            MaxBleed = resistData.BleedMax;
+            CurrentFrost = resistData.FrostCurrent;
+            MaxFrost = resistData.FrostMax;
+            CurrentSleep = resistData.SleepCurrent;
+            MaxSleep = resistData.SleepMax;
+        }
 
         private void UpdateImmunities()
         {

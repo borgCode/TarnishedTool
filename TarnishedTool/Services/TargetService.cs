@@ -2,6 +2,7 @@
 using System.Numerics;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
+using TarnishedTool.Models;
 using TarnishedTool.Utilities;
 using static TarnishedTool.Memory.Offsets;
 
@@ -187,8 +188,9 @@ namespace TarnishedTool.Services
                 hookManager.UninstallHook(code.ToInt64());
             }
         }
+        
+        public ResistanceData GetAllResistances() => chrInsService.GetAllResistances(GetTargetChrIns());
 
-        public int GetResistance(int offset) => chrInsService.GetResistance(GetTargetChrIns(), offset);
         public bool[] GetImmunities() => chrInsService.GetImmunities(GetTargetChrIns());
         public float[] GetDefenses() => chrInsService.GetDefenses(GetTargetChrIns());
         public float GetDist() => chrInsService.GetDistBetweenChrs(playerService.GetPlayerIns(), GetTargetChrIns());

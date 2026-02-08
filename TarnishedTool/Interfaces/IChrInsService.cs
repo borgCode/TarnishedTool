@@ -39,6 +39,7 @@ public interface IChrInsService
     float[] GetDefenses(nint chrIns);
     bool[] GetImmunities(nint chrIns);
     int GetResistance(nint chrIns, int offset);
+    ResistanceData GetAllResistances(nint chrIns);
     uint GetEntityId(nint chrIns);
     int GetNpcThinkParamId(nint chrIns);
     float GetDistBetweenChrs(nint chrIns1, nint chrIns2);

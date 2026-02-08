@@ -15,6 +15,7 @@ namespace TarnishedTool.Services;
 public class ChrInsService(IMemoryService memoryService) : IChrInsService
 {
     public const int ChrInsEntrySize = 0x8;
+    public const int ResistBlockSize = 0x44;
 
     #region Public Methods
 
@@ -169,6 +170,24 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     }
 
     public int GetResistance(nint chrIns, int offset) => memoryService.Read<int>(GetChrResistPtr(chrIns) + offset);
+    public ResistanceData GetAllResistances(nint chrIns)
+    {
+        var ptr = GetChrResistPtr(chrIns);
+        var block = new MemoryBlock(memoryService.ReadBytes(ptr, ResistBlockSize));
+        return new ResistanceData(
+            block.Get<int>((int)ChrIns.ChrResistOffsets.PoisonCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.PoisonMax),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.RotCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.RotMax),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.BleedCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.BleedMax),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.FrostCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.FrostMax),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.SleepCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.SleepMax)
+        );
+    }
+
     public uint GetEntityId(nint chrIns) => memoryService.Read<uint>(chrIns + ChrIns.EntityId);
 
     public int GetNpcThinkParamId(nint chrIns) =>
