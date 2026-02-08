@@ -25,8 +25,8 @@ namespace TarnishedTool.ViewModels
         private readonly IUtilityService _utilityService;
         private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
-        
-        
+
+
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
 
@@ -69,7 +69,8 @@ namespace TarnishedTool.ViewModels
             SetNightCommand = new DelegateCommand(SetNight);
             SetWeatherCommand = new DelegateCommand(SetWeather);
 
-            _baseGameGestureIds = DataLoader.GetSimpleList("BaseGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
+            _baseGameGestureIds =
+                DataLoader.GetSimpleList("BaseGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
             _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
 
             SelectedWeatherType = WeatherTypes.FirstOrDefault();
@@ -244,13 +245,13 @@ namespace TarnishedTool.ViewModels
         }
 
         public IReadOnlyList<Weather> WeatherTypes { get; } = DataLoader.GetWeatherTypes().ToList();
-        
+
         private Weather _selectedWeatherType;
 
         public Weather SelectedWeatherType
         {
             get => _selectedWeatherType;
-            set => SetProperty(ref _selectedWeatherType,value);
+            set => SetProperty(ref _selectedWeatherType, value);
         }
 
         #endregion
@@ -317,7 +318,8 @@ namespace TarnishedTool.ViewModels
 
             string trimmedFlagId = SetFlagId.Trim();
 
-            if (!long.TryParse(trimmedFlagId, NumberStyles.Integer, CultureInfo.InvariantCulture, out long flagIdValue) || flagIdValue <= 0)
+            if (!long.TryParse(trimmedFlagId, NumberStyles.Integer, CultureInfo.InvariantCulture,
+                    out long flagIdValue) || flagIdValue <= 0)
                 return;
 
             _eventService.SetEvent(flagIdValue, FlagStateIndex == 0);
@@ -326,7 +328,8 @@ namespace TarnishedTool.ViewModels
         private void GetEvent()
         {
             if (string.IsNullOrWhiteSpace(GetFlagId)) return;
-            if (!long.TryParse(GetFlagId.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out long flagIdValue) || flagIdValue <= 0) return;
+            if (!long.TryParse(GetFlagId.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture,
+                    out long flagIdValue) || flagIdValue <= 0) return;
 
             var isOn = _eventService.GetEvent(flagIdValue);
             (EventStatusText, EventStatusColor) = isOn ? ("True", OnColor) : ("False", OffColor);
@@ -382,7 +385,9 @@ namespace TarnishedTool.ViewModels
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
-        private void SetWeather() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType.Type));
+
+        private void SetWeather() =>
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType.Type));
 
         private void OpenEventLogWindow()
         {

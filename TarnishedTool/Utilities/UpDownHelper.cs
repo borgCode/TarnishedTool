@@ -85,6 +85,9 @@ public class UpDownHelper<T> where T : struct
             _setValue(_upDown.Value.Value);
         }
         _upDown.Focus();
+        _resumeUpdates?.Invoke();
         e.Handled = true;
     }
+    
+    
 }
