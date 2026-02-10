@@ -6,7 +6,7 @@
 <p>Tarnished Tool is an offline practice tool for Elden Ring mainly catered towards Challenge Runners, Hitless Runners & Speedrunners with support for all game patches (1.02 all the way to 1.16.1) It also provides a bunch of quality of life options for modders.</p>
 
 [![Latest Release](https://img.shields.io/github/v/release/borgCode/TarnishedTool.svg)](https://github.com/borgCode/TarnishedTool/releases/latest)
-[![All Releases](https://img.shields.io/github/downloads/borgCode/TarnishedTool/total.svg)](https://github.com/borgCode/TarnishedTool/releases/download/v1.0.4/TarnishedTool.exe)
+[![All Releases](https://img.shields.io/github/downloads/borgCode/TarnishedTool/total.svg)](https://github.com/borgCode/TarnishedTool/releases/download/v1.0.5/TarnishedTool.exe)
 [![Report Issues](https://img.shields.io/github/issues/borgCode/TarnishedTool.svg)](https://github.com/borgCode/TarnishedTool/issues)
 
 **This tool is strictly for offline use only, it directly manipulates game memory which violates the Terms of Service and will most likely lead to a ban if you use this online.**
