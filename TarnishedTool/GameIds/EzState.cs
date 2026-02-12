@@ -49,7 +49,7 @@ public static class EzState
         public static TalkCommand OpenDialog(int type, int textId, int result, int style, int unk) =>
             new(17, [type, textId, result, style, unk]);
 
-        public static readonly TalkCommand OpenUpgrade = new(24, [1]);
+        public static readonly TalkCommand OpenUpgrade = new(24, [0]);
         public static readonly TalkCommand LevelUp = new(31, []);
         public static readonly TalkCommand OpenAttunement = new(28, [-1, -1]);
         public static readonly TalkCommand OpenChest = new(30, []);
