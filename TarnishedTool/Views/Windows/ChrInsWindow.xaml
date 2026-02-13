@@ -92,18 +92,27 @@
                  ItemsSource="{Binding ChrInsView}"
                  SelectedItem="{Binding SelectedChrInsEntry}"
                  VirtualizingPanel.IsVirtualizing="True"
-                 VirtualizingPanel.VirtualizationMode="Recycling">
+                 VirtualizingPanel.VirtualizationMode="Recycling"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Expander IsExpanded="{Binding IsExpanded}" Expanded="Expander_Expanded">
+                    <Expander IsExpanded="{Binding IsExpanded}"
+                              Expanded="Expander_Expanded"
+                              HorizontalAlignment="Stretch"
+                              Margin="0,4,0,4">
                         <Expander.Header>
                             <TextBlock Text="{Binding ChrInsHeader}" />
                         </Expander.Header>
-                        <Grid>
+                        <Grid Width="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=ActualWidth}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="195" />
                             </Grid.ColumnDefinitions>
                             <StackPanel Margin="20,5,0,5">
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
@@ -126,20 +135,32 @@
                                     <Button Content="Warp" Command="{Binding WarpCommand}" />
                                     <Button Content="Open Goals" Command="{Binding OpenAiWindowCommand}"
                                             Margin="5,0,0,0" />
+                                    <Button Content="Set HP" Command="{Binding SetHpCommand}" Margin="5,0,0,0" />
                                     <Button Content="Kill" Command="{Binding KillChrCommand}"
                                             Margin="5,0,0,0" />
                                 </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <TextBlock FontSize="16" Text="Dist:" Margin="40,10,0,0" />
-                                <TextBlock Text="{Binding Distance, StringFormat={}{0:F2}}" FontSize="16"
-                                           TextAlignment="Right" Margin="5,10,0,0" />
-
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10,5,0,0">
+                                <!-- Hp/MaxHp -->
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontSize="15" Text="HP:" />
+                                    <TextBlock Text="{Binding CurrentHp, StringFormat={}{0:N0}}" FontSize="15"
+                                               Margin="5,0,0,0" />
+                                    <TextBlock Text="/" FontSize="15" Margin="2,0,2,0" />
+                                    <TextBlock Text="{Binding MaxHp, StringFormat={}{0:N0}}" FontSize="15" />
+                                </StackPanel>
+                                <!-- Dist -->
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <TextBlock FontSize="15" Text="Dist:" />
+                                    <TextBlock Text="{Binding Distance, StringFormat={}{0:F2}}" FontSize="15"
+                                               TextAlignment="Right" Margin="5,0,0,0" />
+                                </StackPanel>
                             </StackPanel>
 
+
                             <TextBox Grid.Column="2"
-                                     Margin="10,0,0,0"
+                                     Margin="0,0,15,0"
                                      Text="{Binding ChrInsIds, Mode=OneWay}"
                                      IsReadOnly="True"
                                      Background="Transparent"
@@ -152,7 +173,6 @@
                     </Expander>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-
         </ListBox>
 
     </Grid>

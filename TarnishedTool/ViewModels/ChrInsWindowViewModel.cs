@@ -1,8 +1,10 @@
 ﻿// 
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Data;
@@ -99,7 +101,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
     private void OnGameNotLoaded()
     {
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
-        _aiWindowService.CloseAllAiWindows(); 
+        _aiWindowService.CloseAllAiWindows();
     }
 
     private void ChrInsEntriesTick()
@@ -138,6 +140,9 @@ internal class ChrInsWindowViewModel : BaseViewModel
                             PositionUtils.ToAbsolute(_chrInsService.GetLocalCoords(existingEntry.ChrIns), entryBlockId);
                         existingEntry.Distance = Vector3.Distance(playerAbsolute, entryAbsolute);
                     }
+
+                    existingEntry.CurrentHp = _chrInsService.GetCurrentHp(existingEntry.ChrIns);
+                    existingEntry.MaxHp = _chrInsService.GetMaxHp(existingEntry.ChrIns);
                 }
 
                 continue;
@@ -156,6 +161,8 @@ internal class ChrInsWindowViewModel : BaseViewModel
             entry.EntityId = _chrInsService.GetEntityId(entry.ChrIns);
             entry.Handle = handle;
             entry.NpcParamId = _chrInsService.GetNpcParamId(entry.ChrIns);
+            entry.CurrentHp = _chrInsService.GetCurrentHp(entry.ChrIns);
+            entry.MaxHp = _chrInsService.GetMaxHp(entry.ChrIns);
 
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);
@@ -207,6 +214,9 @@ internal class ChrInsWindowViewModel : BaseViewModel
             case nameof(ChrInsEntry.KillChrCommand):
                 _chrInsService.SetHp(entry.ChrIns, 0);
                 break;
+            case nameof(ChrInsEntry.SetHpCommand):
+                HandleSetHp(entry);
+                break;
         }
     }
 
@@ -218,6 +228,46 @@ internal class ChrInsWindowViewModel : BaseViewModel
         entry.IsNoMoveEnabled = _chrInsService.IsNoMoveEnabled(entry.ChrIns);
         entry.IsNoDamageEnabled = _chrInsService.IsNoDamageEnabled(entry.ChrIns);
     }
+
+    private void HandleSetHp(ChrInsEntry entry)
+    {
+        var input = MsgBox.ShowInput(
+            "Enter HP (number or percentage, e.g. 5000 or 50%)",
+            "",
+            "Set Hp");
+
+        if (string.IsNullOrEmpty(input))
+            return;
+        input = input.Trim();
+
+        int targetHp;
+
+        if (input.EndsWith("%"))
+        {
+            if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
+            {
+                targetHp = (int)(percent / 100.0 * entry.MaxHp);
+            }
+            else
+            {
+                MsgBox.Show("Invalid percentage format", "Error");
+                return;
+            }
+        }
+        else if (int.TryParse(input, NumberStyles.Integer, CultureInfo.InvariantCulture, out var absolute))
+        {
+            targetHp = absolute;
+        }
+        else
+        {
+            MsgBox.Show("Enter a number or percentage (e.g., 5000 or 50%)", "Error");
+            return;
+        }
+
+        targetHp = Math.Min(targetHp, entry.MaxHp);
+        _chrInsService.SetHp(entry.ChrIns, targetHp);
+    }
+
 
     private bool ChrInsFilter(object obj)
     {
@@ -248,7 +298,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
         _gameTickService.Unsubscribe(ChrInsEntriesTick);
 
         _aiWindowService.CloseAllAiWindows();
-        
+
         SelectedChrInsEntry = null;
         _entriesByHandle.Clear();
         ChrInsEntries.Clear();
