@@ -50,26 +50,40 @@
                        VerticalAlignment="Center"/>
             
             <StackPanel Grid.Row="2" 
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Right"
-                        Margin="10,5,10,10">
-                
-                <Button x:Name="OkButton" 
-                        Content="OK" 
-                        Width="75" 
-                        Height="26"
-                        Margin="0,0,8,0"
-                        Click="OkButton_Click"
-                     />
-                
-                <Button x:Name="CancelButton" 
-                        Content="Cancel" 
-                        Width="75" 
-                        Height="26"
-                        Click="CancelButton_Click"
-                        
-                        Visibility="Collapsed"/>
-            </StackPanel>
+            Orientation="Horizontal" 
+            HorizontalAlignment="Right"
+            Margin="10,5,10,10">
+    
+    <Button x:Name="YesButton" 
+            Content="Yes" 
+            Width="75" 
+            Height="26"
+            Margin="0,0,8,0"
+            Click="YesButton_Click"
+            Visibility="Collapsed"/>
+    
+    <Button x:Name="NoButton" 
+            Content="No" 
+            Width="75" 
+            Height="26"
+            Margin="0,0,8,0"
+            Click="NoButton_Click"
+            Visibility="Collapsed"/>
+    
+    <Button x:Name="OkButton" 
+            Content="OK" 
+            Width="75" 
+            Height="26"
+            Margin="0,0,8,0"
+            Click="OkButton_Click"/>
+    
+    <Button x:Name="CancelButton" 
+            Content="Cancel" 
+            Width="75" 
+            Height="26"
+            Click="CancelButton_Click"
+            Visibility="Collapsed"/>
+</StackPanel>
         </Grid>
     </Border>
 

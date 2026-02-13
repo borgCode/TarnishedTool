@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TarnishedTool.Core;
@@ -440,7 +441,7 @@ public class EnemyViewModel : BaseViewModel
         _emevdService.ExecuteEmevdCommand(
             Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, WindAnimationId));
     }
-    
+
     private void ForceLionMiniBossLightningPhase()
     {
         _reminderService.TrySetReminder();
@@ -481,7 +482,44 @@ public class EnemyViewModel : BaseViewModel
         foreach (var bossRevive in BossRevives.AllItems)
             SetBossFlags(bossRevive, isFirstEncounter: false);
 
-        _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+        // Find nearest boss to warp to
+        var playerBlockId = _playerService.GetBlockId();
+        var bossesInBlock = BossRevives.AllItems.Where(b =>
+            b.BlockId == playerBlockId ||
+            (b.BossBlockIds != null && b.BossBlockIds.Contains(playerBlockId))).ToList();
+
+
+        if (bossesInBlock.Any())
+        {
+            // Check Map Coords to decide who is the closest boss
+            var mapLocation = _playerService.GetMapLocation();
+            var playerMapPos = mapLocation.MapCoords;
+
+            // Message Box to warn the player
+            var result = MsgBox.ShowYesNo(
+                "Player is inside or close to a boss room. Would you like to warp? Note that it might not match the boss you were fighting.",
+                "Warp Confirmation");
+            if (!result)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+            }
+            else
+            {
+                var closestBoss = bossesInBlock
+                    .OrderBy(b => CalculateDistance(playerMapPos, b.Position.Coords))
+                    .First();
+
+                // Switch to night if closest boss needs it
+                if (closestBoss.ShouldSetNight)
+                    _shouldSetNight = true;
+
+                _ = Task.Run(() => _travelService.WarpToBlockId(closestBoss.Position));
+            }
+        }
+        else
+        {
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+        }
     }
 
     private void ReviveAllBossesAsFirstEncounter()
@@ -489,7 +527,49 @@ public class EnemyViewModel : BaseViewModel
         foreach (var bossRevive in BossRevives.AllItems)
             SetBossFlags(bossRevive, isFirstEncounter: true);
 
-        _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+        // Find nearest boss to warp to
+        var playerBlockId = _playerService.GetBlockId();
+        var bossesInBlock = BossRevives.AllItems.Where(b =>
+            b.BlockId == playerBlockId ||
+            (b.BossBlockIds != null && b.BossBlockIds.Contains(playerBlockId))).ToList();
+
+        if (bossesInBlock.Any())
+        {
+            // Check Map Coords to decide who is the closest boss
+            var mapLocation = _playerService.GetMapLocation();
+            var playerMapPos = mapLocation.MapCoords;
+
+            // Message Box to warn the player
+            var result = MsgBox.ShowYesNo(
+                "Player is inside or close to a boss room. Would you like to warp? Note that it might not match the boss you were fighting.",
+                "Warp Confirmation");
+            if (!result)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+                return;
+            }
+
+            var playerPos = _playerService.GetPlayerPos();
+            var closestBoss = bossesInBlock
+                .OrderBy(b => CalculateDistance(playerMapPos, b.PositionFirstEncounter.Coords))
+                .First();
+
+            // Switch to night if closest boss needs it
+            if (closestBoss.ShouldSetNight)
+                _shouldSetNight = true;
+
+            _ = Task.Run(() => _travelService.WarpToBlockId(closestBoss.PositionFirstEncounter));
+        }
+        else
+        {
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+        }
+    }
+
+    // Calculate what boss is closest to warp to
+    private float CalculateDistance(Vector3 pos1, Vector3 pos2)
+    {
+        return Vector3.Distance(pos1, pos2);
     }
 
     private void SetBossFlags(BossRevive bossRevive, bool isFirstEncounter)
