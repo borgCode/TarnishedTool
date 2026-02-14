@@ -308,7 +308,7 @@
                                     </MultiBinding>
                                 </Button.IsEnabled>
                             </Button>
-                            
+
                             <Button Content="Lightning"
                                     Command="{Binding SetLionMiniBossLightningPhaseCommand}"
                                     Margin="10,0,0,0">
@@ -545,6 +545,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
@@ -554,19 +555,22 @@
                             <Button Grid.Row="0" Grid.Column="0" Content="Revive Boss"
                                     Command="{Binding ReviveBossCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Margin="0,5, 20, 5" />
+                                    Margin="0,2, 20, 2" />
                             <Button Grid.Row="0" Grid.Column="1" Content="Revive Boss as First Encounter"
                                     Command="{Binding ReviveBossFirstEncounterCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Margin="0,2" />
+                                    Margin="0,2,20,2" />
                             <Button Grid.Row="1" Grid.Column="0" Content="Revive All Bosses"
                                     Command="{Binding ReviveAllBossesCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Margin="0,0, 20, 5" />
+                                    Margin="0,3, 20, 2" />
                             <Button Grid.Row="1" Grid.Column="1" Content="Revive All Bosses as First Encounter"
                                     Command="{Binding ReviveAllBossesAsFirstEncounterCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
-                                    Margin="0,2" />
+                                    Margin="0,3, 20, 2" />
+                            <CheckBox Grid.Row="1" Grid.Column="2"  Content="Rest on Revive"
+                                      IsChecked="{Binding IsRestOnReviveEnabled}"
+                                      Margin="0,2" />
                         </Grid>
                     </StackPanel>
                 </Border>

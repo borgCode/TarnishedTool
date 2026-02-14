@@ -33,7 +33,7 @@ public static class MsgBox
         box.ShowDialog();
         return box.Result;
     }
-    
+
     /// <summary>
     /// Shows a single input dialog.
     /// </summary>
@@ -53,5 +53,18 @@ public static class MsgBox
         var box = new InputBox(fields, title);
         box.ShowDialog();
         return box.Result ? box.GetValues() : null;
+    }
+
+    /// <summary>
+    /// Shows a message box with Yes and No buttons.
+    /// </summary>
+    /// <param name="message">The message to display.</param>
+    /// <param name="title">The title of the message box.</param>
+    /// <returns>True if Yes was clicked, false if No was clicked.</returns>
+    public static bool ShowYesNo(string message, string title = "Message")
+    {
+        var box = new CustomMessageBox(message, title, showYesNo: true);
+        box.ShowDialog();
+        return box.Result;
     }
 }

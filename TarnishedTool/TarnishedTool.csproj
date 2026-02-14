@@ -439,6 +439,9 @@
         <Compile Include="Views\Windows\AiOverlay\SpEffectsOverlayWindow.xaml.cs">
           <DependentUpon>SpEffectsOverlayWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\BossSelectionWindow.xaml.cs">
+          <DependentUpon>BossSelectionWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\ChrInsWindow.xaml.cs">
           <DependentUpon>ChrInsWindow.xaml</DependentUpon>
         </Compile>
@@ -518,6 +521,7 @@
         <Page Include="Views\Windows\AiOverlay\LuaTimersOverlayWindow.xaml" />
         <Page Include="Views\Windows\AiOverlay\SpEffectObserversOverlayWindow.xaml" />
         <Page Include="Views\Windows\AiOverlay\SpEffectsOverlayWindow.xaml" />
+        <Page Include="Views\Windows\BossSelectionWindow.xaml" />
         <Page Include="Views\Windows\ChrInsWindow.xaml" />
         <Page Include="Views\Windows\AttackInfoWindow.xaml" />
         <Page Include="Views\Windows\CreateCustomWarpWindow.xaml" />
