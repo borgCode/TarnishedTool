@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -73,7 +74,7 @@ namespace TarnishedTool.Services
 
         private void WriteInAirTimer(IntPtr inAirTimerCode)
         {
-            var codeBytes = AsmLoader.GetAsmBytes("NoClip_InAirTimer");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_InAirTimer);
             var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
             Array.Copy(bytes, 0, codeBytes, 0x1 + 2, 8);
 
@@ -88,7 +89,7 @@ namespace TarnishedTool.Services
 
         private void WriteKbCode(IntPtr kbCode)
         {
-            var codeBytes = AsmLoader.GetAsmBytes("NoClip_Keyboard");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_Keyboard);
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
 
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
@@ -104,7 +105,7 @@ namespace TarnishedTool.Services
 
         private void WriteTriggerCode(IntPtr triggersCode)
         {
-            var codeBytes = AsmLoader.GetAsmBytes("NoClip_Triggers");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_Triggers);
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
@@ -117,7 +118,7 @@ namespace TarnishedTool.Services
 
         private void WriteUpdateCoords(IntPtr updateCoordsCode)
         {
-            var codeBytes = AsmLoader.GetAsmBytes("NoClip_UpdateCoords");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_UpdateCoords);
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
             var speedScale = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.SpeedScale;
 
@@ -175,7 +176,7 @@ namespace TarnishedTool.Services
 
         private void WriteJumpIntercept(IntPtr jumpInterceptCode)
         {
-            var bytes = AsmLoader.GetAsmBytes("NoClip_JumpHook");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_JumpHook);
             memoryService.WriteBytes(jumpInterceptCode, bytes);
         }
 

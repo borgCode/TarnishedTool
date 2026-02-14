@@ -240,6 +240,7 @@ public class ItemViewModel : BaseViewModel
             !_itemsByCategory.ContainsKey(SelectedMassSpawnCategory))
             return;
 
+        
         var items = _itemsByCategory[SelectedMassSpawnCategory];
         var hasDlc = _dlcService.IsDlcAvailable;
 

@@ -1,5 +1,6 @@
 ﻿// 
 
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -24,7 +25,7 @@ public class ItemService(IMemoryService memoryService) : IItemService
         memoryService.Write(itemStruct + 0x4C, -1);
         memoryService.Write(itemStruct + 0x50, aowId);
 
-        var bytes = AsmLoader.GetAsmBytes("ItemSpawn");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ItemSpawn);
         AsmHelper.WriteRelativeOffsets(bytes, new []
         {
             (code.ToInt64() + 0x4, itemStruct.ToInt64(), 7, 0x4 + 3),

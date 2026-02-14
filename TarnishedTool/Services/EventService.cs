@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -12,7 +13,7 @@ namespace TarnishedTool.Services
         
         public void SetEvent(long eventId, bool flagValue)
         {
-            var bytes = AsmLoader.GetAsmBytes("SetEvent");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.SetEvent);
             AsmHelper.WriteAbsoluteAddresses(bytes, [
                 (memoryService.Read<nint>(VirtualMemFlag.Base), 0x4 + 2 ),
                 (eventId, 0xE + 2),
@@ -25,7 +26,7 @@ namespace TarnishedTool.Services
         public bool GetEvent(long flagId)
         {
             var result = CodeCaveOffsets.Base + CodeCaveOffsets.GetEventResult;
-            var bytes = AsmLoader.GetAsmBytes("GetEvent");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.GetEvent);
             AsmHelper.WriteAbsoluteAddresses(bytes, [
                 (memoryService.Read<nint>(VirtualMemFlag.Base), 0x0 + 2),
                 (flagId, 0xA + 2),
@@ -65,7 +66,7 @@ namespace TarnishedTool.Services
             var code = CodeCaveOffsets.Base + CodeCaveOffsets.EventLogCode;
             if (isEnabled)
             {
-                var bytes = AsmLoader.GetAsmBytes("EventLogHook");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.EventLogHook);
                 var writeIndex = CodeCaveOffsets.Base + CodeCaveOffsets.EventLogWriteIndex;
                 var buffer = CodeCaveOffsets.Base + CodeCaveOffsets.EventLogBuffer;
                 var hookLoc = Functions.SetEvent;

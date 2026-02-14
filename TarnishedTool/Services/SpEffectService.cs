@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -16,7 +17,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
     
     public void ApplySpEffect(nint chrIns, uint spEffectId)
     {
-        var bytes = AsmLoader.GetAsmBytes("SetSpEffect");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.SetSpEffect);
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
             (chrIns, 0x0 + 2),
@@ -29,7 +30,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
     public void RemoveSpEffect(nint chrIns, uint spEffectId)
     {
         var specialEffect = memoryService.Read<nint>(chrIns + ChrIns.SpecialEffect);
-        var bytes = AsmLoader.GetAsmBytes("RemoveSpEffect");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.RemoveSpEffect);
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
             (specialEffect, 0x0 + 2),

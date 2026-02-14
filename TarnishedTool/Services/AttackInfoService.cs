@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -25,7 +26,7 @@ public class AttackInfoService(IMemoryService memoryService, HookManager hookMan
             var writeIndex = CodeCaveOffsets.Base + CodeCaveOffsets.AttackInfoWriteIndex;
             var attackInfoStart = CodeCaveOffsets.Base + CodeCaveOffsets.AttackInfoStart;
             var hookLoc = Hooks.AttackInfo;
-            var bytes = AsmLoader.GetAsmBytes("SaveAttackInfo");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.SaveAttackInfo);
             Array.Copy(OriginalBytesByPatch.AttackInfo.GetOriginal(), 0, bytes, 0, 5);
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]

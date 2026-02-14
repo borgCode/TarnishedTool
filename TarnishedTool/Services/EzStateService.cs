@@ -1,6 +1,7 @@
 ﻿// 
 
 using System;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -25,7 +26,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
             memoryService.Write(paramsLoc + i * 4, command.Params[i]);
         }
         
-        var bytes = AsmLoader.GetAsmBytes("ExecuteTalkCommand");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ExecuteTalkCommand);
         AsmHelper.WriteRelativeOffsets(bytes, new []
         {
             (code.ToInt64() + 0x16, Functions.ExternalEventTempCtor, 5, 0x16 + 1),
@@ -75,7 +76,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
     private void CreateNpcEzStateTalk(uint talkScriptId, uint blockId = 0, long chrHandle = 0)
     {
         var savedNpcTalk = CodeCaveOffsets.Base + CodeCaveOffsets.SavedNpcTalk;
-        var bytes = AsmLoader.GetAsmBytes("CreateNpcTalk");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.CreateNpcTalk);
         AsmHelper.WriteAbsoluteAddresses(bytes, new []
         {
             (savedNpcTalk.ToInt64(), 0x4 + 2),
@@ -137,7 +138,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
     
     private void ExecuteEnvQuery(IntPtr result, int paramCount)
     {
-        var bytes = AsmLoader.GetAsmBytes("ExecuteEnvQuery");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ExecuteEnvQuery);
         var envParams = CodeCaveOffsets.Base + CodeCaveOffsets.EnvParams;
         var savedNpcTalk = CodeCaveOffsets.Base + CodeCaveOffsets.SavedNpcTalk;
         

@@ -1,5 +1,6 @@
 ﻿// 
 
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -15,7 +16,7 @@ public class EmevdService(IMemoryService memoryService) : IEmevdService
         var args = CodeCaveOffsets.Base + CodeCaveOffsets.EmevdArgs;
         memoryService.WriteBytes(args, command.ParamData);
         
-        var bytes = AsmLoader.GetAsmBytes("ExecuteEmevdCommand");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ExecuteEmevdCommand);
         AsmHelper.WriteAbsoluteAddresses(bytes, new []
         {
             (Functions.EmkEventInsCtor, 0x67 + 2),

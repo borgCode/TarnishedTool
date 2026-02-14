@@ -1,4 +1,5 @@
 ﻿using System;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
@@ -48,7 +49,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         {
             var maxDist = CodeCaveOffsets.Base + (int)CodeCaveOffsets.TargetView.MaxDist;
             memoryService.Write(maxDist, 100.0f * 100.0f);
-            var codeBytes = AsmLoader.GetAsmBytes("ReduceTargetView");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.ReduceTargetView);
             var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
             var hook = Hooks.BlueTargetView;
             
@@ -83,7 +84,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         if (isRykardNoMegaEnabled)
         {
             var hook = Hooks.HasSpEffect;
-            var codeBytes = AsmLoader.GetAsmBytes("RykardNoMega");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.RykardNoMega);
             var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 7, code + 0x17);
             Array.Copy(bytes, 0, codeBytes, 0x12 + 1, 4);
             memoryService.WriteBytes(code, codeBytes);
@@ -116,7 +117,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
         memoryService.Write(currentIdx, 0);
 
-        var bytes = AsmLoader.GetAsmBytes("ForceActSequence");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ForceActSequence);
 
         var originalBytes = OriginalBytesByPatch.GetForceActIdx.GetOriginal();
         //Copy to usage in script
@@ -154,7 +155,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         {
             reminderService.TrySetReminder();
             var hook = Hooks.LionCooldownHook;
-            var codeBytes = AsmLoader.GetAsmBytes("LionCooldownHook");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.LionCooldownHook);
             var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x36);
             Array.Copy(bytes, 0, codeBytes, 0x31 + 1, 4);
             memoryService.WriteBytes(code, codeBytes);

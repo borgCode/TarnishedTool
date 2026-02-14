@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -24,7 +25,7 @@ namespace TarnishedTool.Services
                 reminderService.TrySetReminder();
                 var hook = Hooks.LockedTargetPtr;
                 var savedPtr = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
-                var bytes = AsmLoader.GetAsmBytes("LockedTarget");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.LockedTarget);
                 AsmHelper.WriteRelativeOffsets(bytes, [
                     (code.ToInt64() + 0x7, savedPtr.ToInt64(), 7, 0x7 + 3),
                     (code.ToInt64() + 0xE, hook + 0x7, 5, 0xE + 1)
@@ -104,7 +105,7 @@ namespace TarnishedTool.Services
             {
                 var hookLoc = Hooks.TargetNoStagger;
                 var lockedTarget = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
-                var bytes = AsmLoader.GetAsmBytes("TargetNoStagger");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.TargetNoStagger);
                 AsmHelper.WriteRelativeOffsets(bytes, [
                     (code.ToInt64() + 0x5, lockedTarget.ToInt64(), 7, 0x5 + 3),
                     (code.ToInt64() + 0x17, hookLoc + 8, 5, 0x17 + 1)
@@ -124,7 +125,7 @@ namespace TarnishedTool.Services
             var worldChrMan = memoryService.Read<nint>(WorldChrMan.Base);
             var lockedTarget =
                 memoryService.Read<nint>(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
-            var bytes = AsmLoader.GetAsmBytes("KillAll");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.KillAll);
 
             AsmHelper.WriteImmediateDwords(bytes, [
                 (WorldChrMan.PlayerIns, 0x18 + 3),
@@ -147,7 +148,7 @@ namespace TarnishedTool.Services
             {
                 var lockedTargetPtr = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 var hookLoc = Hooks.ShouldUpdateAi;
-                var bytes = AsmLoader.GetAsmBytes("DisableAllExceptTarget");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.DisableAllExceptTarget);
 
                 AsmHelper.WriteRelativeOffsets(bytes, [
                     (code.ToInt64() + 0x5, lockedTargetPtr.ToInt64(), 7, 0x5 + 3),
@@ -173,7 +174,7 @@ namespace TarnishedTool.Services
             if (isNoHealEnabled)
             {
                 var hook = Hooks.NoHeal;
-                var codeBytes = AsmLoader.GetAsmBytes("NoHeal");
+                var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoHeal);
                 var target = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 AsmHelper.WriteRelativeOffsets(codeBytes, [
                     (code.ToInt64() + 5, target.ToInt64(), 7, 5 + 3),

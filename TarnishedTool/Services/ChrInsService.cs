@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -232,7 +233,7 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     {
         nint lookedUpChrIns = CodeCaveOffsets.Base + CodeCaveOffsets.LookedUpChrIns;
         var worldChrMan = memoryService.Read<nint>(WorldChrMan.Base);
-        var bytes = AsmLoader.GetAsmBytes("GetChrIns");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.GetChrIns);
         AsmHelper.WriteAbsoluteAddresses(bytes, [
             (worldChrMan, 0x0 + 2),
             (Functions.GetChrInsByEntityId, 0x19 + 2),
@@ -314,7 +315,7 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         memoryService.Write(input, localPos);
         memoryService.Write(pBlockId, blockId);
 
-        var bytes = AsmLoader.GetAsmBytes("LocalToMapCoords");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.LocalToMapCoords);
         AsmHelper.WriteRelativeOffsets(bytes, [
             (code.ToInt64(), output.ToInt64(), 0x7, 0x0 + 3),
             (code.ToInt64() + 0x7, input.ToInt64(), 0x7, 0x7 + 3),

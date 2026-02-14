@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
@@ -278,7 +279,7 @@ namespace TarnishedTool.Services
         private void HookPoiseDamage(IntPtr code)
         {
             var hook = Hooks.InfinitePoise;
-            var bytes = AsmLoader.GetAsmBytes("InfinitePoise");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.InfinitePoise);
 
             var originalBytes = OriginalBytesByPatch.InfinitePoise.GetOriginal();
             Array.Copy(originalBytes, 0, bytes, 0, originalBytes.Length);
@@ -308,7 +309,7 @@ namespace TarnishedTool.Services
         {
             var hook = Hooks.NoGrab;
             var skipGrabJmpLoc = hook + 0x95;
-            var codeBytes = AsmLoader.GetAsmBytes("NoGrab");
+            var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoGrab);
 
             AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0x8 + 3) });
 
@@ -378,7 +379,7 @@ namespace TarnishedTool.Services
             if (isNoTimePassOnDeathEnabled)
             {
                 var hook = Hooks.NoTimePassOnDeath.ToInt64();
-                var bytes = AsmLoader.GetAsmBytes("NoTimePassOnDeath");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.NoTimePassOnDeath);
                 AsmHelper.WriteRelativeOffsets(bytes, new[]
                 {
                     (code.ToInt64() + 0x8, WorldAreaTimeImpl.Base.ToInt64(), 7, 0x8 + 3),
@@ -410,7 +411,7 @@ namespace TarnishedTool.Services
 
         public void GiveRunes(int runes)
         {
-            var bytes = AsmLoader.GetAsmBytes("GiveRunes");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.GiveRunes);
             var playerGameData =
                 memoryService.Read<nint>(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.PlayerGameData);
             AsmHelper.WriteAbsoluteAddresses(bytes, new[]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -12,7 +13,7 @@ namespace TarnishedTool.Services
     {
         public void Warp(Grace grace)
         {
-            var bytes = AsmLoader.GetAsmBytes("GraceWarp");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.GraceWarp);
             AsmHelper.WriteAbsoluteAddresses(bytes, new[]
             {
                 (WorldChrMan.Base.ToInt64(), 0x0 + 2),
@@ -30,7 +31,7 @@ namespace TarnishedTool.Services
             int map = (int)(position.BlockId >> 8) & 0xFF;
             int altNo = (int)position.BlockId & 0xFF;
 
-            var bytes = AsmLoader.GetAsmBytes("WarpToBlock");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.WarpToBlock);
             AsmHelper.WriteAbsoluteAddress(bytes, Functions.WarpToBlock, 0x16 + 2);
             AsmHelper.WriteImmediateDwords(bytes, new[]
             {
@@ -56,7 +57,7 @@ namespace TarnishedTool.Services
             var code = CodeCaveOffsets.Base + CodeCaveOffsets.NoAcquiredMapPopup;
             if (isEnabled)
             {
-                var bytes = AsmLoader.GetAsmBytes("NoAcquiredMapPopup");
+                var bytes = AsmLoader.GetAsmBytes(AsmScript.NoAcquiredMapPopup);
                 var hookLoc = Hooks.NoMapAcquiredPopup;
                 var skipDialogCreationJumpTarget = hookLoc + 0xD;
                 AsmHelper.WriteRelativeOffsets(bytes, new[]
@@ -89,7 +90,7 @@ namespace TarnishedTool.Services
             memoryService.Write(targetCoords + 0xC, 1f);
             memoryService.Write(targetAngle + 0x4, position.Angle);
 
-            var bytes = AsmLoader.GetAsmBytes("WarpCoordWrite");
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.WarpCoordWrite);
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
                 (warpCode.ToInt64(), targetCoords.ToInt64(), 7, 0x0 + 3),

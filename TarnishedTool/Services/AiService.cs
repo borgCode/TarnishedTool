@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
@@ -167,7 +168,7 @@ public class AiService : IAiService
 
     public void InjectAiScript(byte[] script)
     {
-        var bytes = AsmLoader.GetAsmBytes("LuaDoString");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.LuaDoString);
         var luaState = _memoryService.FollowPointers(WorldAiManagerImp.Base, WorldAiManagerImp.LuaState, true);
 
         var scriptPtr = _memoryService.AllocateMem((uint)script.Length);

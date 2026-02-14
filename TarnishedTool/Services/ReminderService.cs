@@ -99,7 +99,7 @@ public class ReminderService : IReminderService
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.LoadScreenForce;
         var hook = Offsets.Hooks.LoadScreenMsgLookupMidPatches;
-        var bytes = AsmLoader.GetAsmBytes("ForceLoadScreenMidPatches");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ForceLoadScreenMidPatches);
         var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 6, code + 0x12);
         Array.Copy(jmpBytes, 0, bytes, 0xD + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
@@ -110,7 +110,7 @@ public class ReminderService : IReminderService
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.LoadScreenForce;
         var hook = Offsets.Hooks.LoadScreenMsgLookup;
-        var bytes = AsmLoader.GetAsmBytes("ForceLoadScreenReminder");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ForceLoadScreenReminder);
         var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0xE);
         Array.Copy(jmpBytes, 0, bytes, 0x9 + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
@@ -121,7 +121,7 @@ public class ReminderService : IReminderService
     {
         var code = CodeCaveOffsets.Base + CodeCaveOffsets.LoadScreenForce;
         var hook = Offsets.Hooks.LoadScreenMsgLookupEarlyPatches;
-        var bytes = AsmLoader.GetAsmBytes("ForceLoadScreenReminderEarlyPatches");
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.ForceLoadScreenReminderEarlyPatches);
         var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x11);
         Array.Copy(jmpBytes, 0, bytes, 0xC + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
