@@ -353,7 +353,7 @@ namespace TarnishedTool.ViewModels
         }
 
         private void FightFortissax() => _eventService.SetEvent(Event.FightFortissax, true);
-        private void FightEldenBeast() => _eventService.SetEvent(Event.FightEldenBeast, true);
+        private void FightEldenBeast() => Array.ForEach(Event.FightEldenBeast, e => _eventService.SetEvent(e, true));
 
         private void UnlockGestures()
         {

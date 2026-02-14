@@ -15,7 +15,7 @@ public static class Event
                                                  2050407000,400662,4856,4855,4854,4849,2051452718,2051459213,2051450715,9440,2051450180]; //Progress Ymir's Quest, get rid of the Invader, move chair and enable fight with metyr
 
     public static readonly long FightFortissax = 12032859;
-    public static readonly long FightEldenBeast = 19002802;
+    public static readonly long[] FightEldenBeast = [19002802, 19002805];
 
     public static readonly long SnowfieldMausoleum = 1247580400;
 
