@@ -1,0 +1,143 @@
+<Window x:Class="TarnishedTool.Views.Windows.BossSelectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="Select Boss"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        SizeToContent="Height"
+        Width="350"
+        MinHeight="180"
+        MaxHeight="400"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    
+    <Window.Resources>
+        <Style x:Key="MessageBoxButton" TargetType="Button">
+            <Setter Property="Background" Value="#3E3E42"/>
+            <Setter Property="Foreground" Value="#F1F1F1"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#505054"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#92400E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Border Background="#252526" 
+            BorderBrush="#92400E" 
+            BorderThickness="1" 
+            CornerRadius="4"
+            Margin="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
+        </Border.Effect>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Title Bar -->
+            <Border Grid.Row="0" 
+                    Background="#92400E" 
+                    CornerRadius="3,3,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <TextBlock Text="Multiple Bosses Nearby Found" 
+                           Foreground="White" 
+                           FontWeight="SemiBold"
+                           Margin="10,6"/>
+            </Border>
+            
+            <!-- Message -->
+            <TextBlock Grid.Row="1" 
+                       Text="Select Warp Destination (Cancel to only reload area)"
+                       Foreground="#F1F1F1"
+                       Margin="15,15,15,10"
+                       VerticalAlignment="Center"/>
+            
+            <!-- ListBox -->
+            <ListBox Grid.Row="2"
+                     x:Name="BossListBox"
+                     Margin="15,0,15,15"
+                     MinHeight="80"
+                     MaxHeight="200"
+                     Background="#2D2D30"
+                     Foreground="#F1F1F1"
+                     BorderBrush="#333"
+                     BorderThickness="1">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#F1F1F1"/>
+                        <Setter Property="Padding" Value="8,4"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="Border"
+                                            Background="{TemplateBinding Background}"
+                                            Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#3E3E42"/>
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="#92400E"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            
+            <!-- Buttons -->
+            <StackPanel Grid.Row="3" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right"
+                        Margin="10,5,10,10">
+                
+                <Button Content="Warp" 
+                        Width="75" 
+                        Height="26"
+                        Margin="0,0,8,0"
+                        Click="WarpButton_Click"
+                        Style="{StaticResource MessageBoxButton}"/>
+                
+                <Button Content="Cancel" 
+                        Width="75" 
+                        Height="26"
+                        Click="CancelButton_Click"
+                        Style="{StaticResource MessageBoxButton}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
