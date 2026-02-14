@@ -11,6 +11,7 @@ using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
 using TarnishedTool.Models;
 using TarnishedTool.Utilities;
+using TarnishedTool.Views.Windows;
 
 namespace TarnishedTool.ViewModels;
 
@@ -460,7 +461,11 @@ public class EnemyViewModel : BaseViewModel
 
         if (bossRevive.ShouldSetNight) _shouldSetNight = true;
 
-        _ = Task.Run(() => _travelService.WarpToBlockId(bossRevive.Position));
+        _ = Task.Run(() =>
+        {
+            _travelService.WarpToBlockId(bossRevive.Position);
+            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+        });
     }
 
     private void ReviveBossFirstEncounter()
@@ -474,102 +479,124 @@ public class EnemyViewModel : BaseViewModel
 
         if (bossRevive.ShouldSetNight) _shouldSetNight = true;
 
-        _ = Task.Run(() => _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter));
+        _ = Task.Run(() =>
+        {
+            _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter);
+            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+        });
     }
 
     private void ReviveAllBosses()
     {
-        foreach (var bossRevive in BossRevives.AllItems)
-            SetBossFlags(bossRevive, isFirstEncounter: false);
-
-        // Find nearest boss to warp to
-        var playerBlockId = _playerService.GetBlockId();
-        var bossesInBlock = BossRevives.AllItems.Where(b =>
-            b.BlockId == playerBlockId ||
-            (b.BossBlockIds != null && b.BossBlockIds.Contains(playerBlockId))).ToList();
-
-
-        if (bossesInBlock.Any())
-        {
-            // Check Map Coords to decide who is the closest boss
-            var mapLocation = _playerService.GetMapLocation();
-            var playerMapPos = mapLocation.MapCoords;
-
-            // Message Box to warn the player
-            var result = MsgBox.ShowYesNo(
-                "Player is inside or close to a boss room. Would you like to warp? Note that it might not match the boss you were fighting.",
-                "Warp Confirmation");
-            if (!result)
-            {
-                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-            }
-            else
-            {
-                var closestBoss = bossesInBlock
-                    .OrderBy(b => CalculateDistance(playerMapPos, b.Position.Coords))
-                    .First();
-
-                // Switch to night if closest boss needs it
-                if (closestBoss.ShouldSetNight)
-                    _shouldSetNight = true;
-
-                _ = Task.Run(() => _travelService.WarpToBlockId(closestBoss.Position));
-            }
-        }
-        else
-        {
-            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-        }
+        HandleReviveAllWarp(useFirstEncounter: false);
     }
 
     private void ReviveAllBossesAsFirstEncounter()
     {
-        foreach (var bossRevive in BossRevives.AllItems)
-            SetBossFlags(bossRevive, isFirstEncounter: true);
-
-        // Find nearest boss to warp to
-        var playerBlockId = _playerService.GetBlockId();
-        var bossesInBlock = BossRevives.AllItems.Where(b =>
-            b.BlockId == playerBlockId ||
-            (b.BossBlockIds != null && b.BossBlockIds.Contains(playerBlockId))).ToList();
-
-        if (bossesInBlock.Any())
-        {
-            // Check Map Coords to decide who is the closest boss
-            var mapLocation = _playerService.GetMapLocation();
-            var playerMapPos = mapLocation.MapCoords;
-
-            // Message Box to warn the player
-            var result = MsgBox.ShowYesNo(
-                "Player is inside or close to a boss room. Would you like to warp? Note that it might not match the boss you were fighting.",
-                "Warp Confirmation");
-            if (!result)
-            {
-                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-                return;
-            }
-
-            var playerPos = _playerService.GetPlayerPos();
-            var closestBoss = bossesInBlock
-                .OrderBy(b => CalculateDistance(playerMapPos, b.PositionFirstEncounter.Coords))
-                .First();
-
-            // Switch to night if closest boss needs it
-            if (closestBoss.ShouldSetNight)
-                _shouldSetNight = true;
-
-            _ = Task.Run(() => _travelService.WarpToBlockId(closestBoss.PositionFirstEncounter));
-        }
-        else
-        {
-            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-        }
+        HandleReviveAllWarp(useFirstEncounter: true);
     }
 
     // Calculate what boss is closest to warp to
     private float CalculateDistance(Vector3 pos1, Vector3 pos2)
     {
         return Vector3.Distance(pos1, pos2);
+    }
+
+    private void HandleReviveAllWarp(bool useFirstEncounter)
+    {
+        // Find nearest bosses to warp to
+        var playerBlockId = _playerService.GetBlockId();
+        var bossesInBlock = new List<BossRevive>();
+        foreach (var bossRevive in BossRevives.AllItems)
+        {
+            SetBossFlags(bossRevive, useFirstEncounter);
+            if (bossRevive.BlockId == playerBlockId ||
+                (bossRevive.BossBlockIds != null && bossRevive.BossBlockIds.Contains(playerBlockId)))
+            {
+                bossesInBlock.Add(bossRevive);
+            }
+        }
+
+        if (!bossesInBlock.Any())
+        {
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            return;
+        }
+
+        // Check Map Coords to decide who is the closest boss
+        var mapLocation = _playerService.GetMapLocation();
+        var playerMapPos = mapLocation.MapCoords;
+        var bossDistances = bossesInBlock
+            .Select(b => new
+            {
+                Boss = b,
+                Distance = CalculateDistance(playerMapPos,
+                    useFirstEncounter ? b.PositionFirstEncounter.Coords : b.Position.Coords)
+            })
+            .OrderBy(bd => bd.Distance)
+            .ToList();
+
+        var closestBoss = bossDistances.First();
+        BossRevive selectedBoss;
+        // Create a list if multiple bosses are within similar distance to the player (10 units)
+        var nearbyBosses = bossDistances
+            .Where(bd => Math.Abs(bd.Distance - closestBoss.Distance) <= 10)
+            .ToList();
+
+        if (nearbyBosses.Count > 1)
+        {
+            selectedBoss = ShowBossSelectionDialog(nearbyBosses.Select(bd => bd.Boss).ToList());
+            if (selectedBoss == null)
+            {
+                // If user cancels
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+                if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                return;
+            }
+        }
+        else
+        {
+            // Message Box to warn the player
+            var result = MsgBox.ShowYesNo(
+                "Player is inside or close to a boss room. Would you like to warp?",
+                "Warp Confirmation");
+            if (!result)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
+                if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                return;
+            }
+
+            selectedBoss = closestBoss.Boss;
+        }
+
+        // Switch to night if closest boss needs it
+        if (selectedBoss.ShouldSetNight)
+            _shouldSetNight = true;
+
+        var targetPosition = useFirstEncounter
+            ? selectedBoss.PositionFirstEncounter
+            : selectedBoss.Position;
+        _ = Task.Run(() =>
+        {
+            _travelService.WarpToBlockId(targetPosition);
+            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+        });
+    }
+
+    private BossRevive ShowBossSelectionDialog(List<BossRevive> bosses)
+    {
+        var dialog = new BossSelectionWindow(bosses);
+        return dialog.ShowDialog() == true ? dialog.SelectedBoss : null;
+    }
+
+    private bool _isRestOnReviveEnabled;
+
+    public bool IsRestOnReviveEnabled
+    {
+        get => _isRestOnReviveEnabled;
+        set => SetProperty(ref _isRestOnReviveEnabled, value);
     }
 
     private void SetBossFlags(BossRevive bossRevive, bool isFirstEncounter)
