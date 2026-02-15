@@ -27,7 +27,7 @@ namespace TarnishedTool.Services
         private const float LevelUpCostIncrease = 0.02f;
         private const float LevelUpIncreaseInterval = 92f;
         private const int BaseLevelOffset = 80;
-        
+
         private const int StatsBlockSize = 0x20;
 
         private readonly Position[] _positions =
@@ -249,6 +249,9 @@ namespace TarnishedTool.Services
 
         public int GetCurrentFp() =>
             memoryService.Read<int>(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp);
+
+        public int GetMaxFp() =>
+            memoryService.Read<int>(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxFp);
 
         public void SetSp(int sp) =>
             memoryService.Write(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp, sp);

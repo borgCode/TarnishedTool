@@ -45,8 +45,9 @@ public class SettingsViewModel : BaseViewModel
             ["Player"] =
             [
                 new("Set RFBS", HotkeyActions.SetRfbs),
-                new("Set Max Hp", HotkeyActions.SetMaxHp),
-                new("Set Custom Hp", HotkeyActions.PlayerSetCustomHp),
+                new("Set Max HP", HotkeyActions.SetMaxHp),
+                new("Set Custom HP", HotkeyActions.PlayerSetCustomHp),
+                new("Lock HP", HotkeyActions.LockHp),
                 new("Save Position 1", HotkeyActions.SavePos1),
                 new("Save Position 2", HotkeyActions.SavePos2),
                 new("Restore Position 1", HotkeyActions.RestorePos1),
@@ -57,7 +58,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Infinite Stamina", HotkeyActions.InfiniteStamina),
                 new("Infinite Consumables", HotkeyActions.InfiniteConsumables),
                 new("Infinite Arrows", HotkeyActions.InfiniteArrows),
-                new("Infinite Fp", HotkeyActions.InfiniteFp),
+                new("Infinite FP", HotkeyActions.InfiniteFp),
                 new("One Shot", HotkeyActions.OneShot),
                 new("Infinite Poise", HotkeyActions.InfinitePoise),
                 new("Silent", HotkeyActions.Silent),
@@ -69,7 +70,20 @@ public class SettingsViewModel : BaseViewModel
                 new("Remove Special Effect", HotkeyActions.RemoveSpEffect),
                 new("Rune Arc", HotkeyActions.RuneArc),
                 new("Rest Character", HotkeyActions.Rest),
-                new("Faster Death", HotkeyActions.FasterDeath)
+                new("Faster Death", HotkeyActions.FasterDeath),
+                new("Torrent Anywhere", HotkeyActions.TorrentAnywhere),
+                new("Torrent No Death", HotkeyActions.TorrentNoDeath),
+                new("RFBS On Load", HotkeyActions.RfbsOnLoad),
+                new("No Runes From Enemies", HotkeyActions.NoRunesFromEnemies),
+                new("No Rune Loss On Death", HotkeyActions.NoRuneLossOnDeath),
+                new("No Rune Arc Loss On Death", HotkeyActions.NoRuneArcLossOnDeath),
+                new("No Time Change On Death", HotkeyActions.NoTimeChangeOnDeath),
+                new("Rune Level 1", HotkeyActions.Level1),
+                new("Max Rune Level", HotkeyActions.MaxLevel),
+                new("Set NG Cycle to 7", HotkeyActions.SetNgCycleTo7),
+                new("HP Regen", HotkeyActions.HealOverTime),
+                new("FP Regen", HotkeyActions.FpRegen)
+                
             ],
             ["Enemies"] =
             [

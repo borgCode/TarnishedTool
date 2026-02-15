@@ -24,6 +24,7 @@ public interface IPlayerService
     void SetRfbs();
     void SetFp(int fp);
     int GetCurrentFp();
+    int GetMaxFp();
     void SetSp(int sp);
     int GetCurrentSp();
     float GetSpeed();
