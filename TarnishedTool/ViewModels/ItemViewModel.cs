@@ -195,7 +195,7 @@ public class ItemViewModel : BaseViewModel
             ["Pots and Perfumes"] = DataLoader.GetItems("PotsAndPerfumes", "Pots and Perfumes"),
             ["Prattling Pate"] = DataLoader.GetItems("PrattlingPate", "Prattling Pate"),
             ["Sorceries"] = DataLoader.GetItems("Sorceries", "Sorceries"),
-            ["Spirit Ashes"] = DataLoader.GetItems("SpiritAshes", "Spirit Ashes"),
+            ["Spirit Ashes"] = DataLoader.GetSpiritAshes().Cast<Item>().ToList(),
             ["Talismans"] = DataLoader.GetItems("Talismans", "Talismans"),
             ["Upgrade Materials"] = DataLoader.GetItems("UpgradeMaterials", "Upgrade Materials"),
             ["Weapons"] = DataLoader.GetWeapons().Cast<Item>().ToList()
@@ -224,6 +224,11 @@ public class ItemViewModel : BaseViewModel
                 itemId += ItemSelection.SelectedAffinity.GetIdOffset();
                 aowId = ItemSelection.SelectedAshOfWar.Id;
             }
+        }
+
+        if (ItemSelection.SelectedItem is SpiritAsh && ItemSelection.ShowSpiritAshUpgradeOptions)
+        {
+            itemId += ItemSelection.SelectedSpiritAshUpgrade;
         }
 
         if (ItemSelection.SelectedItem is EventItem eventItem && eventItem.NeedsEvent)

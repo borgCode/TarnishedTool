@@ -3045,19 +3045,19 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,40033838,Albinauric Ashes,1,600
-        ///0,40033068,Ancestral Follower Ashes,1,600
-        ///1,4021CC58,Ancient Dragon Florissax,1,600
-        ///0,4003E800,Ancient Dragon Knight Kristoff,1,600
-        ///0,4003CCA8,Archer Ashes,1,600
-        ///0,400372D0,Avionette Soldier Ashes,1,600
-        ///0,40038270,Azula Beastman Ashes,1,600
-        ///0,40031510,Banished Knight Engvall,1,600
-        ///0,40031128,Banished Knight Oleg,1,600
-        ///0,40035F48,Battlemage Hugues,1,600
-        ///1,4021B8D0,Bigmouth Imp Ashes,1,600
-        ///0,40030D40,Black Knife Tiche,1,600
-        ///1,4021B4E8,Black Knight Captain Huw,1,60 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 0,40033838,Albinauric Ashes,1,600,1
+        ///0,40033068,Ancestral Follower Ashes,1,600,1
+        ///1,4021CC58,Ancient Dragon Florissax,1,600,1
+        ///0,4003E800,Ancient Dragon Knight Kristoff,1,600,1
+        ///0,4003CCA8,Archer Ashes,1,600,1
+        ///0,400372D0,Avionette Soldier Ashes,1,600,1
+        ///0,40038270,Azula Beastman Ashes,1,600,1
+        ///0,40031510,Banished Knight Engvall,1,600,1
+        ///0,40031128,Banished Knight Oleg,1,600,1
+        ///0,40035F48,Battlemage Hugues,1,600,1
+        ///1,4021B8D0,Bigmouth Imp Ashes,1,600,1
+        ///0,40030D40,Black Knife Tiche,1,600,1
+        ///1,4021B4E8,Black [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SpiritAshes {
             get {

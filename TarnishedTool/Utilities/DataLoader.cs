@@ -172,7 +172,35 @@ namespace TarnishedTool.Utilities
             return weapons;
         }
 
-        public static List<Item> GetItems(string resourceName, string category)
+        public static List<SpiritAsh> GetSpiritAshes()
+        {
+            List<SpiritAsh> spiritAshes = new List<SpiritAsh>();
+            string csvData = Resources.SpiritAshes;
+            if (string.IsNullOrWhiteSpace(csvData)) return spiritAshes;
+
+            using StringReader reader = new StringReader(csvData);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                string[] parts = ParseCsvLine(line);
+
+                spiritAshes.Add(new SpiritAsh
+                {
+                    IsDlc = byte.Parse(parts[0], CultureInfo.InvariantCulture) == 1,
+                    Id = Convert.ToInt32(parts[1], 16),
+                    Name = parts[2],
+                    StackSize = int.Parse(parts[3], CultureInfo.InvariantCulture),
+                    MaxStorage = int.Parse(parts[4], CultureInfo.InvariantCulture),
+                    CanUpgrade = byte.Parse(parts[5], CultureInfo.InvariantCulture) == 1,
+                    CategoryName = "Spirit Ashes"
+                });
+            }
+            return spiritAshes;
+        }
+
+    public static List<Item> GetItems(string resourceName, string category)
         {
             List<Item> items = new List<Item>();
 

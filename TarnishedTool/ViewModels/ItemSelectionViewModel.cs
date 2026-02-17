@@ -129,10 +129,18 @@ public class ItemSelectionViewModel : BaseViewModel
             {
                 ConfigureForWeapon(weapon);
             }
+            else if (value is SpiritAsh spiritAsh)
+            {
+                ShowWeaponOptions = false;
+                ShowAowOptions = false;
+                ShowSpiritAshUpgradeOptions = spiritAsh.CanUpgrade;
+                SelectedSpiritAshUpgrade = 0;
+            }
             else
             {
                 ShowWeaponOptions = false;
                 ShowAowOptions = false;
+                ShowSpiritAshUpgradeOptions = false;
             }
         }
     }
@@ -162,6 +170,27 @@ public class ItemSelectionViewModel : BaseViewModel
         {
             int clampedValue = Math.Max(1, Math.Min(value, MaxQuantity));
             SetProperty(ref _selectedQuantity, clampedValue);
+        }
+    }
+
+
+    private bool _showSpiritAshUpgradeOptions;
+
+    public bool ShowSpiritAshUpgradeOptions
+    {
+        get => _showSpiritAshUpgradeOptions;
+        private set => SetProperty(ref _showSpiritAshUpgradeOptions, value);
+    }
+    
+    private int _selectedSpiritAshUpgrade;
+
+    public int SelectedSpiritAshUpgrade
+    {
+        get => _selectedSpiritAshUpgrade;
+        set
+        {
+            int clampedValue = Math.Max(0, Math.Min(value, 10));
+            SetProperty(ref _selectedSpiritAshUpgrade, clampedValue);
         }
     }
 
