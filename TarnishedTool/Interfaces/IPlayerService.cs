@@ -33,6 +33,7 @@ public interface IPlayerService
     void ToggleDebugFlag(int offset, bool isEnabled, bool needsReminder = false);
     void ToggleNoDamage(bool isNoDamageEnabled);
     void ToggleNoHit(bool isNoHitEnabled);
+    void ToggleLockHp(bool isEnabled);
     void ToggleNoRuneGain(bool isNoRuneGainEnabled);
     void ToggleNoRuneArcLoss(bool isNoRuneArcLossEnabled);
     void ToggleNoRuneLoss(bool isNoRuneLossEnabled);

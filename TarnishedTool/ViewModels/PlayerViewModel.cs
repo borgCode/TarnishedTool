@@ -174,7 +174,13 @@ namespace TarnishedTool.ViewModels
         public bool IsHpLocked
         {
             get => _isHpLocked;
-            set => SetProperty(ref _isHpLocked, value);
+            set
+            {
+                if (SetProperty(ref _isHpLocked, value))
+                {
+                    _playerService.ToggleLockHp(_isHpLocked);
+                }
+            }
         }
 
         private int _lockedHpValue;
@@ -829,8 +835,6 @@ namespace TarnishedTool.ViewModels
 
             if (IsFpRegenEnabled) TryApplyFpRegen();
 
-            TryLockHp();
-
             CurrentHp = _playerService.GetCurrentHp();
             CurrentMaxHp = _playerService.GetMaxHp();
             PlayerSpeed = _playerService.GetSpeed();
@@ -866,21 +870,6 @@ namespace TarnishedTool.ViewModels
             _playerService.SetFp(fpToSet);
         }
         
-        // got filtered by trying to make it work like the target service freeze hp
-        private void TryLockHp()
-        {
-            if (IsHpLocked)
-            {
-                if (CurrentHp != _lockedHpValue)
-                {
-                    _playerService.SetHp(_lockedHpValue);
-                }
-            }
-            else
-            { 
-                _lockedHpValue = CurrentHp;
-            }
-        }
 
         private void LoadStats()
         {

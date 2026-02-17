@@ -867,6 +867,7 @@ namespace TarnishedTool.Memory
             public static long LoadScreenMsgLookupEarlyPatches;
             public static long LoadScreenMsgLookupMidPatches;
             public static long NoHeal;
+            public static long PlayerLockHp;
         }
 
         public static class Functions
@@ -2476,6 +2477,11 @@ namespace TarnishedTool.Memory
             _ => 0
             };
 
+            Hooks.PlayerLockHp = moduleBase.ToInt64() + Version switch
+            {
+                _ => 0
+            };
+
             // Patches
 
             Patches.NoLogo = moduleBase + Version switch
@@ -3006,6 +3012,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.TargetNoStagger: 0x{Hooks.TargetNoStagger:X}");
             Console.WriteLine($@"Hooks.NoMapAcquiredPopup: 0x{Hooks.NoMapAcquiredPopup:X}");
             Console.WriteLine($@"Hooks.NoHeal: 0x{Hooks.NoHeal:X}");
+            Console.WriteLine($@"Hooks.PlayerLockHp: 0x{Hooks.PlayerLockHp:X}");
 
             Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
             Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");

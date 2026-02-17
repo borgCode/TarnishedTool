@@ -2849,6 +2849,25 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 89 5c 24 18          mov    QWORD PTR [rsp+0x18],rbx
+        ///53                      push   rbx
+        ///52                      push   rdx
+        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]       
+        ///48 8b 9a 08 e5 01 00    mov    rbx,QWORD PTR [rdx+0x1e508]
+        ///75 0f                   jne    26 &lt;normal&gt;
+        ///83 b9 38 01 00 00 00    cmp    DWORD PTR [rcx+0x138],0x0
+        ///74 06                   je     26 &lt;normal&gt;
+        ///8b 81 38 01 00 00       mov    eax,DWORD PTR [rcx+0x138]
+        ///000000000026 &lt;normal&gt;:
+        ///5a                      pop    r [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PlayerLockHp {
+            get {
+                return ResourceManager.GetString("PlayerLockHp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,40000295,Academy Magic Pot,10,600
         ///0,40000E1A,Acid Spraymist,10, 600
         ///0,40000262,Albinauric Pot,10,600

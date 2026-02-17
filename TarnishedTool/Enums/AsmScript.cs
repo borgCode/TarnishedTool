@@ -42,11 +42,6 @@ public enum AsmScript
     ForceLoadScreenReminderEarlyPatches,
     SetSpEffect,
     RemoveSpEffect,
-    
-    
-    
-    
-    
-    
     ItemSpawn,
+    PlayerLockHp
 }
