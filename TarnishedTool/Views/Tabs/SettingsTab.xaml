@@ -103,10 +103,10 @@
                 <TabControl Margin="0,5,0,0"
                             Visibility="{Binding Hotkeys.IsSearchActive, Converter={StaticResource InverseBoolToVisibility}}">
 
-                    <TabItem Header="Player">
+                    <TabItem Header="Player" Width="56">
                         <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Player]}"
-                                          Padding="10"
+                                          Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -116,10 +116,23 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="Enemies">
+                    <TabItem Header="Travel" Width="54">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Travel]}"
+                                          Padding="5"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Enemies" Width="67">
                         <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Enemies]}"
-                                          Padding="10"
+                                          Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -129,10 +142,10 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="Target">
+                    <TabItem Header="Target" Width="56">
                         <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Target]}"
-                                          Padding="10"
+                                          Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -142,10 +155,10 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="Utility">
+                    <TabItem Header="Utility" Width="54">
                         <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Utility]}"
-                                          Padding="10"
+                                          Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -155,10 +168,36 @@
                             </ItemsControl>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="Event">
+                    <TabItem Header="Event" Width="53">
                         <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Event]}"
-                                          Padding="10"
+                                          Padding="5"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Items" Width="52">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Items]}"
+                                          Padding="5"
+                                          ItemTemplate="{StaticResource HotkeyItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="2" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Advanced" Width="76">
+                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding Hotkeys[Advanced]}"
+                                          Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -187,9 +226,9 @@
                 <TextBox Text="{Binding Hotkeys.SearchText, UpdateSourceTrigger=PropertyChanged}"
                          HorizontalAlignment="Right"
                          VerticalAlignment="Top"
-                         Width="150"
-                         Height="30"
-                         Margin="0,2,10,0">
+                         Width="90"
+                         Height="27"
+                         Margin="0,7,5,0">
                     <TextBox.Template>
                         <ControlTemplate TargetType="TextBox">
                             <Border x:Name="border"
@@ -205,7 +244,7 @@
                                                   VerticalAlignment="Center"
                                                   Margin="5,0,0,0" />
                                     <TextBlock x:Name="placeholderText"
-                                               Text="Search hotkeys..."
+                                               Text="Search..."
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left"
                                                Margin="5,0,0,0"

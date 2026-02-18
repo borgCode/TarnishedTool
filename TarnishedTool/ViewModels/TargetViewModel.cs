@@ -336,7 +336,39 @@ namespace TarnishedTool.ViewModels
             get => _maxSleep;
             set => SetProperty(ref _maxSleep, value);
         }
+ /*       
+        private int _currentMadness;
 
+        public int CurrentMadness
+        {
+            get => _currentMadness;
+            set => SetProperty(ref _currentMadness, value);
+        }
+        
+        private int _maxMadness;
+
+        public int MaxMadness
+        {
+            get => _maxMadness;
+            set => SetProperty(ref _maxMadness, value);
+        }
+        
+        private int _currentDeathBlight;
+
+        public int CurrentDeathBlight
+        {
+            get => _currentDeathBlight;
+            set => SetProperty(ref _currentDeathBlight, value);
+        }
+        
+        private int _maxDeathBlight;
+
+        public int MaxDeathBlight
+        {
+            get => _maxDeathBlight;
+            set => SetProperty(ref _maxDeathBlight, value);
+        }
+*/
         private bool _showSleep;
 
         public bool ShowSleep
@@ -355,6 +387,22 @@ namespace TarnishedTool.ViewModels
         {
             get => _isSleepImmune;
             set => SetProperty(ref _isSleepImmune, value);
+        }
+        
+        private bool _isMadnessImmune;
+
+        public bool IsMadnessImmune
+        {
+            get => _isMadnessImmune;
+            set => SetProperty(ref _isMadnessImmune, value);
+        }
+		
+		private bool _isDeathBlightImmune;
+
+        public bool IsDeathBlightImmune
+        {
+            get => _isDeathBlightImmune;
+            set => SetProperty(ref _isDeathBlightImmune, value);
         }
 
         private bool _showAllResistances;
@@ -816,6 +864,21 @@ namespace TarnishedTool.ViewModels
                 () => ExecuteTargetAction(KillAllBesidesTarget));
             _hotkeyManager.RegisterAction(HotkeyActions.ResetTargetPosition,
                 () => ExecuteTargetAction(ResetPosition));
+            _hotkeyManager.RegisterAction(HotkeyActions.TogglePoise,() => ShowPoise = !ShowPoise);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleSleep, () => ShowSleep = !ShowSleep);
+            _hotkeyManager.RegisterAction(HotkeyActions.TogglePoison,() =>  ShowPoison = !ShowPoison);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleRot, () => ShowRot = !ShowRot);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFrost,  () => ShowFrost = !ShowFrost);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleBleed,   () => ShowBleed = !ShowBleed);
+            _hotkeyManager.RegisterAction(HotkeyActions.AiInfo, () => ExecuteTargetAction(OpenAiWindow));
+           /* _hotkeyManager.RegisterAction(HotkeyActions.ToggleMadness,);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleDeathblight,);*/
+             
+            
+            
+            
+            
+            
         }
 
         private void ExecuteTargetAction(Action action)
@@ -1009,6 +1072,11 @@ namespace TarnishedTool.ViewModels
             MaxFrost = resistData.FrostMax;
             CurrentSleep = resistData.SleepCurrent;
             MaxSleep = resistData.SleepMax;
+      /*      CurrentMadness =  resistData.MadnessCurrent;
+            MaxMadness = resistData.MadnessMax;
+            CurrentDeathBlight = resistData.DeathBlightCurrent;
+            MaxDeathBlight = resistData.DeathBlightMax; */
+            
         }
 
         private void UpdateImmunities()
@@ -1017,8 +1085,10 @@ namespace TarnishedTool.ViewModels
             IsSleepImmune = immunities[0];
             IsPoisonImmune = immunities[1];
             IsRotImmune = immunities[2];
-            IsFrostImmune = immunities[3];
-            IsBleedImmune = immunities[4];
+            IsFrostImmune = immunities[5];
+            IsBleedImmune = immunities[3];
+     //     IsMadnessImmune = immunities[6];
+     //     IsDeathBlightImmune = immunities[4];
         }
 
         private void UpdateDefenses()

@@ -677,6 +677,7 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Private Methods
+        
 
         private void OnAppStart()
         {
@@ -850,6 +851,19 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => SafeExecute(() => Fps = 240));
             _hotkeyManager.RegisterAction(HotkeyActions.NoUpgradeCost,
                 () => SafeExecute(() => { IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled; }));
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenMapInCombat, () => _isCombatMapEnabled = !IsCombatMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.WarpInDungeons, () => _isDungeonWarpEnabled = !IsDungeonWarpEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleNextNgCycle, () => TriggerNgCycle());
+            _hotkeyManager.RegisterAction(HotkeyActions.DropRate, () => _isGuaranteedDropEnabled  =!IsGuaranteedDropEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles1, () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles2,() => _isDrawMapTiles2Enabled = !IsDrawMapTiles2Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMiniMap,() =>  _isDrawMiniMapEnabled = !IsDrawMiniMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawTilesOnWorldMap, () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.HideMap, ()  => _isHideMapEnabled = !IsHideMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.HideCharacters, () => _isHideCharactersEnabled  = !IsHideCharactersEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenMirror, () => SafeExecute(OpenMirror));
+            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip, () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
+            
         }
 
         private void SafeExecute(Action action)

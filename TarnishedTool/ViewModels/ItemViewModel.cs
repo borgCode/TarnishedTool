@@ -17,6 +17,7 @@ namespace TarnishedTool.ViewModels;
 
 public class ItemViewModel : BaseViewModel
 {
+    private readonly HotkeyManager _hotkeyManager;
     private readonly IItemService _itemService;
     private readonly IDlcService _dlcService;
     private readonly IEventService _eventService;
@@ -33,11 +34,14 @@ public class ItemViewModel : BaseViewModel
     public ItemSelectionViewModel ItemSelection { get; }
 
     public ItemViewModel(IItemService itemService, IDlcService dlcService, IStateService stateService,
-        IEventService eventService)
+        IEventService eventService,HotkeyManager hotkeyManager)
     {
         _itemService = itemService;
         _dlcService = dlcService;
         _eventService = eventService;
+        _hotkeyManager = hotkeyManager;
+        
+        RegisterHotkeys();
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -150,6 +154,14 @@ public class ItemViewModel : BaseViewModel
     #endregion
 
     #region Private Methods
+
+    private void RegisterHotkeys()
+    {
+        _hotkeyManager.RegisterAction(HotkeyActions.SpawnItem, () => SpawnItem());
+        _hotkeyManager.RegisterAction(HotkeyActions.SpawnSelectedLoadout, () => SpawnLoadout());
+        _hotkeyManager.RegisterAction(HotkeyActions.MassSpawn, () => MassSpawn());
+        _hotkeyManager.RegisterAction(HotkeyActions.CreateLoadout, () => OpenCreateLoadoutWindow());
+    }
 
     private void OnGameLoaded()
     {

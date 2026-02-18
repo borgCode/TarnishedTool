@@ -177,6 +177,8 @@ public enum HotkeyActions
     FightEldenBeast,
     FightFortissax,
     UnlockMetyr,
+    GetEvent,
+    SetEvent,
     DrawEvents,
     DisableEvents,
     OpenEventLogger,
@@ -188,5 +190,14 @@ public enum HotkeyActions
     FlatCloudsWeather,
     WindyPuffyClouds,
     RainyHeavyFog,
-    ScatteredRain
+    ScatteredRain,
+    SpawnItem,
+    SpawnSelectedLoadout,
+    MassSpawn,
+    CreateLoadout,
+    SpawnCustomItem,
+    OpenParamPatcher,
+    OpenCharactersList,
+    InjectAiScript,
+    DisableKbForNoClip
 }

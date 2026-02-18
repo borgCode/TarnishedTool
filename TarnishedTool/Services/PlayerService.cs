@@ -352,7 +352,14 @@ namespace TarnishedTool.Services
             {
                 var hook = Hooks.PlayerLockHp;
                 var codeBytes = AsmLoader.GetAsmBytes(AsmScript.PlayerLockHp);
+                
+                var worldChrManBase =  WorldChrMan.Base.ToInt64();
 
+                AsmHelper.WriteRelativeOffsets(codeBytes, [
+                        (code.ToInt64() + 5, worldChrManBase, 7, 5 + 3),
+                    (code.ToInt64() + 0x2E, hook + 6, 5, 0x2E + 1)
+                    ]);
+                
                 /* I have no clue what to do here Happs
                  
                  0:  48 89 5c 24 18          mov    QWORD PTR [rsp+0x18],rbx

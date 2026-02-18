@@ -66,8 +66,6 @@ public class SettingsViewModel : BaseViewModel
                 new("Toggle Speed", HotkeyActions.TogglePlayerSpeed),
                 new("Increase Speed", HotkeyActions.IncreasePlayerSpeed),
                 new("Decrease Speed", HotkeyActions.DecreasePlayerSpeed),
-                new("Apply Special Effect", HotkeyActions.ApplySpEffect),
-                new("Remove Special Effect", HotkeyActions.RemoveSpEffect),
                 new("Rune Arc", HotkeyActions.RuneArc),
                 new("Rest Character", HotkeyActions.Rest),
                 new("Faster Death", HotkeyActions.FasterDeath),
@@ -82,8 +80,25 @@ public class SettingsViewModel : BaseViewModel
                 new("Max Rune Level", HotkeyActions.MaxLevel),
                 new("Set NG Cycle to 7", HotkeyActions.SetNgCycleTo7),
                 new("HP Regen", HotkeyActions.HealOverTime),
-                new("FP Regen", HotkeyActions.FpRegen)
+                new("FP Regen", HotkeyActions.FpRegen),
                 
+            ],
+            ["Travel"] = 
+            [
+                  new("Unlock All Main Maps", HotkeyActions.UnlockMainGameMaps),
+                  new("Unlock All DLC Maps", HotkeyActions.UnlockDlcMaps),
+                  new("Unlock All Main Graces", HotkeyActions.UnlockAllMainGameGraces),
+                  new("Unlock All DLC Graces", HotkeyActions.UnlockAllDlcGraces),
+                  new("Unlock Main AR Graces", HotkeyActions.UnlockAllMainRemembrancesGraces),
+                  new("Unlock DLC AR Graces", HotkeyActions.UnlockAllDlcRemembrancesGraces),
+                  new("Unlock Preset Graces", HotkeyActions.UnlockPresetGraces),
+                  new("Toggle All Graces", HotkeyActions.ShowAllGraces),
+                  new("Toggle All Maps", HotkeyActions.ShowAllMaps),
+                  new("Toggle Map Popup", HotkeyActions.NoMapAcquiredPopup),
+                  new("Warp To Grace", HotkeyActions.WarpToGrace),
+                  new("Warp To Boss", HotkeyActions.WarpToBoss),
+                  new("Warp To Custom Location", HotkeyActions.WarpToCustomLocation),
+                  new("Toggle Rest On Warp", HotkeyActions.RestOnWarp),
             ],
             ["Enemies"] =
             [
@@ -126,7 +141,7 @@ public class SettingsViewModel : BaseViewModel
                 new("No Attack", HotkeyActions.TargetNoAttack),
                 new("Force Act Sequence", HotkeyActions.ForceActSequence),
                 new("Kill All Except Target", HotkeyActions.KillAllExceptTarget),
-                new("Reset Position", HotkeyActions.ResetTargetPosition)
+                new("Reset Position", HotkeyActions.ResetTargetPosition),
             ],
             ["Utility"] =
             [
@@ -170,15 +185,66 @@ public class SettingsViewModel : BaseViewModel
                 new("Set 120 FPS", HotkeyActions.Set120Fps),
                 new("Set 180 FPS", HotkeyActions.Set180Fps),
                 new("Set 240 FPS", HotkeyActions.Set240Fps),
-                new("No Upgrades Cost", HotkeyActions.NoUpgradeCost)
+                new("No Upgrades Cost", HotkeyActions.NoUpgradeCost),
+                new("Open Mirror", HotkeyActions.OpenMirror),
+                new("Open Map In Combat", HotkeyActions.OpenMapInCombat),
+                new("Warp In Dungeons", HotkeyActions.WarpInDungeons),
+                new("Toggle Next NG Cycle", HotkeyActions.ToggleNextNgCycle),
+                new("Toggle 100% Drop Rate", HotkeyActions.DropRate),
+                new("Draw Map Tiles 1", HotkeyActions.DrawMapTiles1),
+                new("Draw Map Tiles 2", HotkeyActions.DrawMapTiles2),
+                new("Draw Mini Map", HotkeyActions.DrawMiniMap),
+                new("Draw Tiles On World Map", HotkeyActions.DrawTilesOnWorldMap),
+                new("Hide Map", HotkeyActions.HideMap),
+                new("Hide Characters", HotkeyActions.HideCharacters),
+                new("Full Shop Lineup", HotkeyActions.FullShopLineup),
+                new("Disable KB for No Clip", HotkeyActions.DisableKbForNoClip),
+                
+                
             ],
 
             ["Event"] =
             [
-                new("Draw Events", HotkeyActions.DrawEvent),
+                new("Draw Events", HotkeyActions.DrawEvents),
+                new("Get Event State", HotkeyActions.GetEvent),
+                new("Set Event State", HotkeyActions.SetEvent),
+                new("Unlock Affinites", HotkeyActions.UnlockAffinites),
+                new("Unlock Gestures", HotkeyActions.UnlockGestures),
+                new("Fight Elden Beast", HotkeyActions.FightEldenBeast),
+                new("Fight Fortissax", HotkeyActions.FightFortissax),
+                new("Unlock Metyr", HotkeyActions.UnlockMetyr),
+                new("Disable Events", HotkeyActions.DisableEvents),
+                new("Open Event Logger", HotkeyActions.OpenEventLogger),
                 new("Set Morning", HotkeyActions.SetMorning),
                 new("Set Noon", HotkeyActions.SetNoon),
-                new("Set Night", HotkeyActions.SetNight)
+                new("Set Night", HotkeyActions.SetNight),
+                new("Default Weather", HotkeyActions.DefaultWeather),
+                new("Rainy Weather", HotkeyActions.RainyWeather),
+                new("Snowy Weather", HotkeyActions.SnowyWeather),
+                new("Windy Rain Weather", HotkeyActions.WindyRainWeather),
+                new("Foggy Weather", HotkeyActions.FoggyWeather),
+                new("Flat Clouds Weather", HotkeyActions.FlatCloudsWeather),
+                new("Windy Puffy Clouds", HotkeyActions.WindyPuffyClouds),
+                new("Rainy Heavy Fog", HotkeyActions.RainyHeavyFog),
+                new("Scattered Rain", HotkeyActions.ScatteredRain),
+                
+            ],
+            
+            ["Items"] =
+            [
+                new("Spawn Selected Item", HotkeyActions.SpawnItem),
+                new("Spawn Selected Loadout", HotkeyActions.SpawnSelectedLoadout),
+                new("Mass Spawn Category", HotkeyActions.MassSpawn),
+                new("Create Loadout", HotkeyActions.CreateLoadout),
+            ],
+            ["Advanced"] =
+            [
+                new("Apply Player SpEffect", HotkeyActions.ApplySpEffect),
+                new("Remove Player SpEffect", HotkeyActions.RemoveSpEffect),
+                new("Spawn Custom Item", HotkeyActions.SpawnCustomItem),
+                new("Open Param Patcher", HotkeyActions.OpenParamPatcher),
+                new("Open Characters List", HotkeyActions.OpenCharactersList),
+                new("Inject AI Script", HotkeyActions.InjectAiScript),
             ],
         };
 
