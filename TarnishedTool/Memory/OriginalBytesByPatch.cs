@@ -29,6 +29,15 @@ public static class OriginalBytesByPatch
             _ => [0x41, 0xFF, 0x91, 0xC8, 0x05, 0x00, 0x00]
         };
     }
+    
+    public static class PlayerLockHp
+    {
+        public static byte[] GetOriginal() => Offsets.Version switch
+        {
+          Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 => [0],
+            _ => [0x48, 0x89, 0x5C, 0x24, 0x18]
+        };
+    }
 
     public static class InfinitePoise
     {

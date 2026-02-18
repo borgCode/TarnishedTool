@@ -352,36 +352,22 @@ namespace TarnishedTool.Services
             {
                 var hook = Hooks.PlayerLockHp;
                 var codeBytes = AsmLoader.GetAsmBytes(AsmScript.PlayerLockHp);
-                
-                var worldChrManBase =  WorldChrMan.Base.ToInt64();
+
+                var worldChrManBase = WorldChrMan.Base.ToInt64();
+                var patchSpecificPlayerIns = WorldChrMan.PlayerIns;
+                AsmHelper.WriteImmediateDwords(codeBytes, new[]
+                {
+                    (patchSpecificPlayerIns, 0xE + 3)
+                });
 
                 AsmHelper.WriteRelativeOffsets(codeBytes, [
-                        (code.ToInt64() + 5, worldChrManBase, 7, 5 + 3),
-                    (code.ToInt64() + 0x2E, hook + 6, 5, 0x2E + 1)
-                    ]);
-                
-                /* I have no clue what to do here Happs
-                 
-                 0:  48 89 5c 24 18          mov    QWORD PTR [rsp+0x18],rbx
-                 5:  53                      push   rbx
-                 6:  52                      push   rdx
-                 7:  48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # e <_main+0xe>
-                 e:  48 8b 9a 08 e5 01 00    mov    rbx,QWORD PTR [rdx+0x1e508]
-                 15: 75 0f                   jne    26 <normal>
-                 17: 83 b9 38 01 00 00 00    cmp    DWORD PTR [rcx+0x138],0x0
-                 1e: 74 06                   je     26 <normal>
-                 20: 8b 81 38 01 00 00       mov    eax,DWORD PTR [rcx+0x138]
-                 0000000000000026 <normal>:
-                 26: 5a                      pop    rdx
-                 27: 5b                      pop    rbx
-                 28: 89 81 38 01 00 00       mov    DWORD PTR [rcx+0x138],eax
-                 2e: e9 00 00 00 00          jmp    33 <normal+0xd>
-                 
-                 */
+                    (code.ToInt64() + 7, worldChrManBase, 7, 7 + 3),
+                    (code.ToInt64() + 0x2E, hook + 5, 5, 0x2E + 1)
+                ]);
 
                 memoryService.WriteBytes(code, codeBytes);
                 hookManager.InstallHook(code.ToInt64(), hook,
-                    [0x89, 0x81, 0x38, 0x01, 0x00, 0x00]);
+                    [0x48, 0x89, 0x5C, 0x24, 0x18]);
             }
             else
             {
