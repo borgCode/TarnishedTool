@@ -1085,7 +1085,7 @@ namespace TarnishedTool.ViewModels
             IsSleepImmune = immunities[0];
             IsPoisonImmune = immunities[1];
             IsRotImmune = immunities[2];
-            IsFrostImmune = immunities[5];
+            IsFrostImmune = immunities[4];
             IsBleedImmune = immunities[3];
      //     IsMadnessImmune = immunities[6];
      //     IsDeathBlightImmune = immunities[4];
