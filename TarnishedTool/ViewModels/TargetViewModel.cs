@@ -14,7 +14,6 @@ namespace TarnishedTool.ViewModels
     public class TargetViewModel : BaseViewModel
     {
         private bool _customHpHasBeenSet = true;
-
         private nint _currentTargetChrIns;
 
         private float _targetDesiredSpeed = -1f;
@@ -137,7 +136,6 @@ namespace TarnishedTool.ViewModels
                     IsDisableAllExceptTargetEnabled = false;
                     IsNoStaggerEnabled = false;
                     _targetService.ToggleTargetHook(false);
-                    
                 }
 
                 RefreshResistancesWindow();
@@ -177,7 +175,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showPoise, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowPoise = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -206,7 +205,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showPoison, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowPoison = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -243,7 +243,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showBleed, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowBleed = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -280,7 +281,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showRot, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowRot = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -317,7 +319,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showFrost, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowFrost = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -370,7 +373,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showMadness, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowMadness = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -399,7 +403,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showDeathBlight, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowDeathBlight = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -412,7 +417,8 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showSleep, value);
                 RefreshResistancesWindow();
-                SaveResistancesState();
+                SettingsManager.Default.ResistancesShowSleep = value;
+                SettingsManager.Default.Save();
             }
         }
 
@@ -450,7 +456,6 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _showAllResistances, value))
                 {
                     UpdateResistancesDisplay();
-                    SaveResistancesState();
                 }
             }
         }
@@ -663,7 +668,14 @@ namespace TarnishedTool.ViewModels
         public bool ShowCombatInfo
         {
             get => _showCombatInfo;
-            set => SetProperty(ref _showCombatInfo, value);
+            set
+            {
+                if (SetProperty(ref _showCombatInfo, value))
+                {
+                    SettingsManager.Default.ResistancesShowCombatInfo = value;
+                    SettingsManager.Default.Save();
+                }
+            }
         }
 
         private float _targetSpeed;
@@ -1273,21 +1285,7 @@ namespace TarnishedTool.ViewModels
 
             RefreshResistancesWindow();
         }
-
-        private void SaveResistancesState()
-        {
-            SettingsManager.Default.ResistancesShowPoise = ShowPoise;
-            SettingsManager.Default.ResistancesShowSleep = ShowSleep;
-            SettingsManager.Default.ResistancesShowPoison = ShowPoison;
-            SettingsManager.Default.ResistancesShowRot = ShowRot;
-            SettingsManager.Default.ResistancesShowFrost = ShowFrost;
-            SettingsManager.Default.ResistancesShowBleed = ShowBleed;
-            SettingsManager.Default.ResistancesShowMadness = ShowMadness;
-            SettingsManager.Default.ResistancesShowDeathBlight = ShowDeathBlight;
-            SettingsManager.Default.ResistancesShowCombatInfo = ShowCombatInfo;
-            SettingsManager.Default.Save();
-        }
-
+        
         private void OpenResistancesWindow()
         {
             if (_resistancesWindowWindow != null && _resistancesWindowWindow.IsVisible) return;
