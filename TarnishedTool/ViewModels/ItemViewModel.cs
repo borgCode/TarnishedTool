@@ -254,9 +254,9 @@ public class ItemViewModel : BaseViewModel
             }
         }
 
-        if (item is SpiritAsh && ItemSelection.ShowSpiritAshUpgradeOptions)
+        if (item is SpiritAsh && ItemSelection.ShowUpgradeOptions)
         {
-            itemId += ItemSelection.SelectedSpiritAshUpgrade;
+            itemId += ItemSelection.SelectedUpgrade;
         }
 
         if (item is EventItem eventItem && eventItem.NeedsEvent)

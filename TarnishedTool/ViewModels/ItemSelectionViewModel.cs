@@ -13,12 +13,19 @@ public class ItemSelectionViewModel : BaseViewModel
     private readonly Dictionary<string, List<Item>> _itemsByCategory;
     private readonly List<Item> _allItems;
     private readonly List<AshOfWar> _allAshesOfWar;
-    
+
     private static readonly CompareInfo _compareInfo = CultureInfo.InvariantCulture.CompareInfo;
+    
+    private static readonly int[] _somberToStandardUpgrade =
+    { 0, 3, 6, 9, 12, 15, 16, 19, 21, 24, 25 };
+    
+    private static readonly int[] _standardToSomberUpgrade =
+    { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 7, 7, 7, 8, 8, 9, 9, 9, 10 };
 
     private bool _hasDlc;
     private string _preSearchCategory;
     private bool _isSearchActive;
+
     public bool IsSearchActive
     {
         get => _isSearchActive;
@@ -44,7 +51,7 @@ public class ItemSelectionViewModel : BaseViewModel
     }
 
     #region Properties
-    
+
     public List<Item> SelectedItems { get; set; } = new();
 
     private ObservableCollection<string> _categories;
@@ -121,12 +128,12 @@ public class ItemSelectionViewModel : BaseViewModel
         {
             if (!SetProperty(ref _selectedItem, value) || value == null) return;
 
-            MaxQuantity = value.MaxStorage > 0 
-                ? value.MaxStorage + value.StackSize 
+            MaxQuantity = value.MaxStorage > 0
+                ? value.MaxStorage + value.StackSize
                 : value.StackSize;
             SelectedQuantity = value.StackSize;
             QuantityEnabled = value.StackSize > 1;
-            
+
             if (SelectedCategory == "Incantations" || SelectedCategory == "Sorceries")
             {
                 SelectedQuantity = 1;
@@ -138,16 +145,12 @@ public class ItemSelectionViewModel : BaseViewModel
             }
             else if (value is SpiritAsh spiritAsh)
             {
-                ShowWeaponOptions = false;
-                ShowAowOptions = false;
-                ShowSpiritAshUpgradeOptions = spiritAsh.CanUpgrade;
-                SelectedSpiritAshUpgrade = 0;
+                ConfigureForSpiritAsh(spiritAsh);
             }
             else
             {
-                ShowWeaponOptions = false;
+                ShowUpgradeOptions = false;
                 ShowAowOptions = false;
-                ShowSpiritAshUpgradeOptions = false;
             }
         }
     }
@@ -180,34 +183,27 @@ public class ItemSelectionViewModel : BaseViewModel
         }
     }
 
+    private int _weaponUpgrade;
+    private int _spiritAshUpgrade;
 
-    private bool _showSpiritAshUpgradeOptions;
-
-    public bool ShowSpiritAshUpgradeOptions
+    private void ConfigureForSpiritAsh(SpiritAsh spiritAsh)
     {
-        get => _showSpiritAshUpgradeOptions;
-        private set => SetProperty(ref _showSpiritAshUpgradeOptions, value);
-    }
-    
-    private int _selectedSpiritAshUpgrade;
-
-    public int SelectedSpiritAshUpgrade
-    {
-        get => _selectedSpiritAshUpgrade;
-        set
-        {
-            int clampedValue = Math.Max(0, Math.Min(value, 10));
-            SetProperty(ref _selectedSpiritAshUpgrade, clampedValue);
-        }
+        ShowUpgradeOptions = true;
+        ShowAowOptions = false;
+        if (spiritAsh.CanUpgrade) MaxUpgradeLevel = 10;
+        _selectedUpgrade = Math.Min(_spiritAshUpgrade, MaxUpgradeLevel);
+        OnPropertyChanged(nameof(SelectedUpgrade));
     }
 
-    private bool _showWeaponOptions;
 
-    public bool ShowWeaponOptions
+    private bool _showUpgradeOptions;
+
+    public bool ShowUpgradeOptions
     {
-        get => _showWeaponOptions;
-        private set => SetProperty(ref _showWeaponOptions, value);
+        get => _showUpgradeOptions;
+        private set => SetProperty(ref _showUpgradeOptions, value);
     }
+
 
     private int _maxUpgradeLevel = 25;
 
@@ -225,9 +221,13 @@ public class ItemSelectionViewModel : BaseViewModel
         set
         {
             int clampedValue = Math.Max(0, Math.Min(value, MaxUpgradeLevel));
-            SetProperty(ref _selectedUpgrade, clampedValue);
+            if (!SetProperty(ref _selectedUpgrade, clampedValue)) return;
+
+            if (SelectedItem is Weapon) _weaponUpgrade = clampedValue;
+            else if (SelectedItem is SpiritAsh) _spiritAshUpgrade = clampedValue;
         }
     }
+
 
     private bool _canUpgrade;
 
@@ -244,7 +244,7 @@ public class ItemSelectionViewModel : BaseViewModel
         get => _showAowOptions;
         private set => SetProperty(ref _showAowOptions, value);
     }
-    
+
     private bool _showAffinityOptions;
 
     public bool ShowAffinityOptions
@@ -323,23 +323,37 @@ public class ItemSelectionViewModel : BaseViewModel
 
     private void ApplyFilter()
     {
-        var filtered = _allItems.Where(i => 
+        var filtered = _allItems.Where(i =>
             _compareInfo.IndexOf(i.Name, _searchText, CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0);
-        
+
         if (!_hasDlc)
             filtered = filtered.Where(i => !i.IsDlc);
 
         Items = new ObservableCollection<Item>(filtered);
         SelectedItem = Items.FirstOrDefault();
     }
-
+    
+    // Adding logic for smtihing and somber upgrades
     private void ConfigureForWeapon(Weapon weapon)
     {
-        ShowWeaponOptions = true;
+        
         CanUpgrade = weapon.UpgradeType < 2;
-        if (CanUpgrade) MaxUpgradeLevel = weapon.UpgradeType == 0 ? 25 : 10;
+        ShowUpgradeOptions = CanUpgrade;
+        if (CanUpgrade)
+        {
+            if (weapon.UpgradeType == 0)
+            {
+                MaxUpgradeLevel = 25;
+                _selectedUpgrade = _somberToStandardUpgrade[Math.Min(_weaponUpgrade, 10)];
+            }
+            else if (weapon.UpgradeType == 1)
+            {
+                MaxUpgradeLevel = 10;
+                _selectedUpgrade = _standardToSomberUpgrade[Math.Min(_weaponUpgrade, 25)];
+            }
 
-        if (SelectedUpgrade > MaxUpgradeLevel) SelectedUpgrade = MaxUpgradeLevel;
+            OnPropertyChanged(nameof(SelectedUpgrade));
+        }
 
         if (weapon.CanApplyAow)
         {

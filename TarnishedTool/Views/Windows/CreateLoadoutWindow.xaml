@@ -159,9 +159,9 @@
 
                         <StackPanel>
 
-                            <!-- Weapon upgrades -->
+                            <!-- Upgrade Options -->
                             <StackPanel
-                                Visibility="{Binding ItemSelection.ShowWeaponOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                Visibility="{Binding ItemSelection.ShowUpgradeOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid Margin="0,0,0,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -192,23 +192,6 @@
                                               Margin="0,0,0,5" />
                                 </StackPanel>
                             </StackPanel>
-
-                            <!-- Spirit ash upgrades -->
-                            <Grid Margin="0,0,0,5"
-                                  Visibility="{Binding ItemSelection.ShowSpiritAshUpgradeOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Upgrade:"
-                                           VerticalAlignment="Center"
-                                           Margin="0,0,5,0" />
-                                <xctk:IntegerUpDown Grid.Column="1"
-                                                    Value="{Binding ItemSelection.SelectedSpiritAshUpgrade}"
-                                                    Minimum="0"
-                                                    Maximum="10"
-                                                    Increment="1" />
-                            </Grid>
                         </StackPanel>
 
                         <Button Content="Add To Loadout"
