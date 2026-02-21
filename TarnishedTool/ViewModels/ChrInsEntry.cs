@@ -22,14 +22,14 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
 
     public string ChrInsHeader =>
         $@"{Name}    {InternalName}";
-    
-    public string ChrInsIds => 
+
+    public string ChrInsIds =>
         $"ChrId: {ChrId}\nNpcParamId: {NpcParamId}\nNpcThinkParamId: {NpcThinkParamId}\nEntityId: {EntityId}\nChrIns: {(long)ChrIns:X}";
-        
+
 
     public string AiWindowDisplay =>
         $@"{Name}   ChrId: {ChrId} NpcParamId: {NpcParamId} NpcThinkParamId: {NpcThinkParamId}";
-    
+
     private bool _isExpanded;
     public bool IsExpanded
     {
@@ -52,11 +52,11 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         {
             if (SetProperty(ref _isAiDisabled, value))
             {
-               OnOptionChanged.Invoke(this, nameof(IsAiDisabled), value);
+                OnOptionChanged.Invoke(this, nameof(IsAiDisabled), value);
             }
         }
     }
-    
+
     private bool _isTargetViewEnabled;
     public bool IsTargetViewEnabled
     {
@@ -69,7 +69,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
             }
         }
     }
-    
+
     private bool _isNoAttackEnabled;
     public bool IsNoAttackEnabled
     {
@@ -82,7 +82,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
             }
         }
     }
-    
+
     private bool _isNoMoveEnabled;
     public bool IsNoMoveEnabled
     {
@@ -108,30 +108,52 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
             }
         }
     }
-    
+
     private float _distance;
     public float Distance
     {
         get => _distance;
         set => SetProperty(ref _distance, value);
     }
-    
+
+    private int _currentHp;
+
+    public int CurrentHp
+    {
+        get => _currentHp;
+        set => SetProperty(ref _currentHp, value);
+    }
+
+    private int _maxHp;
+
+    public int MaxHp
+    {
+        get => _maxHp;
+        set => SetProperty(ref _maxHp, value);
+    }
+
     private ICommand _warpCommand;
     public ICommand WarpCommand => _warpCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(WarpCommand));
     });
-    
+
     private ICommand _openGoalWindowCommand;
     public ICommand OpenAiWindowCommand => _openGoalWindowCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(OpenAiWindowCommand));
     });
-    
+
     private ICommand _killChrCommand;
     public ICommand KillChrCommand => _killChrCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(KillChrCommand));
     });
-    
+
+    private ICommand _setHpCommand;
+    public ICommand SetHpCommand => _setHpCommand ??= new DelegateCommand(() =>
+    {
+        OnCommandExecuted?.Invoke(this, nameof(SetHpCommand));
+    });
+
 }

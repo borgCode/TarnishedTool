@@ -29,6 +29,7 @@ public static class OriginalBytesByPatch
             _ => [0x41, 0xFF, 0x91, 0xC8, 0x05, 0x00, 0x00]
         };
     }
+    
 
     public static class InfinitePoise
     {

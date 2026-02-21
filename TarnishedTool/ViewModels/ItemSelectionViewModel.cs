@@ -19,6 +19,11 @@ public class ItemSelectionViewModel : BaseViewModel
     private bool _hasDlc;
     private string _preSearchCategory;
     private bool _isSearchActive;
+    public bool IsSearchActive
+    {
+        get => _isSearchActive;
+        private set => SetProperty(ref _isSearchActive, value);
+    }
 
     public ItemSelectionViewModel(
         Dictionary<string, List<Item>> itemsByCategory,
@@ -64,7 +69,7 @@ public class ItemSelectionViewModel : BaseViewModel
 
             if (_isSearchActive)
             {
-                _isSearchActive = false;
+                IsSearchActive = false;
                 _searchText = string.Empty;
                 OnPropertyChanged(nameof(SearchText));
                 _preSearchCategory = null;
@@ -85,7 +90,7 @@ public class ItemSelectionViewModel : BaseViewModel
 
             if (string.IsNullOrEmpty(value))
             {
-                _isSearchActive = false;
+                IsSearchActive = false;
                 if (_preSearchCategory != null)
                 {
                     _selectedCategory = _preSearchCategory;
@@ -99,7 +104,7 @@ public class ItemSelectionViewModel : BaseViewModel
                 if (!_isSearchActive)
                 {
                     _preSearchCategory = _selectedCategory;
-                    _isSearchActive = true;
+                    IsSearchActive = true;
                 }
 
                 ApplyFilter();
@@ -131,10 +136,18 @@ public class ItemSelectionViewModel : BaseViewModel
             {
                 ConfigureForWeapon(weapon);
             }
+            else if (value is SpiritAsh spiritAsh)
+            {
+                ShowWeaponOptions = false;
+                ShowAowOptions = false;
+                ShowSpiritAshUpgradeOptions = spiritAsh.CanUpgrade;
+                SelectedSpiritAshUpgrade = 0;
+            }
             else
             {
                 ShowWeaponOptions = false;
                 ShowAowOptions = false;
+                ShowSpiritAshUpgradeOptions = false;
             }
         }
     }
@@ -164,6 +177,27 @@ public class ItemSelectionViewModel : BaseViewModel
         {
             int clampedValue = Math.Max(1, Math.Min(value, MaxQuantity));
             SetProperty(ref _selectedQuantity, clampedValue);
+        }
+    }
+
+
+    private bool _showSpiritAshUpgradeOptions;
+
+    public bool ShowSpiritAshUpgradeOptions
+    {
+        get => _showSpiritAshUpgradeOptions;
+        private set => SetProperty(ref _showSpiritAshUpgradeOptions, value);
+    }
+    
+    private int _selectedSpiritAshUpgrade;
+
+    public int SelectedSpiritAshUpgrade
+    {
+        get => _selectedSpiritAshUpgrade;
+        set
+        {
+            int clampedValue = Math.Max(0, Math.Min(value, 10));
+            SetProperty(ref _selectedSpiritAshUpgrade, clampedValue);
         }
     }
 

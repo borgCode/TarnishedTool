@@ -2849,6 +2849,25 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 89 5c 24 18          mov    QWORD PTR [rsp+0x18],rbx
+        ///53                      push   rbx
+        ///52                      push   rdx
+        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]    
+        ///48 3b 9a 08 e5 01 00    cmp    rbx,QWORD PTR [rdx+0x1e508]
+        ///75 0f                   jne    26 &lt;normal&gt;
+        ///83 b9 38 01 00 00 00    cmp    DWORD PTR [rcx+0x138],0x0
+        ///74 06                   je     26 &lt;normal&gt;
+        ///8b 81 38 01 00 00       mov    eax,DWORD PTR [rcx+0x138]
+        ///000000000026 &lt;normal&gt;:
+        ///5a                      pop    rdx        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string PlayerLockHp {
+            get {
+                return ResourceManager.GetString("PlayerLockHp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,40000295,Academy Magic Pot,10,600
         ///0,40000E1A,Acid Spraymist,10, 600
         ///0,40000262,Albinauric Pot,10,600
@@ -3045,19 +3064,19 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,40033838,Albinauric Ashes,1,600
-        ///0,40033068,Ancestral Follower Ashes,1,600
-        ///1,4021CC58,Ancient Dragon Florissax,1,600
-        ///0,4003E800,Ancient Dragon Knight Kristoff,1,600
-        ///0,4003CCA8,Archer Ashes,1,600
-        ///0,400372D0,Avionette Soldier Ashes,1,600
-        ///0,40038270,Azula Beastman Ashes,1,600
-        ///0,40031510,Banished Knight Engvall,1,600
-        ///0,40031128,Banished Knight Oleg,1,600
-        ///0,40035F48,Battlemage Hugues,1,600
-        ///1,4021B8D0,Bigmouth Imp Ashes,1,600
-        ///0,40030D40,Black Knife Tiche,1,600
-        ///1,4021B4E8,Black Knight Captain Huw,1,60 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 0,40033838,Albinauric Ashes,1,600,1
+        ///0,40033068,Ancestral Follower Ashes,1,600,1
+        ///1,4021CC58,Ancient Dragon Florissax,1,600,1
+        ///0,4003E800,Ancient Dragon Knight Kristoff,1,600,1
+        ///0,4003CCA8,Archer Ashes,1,600,1
+        ///0,400372D0,Avionette Soldier Ashes,1,600,1
+        ///0,40038270,Azula Beastman Ashes,1,600,1
+        ///0,40031510,Banished Knight Engvall,1,600,1
+        ///0,40031128,Banished Knight Oleg,1,600,1
+        ///0,40035F48,Battlemage Hugues,1,600,1
+        ///1,4021B8D0,Bigmouth Imp Ashes,1,600,1
+        ///0,40030D40,Black Knife Tiche,1,600,1
+        ///1,4021B4E8,Black [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SpiritAshes {
             get {

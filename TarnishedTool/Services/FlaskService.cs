@@ -42,7 +42,7 @@ public class FlaskService(IEzStateService ezStateService, IMemoryService memoryS
 
         int flaskLevel = ezStateService.EnvQuery(EnvQueries.GetFlaskLevel).IntValue;
 
-        if (flaskLevel > 13)
+        if (flaskLevel >= 13)
         {
             ezStateService.ExecuteTalkCommand(TalkCommands.OpenDialog(7, MaxUpgradeTextId, 1, 0, 1));
             return;

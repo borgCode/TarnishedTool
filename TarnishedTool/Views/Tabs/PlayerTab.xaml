@@ -42,27 +42,35 @@
                     <TextBlock Text="{Binding CurrentMaxHp, StringFormat=Max: {0}}"
                                Width="60"
                                VerticalAlignment="Center"
-                               Margin="10,0,0,0" />
+                               Margin="7,0,0,0" />
+                    <CheckBox
+                        Content="Lock HP"
+                        ToolTip="Lock Current HP, Functions similar to ERTool's Max/1HP Toggles"
+                        IsChecked="{Binding IsHpLocked}"
+                        IsEnabled="{Binding AreOptionsEnabled}"
+                        Margin="3,0,4,0"
+                        Width="67"
+                        />
                     <Button
                         Content="RFBS"
                         Command="{Binding SetRfbsCommand}"
                         IsEnabled="{Binding AreOptionsEnabled}"
-                        Margin="10,0,0,0"
-                        Width="60" />
+                        Margin="7,0,0,0"
+                        Width="40" />
                     <Button
                         Command="{Binding SetMaxHpCommand}"
                         Content="Max Hp"
                         IsEnabled="{Binding AreOptionsEnabled}"
-                        Margin="10,0,0,0"
-                        Width="60" />
+                        Margin="7,0,0,0"
+                        Width="55" />
                     <Button
                         Command="{Binding DieCommand}"
                         Content="Die"
                         IsEnabled="{Binding AreOptionsEnabled}"
-                        Margin="10,0,0,0"
-                        Width="40" />
-                    <TextBox Width="70" Height="20"
-                                        Margin="10,0,0,0"
+                        Margin="7,0,0,0"
+                        Width="30" />
+                    <TextBox Width="50" Height="20"
+                                        Margin="7,0,0,0"
                                         Text="{Binding CustomHp, UpdateSourceTrigger=PropertyChanged}"
                                         FontSize="11"
                                         Padding="-0.2"
@@ -74,8 +82,8 @@
                         Command="{Binding SetCustomHpCommand}"
                         Content="Set Custom Hp"
                         IsEnabled="{Binding AreOptionsEnabled}"
-                        Margin="5,0,0,0"
-                        Width="100" />
+                        Margin="7,0,0,0"
+                        Width="95" />
                     
                     <Border Background="#3498db"
                             CornerRadius="10"
@@ -213,7 +221,8 @@
                     <CheckBox Content="Infinite FP"
                               IsChecked="{Binding IsInfiniteFpEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Heal over time"
+                    <CheckBox Content="HP Regen"
+                              ToolTip="Regenerate 3.3% of max HP per tick"
                               IsChecked="{Binding IsHotEnabled}"
                               Margin="0,2" />
                 </StackPanel>
@@ -234,11 +243,12 @@
                     <CheckBox Content="Hidden"
                               IsChecked="{Binding IsHiddenEnabled}"
                               Margin="0,2" />
-                    <CheckBox Content="Torrent No Death"
-                              IsChecked="{Binding IsTorrentNoDeathEnabled}"
-                              Margin="0,2" />
                     <CheckBox Content="Faster Death"
                               IsChecked="{Binding IsFasterDeathEnabled}"
+                              Margin="0,2" />
+                    <CheckBox Content="FP Regen"
+                              ToolTip="Regenerate 3.3% of max FP per tick"
+                              IsChecked="{Binding IsFpRegenEnabled}"
                               Margin="0,2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
@@ -259,6 +269,9 @@
                               Margin="0,2" />
                     <CheckBox Content="Torrent Anywhere"
                               IsChecked="{Binding IsTorrentAnywhereEnabled}"
+                              Margin="0,2" />
+                    <CheckBox Content="Torrent No Death"
+                              IsChecked="{Binding IsTorrentNoDeathEnabled}"
                               Margin="0,2" />
                 </StackPanel>
             </Grid>

@@ -33,6 +33,15 @@ public class SettingsManager
     public bool DisableAchievements { get; set; }
     public bool NoLogo { get; set; }
     public bool MuteMusic { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowPoise { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowSleep { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowPoison { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowRot { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowFrost { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowBleed { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowMadness { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowDeathBlight { get; set; }
+    [DefaultValue(true)] public bool ResistancesShowCombatInfo { get; set; }
     [DefaultValue(1.0)] public double ResistancesWindowScaleX { get; set; }
     [DefaultValue(1.0)] public double ResistancesWindowScaleY { get; set; }
     public double ResistancesWindowOpacity { get; set; }
@@ -71,7 +80,7 @@ public class SettingsManager
     public double AiOverlayGoalsLeft { get; set; }
     public double AiOverlayGoalsTop { get; set; }
     public double AiOverlayGoalsOpacity { get; set; }
-    
+
     public double AiOverlayCoolTimesLeft { get; set; }
     public double AiOverlayCoolTimesTop { get; set; }
     public double AiOverlayCoolTimesOpacity { get; set; }

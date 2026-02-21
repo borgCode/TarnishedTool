@@ -16,7 +16,7 @@ namespace TarnishedTool.Services;
 public class ChrInsService(IMemoryService memoryService) : IChrInsService
 {
     public const int ChrInsEntrySize = 0x8;
-    public const int ResistBlockSize = 0x44;
+    public const int ResistBlockSize = 0x48;
 
     #region Public Methods
 
@@ -161,12 +161,14 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public bool[] GetImmunities(nint chrIns)
     {
         var ptr = GetNpcParamPtr(chrIns);
-        var immunities = new bool[5];
+        var immunities = new bool[7];
         immunities[0] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.SleepImmune) == 90300;
         immunities[1] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.PoisonImmune) == 90000;
         immunities[2] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.RotImmune) == 90010;
-        immunities[4] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.FrostImmune) == 90040;
-        immunities[3] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.BleedImmune) == 90020;
+        immunities[3] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.FrostImmune) == 90040;
+        immunities[4] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.BleedImmune) == 90020;
+        immunities[5] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.MadnessImmune) == 90060;
+        immunities[6] = memoryService.Read<int>(ptr + (int)ChrIns.NpcParamOffsets.DeathBlightImmune) == 90030; // this only affects regular npcs, player enemies use 9634 but maybe different offset?
         return immunities;
     }
 
@@ -185,7 +187,12 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
             block.Get<int>((int)ChrIns.ChrResistOffsets.FrostCurrent),
             block.Get<int>((int)ChrIns.ChrResistOffsets.FrostMax),
             block.Get<int>((int)ChrIns.ChrResistOffsets.SleepCurrent),
-            block.Get<int>((int)ChrIns.ChrResistOffsets.SleepMax)
+            block.Get<int>((int)ChrIns.ChrResistOffsets.SleepMax),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.MadnessCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.MadnessMax),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.DeathBlightCurrent),
+            block.Get<int>((int)ChrIns.ChrResistOffsets.DeathBlightMax)
+            
         );
     }
 

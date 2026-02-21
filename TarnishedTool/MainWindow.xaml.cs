@@ -83,7 +83,7 @@ namespace TarnishedTool
             TravelViewModel travelViewModel = new TravelViewModel(
                 travelService, eventService, _stateService,
                 _dlcService, emevdService, playerService,
-                gameTickService
+                gameTickService, hotkeyManager
             );
 
             EnemyViewModel enemyViewModel = new EnemyViewModel(
@@ -111,7 +111,7 @@ namespace TarnishedTool
             );
 
             ItemViewModel itemViewModel = new ItemViewModel(
-                itemService, _dlcService, _stateService, eventService
+                itemService, _dlcService, _stateService, eventService, hotkeyManager
             );
 
             AdvancedViewModel advancedViewModel = new AdvancedViewModel(

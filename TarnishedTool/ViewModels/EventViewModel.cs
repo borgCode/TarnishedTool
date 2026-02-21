@@ -302,10 +302,35 @@ namespace TarnishedTool.ViewModels
 
         private void RegisterHotkeys()
         {
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawEvent, () => IsDrawEventsEnabled = !IsDrawEventsEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawEvents, () => IsDrawEventsEnabled = !IsDrawEventsEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.GetEvent, () => SafeExecute(GetEvent));
+            _hotkeyManager.RegisterAction(HotkeyActions.SetEvent, () => SafeExecute(SetEvent));
+            _hotkeyManager.RegisterAction(HotkeyActions.DisableEvents,
+                () => IsDisableEventsEnabled = !IsDisableEventsEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenEventLogger, () => OpenEventLogWindow());
+            _hotkeyManager.RegisterAction(HotkeyActions.UnlockAffinites, () => SafeExecute(UnlockWhetblades));
+            _hotkeyManager.RegisterAction(HotkeyActions.UnlockGestures, () => SafeExecute(UnlockGestures));
+            _hotkeyManager.RegisterAction(HotkeyActions.FightEldenBeast, () => SafeExecute(FightEldenBeast));
+            _hotkeyManager.RegisterAction(HotkeyActions.FightFortissax, () => SafeExecute(FightFortissax));
+            _hotkeyManager.RegisterAction(HotkeyActions.UnlockMetyr, () => SafeExecute(UnlockMetyr));
             _hotkeyManager.RegisterAction(HotkeyActions.SetMorning, () => SafeExecute(SetMorning));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNoon, () => SafeExecute(SetNoon));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNight, () => SafeExecute(SetNight));
+            _hotkeyManager.RegisterAction(HotkeyActions.DefaultWeather,
+                () => SafeExecute(() => SetWeatherByType(0)));
+            _hotkeyManager.RegisterAction(HotkeyActions.RainyWeather, () => SafeExecute(() => SetWeatherByType(1)));
+            _hotkeyManager.RegisterAction(HotkeyActions.SnowyWeather, () => SafeExecute(() => SetWeatherByType(2)));
+            _hotkeyManager.RegisterAction(HotkeyActions.WindyRainWeather,
+                () => SafeExecute(() => SetWeatherByType(3)));
+            _hotkeyManager.RegisterAction(HotkeyActions.FoggyWeather, () => SafeExecute(() => SetWeatherByType(4)));
+            _hotkeyManager.RegisterAction(HotkeyActions.FlatCloudsWeather,
+                () => SafeExecute(() => SetWeatherByType(6)));
+            _hotkeyManager.RegisterAction(HotkeyActions.WindyPuffyClouds,
+                () => SafeExecute(() => SetWeatherByType(12)));
+            _hotkeyManager.RegisterAction(HotkeyActions.RainyHeavyFog,
+                () => SafeExecute(() => SetWeatherByType(15)));
+            _hotkeyManager.RegisterAction(HotkeyActions.ScatteredRain,
+                () => SafeExecute(() => SetWeatherByType(17)));
         }
 
         private void SafeExecute(Action action)
@@ -391,6 +416,9 @@ namespace TarnishedTool.ViewModels
 
         private void SetWeather() =>
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(SelectedWeatherType.Type));
+
+        private void SetWeatherByType(sbyte type) =>
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetWeather(type));
 
         private void OpenEventLogWindow()
         {

@@ -17,6 +17,7 @@ namespace TarnishedTool.ViewModels;
 
 public class ItemViewModel : BaseViewModel
 {
+    private readonly HotkeyManager _hotkeyManager;
     private readonly IItemService _itemService;
     private readonly IDlcService _dlcService;
     private readonly IEventService _eventService;
@@ -33,11 +34,14 @@ public class ItemViewModel : BaseViewModel
     public ItemSelectionViewModel ItemSelection { get; }
 
     public ItemViewModel(IItemService itemService, IDlcService dlcService, IStateService stateService,
-        IEventService eventService)
+        IEventService eventService,HotkeyManager hotkeyManager)
     {
         _itemService = itemService;
         _dlcService = dlcService;
         _eventService = eventService;
+        _hotkeyManager = hotkeyManager;
+        
+        RegisterHotkeys();
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -151,6 +155,14 @@ public class ItemViewModel : BaseViewModel
 
     #region Private Methods
 
+    private void RegisterHotkeys()
+    {
+        _hotkeyManager.RegisterAction(HotkeyActions.SpawnItem, () => SpawnItem());
+        _hotkeyManager.RegisterAction(HotkeyActions.SpawnSelectedLoadout, () => SpawnLoadout());
+        _hotkeyManager.RegisterAction(HotkeyActions.MassSpawn, () => MassSpawn());
+        _hotkeyManager.RegisterAction(HotkeyActions.CreateLoadout, () => OpenCreateLoadoutWindow());
+    }
+
     private void OnGameLoaded()
     {
         AreOptionsEnabled = true;
@@ -195,7 +207,7 @@ public class ItemViewModel : BaseViewModel
             ["Pots and Perfumes"] = DataLoader.GetItems("PotsAndPerfumes", "Pots and Perfumes"),
             ["Prattling Pate"] = DataLoader.GetItems("PrattlingPate", "Prattling Pate"),
             ["Sorceries"] = DataLoader.GetItems("Sorceries", "Sorceries"),
-            ["Spirit Ashes"] = DataLoader.GetItems("SpiritAshes", "Spirit Ashes"),
+            ["Spirit Ashes"] = DataLoader.GetSpiritAshes().Cast<Item>().ToList(),
             ["Talismans"] = DataLoader.GetItems("Talismans", "Talismans"),
             ["Upgrade Materials"] = DataLoader.GetItems("UpgradeMaterials", "Upgrade Materials"),
             ["Weapons"] = DataLoader.GetWeapons().Cast<Item>().ToList()
@@ -240,6 +252,11 @@ public class ItemViewModel : BaseViewModel
                 itemId += ItemSelection.SelectedAffinity.GetIdOffset();
                 aowId = ItemSelection.SelectedAshOfWar.Id;
             }
+        }
+
+        if (ItemSelection.SelectedItem is SpiritAsh && ItemSelection.ShowSpiritAshUpgradeOptions)
+        {
+            itemId += ItemSelection.SelectedSpiritAshUpgrade;
         }
 
         if (item is EventItem eventItem && eventItem.NeedsEvent)

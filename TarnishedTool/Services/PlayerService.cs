@@ -27,7 +27,7 @@ namespace TarnishedTool.Services
         private const float LevelUpCostIncrease = 0.02f;
         private const float LevelUpIncreaseInterval = 92f;
         private const int BaseLevelOffset = 80;
-        
+
         private const int StatsBlockSize = 0x20;
 
         private readonly Position[] _positions =
@@ -250,6 +250,9 @@ namespace TarnishedTool.Services
         public int GetCurrentFp() =>
             memoryService.Read<int>(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Fp);
 
+        public int GetMaxFp() =>
+            memoryService.Read<int>(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.MaxFp);
+
         public void SetSp(int sp) =>
             memoryService.Write(GetChrDataPtr() + (int)ChrIns.ChrDataOffsets.Sp, sp);
 
@@ -340,6 +343,36 @@ namespace TarnishedTool.Services
         {
             reminderService.TrySetReminder();
             memoryService.SetBitValue(GetChrInsFlagsPtr(), (int)ChrIns.ChrInsFlags.NoHit, isNoHitEnabled);
+        }
+
+        public void ToggleLockHp(bool isEnabled)
+        {
+            var code = CodeCaveOffsets.Base + CodeCaveOffsets.PlayerLockHp;
+            if (isEnabled)
+            {
+                var hook = Hooks.PlayerLockHp;
+                var codeBytes = AsmLoader.GetAsmBytes(AsmScript.PlayerLockHp);
+
+                var worldChrManBase = WorldChrMan.Base.ToInt64();
+                var patchSpecificPlayerIns = WorldChrMan.PlayerIns;
+                AsmHelper.WriteImmediateDwords(codeBytes, new[]
+                {
+                    (patchSpecificPlayerIns, 0xE + 3)
+                });
+
+                AsmHelper.WriteRelativeOffsets(codeBytes, [
+                    (code.ToInt64() + 7, worldChrManBase, 7, 7 + 3),
+                    (code.ToInt64() + 0x2E, hook + 5, 5, 0x2E + 1)
+                ]);
+
+                memoryService.WriteBytes(code, codeBytes);
+                hookManager.InstallHook(code.ToInt64(), hook,
+                    [0x48, 0x89, 0x5C, 0x24, 0x18]);
+            }
+            else
+            {
+                hookManager.UninstallHook(code.ToInt64());
+            }
         }
 
         public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>

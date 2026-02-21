@@ -85,6 +85,8 @@ namespace TarnishedTool.Memory
         
         public const int NoHeal = 0x2F00; //0x1B
 
+        public const int PlayerLockHp = 0x3F00; 
+
         public enum LocalToMap
         {
             Output = 0x2F40,

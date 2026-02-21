@@ -100,7 +100,7 @@ namespace TarnishedTool.Memory
                 Version1_7_0 or Version2_0_0 => 0x1F1B8,
                 _ => 0x1F1C0
             };
-            
+
             public static class PlayerInsOffsets
             {
                 public const int Handle = 0x8;
@@ -243,13 +243,20 @@ namespace TarnishedTool.Memory
                 PoisonCurrent = 0x10,
                 RotCurrent = 0x14,
                 BleedCurrent = 0x18,
+
+                DeathBlightCurrent = 0x1C,
                 FrostCurrent = 0x20,
                 SleepCurrent = 0x24,
+
+                MadnessCurrent = 0x28,
                 PoisonMax = 0x2C,
                 RotMax = 0x30,
                 BleedMax = 0x34,
+
+                DeathBlightMax = 0x38,
                 FrostMax = 0x3C,
                 SleepMax = 0x40,
+                MadnessMax = 0x44,
             }
 
             public enum ChrBehaviorOffsets
@@ -293,7 +300,7 @@ namespace TarnishedTool.Memory
                 public const int LuaNumbersArray = 0x6CC;
                 public const int AnimationRequest = 0xC428;
                 public const int TargetingSystem = 0xC480;
-                
+
                 public static int SpEffectObserveComp => Version switch
                 {
                     Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
@@ -348,7 +355,7 @@ namespace TarnishedTool.Memory
                     public const int GoalScript = 0xA8;
                     public const int TurnTime = 0x150;
                 }
-                
+
                 public static class SubGoalContainerOffsets
                 {
                     // Pointer chain: *(*(*(SubGoalContainer + 0x08))) -> DequeInternal
@@ -356,12 +363,12 @@ namespace TarnishedTool.Memory
                     public const int StartIdx = 0x20;
                     public const int Count = 0x28;
                 }
-    
+
                 // DequeInternal structure (after triple deref)
                 public static class DequeInternalOffsets
                 {
-                    public const int BlockMap = 0x08; 
-                    public const int MapCapacity  = 0x10;
+                    public const int BlockMap = 0x08;
+                    public const int MapCapacity = 0x10;
                     public const int BlockSize = 2;
                 }
 
@@ -375,7 +382,7 @@ namespace TarnishedTool.Memory
                 {
                     public const int Head = 0x10;
                 }
-                
+
                 public static class SpEffectObserveEntry
                 {
                     public const int Next = 0x0;
@@ -396,13 +403,13 @@ namespace TarnishedTool.Memory
                     public const int TimeSinceLastAttack = 0x4;
                     public const int Cooldown = 0x8;
                 }
-                
             }
 
             public enum TargetingSystemOffsets
             {
                 DebugDrawFlags = 0xC8
             }
+
             // 1 << 0 Draw current target
             public static readonly BitFlag BlueTargetView = new(0x1, 1 << 3);
             public static readonly BitFlag YellowTargetView = new(0xC8, 1 << 5);
@@ -415,9 +422,11 @@ namespace TarnishedTool.Memory
             {
                 PoisonImmune = 0x64,
                 RotImmune = 0x68,
+                DeathBlightImmune = 0x17C,
                 BleedImmune = 0x178,
                 FrostImmune = 0x180,
                 SleepImmune = 0x184,
+                MadnessImmune = 0x188,
                 StandardAbsorption = 0x1A4,
                 SlashAbsorption = 0x1A8,
                 StrikeAbsorption = 0x1AC,
@@ -466,13 +475,13 @@ namespace TarnishedTool.Memory
                 _ => 0x61E,
             };
 
-            public const int WorldInfoOwner = 0x10;  
+            public const int WorldInfoOwner = 0x10;
 
             public static class WorldInfoOwnerOffsets
             {
                 public const int AreaCount = 0x28;
                 public const int AreaArrayBase = 0x30;
-                
+
                 public static int ShouldDrawMiniMap => Version switch
                 {
                     Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
@@ -484,7 +493,6 @@ namespace TarnishedTool.Memory
                     _ => 0xB3368,
                 };
             }
-            
         }
 
         public static class FD4PadManager
@@ -837,10 +845,10 @@ namespace TarnishedTool.Memory
         public static class WorldAiManagerImp
         {
             public static IntPtr Base;
-            
+
             public static readonly int[] LuaState = [0x6938, 0xB8, 0x28];
         }
-        
+
 
         public static class Hooks
         {
@@ -867,6 +875,7 @@ namespace TarnishedTool.Memory
             public static long LoadScreenMsgLookupEarlyPatches;
             public static long LoadScreenMsgLookupMidPatches;
             public static long NoHeal;
+            public static long PlayerLockHp;
         }
 
         public static class Functions
@@ -915,7 +924,6 @@ namespace TarnishedTool.Memory
             public static IntPtr IsWorldPaused;
             public static IntPtr GetItemChance;
             public static IntPtr FpsCap;
-            
         }
 
         private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -1405,7 +1413,7 @@ namespace TarnishedTool.Memory
                     or Version2_6_1 => 0x3D7D4F8,
                 _ => 0
             };
-            
+
             DrawPathing.Base = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3C4C030,
@@ -1425,7 +1433,7 @@ namespace TarnishedTool.Memory
                     or Version2_6_1 => 0x3D61DB0,
                 _ => 0
             };
-            
+
             ChrDbgFlags.Base = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3C50480,
@@ -1445,7 +1453,7 @@ namespace TarnishedTool.Memory
                     or Version2_6_1 => 0x3D661A0,
                 _ => 0
             };
-            
+
             WorldAiManagerImp.Base = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3C4C768,
@@ -1464,7 +1472,7 @@ namespace TarnishedTool.Memory
                 Version2_2_3 or Version2_3_0 => 0x3D62508,
                 _ => 0
             };
-            
+
 
             // Functions
             Functions.GraceWarp = moduleBase.ToInt64() + Version switch
@@ -1944,7 +1952,7 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0xEA52B0,
                 _ => 0L
             };
-            
+
             Functions.LocalToMapCoords = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x5FDCA0,
@@ -1967,7 +1975,7 @@ namespace TarnishedTool.Memory
                 Version2_6_0 or Version2_6_1 => 0x61E350,
                 _ => 0
             };
-            
+
             Functions.LuaDoString = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x1F78EB0,
@@ -1996,7 +2004,6 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0x20269F0,
                 _ => 0
             };
-
 
 
             // Hooks
@@ -2454,26 +2461,47 @@ namespace TarnishedTool.Memory
                 Version2_6_0 or Version2_6_1 => 0x9C63D1,
                 _ => 0L
             };
-            
+
             Hooks.NoHeal = moduleBase.ToInt64() + Version switch
-{
-            Version1_2_0 => 0x42E062,
-            Version1_2_1 or Version1_2_2 => 0x42E0D2,
-            Version1_2_3 => 0x42E1F2,
-            Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x42EE02,
-            Version1_4_0 => 0x431482,
-            Version1_4_1 => 0x431492,
-            Version1_5_0 => 0x4318C2,
-            Version1_6_0 => 0x432702,
-            Version1_7_0 => 0x432782,
-            Version1_8_0 or Version1_8_1 => 0x4340E2,
-            Version1_9_0 or Version1_9_1 => 0x434222,
-            Version2_0_0 or Version2_0_1 => 0x4342C2,
-            Version2_2_0 or Version2_2_3 => 0x437022,
-            Version2_3_0 => 0x437042,
-            Version2_4_0 or Version2_5_0 => 0x437082,
-            Version2_6_0 or Version2_6_1 => 0x437052,
-            _ => 0
+            {
+                Version1_2_0 => 0x42E062,
+                Version1_2_1 or Version1_2_2 => 0x42E0D2,
+                Version1_2_3 => 0x42E1F2,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x42EE02,
+                Version1_4_0 => 0x431482,
+                Version1_4_1 => 0x431492,
+                Version1_5_0 => 0x4318C2,
+                Version1_6_0 => 0x432702,
+                Version1_7_0 => 0x432782,
+                Version1_8_0 or Version1_8_1 => 0x4340E2,
+                Version1_9_0 or Version1_9_1 => 0x434222,
+                Version2_0_0 or Version2_0_1 => 0x4342C2,
+                Version2_2_0 or Version2_2_3 => 0x437022,
+                Version2_3_0 => 0x437042,
+                Version2_4_0 or Version2_5_0 => 0x437082,
+                Version2_6_0 or Version2_6_1 => 0x437052,
+                _ => 0
+            };
+
+            Hooks.PlayerLockHp = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x42E010,
+                Version1_2_1 or Version1_2_2 => 0x42E080,
+                Version1_2_3 => 0x42E1A0,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x42EDB0,
+                Version1_4_0 => 0x431430,
+                Version1_4_1 => 0x431440,
+                Version1_5_0 => 0x431870,
+                Version1_6_0 => 0x4326B0,
+                Version1_7_0 => 0x432730,
+                Version1_8_0 or Version1_8_1 => 0x434090,
+                Version1_9_0 or Version1_9_1 => 0x4341D0,
+                Version2_0_0 or Version2_0_1 => 0x434270,
+                Version2_2_0 or Version2_2_3 => 0x436FD0,
+                Version2_3_0 => 0x436FF0,
+                Version2_4_0 or Version2_5_0 => 0x437030,
+                Version2_6_0 or Version2_6_1 => 0x437000,
+                _ => 0
             };
 
             // Patches
@@ -2904,7 +2932,7 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0xD49CF0,
                 _ => 0
             };
-            
+
             Patches.FpsCap = moduleBase + Version switch
             {
                 Version1_2_0 => 0xDFEF5F,
@@ -2933,7 +2961,6 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0xE82B5D,
                 _ => 0
             };
-
 
 
 #if DEBUG
@@ -3006,6 +3033,7 @@ namespace TarnishedTool.Memory
             Console.WriteLine($@"Hooks.TargetNoStagger: 0x{Hooks.TargetNoStagger:X}");
             Console.WriteLine($@"Hooks.NoMapAcquiredPopup: 0x{Hooks.NoMapAcquiredPopup:X}");
             Console.WriteLine($@"Hooks.NoHeal: 0x{Hooks.NoHeal:X}");
+            Console.WriteLine($@"Hooks.PlayerLockHp: 0x{Hooks.PlayerLockHp:X}");
 
             Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
             Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");

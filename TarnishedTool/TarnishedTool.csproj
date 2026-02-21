@@ -124,6 +124,7 @@
         <Compile Include="Converters\BoolToGridLengthConverter.cs" />
         <Compile Include="Converters\BoolToShowHideConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
+        <Compile Include="Converters\HealthFillConverter.cs" />
         <Compile Include="Converters\ImmuneFillConverter.cs" />
         <Compile Include="Converters\IndentConverter.cs" />
         <Compile Include="Converters\InverseBooleanConverter.cs" />
@@ -315,6 +316,7 @@
         <Compile Include="Models\ShopCommand.cs" />
         <Compile Include="Models\SpEffectEntry.cs" />
         <Compile Include="Models\SpEffectObserve.cs" />
+        <Compile Include="Models\SpiritAsh.cs" />
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />

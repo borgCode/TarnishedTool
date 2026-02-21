@@ -91,10 +91,11 @@
                                     Increment="1" />
             </Grid>
 
-            <StackPanel Grid.Row="3"
-                        Visibility="{Binding ItemSelection.ShowWeaponOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Grid.Row="3">
 
-                <Grid Margin="0,0,0,5">
+                <!-- Weapon upgrades -->
+                <Grid Margin="0,0,0,5"
+                      Visibility="{Binding ItemSelection.ShowWeaponOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -110,6 +111,7 @@
                                         Increment="1" />
                 </Grid>
 
+                <!-- AoW options -->
                 <StackPanel
                     Visibility="{Binding ItemSelection.ShowAowOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <TextBlock Text="Ash of War:" Margin="0,0,0,5" />
@@ -117,7 +119,6 @@
                               SelectedItem="{Binding ItemSelection.SelectedAshOfWar}"
                               DisplayMemberPath="Name"
                               Margin="0,0,0,10" />
-
                     <TextBlock Text="Affinity:" Margin="0,0,0,5"
                                Visibility="{Binding ItemSelection.ShowAffinityOptions, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <ComboBox ItemsSource="{Binding ItemSelection.AvailableAffinities}"
@@ -125,6 +126,25 @@
                               Visibility="{Binding ItemSelection.ShowAffinityOptions, Converter={StaticResource BooleanToVisibilityConverter}}"
                               Margin="0,0,0,10" />
                 </StackPanel>
+
+                <!-- Spirit ash upgrades -->
+                <Grid Margin="0,0,0,5"
+                      Visibility="{Binding ItemSelection.ShowSpiritAshUpgradeOptions, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Upgrade:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0" />
+                    <xctk:IntegerUpDown Grid.Column="1"
+                                        Value="{Binding ItemSelection.SelectedSpiritAshUpgrade}"
+                                        Minimum="0"
+                                        Maximum="10"
+                                        Margin="0,5"
+                                        Increment="1" />
+                </Grid>
+
             </StackPanel>
 
             <StackPanel Grid.Row="4" Margin="0,5,0,0">

@@ -25,7 +25,7 @@ namespace TarnishedTool.ViewModels
 
         private readonly IPlayerService _playerService;
         private readonly IParamService _paramService;
-        
+
         private readonly CharacterState _saveState1 = new();
         private readonly CharacterState _saveState2 = new();
 
@@ -38,10 +38,10 @@ namespace TarnishedTool.ViewModels
         private readonly IGameTickService _gameTickService;
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
-        
+
         private const uint MenuCommonParamRowId = 0;
-        private const int DeathTimeOffset0 = 0x0; 
-        private const int DeathTimeOffset4 = 0x4; 
+        private const int DeathTimeOffset0 = 0x0;
+        private const int DeathTimeOffset4 = 0x4;
         private const float OriginalDeathTime0x0 = 3.8f;
         private const float OriginalDeathTime0x4 = 3.3f;
 
@@ -138,6 +138,7 @@ namespace TarnishedTool.ViewModels
             get => _currentMaxHp;
             set => SetProperty(ref _currentMaxHp, value);
         }
+
         private string _customHp = SettingsManager.Default.SaveCustomHp;
 
         public string CustomHp
@@ -159,6 +160,30 @@ namespace TarnishedTool.ViewModels
             get => _isHotEnabled;
             set => SetProperty(ref _isHotEnabled, value);
         }
+
+        private bool _isFpRegenEnabled;
+
+        public bool IsFpRegenEnabled
+        {
+            get => _isFpRegenEnabled;
+            set => SetProperty(ref _isFpRegenEnabled, value);
+        }
+
+        private bool _isHpLocked;
+
+        public bool IsHpLocked
+        {
+            get => _isHpLocked;
+            set
+            {
+                if (SetProperty(ref _isHpLocked, value))
+                {
+                    _playerService.ToggleLockHp(_isHpLocked);
+                }
+            }
+        }
+
+        private int _lockedHpValue;
 
         private bool _isSetRfbsOnLoadEnabled;
 
@@ -661,6 +686,7 @@ namespace TarnishedTool.ViewModels
                 ApplyFasterDeath(value);
             }
         }
+
         #endregion
 
         #region Public Methods
@@ -693,7 +719,6 @@ namespace TarnishedTool.ViewModels
             _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
-            
         }
 
         private void OnFadedIn()
@@ -770,7 +795,30 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Rest, () => SafeExecute(Rest));
             _hotkeyManager.RegisterAction(HotkeyActions.PlayerSetCustomHp, SetCustomHp);
             _hotkeyManager.RegisterAction(HotkeyActions.NoHit, () => { IsNoHitEnabled = !IsNoHitEnabled; });
-            _hotkeyManager.RegisterAction(HotkeyActions.FasterDeath,() => { IsFasterDeathEnabled = !IsFasterDeathEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.FasterDeath,
+                () => { IsFasterDeathEnabled = !IsFasterDeathEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.HealOverTime, () => { IsHotEnabled = !IsHotEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.TorrentNoDeath,
+                () => { IsTorrentNoDeathEnabled = !IsTorrentNoDeathEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.TorrentAnywhere,
+                () => { IsTorrentAnywhereEnabled = !IsTorrentAnywhereEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.RfbsOnLoad,
+                () => { IsSetRfbsOnLoadEnabled = !IsSetRfbsOnLoadEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.NoRunesFromEnemies,
+                () => { IsNoRuneGainEnabled = !IsNoRuneGainEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.NoRuneArcLossOnDeath,
+                () => { IsNoRuneArcLossEnabled = !IsNoRuneArcLossEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.NoRuneLossOnDeath,
+                () => { IsNoRuneLossEnabled = !IsNoRuneLossEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.NoTimeChangeOnDeath,
+                () => { IsNoTimePassOnDeathEnabled = !IsNoTimePassOnDeathEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleResetEnemiesWithRest,
+                () => { IsResetWorldIncluded = !IsResetWorldIncluded; });
+            _hotkeyManager.RegisterAction(HotkeyActions.Level1, SetRuneLevelOne);
+            _hotkeyManager.RegisterAction(HotkeyActions.MaxLevel, SetMaxLevel);
+            _hotkeyManager.RegisterAction(HotkeyActions.SetNgCycleTo7, () => { SetNewGame(7); });
+            _hotkeyManager.RegisterAction(HotkeyActions.FpRegen, () => { IsFpRegenEnabled = !IsFpRegenEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.LockHp, () => { IsHpLocked = !IsHpLocked; });
         }
 
         private void SafeExecute(Action action)
@@ -784,6 +832,8 @@ namespace TarnishedTool.ViewModels
             if (_pauseUpdates) return;
 
             if (IsHotEnabled) TryApplyHot();
+
+            if (IsFpRegenEnabled) TryApplyFpRegen();
 
             CurrentHp = _playerService.GetCurrentHp();
             CurrentMaxHp = _playerService.GetMaxHp();
@@ -809,6 +859,17 @@ namespace TarnishedTool.ViewModels
             int hpToSet = Math.Min(currentHp + (int)(maxHp * 0.033), maxHp);
             _playerService.SetHp(hpToSet);
         }
+
+        private void TryApplyFpRegen()
+        {
+            int currentFp = _playerService.GetCurrentFp();
+            int maxFp = _playerService.GetMaxFp();
+
+            if (currentFp >= maxFp) return;
+            int fpToSet = Math.Min(currentFp + (int)(maxFp * 0.033), maxFp);
+            _playerService.SetFp(fpToSet);
+        }
+        
 
         private void LoadStats()
         {
@@ -948,6 +1009,7 @@ namespace TarnishedTool.ViewModels
         private void SetNewGame(int value)
         {
             _playerService.SetNewGame(value);
+            NewGame = value;
             var activeIndex = Math.Min(_newGame, NewGameEventIds.Length - 1);
             for (var i = 0; i < NewGameEventIds.Length; i++)
             {
@@ -978,13 +1040,13 @@ namespace TarnishedTool.ViewModels
         private void ApplyFasterDeath(bool enabled)
         {
             var (tableIndex, slotIndex) = ParamIndices.All["MenuCommonParam"];
-    
+
             IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, MenuCommonParamRowId);
             if (row == IntPtr.Zero) return;
 
             float val0 = enabled ? 0f : OriginalDeathTime0x0;
             float val4 = enabled ? 0f : OriginalDeathTime0x4;
-    
+
             _paramService.Write(row, DeathTimeOffset0, val0);
             _paramService.Write(row, DeathTimeOffset4, val4);
         }

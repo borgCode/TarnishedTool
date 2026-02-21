@@ -61,6 +61,16 @@ namespace TarnishedTool.ViewModels
             _aiWindowService = aiWindowService;
             RegisterHotkeys();
 
+            ShowPoise = SettingsManager.Default.ResistancesShowPoise;
+            ShowSleep = SettingsManager.Default.ResistancesShowSleep;
+            ShowPoison = SettingsManager.Default.ResistancesShowPoison;
+            ShowRot = SettingsManager.Default.ResistancesShowRot;
+            ShowFrost = SettingsManager.Default.ResistancesShowFrost;
+            ShowBleed = SettingsManager.Default.ResistancesShowBleed;
+            ShowMadness = SettingsManager.Default.ResistancesShowMadness;
+            ShowDeathBlight = SettingsManager.Default.ResistancesShowDeathBlight;
+            ShowCombatInfo = SettingsManager.Default.ResistancesShowCombatInfo;
+
             stateService.Subscribe(State.Loaded, OnGameLoaded);
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
 
@@ -113,7 +123,6 @@ namespace TarnishedTool.ViewModels
                 {
                     _targetService.ToggleTargetHook(true);
                     _gameTickService.Subscribe(TargetTick);
-                    ShowAllResistances = true;
                 }
                 else
                 {
@@ -123,18 +132,12 @@ namespace TarnishedTool.ViewModels
                     IsShowAttackInfoEnabled = false;
                     IsShowSpEffectEnabled = false;
                     IsRepeatActEnabled = false;
-                    ShowAllResistances = false;
                     IsResistancesWindowOpen = false;
                     IsFreezeHealthEnabled = false;
                     IsDisableAllExceptTargetEnabled = false;
                     IsNoStaggerEnabled = false;
                     _targetService.ToggleTargetHook(false);
-                    ShowPoise = false;
-                    ShowSleep = false;
-                    ShowPoison = false;
-                    ShowRot = false;
-                    ShowFrost = false;
-                    ShowBleed = false;
+                    
                 }
 
                 RefreshResistancesWindow();
@@ -174,6 +177,7 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showPoise, value);
                 RefreshResistancesWindow();
+                SaveResistancesState();
             }
         }
 
@@ -202,6 +206,7 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showPoison, value);
                 RefreshResistancesWindow();
+                SaveResistancesState();
             }
         }
 
@@ -238,6 +243,7 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showBleed, value);
                 RefreshResistancesWindow();
+                SaveResistancesState();
             }
         }
 
@@ -274,6 +280,7 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showRot, value);
                 RefreshResistancesWindow();
+                SaveResistancesState();
             }
         }
 
@@ -310,6 +317,7 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showFrost, value);
                 RefreshResistancesWindow();
+                SaveResistancesState();
             }
         }
 
@@ -337,6 +345,64 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _maxSleep, value);
         }
 
+        private int _currentMadness;
+
+        public int CurrentMadness
+        {
+            get => _currentMadness;
+            set => SetProperty(ref _currentMadness, value);
+        }
+
+        private int _maxMadness;
+
+        public int MaxMadness
+        {
+            get => _maxMadness;
+            set => SetProperty(ref _maxMadness, value);
+        }
+
+        private bool _showMadness;
+
+        public bool ShowMadness
+        {
+            get => _showMadness;
+            set
+            {
+                SetProperty(ref _showMadness, value);
+                RefreshResistancesWindow();
+                SaveResistancesState();
+            }
+        }
+
+        private int _currentDeathBlight;
+
+        public int CurrentDeathBlight
+        {
+            get => _currentDeathBlight;
+            set => SetProperty(ref _currentDeathBlight, value);
+        }
+
+        private int _maxDeathBlight;
+
+        public int MaxDeathBlight
+        {
+            get => _maxDeathBlight;
+            set => SetProperty(ref _maxDeathBlight, value);
+        }
+
+        private bool _showDeathBlight;
+
+        public bool ShowDeathBlight
+        {
+            get => _showDeathBlight;
+            set
+            {
+                SetProperty(ref _showDeathBlight, value);
+                RefreshResistancesWindow();
+                SaveResistancesState();
+            }
+        }
+
         private bool _showSleep;
 
         public bool ShowSleep
@@ -346,6 +412,7 @@ namespace TarnishedTool.ViewModels
             {
                 SetProperty(ref _showSleep, value);
                 RefreshResistancesWindow();
+                SaveResistancesState();
             }
         }
 
@@ -355,6 +422,22 @@ namespace TarnishedTool.ViewModels
         {
             get => _isSleepImmune;
             set => SetProperty(ref _isSleepImmune, value);
+        }
+
+        private bool _isMadnessImmune;
+
+        public bool IsMadnessImmune
+        {
+            get => _isMadnessImmune;
+            set => SetProperty(ref _isMadnessImmune, value);
+        }
+
+        private bool _isDeathBlightImmune;
+
+        public bool IsDeathBlightImmune
+        {
+            get => _isDeathBlightImmune;
+            set => SetProperty(ref _isDeathBlightImmune, value);
         }
 
         private bool _showAllResistances;
@@ -367,6 +450,7 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _showAllResistances, value))
                 {
                     UpdateResistancesDisplay();
+                    SaveResistancesState();
                 }
             }
         }
@@ -574,6 +658,14 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private bool _showCombatInfo;
+
+        public bool ShowCombatInfo
+        {
+            get => _showCombatInfo;
+            set => SetProperty(ref _showCombatInfo, value);
+        }
+
         private float _targetSpeed;
 
         public float TargetSpeed
@@ -676,7 +768,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private bool _isShowAiInfoEnabled;
 
         public bool IsShowAiInfoEnabled
@@ -720,6 +812,8 @@ namespace TarnishedTool.ViewModels
         public bool ShowRotAndNotImmune => ShowRot && !IsRotImmune;
         public bool ShowFrostAndNotImmune => ShowFrost && !IsFrostImmune;
         public bool ShowBleedAndNotImmune => ShowBleed && !IsBleedImmune;
+        public bool ShowMadnessAndNotImmune => ShowMadness && !IsMadnessImmune;
+        public bool ShowDeathBlightAndNotImmune => ShowDeathBlight && !IsDeathBlightImmune;
 
         #endregion
 
@@ -816,6 +910,15 @@ namespace TarnishedTool.ViewModels
                 () => ExecuteTargetAction(KillAllBesidesTarget));
             _hotkeyManager.RegisterAction(HotkeyActions.ResetTargetPosition,
                 () => ExecuteTargetAction(ResetPosition));
+            _hotkeyManager.RegisterAction(HotkeyActions.TogglePoise, () => ShowPoise = !ShowPoise);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleSleep, () => ShowSleep = !ShowSleep);
+            _hotkeyManager.RegisterAction(HotkeyActions.TogglePoison, () => ShowPoison = !ShowPoison);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleRot, () => ShowRot = !ShowRot);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleFrost, () => ShowFrost = !ShowFrost);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleBleed, () => ShowBleed = !ShowBleed);
+            _hotkeyManager.RegisterAction(HotkeyActions.AiInfo, () => ExecuteTargetAction(OpenAiWindow));
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleMadness, () => ShowMadness = !ShowMadness);
+            _hotkeyManager.RegisterAction(HotkeyActions.ToggleDeathblight, () => ShowDeathBlight = !ShowDeathBlight);
         }
 
         private void ExecuteTargetAction(Action action)
@@ -891,7 +994,7 @@ namespace TarnishedTool.ViewModels
                 _targetService.SetHp(CustomHp.Value);
             }
         }
-        
+
         private (int? value, string error) ParseCustomHp()
         {
             var input = CustomHp?.Trim();
@@ -925,7 +1028,7 @@ namespace TarnishedTool.ViewModels
             if (chrIns != _currentTargetChrIns)
             {
 #if DEBUG
-                
+
                 uint entityId = _targetService.GetEntityId();
                 int npcThinkParamId = _targetService.GetNpcThinkParamId();
                 int chrId = _targetService.GetNpcChrId();
@@ -957,7 +1060,7 @@ namespace TarnishedTool.ViewModels
                 _targetService.ToggleNoHeal(IsFreezeHealthEnabled);
 
                 if (IsShowAiInfoEnabled) UpdateAiWindow(_currentTargetChrIns, chrIns);
-                    
+
                 _currentTargetChrIns = chrIns;
                 MaxPoise = _targetService.GetMaxPoise();
 
@@ -978,7 +1081,7 @@ namespace TarnishedTool.ViewModels
             Dist = _targetService.GetDist();
 
             UpdateResistances();
-            
+
 
             if (IsShowAttackInfoEnabled)
             {
@@ -1009,6 +1112,10 @@ namespace TarnishedTool.ViewModels
             MaxFrost = resistData.FrostMax;
             CurrentSleep = resistData.SleepCurrent;
             MaxSleep = resistData.SleepMax;
+            CurrentMadness = resistData.MadnessCurrent;
+            MaxMadness = resistData.MadnessMax;
+            CurrentDeathBlight = resistData.DeathBlightCurrent;
+            MaxDeathBlight = resistData.DeathBlightMax;
         }
 
         private void UpdateImmunities()
@@ -1019,6 +1126,8 @@ namespace TarnishedTool.ViewModels
             IsRotImmune = immunities[2];
             IsFrostImmune = immunities[3];
             IsBleedImmune = immunities[4];
+            IsMadnessImmune = immunities[5];
+            IsDeathBlightImmune = immunities[6];
         }
 
         private void UpdateDefenses()
@@ -1147,6 +1256,8 @@ namespace TarnishedTool.ViewModels
                 ShowRot = true;
                 ShowFrost = true;
                 ShowBleed = true;
+                ShowMadness = true;
+                ShowDeathBlight = true;
             }
             else
             {
@@ -1156,14 +1267,33 @@ namespace TarnishedTool.ViewModels
                 ShowRot = false;
                 ShowFrost = false;
                 ShowBleed = false;
+                ShowMadness = false;
+                ShowDeathBlight = false;
             }
 
             RefreshResistancesWindow();
         }
 
+        private void SaveResistancesState()
+        {
+            SettingsManager.Default.ResistancesShowPoise = ShowPoise;
+            SettingsManager.Default.ResistancesShowSleep = ShowSleep;
+            SettingsManager.Default.ResistancesShowPoison = ShowPoison;
+            SettingsManager.Default.ResistancesShowRot = ShowRot;
+            SettingsManager.Default.ResistancesShowFrost = ShowFrost;
+            SettingsManager.Default.ResistancesShowBleed = ShowBleed;
+            SettingsManager.Default.ResistancesShowMadness = ShowMadness;
+            SettingsManager.Default.ResistancesShowDeathBlight = ShowDeathBlight;
+            SettingsManager.Default.ResistancesShowCombatInfo = ShowCombatInfo;
+            SettingsManager.Default.Save();
+        }
+
         private void OpenResistancesWindow()
         {
             if (_resistancesWindowWindow != null && _resistancesWindowWindow.IsVisible) return;
+
+            ShowCombatInfo = SettingsManager.Default.ResistancesShowCombatInfo;
+
             _resistancesWindowWindow = new ResistancesWindow
             {
                 DataContext = this
@@ -1213,20 +1343,20 @@ namespace TarnishedTool.ViewModels
             var entityId = _targetService.GetEntityId();
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ResetCharacterPosition(entityId));
         }
-        
+
         private void OpenAiWindow()
         {
             var chrInsEntry = CreateChrInsEntry(_currentTargetChrIns);
-            
+
             _aiWindowService.OpenAiWindow(chrInsEntry);
         }
-        
+
         private void UpdateAiWindow(nint oldTarget, nint newTarget)
         {
             var newEntry = CreateChrInsEntry(newTarget);
             _aiWindowService.UpdateAiWindow(oldTarget, newEntry);
         }
-        
+
         private ChrInsEntry CreateChrInsEntry(nint currentTargetChrIns)
         {
             return new ChrInsEntry(currentTargetChrIns)
@@ -1237,6 +1367,7 @@ namespace TarnishedTool.ViewModels
                 Name = "Current Target"
             };
         }
+
         private void CloseTargetAiWindow() => _aiWindowService.CloseSpecificWindow(_currentTargetChrIns);
 
         #endregion
