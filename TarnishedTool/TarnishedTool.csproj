@@ -124,6 +124,7 @@
         <Compile Include="Converters\BoolToGridLengthConverter.cs" />
         <Compile Include="Converters\BoolToShowHideConverter.cs" />
         <Compile Include="Converters\GreaterThanZeroVisibilityConverter.cs" />
+        <Compile Include="Converters\HealthFillConverter.cs" />
         <Compile Include="Converters\ImmuneFillConverter.cs" />
         <Compile Include="Converters\IndentConverter.cs" />
         <Compile Include="Converters\InverseBooleanConverter.cs" />

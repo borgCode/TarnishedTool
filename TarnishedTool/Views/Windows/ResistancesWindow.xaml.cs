@@ -85,6 +85,12 @@ public partial class ResistancesWindow : Window
         SettingsManager.Default.ResistancesWindowLeft = Left;
         SettingsManager.Default.ResistancesWindowTop = Top;
         SettingsManager.Default.ResistancesWindowWidth = Width;
+
+        if (DataContext is TargetViewModel vm)
+        {
+            SettingsManager.Default.ResistancesShowCombatInfo = vm.ShowCombatInfo;
+        }
+
         SettingsManager.Default.Save();
     }
 
@@ -115,5 +121,11 @@ public partial class ResistancesWindow : Window
             ContentScale.ScaleX = _scaleMultiplier;
             ContentScale.ScaleY = _scaleMultiplier;
         }
+    }
+
+    private void ToggleCombatInfo_Click(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is TargetViewModel vm)
+            vm.ShowCombatInfo = !vm.ShowCombatInfo;
     }
 }

@@ -366,6 +366,29 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBoss, () => SafeExecute(ReviveBoss));
         _hotkeyManager.RegisterAction(HotkeyActions.ReviveSelectedBossFirstEncounter,
             () => SafeExecute(ReviveBossFirstEncounter));
+        _hotkeyManager.RegisterAction(HotkeyActions.ReviveAllBosses, () => SafeExecute(ReviveAllBosses));
+        _hotkeyManager.RegisterAction(HotkeyActions.ReviveAllBossesFirstEncounter,
+            () => SafeExecute(ReviveAllBossesAsFirstEncounter));
+        _hotkeyManager.RegisterAction(HotkeyActions.RestOnRevive,
+            () => { _isRestOnReviveEnabled = !_isRestOnReviveEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.DrawNavigationRoute,
+            () => { IsDrawNavigationRouteEnabled = !IsDrawNavigationRouteEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.RykardNoMega,
+            () => { IsRykardNoMegaEnabled = !IsRykardNoMegaEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMainLightning,
+            () => SafeExecute(ForceLionMainBossLightningPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMainFrost, () => SafeExecute(ForceLionMainBossFrostPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMainWind, () => SafeExecute(ForceLionMainBossWindPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMainLockPhase,
+            () => { _isLionMainBossPhaseLockEnabled = !_isLionMainBossPhaseLockEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMiniDeathblight,
+            () => SafeExecute(ForceLionMiniBossDeathblightPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMiniLightning,
+            () => SafeExecute(ForceLionMiniBossLightningPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMiniFrost, () => SafeExecute(ForceLionMiniBossFrostPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMiniWind, () => SafeExecute(ForceLionMiniBossWindPhase));
+        _hotkeyManager.RegisterAction(HotkeyActions.LionMiniLockPhase,
+            () => { IsLionMiniBossPhaseLockEnabled = !IsLionMiniBossPhaseLockEnabled; });
     }
 
     private void SafeExecute(Action action)
@@ -453,6 +476,9 @@ public class EnemyViewModel : BaseViewModel
     private void ReviveBoss()
     {
         var bossRevive = BossRevives.SelectedItem;
+
+        if (!CheckDtsValidity(bossRevive)) return; // Cancel early if DTS is picked in ashen capital
+
         SetBossFlags(bossRevive, isFirstEncounter: false);
         var playerBlockId = _playerService.GetBlockId();
         if (playerBlockId != bossRevive.BlockId &&
@@ -471,6 +497,9 @@ public class EnemyViewModel : BaseViewModel
     private void ReviveBossFirstEncounter()
     {
         var bossRevive = BossRevives.SelectedItem;
+
+        if (!CheckDtsValidity(bossRevive)) return; // Cancel early if DTS is picked in ashen capital
+
         SetBossFlags(bossRevive, isFirstEncounter: true);
         var playerBlockId = _playerService.GetBlockId();
         if (playerBlockId != bossRevive.BlockId &&
@@ -583,6 +612,28 @@ public class EnemyViewModel : BaseViewModel
             _travelService.WarpToBlockId(targetPosition);
             if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
         });
+    }
+
+    // Check if player is in Ashen Capital to show "cannot revive"
+    private bool CheckDtsValidity(BossRevive bossRevive)
+    {
+        var isInAshenCapital = _eventService.GetEvent(900); // Check if Maliketh is dead and player is in Ashen Capital
+        if (!isInAshenCapital)
+        {
+            return true;
+        }
+
+        if (bossRevive.BossName == null ||
+            bossRevive.BossName.IndexOf("Draconic Tree Sentinel", StringComparison.OrdinalIgnoreCase) < 0)
+        {
+            return true;
+        }
+
+        MsgBox.Show(
+            "Draconic Tree Sentinel can only be fought in 'Leyndell, Royal Capital' and cannot be revived as he doesn't exist in the Ashen Capital Map.",
+            "Cannot Revive Boss");
+
+        return false;
     }
 
     private BossRevive ShowBossSelectionDialog(List<BossRevive> bosses)

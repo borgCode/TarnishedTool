@@ -7,9 +7,11 @@
              xmlns:converters="clr-namespace:TarnishedTool.Converters"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <converters:HealthFillConverter x:Key="HealthFillConverter" />
         <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:ImmuneFillConverter x:Key="ImmuneFillConverter" />
+
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -44,15 +46,14 @@
                                 Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}"
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Right">
-                    <TextBox Width="60"
-                                        Margin="5,2,5,1"
-                                        Text="{Binding CustomHp, UpdateSourceTrigger=PropertyChanged}"
-                                        FontSize="11"
-                                        Padding="-0.2"
-                                        VerticalContentAlignment="Center"
-                                        HorizontalContentAlignment="Center"
-                                        MaxLength="5"
-                                        />                        
+                        <TextBox Width="60"
+                                 Margin="5,2,5,1"
+                                 Text="{Binding CustomHp, UpdateSourceTrigger=PropertyChanged}"
+                                 FontSize="11"
+                                 Padding="-0.2"
+                                 VerticalContentAlignment="Center"
+                                 HorizontalContentAlignment="Center"
+                                 MaxLength="5" />
                         <Button Content="Set hp" Margin="1"
                                 Command="{Binding SetCustomHpCommand}">
                             <Button.IsEnabled>
@@ -82,10 +83,18 @@
                                 <Border BorderBrush="#444444" BorderThickness="1" Background="#222222" CornerRadius="3">
                                     <Grid x:Name="PART_Track">
                                         <Rectangle x:Name="PART_Indicator"
-                                                   Fill="#4CAF50"
                                                    HorizontalAlignment="Left"
                                                    RadiusX="2" RadiusY="2"
-                                                   Margin="1" />
+                                                   Margin="1">
+                                            <Rectangle.Fill>
+                                                <MultiBinding Converter="{StaticResource HealthFillConverter}">
+                                                    <Binding Path="Value"
+                                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                                    <Binding Path="Maximum"
+                                                             RelativeSource="{RelativeSource TemplatedParent}" />
+                                                </MultiBinding>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
                                 </Border>
                             </ControlTemplate>
@@ -248,7 +257,7 @@
                                                         CornerRadius="3">
                                                     <Grid x:Name="PART_Track">
                                                         <Rectangle x:Name="PART_Indicator"
-                                                                   Fill="#4CAF50"
+                                                                   Fill="#d6d6d6"
                                                                    HorizontalAlignment="Left"
                                                                    RadiusX="2" RadiusY="2"
                                                                    Margin="1" />
@@ -322,7 +331,7 @@
                                                             CornerRadius="3">
                                                         <Grid x:Name="PART_Track">
                                                             <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsPoisonImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#7B1FA2}"
+                                                                       Fill="{Binding IsPoisonImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#4A750B}"
                                                                        HorizontalAlignment="Left"
                                                                        RadiusX="2" RadiusY="2"
                                                                        Margin="1" />
@@ -361,7 +370,7 @@
                                                             CornerRadius="3">
                                                         <Grid x:Name="PART_Track">
                                                             <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsRotImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#f73e75}"
+                                                                       Fill="{Binding IsRotImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#E09D91}"
                                                                        HorizontalAlignment="Left"
                                                                        RadiusX="2" RadiusY="2"
                                                                        Margin="1" />
@@ -400,7 +409,7 @@
                                                             CornerRadius="3">
                                                         <Grid x:Name="PART_Track">
                                                             <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsFrostImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#2196F3}"
+                                                                       Fill="{Binding IsFrostImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#8CB1C9}"
                                                                        HorizontalAlignment="Left"
                                                                        RadiusX="2" RadiusY="2"
                                                                        Margin="1" />
@@ -439,7 +448,7 @@
                                                             CornerRadius="3">
                                                         <Grid x:Name="PART_Track">
                                                             <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsBleedImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#D32F2F}"
+                                                                       Fill="{Binding IsBleedImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#A80202}"
                                                                        HorizontalAlignment="Left"
                                                                        RadiusX="2" RadiusY="2"
                                                                        Margin="1" />
@@ -477,7 +486,7 @@
                                                             CornerRadius="3">
                                                         <Grid x:Name="PART_Track">
                                                             <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsMadnessImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#f4b084}"
+                                                                       Fill="{Binding IsMadnessImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#DC9F02}"
                                                                        HorizontalAlignment="Left"
                                                                        RadiusX="2" RadiusY="2"
                                                                        Margin="1" />
@@ -516,7 +525,7 @@
                                                             CornerRadius="3">
                                                         <Grid x:Name="PART_Track">
                                                             <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsDeathBlightImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#8497b0}"
+                                                                       Fill="{Binding IsDeathBlightImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#586575}"
                                                                        HorizontalAlignment="Left"
                                                                        RadiusX="2" RadiusY="2"
                                                                        Margin="1" />
@@ -623,7 +632,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            
+
                             <CheckBox Grid.Row="0" Grid.Column="0" Content="Show Attack Info" Margin="0,2,0,2"
                                       IsChecked="{Binding IsShowAttackInfoEnabled}">
                                 <CheckBox.IsEnabled>
@@ -634,7 +643,7 @@
                                 </CheckBox.IsEnabled>
                             </CheckBox>
 
-                            
+
                             <CheckBox Grid.Row="1" Grid.Column="0" Content="Show Defenses" Margin="0,2,0,2"
                                       IsChecked="{Binding IsShowDefensesEnabled}">
                                 <CheckBox.IsEnabled>
@@ -665,7 +674,7 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            
+
                             <CheckBox Grid.Row="4" Grid.Column="0" Content="Repeat Last Act" Margin="0,2,0,2"
                                       IsChecked="{Binding IsRepeatActEnabled}">
                                 <CheckBox.IsEnabled>
@@ -675,7 +684,7 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            
+
                             <CheckBox Grid.Row="0" Grid.Column="1" Content="Disable AI" Margin="10,2,0,2"
                                       IsChecked="{Binding IsFreezeAiEnabled}">
                                 <CheckBox.IsEnabled>
@@ -704,7 +713,7 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            
+
                             <CheckBox Grid.Row="3" Grid.Column="1" Content="No Attack" Margin="10,2,0,2"
                                       IsChecked="{Binding IsNoAttackEnabled}">
                                 <CheckBox.IsEnabled>
@@ -714,7 +723,7 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            
+
                             <CheckBox Grid.Row="4" Grid.Column="1" Content="No Move" Margin="10,2,0,2"
                                       IsChecked="{Binding IsNoMoveEnabled}">
                                 <CheckBox.IsEnabled>
@@ -724,13 +733,14 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            
+
                         </Grid>
                     </Grid>
 
                     <TextBlock Text="Force Act Sequence" FontWeight="Bold" Margin="5,0,0,0" />
                     <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
-                        <TextBox Text="{Binding ActSequence, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="250" FontSize="14" Margin="10"
+                        <TextBox Text="{Binding ActSequence, UpdateSourceTrigger=PropertyChanged}" Height="30"
+                                 Width="250" FontSize="14" Margin="10"
                                  MaxLength="29" />
                         <Button Content="Force acts" IsEnabled="{Binding AreOptionsEnabled}"
                                 Command="{Binding ForActSequenceCommand}" Height="30" Margin="10,0,0,0" />
@@ -757,7 +767,7 @@
                                 </MultiBinding>
                             </Button.IsEnabled>
                         </Button>
-                        
+
                         <CheckBox Content="Disable All AI Besides Target"
                                   Margin="20,10,0,0" IsChecked="{Binding IsDisableAllExceptTargetEnabled}">
                             <CheckBox.IsEnabled>
@@ -767,9 +777,9 @@
                                 </MultiBinding>
                             </CheckBox.IsEnabled>
                         </CheckBox>
-                        
+
                         <Button Content="Reset Position"
-                                  Margin="20,10,0,0" Command="{Binding ResetPositionCommand}">
+                                Margin="20,10,0,0" Command="{Binding ResetPositionCommand}">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />

@@ -19,6 +19,11 @@ public class ItemSelectionViewModel : BaseViewModel
     private bool _hasDlc;
     private string _preSearchCategory;
     private bool _isSearchActive;
+    public bool IsSearchActive
+    {
+        get => _isSearchActive;
+        private set => SetProperty(ref _isSearchActive, value);
+    }
 
     public ItemSelectionViewModel(
         Dictionary<string, List<Item>> itemsByCategory,
@@ -62,7 +67,7 @@ public class ItemSelectionViewModel : BaseViewModel
 
             if (_isSearchActive)
             {
-                _isSearchActive = false;
+                IsSearchActive = false;
                 _searchText = string.Empty;
                 OnPropertyChanged(nameof(SearchText));
                 _preSearchCategory = null;
@@ -83,7 +88,7 @@ public class ItemSelectionViewModel : BaseViewModel
 
             if (string.IsNullOrEmpty(value))
             {
-                _isSearchActive = false;
+                IsSearchActive = false;
                 if (_preSearchCategory != null)
                 {
                     _selectedCategory = _preSearchCategory;
@@ -97,7 +102,7 @@ public class ItemSelectionViewModel : BaseViewModel
                 if (!_isSearchActive)
                 {
                     _preSearchCategory = _selectedCategory;
-                    _isSearchActive = true;
+                    IsSearchActive = true;
                 }
 
                 ApplyFilter();

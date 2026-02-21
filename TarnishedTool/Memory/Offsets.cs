@@ -244,19 +244,19 @@ namespace TarnishedTool.Memory
                 RotCurrent = 0x14,
                 BleedCurrent = 0x18,
 
-                // DeathBlightCurrent = 0x1C,
+                DeathBlightCurrent = 0x1C,
                 FrostCurrent = 0x20,
                 SleepCurrent = 0x24,
 
-                // MadnessCurrent = 0x28,
+                MadnessCurrent = 0x28,
                 PoisonMax = 0x2C,
                 RotMax = 0x30,
                 BleedMax = 0x34,
 
-                // DeathBlightMax = 0x38,
+                DeathBlightMax = 0x38,
                 FrostMax = 0x3C,
                 SleepMax = 0x40,
-                // MadnessMax = 0x44,
+                MadnessMax = 0x44,
             }
 
             public enum ChrBehaviorOffsets
@@ -422,9 +422,11 @@ namespace TarnishedTool.Memory
             {
                 PoisonImmune = 0x64,
                 RotImmune = 0x68,
+                DeathBlightImmune = 0x17C,
                 BleedImmune = 0x178,
                 FrostImmune = 0x180,
                 SleepImmune = 0x184,
+                MadnessImmune = 0x188,
                 StandardAbsorption = 0x1A4,
                 SlashAbsorption = 0x1A8,
                 StrikeAbsorption = 0x1AC,

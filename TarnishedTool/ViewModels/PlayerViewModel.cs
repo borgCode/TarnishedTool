@@ -813,7 +813,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.NoTimeChangeOnDeath,
                 () => { IsNoTimePassOnDeathEnabled = !IsNoTimePassOnDeathEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleResetEnemiesWithRest,
-                () => { IsNoTimePassOnDeathEnabled = !IsNoTimePassOnDeathEnabled; });
+                () => { IsResetWorldIncluded = !IsResetWorldIncluded; });
             _hotkeyManager.RegisterAction(HotkeyActions.Level1, SetRuneLevelOne);
             _hotkeyManager.RegisterAction(HotkeyActions.MaxLevel, SetMaxLevel);
             _hotkeyManager.RegisterAction(HotkeyActions.SetNgCycleTo7, () => { SetNewGame(7); });

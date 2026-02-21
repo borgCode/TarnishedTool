@@ -177,9 +177,10 @@ public class AdvancedViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.ApplySpEffect, () => SafeExecute(ApplySpEffect));
         _hotkeyManager.RegisterAction(HotkeyActions.RemoveSpEffect, () => SafeExecute(RemoveSpEffect));
         _hotkeyManager.RegisterAction(HotkeyActions.SpawnCustomItem,() => SafeExecute(SpawnWithEquipId));
-        _hotkeyManager.RegisterAction(HotkeyActions.OpenParamPatcher, () => OpenParamEditor());
+        _hotkeyManager.RegisterAction(HotkeyActions.OpenParamPatcher, () => SafeExecute(OpenParamEditor));
         _hotkeyManager.RegisterAction(HotkeyActions.OpenCharactersList, () => SafeExecute(OpenAiWindow));
         _hotkeyManager.RegisterAction(HotkeyActions.InjectAiScript, () => SafeExecute(InjectScript));
+        
 
     }
 
@@ -304,6 +305,9 @@ public class AdvancedViewModel : BaseViewModel
         _reminderService.TrySetReminder();
         _chrInsWindow.Show();
         _chrInsWindowViewModel.NotifyWindowOpen();
+        
+        _chrInsWindow.Activate();
+        _chrInsWindow.Focus();
     }
     
     private void InjectScript()
