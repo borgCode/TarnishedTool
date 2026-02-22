@@ -1036,7 +1036,7 @@ namespace TarnishedTool.ViewModels
                 Console.WriteLine(
                     $@"EntityId: {entityId} NpcThinkParamId: {npcThinkParamId} NpcParamId: {npcParamId} ChrId: {chrId}");
                 var aiThink = _targetService.GetAiThinkPtr();
-                Console.WriteLine($@"Locked on target chrIns: 0x{chrIns:X} AiThink: 0x{aiThink.ToInt64():X}");
+                Console.WriteLine($@"Locked on target chrIns: 0x{(long)chrIns:X} AiThink: 0x{(long)aiThink:X}");
 
 #endif
                 IsFreezeAiEnabled = _targetService.IsAiDisabled();

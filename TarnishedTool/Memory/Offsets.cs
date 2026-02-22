@@ -128,6 +128,8 @@ namespace TarnishedTool.Memory
                     Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0x6BC,
                     _ => 0x6CC,
                 };
+                
+                public static readonly int[] NpcParam = [0x5F0, 0x0];
             }
         }
 

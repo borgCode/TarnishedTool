@@ -47,5 +47,5 @@ public interface ITargetService
     int GetNpcChrId();
     uint GetNpcParamId();
     void ToggleNoHeal(bool isNoHealEnabled);
-    IntPtr GetAiThinkPtr();
+    nint GetAiThinkPtr();
 }
