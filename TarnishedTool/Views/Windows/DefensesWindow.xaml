@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:converters="clr-namespace:TarnishedTool.Converters"
         mc:Ignorable="d"
         Width="180"
         SizeToContent="WidthAndHeight"
@@ -11,11 +10,7 @@
         WindowStyle="None"
         ShowInTaskbar="False"
         Background="#80000000">
-
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis" />
-    </Window.Resources>
+    
     <Grid>
         <Grid.LayoutTransform>
             <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1" />
