@@ -1223,7 +1223,7 @@ namespace TarnishedTool.ViewModels
             _defensesWindow.Closed += (s, e) =>
             {
                 _defensesWindow = null;
-                IsShowDefensesEnabled = false;
+                _isShowDefensesEnabled = false; 
             };
             _defensesWindow.Show();
         }

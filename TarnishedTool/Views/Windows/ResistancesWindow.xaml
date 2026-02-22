@@ -239,7 +239,7 @@
                                             CornerRadius="2">
                                         <Grid x:Name="PART_Track">
                                             <Rectangle x:Name="PART_Indicator"
-                                                       Fill="{Binding IsRotImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#E09D91}"
+                                                       Fill="{Binding IsRotImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#D14C4B}"
                                                        HorizontalAlignment="Left"
                                                        RadiusX="1" RadiusY="1"
                                                        Margin="1" />

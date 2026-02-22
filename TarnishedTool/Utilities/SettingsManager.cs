@@ -48,6 +48,13 @@ public class SettingsManager
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
     public double ResistancesWindowTop { get; set; }
+    
+    [DefaultValue(1.0)] public double DefensesWindowScaleX { get; set; }
+    [DefaultValue(1.0)] public double DefensesWindowScaleY { get; set; }
+    public double DefensesWindowOpacity { get; set; }
+    public double DefensesWindowWidth { get; set; }
+    public double DefensesWindowLeft { get; set; }
+    public double DefensesWindowTop { get; set; }
     public string HotkeyActionIds { get; set; } = "";
     public bool EnableHotkeys { get; set; }
     public bool RememberPlayerSpeed { get; set; }
