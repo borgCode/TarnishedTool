@@ -45,6 +45,7 @@
 
                         <Button Content="✕" Width="16" Height="16" FontSize="8"
                                 HorizontalAlignment="Right"
+                                Margin="0,3,5,0"
                                 Background="Transparent"
                                 BorderThickness="0" Foreground="#CCFFFFFF"
                                 Click="CloseButton_Click"

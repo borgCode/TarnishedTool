@@ -188,6 +188,7 @@ public class ItemSelectionViewModel : BaseViewModel
 
     private void ConfigureForSpiritAsh(SpiritAsh spiritAsh)
     {
+        CanUpgrade = spiritAsh.CanUpgrade;
         ShowUpgradeOptions = true;
         ShowAowOptions = false;
         if (spiritAsh.CanUpgrade) MaxUpgradeLevel = 10;

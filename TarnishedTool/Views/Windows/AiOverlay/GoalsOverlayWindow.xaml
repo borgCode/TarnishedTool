@@ -7,7 +7,7 @@
                                xmlns:converters="clr-namespace:TarnishedTool.Converters"
                                xmlns:aiOverlay="clr-namespace:TarnishedTool.Views.Windows.AiOverlay"
                                mc:Ignorable="d"
-                               Title="GoalsOverlayWindow" Height="320" Width="650">
+                               Title="GoalsOverlayWindow" Height="345" Width="650">
     <aiOverlay:AiOverlayWindowBase.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <converters:IndentConverter x:Key="IndentConverter" />
