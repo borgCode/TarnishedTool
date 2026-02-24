@@ -45,6 +45,7 @@
                                 Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontSize="13" Text="{Binding ActiveIndicator}" Foreground="#ffc480" Margin="0,0,4,0"/>
                                     <TextBlock FontSize="13" Text="[" Foreground="#ffc480"/>
                                     <TextBlock FontSize="13" Text="{Binding Name}" FontWeight="SemiBold"/>
                                     <TextBlock FontSize="13" Text="]" Foreground="#ffc480"/>

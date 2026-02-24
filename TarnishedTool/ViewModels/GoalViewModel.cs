@@ -34,6 +34,18 @@ public class GoalViewModel : BaseViewModel
         get => _turnTime;
         set => SetProperty(ref _turnTime, value);
     }
+    
+    private bool _isActive;
+    public bool IsActive
+    {
+        get => _isActive;
+        set
+        {
+            if (!SetProperty(ref _isActive, value)) return;
+            OnPropertyChanged(nameof(ActiveIndicator));
+        }
+    }
+
 
     public bool HasTurnTime => TurnTime > 0;
 
@@ -70,6 +82,8 @@ public class GoalViewModel : BaseViewModel
             return string.Join("\n", chunks);
         }
     }
+    
+    public string ActiveIndicator => IsActive ? "■" : "□";
     
 
     #endregion

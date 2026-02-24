@@ -213,12 +213,12 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
             UpdateGoalViewModel(TopGoal, topGoal);
         }
 
-        UpdateChildren(TopGoal, goalPtr);
+        UpdateChildren(TopGoal, goalPtr, true);
 
         OnPropertyChanged(nameof(FlatGoals));
     }
 
-    private GoalViewModel CreateGoalViewModel(GoalIns ins, int indentLevel = 0)
+    private GoalViewModel CreateGoalViewModel(GoalIns ins, int indentLevel = 0, bool isActive = false)
     {
         var vm = new GoalViewModel
         {
@@ -228,6 +228,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
             Name = GetGoalName(ins.GoalId),
             Params = BuildParamViewModels(ins).ToList(),
             IndentLevel = indentLevel,
+            IsActive = isActive,
             Children = new ObservableCollection<GoalViewModel>()
         };
         return vm;
@@ -240,7 +241,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         vm.Params = BuildParamViewModels(ins).ToList();
     }
 
-    private void UpdateChildren(GoalViewModel parent, nint goalPtr)
+    private void UpdateChildren(GoalViewModel parent, nint goalPtr, bool parentIsActive = true)
     {
         if (!_aiService.HasSubGoals(goalPtr))
         {
@@ -257,6 +258,7 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
         {
             var childPtr = subGoalPtrs[i];
             var childIns = _aiService.GetGoalInfo(childPtr);
+            var isActive = parentIsActive && (i == 0);
 
             if (i < parent.Children.Count)
             {
@@ -264,18 +266,19 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
                 if (existing.GoalId == childIns.GoalId)
                 {
                     UpdateGoalViewModel(existing, childIns);
+                    existing.IsActive = isActive;
                 }
                 else
                 {
-                    parent.Children[i] = CreateGoalViewModel(childIns, parent.IndentLevel + 1);
+                    parent.Children[i] = CreateGoalViewModel(childIns, parent.IndentLevel + 1, isActive);
                 }
             }
             else
             {
-                parent.Children.Add(CreateGoalViewModel(childIns, parent.IndentLevel + 1));
+                parent.Children.Add(CreateGoalViewModel(childIns, parent.IndentLevel + 1, isActive));
             }
 
-            UpdateChildren(parent.Children[i], childPtr);
+            UpdateChildren(parent.Children[i], childPtr, isActive);
         }
     }
 

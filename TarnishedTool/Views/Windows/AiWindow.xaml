@@ -65,6 +65,7 @@
                     <DataTemplate>
                         <StackPanel Margin="{Binding IndentLevel, Converter={StaticResource IndentConverter}}">
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding ActiveIndicator}" Margin="0,0,4,0" />
                                 <TextBlock Text="[" />
                                 <TextBlock Text="{Binding Name}" />
                                 <TextBlock Text="]" />
