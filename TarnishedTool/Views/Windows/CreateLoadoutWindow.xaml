@@ -315,7 +315,7 @@
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                                         <TextBlock Grid.Column="1"
                                                    Text="{Binding CategoryName}"
-                                                   Foreground="#888888"
+                                                   Foreground="#ceccca"
                                                    FontStyle="Italic"
                                                    Margin="10,0,0,0"
                                                    Visibility="{Binding DataContext.ItemSelection.IsSearchActive, 
@@ -388,12 +388,12 @@
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal"
                                                 Visibility="{Binding AshOfWarName, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Collapsed}">
-                                        <TextBlock Text="{Binding AffinityName}" Foreground="#888888" FontSize="11" />
-                                        <TextBlock Text=" / " Foreground="#888888" FontSize="11" />
-                                        <TextBlock Text="{Binding AshOfWarName}" Foreground="#888888" FontSize="11" />
+                                        <TextBlock Text="{Binding AffinityName}" Foreground="#ceccca" FontSize="11" />
+                                        <TextBlock Text=" / " Foreground="#ceccca" FontSize="11" />
+                                        <TextBlock Text="{Binding AshOfWarName}" Foreground="#ceccca" FontSize="11" />
                                     </StackPanel>
                                     <TextBlock Text="{Binding Upgrade, StringFormat='+{0}'}"
-                                               Foreground="#888888"
+                                               Foreground="#ceccca"
                                                FontSize="11"
                                                Visibility="{Binding Upgrade, Converter={StaticResource GreaterThanZeroVisibilityConverter}, FallbackValue=Collapsed}" />
                                 </StackPanel>
