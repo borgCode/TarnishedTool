@@ -6,8 +6,9 @@
 <p>Tarnished Tool is an offline practice tool for Elden Ring mainly catered towards Challenge Runners, Hitless Runners & Speedrunners with support for all game patches (1.02 all the way to 1.16.1) It also provides a bunch of quality of life options for modders.</p>
 
 [![Latest Release](https://img.shields.io/github/v/release/borgCode/TarnishedTool.svg)](https://github.com/borgCode/TarnishedTool/releases/latest)
-[![All Releases](https://img.shields.io/github/downloads/borgCode/TarnishedTool/total.svg)](https://github.com/borgCode/TarnishedTool/releases/download/v1.0.5/TarnishedTool.exe)
+[![All Releases](https://img.shields.io/github/downloads/borgCode/TarnishedTool/total.svg)](https://github.com/borgCode/TarnishedTool/releases/download/v1.0.6/TarnishedTool.exe)
 [![Report Issues](https://img.shields.io/github/issues/borgCode/TarnishedTool.svg)](https://github.com/borgCode/TarnishedTool/issues)
+[![Nexusmods Page](https://img.shields.io/badge/Nexusmods_Page-orange)](https://www.nexusmods.com/eldenring/mods/9277)
 
 **This tool is strictly for offline use only, it directly manipulates game memory which violates the Terms of Service and will most likely lead to a ban if you use this online.**
 
@@ -54,7 +55,7 @@ This tool offers plenty of features such as:
 <details>
   <summary>Player Tab</summary>
   <br>
-<p><img width="600" height="720" alt="Player Tab" src="https://github.com/user-attachments/assets/e267561a-0b19-4d4d-88c2-42a620e5a28d" /></p>
+<p><img width="600" height="720" alt="Player Tab" src="https://github.com/user-attachments/assets/5987e60c-b1be-4f1b-aa77-ea5c8db62bac" /></p>
 </details>
 <details>
   <summary>Travel Tab</summary>
@@ -75,23 +76,29 @@ This tool offers plenty of features such as:
   <br>
 <p>General Enemey Settings<br><img width="600" height="720" alt="General Enemey Settings" src="https://github.com/user-attachments/assets/74f633ab-db1d-47ef-85b4-2774cd1e1333" /></p>
 
-<p>Boss Revives<br><img width="600" height="720" alt="Boss Revives" src="https://github.com/user-attachments/assets/bd71e842-c526-4145-a8d2-ac05fae0efc3" /></p>
+<p>Boss Revives<br><img width="600" height="720" alt="Boss Revives" src="https://github.com/user-attachments/assets/7d8dd26f-68fc-4418-96a8-97ee110e4bee" /></p>
+
+<p>Warp Prompt for Revive All<br><img width="600" height="720" alt="Boss Revives" src="https://github.com/user-attachments/assets/4dde07c8-5623-45cf-b97b-7e923b8405fb" /></p>
+
+<p><img width="600" height="720" alt="Custom Warps" src="https://github.com/user-attachments/assets/2c4ff394-9fa5-4682-9a1a-20ce0168e479" /></p>
 </details>
 <details>
   <summary>Target Tab</summary>
   <br>
-<p><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/f64cf935-d5a6-4e58-82c8-d9c321830eb3" /></p>
+
+
+<p><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/959f008a-a87d-47f7-a8c3-1c3f892042f7" /></p>
+<p>Healthbar colour changes dynamically the lower the HP of the target is</p>
+<p><img width="579" height="129" alt="HP Drain" src="https://github.com/user-attachments/assets/49dbddf9-5482-47fc-86ae-550ea1015d6e"/></p>
+
 
 <p>Attack Info Window<br><img width="800" height="450" alt="image" src="https://github.com/user-attachments/assets/1739728a-63f9-42c0-953b-b2e376ee19f5" /></p>
 
-<p>Defenses Window<br><img width="250" height="285" alt="image" src="https://github.com/user-attachments/assets/f5c4c2f4-4dc9-4e26-bce2-dbd676f401e1" /></p>
-
 <p>Active SpEffects Window<br><img width="400" height="750" alt="image" src="https://github.com/user-attachments/assets/53eea29f-6740-432d-b0a0-e52ce484a64a" /></p>
 
+<p>Pop Out Resistances & Defenses Window<br><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c83a86c8-30a5-4778-a9d2-60fdfb78e973" /></p>
 
-<p>Pop Out Resistances<br><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e559f6d0-97bf-4f40-8275-268e07355cb4" /></p>
-
-<p><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/139dee33-85d8-4748-a866-af2619674ec7" /></p>
+<p><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a156fc69-ff2c-467a-93f4-3621f931220f" /></p>
 </details>
 <details>
   <summary>Utility Tab</summary>
@@ -104,15 +111,16 @@ This tool offers plenty of features such as:
 </details>
 <details>
   <summary>Event Tab</summary>
-<p><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/21b59c82-917f-42e7-8dc3-e52c96c384ee" /></p>
+<p><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/b3af66c8-f5c8-4df0-97cd-4ba29b13672a" /></p>
 
 <p>Events Logger<br><img width="600" height="450" alt="image" src="https://github.com/user-attachments/assets/32f5042e-ceee-4750-8208-ff2e951b445c" /></p>
 </details>
 <details>
   <summary>Items Tab</summary>
+
 <p><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/25410324-7d8e-4219-ba5d-d3e2cf3a56dd" /></p>
   
-<p><img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/67e881f5-f7ac-4c8f-9ddd-bda9931769a5" /></p>
+<p><img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/f50c33f7-c4ad-48f5-808b-178d8176fd8d" /></p>
 </details>
 <details>
   <summary>Advanced Tab</summary>
@@ -127,15 +135,16 @@ This tool offers plenty of features such as:
 
 <p>Characters List<br><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8125f7eb-229c-4805-b701-826bd2baf572" /></p>
 
-<p>AI Viewer<br><img width="1300" height="800" alt="image" src="https://github.com/user-attachments/assets/447eb66a-904b-4d41-b074-693c184bbe1d" /></p>
+<p>AI Viewer<br><img width="1300" height="800" alt="image" src="https://github.com/user-attachments/assets/65cc34cb-8335-4a68-8a08-39102896ae50" /></p>
 
-<p>AI Viewer (Overlay)<br><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/987b6d28-fb07-435a-b55f-8a548fc98e55" /></p>
+<p>AI Viewer (Overlay)<br><img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9d6187cd-5fa9-4213-b445-19bbe8636b3c" /></p>
 
 </details>
 <details>
   <summary>Settings Tab</summary>
   <br>
-<p>Settings & Hotkeys<br><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/24c872c7-50f7-4d4e-9421-d7bfe36e1c27" /></p>
+<p>Settings & Hotkeys<br><img width="600" height="720" alt="image" src="https://github.com/user-attachments/assets/14887b4d-50f6-4fc2-a725-1ffd82c9c7a0" /></p>
+
 </details>
 
 
