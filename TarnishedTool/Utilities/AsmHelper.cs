@@ -57,6 +57,20 @@ namespace TarnishedTool.Utilities
                 Array.Copy(relativeBytes, 0, buffer, writeOffset, 4);
             }
         }
+        
+        /// <summary>
+        /// Writes a single relative offset into a byte buffer.
+        /// </summary>
+        /// <param name="buffer">The byte array to write into.</param>
+        /// <param name="instructionAddress">Address of the instruction in memory.</param>
+        /// <param name="targetAddress">The target address the offset should point to.</param>
+        /// <param name="instructionLength">Total length of the instruction.</param>
+        /// <param name="writeOffset">Index in the buffer to write the 4-byte offset.</param>
+        public static void WriteRelativeOffset(byte[] buffer, nint instructionAddress, nint targetAddress, int instructionLength, int writeOffset)
+        {
+            var relativeBytes = GetRelOffsetBytes(instructionAddress, targetAddress, instructionLength);
+            Array.Copy(relativeBytes, 0, buffer, writeOffset, 4);
+        }
 
         /// <summary>
         /// Calculates the relative offset for a jump back to the original code after a hook.

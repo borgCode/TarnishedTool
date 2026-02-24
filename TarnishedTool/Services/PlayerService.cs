@@ -347,32 +347,31 @@ namespace TarnishedTool.Services
 
         public void ToggleLockHp(bool isEnabled)
         {
-            var code = CodeCaveOffsets.Base + CodeCaveOffsets.PlayerLockHp;
+            var playerLockHp = CodeCaveOffsets.Base + CodeCaveOffsets.PlayerLockHp;
+            
             if (isEnabled)
             {
-                var hook = Hooks.PlayerLockHp;
-                var codeBytes = AsmLoader.GetAsmBytes(AsmScript.PlayerLockHp);
 
-                var worldChrManBase = WorldChrMan.Base.ToInt64();
-                var patchSpecificPlayerIns = WorldChrMan.PlayerIns;
-                AsmHelper.WriteImmediateDwords(codeBytes, new[]
-                {
-                    (patchSpecificPlayerIns, 0xE + 3)
-                });
-
-                AsmHelper.WriteRelativeOffsets(codeBytes, [
-                    (code.ToInt64() + 7, worldChrManBase, 7, 7 + 3),
-                    (code.ToInt64() + 0x2E, hook + 5, 5, 0x2E + 1)
-                ]);
-
-                memoryService.WriteBytes(code, codeBytes);
-                hookManager.InstallHook(code.ToInt64(), hook,
-                    [0x48, 0x89, 0x5C, 0x24, 0x18]);
+                InstallPlayerLockHp(playerLockHp);
             }
             else
             {
-                hookManager.UninstallHook(code.ToInt64());
+                hookManager.UninstallHook(playerLockHp.ToInt64());
             }
+            
+        }
+        
+        private void InstallPlayerLockHp(nint code)
+        {
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.PlayerLockHp);
+            AsmHelper.WriteRelativeOffsets(bytes, [
+            (code + 0x6, WorldChrMan.Base.ToInt64(), 7, 0x6 + 3),
+            (code + 0x36, Hooks.PlayerLockHp + 5, 5, 0x36 + 1)
+            ]);
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code, Hooks.PlayerLockHp, [0x48, 0x89, 0x5C, 0x24, 0x18]);
+            
         }
 
         public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>

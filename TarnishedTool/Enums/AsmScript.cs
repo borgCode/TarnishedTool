@@ -43,5 +43,5 @@ public enum AsmScript
     SetSpEffect,
     RemoveSpEffect,
     ItemSpawn,
-    PlayerLockHp
+    PlayerLockHp,
 }

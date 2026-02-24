@@ -2850,16 +2850,16 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 48 89 5c 24 18          mov    QWORD PTR [rsp+0x18],rbx
-        ///53                      push   rbx
-        ///52                      push   rdx
-        ///48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]    
-        ///48 3b 9a 08 e5 01 00    cmp    rbx,QWORD PTR [rdx+0x1e508]
-        ///75 0f                   jne    26 &lt;normal&gt;
-        ///83 b9 38 01 00 00 00    cmp    DWORD PTR [rcx+0x138],0x0
-        ///74 06                   je     26 &lt;normal&gt;
-        ///8b 81 38 01 00 00       mov    eax,DWORD PTR [rcx+0x138]
-        ///000000000026 &lt;normal&gt;:
-        ///5a                      pop    rdx        /// [rest of string was truncated]&quot;;.
+        ///50                      push   rax
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # d &lt;_main+0xd&gt;
+        ///48 85 c0                test   rax,rax
+        ///74 23                   je     35 &lt;exit&gt;
+        ///48 8b 80 08 e5 01 00    mov    rax,QWORD PTR [rax+0x1e508]
+        ///48 85 c0                test   rax,rax
+        ///74 17                   je     35 &lt;exit&gt;
+        ///48 8b 80 90 01 00 00    mov    rax,QWORD PTR [rax+0x190]
+        ///48 85 c0                test   rax,rax
+        ///74 0b              [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string PlayerLockHp {
             get {

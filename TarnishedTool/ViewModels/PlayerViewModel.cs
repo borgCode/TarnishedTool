@@ -179,12 +179,15 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _isHpLocked, value))
                 {
                     _playerService.ToggleLockHp(_isHpLocked);
+                    _playerService.ToggleNoDamage(_isHpLocked);
+                    if (!_isHpLocked && !IsNoDamageEnabled)
+                    {
+                        _playerService.ToggleNoDamage(false);
+                    }
                 }
             }
         }
-
-        private int _lockedHpValue;
-
+        
         private bool _isSetRfbsOnLoadEnabled;
 
         public bool IsSetRfbsOnLoadEnabled
