@@ -65,6 +65,7 @@ public static class Emevd
             2001,
             4,
             (byte)18, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (float)0.75, (float)2.0, (float)0
+        );
             
         public static readonly EmevdCommand SetNight = new(
             2001,
