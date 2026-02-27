@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -68,6 +68,7 @@ namespace TarnishedTool.ViewModels
             DeactivateMausoleumCommand = new DelegateCommand(ToggleSnowfieldMausoleum);
             SetMorningCommand = new DelegateCommand(SetMorning);
             SetNoonCommand = new DelegateCommand(SetNoon);
+            SetDuskCommand = new DelegateCommand(SetDusk);
             SetNightCommand = new DelegateCommand(SetNight);
             SetWeatherCommand = new DelegateCommand(SetWeather);
             GiveStartingFlasksCommand = new DelegateCommand(GiveStartingFlasks);
@@ -97,6 +98,7 @@ namespace TarnishedTool.ViewModels
         public ICommand DeactivateMausoleumCommand { get; set; }
         public ICommand SetMorningCommand { get; set; }
         public ICommand SetNoonCommand { get; set; }
+        public ICommand SetDuskCommand { get; set; }
         public ICommand SetNightCommand { get; set; }
         public ICommand SetWeatherCommand { get; set; }
         public ICommand GiveStartingFlasksCommand { get; set; }
@@ -336,6 +338,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.UnlockMetyr, () => SafeExecute(UnlockMetyr));
             _hotkeyManager.RegisterAction(HotkeyActions.SetMorning, () => SafeExecute(SetMorning));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNoon, () => SafeExecute(SetNoon));
+            _hotkeyManager.RegisterAction(HotkeyActions.SetDusk, () => SafeExecute(SetDusk));
             _hotkeyManager.RegisterAction(HotkeyActions.SetNight, () => SafeExecute(SetNight));
             _hotkeyManager.RegisterAction(HotkeyActions.DefaultWeather,
                 () => SafeExecute(() => SetWeatherByType(0)));
@@ -449,6 +452,7 @@ namespace TarnishedTool.ViewModels
 
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);
+        private void SetDusk() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetDusk);
         private void SetNight() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
 
         private void SetWeather() =>
