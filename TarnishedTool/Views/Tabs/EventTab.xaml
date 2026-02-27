@@ -366,6 +366,11 @@
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetNoonCommand}" />
                                 <Button
+                                    Content="Dusk"
+                                    Margin="10,0,0,0"
+                                    IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding SetDuskCommand}" />
+                                <Button
                                     Content="Night"
                                     Margin="10,0,0,0"
                                     IsEnabled="{Binding AreOptionsEnabled}"
