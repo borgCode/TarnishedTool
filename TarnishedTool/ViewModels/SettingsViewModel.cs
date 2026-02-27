@@ -239,6 +239,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Open Event Logger", HotkeyActions.OpenEventLogger),
                 new("Set Morning", HotkeyActions.SetMorning),
                 new("Set Noon", HotkeyActions.SetNoon),
+                new("Set Dusk", HotkeyActions.SetDusk),
                 new("Set Night", HotkeyActions.SetNight),
                 new("Default Weather", HotkeyActions.DefaultWeather),
                 new("Rainy Weather", HotkeyActions.RainyWeather),
