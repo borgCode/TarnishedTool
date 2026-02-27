@@ -129,7 +129,6 @@
                     <Button Grid.Row="1" Grid.Column="0" Content="Unlock All Gestures"
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Command="{Binding UnlockGesturesCommand}"
-                            ToolTip="Doesn't Include The Ring or Ring of Miquella."
                             Margin="0, 5, 0,2" />
 
                    

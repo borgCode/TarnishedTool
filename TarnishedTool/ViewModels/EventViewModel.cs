@@ -26,7 +26,8 @@ namespace TarnishedTool.ViewModels
         private readonly IEventLogReader _eventLogReader;
         public const int WhetstoneBladeId = 0x4000218E;
 
-        private static readonly int[] StartingFlaskIds = [201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229];
+        private static readonly int[] StartingFlaskIds =
+            [201, 203, 205, 207, 209, 211, 213, 215, 217, 219, 221, 223, 225, 227, 229];
 
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
@@ -118,6 +119,24 @@ namespace TarnishedTool.ViewModels
         {
             get => _isDlcAvailable;
             set => SetProperty(ref _isDlcAvailable, value);
+        }
+
+        // Surely works
+
+        private bool _preOrderBaseGesture;
+
+        public bool PreOrderBaseGesture
+        {
+            get => _preOrderBaseGesture;
+            set => SetProperty(ref _preOrderBaseGesture, value);
+        }
+
+        private bool _preOrderDlcGesture;
+
+        public bool PreOrderDlcGesture
+        {
+            get => _preOrderDlcGesture;
+            set => SetProperty(ref _preOrderDlcGesture, value);
         }
 
         private string _setFlagId;
@@ -265,6 +284,8 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = true;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
+            PreOrderBaseGesture = _dlcService.PreOrderBaseGesture;
+            PreOrderDlcGesture = _dlcService.PreOrderDlcGesture;
             UpdateEventStatus();
         }
 
@@ -385,17 +406,33 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockGestures()
         {
+            UnlockBaseGestures();
+
+            if (!IsDlcAvailable) return;
+
+            UnlockDlcGestures();
+        }
+
+        private void UnlockBaseGestures()
+        {
             foreach (var baseGameGestureId in _baseGameGestureIds)
             {
                 _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(baseGameGestureId));
             }
+            // Pre-Order Check
+            int basePreOrderGestureId = !PreOrderBaseGesture ? 109 : 108;
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(basePreOrderGestureId));
+        }
 
-            if (!IsDlcAvailable) return;
-
+        private void UnlockDlcGestures()
+        {
             foreach (var dlcGestureId in _dlcGestureIds)
             {
                 _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcGestureId));
             }
+            // Pre-Order Check
+            int dlcPreOrderGestureId = !PreOrderDlcGesture ? 113 : 116;
+            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcPreOrderGestureId));
         }
 
         private void ToggleClearDlc()
@@ -444,9 +481,8 @@ namespace TarnishedTool.ViewModels
         private void OnLogEntriesReceived(List<EventLogEntry> events) =>
             _eventLogViewModel.RefreshEventLogs(events);
 
-        private void GiveStartingFlasks() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.AwardItemsIncludingClients(2000));
-     
-
+        private void GiveStartingFlasks() =>
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.AwardItemsIncludingClients(2000));
 
         #endregion
     }
