@@ -74,6 +74,7 @@ public enum HotkeyActions
     DecreaseGameSpeed,
     SetMorning,
     SetNoon,
+    SetDusk,
     SetNight,
     DrawHitbox,
     DrawPlayerSound,
