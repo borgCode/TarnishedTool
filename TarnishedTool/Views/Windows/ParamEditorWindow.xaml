@@ -22,39 +22,10 @@
         <converters:ParamEntryToDisplayTextConverter x:Key="ParamEntryToDisplayTextConverter" />
         <converters:BoolToShowHideConverter x:Key="BoolToShowHideConverter" />
         <converters:BoolToGridLengthConverter x:Key="BoolToGridLengthConverter" />
-        <Style TargetType="ContextMenu">
-            <Setter Property="Background" Value="#2D2D2D" />
-            <Setter Property="BorderBrush" Value="#333" />
-            <Setter Property="BorderThickness" Value="1" />
-        </Style>
+        
 
-        <Style TargetType="MenuItem">
-            <Setter Property="Background" Value="#2D2D2D" />
-            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
-            <Setter Property="Padding" Value="20,6" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="MenuItem">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                Padding="{TemplateBinding Padding}"
-                                MinWidth="120">
-                            <ContentPresenter ContentSource="Header" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsHighlighted" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="EnumMenuItemStyle" TargetType="MenuItem">
+        <Style x:Key="EnumMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
             <Setter Property="Header" Value="{Binding DisplayText}" />
-            <Setter Property="Background" Value="#2D2D2D" />
-            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
             <Setter Property="Padding" Value="20,6" />
             <Setter Property="Tag" Value="{Binding Value}" />
 
@@ -238,9 +209,9 @@
                             Content="Search All Params"
                             IsChecked="{Binding IsSearchAllParamsEnabled}" />
 
-                        <Button Content="Restore All Params" Margin="15,0,0,5" 
+                        <Button Content="Restore All Params" Margin="15,0,0,5"
                                 Command="{Binding RestoreAllEntriesCommand}"
-                                IsEnabled="{Binding HasAnyModified}"/>
+                                IsEnabled="{Binding HasAnyModified}" />
                     </WrapPanel>
 
                 </Grid>
@@ -283,7 +254,7 @@
                         </ListView.ItemTemplate>
                         <ListView.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Unpin" Click="UnpinMenuItem_Click" />
+                                <MenuItem Header="Unpin" Click="UnpinMenuItem_Click"/>
                             </ContextMenu>
                         </ListView.ContextMenu>
                     </ListView>
