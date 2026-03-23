@@ -34,13 +34,13 @@ public class ItemViewModel : BaseViewModel
     public ItemSelectionViewModel ItemSelection { get; }
 
     public ItemViewModel(IItemService itemService, IDlcService dlcService, IStateService stateService,
-        IEventService eventService,HotkeyManager hotkeyManager)
+        IEventService eventService, HotkeyManager hotkeyManager)
     {
         _itemService = itemService;
         _dlcService = dlcService;
         _eventService = eventService;
         _hotkeyManager = hotkeyManager;
-        
+
         RegisterHotkeys();
 
         stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -273,7 +273,7 @@ public class ItemViewModel : BaseViewModel
             !_itemsByCategory.ContainsKey(SelectedMassSpawnCategory))
             return;
 
-        
+
         var items = _itemsByCategory[SelectedMassSpawnCategory];
         var hasDlc = _dlcService.IsDlcAvailable;
 
@@ -339,7 +339,9 @@ public class ItemViewModel : BaseViewModel
         var loadout = _customLoadoutTemplates[SelectedLoadoutName];
         foreach (var template in loadout.Items)
         {
-            var item = _allItems.FirstOrDefault(i => i.Name == template.ItemName);
+            var item = template.ItemId != 0
+                ? _allItems.FirstOrDefault(i => i.Id == template.ItemId)
+                : _allItems.FirstOrDefault(i => i.Name == template.ItemName);
             if (item == null) continue;
 
             int itemId = item.Id;
