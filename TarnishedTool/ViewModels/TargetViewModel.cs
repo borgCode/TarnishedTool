@@ -864,7 +864,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.SetTargetMaxHp, () =>
                 ExecuteTargetAction(() => SetHpPercentage(100)));
             _hotkeyManager.RegisterAction(HotkeyActions.SetTargetCustomHp, () =>
-                ExecuteTargetAction(() => SetHpPercentage(CustomHp)));
+                ExecuteTargetAction(() => SetHp(CustomHp)));
             _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances, () =>
             {
                 if (!IsTargetOptionsEnabled) IsTargetOptionsEnabled = true;
