@@ -179,6 +179,7 @@ public class CreateLoadoutViewModel : BaseViewModel
         var template = new ItemTemplate
         {
             ItemName = ItemSelection.SelectedItem.Name,
+            ItemId = ItemSelection.SelectedItem.Id, 
             Quantity = ItemSelection.SelectedQuantity,
             Upgrade = ItemSelection.SelectedUpgrade
         };
