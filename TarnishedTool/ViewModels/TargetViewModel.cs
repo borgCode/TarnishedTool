@@ -177,6 +177,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowPoise = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -207,6 +208,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowPoison = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -245,6 +247,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowBleed = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -283,6 +286,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowRot = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -321,6 +325,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowFrost = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -375,6 +380,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowMadness = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -405,6 +411,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowDeathBlight = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -419,6 +426,7 @@ namespace TarnishedTool.ViewModels
                 RefreshResistancesWindow();
                 SettingsManager.Default.ResistancesShowSleep = value;
                 SettingsManager.Default.Save();
+                UpdateShowAllState();
             }
         }
 
@@ -639,7 +647,11 @@ namespace TarnishedTool.ViewModels
         public int CurrentHealth
         {
             get => _currentHealth;
-            set => SetProperty(ref _currentHealth, value);
+            set
+            {
+                SetProperty(ref _currentHealth, value); 
+                OnPropertyChanged(nameof(HealthPercentage));
+            }
         }
 
         private int _maxHealth;
@@ -647,8 +659,16 @@ namespace TarnishedTool.ViewModels
         public int MaxHealth
         {
             get => _maxHealth;
-            set => SetProperty(ref _maxHealth, value);
+            set
+            {
+                SetProperty(ref _maxHealth, value);
+                OnPropertyChanged(nameof(HealthPercentage));
+            }
         }
+
+        public string HealthPercentage => MaxHealth > 0
+            ? (CurrentHealth / (double)MaxHealth * 100).ToString("F1")
+            : "0.0";
 
         private bool _isFreezeHealthEnabled;
 
@@ -1284,6 +1304,12 @@ namespace TarnishedTool.ViewModels
             }
 
             RefreshResistancesWindow();
+        }
+
+        private void UpdateShowAllState()
+        {
+            _showAllResistances = ShowPoise && ShowSleep && ShowPoison && ShowRot && ShowFrost && ShowBleed && ShowMadness && ShowDeathBlight;
+            OnPropertyChanged(nameof(ShowAllResistances));
         }
         
         private void OpenResistancesWindow()

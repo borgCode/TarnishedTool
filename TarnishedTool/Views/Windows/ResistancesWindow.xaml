@@ -35,8 +35,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- Icons Field -->
@@ -57,9 +58,10 @@
                             <Button Content="◐" Width="24" Height="20" FontSize="14"
                                     Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
                                     Click="CycleOpacity_Click" Cursor="Hand" ToolTip="Opacity" />
-                            <Button Content="⚔" Width="24" Height="20" FontSize="10" Padding="3,3,0,0" 
+                            <Button Content="⚔" Width="24" Height="20" FontSize="10" Padding="3,3,0,0"
                                     Background="Transparent" BorderThickness="0" Foreground="#CCFFFFFF"
-                                    Click="ToggleCombatInfo_Click" Cursor="Hand" ToolTip="Toggle Distance, Last Act and Current Animation" />
+                                    Click="ToggleCombatInfo_Click" Cursor="Hand"
+                                    ToolTip="Toggle Distance, Last Act and Current Animation" />
 
                         </StackPanel>
 
@@ -74,7 +76,7 @@
                 </Grid>
 
                 <!-- HP Field -->
-                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,8" >
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" >
                     <TextBlock.Effect>
                         <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="Black" Opacity="0.7" />
                     </TextBlock.Effect>
@@ -84,35 +86,49 @@
                     <Run Text="{Binding MaxHealth, Mode=OneWay}"
                          Foreground="#FF9900" FontSize="18" FontWeight="Bold" />
                 </TextBlock>
-                
+                <!-- Percentage -->
+                <TextBlock Grid.Row="2" HorizontalAlignment="Center"
+                           Text="{Binding HealthPercentage, Mode=OneWay, StringFormat={}({0}%)}"
+                           Foreground="#FF9900" FontSize="13" FontWeight="Bold" Opacity="0.85" Margin="0,-2,0,8">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="Black" Opacity="0.7" />
+                    </TextBlock.Effect>
+                </TextBlock>
+
                 <!-- Distance Field -->
-                <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,8" Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
+                <TextBlock Grid.Row="3" HorizontalAlignment="Left" Margin="0,0,0,8"
+                           Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
                     <TextBlock.Effect>
                         <DropShadowEffect ShadowDepth="1" BlurRadius="3" Color="Black" Opacity="0.7" />
                     </TextBlock.Effect>
                     <Run Text="Distance" Foreground="#FF9900" FontSize="12" />
                 </TextBlock>
-                <TextBlock Grid.Row="2" HorizontalAlignment="Right" DockPanel.Dock="Right" Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
+                <TextBlock Grid.Row="3" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                           Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
                     <Run Text="{Binding Dist, StringFormat={}{0:F2}, Mode=OneWay}"
                          Foreground="#FF9900" FontSize="12" FontWeight="Bold" />
                 </TextBlock>
                 <!-- Last Act Field -->
-                <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="0,20,0,8" Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
+                <TextBlock Grid.Row="3" HorizontalAlignment="Left" Margin="0,20,0,8"
+                           Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
                     <Run Text="Last Act" Foreground="#FF9900" FontSize="12" />
                 </TextBlock>
-                <TextBlock Grid.Row="2" HorizontalAlignment="Right" Margin="0,20,0,8" Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
+                <TextBlock Grid.Row="3" HorizontalAlignment="Right" Margin="0,20,0,8"
+                           Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
                     <Run Text="{Binding LastAct, Mode=OneWay}" Foreground="#FF9900" FontSize="12" FontWeight="Bold" />
                 </TextBlock>
-                <TextBlock Grid.Row="2" HorizontalAlignment="Left" Margin="0,40,0,8" Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
+                <TextBlock Grid.Row="3" HorizontalAlignment="Left" Margin="0,40,0,8"
+                           Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
                     <Run Text="Animation" Foreground="#FF9900" FontSize="12" />
                 </TextBlock>
-                <TextBlock Grid.Row="2" HorizontalAlignment="Right" Margin="0,40,0,8" Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
+                <TextBlock Grid.Row="3" HorizontalAlignment="Right" Margin="0,40,0,8"
+                           Visibility="{Binding ShowCombatInfo, Converter={StaticResource BoolToVis}}">
                     <Run Text="{Binding CurrentAnimation, Mode=OneWay}" Foreground="#FF9900" FontSize="12"
                          FontWeight="Bold" />
                 </TextBlock>
 
                 <!-- Poise Field -->
-                <StackPanel Grid.Row="3" Margin="0,0,0,5"
+                <StackPanel Grid.Row="4" Margin="0,0,0,5"
                             Visibility="{Binding ShowPoise, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Poise" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -147,7 +163,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Sleep Field -->
-                <StackPanel Grid.Row="4" Margin="0,0,0,5"
+                <StackPanel Grid.Row="5" Margin="0,0,0,5"
                             Visibility="{Binding ShowSleepAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Sleep" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -183,7 +199,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Poison Field -->
-                <StackPanel Grid.Row="5" Margin="0,0,0,5"
+                <StackPanel Grid.Row="6" Margin="0,0,0,5"
                             Visibility="{Binding ShowPoisonAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Poison" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -219,7 +235,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Rot Field -->
-                <StackPanel Grid.Row="6" Margin="0,0,0,5"
+                <StackPanel Grid.Row="7" Margin="0,0,0,5"
                             Visibility="{Binding ShowRotAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Rot" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -255,7 +271,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Frost Field -->
-                <StackPanel Grid.Row="7" Margin="0,0,0,5"
+                <StackPanel Grid.Row="8" Margin="0,0,0,5"
                             Visibility="{Binding ShowFrostAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Frost" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -292,7 +308,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Bleed Field -->
-                <StackPanel Grid.Row="8" Margin="0,0,0,5"
+                <StackPanel Grid.Row="9" Margin="0,0,0,5"
                             Visibility="{Binding ShowBleedAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Bleed" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -329,7 +345,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Madness Field -->
-                <StackPanel Grid.Row="9" Margin="0,0,0,5"
+                <StackPanel Grid.Row="10" Margin="0,0,0,5"
                             Visibility="{Binding ShowMadnessAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Madness" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />
@@ -366,7 +382,7 @@
                     </Grid>
                 </StackPanel>
                 <!-- Deathblight Field -->
-                <StackPanel Grid.Row="10" Margin="0,0,0,0"
+                <StackPanel Grid.Row="11" Margin="0,0,0,0"
                             Visibility="{Binding ShowDeathBlightAndNotImmune, Converter={StaticResource BoolToVis}}">
                     <DockPanel Margin="0,0,0,2">
                         <TextBlock Text="Deathblight" Foreground="#CCFFFFFF" DockPanel.Dock="Left" />

@@ -72,6 +72,7 @@
                         <Run Text="{Binding CurrentHealth, Mode=OneWay}" />
                         <Run Text="/" />
                         <Run Text="{Binding MaxHealth, Mode=OneWay}" />
+                        <Run Text=" (" /><Run Text="{Binding HealthPercentage, Mode=OneWay, StringFormat={}{0:F1}%}" /><Run Text=")" />
                     </TextBlock>
 
                     <ProgressBar Width="250" Height="20"
