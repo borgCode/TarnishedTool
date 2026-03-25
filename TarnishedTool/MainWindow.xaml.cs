@@ -121,8 +121,12 @@ namespace TarnishedTool
                 utilityService, chrInsService, aiWindowService
             );
 
+            ActivateOnLaunchViewModel activateOnLaunchViewModel = new ActivateOnLaunchViewModel(
+                playerViewModel,enemyViewModel,utilityViewModel, travelViewModel, eventViewModel, itemViewModel,_stateService
+            );
+
             SettingsViewModel settingsViewModel = new SettingsViewModel(
-                settingsService, hotkeyManager, _stateService
+                settingsService, hotkeyManager, _stateService, activateOnLaunchViewModel
             );
 
             var playerTab = new PlayerTab(playerViewModel);

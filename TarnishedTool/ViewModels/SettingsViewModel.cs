@@ -10,6 +10,7 @@ using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Utilities;
+using TarnishedTool.Views.Windows;
 using Key = H.Hooks.Key;
 using KeyboardEventArgs = H.Hooks.KeyboardEventArgs;
 
@@ -28,10 +29,12 @@ public class SettingsViewModel : BaseViewModel
 
     public SearchableGroupedCollection<string, HotkeyBindingViewModel> Hotkeys { get; }
 
-    public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager, IStateService stateService)
+    public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager, IStateService stateService,
+        ActivateOnLaunchViewModel activateOnLaunchViewModel)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
+        _activateOnLaunchViewModel = activateOnLaunchViewModel;
 
         stateService.Subscribe(State.AppStart, OnAppStart);
         stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -81,24 +84,23 @@ public class SettingsViewModel : BaseViewModel
                 new("Set NG Cycle to 7", HotkeyActions.SetNgCycleTo7),
                 new("HP Regen", HotkeyActions.HealOverTime),
                 new("FP Regen", HotkeyActions.FpRegen),
-                
             ],
-            ["Travel"] = 
+            ["Travel"] =
             [
-                  new("Unlock All Main Maps", HotkeyActions.UnlockMainGameMaps),
-                  new("Unlock All DLC Maps", HotkeyActions.UnlockDlcMaps),
-                  new("Unlock All Main Graces", HotkeyActions.UnlockAllMainGameGraces),
-                  new("Unlock All DLC Graces", HotkeyActions.UnlockAllDlcGraces),
-                  new("Unlock Main AR Graces", HotkeyActions.UnlockAllMainRemembrancesGraces),
-                  new("Unlock DLC AR Graces", HotkeyActions.UnlockAllDlcRemembrancesGraces),
-                  new("Unlock Preset Graces", HotkeyActions.UnlockPresetGraces),
-                  new("Toggle All Graces", HotkeyActions.ShowAllGraces),
-                  new("Toggle All Maps", HotkeyActions.ShowAllMaps),
-                  new("Toggle Map Popup", HotkeyActions.NoMapAcquiredPopup),
-                  new("Warp To Grace", HotkeyActions.WarpToGrace),
-                  new("Warp To Boss", HotkeyActions.WarpToBoss),
-                  new("Warp To Custom Location", HotkeyActions.WarpToCustomLocation),
-                  new("Toggle Rest On Warp", HotkeyActions.RestOnWarp),
+                new("Unlock All Main Maps", HotkeyActions.UnlockMainGameMaps),
+                new("Unlock All DLC Maps", HotkeyActions.UnlockDlcMaps),
+                new("Unlock All Main Graces", HotkeyActions.UnlockAllMainGameGraces),
+                new("Unlock All DLC Graces", HotkeyActions.UnlockAllDlcGraces),
+                new("Unlock Main AR Graces", HotkeyActions.UnlockAllMainRemembrancesGraces),
+                new("Unlock DLC AR Graces", HotkeyActions.UnlockAllDlcRemembrancesGraces),
+                new("Unlock Preset Graces", HotkeyActions.UnlockPresetGraces),
+                new("Toggle All Graces", HotkeyActions.ShowAllGraces),
+                new("Toggle All Maps", HotkeyActions.ShowAllMaps),
+                new("Toggle Map Popup", HotkeyActions.NoMapAcquiredPopup),
+                new("Warp To Grace", HotkeyActions.WarpToGrace),
+                new("Warp To Boss", HotkeyActions.WarpToBoss),
+                new("Warp To Custom Location", HotkeyActions.WarpToCustomLocation),
+                new("Toggle Rest On Warp", HotkeyActions.RestOnWarp),
             ],
             ["Enemies"] =
             [
@@ -126,7 +128,6 @@ public class SettingsViewModel : BaseViewModel
                 new("Lion Mini Frost", HotkeyActions.LionMiniFrost),
                 new("Lion Mini Wind", HotkeyActions.LionMiniWind),
                 new("Lion Mini Lock Phase", HotkeyActions.LionMiniLockPhase),
-                
             ],
 
             ["Target"] =
@@ -221,8 +222,6 @@ public class SettingsViewModel : BaseViewModel
                 new("Hide Characters", HotkeyActions.HideCharacters),
                 new("Full Shop Lineup", HotkeyActions.FullShopLineup),
                 new("Disable KB for No Clip", HotkeyActions.DisableKbForNoClip),
-                
-                
             ],
 
             ["Event"] =
@@ -250,9 +249,8 @@ public class SettingsViewModel : BaseViewModel
                 new("Windy Puffy Clouds", HotkeyActions.WindyPuffyClouds),
                 new("Rainy Heavy Fog", HotkeyActions.RainyHeavyFog),
                 new("Scattered Rain", HotkeyActions.ScatteredRain),
-                
             ],
-            
+
             ["Items"] =
             [
                 new("Spawn Selected Item", HotkeyActions.SpawnItem),
@@ -275,17 +273,19 @@ public class SettingsViewModel : BaseViewModel
             groupedHotkeys,
             (hotkey, search) => hotkey.DisplayName.ToLower().Contains(search)
         );
-        
+
         _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
-        
+
         LoadHotkeyDisplays();
         RegisterHotkeys();
         ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);
+        OpenActivateOnLaunchCommand = new DelegateCommand(OpenActivateOnLaunch);
     }
 
     #region Commands
 
     public ICommand ClearHotkeysCommand { get; set; }
+    public ICommand OpenActivateOnLaunchCommand { get; set; }
 
     #endregion
 
@@ -455,9 +455,7 @@ public class SettingsViewModel : BaseViewModel
             return;
         }
 
-        HandleExistingHotkey(currentKeys);
         SetNewHotkey(currentSettingHotkeyId, currentKeys);
-
         StopSettingHotkey();
     }
 
@@ -614,17 +612,6 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    private void HandleExistingHotkey(Keys currentKeys)
-    {
-        string existingHotkeyId = _hotkeyManager.GetActionIdByKeys(currentKeys);
-        if (string.IsNullOrEmpty(existingHotkeyId)) return;
-
-        _hotkeyManager.ClearHotkey(existingHotkeyId);
-        if (_hotkeyLookup.TryGetValue(existingHotkeyId, out var binding))
-        {
-            binding.HotkeyText = "None";
-        }
-    }
 
     private void SetNewHotkey(string currentSettingHotkeyId, Keys currentKeys)
     {
@@ -645,6 +632,27 @@ public class SettingsViewModel : BaseViewModel
     {
         _hotkeyManager.ClearAll();
         LoadHotkeyDisplays();
+    }
+
+    private readonly ActivateOnLaunchViewModel _activateOnLaunchViewModel;
+    private ActivateOnLaunchWindow _activateOnLaunchWindow;
+
+    private void OpenActivateOnLaunch()
+    {
+        if (_activateOnLaunchWindow != null && _activateOnLaunchWindow.IsVisible)
+        {
+            _activateOnLaunchWindow.Activate();
+            return;
+        }
+
+        _activateOnLaunchWindow = new ActivateOnLaunchWindow(_activateOnLaunchViewModel)
+        {
+            DataContext = _activateOnLaunchViewModel,
+            Owner = Application.Current.MainWindow
+        };
+
+        _activateOnLaunchWindow.Closed += (_, _) => _activateOnLaunchWindow = null;
+        _activateOnLaunchWindow.ShowDialog();
     }
 
     #endregion

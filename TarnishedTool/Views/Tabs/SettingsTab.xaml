@@ -69,7 +69,9 @@
                               Margin="0,0,10,0" />
                     <CheckBox Content="Disable Achievements"
                               IsChecked="{Binding IsDisableAchievementsEnabled}"
-                              Margin="0,0,0,0" />
+                              Margin="0,0,10,0" />
+                    <Button Content="Activate On Launch"
+                            Command="{Binding OpenActivateOnLaunchCommand}" />
                 </StackPanel>
             </StackPanel>
 
@@ -77,9 +79,16 @@
 
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="10,0,0,10" HorizontalAlignment="Left" />
+                <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,10"
+                        VerticalAlignment="Center"
+                        ToolTip="For Macros simply set the same keybind to a hotkey."
+                        ToolTipService.InitialShowDelay="100">
+                    <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                               VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                </Border>
                 <CheckBox Content="Enable Hotkeys"
                           IsChecked="{Binding IsEnableHotkeysEnabled}"
-                          Margin="40,0,0,10" />
+                          Margin="30,0,0,10" />
                 <CheckBox Content="Block Game Actions"
                           IsChecked="{Binding IsBlockGameHotkeysEnabled}"
                           Margin="20,0,10,10" />
