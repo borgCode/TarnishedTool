@@ -78,7 +78,7 @@
             <Separator Margin="0,0,0,10" />
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="10,0,0,10" HorizontalAlignment="Left" />
+                <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="10,0,5,10" HorizontalAlignment="Left" />
                 <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,10"
                         VerticalAlignment="Center"
                         ToolTip="For Macros simply set the same keybind to a hotkey."
@@ -88,7 +88,7 @@
                 </Border>
                 <CheckBox Content="Enable Hotkeys"
                           IsChecked="{Binding IsEnableHotkeysEnabled}"
-                          Margin="30,0,0,10" />
+                          Margin="20,0,0,10" />
                 <CheckBox Content="Block Game Actions"
                           IsChecked="{Binding IsBlockGameHotkeysEnabled}"
                           Margin="20,0,10,10" />
