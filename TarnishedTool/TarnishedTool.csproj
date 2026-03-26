@@ -344,6 +344,7 @@
         <Compile Include="Services\StateService.cs" />
         <Compile Include="Services\TravelService.cs" />
         <Compile Include="Services\UtilityService.cs" />
+        <Compile Include="Utilities\ActivateOnLaunchManager.cs" />
         <Compile Include="Utilities\AsmHelper.cs" />
         <Compile Include="Utilities\AsmLoader.cs" />
         <Compile Include="Utilities\EnumUtil.cs" />
@@ -357,6 +358,7 @@
         <Compile Include="Utilities\UpDownHelper.cs" />
         <Compile Include="Utilities\User32.cs" />
         <Compile Include="Utilities\VersionChecker.cs" />
+        <Compile Include="ViewModels\ActivateOnLaunchViewModel.cs" />
         <Compile Include="ViewModels\AdvancedViewModel.cs" />
         <Compile Include="ViewModels\ChrInsEntry.cs" />
         <Compile Include="ViewModels\ChrInsWindowViewModel.cs" />
@@ -415,6 +417,9 @@
         </Compile>
         <Compile Include="Views\Tabs\UtilityTab.xaml.cs">
           <DependentUpon>UtilityTab.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="Views\Windows\ActivateOnLaunchWindow.xaml.cs">
+          <DependentUpon>ActivateOnLaunchWindow.xaml</DependentUpon>
         </Compile>
         <Compile Include="Views\Windows\AiOverlay\AiOverlayToolbar.xaml.cs">
           <DependentUpon>AiOverlayToolbar.xaml</DependentUpon>
@@ -515,6 +520,7 @@
         <Page Include="Views\Tabs\PlayerTab.xaml" />
         <Page Include="Views\Tabs\TravelTab.xaml" />
         <Page Include="Views\Tabs\UtilityTab.xaml" />
+        <Page Include="Views\Windows\ActivateOnLaunchWindow.xaml" />
         <Page Include="Views\Windows\AiOverlay\AiOverlayToolbar.xaml" />
         <Page Include="Views\Windows\AiOverlay\CoolTimesOverlayWindow.xaml" />
         <Page Include="Views\Windows\AiOverlay\GoalsOverlayWindow.xaml" />

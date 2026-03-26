@@ -1,0 +1,321 @@
+<local:TopmostWindow x:Class="TarnishedTool.Views.Windows.ActivateOnLaunchWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
+                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                     mc:Ignorable="d"
+                     Title="Activate On Launch" Height="400" Width="450"
+                     Background="{StaticResource BackgroundBrush}"
+                     Foreground="{StaticResource TextBrush}"
+                     BorderBrush="{StaticResource BorderBrush}"
+                     WindowStyle="None"
+                     AllowsTransparency="True"
+                     ResizeMode="NoResize"
+                     WindowStartupLocation="CenterOwner">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <controls:TitleBar Title="Activate On Launch"
+                           xmlns:controls="clr-namespace:TarnishedTool.Controls" />
+
+        <Grid Grid.Row="1" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Master toggle -->
+            <CheckBox Grid.Row="0"
+                      Content="Enable Activate On Launch"
+                      IsChecked="{Binding IsEnabled}"
+                      FontWeight="SemiBold"
+                      Margin="0,0,0,10" />
+
+            <!-- Toggles Section -->
+            <Border Grid.Row="1"
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="10">
+                        
+                        <!-- FPS -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,5,10"> 
+                        <TextBlock Text="FPS"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,10,0,6" />
+                        
+
+                        <xctk:IntegerUpDown
+                            Margin="5,4.5,0,0"
+                            Width="100"
+                            Height="20"
+                            Value="{Binding LaunchFps, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Minimum="30"
+                            Maximum="360"
+                            Increment="10"
+                            TextAlignment="Center"
+                            IsEnabled="{Binding IsEnabled}"
+                            BorderBrush="#3F3F46" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,4.5,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Activates as soon as tool attaches to the game."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        
+                        <!-- Player -->
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Player"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,0,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,-3,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        <CheckBox Content="No Death" Margin="0,0,0,4" IsChecked="{Binding IsNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="No Damage" Margin="0,0,0,4" IsChecked="{Binding IsNoDamageChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="No Hit" Margin="0,0,0,4" IsChecked="{Binding IsNoHitChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Infinite Stamina" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsInfiniteStaminaChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Infinite Consumables" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsInfiniteConsumablesChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Infinite Arrows" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsInfiniteArrowsChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Infinite FP" Margin="0,0,0,4" IsChecked="{Binding IsInfiniteFpChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="One Shot" Margin="0,0,0,4" IsChecked="{Binding IsOneShotChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Infinite Poise" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsInfinitePoiseChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Silent" Margin="0,0,0,4" IsChecked="{Binding IsSilentChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Hidden" Margin="0,0,0,4" IsChecked="{Binding IsHiddenChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Faster Death" Margin="0,0,0,4" IsChecked="{Binding IsFasterDeathChecked}"  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Torrent Anywhere" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsTorrentAnywhereChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Torrent No Death" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsTorrentNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="RFBS On Load" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsRfbsOnLoadChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="No Runes From Enemies" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsNoRunesFromEnemiesChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="No Rune Loss On Death" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsNoRuneLossChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="No Rune Arc Loss On Death" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsNoRuneArcLossChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="No Time Change On Death" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsNoTimeChangeOnDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="HP Regen" Margin="0,0,0,4" IsChecked="{Binding IsHpRegenChecked}" IsEnabled="{Binding IsEnabled}" />
+                        <CheckBox Content="FP Regen" Margin="0,0,0,4" IsChecked="{Binding IsFpRegenChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        
+                        <!-- Travel -->
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Travel"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section (Except for map popups) will activate on New Game."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        <CheckBox Content="No Map Acquired Popups" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsNoMapAcquiredPopupsChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Unlock Preset Graces On New Game Start" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsUnlockPresetGracesOnStartChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Unlock Base Game Maps" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsBaseGameMapsChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Unlock DLC Maps" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsDlcMapsChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>			  
+						<CheckBox Content="Unlock Base Game Graces" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsMainGracesChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Unlock DLC Graces" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsDlcGracesChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Unlock Base Game AR Graces" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsMainArGracesChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Unlock DLC AR Graces" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsDlcArGracesChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        
+                        <!-- Enemies -->
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Enemies"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        <CheckBox Content="All No Death" Margin="0,0,0,4" IsChecked="{Binding IsAllNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="All No Damage" Margin="0,0,0,4" IsChecked="{Binding IsAllNoDamageChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="All No Hit" Margin="0,0,0,4" IsChecked="{Binding IsAllNoHitChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="All No Attack" Margin="0,0,0,4" IsChecked="{Binding IsAllNoAttackChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="All No Move" Margin="0,0,0,4" IsChecked="{Binding IsAllNoMoveChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="All Disable AI" Margin="0,0,0,4" IsChecked="{Binding IsAllDisableAiChecked}" IsEnabled="{Binding IsEnabled}" />
+                        
+                        <!-- Utility -->
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Utility"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        <CheckBox Content="No Upgrade Cost" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsNoUpgradeCostChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Open Map In Combat" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsOpenMapInCombatChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Warp In Dungeons" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsWarpInDungeonsChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Toggle 100% Drop Rate" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsDropRateChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        
+                        <!-- Event -->
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Event"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate on New Game."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        <CheckBox Content="Give Starting Flasks" Margin="0,0,0,4" IsChecked="{Binding IsStartingFlasksChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        
+                        <!-- Item -->
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Item"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
+                        <CheckBox Content="Spawn Weapon At Start" Margin="0,0,0,4" IsChecked="{Binding IsUnlockWeaponOnStartChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Spawn Loadout At Start" Margin="0,0,0,4" IsChecked="{Binding IsUnlockLoadoutOnStartChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        
+                        
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</local:TopmostWindow>

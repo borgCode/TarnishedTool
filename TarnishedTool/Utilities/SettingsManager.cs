@@ -50,7 +50,7 @@ public class SettingsManager
     public double ResistancesWindowWidth { get; set; }
     public double ResistancesWindowLeft { get; set; }
     public double ResistancesWindowTop { get; set; }
-    
+
     [DefaultValue(1.0)] public double DefensesWindowScaleX { get; set; }
     [DefaultValue(1.0)] public double DefensesWindowScaleY { get; set; }
     public double DefensesWindowOpacity { get; set; }
@@ -116,6 +116,11 @@ public class SettingsManager
 
     public double ParamEditorWindowWidth { get; set; }
     public double ParamEditorWindowHeight { get; set; }
+
+    // Activate on Launch
+
+    public bool ActivateOnLaunchEnabled { get; set; }
+    public string ActivateOnLaunchActionIds { get; set; } = "";
 
 
     private static string SettingsPath => Path.Combine(
@@ -188,6 +193,8 @@ public class SettingsManager
                         double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var d) ? d : 0.0,
                     { } t when t == typeof(float) =>
                         float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var f) ? f : 0f,
+                    { } t when t == typeof(int) =>
+                        int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i) ? i : 0,
                     { } t when t == typeof(bool) =>
                         bool.TryParse(value, out var b) && b,
                     { } t when t == typeof(string) => value,

@@ -12,7 +12,7 @@ public class HotkeyManager
 {
     private readonly IMemoryService _memoryService;
     private readonly LowLevelKeyboardHook _keyboardHook = new();
-    private readonly Dictionary<string, Keys> _hotkeyMappings = new();
+    private readonly Dictionary<Keys, List<string>> _hotkeyMappings = new();
     private readonly Dictionary<string, Action> _actions = new();
 
     public HotkeyManager(IMemoryService memoryService)
@@ -45,13 +45,14 @@ public class HotkeyManager
         if (!IsGameFocused()) return;
         foreach (var mapping in _hotkeyMappings)
         {
-            string actionId = mapping.Key;
-            Keys keys = mapping.Value;
-            if (!e.Keys.Are(keys.Values.ToArray())) continue;
+            if (!e.Keys.Are(mapping.Key.Values.ToArray())) continue;
             if (_keyboardHook.Handling) e.IsHandled = true;
-            if (_actions.TryGetValue(actionId, out var action))
+            foreach (var actionId in mapping.Value)
             {
-                Application.Current.Dispatcher.BeginInvoke(action); 
+                if (_actions.TryGetValue(actionId, out var action))
+                {
+                    Application.Current.Dispatcher.BeginInvoke(action);
+                }
             }
 
             break;
@@ -69,24 +70,48 @@ public class HotkeyManager
 
     public void SetHotkey(string actionId, Keys keys)
     {
-        _hotkeyMappings[actionId] = keys;
+        ClearHotkey(actionId);
+
+        if (!_hotkeyMappings.TryGetValue(keys, out var actions))
+        {
+            actions = new List<string>();
+            _hotkeyMappings[keys] = actions;
+        }
+
+        actions.Add(actionId);
         SaveHotkeys();
     }
 
     public void ClearHotkey(string actionId)
     {
-        _hotkeyMappings.Remove(actionId);
+        var toRemove = _hotkeyMappings
+            .FirstOrDefault(m => m.Value.Contains(actionId));
+
+        if (toRemove.Key == null) return;
+
+        toRemove.Value.Remove(actionId);
+        if (toRemove.Value.Count == 0)
+            _hotkeyMappings.Remove(toRemove.Key);
+
         SaveHotkeys();
     }
 
     public Keys GetHotkey(string actionId)
     {
-        return _hotkeyMappings.TryGetValue(actionId, out var keys) ? keys : null;
+        foreach (var mapping in _hotkeyMappings)
+        {
+            if (mapping.Value.Contains(actionId))
+                return mapping.Key;
+        }
+
+        return null;
     }
 
     public string GetActionIdByKeys(Keys keys)
     {
-        return _hotkeyMappings.FirstOrDefault(x => x.Value == keys).Key;
+        return _hotkeyMappings.TryGetValue(keys, out var actions)
+            ? actions.FirstOrDefault()
+            : null;
     }
 
     public void SaveHotkeys()
@@ -94,14 +119,15 @@ public class HotkeyManager
         try
         {
             var mappingPairs = new List<string>();
-
             foreach (var mapping in _hotkeyMappings)
             {
-                mappingPairs.Add($"{mapping.Key}={mapping.Value}");
+                foreach (var actionId in mapping.Value)
+                {
+                    mappingPairs.Add($"{actionId}={mapping.Key}");
+                }
             }
 
             SettingsManager.Default.HotkeyActionIds = string.Join(";", mappingPairs);
-
             SettingsManager.Default.Save();
         }
         catch (Exception ex)
@@ -115,23 +141,24 @@ public class HotkeyManager
         try
         {
             _hotkeyMappings.Clear();
-
             string mappingsString = SettingsManager.Default.HotkeyActionIds;
-
             if (!string.IsNullOrEmpty(mappingsString))
             {
                 string[] pairs = mappingsString.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
                 foreach (string pair in pairs)
                 {
                     int separatorIndex = pair.IndexOf('=');
-                    if (separatorIndex > 0)
+                    if (separatorIndex <= 0) continue;
+                    string actionId = pair.Substring(0, separatorIndex);
+                    string keyValue = pair.Substring(separatorIndex + 1);
+                    var keys = Keys.Parse(keyValue);
+                    if (!_hotkeyMappings.TryGetValue(keys, out var actions))
                     {
-                        string actionId = pair.Substring(0, separatorIndex);
-                        string keyValue = pair.Substring(separatorIndex + 1);
-
-                        _hotkeyMappings[actionId] = Keys.Parse(keyValue);
+                        actions = new List<string>();
+                        _hotkeyMappings[keys] = actions;
                     }
+
+                    actions.Add(actionId);
                 }
             }
         }
@@ -148,6 +175,4 @@ public class HotkeyManager
     }
 
     public void SetKeyboardHandling(bool isEnabled) => _keyboardHook.Handling = isEnabled;
-
-
 }

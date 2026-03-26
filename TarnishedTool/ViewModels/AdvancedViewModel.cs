@@ -218,6 +218,7 @@ public class AdvancedViewModel : BaseViewModel
 
         _paramEditorWindow = new ParamEditorWindow
         {
+            Title = "Param Editor",
             DataContext = _paramEditorViewModel
         };
 
