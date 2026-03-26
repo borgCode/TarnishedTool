@@ -33,6 +33,8 @@ public class SettingsManager
     public bool DisableAchievements { get; set; }
     public bool NoLogo { get; set; }
     public bool MuteMusic { get; set; }
+    public bool HasOriginalMusicVolume { get; set; }
+    public byte OriginalMusicVolume { get; set; }
     [DefaultValue(true)] public bool ResistancesShowPoise { get; set; }
     [DefaultValue(true)] public bool ResistancesShowSleep { get; set; }
     [DefaultValue(true)] public bool ResistancesShowPoison { get; set; }
@@ -180,6 +182,8 @@ public class SettingsManager
 
                 object parsed = prop.PropertyType switch
                 {
+                    { } t when t == typeof(byte) =>
+                        byte.TryParse(value, out var by) ? by : (byte)0,
                     { } t when t == typeof(double) =>
                         double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var d) ? d : 0.0,
                     { } t when t == typeof(float) =>
