@@ -40,6 +40,22 @@
                     <CheckBox Content="Mute Music"
                               IsChecked="{Binding IsMuteMusicEnabled}"
                               Margin="0,0,0,0" />
+                    <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Moves the music slider all the way to 0.&#x0a;The initial slider value when you mute is saved and reverted on unmute."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
                     <StackPanel Orientation="Horizontal">
                         <CheckBox Content="Hotkey Reminder"
                                   IsChecked="{Binding IsHotkeyReminderEnabled}"
