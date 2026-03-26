@@ -980,18 +980,18 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,40001B59,Agheel&apos;s Flame,99,600
-        ///0,40001B1C,Ancient Dragons&apos; Lightning Spear,99,600
-        ///0,40001AFE,Ancient Dragons&apos; Lightning Strike,99,600
-        ///1,401E9E84,Aspects of the Crucible: Bloom,99,600
-        ///0,40001D60,Aspects of the Crucible: Breath,99,600
-        ///0,40001D56,Aspects of the Crucible: Horns,99,600
-        ///0,40001D4C,Aspects of the Crucible: Tail,99,600
-        ///1,401E9E7A,Aspects of the Crucible: Thorns,99,600
-        ///0,4000196E,Assassin&apos;s Approach,99,600
-        ///0,400018BA,Barrier of Gold,99,600
-        ///1,401E9FE2,Bayle&apos;s Flame Lightning,99,600
-        ///1,401 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 0,40001B59,Agheel&apos;s Flame,1,600
+        ///0,40001B1C,Ancient Dragons&apos; Lightning Spear,1,600
+        ///0,40001AFE,Ancient Dragons&apos; Lightning Strike,1,600
+        ///1,401E9E84,Aspects of the Crucible: Bloom,1,600
+        ///0,40001D60,Aspects of the Crucible: Breath,1,600
+        ///0,40001D56,Aspects of the Crucible: Horns,1,600
+        ///0,40001D4C,Aspects of the Crucible: Tail,1,600
+        ///1,401E9E7A,Aspects of the Crucible: Thorns,1,600
+        ///0,4000196E,Assassin&apos;s Approach,1,600
+        ///0,400018BA,Barrier of Gold,1,600
+        ///1,401E9FE2,Bayle&apos;s Flame Lightning,1,600
+        ///1,401E9FD8,Bayle [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Incantations {
             get {
@@ -2876,10 +2876,10 @@ namespace TarnishedTool.Properties {
         ///0,40000187,Beastlure Pot,10,600
         ///0,40000276,Cursed-Blood Pot,10,600
         ///1,401E8764,Eternal Sleep Pot,10,600
-        ///0,4000014A,Fetid Pot,10,600
-        ///0,4000012C,Fire Pot,10,600
+        ///0,4000014A,Fetid Pot,20,600
+        ///0,4000012C,Fire Pot,20,600
         ///0,40000168,Freezing Pot,10,600
-        ///1,401E8746,Frenzied Flame Pot,10,600
+        ///1,401E8746,Frenzied Flame Pot,20,600
         ///0,4000012E,Giantsflame Fire Pot,10,600
         ///1,401E85CA,Hefty Fetid Pot,10,600
         ///1,401E85AC,Hefty Fire Po [rest of string was truncated]&quot;;.
@@ -3041,21 +3041,22 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 0,4000114F,Adula&apos;s Moonblade,99,600
-        ///0,400011F8,Ambush Shard,99,600
-        ///0,40001389,Ancient Death Rancor,99,600
-        ///1,401E96DC,Blades of Stone,99,600
-        ///0,4000132E,Briars of Punishment,99,600
-        ///0,40001324,Briars of Sin,99,600
-        ///0,40000FF0,Cannon of Haima,99,600
-        ///0,4000114E,Carian Greatsword,99,600
-        ///0,400010CD,Carian Phalanx,99,600
-        ///0,40001162,Carian Piercer,99,600
-        ///0,40001220,Carian Retaliation,99,600
-        ///0,40001158,Carian Slicer,99,600
-        ///1,401EA17C,Cherishing Fingers,99,600
-        ///0,40001271,Collapsing Stars,99,600
-        ///0,40000FB5 [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to 0,4000114F,Adula&apos;s Moonblade,1,600
+        ///0,400011F8,Ambush Shard,1,600
+        ///0,40001389,Ancient Death Rancor,1,600
+        ///1,401E96DC,Blades of Stone,1,600
+        ///0,4000132E,Briars of Punishment,1,600
+        ///0,40001324,Briars of Sin,1,600
+        ///0,40000FF0,Cannon of Haima,1,600
+        ///0,4000114E,Carian Greatsword,1,600
+        ///0,400010CD,Carian Phalanx,1,600
+        ///0,40001162,Carian Piercer,1,600
+        ///0,40001220,Carian Retaliation,1,600
+        ///0,40001158,Carian Slicer,1,600
+        ///1,401EA17C,Cherishing Fingers,1,600
+        ///0,40001271,Collapsing Stars,1,600
+        ///0,40000FB5,Comet,1,600
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Sorceries {
             get {
