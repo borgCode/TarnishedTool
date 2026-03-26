@@ -165,3 +165,4 @@ This tool offers plenty of features such as:
 - [Oppai](https://www.youtube.com/channel/UCFfKUbX6L8a3IO4fbWEIlYw) - For providing lists of graces needed for All Remembrances runs.
 - [Bender](https://www.twitch.tv/benderzgreat) - For lots of thorough testing and feedback
 - [axd1x8a](https://github.com/axd1x8a), [nex3](https://github.com/nex3) and [ndahn](https://github.com/ndahn) - For working on Elden Ring's ParamDefs and [vawser](https://github.com/vawser) for both working on the ParamDefs as well as giving permissions to borrow them from [Smithbox](https://github.com/vawser/Smithbox).
+- [ooloh](https://www.youtube.com/@ooloh/) - For adding Dusk to Set Time.
