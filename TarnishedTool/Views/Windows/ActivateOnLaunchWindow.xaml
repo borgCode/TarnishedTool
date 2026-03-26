@@ -45,7 +45,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
                     <StackPanel Margin="10">
-
+                        
                         <!-- FPS -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,5,10"> 
                         <TextBlock Text="FPS"
@@ -54,6 +54,7 @@
                                    VerticalAlignment="Center"
                                    Foreground="{StaticResource AccentBrush}"
                                    Margin="0,10,0,6" />
+                        
 
                         <xctk:IntegerUpDown
                             Margin="5,4.5,0,0"
@@ -66,14 +67,48 @@
                             TextAlignment="Center"
                             IsEnabled="{Binding IsEnabled}"
                             BorderBrush="#3F3F46" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,4.5,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Activates as soon as tool attaches to the game."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
                         </StackPanel>
                         
                         <!-- Player -->
+                        <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Player"
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}"
                                    Margin="0,0,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,-3,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
                         <CheckBox Content="No Death" Margin="0,0,0,4" IsChecked="{Binding IsNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="No Damage" Margin="0,0,0,4" IsChecked="{Binding IsNoDamageChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="No Hit" Margin="0,0,0,4" IsChecked="{Binding IsNoHitChecked}" IsEnabled="{Binding IsEnabled}"/>
@@ -108,15 +143,33 @@
                         <CheckBox Content="FP Regen" Margin="0,0,0,4" IsChecked="{Binding IsFpRegenChecked}" IsEnabled="{Binding IsEnabled}"/>
                         
                         <!-- Travel -->
+                        <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Travel"
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}"
                                    Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section (Except for map popups) will activate on New Game."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
                         <CheckBox Content="No Map Acquired Popups" Margin="0,0,0,4"
                                   IsChecked="{Binding IsNoMapAcquiredPopupsChecked}"
                                   IsEnabled="{Binding IsEnabled}"/>
-                        <CheckBox Content="Unlock Preset Graces On Start" Margin="0,0,0,4"
+                        <CheckBox Content="Unlock Preset Graces On New Game Start" Margin="0,0,0,4"
                                   IsChecked="{Binding IsUnlockPresetGracesOnStartChecked}"
                                   IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="Unlock Base Game Maps" Margin="0,0,0,4"
@@ -139,11 +192,29 @@
                                   IsEnabled="{Binding IsEnabled}"/>
                         
                         <!-- Enemies -->
+                        <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Enemies"
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}"
                                    Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
                         <CheckBox Content="All No Death" Margin="0,0,0,4" IsChecked="{Binding IsAllNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="All No Damage" Margin="0,0,0,4" IsChecked="{Binding IsAllNoDamageChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="All No Hit" Margin="0,0,0,4" IsChecked="{Binding IsAllNoHitChecked}" IsEnabled="{Binding IsEnabled}"/>
@@ -152,11 +223,29 @@
                         <CheckBox Content="All Disable AI" Margin="0,0,0,4" IsChecked="{Binding IsAllDisableAiChecked}" IsEnabled="{Binding IsEnabled}" />
                         
                         <!-- Utility -->
+                        <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Utility"
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}"
                                    Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
                         <CheckBox Content="No Upgrade Cost" Margin="0,0,0,4"
                                   IsChecked="{Binding IsNoUpgradeCostChecked}"
                                   IsEnabled="{Binding IsEnabled}"/>
@@ -171,19 +260,55 @@
                                   IsEnabled="{Binding IsEnabled}"/>
                         
                         <!-- Event -->
+                        <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Event"
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}"
-                                   Margin="0,0,0,6" />
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate on New Game."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
                         <CheckBox Content="Give Starting Flasks" Margin="0,0,0,4" IsChecked="{Binding IsStartingFlasksChecked}" IsEnabled="{Binding IsEnabled}"/>
                         
                         <!-- Item -->
+                        <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Item"
                                    FontSize="13"
                                    FontWeight="Bold"
                                    Foreground="{StaticResource AccentBrush}"
-                                   Margin="0,0,0,6" />
+                                   Margin="0,14,0,6" />
+                        <Border
+                            Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="5,10,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Features in this section will activate as soon as the tool launches."
+                            ToolTipService.InitialShowDelay='100'>
+                            <TextBlock Text="i"
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="10" />
+                        </Border>
+                        </StackPanel>
                         <CheckBox Content="Spawn Weapon At Start" Margin="0,0,0,4" IsChecked="{Binding IsUnlockWeaponOnStartChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="Spawn Loadout At Start" Margin="0,0,0,4" IsChecked="{Binding IsUnlockLoadoutOnStartChecked}" IsEnabled="{Binding IsEnabled}"/>
                         

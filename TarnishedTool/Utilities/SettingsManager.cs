@@ -118,49 +118,7 @@ public class SettingsManager
     // Activate on Launch
 
     public bool ActivateOnLaunchEnabled { get; set; }
-    public bool AolNoDeath { get; set; }
-    public bool AolNoDamage { get; set; }
-    public bool AolNoHit { get; set; }
-    public bool AolInfiniteStamina { get; set; }
-    public bool AolInfiniteConsumables { get; set; }
-    public bool AolInfiniteArrows { get; set; }
-    public bool AolInfiniteFp { get; set; }
-    public bool AolOneShot { get; set; }
-    public bool AolInfinitePoise { get; set; }
-    public bool AolSilent { get; set; }
-    public bool AolHidden { get; set; }
-    public bool AolFasterDeath { get; set; }
-    public bool AolTorrentAnywhere { get; set; }
-    public bool AolTorrentNoDeath { get; set; }
-    public bool AolRfbsOnLoad { get; set; }
-    public bool AolNoRunesFromEnemies { get; set; }
-    public bool AolNoRuneLoss { get; set; }
-    public bool AolNoRuneArcLoss { get; set; }
-    public bool AolNoTimeChangeOnDeath { get; set; }
-    public bool AolHpRegen { get; set; }
-    public bool AolFpRegen { get; set; }
-    public bool AolAllNoDeath { get; set; }
-    public bool AolAllNoDamage { get; set; }
-    public bool AolAllNoHit { get; set; }
-    public bool AolAllNoAttack { get; set; }
-    public bool AolAllNoMove { get; set; }
-    public bool AolAllDisableAi { get; set; }
-    public bool AolNoUpgradeCost { get; set; }
-    public bool AolOpenMapInCombat { get; set; }
-    public bool AolWarpInDungeons { get; set; }
-    public bool AolDropRate { get; set; }
-    [DefaultValue(60)] public int AolFps { get; set; }
-    public bool AolStartingFlasks { get; set; }
-    public bool AolNoMapAcquiredPopups { get; set; }
-    public bool AolUnlockPresetGracesOnStart { get; set; }
-    public bool AolUnlockWeaponOnStart { get; set; }
-    public bool AolUnlockLoadoutOnStart { get; set; }
-    public bool AolBaseGameMaps { get; set; }
-    public bool AolDlcMaps { get; set; }
-    public bool AolMainGraces { get; set; }
-    public bool AolDlcGraces { get; set; }
-    public bool AolMainArGraces { get; set; }
-    public bool AolDlcArGraces { get; set; }
+    public string ActivateOnLaunchActionIds { get; set; } = "";
 
 
     private static string SettingsPath => Path.Combine(
