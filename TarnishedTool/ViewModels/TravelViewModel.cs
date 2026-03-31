@@ -236,7 +236,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.WarpToGrace, () => GraceWarp());
             _hotkeyManager.RegisterAction(HotkeyActions.WarpToBoss, () =>  BossWarp());
             _hotkeyManager.RegisterAction(HotkeyActions.WarpToCustomLocation,  () => CustomWarp());
-            _hotkeyManager.RegisterAction(HotkeyActions.RestOnWarp,  () => IsRestOnCustomWarpEnabled = !IsRestOnCustomWarpEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.RestOnWarp,  () => IsRestOnWarpEnabled = !IsRestOnWarpEnabled);
         }
 
         private void OnGameLoaded()

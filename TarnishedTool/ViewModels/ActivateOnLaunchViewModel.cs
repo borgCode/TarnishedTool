@@ -56,7 +56,6 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         if (IsSilentChecked) _playerViewModel.IsSilentEnabled = true;
         if (IsHiddenChecked) _playerViewModel.IsHiddenEnabled = true;
         if (IsFasterDeathChecked) _playerViewModel.IsFasterDeathEnabled = true;
-        if (IsTorrentAnywhereChecked) _playerViewModel.IsTorrentAnywhereEnabled = true;
         if (IsTorrentNoDeathChecked) _playerViewModel.IsTorrentNoDeathEnabled = true;
         if (IsRfbsOnLoadChecked) _playerViewModel.IsSetRfbsOnLoadEnabled = true;
         if (IsNoRunesFromEnemiesChecked) _playerViewModel.IsNoRuneGainEnabled = true;
@@ -69,6 +68,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         // Travel
         if (IsNoMapAcquiredPopupsChecked) _travelViewModel.IsNoMapAcquiredPopupsEnabled = true;
         if (IsUnlockPresetGracesOnStartChecked) _travelViewModel.IsAutoUnlockPresetEnabled = true;
+        if (IsRestOnWarpChecked) _travelViewModel.IsRestOnWarpEnabled = true;
 
         // Enemies 
         if (IsAllNoDeathChecked) _enemyViewModel.IsNoDeathEnabled = true;
@@ -77,6 +77,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         if (IsAllNoAttackChecked) _enemyViewModel.IsNoAttackEnabled = true;
         if (IsAllNoMoveChecked) _enemyViewModel.IsNoMoveEnabled = true;
         if (IsAllDisableAiChecked) _enemyViewModel.IsDisableAiEnabled = true;
+        if (IsRestOnReviveChecked) _enemyViewModel.IsRestOnReviveEnabled = true;
 
         // Utility 
         if (IsNoUpgradeCostChecked) _utilityViewModel.IsNoUpgradeCostEnabled = true;
@@ -142,6 +143,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         // FPS
         if (!IsEnabled) return;
         if (LaunchFps > 0) _utilityViewModel.Fps = LaunchFps;
+        if (IsTorrentAnywhereChecked) _playerViewModel.IsTorrentAnywhereEnabled = true;
     }
     
     
@@ -174,11 +176,15 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         _isAllNoAttackChecked = Get(nameof(IsAllNoAttackChecked));
         _isAllNoMoveChecked = Get(nameof(IsAllNoMoveChecked));
         _isAllDisableAiChecked = Get(nameof(IsAllDisableAiChecked));
+        _isRestOnReviveChecked = Get(nameof(IsRestOnReviveChecked));
+        
         _isNoUpgradeCostChecked = Get(nameof(IsNoUpgradeCostChecked));
         _isOpenMapInCombatChecked = Get(nameof(IsOpenMapInCombatChecked));
         _isWarpInDungeonsChecked = Get(nameof(IsWarpInDungeonsChecked));
         _isDropRateChecked = Get(nameof(IsDropRateChecked));
         _isStartingFlasksChecked = Get(nameof(IsStartingFlasksChecked));
+
+        _isRestOnWarpChecked = Get(nameof(IsRestOnWarpChecked));
         _isNoMapAcquiredPopupsChecked = Get(nameof(IsNoMapAcquiredPopupsChecked));
         _isUnlockPresetGracesOnStartChecked = Get(nameof(IsUnlockPresetGracesOnStartChecked));
         _isBaseGameMapsChecked = Get(nameof(IsBaseGameMapsChecked));
@@ -187,8 +193,10 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         _isDlcGracesChecked = Get(nameof(IsDlcGracesChecked));
         _isMainArGracesChecked = Get(nameof(IsMainArGracesChecked));
         _isDlcArGracesChecked = Get(nameof(IsDlcArGracesChecked));
+        
         _isUnlockWeaponOnStartChecked = Get(nameof(IsUnlockWeaponOnStartChecked));
         _isUnlockLoadoutOnStartChecked = Get(nameof(IsUnlockLoadoutOnStartChecked));
+        
         _launchFps = _aol.GetInt(nameof(LaunchFps), defaultValue: 60);
     }
 
@@ -511,6 +519,17 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         }
     }
 
+    private bool _isRestOnReviveChecked;
+
+    public bool IsRestOnReviveChecked
+    {
+        get => _isRestOnReviveChecked;
+        set
+        {
+            if (SetProperty (ref _isRestOnReviveChecked, value)) Set (nameof(IsRestOnReviveChecked), value);
+        }
+    }
+
     // Utility
     private bool _isNoUpgradeCostChecked;
 
@@ -714,6 +733,17 @@ public class ActivateOnLaunchViewModel : BaseViewModel
 
                 Set(nameof(IsDlcArGracesChecked), value);
             }
+        }
+    }
+    
+    private bool _isRestOnWarpChecked;
+
+    public bool IsRestOnWarpChecked
+    {
+        get => _isRestOnWarpChecked;
+        set
+        {
+            if (SetProperty (ref _isRestOnWarpChecked, value)) Set (nameof(IsRestOnWarpChecked), value);
         }
     }
 
