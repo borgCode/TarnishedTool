@@ -64,6 +64,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         if (IsNoTimeChangeOnDeathChecked) _playerViewModel.IsNoTimePassOnDeathEnabled = true;
         if (IsHpRegenChecked) _playerViewModel.IsHotEnabled = true;
         if (IsFpRegenChecked) _playerViewModel.IsFpRegenEnabled = true;
+        if (IsTorrentAnywhereChecked) _playerViewModel.IsTorrentAnywhereEnabled = true;
 
         // Travel
         if (IsNoMapAcquiredPopupsChecked) _travelViewModel.IsNoMapAcquiredPopupsEnabled = true;
@@ -143,7 +144,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         // FPS
         if (!IsEnabled) return;
         if (LaunchFps > 0) _utilityViewModel.Fps = LaunchFps;
-        if (IsTorrentAnywhereChecked) _playerViewModel.IsTorrentAnywhereEnabled = true;
+        
     }
     
     

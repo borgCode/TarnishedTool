@@ -727,6 +727,7 @@ namespace TarnishedTool.ViewModels
         private void OnFadedIn()
         {
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
+            if (IsTorrentAnywhereEnabled) _playerService.ToggleTorrentAnywhere(true);
             if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
             if (IsNoHitEnabled) _playerService.ToggleNoHit(true);

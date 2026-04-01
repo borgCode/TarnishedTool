@@ -156,7 +156,7 @@
                             Height="12"
                             Margin="5,10,0,0"
                             VerticalAlignment="Center"
-                            ToolTip="Features in this section (Except for map popups) will activate on New Game."
+                            ToolTip="Features in this section will activate on New Game.&#x0a;Map Popups and Rest On Boss Warp will activate on tool launch."
                             ToolTipService.InitialShowDelay='100'>
                             <TextBlock Text="i"
                                        Foreground="White"
