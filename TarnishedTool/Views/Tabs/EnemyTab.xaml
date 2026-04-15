@@ -541,11 +541,18 @@
                         Grid.ColumnSpan="2">
                     <StackPanel Margin="10">
 
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="10,0,0,5"
+                                    Visibility="{Binding SelectedBossStatus, 
+                             Converter={StaticResource NullToVisibilityConverter}}">
+                            <TextBlock Text="Status: " FontWeight="SemiBold" FontSize="12" />
+                            <TextBlock Text="{Binding SelectedBossStatus}" FontWeight="Bold" FontSize="12" Foreground="{Binding SelectedBossStatusColor}" />
+                        </StackPanel>
                         <Grid Margin="10,0,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
@@ -568,7 +575,7 @@
                                     Command="{Binding ReviveAllBossesAsFirstEncounterCommand}"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Margin="0,3, 20, 2" />
-                            <CheckBox Grid.Row="1" Grid.Column="2"  Content="Rest on Revive"
+                            <CheckBox Grid.Row="1" Grid.Column="2" Content="Rest on Revive"
                                       IsChecked="{Binding IsRestOnReviveEnabled}"
                                       Margin="0,2" />
                         </Grid>

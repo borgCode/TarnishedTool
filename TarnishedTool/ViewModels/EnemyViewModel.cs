@@ -94,6 +94,14 @@ public class EnemyViewModel : BaseViewModel
             DataLoader.GetBossRevives(),
             (bossRevive, search) => bossRevive.BossName.ToLower().Contains(search) ||
                                     bossRevive.Area.ToLower().Contains(search));
+        BossRevives.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName != nameof(BossRevives.SelectedItem)) return;
+            SelectedBossStatus = AreOptionsEnabled && BossRevives.SelectedItem != null
+                ? GetBossStatus(BossRevives.SelectedItem)
+                : string.Empty;
+            SelectedBossStatusColor = GetBossStatusColor(SelectedBossStatus);
+        };
 
         SelectedAct = Acts.FirstOrDefault();
 
@@ -327,11 +335,19 @@ public class EnemyViewModel : BaseViewModel
             _shouldSetNight = false;
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
         }
+
+        if (BossRevives.SelectedItem != null)
+        {
+            SelectedBossStatus = GetBossStatus(BossRevives.SelectedItem);
+            SelectedBossStatusColor = GetBossStatusColor(SelectedBossStatus);
+        }
     }
 
     private void OnGameNotLoaded()
     {
         AreOptionsEnabled = false;
+        SelectedBossStatus = string.Empty;
+        SelectedBossStatusColor = "White";
         IsLionMainBossPhaseLockEnabled = false;
         IsLionMiniBossPhaseLockEnabled = false;
     }
@@ -630,10 +646,10 @@ public class EnemyViewModel : BaseViewModel
         }
 
         MsgBox.Show(
-            "Draconic Tree Sentinel can only be fought in 'Leyndell, Royal Capital' and cannot be revived as he doesn't exist in the Ashen Capital Map.",
-            "Cannot Revive Boss");
+            "It seems that the user has defeated Maliketh and is trying to revive Draconic Tree Sentinel.\n Draconic Tree Sentinel can normally only be fought in 'Leyndell, Royal Capital' as he doesn't exist in the Ashen Capital Map.\nHowever, the tool will try to revive him either way.",
+            "Boss Revive Warning");
 
-        return false;
+        return true;
     }
 
     private BossRevive ShowBossSelectionDialog(List<BossRevive> bosses)
@@ -664,6 +680,54 @@ public class EnemyViewModel : BaseViewModel
         foreach (var flag in bossRevive.BossFlags)
             _eventService.SetEvent(flag.EventId, flag.SetValue);
     }
+
+    private string _selectedBossStatus;
+
+    public string SelectedBossStatus
+    {
+        get => _selectedBossStatus;
+        set => SetProperty(ref _selectedBossStatus, value);
+    }
+
+    private string _selectedBossStatusColor = "White";
+
+    public string SelectedBossStatusColor
+    {
+        get => _selectedBossStatusColor;
+        set => SetProperty(ref _selectedBossStatusColor, value);
+    }
+
+    private string GetBossStatus(BossRevive bossRevive)
+    {
+        if (bossRevive?.BossFlags == null || bossRevive.BossFlags.Count == 0)
+            return string.Empty;
+
+        var firstBossFlagDead = _eventService.GetEvent(bossRevive.BossFlags[0].EventId);
+
+        if (firstBossFlagDead)
+            return "Dead";
+
+        bool hasFirstEncounterFlags = bossRevive.FirstEncounterFlags != null &&
+                                      bossRevive.FirstEncounterFlags.Count > 0;
+
+        if (hasFirstEncounterFlags)
+        {
+            var allFirstEncounterFlagsTrue = bossRevive.FirstEncounterFlags
+                .All(f => _eventService.GetEvent(f.EventId));
+
+            return allFirstEncounterFlagsTrue ? "Alive" : "Alive, First Encounter";
+        }
+
+        return "Alive";
+    }
+
+    private string GetBossStatusColor(string status) => status switch
+    {
+        "Dead" => "#e74c3c",
+        "Alive" => "#2ecc71",
+        "Alive, First Encounter" => "#2ecc71",
+        _ => "White"
+    };
 
     private void SetInitializeDead(List<uint> npcParamIds)
     {
