@@ -129,7 +129,7 @@ public class EnemyViewModel : BaseViewModel
 
     #region Properties
 
-    private bool _areOptionsEnabled = true;
+    private bool _areOptionsEnabled;
 
     public bool AreOptionsEnabled
     {
