@@ -646,7 +646,7 @@ public class EnemyViewModel : BaseViewModel
         }
 
         MsgBox.Show(
-            "It seems that the user has defeated Maliketh and is trying to revive Draconic Tree Sentinel.\n Draconic Tree Sentinel can normally only be fought in 'Leyndell, Royal Capital' as he doesn't exist in the Ashen Capital Map.\nHowever, the tool will try to revive him either way.",
+            "EventID 900: Player is in 'Leyndell, Ashen Capital'.\nDraconic Tree Sentinel can only be fought in 'Leyndell, Royal Captial', reviving may not work as expected.",
             "Boss Revive Warning");
 
         return true;
