@@ -100,7 +100,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Warp To Grace", HotkeyActions.WarpToGrace),
                 new("Warp To Boss", HotkeyActions.WarpToBoss),
                 new("Warp To Custom Location", HotkeyActions.WarpToCustomLocation),
-                new("Toggle Rest On Warp", HotkeyActions.RestOnWarp),
+                new("Rest On Boss Warp", HotkeyActions.RestOnWarp),
             ],
             ["Enemies"] =
             [

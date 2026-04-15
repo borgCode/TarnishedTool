@@ -507,9 +507,9 @@ namespace TarnishedTool.Properties {
         ///0,Limgrave,Black Knife Assassin,504037376,-171.94|177.79|23.30|1,1.47
         ///0,Limgrave,Bloodhound Knight Darriwil,1009525504,-15.51|104.36|-112.79|1,0.8
         ///0,Limgrave,Crucible Knight,1009394944,-68.52|158.16|45.94|1,-0.83
-        ///0,Limgrave,Crystalian,537001984,23.46|112.06|-3.61|1,3.13
         ///0,Limgrave,Deathbird,1009395200,90.76|199.90|95.32|1,-0.63
-        ///0,Limgrave,Demi-Human Chiefs,521076 [rest of string was truncated]&quot;;.
+        ///0,Limgrave,Demi-Human Chiefs,521076736,20.10|-26.18|-72.41|1,-0.02
+        ///0,Limgrave,Erdtree Burial  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string BossWarps {
             get {

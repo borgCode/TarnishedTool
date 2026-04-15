@@ -156,7 +156,7 @@
                             Height="12"
                             Margin="5,10,0,0"
                             VerticalAlignment="Center"
-                            ToolTip="Features in this section (Except for map popups) will activate on New Game."
+                            ToolTip="Features in this section will activate on New Game.&#x0a;Map Popups and Rest On Boss Warp will activate on tool launch."
                             ToolTipService.InitialShowDelay='100'>
                             <TextBlock Text="i"
                                        Foreground="White"
@@ -168,6 +168,9 @@
                         </StackPanel>
                         <CheckBox Content="No Map Acquired Popups" Margin="0,0,0,4"
                                   IsChecked="{Binding IsNoMapAcquiredPopupsChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Rest On Boss Warp" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsRestOnWarpChecked}"
                                   IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="Unlock Preset Graces On New Game Start" Margin="0,0,0,4"
                                   IsChecked="{Binding IsUnlockPresetGracesOnStartChecked}"
@@ -215,6 +218,7 @@
                                        FontSize="10" />
                         </Border>
                         </StackPanel>
+                        <CheckBox Content="Rest On Revive" Margin="0,0,0,4" IsChecked="{Binding IsRestOnReviveChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="All No Death" Margin="0,0,0,4" IsChecked="{Binding IsAllNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="All No Damage" Margin="0,0,0,4" IsChecked="{Binding IsAllNoDamageChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="All No Hit" Margin="0,0,0,4" IsChecked="{Binding IsAllNoHitChecked}" IsEnabled="{Binding IsEnabled}"/>
