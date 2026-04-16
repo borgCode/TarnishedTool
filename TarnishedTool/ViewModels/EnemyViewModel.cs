@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.GameIds;
@@ -39,6 +40,16 @@ public class EnemyViewModel : BaseViewModel
     public const int DeathblightAnimationId = 20003;
     public const int FrostAnimationId = 20004;
     public const int WindAnimationId = 20006;
+
+    private const string BossStatusDead = "Dead";
+    private const string BossStatusAlive = "Alive";
+    private const string BossStatusFirstEncounter = "Alive, First Encounter";
+
+    private static readonly SolidColorBrush BossStatusDeadBrush =
+        (SolidColorBrush)new BrushConverter().ConvertFrom("#e74c3c")!;
+    private static readonly SolidColorBrush BossStatusAliveBrush =
+        (SolidColorBrush)new BrushConverter().ConvertFrom("#2ecc71")!;
+    private static readonly SolidColorBrush BossStatusDefaultBrush = Brushes.White;
 
     public const int NpcParamTableIndex = 6;
     public const int NpcParamSlotIndex = 0;
@@ -323,6 +334,22 @@ public class EnemyViewModel : BaseViewModel
         set => SetProperty(ref _selectedAct, value);
     }
 
+    private string _selectedBossStatus;
+
+    public string SelectedBossStatus
+    {
+        get => _selectedBossStatus;
+        set => SetProperty(ref _selectedBossStatus, value);
+    }
+
+    private SolidColorBrush _selectedBossStatusColor = BossStatusDefaultBrush;
+
+    public SolidColorBrush SelectedBossStatusColor
+    {
+        get => _selectedBossStatusColor;
+        set => SetProperty(ref _selectedBossStatusColor, value);
+    }
+
     #endregion
 
     #region Private Methods
@@ -347,7 +374,7 @@ public class EnemyViewModel : BaseViewModel
     {
         AreOptionsEnabled = false;
         SelectedBossStatus = string.Empty;
-        SelectedBossStatusColor = "White";
+        SelectedBossStatusColor = BossStatusDefaultBrush;
         IsLionMainBossPhaseLockEnabled = false;
         IsLionMiniBossPhaseLockEnabled = false;
     }
@@ -681,22 +708,6 @@ public class EnemyViewModel : BaseViewModel
             _eventService.SetEvent(flag.EventId, flag.SetValue);
     }
     
-    private string _selectedBossStatus;
-
-    public string SelectedBossStatus
-    {
-        get => _selectedBossStatus;
-        set => SetProperty(ref _selectedBossStatus, value);
-    }
-
-    private string _selectedBossStatusColor = "White";
-
-    public string SelectedBossStatusColor
-    {
-        get => _selectedBossStatusColor;
-        set => SetProperty(ref _selectedBossStatusColor, value);
-    }
-
     private string GetBossStatus(BossRevive bossRevive)
     {
         if (bossRevive?.BossFlags == null || bossRevive.BossFlags.Count == 0)
@@ -705,7 +716,7 @@ public class EnemyViewModel : BaseViewModel
         var firstBossFlagDead = _eventService.GetEvent(bossRevive.BossFlags[0].EventId);
 
         if (firstBossFlagDead)
-            return "Dead";
+            return BossStatusDead;
 
         bool hasFirstEncounterFlags = bossRevive.FirstEncounterFlags != null &&
                                       bossRevive.FirstEncounterFlags.Count > 0;
@@ -715,19 +726,19 @@ public class EnemyViewModel : BaseViewModel
             var allFirstEncounterFlagsTrue = bossRevive.FirstEncounterFlags
                 .All(f => _eventService.GetEvent(f.EventId));
 
-            return allFirstEncounterFlagsTrue ? "Alive" : "Alive, First Encounter";
+            return allFirstEncounterFlagsTrue ? BossStatusAlive : BossStatusFirstEncounter;
         }
 
-        return "Alive";
+        return BossStatusAlive;
     }
 
-    private string GetBossStatusColor(string status) => status switch
+    private SolidColorBrush GetBossStatusColor(string status) => status switch
     {
-        "Dead" => "#e74c3c",
-        "Alive" => "#2ecc71",
-        "Alive, First Encounter" => "#2ecc71",
-        _ => "White"
-    };    
+        BossStatusDead => BossStatusDeadBrush,
+        BossStatusAlive => BossStatusAliveBrush,
+        BossStatusFirstEncounter => BossStatusAliveBrush,
+        _ => BossStatusDefaultBrush
+    };
 
     private void SetInitializeDead(List<uint> npcParamIds)
     {
