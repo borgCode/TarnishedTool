@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using TarnishedTool.Utilities;
+using TarnishedTool.ViewModels;
 
 namespace TarnishedTool.Views.Windows.AiOverlay;
 
@@ -24,7 +25,13 @@ public abstract class AiOverlayWindowBase : Window
         ShowInTaskbar = false;
         Background = new SolidColorBrush(Color.FromArgb(128, 0, 0, 0));
         
-        MouseLeftButtonDown += (s, e) => DragMove();
+        MouseLeftButtonDown += (s, e) =>
+        {
+            var vm = DataContext as AiWindowViewModel;
+            if (vm != null) vm.AreOverlayUpdatesPaused = true;
+            try { DragMove(); }
+            finally { if (vm != null) vm.AreOverlayUpdatesPaused = false; }
+        };
         
         Loaded += OnLoaded;
         Closing += OnClosing;
