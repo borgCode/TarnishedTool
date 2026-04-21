@@ -185,8 +185,12 @@ public class AiWindowViewModel : BaseViewModel, IDisposable
 
     #region Private Methods
 
+    public bool AreOverlayUpdatesPaused { get; set; }
+
     private void UpdateTick()
     {
+        if (AreOverlayUpdatesPaused) return;
+
         if (IsShowGoalsEnabled)
         {
             var goalPtr = _aiService.GetTopGoal(_aiThink);

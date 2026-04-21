@@ -28,7 +28,12 @@ public partial class AiOverlayToolbar : Window
         _onExit = onExit;
         EntityNameText.Text = entityName;
 
-        MouseLeftButtonDown += (s, e) => DragMove();
+        MouseLeftButtonDown += (s, e) =>
+        {
+            _viewModel.AreOverlayUpdatesPaused = true;
+            try { DragMove(); }
+            finally { _viewModel.AreOverlayUpdatesPaused = false; }
+        };
 
 
         _overlayFactories = new()
