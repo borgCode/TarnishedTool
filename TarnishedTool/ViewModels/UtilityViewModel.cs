@@ -47,6 +47,19 @@ namespace TarnishedTool.ViewModels
         private List<byte[]>? _originalReinforcePriceRate;
         private List<byte[]>? _originalBaseChangePriceRate;
 
+        // All Discardable
+        public const int EquipParamAccessoryDiscardOffset = 0x40;
+        public const int EquipParamGemDiscardOffset = 0x34;
+        public const int EquipParamGoodsDiscardOffset = 0x49;
+        public const int EquipParamProtectorDiscardOffset = 0xe3;
+        public const int EquipParamWeaponDiscardOffset = 0x109;
+
+        private List<byte[]>? _originalAccessoryDiscard;
+        private List<byte[]>? _originalGemDiscard;
+        private List<byte[]>? _originalGoodsDiscard;
+        private List<byte[]>? _originalProtectorDiscard;
+        private List<byte[]>? _originalWeaponDiscard;
+
         private static readonly uint[] DisableGraceWarpIds = [4270, 4271, 4272, 4282, 4286, 4288];
 
         private readonly List<ShopCommand> _allShops;
@@ -92,6 +105,7 @@ namespace TarnishedTool.ViewModels
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
+            QuitoutCommand = new DelegateCommand(() => _utilityService.Quitout());
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -123,6 +137,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UpgradeFlaskCommand { get; }
         public ICommand IncreaseChargesCommand { get; }
         public ICommand OpenMirrorCommand { get; }
+        public ICommand QuitoutCommand { get; set; }
 
         #endregion
 
@@ -668,6 +683,69 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private bool _isAllDiscardableEnabled;
+
+        public bool IsAllDiscardableEnabled
+        {
+            get => _isAllDiscardableEnabled;
+
+            set
+            {
+                if (!SetProperty(ref _isAllDiscardableEnabled, value)) return;
+                _ = Task.Run(() =>
+                {
+                    var (accessoryTable, accessorySlot) = ParamIndices.All["EquipParamAccessory"];
+                    var (gemTable, gemSlot) = ParamIndices.All["EquipParamGem"];
+                    var (goodsTable, goodsSlot) = ParamIndices.All["EquipParamGoods"];
+                    var (protectorTable, protectorSlot) = ParamIndices.All["EquipParamProtector"];
+                    var (weaponTable, weaponSlot) = ParamIndices.All["EquipParamWeapon"];
+
+                    if (_isAllDiscardableEnabled)
+                    {
+                        _originalGoodsDiscard ??= _paramService.ReadFieldFromAllRows(goodsTable, goodsSlot,
+                            EquipParamGoodsDiscardOffset, sizeof(byte));
+                        _originalWeaponDiscard ??= _paramService.ReadFieldFromAllRows(weaponTable, weaponSlot,
+                            EquipParamWeaponDiscardOffset, sizeof(byte));
+                        _originalProtectorDiscard ??= _paramService.ReadFieldFromAllRows(protectorTable, protectorSlot,
+                            EquipParamProtectorDiscardOffset, sizeof(byte));
+                        _originalAccessoryDiscard ??= _paramService.ReadFieldFromAllRows(accessoryTable, accessorySlot,
+                            EquipParamAccessoryDiscardOffset, sizeof(byte));
+                        _originalGemDiscard ??= _paramService.ReadFieldFromAllRows(gemTable, gemSlot,
+                            EquipParamGemDiscardOffset, sizeof(byte));
+
+
+                        Parallel.Invoke(
+                            () => _paramService.WriteFieldForAllRows(goodsTable, goodsSlot,
+                                EquipParamGoodsDiscardOffset, SetBitInAll(_originalGoodsDiscard, 0x8, true)),
+                            () => _paramService.WriteFieldForAllRows(weaponTable, weaponSlot,
+                                EquipParamWeaponDiscardOffset, SetBitInAll(_originalWeaponDiscard, 0x2, true)),
+                            () => _paramService.WriteFieldForAllRows(protectorTable, protectorSlot,
+                                EquipParamProtectorDiscardOffset, SetBitInAll(_originalProtectorDiscard, 0x1, true)),
+                            () => _paramService.WriteFieldForAllRows(accessoryTable, accessorySlot,
+                                EquipParamAccessoryDiscardOffset, SetBitInAll(_originalAccessoryDiscard, 0x8, true)),
+                            () => _paramService.WriteFieldForAllRows(gemTable, gemSlot,
+                                EquipParamGemDiscardOffset, SetBitInAll(_originalGemDiscard, 0x1, true))
+                        );
+                    }
+                    else
+                    {
+                        Parallel.Invoke(
+                            () => _paramService.RestoreFieldToAllRows(goodsTable, goodsSlot,
+                                EquipParamGoodsDiscardOffset, _originalGoodsDiscard),
+                            () => _paramService.RestoreFieldToAllRows(weaponTable, weaponSlot,
+                                EquipParamWeaponDiscardOffset, _originalWeaponDiscard),
+                            () => _paramService.RestoreFieldToAllRows(protectorTable, protectorSlot,
+                                EquipParamProtectorDiscardOffset, _originalProtectorDiscard),
+                            () => _paramService.RestoreFieldToAllRows(accessoryTable, accessorySlot,
+                                EquipParamAccessoryDiscardOffset, _originalAccessoryDiscard),
+                            () => _paramService.RestoreFieldToAllRows(gemTable, gemSlot, EquipParamGemDiscardOffset,
+                                _originalGemDiscard)
+                        );
+                    }
+                });
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -677,7 +755,6 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Private Methods
-        
 
         private void OnAppStart()
         {
@@ -851,19 +928,30 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => SafeExecute(() => Fps = 240));
             _hotkeyManager.RegisterAction(HotkeyActions.NoUpgradeCost,
                 () => SafeExecute(() => { IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled; }));
-            _hotkeyManager.RegisterAction(HotkeyActions.OpenMapInCombat, () => _isCombatMapEnabled = !IsCombatMapEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.WarpInDungeons, () => _isDungeonWarpEnabled = !IsDungeonWarpEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.AllDiscardable,
+                () => SafeExecute(() => { IsAllDiscardableEnabled = !IsAllDiscardableEnabled; }));
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenMapInCombat,
+                () => _isCombatMapEnabled = !IsCombatMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.WarpInDungeons,
+                () => _isDungeonWarpEnabled = !IsDungeonWarpEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleNextNgCycle, () => TriggerNgCycle());
-            _hotkeyManager.RegisterAction(HotkeyActions.DropRate, () => _isGuaranteedDropEnabled  =!IsGuaranteedDropEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles1, () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles2,() => _isDrawMapTiles2Enabled = !IsDrawMapTiles2Enabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawMiniMap,() =>  _isDrawMiniMapEnabled = !IsDrawMiniMapEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawTilesOnWorldMap, () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.HideMap, ()  => _isHideMapEnabled = !IsHideMapEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.HideCharacters, () => _isHideCharactersEnabled  = !IsHideCharactersEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DropRate,
+                () => _isGuaranteedDropEnabled = !IsGuaranteedDropEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles1,
+                () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles2,
+                () => _isDrawMapTiles2Enabled = !IsDrawMapTiles2Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMiniMap,
+                () => _isDrawMiniMapEnabled = !IsDrawMiniMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawTilesOnWorldMap,
+                () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.HideMap, () => _isHideMapEnabled = !IsHideMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.HideCharacters,
+                () => _isHideCharactersEnabled = !IsHideCharactersEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.OpenMirror, () => SafeExecute(OpenMirror));
-            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip, () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
-            
+            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip,
+                () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.Quitout, () => _utilityService.Quitout());
         }
 
         private void SafeExecute(Action action)
@@ -1016,6 +1104,18 @@ namespace TarnishedTool.ViewModels
             {
                 IsIncreasingCharges = false;
             }
+        }
+
+        private static List<byte[]> SetBitInAll(List<byte[]> originals, int mask, bool set)
+        {
+            var result = new List<byte[]>(originals.Count);
+            foreach (var b in originals)
+            {
+                byte val = set ? (byte)(b[0] | mask) : (byte)(b[0] & ~mask);
+                result.Add(new byte[] { val });
+            }
+
+            return result;
         }
 
         #endregion
