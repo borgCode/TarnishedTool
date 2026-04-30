@@ -39,11 +39,19 @@ namespace TarnishedTool.ViewModels
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
+        // Faster Death Stuff
         private const uint MenuCommonParamRowId = 0;
         private const int DeathTimeOffset0 = 0x0;
         private const int DeathTimeOffset4 = 0x4;
         private const float OriginalDeathTime0x0 = 3.8f;
         private const float OriginalDeathTime0x4 = 3.3f;
+
+        // No Death Stuff (Miquella's Grab)
+        private const uint NoMiquellaCharmSpEffectRowId = 19681;
+        private const int SpEffectDurationOffset = 0x8;
+        private const int SpEffectVfxOffset = 0x170;
+        private const float OriginalSpEffectDuration = -1f;
+        private const int OriginalSpEffectVfx = 20050560;
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
@@ -187,7 +195,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private bool _isSetRfbsOnLoadEnabled;
 
         public bool IsSetRfbsOnLoadEnabled
@@ -254,6 +262,7 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _isNoDeathEnabled, value))
                 {
                     _playerService.ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, _isNoDeathEnabled);
+                    ApplyNoMiquellaCharm(_isNoDeathEnabled);
                 }
             }
         }
@@ -735,7 +744,11 @@ namespace TarnishedTool.ViewModels
 
         private void OnGameFirstLoaded()
         {
-            if (IsNoDeathEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
+            if (IsNoDeathEnabled)
+            {
+                _playerService.ToggleDebugFlag(ChrDbgFlags.PlayerNoDeath, true);
+                ApplyNoMiquellaCharm(true);
+            }
             if (IsInfiniteStaminaEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteStam, true);
             if (IsInfiniteConsumablesEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteGoods, true);
             if (IsInfiniteArrowsEnabled) _playerService.ToggleDebugFlag(ChrDbgFlags.InfiniteArrows, true);
@@ -873,7 +886,7 @@ namespace TarnishedTool.ViewModels
             int fpToSet = Math.Min(currentFp + (int)(maxFp * 0.033), maxFp);
             _playerService.SetFp(fpToSet);
         }
-        
+
 
         private void LoadStats()
         {
@@ -1053,6 +1066,19 @@ namespace TarnishedTool.ViewModels
 
             _paramService.Write(row, DeathTimeOffset0, val0);
             _paramService.Write(row, DeathTimeOffset4, val4);
+        }
+
+        private void ApplyNoMiquellaCharm(bool enabled)
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+
+            IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, NoMiquellaCharmSpEffectRowId);
+            if (row == IntPtr.Zero) return;
+
+            float duration = enabled ? 0f : OriginalSpEffectDuration;
+            int vfx = enabled ? -1 : OriginalSpEffectVfx;
+            _paramService.Write(row, SpEffectDurationOffset, duration);
+            _paramService.Write(row, SpEffectVfxOffset, vfx);
         }
 
         #endregion
