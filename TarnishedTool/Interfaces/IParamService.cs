@@ -18,6 +18,7 @@ public interface IParamService
     void SetBit(IntPtr row, int offset, int mask, bool setValue);
     void WriteRow(IntPtr row, byte[] data);
     void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value);
+    void WriteFieldForAllRows(int tableIndex, int slotIndex, int offset, List<byte[]> values);
     List<byte[]> ReadFieldFromAllRows(int tableIndex, int slotIndex, int offset, int size);
     void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values);
     

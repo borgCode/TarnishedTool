@@ -36,6 +36,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         stateService.Subscribe(State.AppStart, OnAppStart);
         stateService.Subscribe(State.Attached, OnGameAttached);
         stateService.Subscribe(State.OnNewGameStart, OnNewGameStart);
+        stateService.Subscribe(State.Loaded, OnLoaded);
 
         RegisterActions();
     }
@@ -81,7 +82,6 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         if (IsRestOnReviveChecked) _enemyViewModel.IsRestOnReviveEnabled = true;
 
         // Utility 
-        if (IsNoUpgradeCostChecked) _utilityViewModel.IsNoUpgradeCostEnabled = true;
         if (IsOpenMapInCombatChecked) _utilityViewModel.IsCombatMapEnabled = true;
         if (IsWarpInDungeonsChecked) _utilityViewModel.IsDungeonWarpEnabled = true;
         if (IsDropRateChecked) _utilityViewModel.IsGuaranteedDropEnabled = true;
@@ -147,6 +147,12 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         
     }
     
+    private void OnLoaded()
+    {
+        if (IsAllDiscardableChecked) _utilityViewModel.IsAllDiscardableEnabled = true;
+        if (IsNoUpgradeCostChecked) _utilityViewModel.IsNoUpgradeCostEnabled = true;
+    }
+    
     
     private void RegisterActions()
     {
@@ -179,6 +185,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         _isAllDisableAiChecked = Get(nameof(IsAllDisableAiChecked));
         _isRestOnReviveChecked = Get(nameof(IsRestOnReviveChecked));
         
+        _isAllDiscardableChecked = Get(nameof(IsAllDiscardableChecked));
         _isNoUpgradeCostChecked = Get(nameof(IsNoUpgradeCostChecked));
         _isOpenMapInCombatChecked = Get(nameof(IsOpenMapInCombatChecked));
         _isWarpInDungeonsChecked = Get(nameof(IsWarpInDungeonsChecked));
@@ -532,6 +539,17 @@ public class ActivateOnLaunchViewModel : BaseViewModel
     }
 
     // Utility
+    private bool _isAllDiscardableChecked;
+
+    public bool IsAllDiscardableChecked
+    {
+        get => _isAllDiscardableChecked;
+        set
+        {
+            if (SetProperty(ref _isAllDiscardableChecked, value)) Set(nameof(IsAllDiscardableChecked), value);
+        }
+    }
+    
     private bool _isNoUpgradeCostChecked;
 
     public bool IsNoUpgradeCostChecked

@@ -277,7 +277,6 @@ public class SettingsViewModel : BaseViewModel
         _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
 
         LoadHotkeyDisplays();
-        RegisterHotkeys();
         ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);
         OpenActivateOnLaunchCommand = new DelegateCommand(OpenActivateOnLaunch);
     }
@@ -623,10 +622,7 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    private void RegisterHotkeys()
-    {
-        _hotkeyManager.RegisterAction(HotkeyActions.Quitout, () => _settingsService.Quitout());
-    }
+    
 
     private void ClearHotkeys()
     {

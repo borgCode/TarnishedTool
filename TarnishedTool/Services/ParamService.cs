@@ -48,15 +48,15 @@ public class ParamService(IMemoryService memoryService) : IParamService
             var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
             var row = paramData + (int)dataOffset;
             var rowBytes = memoryService.ReadBytes(row + offset, bytes.Length);
-        
+
             if (rowBytes.AsSpan().SequenceEqual(bytes))
                 return row;
         }
 
         return IntPtr.Zero;
     }
-    
-    public void Write<T>(nint row, int offset, T value) where T : unmanaged 
+
+    public void Write<T>(nint row, int offset, T value) where T : unmanaged
         => memoryService.Write<T>(row + offset, value);
 
     public void PrintAllParamTableNames()
@@ -69,7 +69,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
 
             var capacity = memoryService.Read<int>(tableBase + 0x80);
             if (capacity <= 0) continue;
-            
+
             var paramResCap = memoryService.Read<nint>(tableBase + 0x88);
             if (paramResCap == 0) continue;
 
@@ -77,12 +77,12 @@ public class ParamService(IMemoryService memoryService) : IParamService
             if (namePtr == 0) continue;
 
             var name = memoryService.ReadString(namePtr);
-        
+
             Console.WriteLine($"[{tableIndex}] {name}");
         }
     }
 
-    
+
     public void WriteField(nint row, ParamFieldDef field, object value)
     {
         nint addr = row + field.Offset;
@@ -92,10 +92,10 @@ public class ParamService(IMemoryService memoryService) : IParamService
             byte current = memoryService.Read<byte>(addr);
             int mask = (1 << field.BitWidth.Value) - 1;
             int shifted = mask << field.BitPos.Value;
-            
+
             int newVal = value is bool b ? (b ? 1 : 0) : Convert.ToInt32(value);
             newVal &= mask;
-        
+
             byte result = (byte)((current & ~shifted) | (newVal << field.BitPos.Value));
             memoryService.Write(addr, result);
             return;
@@ -111,22 +111,22 @@ public class ParamService(IMemoryService memoryService) : IParamService
             case "s8" or "u8" or "dummy8": memoryService.Write(addr, Convert.ToByte(value)); break;
         }
     }
-    
+
     public byte[] ReadRow(nint row, int size)
     {
         return memoryService.ReadBytes(row, size);
     }
-    
+
     public object ReadFieldFromBytes(byte[] data, ParamFieldDef field)
     {
         if (field.BitWidth.HasValue)
         {
             byte raw = data[field.Offset];
             int mask = (1 << field.BitWidth.Value) - 1;
-            int value =  (raw >> field.BitPos.Value) & mask;
+            int value = (raw >> field.BitPos.Value) & mask;
             if (field.BitWidth.Value == 1)
                 return value != 0;
-        
+
             return value;
         }
 
@@ -142,8 +142,8 @@ public class ParamService(IMemoryService memoryService) : IParamService
             _ => 0
         };
     }
-    
-    public void SetBit(nint row, int offset, int mask, bool setValue) => 
+
+    public void SetBit(nint row, int offset, int mask, bool setValue) =>
         memoryService.SetBitValue(row + offset, mask, setValue);
 
     public void WriteRow(nint row, byte[] data) => memoryService.WriteBytes(row, data);
@@ -159,38 +159,54 @@ public class ParamService(IMemoryService memoryService) : IParamService
             memoryService.WriteBytes(paramData + (int)dataOffset + offset, value);
         }
     }
-    
+
+    // Needed something for bits, didn't know what to name it
+    public void WriteFieldForAllRows(int tableIndex, int slotIndex, int offset, List<byte[]> values)
+    {
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (paramData, rowCount, descriptorBase)) return;
+
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        for (int i = 0; i < rowCount && i < values.Count; i++)
+        {
+            var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
+            memoryService.WriteBytes(paramData + (int)dataOffset + offset, values[i]);
+        }
+    }
+
     public List<byte[]> ReadFieldFromAllRows(int tableIndex, int slotIndex, int offset, int size)
     {
         var result = new List<byte[]>();
-    
+
         var data = GetParamData(tableIndex, slotIndex);
         if (data is not var (paramData, rowCount, descriptorBase)) return result;
 
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
         for (int i = 0; i < rowCount; i++)
         {
-            var dataOffset = memoryService.Read<nint>(descriptorBase + i * 0x18 + 0x08);
+            var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
             var bytes = memoryService.ReadBytes(paramData + (int)dataOffset + offset, size);
             result.Add(bytes);
         }
 
         return result;
     }
-    
+
     public void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values)
     {
         if (values == null) return;
-    
+
         var data = GetParamData(tableIndex, slotIndex);
         if (data is not var (paramData, rowCount, descriptorBase)) return;
 
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
         for (int i = 0; i < rowCount && i < values.Count; i++)
         {
-            var dataOffset = memoryService.Read<nint>((descriptorBase + i * 0x18 + 0x08));
+            var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
             memoryService.WriteBytes(paramData + (int)dataOffset + offset, values[i]);
         }
     }
-    
+
     private (nint paramData, int rowCount, nint descriptorBase)? GetParamData(int tableIndex, int slotIndex)
     {
         if (tableIndex < 0 || tableIndex >= 0xC2) return null;
