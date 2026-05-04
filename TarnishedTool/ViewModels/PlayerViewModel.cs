@@ -52,6 +52,13 @@ namespace TarnishedTool.ViewModels
         private const int SpEffectVfxOffset = 0x170;
         private const float OriginalSpEffectDuration = -1f;
         private const int OriginalSpEffectVfx = 20050560;
+        
+        // Torrent Anywhere Stuff (Abyssal Woods)
+        private const uint NoForcedDismountSpEffectRowId = 19995;
+        private const int ForcedDismountDurationOffset = 0x8;
+        private const int ForcedDismountStateInfoOffset = 0x156;
+        private const float ForcedDismountDuration = -1f;
+		private const int ForcedDismountStateInfo = 433;
 
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
@@ -431,6 +438,7 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _isTorrentAnywhereEnabled, value))
                 {
                     _playerService.ToggleTorrentAnywhere(_isTorrentAnywhereEnabled);
+                    ApplyTorrentAnywhere(_isTorrentAnywhereEnabled);
                 }
             }
         }
@@ -736,7 +744,11 @@ namespace TarnishedTool.ViewModels
         private void OnFadedIn()
         {
             if (IsSetRfbsOnLoadEnabled) SetRfbs();
-            if (IsTorrentAnywhereEnabled) _playerService.ToggleTorrentAnywhere(true);
+            if (IsTorrentAnywhereEnabled)
+            {
+                _playerService.ToggleTorrentAnywhere(true);
+                ApplyTorrentAnywhere(_isTorrentAnywhereEnabled);
+            }
             if (IsTorrentNoDeathEnabled) _playerService.ToggleTorrentNoDeath(true);
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
             if (IsNoHitEnabled) _playerService.ToggleNoHit(true);
@@ -1079,6 +1091,24 @@ namespace TarnishedTool.ViewModels
             int vfx = enabled ? -1 : OriginalSpEffectVfx;
             _paramService.Write(row, SpEffectDurationOffset, duration);
             _paramService.Write(row, SpEffectVfxOffset, vfx);
+        }
+        
+        private void ApplyTorrentAnywhere(bool enabled)
+        {
+            // needed if player enables it while in Abyssal woods
+            var playerIns = _playerService.GetPlayerIns();
+            _spEffectService.RemoveSpEffect(playerIns, SpEffect.ForcedDismount);
+            
+            // needed for later area reloads
+            var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+
+            IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, NoForcedDismountSpEffectRowId);
+            if (row == IntPtr.Zero) return;
+
+            float duration = enabled ? 0f : ForcedDismountDuration;
+            int stateinfo = enabled ? 0 : ForcedDismountStateInfo;
+            _paramService.Write(row, ForcedDismountDurationOffset, duration);
+            _paramService.Write(row, ForcedDismountStateInfoOffset, stateinfo);
         }
 
         #endregion
