@@ -181,7 +181,8 @@ public class CreateLoadoutViewModel : BaseViewModel
             ItemName = ItemSelection.SelectedItem.Name,
             ItemId = ItemSelection.SelectedItem.Id, 
             Quantity = ItemSelection.SelectedQuantity,
-            Upgrade = ItemSelection.SelectedUpgrade
+            Upgrade = ItemSelection.SelectedUpgrade,
+            UpgradeType = ItemSelection.SelectedItem is Weapon w ? w.UpgradeType : -1
         };
 
         if (ItemSelection.SelectedItem is Weapon && ItemSelection.ShowAowOptions)
