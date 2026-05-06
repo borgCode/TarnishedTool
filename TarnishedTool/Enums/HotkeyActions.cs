@@ -174,6 +174,7 @@ public enum HotkeyActions
     HideMap,
     HideCharacters,
     OpenMirror,
+    OpenSpiritTuning,
     FullShopLineup,
     UnlockAffinites,
     UnlockGestures,

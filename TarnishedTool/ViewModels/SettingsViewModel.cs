@@ -210,6 +210,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Set 240 FPS", HotkeyActions.Set240Fps),
                 new("No Upgrades Cost", HotkeyActions.NoUpgradeCost),
                 new("Open Mirror", HotkeyActions.OpenMirror),
+                new("Spirit Tuning", HotkeyActions.OpenSpiritTuning),
                 new("Open Map In Combat", HotkeyActions.OpenMapInCombat),
                 new("Warp In Dungeons", HotkeyActions.WarpInDungeons),
                 new("Toggle Next NG Cycle", HotkeyActions.ToggleNextNgCycle),
