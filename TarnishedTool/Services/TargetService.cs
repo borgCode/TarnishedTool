@@ -87,13 +87,13 @@ namespace TarnishedTool.Services
             memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct) != 0;
 
         public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetTargetChrIns());
-        
-        public void ToggleTargetingView(bool isTargetingViewEnabled) => 
+
+        public void ToggleTargetingView(bool isTargetingViewEnabled) =>
             chrInsService.ToggleTargetView(GetTargetChrIns(), isTargetingViewEnabled);
 
         public bool IsTargetViewEnabled() => chrInsService.IsTargetViewEnabled(GetTargetChrIns());
 
-        public void ToggleTargetNoDamage(bool isNoDamageEnabled) => 
+        public void ToggleTargetNoDamage(bool isNoDamageEnabled) =>
             chrInsService.ToggleNoDamage(GetTargetChrIns(), isNoDamageEnabled);
 
         public bool IsNoDamageEnabled() => chrInsService.IsNoDamageEnabled(GetTargetChrIns());
@@ -189,18 +189,31 @@ namespace TarnishedTool.Services
                 hookManager.UninstallHook(code.ToInt64());
             }
         }
-        
+
         public ResistanceData GetAllResistances() => chrInsService.GetAllResistances(GetTargetChrIns());
 
         public bool[] GetImmunities() => chrInsService.GetImmunities(GetTargetChrIns());
         public float[] GetDefenses() => chrInsService.GetDefenses(GetTargetChrIns());
         public float GetDist() => chrInsService.GetDistBetweenChrs(playerService.GetPlayerIns(), GetTargetChrIns());
         public uint GetEntityId() => chrInsService.GetEntityId(GetTargetChrIns());
-        
+
 
         public IntPtr GetAiThinkPtr() =>
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
-        
+
+        private nint GetCritBase()
+        {
+            var chrIns = memoryService.Read<nint>(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
+            var step1 = memoryService.Read<nint>(chrIns + ChrIns.Modules);
+            var step2 = memoryService.Read<nint>(step1 + ChrIns.ChrCrit.ModulesOffset);
+            return memoryService.Read<nint>(step2 + ChrIns.ChrCrit.Step3Offset);
+        }
+
+        public void SetDrawCritView(bool enabled) =>
+            memoryService.Write(GetCritBase() + ChrIns.ChrCrit.Crit, enabled ? (byte)1 : (byte)0);
+
+        public void SetDrawBackstabView(bool enabled) =>
+            memoryService.Write(GetCritBase() + ChrIns.ChrCrit.Backstab, enabled ? (byte)1 : (byte)0);
     }
 }

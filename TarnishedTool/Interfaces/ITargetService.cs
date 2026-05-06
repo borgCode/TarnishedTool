@@ -24,7 +24,7 @@ public interface ITargetService
     void ToggleNoAttack(bool isNoAttackEnabled);
     bool IsNoAttackEnabled();
     void ToggleNoMove(bool isNoMoveEnabled);
-    bool IsNoMoveEnabled(); 
+    bool IsNoMoveEnabled();
     void ForceAct(int forceAct);
     int GetLastAct();
     int GetForceAct();
@@ -48,4 +48,6 @@ public interface ITargetService
     uint GetNpcParamId();
     void ToggleNoHeal(bool isNoHealEnabled);
     nint GetAiThinkPtr();
+    void SetDrawCritView(bool enabled);
+    void SetDrawBackstabView(bool enabled);
 }

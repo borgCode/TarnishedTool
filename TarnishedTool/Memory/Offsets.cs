@@ -128,7 +128,7 @@ namespace TarnishedTool.Memory
                     Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0x6BC,
                     _ => 0x6CC,
                 };
-                
+
                 public static readonly int[] NpcParam = [0x5F0, 0x0];
             }
         }
@@ -220,6 +220,15 @@ namespace TarnishedTool.Memory
             }
 
             public static readonly int[] InstanceId = [0x28, 0x8];
+            
+            // Sorry I didn't know where to place this class 😭
+            public static class ChrCrit
+            {
+                public const int ModulesOffset = 0x88;
+                public const int Step3Offset   = 0x10;
+                public const int Crit          = 0x131;
+                public const int Backstab      = 0x129;
+            }
 
             public static int ChrDataFlags => Version switch
             {
@@ -2505,7 +2514,6 @@ namespace TarnishedTool.Memory
                 Version2_6_0 or Version2_6_1 => 0x437000,
                 _ => 0
             };
-
 
 
             // Patches
