@@ -208,6 +208,7 @@ namespace TarnishedTool.Memory
             public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
             public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
             public static readonly int[] ChrRideModule = [Modules, 0xE8];
+            public static readonly int[] ChrThrowModule = [Modules, 0x88, 0x10];
 
             public enum ChrDataOffsets
             {
@@ -220,16 +221,6 @@ namespace TarnishedTool.Memory
             }
 
             public static readonly int[] InstanceId = [0x28, 0x8];
-            
-            // Sorry I didn't know where to place this class 😭
-            public static class ChrCrit
-            {
-                public const int ModulesOffset = 0x88;
-                public const int Step3Offset   = 0x10;
-                public const int Crit          = 0x131;
-                public const int Backstab      = 0x129;
-            }
-
             public static int ChrDataFlags => Version switch
             {
                 Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
@@ -299,6 +290,12 @@ namespace TarnishedTool.Memory
             {
                 HorseHandle = 0x18,
                 IsRiding = 0x50
+            }
+            
+            public enum ChrThrowOffsets
+            {
+                Crit          = 0x131,
+                Backstab      = 0x129
             }
 
             public static readonly int[] AiThink = [ChrManipulator, 0xC0];

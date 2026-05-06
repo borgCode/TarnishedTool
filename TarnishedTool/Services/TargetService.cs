@@ -202,18 +202,30 @@ namespace TarnishedTool.Services
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
 
-        private nint GetCritBase()
+        private IntPtr GetChrThrowModulePtr() =>
+            memoryService.FollowPointers(
+                CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
+                [..ChrIns.ChrThrowModule], true);
+
+
+        public void SetDrawCritView(bool enabled)
         {
-            var chrIns = memoryService.Read<nint>(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr);
-            var step1 = memoryService.Read<nint>(chrIns + ChrIns.Modules);
-            var step2 = memoryService.Read<nint>(step1 + ChrIns.ChrCrit.ModulesOffset);
-            return memoryService.Read<nint>(step2 + ChrIns.ChrCrit.Step3Offset);
+            var ptr = GetChrThrowModulePtr();
+            #if DEBUG
+            Console.WriteLine($"ChrThrowModule ptr: 0x{ptr.ToInt64():X}");
+            Console.WriteLine($"Crit write addr:    0x{(ptr + (int)ChrIns.ChrThrowOffsets.Crit).ToInt64():X}");
+            #endif
+            memoryService.Write(ptr + (int)ChrIns.ChrThrowOffsets.Crit, enabled ? (byte)1 : (byte)0);
         }
 
-        public void SetDrawCritView(bool enabled) =>
-            memoryService.Write(GetCritBase() + ChrIns.ChrCrit.Crit, enabled ? (byte)1 : (byte)0);
-
-        public void SetDrawBackstabView(bool enabled) =>
-            memoryService.Write(GetCritBase() + ChrIns.ChrCrit.Backstab, enabled ? (byte)1 : (byte)0);
+        public void SetDrawBackstabView(bool enabled)
+        {
+            var ptr = GetChrThrowModulePtr();
+            #if DEBUG
+            Console.WriteLine($"ChrThrowModule ptr: 0x{ptr.ToInt64():X}");
+            Console.WriteLine($"Backstab write addr:    0x{(ptr + (int)ChrIns.ChrThrowOffsets.Backstab).ToInt64():X}");
+            #endif
+            memoryService.Write(ptr + (int)ChrIns.ChrThrowOffsets.Backstab, enabled ? (byte)1 : (byte)0);
+        }
     }
 }
