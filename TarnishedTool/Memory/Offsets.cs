@@ -208,7 +208,7 @@ namespace TarnishedTool.Memory
             public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
             public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
             public static readonly int[] ChrRideModule = [Modules, 0xE8];
-            public static readonly int[] ChrThrowModule = [Modules, 0x88, 0x10];
+            public static readonly int[] ChrThrowModule = [Modules, 0x88];
 
             public enum ChrDataOffsets
             {
@@ -291,13 +291,15 @@ namespace TarnishedTool.Memory
                 HorseHandle = 0x18,
                 IsRiding = 0x50
             }
-            
-            public enum ChrThrowOffsets
-            {
-                Crit          = 0x131,
-                Backstab      = 0x129
-            }
 
+            public static class ChrThrowOffsets
+            {
+                public const int CsThrowNode = 0x10;
+                public const int Crit        = 0x131;
+                public const int Backstab    = 0x129;
+            }
+            
+           
             public static readonly int[] AiThink = [ChrManipulator, 0xC0];
 
             public static class AiThinkOffsets
