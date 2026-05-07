@@ -269,6 +269,14 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public void ToggleNoGravity(IntPtr chrIns, bool isEnabled) =>
         memoryService.Write(GetChrPhysicsPtr(chrIns) + (int)ChrIns.ChrPhysicsOffsets.NoGravity, isEnabled);
 
+    public void SetDrawCritView(nint chrIns, bool enabled) =>
+        memoryService.Write(GetChrThrowNodePtr(chrIns) + ChrIns.ChrThrowOffsets.Crit,
+            enabled ? (byte)1 : (byte)0);
+
+    public void SetDrawBackstabView(nint chrIns, bool enabled) =>
+        memoryService.Write(GetChrThrowNodePtr(chrIns) + ChrIns.ChrThrowOffsets.Backstab,
+            enabled ? (byte)1 : (byte)0);
+
     #endregion
 
     #region Private Methods
@@ -315,6 +323,12 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
 
     private nint GetPlayerNpcParamPtr(nint chrIns) =>
         memoryService.FollowPointers(chrIns, WorldChrMan.PlayerInsOffsets.NpcParam, true, false);
+
+    private nint GetChrThrowNodePtr(nint chrIns)
+    {
+        var throwModule = memoryService.FollowPointers(chrIns, ChrIns.ChrThrowModule, true, false);
+        return memoryService.Read<nint>(throwModule + ChrIns.ChrThrowOffsets.CsThrowNode);
+    }
 
     private PosWithHurtbox GetPosWithHurtbox(nint chrIns)
     {

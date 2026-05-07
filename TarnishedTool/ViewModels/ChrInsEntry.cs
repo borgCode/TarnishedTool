@@ -31,6 +31,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         $@"{Name}   ChrId: {ChrId} NpcParamId: {NpcParamId} NpcThinkParamId: {NpcThinkParamId}";
 
     private bool _isExpanded;
+
     public bool IsExpanded
     {
         get => _isExpanded;
@@ -45,6 +46,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
 
 
     private bool _isAiDisabled;
+
     public bool IsAiDisabled
     {
         get => _isAiDisabled;
@@ -58,6 +60,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     }
 
     private bool _isTargetViewEnabled;
+
     public bool IsTargetViewEnabled
     {
         get => _isTargetViewEnabled;
@@ -71,6 +74,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     }
 
     private bool _isNoAttackEnabled;
+
     public bool IsNoAttackEnabled
     {
         get => _isNoAttackEnabled;
@@ -84,6 +88,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     }
 
     private bool _isNoMoveEnabled;
+
     public bool IsNoMoveEnabled
     {
         get => _isNoMoveEnabled;
@@ -97,6 +102,7 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     }
 
     private bool _isNoDamageEnabled;
+
     public bool IsNoDamageEnabled
     {
         get => _isNoDamageEnabled;
@@ -109,7 +115,36 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         }
     }
 
+    private bool _isDrawCritEnabled;
+
+    public bool IsDrawCritEnabled
+    {
+        get => _isDrawCritEnabled;
+        set
+        {
+            if (SetProperty(ref _isDrawCritEnabled, value))
+            {
+                OnOptionChanged.Invoke(this, nameof(IsDrawCritEnabled), value);
+            }
+        }
+    }
+
+    private bool _isDrawBackstabEnabled;
+
+    public bool IsDrawBackstabEnabled
+    {
+        get => _isDrawBackstabEnabled;
+        set
+        {
+            if (SetProperty(ref _isDrawBackstabEnabled, value))
+            {
+                OnOptionChanged.Invoke(this, nameof(IsDrawBackstabEnabled), value);
+            }
+        }
+    }
+
     private float _distance;
+
     public float Distance
     {
         get => _distance;
@@ -133,27 +168,30 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
     }
 
     private ICommand _warpCommand;
+
     public ICommand WarpCommand => _warpCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(WarpCommand));
     });
 
     private ICommand _openGoalWindowCommand;
+
     public ICommand OpenAiWindowCommand => _openGoalWindowCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(OpenAiWindowCommand));
     });
 
     private ICommand _killChrCommand;
+
     public ICommand KillChrCommand => _killChrCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(KillChrCommand));
     });
 
     private ICommand _setHpCommand;
+
     public ICommand SetHpCommand => _setHpCommand ??= new DelegateCommand(() =>
     {
         OnCommandExecuted?.Invoke(this, nameof(SetHpCommand));
     });
-
 }

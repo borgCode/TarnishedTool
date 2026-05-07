@@ -201,36 +201,9 @@ namespace TarnishedTool.Services
         public IntPtr GetAiThinkPtr() =>
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
-
-        private IntPtr GetChrThrowNodePtr()
-        {
-            var chrThrowModulePtr = memoryService.FollowPointers(
-                CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
-                [..ChrIns.ChrThrowModule], true);
-            return memoryService.Read<IntPtr>(
-                chrThrowModulePtr + ChrIns.ChrThrowOffsets.CsThrowNode);
-        }
-
-
-        public void SetDrawCritView(bool enabled)
-        {
-            var ptr = GetChrThrowNodePtr();
-#if DEBUG
-            Console.WriteLine($"ChrThrowModule ptr: 0x{ptr.ToInt64():X}");
-            Console.WriteLine($"Crit write addr:    0x{(ptr + (int)ChrIns.ChrThrowOffsets.Crit).ToInt64():X}");
-#endif
-            memoryService.Write(ptr + (int)ChrIns.ChrThrowOffsets.Crit, enabled ? (byte)1 : (byte)0);
-        }
-
-        public void SetDrawBackstabView(bool enabled)
-        {
-            var ptr = GetChrThrowNodePtr();
-#if DEBUG
-            Console.WriteLine($"ChrThrowModule ptr: 0x{ptr.ToInt64():X}");
-            Console.WriteLine(
-                $"Backstab write addr:    0x{(ptr + (int)ChrIns.ChrThrowOffsets.Backstab).ToInt64():X}");
-#endif
-            memoryService.Write(ptr + (int)ChrIns.ChrThrowOffsets.Backstab, enabled ? (byte)1 : (byte)0);
-        }
+        
+        public void SetDrawCritView(bool enabled) => chrInsService.SetDrawCritView(GetTargetChrIns(), enabled);
+        
+        public void SetDrawBackstabView(bool enabled) => chrInsService.SetDrawBackstabView(GetTargetChrIns(), enabled);
     }
 }
