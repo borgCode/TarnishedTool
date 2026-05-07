@@ -92,6 +92,7 @@ namespace TarnishedTool.ViewModels
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
+            OpenSpiritTuningCommand = new DelegateCommand(OpenSpiritTuning);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -123,6 +124,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UpgradeFlaskCommand { get; }
         public ICommand IncreaseChargesCommand { get; }
         public ICommand OpenMirrorCommand { get; }
+        public ICommand OpenSpiritTuningCommand { get; }
 
         #endregion
 
@@ -862,6 +864,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.HideMap, ()  => _isHideMapEnabled = !IsHideMapEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.HideCharacters, () => _isHideCharactersEnabled  = !IsHideCharactersEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.OpenMirror, () => SafeExecute(OpenMirror));
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenSpiritTuning, () => SafeExecute(OpenSpiritTuning));
             _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip, () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
             
         }
@@ -928,6 +931,8 @@ namespace TarnishedTool.ViewModels
         private void OpenRebirth() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.Rebirth);
 
         private void OpenMirror() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenMirror);
+        
+        private void OpenSpiritTuning() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenSpiritTuning);
 
         private void OpenUpgrade()
         {

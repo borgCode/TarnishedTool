@@ -15,12 +15,14 @@ public class ItemSelectionViewModel : BaseViewModel
     private readonly List<AshOfWar> _allAshesOfWar;
 
     private static readonly CompareInfo _compareInfo = CultureInfo.InvariantCulture.CompareInfo;
+
+    internal static readonly int[] SomberToStandardUpgrade =
+        { 0, 3, 6, 9, 12, 15, 16, 19, 21, 24, 25 };
+
+    internal static readonly int[] StandardToSomberUpgrade =
+        { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 7, 7, 7, 8, 8, 9, 9, 9, 10 };
     
-    private static readonly int[] _somberToStandardUpgrade =
-    { 0, 3, 6, 9, 12, 15, 16, 19, 21, 24, 25 };
-    
-    private static readonly int[] _standardToSomberUpgrade =
-    { 0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 7, 7, 7, 8, 8, 9, 9, 9, 10 };
+    public int SelectedItemUpgradeType => (SelectedItem as Weapon)?.UpgradeType ?? -1;
 
     private bool _hasDlc;
     private string _preSearchCategory;
@@ -224,7 +226,12 @@ public class ItemSelectionViewModel : BaseViewModel
             int clampedValue = Math.Max(0, Math.Min(value, MaxUpgradeLevel));
             if (!SetProperty(ref _selectedUpgrade, clampedValue)) return;
 
-            if (SelectedItem is Weapon) _weaponUpgrade = clampedValue;
+            if (SelectedItem is Weapon weapon)
+            {
+                _weaponUpgrade = weapon.UpgradeType == 1
+                ? SomberToStandardUpgrade[Math.Min(clampedValue, 10)]
+                : Math.Min(clampedValue, 25);
+            }
             else if (SelectedItem is SpiritAsh) _spiritAshUpgrade = clampedValue;
         }
     }
@@ -333,11 +340,10 @@ public class ItemSelectionViewModel : BaseViewModel
         Items = new ObservableCollection<Item>(filtered);
         SelectedItem = Items.FirstOrDefault();
     }
-    
-    // Adding logic for smtihing and somber upgrades
+
+    // Adding logic for smithing and somber upgrades
     private void ConfigureForWeapon(Weapon weapon)
     {
-        
         CanUpgrade = weapon.UpgradeType < 2;
         ShowUpgradeOptions = CanUpgrade;
         if (CanUpgrade)
@@ -345,12 +351,12 @@ public class ItemSelectionViewModel : BaseViewModel
             if (weapon.UpgradeType == 0)
             {
                 MaxUpgradeLevel = 25;
-                _selectedUpgrade = _somberToStandardUpgrade[Math.Min(_weaponUpgrade, 10)];
+                _selectedUpgrade = Math.Min(_weaponUpgrade, 25);
             }
             else if (weapon.UpgradeType == 1)
             {
                 MaxUpgradeLevel = 10;
-                _selectedUpgrade = _standardToSomberUpgrade[Math.Min(_weaponUpgrade, 25)];
+                _selectedUpgrade = StandardToSomberUpgrade[Math.Min(_weaponUpgrade, 25)];
             }
 
             OnPropertyChanged(nameof(SelectedUpgrade));
