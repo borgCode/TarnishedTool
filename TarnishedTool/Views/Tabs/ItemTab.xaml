@@ -291,6 +291,14 @@
                         <ComboBox ItemsSource="{Binding ItemSelection.Categories}"
                                   SelectedItem="{Binding SelectedMassSpawnCategory}"
                                   Margin="0,0,0,5" />
+
+                        <!-- Mass Spawn Upgrade Level Dropdown -->
+                        <ComboBox ItemsSource="{Binding MassSpawnUpgradeOptions}"
+                                  SelectedItem="{Binding SelectedMassSpawnUpgrade}"
+                                  Margin="0,0,0,5"
+                                  Visibility="{Binding ShowMassSpawnUpgrade,
+                           Converter={StaticResource BooleanToVisibilityConverter}}" />
+
                         <Button Content="Mass Spawn"
                                 Command="{Binding MassSpawnCommand}"
                                 IsEnabled="{Binding AreOptionsEnabled}"
