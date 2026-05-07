@@ -100,7 +100,63 @@ public class ItemViewModel : BaseViewModel
     public string SelectedMassSpawnCategory
     {
         get => _selectedMassSpawnCategory;
-        set => SetProperty(ref _selectedMassSpawnCategory, value);
+        set
+        {
+            if (!SetProperty(ref _selectedMassSpawnCategory, value)) return;
+
+            bool isWeapons = value == "Weapons";
+            bool isSpiritAshes = value == "Spirit Ashes";
+            ShowMassSpawnUpgrade = isWeapons || isSpiritAshes;
+
+            if (isWeapons)
+            {
+                var options = new ObservableCollection<string>();
+                for (int s = 0; s <= 25; s++)
+                {
+                    int somber = ItemSelectionViewModel.StandardToSomberUpgrade[s];
+                    options.Add($"+{s} Smithing | +{somber} Somber");
+                }
+
+                MassSpawnUpgradeOptions = options;
+                SelectedMassSpawnUpgrade = options[25];
+            }
+            else if (isSpiritAshes)
+            {
+                var options = new ObservableCollection<string>(
+                    Enumerable.Range(0, 11).Select(i => $"+{i}"));
+                MassSpawnUpgradeOptions = options;
+                SelectedMassSpawnUpgrade = options[10];
+            }
+            else
+            {
+                MassSpawnUpgradeOptions = new ObservableCollection<string>();
+                SelectedMassSpawnUpgrade = null;
+            }
+        }
+    }
+
+    private ObservableCollection<string> _massSpawnUpgradeOptions = new();
+
+    public ObservableCollection<string> MassSpawnUpgradeOptions
+    {
+        get => _massSpawnUpgradeOptions;
+        private set => SetProperty(ref _massSpawnUpgradeOptions, value);
+    }
+
+    private string _selectedMassSpawnUpgrade;
+
+    public string SelectedMassSpawnUpgrade
+    {
+        get => _selectedMassSpawnUpgrade;
+        set => SetProperty(ref _selectedMassSpawnUpgrade, value);
+    }
+
+    private bool _showMassSpawnUpgrade;
+
+    public bool ShowMassSpawnUpgrade
+    {
+        get => _showMassSpawnUpgrade;
+        private set => SetProperty(ref _showMassSpawnUpgrade, value);
     }
 
     private ObservableCollection<string> _loadouts;
@@ -226,6 +282,7 @@ public class ItemViewModel : BaseViewModel
 
         if (itemsToSpawn == null) return;
 
+
         foreach (var item in itemsToSpawn)
         {
             SpawnSingleItem(item);
@@ -244,7 +301,12 @@ public class ItemViewModel : BaseViewModel
 
         if (item is Weapon weapon)
         {
-            if (ItemSelection.CanUpgrade) itemId += ItemSelection.SelectedUpgrade;
+            if (ItemSelection.CanUpgrade)
+            {
+                int convertedUpgradeLevel = ConvertUpgradeLevelForWeapon(weapon, ItemSelection.SelectedUpgrade,
+                    ItemSelection.SelectedItemUpgradeType);
+                itemId += convertedUpgradeLevel;
+            }
 
             if (weapon.CanApplyAow && ItemSelection.SelectedAshOfWar != null
                                    && ItemSelection.SelectedAshOfWar != AshOfWar.None)
@@ -267,6 +329,35 @@ public class ItemViewModel : BaseViewModel
         _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
     }
 
+    private static int ConvertUpgradeLevelForWeapon(Weapon weapon, int selectedUpgrade, int sliderUpgradeType)
+    {
+        bool sliderIsStandard = sliderUpgradeType == 0;
+        bool sliderIsSomber = sliderUpgradeType == 1;
+
+        if (weapon.UpgradeType == 0)
+        {
+            if (sliderIsSomber)
+            {
+                int clamped = Math.Min(selectedUpgrade, 10);
+                return ItemSelectionViewModel.SomberToStandardUpgrade[clamped];
+            }
+
+            return Math.Min(selectedUpgrade, 25);
+        }
+        else if (weapon.UpgradeType == 1)
+        {
+            if (sliderIsStandard)
+            {
+                int clamped = Math.Min(selectedUpgrade, 25);
+                return ItemSelectionViewModel.StandardToSomberUpgrade[clamped];
+            }
+
+            return Math.Min(selectedUpgrade, 10);
+        }
+
+        return 0;
+    }
+
     private async void MassSpawn()
     {
         if (string.IsNullOrEmpty(SelectedMassSpawnCategory) ||
@@ -280,6 +371,26 @@ public class ItemViewModel : BaseViewModel
         if (!hasDlc) items = items.Where(i => !i.IsDlc).ToList();
 
         bool needsDelay = SelectedMassSpawnCategory is "Cookbooks" or "Crystal Tears";
+        bool isWeapons = SelectedMassSpawnCategory == "Weapons";
+        bool isSpiritAshes = SelectedMassSpawnCategory == "Spirit Ashes";
+        
+        int standardUpgrade = 0;
+        int somberUpgrade = 0;
+        int spiritAshUpgrade = 0;
+
+        if (isWeapons && !string.IsNullOrEmpty(SelectedMassSpawnUpgrade))
+        {
+            var parts = SelectedMassSpawnUpgrade.Split('|');
+            if (parts.Length == 2)
+            {
+                standardUpgrade = int.Parse(parts[0].Trim().TrimStart('+').Split(' ')[0]);
+                somberUpgrade = int.Parse(parts[1].Trim().TrimStart('+').Split(' ')[0]);
+            }
+        }
+        else if (isSpiritAshes && !string.IsNullOrEmpty(SelectedMassSpawnUpgrade))
+        {
+            spiritAshUpgrade = int.Parse(SelectedMassSpawnUpgrade.TrimStart('+'));
+        }
 
         await Task.Run(async () =>
         {
@@ -297,6 +408,15 @@ public class ItemViewModel : BaseViewModel
                 int aowId = -1;
                 int maxQuantity = item.MaxStorage + item.StackSize;
                 bool shouldQuantityAdjust = item.StackSize > 1;
+
+                if (isWeapons && item is Weapon weapon && weapon.UpgradeType < 2)
+                {
+                    itemId += weapon.UpgradeType == 0 ? standardUpgrade : somberUpgrade;
+                }
+                else if (isSpiritAshes && item is SpiritAsh spiritAsh && spiritAsh.CanUpgrade)
+                {
+                    itemId += spiritAshUpgrade;
+                }
 
                 _itemService.SpawnItem(itemId, quantity, aowId, shouldQuantityAdjust, maxQuantity);
             }
@@ -354,7 +474,7 @@ public class ItemViewModel : BaseViewModel
             {
                 if (weapon.UpgradeType < 2)
                 {
-                    itemId += template.Upgrade;
+                    itemId += ConvertUpgradeLevelForWeapon(weapon, template.Upgrade, template.UpgradeType);
                 }
 
                 if (weapon.CanApplyAow && !string.IsNullOrEmpty(template.AshOfWarName)

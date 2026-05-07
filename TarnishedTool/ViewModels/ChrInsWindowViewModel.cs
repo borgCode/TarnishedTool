@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Data;
+using TarnishedTool.Core;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Utilities;
@@ -41,7 +42,14 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
         _chrInsView = (ListCollectionView)CollectionViewSource.GetDefaultView(ChrInsEntries);
         _chrInsView.Filter = ChrInsFilter;
+        ClearSelectionCommand = new DelegateCommand(ClearSelection);
     }
+    
+    #region Commands
+    
+    public DelegateCommand ClearSelectionCommand { get; }
+    
+    #endregion
 
     #region Properties
 
@@ -197,6 +205,12 @@ internal class ChrInsWindowViewModel : BaseViewModel
             case nameof(ChrInsEntry.IsNoDamageEnabled):
                 _chrInsService.ToggleNoDamage(entry.ChrIns, value);
                 break;
+            case nameof(ChrInsEntry.IsDrawCritEnabled):
+                _chrInsService.SetDrawCritView(entry.ChrIns, value);
+                break;
+            case nameof(ChrInsEntry.IsDrawBackstabEnabled):
+                _chrInsService.SetDrawBackstabView(entry.ChrIns, value);
+                break;			
         }
     }
 
@@ -227,6 +241,9 @@ internal class ChrInsWindowViewModel : BaseViewModel
         entry.IsNoAttackEnabled = _chrInsService.IsNoAttackEnabled(entry.ChrIns);
         entry.IsNoMoveEnabled = _chrInsService.IsNoMoveEnabled(entry.ChrIns);
         entry.IsNoDamageEnabled = _chrInsService.IsNoDamageEnabled(entry.ChrIns);
+        entry.IsDrawCritEnabled = false;
+        entry.IsDrawBackstabEnabled = false;
+        
     }
 
     private void HandleSetHp(ChrInsEntry entry)
@@ -278,6 +295,11 @@ internal class ChrInsWindowViewModel : BaseViewModel
         return (e.Name?.ToLowerInvariant().Contains(s) ?? false)
                || (e.InternalName?.ToLowerInvariant().Contains(s) ?? false)
                || e.ChrId.ToString().Contains(s);
+    }
+
+    private void ClearSelection()
+    {
+        SelectedChrInsEntry = null;
     }
 
     #endregion

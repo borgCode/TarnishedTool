@@ -105,6 +105,7 @@ namespace TarnishedTool.ViewModels
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
+            OpenSpiritTuningCommand = new DelegateCommand(OpenSpiritTuning);
             QuitoutCommand = new DelegateCommand(() => _utilityService.Quitout());
 
             _allShops = DataLoader.GetShops();
@@ -138,6 +139,7 @@ namespace TarnishedTool.ViewModels
         public ICommand IncreaseChargesCommand { get; }
         public ICommand OpenMirrorCommand { get; }
         public ICommand QuitoutCommand { get; set; }
+        public ICommand OpenSpiritTuningCommand { get; }
 
         #endregion
 
@@ -755,6 +757,7 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Private Methods
+        
 
         private void OnAppStart()
         {
@@ -952,6 +955,9 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip,
                 () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.Quitout, () => _utilityService.Quitout());
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenSpiritTuning, () => SafeExecute(OpenSpiritTuning));
+            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip, () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
+            
         }
 
         private void SafeExecute(Action action)
@@ -1016,6 +1022,8 @@ namespace TarnishedTool.ViewModels
         private void OpenRebirth() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.Rebirth);
 
         private void OpenMirror() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenMirror);
+        
+        private void OpenSpiritTuning() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenSpiritTuning);
 
         private void OpenUpgrade()
         {

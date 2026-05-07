@@ -135,6 +135,8 @@ namespace TarnishedTool.ViewModels
                     IsFreezeHealthEnabled = false;
                     IsDisableAllExceptTargetEnabled = false;
                     IsNoStaggerEnabled = false;
+                    IsDrawCritViewEnabled = false;
+                    IsDrawBackstabViewEnabled = false;
                     _targetService.ToggleTargetHook(false);
                 }
 
@@ -649,7 +651,7 @@ namespace TarnishedTool.ViewModels
             get => _currentHealth;
             set
             {
-                SetProperty(ref _currentHealth, value); 
+                SetProperty(ref _currentHealth, value);
                 OnPropertyChanged(nameof(HealthPercentage));
             }
         }
@@ -813,6 +815,30 @@ namespace TarnishedTool.ViewModels
                     if (_isShowAiInfoEnabled) OpenAiWindow();
                     else CloseTargetAiWindow();
                 }
+            }
+        }
+
+        private bool _isDrawCritViewEnabled;
+
+        public bool IsDrawCritViewEnabled
+        {
+            get => _isDrawCritViewEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawCritViewEnabled, value)) return;
+                _targetService.SetDrawCritView(_isDrawCritViewEnabled);
+            }
+        }
+
+        private bool _isDrawBackstabViewEnabled;
+
+        public bool IsDrawBackstabViewEnabled
+        {
+            get => _isDrawBackstabViewEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDrawBackstabViewEnabled, value)) return;
+                _targetService.SetDrawBackstabView(_isDrawBackstabViewEnabled);
             }
         }
 
@@ -1060,7 +1086,6 @@ namespace TarnishedTool.ViewModels
             if (chrIns != _currentTargetChrIns)
             {
 #if DEBUG
-
                 uint entityId = _targetService.GetEntityId();
                 int npcThinkParamId = _targetService.GetNpcThinkParamId();
                 int chrId = _targetService.GetNpcChrId();
@@ -1243,7 +1268,7 @@ namespace TarnishedTool.ViewModels
             _defensesWindow.Closed += (s, e) =>
             {
                 _defensesWindow = null;
-                _isShowDefensesEnabled = false; 
+                _isShowDefensesEnabled = false;
             };
             _defensesWindow.Show();
         }
@@ -1308,10 +1333,11 @@ namespace TarnishedTool.ViewModels
 
         private void UpdateShowAllState()
         {
-            _showAllResistances = ShowPoise && ShowSleep && ShowPoison && ShowRot && ShowFrost && ShowBleed && ShowMadness && ShowDeathBlight;
+            _showAllResistances = ShowPoise && ShowSleep && ShowPoison && ShowRot && ShowFrost && ShowBleed &&
+                                  ShowMadness && ShowDeathBlight;
             OnPropertyChanged(nameof(ShowAllResistances));
         }
-        
+
         private void OpenResistancesWindow()
         {
             if (_resistancesWindowWindow != null && _resistancesWindowWindow.IsVisible) return;

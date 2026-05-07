@@ -87,13 +87,13 @@ namespace TarnishedTool.Services
             memoryService.Read<byte>(GetAiThinkPtr() + ChrIns.AiThinkOffsets.ForceAct) != 0;
 
         public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetTargetChrIns());
-        
-        public void ToggleTargetingView(bool isTargetingViewEnabled) => 
+
+        public void ToggleTargetingView(bool isTargetingViewEnabled) =>
             chrInsService.ToggleTargetView(GetTargetChrIns(), isTargetingViewEnabled);
 
         public bool IsTargetViewEnabled() => chrInsService.IsTargetViewEnabled(GetTargetChrIns());
 
-        public void ToggleTargetNoDamage(bool isNoDamageEnabled) => 
+        public void ToggleTargetNoDamage(bool isNoDamageEnabled) =>
             chrInsService.ToggleNoDamage(GetTargetChrIns(), isNoDamageEnabled);
 
         public bool IsNoDamageEnabled() => chrInsService.IsNoDamageEnabled(GetTargetChrIns());
@@ -189,18 +189,21 @@ namespace TarnishedTool.Services
                 hookManager.UninstallHook(code.ToInt64());
             }
         }
-        
+
         public ResistanceData GetAllResistances() => chrInsService.GetAllResistances(GetTargetChrIns());
 
         public bool[] GetImmunities() => chrInsService.GetImmunities(GetTargetChrIns());
         public float[] GetDefenses() => chrInsService.GetDefenses(GetTargetChrIns());
         public float GetDist() => chrInsService.GetDistBetweenChrs(playerService.GetPlayerIns(), GetTargetChrIns());
         public uint GetEntityId() => chrInsService.GetEntityId(GetTargetChrIns());
-        
+
 
         public IntPtr GetAiThinkPtr() =>
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
         
+        public void SetDrawCritView(bool enabled) => chrInsService.SetDrawCritView(GetTargetChrIns(), enabled);
+        
+        public void SetDrawBackstabView(bool enabled) => chrInsService.SetDrawBackstabView(GetTargetChrIns(), enabled);
     }
 }

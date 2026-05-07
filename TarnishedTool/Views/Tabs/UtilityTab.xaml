@@ -497,8 +497,12 @@
                             Content="Open Mirror"
                             Command="{Binding OpenMirrorCommand}"
                             IsEnabled="{Binding AreOptionsEnabled}"
-                            Margin="0,10,10,0" />
-                        
+                            Margin="0,10,10,0"/>
+                        <Button
+                            Content="Spirit Tuning"
+                            Command="{Binding OpenSpiritTuningCommand}"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Margin="0,10,10,0"/>
                     </WrapPanel>
                 </TabItem>
 
