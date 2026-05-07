@@ -128,7 +128,7 @@ namespace TarnishedTool.Memory
                     Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0x6BC,
                     _ => 0x6CC,
                 };
-                
+
                 public static readonly int[] NpcParam = [0x5F0, 0x0];
             }
         }
@@ -208,6 +208,7 @@ namespace TarnishedTool.Memory
             public static readonly int[] ChrSuperArmorModule = [Modules, 0x40];
             public static readonly int[] ChrPhysicsModule = [Modules, 0x68];
             public static readonly int[] ChrRideModule = [Modules, 0xE8];
+            public static readonly int[] ChrThrowModule = [Modules, 0x88];
 
             public enum ChrDataOffsets
             {
@@ -220,7 +221,6 @@ namespace TarnishedTool.Memory
             }
 
             public static readonly int[] InstanceId = [0x28, 0x8];
-
             public static int ChrDataFlags => Version switch
             {
                 Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
@@ -292,6 +292,14 @@ namespace TarnishedTool.Memory
                 IsRiding = 0x50
             }
 
+            public static class ChrThrowOffsets
+            {
+                public const int CsThrowNode = 0x10;
+                public const int Crit        = 0x131;
+                public const int Backstab    = 0x129;
+            }
+            
+           
             public static readonly int[] AiThink = [ChrManipulator, 0xC0];
 
             public static class AiThinkOffsets
@@ -2505,7 +2513,6 @@ namespace TarnishedTool.Memory
                 Version2_6_0 or Version2_6_1 => 0x437000,
                 _ => 0
             };
-
 
 
             // Patches
