@@ -250,6 +250,9 @@
                                        FontSize="10" />
                         </Border>
                         </StackPanel>
+                        <CheckBox Content="Discard Anything" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsAllDiscardableChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="No Upgrade Cost" Margin="0,0,0,4"
                                   IsChecked="{Binding IsNoUpgradeCostChecked}"
                                   IsEnabled="{Binding IsEnabled}"/>

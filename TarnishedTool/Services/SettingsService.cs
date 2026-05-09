@@ -9,8 +9,7 @@ namespace TarnishedTool.Services;
 
 public class SettingsService(IMemoryService memoryService) : ISettingsService
 {
-    public void Quitout() =>
-        memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
+    
 
     public void ToggleStutterFix(bool isEnabled) =>
         memoryService.Write(memoryService.Read<nint>(UserInputManager.Base) + UserInputManager.SteamInputEnum,

@@ -12,6 +12,9 @@ namespace TarnishedTool.Services
         : IUtilityService
     {
         public const float DefaultNoClipSpeedScale = 0.2f;
+        
+        public void Quitout() =>
+        memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
 
         public void ForceSave() =>
             memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ForceSave, (byte)1);

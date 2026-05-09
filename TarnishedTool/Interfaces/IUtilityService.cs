@@ -4,6 +4,7 @@ namespace TarnishedTool.Interfaces;
 
 public interface IUtilityService
 {
+    void Quitout();
     void ForceSave();
     void TriggerNewNgCycle();
     void ToggleCombatMap(bool isEnabled);

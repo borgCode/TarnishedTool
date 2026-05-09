@@ -203,5 +203,6 @@ public enum HotkeyActions
     OpenParamPatcher,
     OpenCharactersList,
     InjectAiScript,
-    DisableKbForNoClip
+    DisableKbForNoClip,
+    AllDiscardable,
 }

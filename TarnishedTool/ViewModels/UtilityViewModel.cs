@@ -38,6 +38,13 @@ namespace TarnishedTool.ViewModels
         private readonly IParamService _paramService;
 
         public const int MaterialId01Offset = 0x0;
+        /* saving those just in case I decide to add no crafting cost
+        public const int MaterialId02Offset = 0x4;
+        public const int MaterialId03Offset = 0x8;
+        public const int MaterialId04Offset = 0xc;
+        public const int MaterialId05Offset = 0x10;
+        public const int MaterialId06Offset = 0x14;
+        */
         public const int ItemNum01Offset = 0x20;
         private List<byte[]>? _originalMaterialIds;
         private List<byte[]>? _originalItemNums;
@@ -47,7 +54,22 @@ namespace TarnishedTool.ViewModels
         private List<byte[]>? _originalReinforcePriceRate;
         private List<byte[]>? _originalBaseChangePriceRate;
 
+        // All Discardable
+        public const int EquipParamAccessoryDiscardOffset = 0x40;
+        public const int EquipParamGemDiscardOffset = 0x34;
+        public const int EquipParamGoodsDiscardOffset = 0x49;
+        public const int EquipParamProtectorDiscardOffset = 0xe3;
+        public const int EquipParamWeaponDiscardOffset = 0x109;
+
+        private List<byte[]>? _originalAccessoryDiscard;
+        private List<byte[]>? _originalGemDiscard;
+        private List<byte[]>? _originalGoodsDiscard;
+        private List<byte[]>? _originalProtectorDiscard;
+        private List<byte[]>? _originalWeaponDiscard;
+
         private static readonly uint[] DisableGraceWarpIds = [4270, 4271, 4272, 4282, 4286, 4288];
+        private readonly List<EquipMtrlUpgrades> _equipMtrlUpgrades = DataLoader.GetEquipMtrlUpgrades();
+        private readonly Dictionary<uint, (int Material, int ItemNum)> _originalEquipMtrlUpgradeMaterials = new();
 
         private readonly List<ShopCommand> _allShops;
 
@@ -93,6 +115,7 @@ namespace TarnishedTool.ViewModels
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
             OpenSpiritTuningCommand = new DelegateCommand(OpenSpiritTuning);
+            QuitoutCommand = new DelegateCommand(() => _utilityService.Quitout());
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -124,6 +147,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UpgradeFlaskCommand { get; }
         public ICommand IncreaseChargesCommand { get; }
         public ICommand OpenMirrorCommand { get; }
+        public ICommand QuitoutCommand { get; set; }
         public ICommand OpenSpiritTuningCommand { get; }
 
         #endregion
@@ -620,51 +644,128 @@ namespace TarnishedTool.ViewModels
                     var (reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex) =
                         ParamIndices.All["ReinforceParamWeapon"];
 
+                    var ids = _equipMtrlUpgrades.Select(e => e.Id).ToList();
+                    var equipRowSize =
+                        _paramService.GetRowSize(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex);
+                    var reinforceRowSize =
+                        _paramService.GetRowSize(reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex);
+
                     if (_isNoUpgradeCostEnabled)
                     {
-                        _originalMaterialIds ??= _paramService.ReadFieldFromAllRows(equipMtrlSetParamTableIndex,
-                            equipMtrlSetParamSlotIndex, MaterialId01Offset, sizeof(int));
-
-                        _originalItemNums ??= _paramService.ReadFieldFromAllRows(equipMtrlSetParamTableIndex,
-                            equipMtrlSetParamSlotIndex, ItemNum01Offset, sizeof(int));
+                        foreach (var entry in _equipMtrlUpgrades)
+                        {
+                            if (!_originalEquipMtrlUpgradeMaterials.ContainsKey(entry.Id))
+                                _originalEquipMtrlUpgradeMaterials[entry.Id] = (entry.Material, entry.ItemNum);
+                        }
 
                         _originalReinforcePriceRate ??= _paramService.ReadFieldFromAllRows(
-                            reinforceParamWeaponTableIndex,
-                            reinforceParamWeaponSlotIndex, ReinforcePriceRateOffset, sizeof(float));
-
+                            reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex, ReinforcePriceRateOffset,
+                            sizeof(float));
                         _originalBaseChangePriceRate ??= _paramService.ReadFieldFromAllRows(
-                            reinforceParamWeaponTableIndex,
-                            reinforceParamWeaponSlotIndex, BaseChangePriceRateOffset, sizeof(float));
+                            reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex, BaseChangePriceRateOffset,
+                            sizeof(float));
 
-                        _paramService.WriteFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
-                            MaterialId01Offset,
-                            BitConverter.GetBytes(-1));
-                        _paramService.WriteFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
-                            ItemNum01Offset,
-                            BitConverter.GetBytes(-1));
+                        _paramService.WriteFieldsToSpecificRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
+                            ids, MaterialId01Offset, BitConverter.GetBytes(-1), equipRowSize);
+                        _paramService.WriteFieldsToSpecificRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
+                            ids, ItemNum01Offset, BitConverter.GetBytes(-1), equipRowSize);
                         _paramService.WriteFieldToAllRows(reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex,
-                            ReinforcePriceRateOffset,
-                            BitConverter.GetBytes(0f));
+                            ReinforcePriceRateOffset, BitConverter.GetBytes(0f), reinforceRowSize);
                         _paramService.WriteFieldToAllRows(reinforceParamWeaponTableIndex, reinforceParamWeaponSlotIndex,
-                            BaseChangePriceRateOffset,
-                            BitConverter.GetBytes(0f));
+                            BaseChangePriceRateOffset, BitConverter.GetBytes(0f), reinforceRowSize);
                     }
                     else
                     {
-                        _paramService.RestoreFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
-                            MaterialId01Offset,
-                            _originalMaterialIds);
-                        _paramService.RestoreFieldToAllRows(equipMtrlSetParamTableIndex, equipMtrlSetParamSlotIndex,
-                            ItemNum01Offset,
-                            _originalItemNums);
+                        var materialRestoreIds = _originalEquipMtrlUpgradeMaterials.ToDictionary(
+                            kvp => kvp.Key,
+                            kvp => BitConverter.GetBytes(kvp.Value.Material)
+                        );
+                        var itemNumRestoreIds = _originalEquipMtrlUpgradeMaterials.ToDictionary(
+                            kvp => kvp.Key,
+                            kvp => BitConverter.GetBytes(kvp.Value.ItemNum)
+                        );
+
+
+                        _paramService.RestoreFieldsToSpecificRows(equipMtrlSetParamTableIndex,
+                            equipMtrlSetParamSlotIndex, materialRestoreIds, MaterialId01Offset, equipRowSize);
+                        _paramService.RestoreFieldsToSpecificRows(equipMtrlSetParamTableIndex,
+                            equipMtrlSetParamSlotIndex, itemNumRestoreIds, ItemNum01Offset, equipRowSize);
                         _paramService.RestoreFieldToAllRows(reinforceParamWeaponTableIndex,
-                            reinforceParamWeaponSlotIndex,
-                            ReinforcePriceRateOffset,
-                            _originalReinforcePriceRate);
+                            reinforceParamWeaponSlotIndex, ReinforcePriceRateOffset, _originalReinforcePriceRate,
+                            reinforceRowSize);
                         _paramService.RestoreFieldToAllRows(reinforceParamWeaponTableIndex,
-                            reinforceParamWeaponSlotIndex,
-                            BaseChangePriceRateOffset,
-                            _originalBaseChangePriceRate);
+                            reinforceParamWeaponSlotIndex, BaseChangePriceRateOffset, _originalBaseChangePriceRate,
+                            reinforceRowSize);
+                    }
+                });
+            }
+        }
+
+        private bool _isAllDiscardableEnabled;
+
+        public bool IsAllDiscardableEnabled
+        {
+            get => _isAllDiscardableEnabled;
+
+            set
+            {
+                if (!SetProperty(ref _isAllDiscardableEnabled, value)) return;
+                _ = Task.Run(() =>
+                {
+                    var (accessoryTable, accessorySlot) = ParamIndices.All["EquipParamAccessory"];
+                    var (gemTable, gemSlot) = ParamIndices.All["EquipParamGem"];
+                    var (goodsTable, goodsSlot) = ParamIndices.All["EquipParamGoods"];
+                    var (protectorTable, protectorSlot) = ParamIndices.All["EquipParamProtector"];
+                    var (weaponTable, weaponSlot) = ParamIndices.All["EquipParamWeapon"];
+
+                    var goodsRowSize = _paramService.GetRowSize(goodsTable, goodsSlot);
+                    var weaponRowSize = _paramService.GetRowSize(weaponTable, weaponSlot);
+                    var protectorRowSize = _paramService.GetRowSize(protectorTable, protectorSlot);
+                    var accessoryRowSize = _paramService.GetRowSize(accessoryTable, accessorySlot);
+                    var gemRowSize = _paramService.GetRowSize(gemTable, gemSlot);
+
+                    if (_isAllDiscardableEnabled)
+                    {
+                        _originalGoodsDiscard ??= _paramService.ReadFieldFromAllRows(goodsTable, goodsSlot,
+                            EquipParamGoodsDiscardOffset, sizeof(byte));
+                        _originalWeaponDiscard ??= _paramService.ReadFieldFromAllRows(weaponTable, weaponSlot,
+                            EquipParamWeaponDiscardOffset, sizeof(byte));
+                        _originalProtectorDiscard ??= _paramService.ReadFieldFromAllRows(protectorTable, protectorSlot,
+                            EquipParamProtectorDiscardOffset, sizeof(byte));
+                        _originalAccessoryDiscard ??= _paramService.ReadFieldFromAllRows(accessoryTable, accessorySlot,
+                            EquipParamAccessoryDiscardOffset, sizeof(byte));
+                        _originalGemDiscard ??= _paramService.ReadFieldFromAllRows(gemTable, gemSlot,
+                            EquipParamGemDiscardOffset, sizeof(byte));
+
+                        _paramService.WriteFieldBitToAllRows(goodsTable, goodsSlot,
+                            EquipParamGoodsDiscardOffset, SetBitInAll(_originalGoodsDiscard, 0x8, true),
+                            goodsRowSize);
+                        _paramService.WriteFieldBitToAllRows(weaponTable, weaponSlot,
+                            EquipParamWeaponDiscardOffset, SetBitInAll(_originalWeaponDiscard, 0x2, true),
+                            weaponRowSize);
+                        _paramService.WriteFieldBitToAllRows(protectorTable, protectorSlot,
+                            EquipParamProtectorDiscardOffset, SetBitInAll(_originalProtectorDiscard, 0x1, true),
+                            protectorRowSize);
+                        _paramService.WriteFieldBitToAllRows(accessoryTable, accessorySlot,
+                            EquipParamAccessoryDiscardOffset, SetBitInAll(_originalAccessoryDiscard, 0x8, true),
+                            accessoryRowSize);
+                        _paramService.WriteFieldBitToAllRows(gemTable, gemSlot,
+                            EquipParamGemDiscardOffset,
+                            SetBitInAll(_originalGemDiscard, 0x1, true), gemRowSize);
+                    }
+                    else
+                    {
+                        _paramService.RestoreFieldBitToAllRows(goodsTable, goodsSlot,
+                            EquipParamGoodsDiscardOffset, _originalGoodsDiscard, goodsRowSize);
+                        _paramService.RestoreFieldBitToAllRows(weaponTable, weaponSlot,
+                            EquipParamWeaponDiscardOffset, _originalWeaponDiscard, weaponRowSize);
+                        _paramService.RestoreFieldBitToAllRows(protectorTable, protectorSlot,
+                            EquipParamProtectorDiscardOffset, _originalProtectorDiscard, protectorRowSize);
+                        _paramService.RestoreFieldBitToAllRows(accessoryTable, accessorySlot,
+                            EquipParamAccessoryDiscardOffset, _originalAccessoryDiscard, accessoryRowSize);
+                        _paramService.RestoreFieldBitToAllRows(gemTable, gemSlot,
+                            EquipParamGemDiscardOffset,
+                            _originalGemDiscard, gemRowSize);
                     }
                 });
             }
@@ -679,7 +780,6 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Private Methods
-        
 
         private void OnAppStart()
         {
@@ -853,20 +953,33 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => SafeExecute(() => Fps = 240));
             _hotkeyManager.RegisterAction(HotkeyActions.NoUpgradeCost,
                 () => SafeExecute(() => { IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled; }));
-            _hotkeyManager.RegisterAction(HotkeyActions.OpenMapInCombat, () => _isCombatMapEnabled = !IsCombatMapEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.WarpInDungeons, () => _isDungeonWarpEnabled = !IsDungeonWarpEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.AllDiscardable,
+                () => SafeExecute(() => { IsAllDiscardableEnabled = !IsAllDiscardableEnabled; }));
+            _hotkeyManager.RegisterAction(HotkeyActions.OpenMapInCombat,
+                () => _isCombatMapEnabled = !IsCombatMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.WarpInDungeons,
+                () => _isDungeonWarpEnabled = !IsDungeonWarpEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleNextNgCycle, () => TriggerNgCycle());
-            _hotkeyManager.RegisterAction(HotkeyActions.DropRate, () => _isGuaranteedDropEnabled  =!IsGuaranteedDropEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles1, () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles2,() => _isDrawMapTiles2Enabled = !IsDrawMapTiles2Enabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawMiniMap,() =>  _isDrawMiniMapEnabled = !IsDrawMiniMapEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawTilesOnWorldMap, () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.HideMap, ()  => _isHideMapEnabled = !IsHideMapEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.HideCharacters, () => _isHideCharactersEnabled  = !IsHideCharactersEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DropRate,
+                () => _isGuaranteedDropEnabled = !IsGuaranteedDropEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles1,
+                () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMapTiles2,
+                () => _isDrawMapTiles2Enabled = !IsDrawMapTiles2Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawMiniMap,
+                () => _isDrawMiniMapEnabled = !IsDrawMiniMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawTilesOnWorldMap,
+                () => _isDrawMapTiles1Enabled = !IsDrawMapTiles1Enabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.HideMap, () => _isHideMapEnabled = !IsHideMapEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.HideCharacters,
+                () => _isHideCharactersEnabled = !IsHideCharactersEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.OpenMirror, () => SafeExecute(OpenMirror));
+            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip,
+                () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.Quitout, () => _utilityService.Quitout());
             _hotkeyManager.RegisterAction(HotkeyActions.OpenSpiritTuning, () => SafeExecute(OpenSpiritTuning));
-            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip, () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
-            
+            _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip,
+                () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
         }
 
         private void SafeExecute(Action action)
@@ -931,7 +1044,7 @@ namespace TarnishedTool.ViewModels
         private void OpenRebirth() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.Rebirth);
 
         private void OpenMirror() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenMirror);
-        
+
         private void OpenSpiritTuning() => _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.OpenSpiritTuning);
 
         private void OpenUpgrade()
@@ -1021,6 +1134,18 @@ namespace TarnishedTool.ViewModels
             {
                 IsIncreasingCharges = false;
             }
+        }
+
+        private static List<byte[]> SetBitInAll(List<byte[]> originals, int mask, bool set)
+        {
+            var result = new List<byte[]>(originals.Count);
+            foreach (var b in originals)
+            {
+                byte val = set ? (byte)(b[0] | mask) : (byte)(b[0] & ~mask);
+                result.Add(new byte[] { val });
+            }
+
+            return result;
         }
 
         #endregion

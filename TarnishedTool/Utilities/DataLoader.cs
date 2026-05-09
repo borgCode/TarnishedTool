@@ -197,10 +197,11 @@ namespace TarnishedTool.Utilities
                     CategoryName = "Spirit Ashes"
                 });
             }
+
             return spiritAshes;
         }
 
-    public static List<Item> GetItems(string resourceName, string category)
+        public static List<Item> GetItems(string resourceName, string category)
         {
             List<Item> items = new List<Item>();
 
@@ -646,15 +647,39 @@ namespace TarnishedTool.Utilities
             }
         }
 
+        public static List<EquipMtrlUpgrades> GetEquipMtrlUpgrades()
+        {
+            List<EquipMtrlUpgrades> materials = new List<EquipMtrlUpgrades>();
+            string csvData = Resources.EquipMtrlUpgrades;
+            if (string.IsNullOrWhiteSpace(csvData)) return materials;
+
+            using StringReader reader = new StringReader(csvData);
+            reader.ReadLine(); 
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                string[] parts = line.Split(',');
+                materials.Add(new EquipMtrlUpgrades
+                {
+                    Id = uint.Parse(parts[0], CultureInfo.InvariantCulture),
+                    Material = int.Parse(parts[1], CultureInfo.InvariantCulture),
+                    ItemNum = int.Parse(parts[2], CultureInfo.InvariantCulture)
+                });
+            }
+
+            return materials;
+        }
+
         public static Dictionary<int, GoalInfo> LoadGoalInfo()
         {
             Dictionary<int, GoalInfo> goalInfos = new Dictionary<int, GoalInfo>();
             string csvData = Resources.GoalInfo;
-            
+
             using StringReader reader = new StringReader(csvData);
-            
+
             reader.ReadLine();
-    
+
             string line;
             while ((line = reader.ReadLine()) != null)
             {
@@ -664,9 +689,9 @@ namespace TarnishedTool.Utilities
 
                 int goalId = int.Parse(parts[0], CultureInfo.InvariantCulture);
                 string name = parts[1];
-                
+
                 List<GoalParamDef> goalParams = new List<GoalParamDef>();
-                
+
                 if (parts.Length > 2 && !string.IsNullOrEmpty(parts[2]))
                 {
                     var paramParts = parts[2].Split(';');
@@ -677,9 +702,8 @@ namespace TarnishedTool.Utilities
                         var paramDef = ParseParamDef(segments);
                         goalParams.Add(paramDef);
                     }
-                    
                 }
-                
+
                 goalInfos[goalId] = new GoalInfo
                 {
                     GoalName = name,
@@ -710,8 +734,8 @@ namespace TarnishedTool.Utilities
         }
 
         public static Dictionary<TKey, TValue> GetSimpleDict<TKey, TValue>(
-            string resourceName, 
-            Func<string, TKey> keyParser, 
+            string resourceName,
+            Func<string, TKey> keyParser,
             Func<string, TValue> valueParser,
             char delimiter = ',')
         {
@@ -726,7 +750,7 @@ namespace TarnishedTool.Utilities
             while ((line = reader.ReadLine()) != null)
             {
                 if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
-        
+
                 string[] parts = line.Split(delimiter);
                 dict[keyParser(parts[0])] = valueParser(parts[1]);
             }
