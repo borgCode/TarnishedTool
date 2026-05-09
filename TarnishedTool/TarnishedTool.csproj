@@ -295,6 +295,7 @@
         <Compile Include="Models\CoolTimeEntry.cs" />
         <Compile Include="Models\CustomWarpChange.cs" />
         <Compile Include="Models\EnumValueItem.cs" />
+        <Compile Include="Models\EquipMtrlUpgrades.cs" />
         <Compile Include="Models\EventItem.cs" />
         <Compile Include="Models\EventLogEntry.cs" />
         <Compile Include="Models\GoalInfo.cs" />

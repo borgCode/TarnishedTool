@@ -730,6 +730,56 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id,Material,ItemNum
+        ///1,10100,2
+        ///2,10100,4
+        ///3,10100,6
+        ///4,10101,2
+        ///5,10101,4
+        ///6,10101,6
+        ///7,10102,2
+        ///8,10102,4
+        ///9,10102,6
+        ///10,10103,2
+        ///11,10103,4
+        ///12,10103,6
+        ///13,10104,2
+        ///14,10104,4
+        ///15,10104,6
+        ///16,10105,2
+        ///17,10105,4
+        ///18,10105,6
+        ///19,10106,2
+        ///20,10106,4
+        ///21,10106,6
+        ///22,10107,2
+        ///23,10107,4
+        ///24,10107,6
+        ///25,10140,1
+        ///101,10100,2
+        ///102,10100,4
+        ///103,10100,6
+        ///104,10101,2
+        ///105,10101,4
+        ///106,10101,6
+        ///107,10102,2
+        ///108,10102,4
+        ///109,10102,6
+        ///110,10103,2
+        ///111,10103,4
+        ///112,10103,6
+        ///113,10104,2
+        ///114,10104,4
+        ///115,10104,6
+        ///116,1 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EquipMtrlUpgrades {
+            get {
+                return ResourceManager.GetString("EquipMtrlUpgrades", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 48 89 5c 24 08          mov    QWORD PTR [rsp+0x8],rbx
         ///50                      push   rax
         ///53                      push   rbx

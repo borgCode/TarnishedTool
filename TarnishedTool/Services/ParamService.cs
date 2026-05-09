@@ -147,31 +147,85 @@ public class ParamService(IMemoryService memoryService) : IParamService
         memoryService.SetBitValue(row + offset, mask, setValue);
 
     public void WriteRow(nint row, byte[] data) => memoryService.WriteBytes(row, data);
-    
-    public void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value)
-    {
-        var data = GetParamData(tableIndex, slotIndex);
-        if (data is not var (paramData, rowCount, descriptorBase)) return;
 
-        for (int i = 0; i < rowCount; i++)
-        {
-            var dataOffset = memoryService.Read<nint>(descriptorBase + i * 0x18 + 0x08);
-            memoryService.WriteBytes(paramData + (int)dataOffset + offset, value);
-        }
-    }
-
-    // Needed something for bits, didn't know what to name it
-    public void WriteFieldForAllRows(int tableIndex, int slotIndex, int offset, List<byte[]> values)
+    public void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value, int rowSize)
     {
         var data = GetParamData(tableIndex, slotIndex);
         if (data is not var (paramData, rowCount, descriptorBase)) return;
 
         var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        var firstOffset = (int)BitConverter.ToInt64(descriptors, 0x08);
+
+        var block = memoryService.ReadBytes(paramData + firstOffset, rowSize * rowCount);
+
+        for (int i = 0; i < rowCount; i++)
+        {
+            var dataOffset = (int)BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
+            int rowStart = dataOffset - firstOffset;
+            for (int b = 0; b < value.Length; b++)
+                block[rowStart + offset + b] = value[b];
+        }
+
+        memoryService.WriteBytes(paramData + firstOffset, block);
+    }
+
+    public void WriteFieldBitToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]> values, int rowSize)
+    {
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (paramData, rowCount, descriptorBase)) return;
+
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        var firstOffset = (int)BitConverter.ToInt64(descriptors, 0x08);
+
+        var block = memoryService.ReadBytes(paramData + firstOffset, rowSize * rowCount);
+
         for (int i = 0; i < rowCount && i < values.Count; i++)
         {
-            var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
-            memoryService.WriteBytes(paramData + (int)dataOffset + offset, values[i]);
+            var dataOffset = (int)BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
+            int rowStart = dataOffset - firstOffset;
+            var val = values[i];
+            for (int b = 0; b < val.Length; b++)
+                block[rowStart + offset + b] = val[b];
         }
+
+        memoryService.WriteBytes(paramData + firstOffset, block);
+    }
+
+    public void RestoreFieldBitToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values,
+        int rowSize)
+    {
+        if (values == null) return;
+
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (paramData, rowCount, descriptorBase)) return;
+
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        var firstOffset = (int)BitConverter.ToInt64(descriptors, 0x08);
+
+        var block = memoryService.ReadBytes(paramData + firstOffset, rowSize * rowCount);
+
+        for (int i = 0; i < rowCount && i < values.Count; i++)
+        {
+            var dataOffset = (int)BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
+            int rowStart = dataOffset - firstOffset;
+            var val = values[i];
+            for (int b = 0; b < val.Length; b++)
+                block[rowStart + offset + b] = val[b];
+        }
+
+        memoryService.WriteBytes(paramData + firstOffset, block);
+    }
+
+    public int GetRowSize(int tableIndex, int slotIndex)
+    {
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (_, rowCount, descriptorBase)) return 0;
+        if (rowCount < 2) return 0;
+
+        var descriptors = memoryService.ReadBytes(descriptorBase, 2 * 0x18);
+        var first = BitConverter.ToInt64(descriptors, 0x08);
+        var second = BitConverter.ToInt64(descriptors, 0x18 + 0x08);
+        return (int)(second - first);
     }
 
     public List<byte[]> ReadFieldFromAllRows(int tableIndex, int slotIndex, int offset, int size)
@@ -192,7 +246,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
         return result;
     }
 
-    public void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values)
+    public void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values, int rowSize)
     {
         if (values == null) return;
 
@@ -200,11 +254,81 @@ public class ParamService(IMemoryService memoryService) : IParamService
         if (data is not var (paramData, rowCount, descriptorBase)) return;
 
         var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        var firstOffset = (int)BitConverter.ToInt64(descriptors, 0x08);
+
+        var block = memoryService.ReadBytes(paramData + firstOffset, rowSize * rowCount);
+
         for (int i = 0; i < rowCount && i < values.Count; i++)
         {
-            var dataOffset = BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
-            memoryService.WriteBytes(paramData + (int)dataOffset + offset, values[i]);
+            var dataOffset = (int)BitConverter.ToInt64(descriptors, i * 0x18 + 0x08);
+            int rowStart = dataOffset - firstOffset;
+            var val = values[i];
+            for (int b = 0; b < val.Length; b++)
+                block[rowStart + offset + b] = val[b];
         }
+
+        memoryService.WriteBytes(paramData + firstOffset, block);
+    }
+
+    public void WriteFieldsToSpecificRows(int tableIndex, int slotIndex, IEnumerable<uint> rowIds, int offset,
+        byte[] value,
+        int rowSize)
+    {
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (paramData, rowCount, descriptorBase)) return;
+
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        var firstOffset = (int)BitConverter.ToInt64(descriptors, 0x08);
+
+        var block = memoryService.ReadBytes(paramData + firstOffset, rowSize * rowCount);
+        
+        var idToIndex = new Dictionary<uint, int>(rowCount);
+        for (int i = 0; i < rowCount; i++)
+        {
+            var id = BitConverter.ToUInt32(descriptors, i * 0x18);
+            idToIndex[id] = i;
+        }
+
+        foreach (var rowId in rowIds)
+        {
+            if (!idToIndex.TryGetValue(rowId, out int idx)) continue;
+            var dataOffset = (int)BitConverter.ToInt64(descriptors, idx * 0x18 + 0x08);
+            int rowStart = dataOffset - firstOffset;
+            for (int b = 0; b < value.Length; b++)
+                block[rowStart + offset + b] = value[b];
+        }
+
+        memoryService.WriteBytes(paramData + firstOffset, block);
+    }
+
+    public void RestoreFieldsToSpecificRows(int tableIndex, int slotIndex, Dictionary<uint, byte[]> rowValues,
+        int offset, int rowSize)
+    {
+        var data = GetParamData(tableIndex, slotIndex);
+        if (data is not var (paramData, rowCount, descriptorBase)) return;
+
+        var descriptors = memoryService.ReadBytes(descriptorBase, rowCount * 0x18);
+        var firstOffset = (int)BitConverter.ToInt64(descriptors, 0x08);
+
+        var block = memoryService.ReadBytes(paramData + firstOffset, rowSize * rowCount);
+
+        var idToIndex = new Dictionary<uint, int>(rowCount);
+        for (int i = 0; i < rowCount; i++)
+        {
+            var id = BitConverter.ToUInt32(descriptors, i * 0x18);
+            idToIndex[id] = i;
+        }
+
+        foreach (var kvp in rowValues)
+        {
+            if (!idToIndex.TryGetValue(kvp.Key, out int idx)) continue;
+            var dataOffset = (int)BitConverter.ToInt64(descriptors, idx * 0x18 + 0x08);
+            int rowStart = dataOffset - firstOffset;
+            for (int b = 0; b < kvp.Value.Length; b++)
+                block[rowStart + offset + b] = kvp.Value[b];
+        }
+
+        memoryService.WriteBytes(paramData + firstOffset, block);
     }
 
     private (nint paramData, int rowCount, nint descriptorBase)? GetParamData(int tableIndex, int slotIndex)
