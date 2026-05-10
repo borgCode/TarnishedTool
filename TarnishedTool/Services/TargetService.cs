@@ -201,9 +201,12 @@ namespace TarnishedTool.Services
         public IntPtr GetAiThinkPtr() =>
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
-        
+
         public void SetDrawCritView(bool enabled) => chrInsService.SetDrawCritView(GetTargetChrIns(), enabled);
-        
+
         public void SetDrawBackstabView(bool enabled) => chrInsService.SetDrawBackstabView(GetTargetChrIns(), enabled);
+
+        public bool IsDrawCritViewEnabled() => chrInsService.IsDrawCritViewEnabled(GetTargetChrIns());
+        public bool IsDrawBackstabViewEnabled() => chrInsService.IsDrawBackstabViewEnabled(GetTargetChrIns());
     }
 }
