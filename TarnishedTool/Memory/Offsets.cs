@@ -912,6 +912,7 @@ namespace TarnishedTool.Memory
             public static long EzStateEnvQueryImplCtor;
             public static long LocalToMapCoords;
             public static long LuaDoString;
+            public static long RefreshFromStorage;
         }
 
         public static class Patches
@@ -2014,6 +2015,25 @@ namespace TarnishedTool.Memory
                 Version2_6_1 => 0x20269F0,
                 _ => 0
             };
+            
+            Functions.RefreshFromStorage = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x248D90,
+                Version1_2_1 or Version1_2_2 => 0x248E00,
+                Version1_2_3 => 0x248F20,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x249300,
+                Version1_4_0 or Version1_4_1 => 0x24B210,
+                Version1_5_0 => 0x24B380,
+                Version1_6_0 => 0x24C200,
+                Version1_7_0 => 0x24C2B0,
+                Version1_8_0 or Version1_8_1 => 0x24CB50,
+                Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x24CC80,
+                Version2_2_0 or Version2_2_3 or Version2_3_0
+                    or Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 => 0x24E0A0,
+                _ => 0
+            };
+
 
 
             // Hooks

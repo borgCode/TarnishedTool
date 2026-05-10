@@ -1025,6 +1025,8 @@ namespace TarnishedTool.ViewModels
         {
             if (IsResetWorldIncluded) _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.FadeOutAndPassTime(true));
             else _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+
+            _playerService.RefreshFromStorage();
         }
 
 

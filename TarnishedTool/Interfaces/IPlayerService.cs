@@ -54,4 +54,5 @@ public interface IPlayerService
     int GetCurrentAnimation();
     void ToggleTorrentAnywhere(bool isEnabled);
     bool IsRiding();
+    void RefreshFromStorage();
 }

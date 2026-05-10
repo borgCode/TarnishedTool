@@ -44,4 +44,5 @@ public enum AsmScript
     RemoveSpEffect,
     ItemSpawn,
     PlayerLockHp,
+    RefreshFromStorage
 }
