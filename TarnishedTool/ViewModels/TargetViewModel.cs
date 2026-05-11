@@ -1117,6 +1117,8 @@ namespace TarnishedTool.ViewModels
                 _targetService.ToggleNoHeal(IsFreezeHealthEnabled);
 
                 if (IsShowAiInfoEnabled) UpdateAiWindow(_currentTargetChrIns, chrIns);
+                IsDrawCritViewEnabled = _targetService.IsDrawCritViewEnabled();
+                IsDrawBackstabViewEnabled = _targetService.IsDrawBackstabViewEnabled();
 
                 _currentTargetChrIns = chrIns;
                 MaxPoise = _targetService.GetMaxPoise();

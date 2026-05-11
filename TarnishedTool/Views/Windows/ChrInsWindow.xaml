@@ -140,7 +140,7 @@
                                               Margin="5,0,0,0" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                    <CheckBox Content="Draw Crit"
+                                    <CheckBox Content="Draw Stance Crit"
                                               IsChecked="{Binding IsDrawCritEnabled}"
                                               Margin="0,0,0,0"/>
                                     <CheckBox Content="Draw Backstab"

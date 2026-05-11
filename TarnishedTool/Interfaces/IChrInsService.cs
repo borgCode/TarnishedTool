@@ -53,4 +53,6 @@ public interface IChrInsService
     void ToggleNoGravity(IntPtr chrIns, bool isEnabled);
     void SetDrawCritView(nint chrIns, bool enabled);
     void SetDrawBackstabView(nint chrIns, bool enabled);
+    bool IsDrawCritViewEnabled(nint chrIns);
+    bool IsDrawBackstabViewEnabled(nint chrIns);
 }

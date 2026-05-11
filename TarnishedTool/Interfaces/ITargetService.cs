@@ -50,4 +50,7 @@ public interface ITargetService
     nint GetAiThinkPtr();
     void SetDrawCritView(bool enabled);
     void SetDrawBackstabView(bool enabled);
+    bool IsDrawCritViewEnabled();
+    bool IsDrawBackstabViewEnabled();
+    
 }

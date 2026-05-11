@@ -686,7 +686,7 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            <CheckBox Grid.Row="5" Grid.Column="0" Content="Draw Backstab View" Margin="0,2,0,2"
+                            <CheckBox Grid.Row="5" Grid.Column="0" Content="Draw Backstab" Margin="0,2,0,2"
                                       IsChecked="{Binding IsDrawBackstabViewEnabled}">
                                 <CheckBox.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">
@@ -744,7 +744,7 @@
                                     </MultiBinding>
                                 </CheckBox.IsEnabled>
                             </CheckBox>
-                            <CheckBox Grid.Row="5" Grid.Column="1" Content="Draw Crit View" Margin="10,2,0,2"
+                            <CheckBox Grid.Row="5" Grid.Column="1" Content="Draw Stance Crit" Margin="10,2,0,2"
                                       IsChecked="{Binding IsDrawCritViewEnabled}">
                                 <CheckBox.IsEnabled>
                                     <MultiBinding Converter="{StaticResource BooleanAndConverter}">

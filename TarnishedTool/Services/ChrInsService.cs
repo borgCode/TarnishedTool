@@ -238,7 +238,6 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         var chrIns = memoryService.Read<nint>(entriesBase + slotIndex * 16);
 
 #if DEBUG
-
         Console.WriteLine($@"ChrIns looked up by handle: 0x{(long)chrIns:X}");
 #endif
 
@@ -276,6 +275,12 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
     public void SetDrawBackstabView(nint chrIns, bool enabled) =>
         memoryService.Write(GetChrThrowNodePtr(chrIns) + ChrIns.ChrThrowOffsets.Backstab,
             enabled ? (byte)1 : (byte)0);
+
+    public bool IsDrawCritViewEnabled(nint chrIns) =>
+        memoryService.Read<byte>(GetChrThrowNodePtr(chrIns) + ChrIns.ChrThrowOffsets.Crit) == 1;
+
+    public bool IsDrawBackstabViewEnabled(nint chrIns) =>
+        memoryService.Read<byte>(GetChrThrowNodePtr(chrIns) + ChrIns.ChrThrowOffsets.Backstab) == 1;
 
     #endregion
 
