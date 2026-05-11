@@ -198,6 +198,13 @@ namespace TarnishedTool.Services
         }
 
         public bool IsRiding() => IsRidingInternal(GetChrRidePtr());
+        
+        public void RefreshFromStorage()
+        {
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.RefreshFromStorage);
+            AsmHelper.WriteAbsoluteAddress(bytes, Functions.RefreshFromStorage, 0x4 + 2);
+            memoryService.AllocateAndExecute(bytes);
+        }
 
         private bool IsRidingInternal(IntPtr chrRideModule)
         {
