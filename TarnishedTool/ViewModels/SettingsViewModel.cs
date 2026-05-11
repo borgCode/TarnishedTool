@@ -202,6 +202,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Upgrade Flask", HotkeyActions.UpgradeFlask),
                 new("Increase Flask Charges", HotkeyActions.IncreaseFlaskCharges),
                 new("Open Shop Window", HotkeyActions.OpenShopWindow),
+                new("Set 20 FPS", HotkeyActions.Set20Fps),
                 new("Set 30 FPS", HotkeyActions.Set30Fps),
                 new("Set 60 FPS", HotkeyActions.Set60Fps),
                 new("Set 90 FPS", HotkeyActions.Set90Fps),
