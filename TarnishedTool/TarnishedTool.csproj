@@ -321,6 +321,7 @@
         <Compile Include="Models\Stats.cs" />
         <Compile Include="Models\Weapon.cs" />
         <Compile Include="Models\Weather.cs" />
+        <Compile Include="Services\ActionRequestService.cs" />
         <Compile Include="Services\AiService.cs" />
         <Compile Include="Services\AiWindowService.cs" />
         <Compile Include="Services\AttackInfoService.cs" />

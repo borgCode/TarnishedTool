@@ -55,4 +55,5 @@ public interface IPlayerService
     void ToggleTorrentAnywhere(bool isEnabled);
     bool IsRiding();
     void RefreshFromStorage();
+    void ToggleNoRoll(bool isEnabled);
 }

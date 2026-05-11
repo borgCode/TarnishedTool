@@ -8,7 +8,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class UtilityService(IMemoryService memoryService, HookManager hookManager, IPlayerService playerService)
+    public class UtilityService(IMemoryService memoryService, HookManager hookManager, IPlayerService playerService, ActionRequestService actionRequestService)
         : IUtilityService
     {
         public const float DefaultNoClipSpeedScale = 0.2f;
@@ -38,7 +38,7 @@ namespace TarnishedTool.Services
             var kbCode = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.Kb;
             var triggersCode = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.Triggers;
             var updateCoordsCode = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.UpdateCoords;
-            var jumpInterceptCode = CodeCaveOffsets.Base + CodeCaveOffsets.NoClipJmpHook;
+            
 
             if (isNoClipEnabled)
             {
@@ -46,7 +46,7 @@ namespace TarnishedTool.Services
                 if (!isKeyboardHookDisabled) WriteKbCode(kbCode);
                 WriteTriggerCode(triggersCode);
                 WriteUpdateCoords(updateCoordsCode);
-                WriteJumpIntercept(jumpInterceptCode);
+                actionRequestService.ToggleNoJump(true);
 
                 hookManager.InstallHook(inAirTimerCode.ToInt64(), Hooks.InAirTimer, new byte[]
                     { 0xF3, 0x0F, 0x11, 0x43, 0x18 });
@@ -60,8 +60,7 @@ namespace TarnishedTool.Services
                     { 0x0F, 0xB6, 0x44, 0x24, 0x36 });
                 hookManager.InstallHook(updateCoordsCode.ToInt64(), Hooks.UpdateCoords, new byte[]
                     { 0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43, 0x7C, 0x00, 0x00, 0x80, 0x3F });
-                hookManager.InstallHook(jumpInterceptCode.ToInt64(), Hooks.SetActionRequested,
-                    [0x49, 0x09, 0x41, 0x10, 0xC3]);
+                
             }
             else
             {
@@ -69,7 +68,7 @@ namespace TarnishedTool.Services
                 hookManager.UninstallHook(kbCode.ToInt64());
                 hookManager.UninstallHook(triggersCode.ToInt64());
                 hookManager.UninstallHook(updateCoordsCode.ToInt64());
-                hookManager.UninstallHook(jumpInterceptCode.ToInt64());
+                actionRequestService.ToggleNoJump(false);
 
                 playerService.ToggleNoGravity(false);
             }

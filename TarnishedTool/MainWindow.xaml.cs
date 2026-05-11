@@ -28,6 +28,7 @@ namespace TarnishedTool
         private readonly AoBScanner _aobScanner;
 
         private readonly DispatcherTimer _gameLoadedTimer;
+        private readonly ActionRequestService  _actionRequestService;
 
         public MainWindow()
         {
@@ -50,13 +51,14 @@ namespace TarnishedTool
             var hookManager = new HookManager(_memoryService, _stateService);
             var hotkeyManager = new HotkeyManager(_memoryService);
 
+            _actionRequestService = new ActionRequestService(_memoryService, hookManager);
             IParamService paramService = new ParamService(_memoryService);
             IReminderService reminderService = new ReminderService(_memoryService, hookManager, _stateService);
             IChrInsService chrInsService = new ChrInsService(_memoryService);
             ITravelService travelService = new TravelService(_memoryService, hookManager);
             IPlayerService playerService =
-                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService, chrInsService);
-            IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService);
+                new PlayerService(_memoryService, hookManager, travelService, reminderService, paramService, chrInsService, _actionRequestService);
+            IUtilityService utilityService = new UtilityService(_memoryService, hookManager, playerService, _actionRequestService);
             IEventService eventService = new EventService(_memoryService, hookManager, reminderService);
             IAttackInfoService attackInfoService = new AttackInfoService(_memoryService, hookManager);
             ITargetService targetService =
@@ -223,6 +225,7 @@ namespace TarnishedTool
 #endif
                     _stateService.Publish(State.Attached);
                     _hasAllocatedMemory = true;
+                    _actionRequestService.WriteInterceptCode();
                 }
 
                 if (_stateService.IsLoaded())
