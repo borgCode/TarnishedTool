@@ -60,6 +60,26 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 83 fa 11                cmp    edx,0x11
+        ///75 0b                   jne    10 &lt;check_jump&gt;
+        ///80 3d 1a 00 00 00 01    cmp    BYTE PTR [rip+0x1a],0x1        # 26 &lt;rollFlag&gt;
+        ///74 12                   je     20 &lt;block&gt;
+        ///eb 11                   jmp    21 &lt;normal&gt;
+        ///
+        ///000000000010 &lt;check_jump&gt;:
+        ///83 fa 06                cmp    edx,0x6
+        ///75 0c                   jne    21 &lt;normal&gt;
+        ///80 3d 0b 00 00 00 01    cmp    BYTE PTR [rip+0xb],0x1        # 27 &lt;jumpFlag&gt;
+        ///74 02                   je     20 &lt;block&gt;
+        ///eb 01                  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ActionRequestIntercept {
+            get {
+                return ResourceManager.GetString("ActionRequestIntercept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value,Name
         ///0,AI_DIR_TYPE_CENTER
         ///1,AI_DIR_TYPE_F
@@ -1227,20 +1247,6 @@ namespace TarnishedTool.Properties {
         internal static string NoClip_InAirTimer {
             get {
                 return ResourceManager.GetString("NoClip_InAirTimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 83 fa 06                cmp    edx,0x6
-        ///75 01                   jne    6 &lt;normal&gt;
-        ///c3                      ret
-        ///000000000006 &lt;normal&gt;:
-        ///49 09 41 10             or     QWORD PTR [r9+0x10],rax
-        ///c3                      ret.
-        /// </summary>
-        internal static string NoClip_JumpHook {
-            get {
-                return ResourceManager.GetString("NoClip_JumpHook", resourceCulture);
             }
         }
         

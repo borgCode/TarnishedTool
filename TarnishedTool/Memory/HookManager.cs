@@ -22,6 +22,8 @@ namespace TarnishedTool.Memory
         {
             _memoryService = memoryService;
         }
+        
+        public bool IsHookInstalled(long key) =>  _hookRegistry.ContainsKey(key);
 
         public void InstallHook(long codeLoc, long origin, byte[] originalBytes)
         {

@@ -18,7 +18,8 @@ namespace TarnishedTool.Services
         ITravelService travelService,
         IReminderService reminderService,
         IParamService paramService,
-        IChrInsService chrInsService) : IPlayerService
+        IChrInsService chrInsService,
+        IActionRequestService actionRequestService) : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
 
@@ -198,7 +199,7 @@ namespace TarnishedTool.Services
         }
 
         public bool IsRiding() => IsRidingInternal(GetChrRidePtr());
-        
+
         public void RefreshFromStorage()
         {
             var bytes = AsmLoader.GetAsmBytes(AsmScript.RefreshFromStorage);
@@ -355,30 +356,27 @@ namespace TarnishedTool.Services
         public void ToggleLockHp(bool isEnabled)
         {
             var playerLockHp = CodeCaveOffsets.Base + CodeCaveOffsets.PlayerLockHp;
-            
+
             if (isEnabled)
             {
-
                 InstallPlayerLockHp(playerLockHp);
             }
             else
             {
                 hookManager.UninstallHook(playerLockHp.ToInt64());
             }
-            
         }
-        
+
         private void InstallPlayerLockHp(nint code)
         {
             var bytes = AsmLoader.GetAsmBytes(AsmScript.PlayerLockHp);
             AsmHelper.WriteRelativeOffsets(bytes, [
-            (code + 0x6, WorldChrMan.Base.ToInt64(), 7, 0x6 + 3),
-            (code + 0x36, Hooks.PlayerLockHp + 5, 5, 0x36 + 1)
+                (code + 0x6, WorldChrMan.Base.ToInt64(), 7, 0x6 + 3),
+                (code + 0x36, Hooks.PlayerLockHp + 5, 5, 0x36 + 1)
             ]);
-            
+
             memoryService.WriteBytes(code, bytes);
             hookManager.InstallHook(code, Hooks.PlayerLockHp, [0x48, 0x89, 0x5C, 0x24, 0x18]);
-            
         }
 
         public void ToggleNoRuneGain(bool isNoRuneGainEnabled) =>
@@ -591,6 +589,11 @@ namespace TarnishedTool.Services
             var angle = memoryService.Read<float>(playerIns + WorldChrMan.PlayerInsOffsets.CurrentMapAngle);
 
             return new Position(currentBlockId, coords, angle);
+        }
+
+        public void ToggleNoRoll(bool isEnabled)
+        {
+            actionRequestService.ToggleNoRoll(isEnabled);
         }
     }
 }

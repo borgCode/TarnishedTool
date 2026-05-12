@@ -17,7 +17,7 @@ namespace TarnishedTool.Memory
             UpdateCoords = 0x100
         }
 
-        
+
         public enum TargetView
         {
             MaxDist = 0x350,
@@ -26,7 +26,7 @@ namespace TarnishedTool.Memory
 
         public const int TargetPtr = 0x560;
         public const int SaveTargetPtrCode = 0x570;
-        
+
         public const int DisableAllExceptTarget = 0x600;
 
         public const int ActArray = 0x650;
@@ -49,7 +49,7 @@ namespace TarnishedTool.Memory
 
         public const int EzStateTalkParams = 0x1000;
         public const int EzStateTalkCode = 0x1040;
-        
+
         public const int GetEventResult = 0x1240;
 
         public const int ShouldCheckQuantity = 0x1244;
@@ -64,8 +64,7 @@ namespace TarnishedTool.Memory
 
         public const int LookedUpChrIns = 0x1900;
         public const int LionCooldownHook = 0x1A00;
-
-        public const int NoClipJmpHook = 0x1B00;
+        
 
         public const int InfinitePoise = 0x1b30; // 0x6F
 
@@ -82,7 +81,7 @@ namespace TarnishedTool.Memory
         public const int EventLogWriteIndex = 0x1E20;
         public const int EventLogCode = 0x1E40; //0x39
         public const int EventLogBuffer = 0x1E80; //0x1000
-        
+
         public const int NoHeal = 0x2F00; //0x1B
 
         public enum LocalToMap
@@ -92,11 +91,11 @@ namespace TarnishedTool.Memory
             BlockId = 0x2F60,
             Code = 0x2F70, // 0x22
         }
-        
+
         public const int PlayerLockHp = 0x3000;
-        
 
-
-
+        public const int ActionRequestIntercept = 0x4000;
+        public const int NoPlayerRoll = 0x4100;
+        public const int NoPlayerJump = 0x4101;
     }
 }

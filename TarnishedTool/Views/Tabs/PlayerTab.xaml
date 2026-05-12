@@ -225,6 +225,9 @@
                               ToolTip="Regenerate 3.3% of max HP per tick"
                               IsChecked="{Binding IsHotEnabled}"
                               Margin="0,2" />
+                    <CheckBox Content="No Roll"
+                              IsChecked="{Binding IsNoRollEnabled}"
+                              Margin="0,2" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
