@@ -19,7 +19,7 @@ namespace TarnishedTool.Services
         IReminderService reminderService,
         IParamService paramService,
         IChrInsService chrInsService,
-        ActionRequestService actionRequestService) : IPlayerService
+        IActionRequestService actionRequestService) : IPlayerService
     {
         private const float LongDistanceRestore = 500f;
 

@@ -7,18 +7,42 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services
 {
-    public class ActionRequestService(IMemoryService memoryService, HookManager hookManager)
+    public class ActionRequestService(IMemoryService memoryService, HookManager hookManager) : IActionRequestService
     {
         private IntPtr _interceptCode;
         private IntPtr _rollFlag;
         private IntPtr _jumpFlag;
 
-        public void WriteInterceptCode()
+        public void ToggleNoRoll(bool enabled)
+        {
+            if (enabled)
+                EnsureHookInstalled();
+
+            memoryService.Write(_rollFlag, enabled ? (byte)1 : (byte)0);
+
+            if (!enabled)
+                CheckAndRemoveHookIfNeeded();
+        }
+
+        public void ToggleNoJump(bool enabled)
+        {
+            if (enabled)
+                EnsureHookInstalled();
+
+            memoryService.Write(_jumpFlag, enabled ? (byte)1 : (byte)0);
+
+            if (!enabled)
+                CheckAndRemoveHookIfNeeded();
+        }
+
+        private void EnsureHookInstalled()
         {
             _interceptCode = CodeCaveOffsets.Base + CodeCaveOffsets.ActionRequestIntercept;
-
             _rollFlag = CodeCaveOffsets.Base + CodeCaveOffsets.NoPlayerRoll;
             _jumpFlag = CodeCaveOffsets.Base + CodeCaveOffsets.NoPlayerJump;
+
+            if (hookManager.IsHookInstalled(_interceptCode.ToInt64()))
+                return;
 
             var bytes = AsmLoader.GetAsmBytes(AsmScript.ActionRequestIntercept);
 
@@ -29,45 +53,8 @@ namespace TarnishedTool.Services
             });
 
             memoryService.WriteBytes(_interceptCode, bytes);
-
             memoryService.Write(_rollFlag, (byte)0);
             memoryService.Write(_jumpFlag, (byte)0);
-        }
-
-        public void ToggleNoRoll(bool enabled)
-        {
-            if (_interceptCode == IntPtr.Zero) return;
-            if (enabled)
-                EnsureHookInstalled();
-
-            memoryService.Write(_rollFlag, enabled ? (byte)1 : (byte)0);
-#if DEBUG
-            Console.WriteLine($"RollFlag = {memoryService.Read<byte>(_rollFlag)}");
-            Console.WriteLine($"JumpFlag = {memoryService.Read<byte>(_jumpFlag)}");
-#endif
-            if (!enabled)
-                CheckAndRemoveHookIfNeeded();
-        }
-
-        public void ToggleNoJump(bool enabled)
-        {
-            if (_interceptCode == IntPtr.Zero) return;
-            if (enabled)
-                EnsureHookInstalled();
-
-            memoryService.Write(_jumpFlag, enabled ? (byte)1 : (byte)0);
-#if DEBUG
-            Console.WriteLine($"RollFlag = {memoryService.Read<byte>(_rollFlag)}");
-            Console.WriteLine($"JumpFlag = {memoryService.Read<byte>(_jumpFlag)}");
-#endif
-            if (!enabled)
-                CheckAndRemoveHookIfNeeded();
-        }
-
-        private void EnsureHookInstalled()
-        {
-            if (hookManager.IsHookInstalled(Hooks.SetActionRequested))
-                return;
 
             hookManager.InstallHook(
                 _interceptCode.ToInt64(),
@@ -77,11 +64,10 @@ namespace TarnishedTool.Services
 
         private void CheckAndRemoveHookIfNeeded()
         {
-            if (_interceptCode == IntPtr.Zero) return;
             if (memoryService.Read<byte>(_rollFlag) == 0 &&
                 memoryService.Read<byte>(_jumpFlag) == 0)
             {
-                hookManager.UninstallHook(Hooks.SetActionRequested);
+                hookManager.UninstallHook(_interceptCode.ToInt64());
             }
         }
     }

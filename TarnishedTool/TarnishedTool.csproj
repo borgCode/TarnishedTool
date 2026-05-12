@@ -257,6 +257,7 @@
         <Compile Include="GameIds\ParamIndicies.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAiService.cs" />
+        <Compile Include="Interfaces\IActionRequestService.cs" />
         <Compile Include="Interfaces\IAiWindowService.cs" />
         <Compile Include="Interfaces\IAttackInfoService.cs" />
         <Compile Include="Interfaces\IChrInsService.cs" />
