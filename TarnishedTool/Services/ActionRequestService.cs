@@ -24,8 +24,8 @@ namespace TarnishedTool.Services
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (_interceptCode.ToInt64() + 0x5, _rollFlag.ToInt64(), 7, 0x5 + 3),
-                (_interceptCode.ToInt64() + 0x15, _jumpFlag.ToInt64(), 7, 0x15 + 3),
+                (_interceptCode.ToInt64() + 0x5, _rollFlag.ToInt64(), 7, 0x7),
+                (_interceptCode.ToInt64() + 0x15, _jumpFlag.ToInt64(), 7, 0x17),
             });
 
             memoryService.WriteBytes(_interceptCode, bytes);
@@ -36,29 +36,37 @@ namespace TarnishedTool.Services
 
         public void ToggleNoRoll(bool enabled)
         {
+            if (_interceptCode == IntPtr.Zero) return;
             if (enabled)
                 EnsureHookInstalled();
 
             memoryService.Write(_rollFlag, enabled ? (byte)1 : (byte)0);
-
+#if DEBUG
+            Console.WriteLine($"RollFlag = {memoryService.Read<byte>(_rollFlag)}");
+            Console.WriteLine($"JumpFlag = {memoryService.Read<byte>(_jumpFlag)}");
+#endif
             if (!enabled)
                 CheckAndRemoveHookIfNeeded();
         }
 
         public void ToggleNoJump(bool enabled)
         {
+            if (_interceptCode == IntPtr.Zero) return;
             if (enabled)
                 EnsureHookInstalled();
 
             memoryService.Write(_jumpFlag, enabled ? (byte)1 : (byte)0);
-
+#if DEBUG
+            Console.WriteLine($"RollFlag = {memoryService.Read<byte>(_rollFlag)}");
+            Console.WriteLine($"JumpFlag = {memoryService.Read<byte>(_jumpFlag)}");
+#endif
             if (!enabled)
                 CheckAndRemoveHookIfNeeded();
         }
 
         private void EnsureHookInstalled()
         {
-            if (hookManager.IsHookInstalled(_interceptCode.ToInt64()))
+            if (hookManager.IsHookInstalled(Hooks.SetActionRequested))
                 return;
 
             hookManager.InstallHook(
@@ -69,10 +77,11 @@ namespace TarnishedTool.Services
 
         private void CheckAndRemoveHookIfNeeded()
         {
+            if (_interceptCode == IntPtr.Zero) return;
             if (memoryService.Read<byte>(_rollFlag) == 0 &&
                 memoryService.Read<byte>(_jumpFlag) == 0)
             {
-                hookManager.UninstallHook(_interceptCode.ToInt64());
+                hookManager.UninstallHook(Hooks.SetActionRequested);
             }
         }
     }

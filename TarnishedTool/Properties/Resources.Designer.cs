@@ -1251,20 +1251,6 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 83 fa 06                cmp    edx,0x6
-        ///75 01                   jne    6 &lt;normal&gt;
-        ///c3                      ret
-        ///000000000006 &lt;normal&gt;:
-        ///49 09 41 10             or     QWORD PTR [r9+0x10],rax
-        ///c3                      ret.
-        /// </summary>
-        internal static string NoClip_JumpHook {
-            get {
-                return ResourceManager.GetString("NoClip_JumpHook", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 48 83 f8 39             cmp    rax,0x39
         ///75 13                   jne    19 &lt;check_ctrl&gt;
         ///f6 84 08 e8 07 00 00    test   BYTE PTR [rax+rcx*1+0x7e8],0x80
@@ -1356,20 +1342,6 @@ namespace TarnishedTool.Properties {
         internal static string NoHeal {
             get {
                 return ResourceManager.GetString("NoHeal", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 83 fa 11                cmp    edx,0x11
-        ///75 01                   jne    6 &lt;normal&gt;
-        ///c3                      ret
-        ///000000000006 &lt;normal&gt;:
-        ///49 09 41 10             or     QWORD PTR [r9+0x10],rax
-        ///c3                      ret.
-        /// </summary>
-        internal static string NoRollHook {
-            get {
-                return ResourceManager.GetString("NoRollHook", resourceCulture);
             }
         }
         
