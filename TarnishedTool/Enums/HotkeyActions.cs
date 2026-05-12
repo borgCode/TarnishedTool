@@ -206,4 +206,5 @@ public enum HotkeyActions
     InjectAiScript,
     DisableKbForNoClip,
     AllDiscardable,
+    NoRoll,
 }

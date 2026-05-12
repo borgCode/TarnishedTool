@@ -866,6 +866,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.SetNgCycleTo7, () => { SetNewGame(7); });
             _hotkeyManager.RegisterAction(HotkeyActions.FpRegen, () => { IsFpRegenEnabled = !IsFpRegenEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.LockHp, () => { IsHpLocked = !IsHpLocked; });
+            _hotkeyManager.RegisterAction(HotkeyActions.NoRoll, () => { IsNoRollEnabled = !IsNoRollEnabled; });
         }
 
         private void SafeExecute(Action action)
