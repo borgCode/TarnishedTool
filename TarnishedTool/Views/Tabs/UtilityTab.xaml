@@ -120,7 +120,7 @@
                                         Value="{Binding GameSpeed}"
                                         TextAlignment="Center"
                                         Width="80"
-                                        Minimum="0.01"
+                                        Minimum="0"
                                         Increment="0.50"
                                         FormatString="F2"
                                         BorderBrush="#3F3F46" />
@@ -203,7 +203,7 @@
                                         Value="{Binding NoClipSpeed}"
                                         TextAlignment="Center"
                                         Width="80"
-                                        Minimum="0.01"
+                                        Minimum="0"
                                         Increment="0.50"
                                         FormatString="F2"
                                         IsEnabled="{Binding IsNoClipEnabled}"

@@ -1118,6 +1118,7 @@ namespace TarnishedTool.ViewModels
         {
             // needed if player enables it while in Abyssal woods
             var playerIns = _playerService.GetPlayerIns();
+            if (playerIns == IntPtr.Zero) return;
             _spEffectService.RemoveSpEffect(playerIns, SpEffect.ForcedDismount);
 
             // needed for later area reloads
