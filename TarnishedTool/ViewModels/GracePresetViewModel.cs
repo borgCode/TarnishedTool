@@ -21,7 +21,7 @@ public class GracePresetViewModel : BaseViewModel
     public GracePresetViewModel(
         SearchableGroupedCollection<string, Grace> graces,
         Dictionary<string, GracePresetTemplate> customPresetTemplates
-        )
+    )
     {
         Graces = graces;
         _customPresetTemplates = customPresetTemplates;
@@ -35,7 +35,12 @@ public class GracePresetViewModel : BaseViewModel
 
         CreateLoadoutCommand = new DelegateCommand(CreateLoadout);
         RenameLoadoutCommand = new DelegateCommand(RenameLoadout);
-        DeleteLoadoutCommand = new DelegateCommand(DeleteLoadout);
+        DeleteLoadoutCommand = new DelegateCommand(() =>
+        {
+            var confirmed = MsgBox.ShowYesNo("Are you sure you want to delete the selected grace preset?", "Delete Preset");
+            if (!confirmed) return;
+            DeleteLoadout();
+        });
         AddGraceCommand = new DelegateCommand(AddGrace);
         RemoveGraceCommand = new DelegateCommand(RemoveGrace);
         ImportLoadoutCommand = new DelegateCommand(ImportLoadout);
@@ -80,6 +85,7 @@ public class GracePresetViewModel : BaseViewModel
                 {
                     CurrentLoadoutGraces.Add(grace);
                 }
+
                 OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
             }
         }
@@ -100,8 +106,9 @@ public class GracePresetViewModel : BaseViewModel
         get => _selectedLoadoutGrace;
         set => SetProperty(ref _selectedLoadoutGrace, value);
     }
-    
+
     private string _presetGracesSearchText = "";
+
     public string PresetGracesSearchText
     {
         get => _presetGracesSearchText;
@@ -111,11 +118,11 @@ public class GracePresetViewModel : BaseViewModel
                 OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
         }
     }
-    
+
     public IEnumerable<GracePresetEntry> FilteredCurrentLoadoutGraces =>
         string.IsNullOrWhiteSpace(PresetGracesSearchText)
             ? CurrentLoadoutGraces
-            : CurrentLoadoutGraces.Where(g => 
+            : CurrentLoadoutGraces.Where(g =>
                 g.Name.IndexOf(PresetGracesSearchText, StringComparison.OrdinalIgnoreCase) >= 0 ||
                 g.MainArea.IndexOf(PresetGracesSearchText, StringComparison.OrdinalIgnoreCase) >= 0);
 
@@ -202,7 +209,7 @@ public class GracePresetViewModel : BaseViewModel
 
         SelectedLoadout.Graces.Add(entry);
         CurrentLoadoutGraces.Add(entry);
-        OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces)); 
+        OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
     }
 
     private void RemoveGrace()
@@ -350,7 +357,7 @@ public class GracePresetViewModel : BaseViewModel
             MsgBox.Show($"Failed to export presets: {ex.Message}");
         }
     }
-    
+
     #endregion
 
     #region Public Methods
@@ -375,7 +382,7 @@ public class GracePresetViewModel : BaseViewModel
             SelectedLoadout.Graces.Add(entry);
             CurrentLoadoutGraces.Add(entry);
         }
-        
+
         OnPropertyChanged(nameof(FilteredCurrentLoadoutGraces));
     }
 

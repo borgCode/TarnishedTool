@@ -280,7 +280,12 @@ public class SettingsViewModel : BaseViewModel
         _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
 
         LoadHotkeyDisplays();
-        ClearHotkeysCommand = new DelegateCommand(ClearHotkeys);
+        ClearHotkeysCommand = new DelegateCommand(() =>
+        {
+            var confirmed = MsgBox.ShowYesNo("Are you sure you want to clear all set hotkeys?", "Clear Hotkeys");
+            if (!confirmed) return;
+            ClearHotkeys();
+        });
         OpenActivateOnLaunchCommand = new DelegateCommand(OpenActivateOnLaunch);
     }
 

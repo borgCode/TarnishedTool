@@ -14,7 +14,6 @@ namespace TarnishedTool.Views.Windows;
 
 public partial class CreateCustomWarpWindow : TopmostWindow
 {
-
     public CreateCustomWarpWindow(Dictionary<string, List<BlockWarp>> customWarps,
         bool areOptionsEnabled,
         IStateService stateService,
@@ -30,23 +29,23 @@ public partial class CreateCustomWarpWindow : TopmostWindow
             gameTickService,
             onChange
         );
-        
+
         DataContext = viewModel;
-        
-        
+
+
         if (Application.Current.MainWindow != null)
         {
             Application.Current.MainWindow.Closing += (_, _) => Close();
         }
-        
+
         Loaded += (s, e) =>
         {
             if (SettingsManager.Default.CreateCustomWarpWindowLeft > 0)
                 Left = SettingsManager.Default.CreateCustomWarpWindowLeft;
-        
+
             if (SettingsManager.Default.CreateCustomWarpWindowTop > 0)
                 Top = SettingsManager.Default.CreateCustomWarpWindowTop;
-            
+
             AlwaysOnTopCheckBox.IsChecked = SettingsManager.Default.CreateCustomWarpWindowAlwaysOnTop;
         };
     }
@@ -60,7 +59,23 @@ public partial class CreateCustomWarpWindow : TopmostWindow
             vm.DeleteWarps(itemsToDelete);
         }
     }
-    
+
+    private void DeleteWarps_Click(object sender, RoutedEventArgs e)
+        => DeleteSelected();
+
+    private void DeleteSelected()
+    {
+        var itemsToDelete = DeleteCustomWarpListView.SelectedItems.Cast<BlockWarp>().ToList();
+        if (!itemsToDelete.Any()) return;
+
+        var confirmed = MsgBox.ShowYesNo(
+            $"Are you sure you want to delete the selected warp(s)?", "Delete Warps");
+        if (!confirmed) return;
+
+        var vm = (CreateCustomWarpViewModel)DataContext;
+        vm.DeleteWarps(itemsToDelete);
+    }
+
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
         base.OnClosing(e);

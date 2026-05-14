@@ -430,8 +430,9 @@ namespace TarnishedTool.ViewModels
                     CustomWarps.RemoveGroup(category);
                     break;
             }
-
+            OnPropertyChanged(nameof(CustomWarps));
             DataLoader.SaveCustomWarps(CustomWarps.GroupedItems);
+            CustomWarps.SelectedGroup = CustomWarps.GroupedItems.Keys.FirstOrDefault();
         }
 
         #endregion
