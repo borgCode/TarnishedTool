@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
@@ -21,6 +22,12 @@ namespace TarnishedTool.Services
                 (Functions.SetEvent, 0x22 + 2)
             ]);
             memoryService.AllocateAndExecute(bytes);
+        }
+
+        public void SetEvents(IEnumerable<long> eventIds, bool flagValue)
+        {
+            foreach (var eventId in eventIds)
+                SetEvent(eventId, flagValue);
         }
 
         public bool GetEvent(long flagId)
@@ -60,6 +67,12 @@ namespace TarnishedTool.Services
         public bool AreAllEventsTrue(long[] eventToCheck) => eventToCheck.All(GetEvent);
         
         public void ToggleEvent(long eventId) => SetEvent(eventId, !GetEvent(eventId));
+
+        public void ToggleEvents(IEnumerable<long> eventIds)
+        {
+            foreach (var eventId in eventIds)
+                SetEvent(eventId, !GetEvent(eventId));
+        }
         
         public void ToggleEventLogger(bool isEnabled)
         {

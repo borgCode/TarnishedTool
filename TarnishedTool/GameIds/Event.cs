@@ -19,4 +19,6 @@ public static class Event
 
     public static readonly long SnowfieldMausoleum = 1247580400;
 
+    public static readonly long[] LakeOfRotPlatforms = [12010590,12010591,12010592,12010593,12010594,12010595];
+
 }

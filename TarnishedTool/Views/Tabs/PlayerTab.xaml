@@ -189,7 +189,7 @@
 
                     <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"
                             Visibility="{Binding ShowPlayerLocation, Converter={StaticResource BoolToVis}}"
-                            Margin="20, 0, 0, 0">
+                            Margin="15, 0, 0, 0">
                         <controls:CoordinateDisplay DataContext="{Binding MapLocation}" />
                     </Border>
                 </Grid>
