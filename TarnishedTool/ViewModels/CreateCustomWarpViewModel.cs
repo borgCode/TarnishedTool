@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Windows.Input;
 using TarnishedTool.Core;
@@ -53,7 +54,21 @@ public class CreateCustomWarpViewModel : BaseViewModel
         SavePositionCommand = new DelegateCommand(SavePosition);
         ImportWarpsCommand = new DelegateCommand(ImportWarps);
         ExportWarpsCommand = new DelegateCommand(ExportWarps);
-        DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
+        DeleteCategoryCommand = new DelegateCommand(() =>
+        {
+            var category = CustomWarps.SelectedGroup;
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                MsgBox.Show("Please select a category to delete.", "Delete Category");
+                return;
+            }
+
+            var confirmed = MsgBox.ShowYesNo("Are you sure you want to delete the selected grace preset?",
+                "Delete Preset");
+            if (!confirmed) return;
+            DeleteCategory(category);
+        });
+        
     }
 
     #region Commands
@@ -138,6 +153,8 @@ public class CreateCustomWarpViewModel : BaseViewModel
         };
 
         CustomWarps.Add(category, warp);
+        CustomWarps.SelectedGroup = category;
+        CustomWarps.SelectedItem = warp;
         _onChange?.Invoke(new WarpAdded(warp));
     }
 
@@ -298,11 +315,11 @@ public class CreateCustomWarpViewModel : BaseViewModel
         }
     }
 
-    private void DeleteCategory()
+    private void DeleteCategory(string category)
     {
-        var category = CustomWarps.SelectedGroup;
         CustomWarps.RemoveGroup(category);
         _onChange?.Invoke(new CategoryDeleted(category));
+        CustomWarps.SelectedGroup = CustomWarps.GroupedItems.Keys.FirstOrDefault();
     }
 
     #endregion

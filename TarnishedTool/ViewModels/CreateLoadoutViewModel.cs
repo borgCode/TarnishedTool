@@ -40,7 +40,12 @@ public class CreateLoadoutViewModel : BaseViewModel
 
         CreateLoadoutCommand = new DelegateCommand(CreateLoadout);
         RenameLoadoutCommand = new DelegateCommand(RenameLoadout);
-        DeleteLoadoutCommand = new DelegateCommand(DeleteLoadout);
+        DeleteLoadoutCommand = new DelegateCommand(() =>
+        {
+            var confirmed = MsgBox.ShowYesNo("Are you sure you want to delete the selected loadout?", "Delete Loadout");
+            if (!confirmed) return;
+            DeleteLoadout();
+        });
         AddItemCommand = new DelegateCommand(AddItem);
         RemoveItemCommand = new DelegateCommand(RemoveItem);
         ImportLoadoutCommand = new DelegateCommand(ImportLoadout);
