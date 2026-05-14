@@ -131,7 +131,7 @@
                             Command="{Binding UnlockGesturesCommand}"
                             Margin="0, 5, 0,2" />
 
-                   
+
                     <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Margin="0, 10, 0,2">
                         <Button
                             Content="Unlock Metyr"
@@ -145,7 +145,7 @@
                                 </MultiBinding>
                             </Button.IsEnabled>
                         </Button>
-                        
+
 
                         <Border Background="#3498db"
                                 CornerRadius="10"
@@ -165,7 +165,7 @@
 
                     </StackPanel>
 
-                    
+
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                         <Button Content="Fight Elden Beast"
                                 Width="120"
@@ -216,81 +216,96 @@
                                        FontSize="10" />
                         </Border>
                     </StackPanel>
-                    <Button Grid.Row="0" Grid.Column="2" 
+                    <Button Grid.Row="0" Grid.Column="2"
                             Content="Give starting flasks"
                             Command="{Binding GiveStartingFlasksCommand}"
-                            IsEnabled="{Binding AreOptionsEnabled}"
-                            ></Button>
+                            IsEnabled="{Binding AreOptionsEnabled}">
+                    </Button>
                 </Grid>
             </StackPanel>
         </Border>
-        
+
         <Border Grid.Row="2"
                 BorderThickness="1"
                 BorderBrush="#333"
                 CornerRadius="3"
                 Margin="0,0,0,5">
             <StackPanel Margin="10">
-                
+
                 <TextBlock Text="Toggle Flags"
                            FontWeight="Bold"
                            Margin="0,0,0,10" />
-                
-                
-                 <StackPanel Orientation="Horizontal">
 
-                        <Button Content="DLC Clear Flag"
-                                Width="120"
-                                Command="{Binding ClearDlcCommand}"
-                                Margin="10, 0, 0,2">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="AreOptionsEnabled" />
-                                    <Binding Path="IsDlcAvailable" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
-                        </Button>
-                     
-                     <TextBlock Text="{Binding DlcClearStatusText}"
-                                Width="20"
-                                Foreground="{Binding DlcClearStatusColor}"
-                                FontFamily="Bold"
-                                VerticalAlignment="Center" Margin="10,0,0,0" />
 
-                        <Border Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="This is a newly introduced stat modifier that increases the HP of bosses and enemies in the DLC.&#x0a;This modifier activates after defeating Promised Consort Radahn and going to the next game cycle.&#x0a;This modifier does not go away once it's activated and is a flat value meaning if you go to the next cycle the HP boost % remains the same.&#x0a;This modifier also does NOT affect base game bosses and enemies."
-                                ToolTipService.InitialShowDelay="100">
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
+                <StackPanel Orientation="Horizontal">
 
-                    </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Margin="0, 10, 0,2">
+                    <Button Content="DLC Clear Flag"
+                            Width="130"
+                            Height="22.5"
+                            Command="{Binding ClearDlcCommand}"
+                            Margin="10, 0, 0,2">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsDlcAvailable" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+
+                    <TextBlock Text="{Binding DlcClearStatusText}"
+                               Width="20"
+                               Foreground="{Binding DlcClearStatusColor}"
+                               FontFamily="Bold"
+                               VerticalAlignment="Center" Margin="10,0,0,0" />
+
+                    <Border Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="This is a newly introduced stat modifier that increases the HP of bosses and enemies in the DLC.&#x0a;This modifier activates after defeating Promised Consort Radahn and going to the next game cycle.&#x0a;This modifier does not go away once it's activated and is a flat value meaning if you go to the next cycle the HP boost % remains the same.&#x0a;This modifier also does NOT affect base game bosses and enemies."
+                            ToolTipService.InitialShowDelay="100">
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
+
                     <Button
                         Content="Deactivate Snowfield Mausoleum"
                         Command="{Binding DeactivateMausoleumCommand}"
                         Width="200"
+                        Height="22.5"
                         Margin="10, 0, 0,2"
-                        IsEnabled="{Binding AreOptionsEnabled}"
-                        />
-                        
-                    
+                        IsEnabled="{Binding AreOptionsEnabled}" />
+
+
                     <TextBlock Text="{Binding DeactivateMausoleumStatusText}"
                                Width="20"
                                Foreground="{Binding DeactivateMausoleumStatusColor}"
                                FontFamily="Bold"
                                VerticalAlignment="Center" Margin="5,0,0,0" />
-                    
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0, 8, 0,2">
+                    <Button Content="Lake of Rot Platforms"
+                                Width="130"
+                                Height="22.5"
+                                Command="{Binding LakeOfRotPlatformsCommand}"
+                                Margin="10, 0, 0,2"
+                                IsEnabled="{Binding AreOptionsEnabled}"/>
+                     
+                     <TextBlock Text="{Binding DeactivatePlatformsStatusText}"
+                                Width="20"
+                                Foreground="{Binding DeactivatePlatformsStatusColor}"
+                                FontFamily="Bold"
+                                VerticalAlignment="Center" Margin="10,0,0,0" />
+
+
                 </StackPanel>
             </StackPanel>
         </Border>
@@ -335,7 +350,7 @@
                                         IsChecked="{Binding IsDisableEventsEnabled}">
 
                                     </CheckBox>
-                                    
+
                                     <CheckBox
                                         Content="Event Logger"
                                         IsChecked="{Binding IsEventLoggerEnabled}">
@@ -375,19 +390,19 @@
                                     Margin="10,0,0,0"
                                     IsEnabled="{Binding AreOptionsEnabled}"
                                     Command="{Binding SetNightCommand}" />
-                                </StackPanel>
-                        <StackPanel>
-                            <TextBlock Text ="Set Weather" FontWeight="SemiBold" Margin="0,15,0,0"/>
-                            <ComboBox ItemsSource="{Binding WeatherTypes}"
-                                      DisplayMemberPath="Name"
-                                       SelectedItem="{Binding SelectedWeatherType}"
-                                      Margin="0,10,0,0"/>
-                            <Button Content ="Set"
-                                    Margin="0,6,0,0"
-                                    IsEnabled="{Binding AreOptionsEnabled}"
-                                    Command="{Binding SetWeatherCommand}"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="Set Weather" FontWeight="SemiBold" Margin="0,15,0,0" />
+                                <ComboBox ItemsSource="{Binding WeatherTypes}"
+                                          DisplayMemberPath="Name"
+                                          SelectedItem="{Binding SelectedWeatherType}"
+                                          Margin="0,10,0,0" />
+                                <Button Content="Set"
+                                        Margin="0,6,0,0"
+                                        IsEnabled="{Binding AreOptionsEnabled}"
+                                        Command="{Binding SetWeatherCommand}" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>        
                     </Border>
                 </Grid>
             </StackPanel>
