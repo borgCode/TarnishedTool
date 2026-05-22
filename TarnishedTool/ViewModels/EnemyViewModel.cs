@@ -673,7 +673,7 @@ public class EnemyViewModel : BaseViewModel
         }
 
         MsgBox.Show(
-            "EventID 900: Player is in 'Leyndell, Ashen Capital'.\nDraconic Tree Sentinel can only be fought in 'Leyndell, Royal Captial', reviving may not work as expected.",
+            "EventID 900: Player is in 'Leyndell, Ashen Capital'.\nDraconic Tree Sentinel can only be fought in 'Leyndell, Royal Capital', reviving may not work as expected.",
             "Boss Revive Warning");
 
         return true;

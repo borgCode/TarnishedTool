@@ -166,6 +166,8 @@ public class SettingsViewModel : BaseViewModel
                 new("Toggle Target Frost", HotkeyActions.ToggleFrost),
                 new("Toggle Target Bleed", HotkeyActions.ToggleBleed),
                 new("Open Target AI Window", HotkeyActions.AiInfo),
+                new("Draw Stance Crit", HotkeyActions.DrawStance),
+                new("Draw Backstab", HotkeyActions.DrawBackstab),
             ],
             ["Utility"] =
             [

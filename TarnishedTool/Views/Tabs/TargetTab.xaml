@@ -589,7 +589,7 @@
                                 <TextBlock Text="Last Act:" VerticalAlignment="Center" />
                                 <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20"
                                            TextAlignment="Right" Margin="5,0,15,0" Foreground="Gold" FontFamily="Bold" />
-                                <TextBlock Text="Force Act:" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                <TextBlock Text="Repeat Act:" VerticalAlignment="Center" Margin="0,0,10,0" />
                                 <xctk:IntegerUpDown Width="50" Height="20"
                                                     Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
                                                     Minimum="0"

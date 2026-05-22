@@ -207,4 +207,6 @@ public enum HotkeyActions
     DisableKbForNoClip,
     AllDiscardable,
     NoRoll,
+    DrawStance,
+    DrawBackstab,
 }
