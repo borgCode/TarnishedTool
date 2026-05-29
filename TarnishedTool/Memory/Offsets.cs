@@ -41,6 +41,7 @@ namespace TarnishedTool.Memory
                 var v when v.StartsWith("2.5.0.") => Version2_5_0,
                 var v when v.StartsWith("2.6.0.") => Version2_6_0,
                 var v when v.StartsWith("2.6.1.") => Version2_6_1,
+                var v when v.StartsWith("2.6.2.") => Version2_6_2,
                 _ => null
             };
 
@@ -221,6 +222,7 @@ namespace TarnishedTool.Memory
             }
 
             public static readonly int[] InstanceId = [0x28, 0x8];
+
             public static int ChrDataFlags => Version switch
             {
                 Version1_2_0 or Version1_2_1 or Version1_2_2 or Version1_2_3 or Version1_3_0 or Version1_3_1
@@ -295,11 +297,10 @@ namespace TarnishedTool.Memory
             public static class ChrThrowOffsets
             {
                 public const int CsThrowNode = 0x10;
-                public const int Crit        = 0x131;
-                public const int Backstab    = 0x129;
+                public const int Crit = 0x131;
+                public const int Backstab = 0x129;
             }
-            
-           
+
             public static readonly int[] AiThink = [ChrManipulator, 0xC0];
 
             public static class AiThinkOffsets
@@ -350,7 +351,6 @@ namespace TarnishedTool.Memory
                         or Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0xE9B2,
                     _ => 0xE9C2,
                 };
-
 
                 public static class Goal
                 {
@@ -851,14 +851,12 @@ namespace TarnishedTool.Memory
             }
         }
 
-
         public static class WorldAiManagerImp
         {
             public static IntPtr Base;
 
             public static readonly int[] LuaState = [0x6938, 0xB8, 0x28];
         }
-
 
         public static class Hooks
         {
@@ -952,10 +950,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4BA78,
                 Version1_8_0 or Version1_8_1 => 0x3CD9998,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDCDD8,
-                Version2_2_0 => 0x3D65F88,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D65F88,
                 Version2_2_3 or Version2_3_0 => 0x3D65FA8,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D65F88,
                 _ => 0
             };
 
@@ -972,10 +969,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4EC50,
                 Version1_8_0 or Version1_8_1 => 0x3CDCB80,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDFFC0,
-                Version2_2_0 => 0x3D691D8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D691D8,
                 Version2_2_3 or Version2_3_0 => 0x3D691F8,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D691D8,
                 _ => 0
             };
 
@@ -992,10 +988,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4D8D8,
                 Version1_8_0 or Version1_8_1 => 0x3CDB7F8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDEC38,
-                Version2_2_0 => 0x3D67E48,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D67E48,
                 Version2_2_3 or Version2_3_0 => 0x3D67E68,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D67E48,
                 _ => 0
             };
 
@@ -1012,10 +1007,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4DEC8,
                 Version1_8_0 or Version1_8_1 => 0x3CDBDF8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDF238,
-                Version2_2_0 => 0x3D68448,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D68448,
                 Version2_2_3 or Version2_3_0 => 0x3D68468,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D68448,
                 _ => 0
             };
 
@@ -1032,10 +1026,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4BE48,
                 Version1_8_0 or Version1_8_1 => 0x3CD9D68,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDD1A8,
-                Version2_2_0 => 0x3D66378,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D66378,
                 Version2_2_3 or Version2_3_0 => 0x3D66398,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D66378,
                 _ => 0
             };
 
@@ -1052,10 +1045,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C51360,
                 Version1_8_0 or Version1_8_1 => 0x3CDF140,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CE2580,
-                Version2_2_0 => 0x3D6B7B0,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D6B7B0,
                 Version2_2_3 or Version2_3_0 => 0x3D6B7D0,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D6B7B0,
                 _ => 0
             };
 
@@ -1072,10 +1064,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C47DFA,
                 Version1_8_0 or Version1_8_1 => 0x3CD5C7A,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CD90BA,
-                Version2_2_0 => 0x3D6226B,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D6226B,
                 Version2_2_3 or Version2_3_0 => 0x3D6228B,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D6226B,
                 _ => 0
             };
 
@@ -1092,10 +1083,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4F398,
                 Version1_8_0 or Version1_8_1 => 0x3CDD2C8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CE0708,
-                Version2_2_0 => 0x3D69918,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D69918,
                 Version2_2_3 or Version2_3_0 => 0x3D69938,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D69918,
                 _ => 0
             };
 
@@ -1112,10 +1102,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4FB40,
                 Version1_8_0 or Version1_8_1 => 0x3CDDA70,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CE0EB0,
-                Version2_2_0 => 0x3D6A0E0,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D6A0E0,
                 Version2_2_3 or Version2_3_0 => 0x3D6A100,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D6A0E0,
                 _ => 0
             };
 
@@ -1132,10 +1121,28 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4BC68,
                 Version1_8_0 or Version1_8_1 => 0x3CD9BD0,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDD010,
-                Version2_2_0 => 0x3D66198,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D66198,
                 Version2_2_3 or Version2_3_0 => 0x3D661B8,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D66198,
+                _ => 0
+            };
+
+            ChrDbgFlags.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x3C50480,
+                Version1_2_1 => 0x3C504A0,
+                Version1_2_2 => 0x3C504C0,
+                Version1_2_3 => 0x3C534DE,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x3C65050,
+                Version1_4_0 or Version1_4_1 => 0x3C082E0,
+                Version1_5_0 => 0x3C2008A,
+                Version1_6_0 => 0x3C312B0,
+                Version1_7_0 => 0x3C4BC70,
+                Version1_8_0 or Version1_8_1 => 0x3CD9B97,
+                Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDCFE8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D661A0,
+                Version2_2_3 or Version2_3_0 => 0x3D661C0,
                 _ => 0
             };
 
@@ -1152,10 +1159,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C43AC8,
                 Version1_8_0 or Version1_8_1 => 0x3CD1948,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CD4D88,
-                Version2_2_0 => 0x3D5DF38,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D5DF38,
                 Version2_2_3 or Version2_3_0 => 0x3D5DF58,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D5DF38,
                 _ => 0
             };
 
@@ -1172,10 +1178,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C6B988,
                 Version1_8_0 or Version1_8_1 => 0x3CFA3F8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CFD838,
-                Version2_2_0 => 0x3D86BD8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D86BD8,
                 Version2_2_3 or Version2_3_0 => 0x3D86BF8,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D86BD8,
                 _ => 0
             };
 
@@ -1192,10 +1197,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4D4E0,
                 Version1_8_0 or Version1_8_1 => 0x3CDB400,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDE840,
-                Version2_2_0 => 0x3D67A50,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D67A50,
                 Version2_2_3 or Version2_3_0 => 0x3D67A70,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D67A50,
                 _ => 0
             };
 
@@ -1216,7 +1220,7 @@ namespace TarnishedTool.Memory
                 Version2_2_0 => 0x485DB70,
                 Version2_2_3 or Version2_3_0 => 0x485DB90,
                 Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x485DC20,
+                    or Version2_6_1 or Version2_6_2 => 0x485DC20,
                 _ => 0
             };
 
@@ -1233,10 +1237,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4D660,
                 Version1_8_0 or Version1_8_1 => 0x3CDB580,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDE9C0,
-                Version2_2_0 => 0x3D67BD0,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D67BD0,
                 Version2_2_3 or Version2_3_0 => 0x3D67BF0,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D67BD0,
                 _ => 0
             };
 
@@ -1253,10 +1256,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4ED80,
                 Version1_8_0 or Version1_8_1 => 0x3CDCCB0,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CE00F0,
-                Version2_2_0 => 0x3D692F8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D692F8,
                 Version2_2_3 or Version2_3_0 => 0x3D69318,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D692F8,
                 _ => 0
             };
 
@@ -1272,13 +1274,11 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3A37A20,
                 Version1_8_0 or Version1_8_1 => 0x3ABFAE8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3AC2AE8,
-                Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0
-                    or Version2_5_0
-                    or Version2_6_0
-                    or Version2_6_1 => 0x3B33D00,
+                Version2_2_0 or Version2_2_3 or Version2_3_0
+                    or Version2_4_0 or Version2_5_0 or Version2_6_0
+                    or Version2_6_1 or Version2_6_2 => 0x3B33D00,
                 _ => 0
             };
-
 
             CSFlipperImp.Base = moduleBase + Version switch
             {
@@ -1294,10 +1294,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x446E858,
                 Version1_8_0 or Version1_8_1 => 0x44FD2C8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x4500708,
-                Version2_2_0 => 0x4589AD8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x4589AD8,
                 Version2_2_3 or Version2_3_0 => 0x4589AF8,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x4589AD8,
                 _ => 0
             };
 
@@ -1314,13 +1313,11 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C4DA80,
                 Version1_8_0 or Version1_8_1 => 0x3CDB9A8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDEDE8,
-                Version2_2_0 => 0x3D67FF8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D67FF8,
                 Version2_2_3 or Version2_3_0 => 0x3D68018,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D67FF8,
                 _ => 0
             };
-
 
             UserInputManager.Base = moduleBase + Version switch
             {
@@ -1339,7 +1336,7 @@ namespace TarnishedTool.Memory
                 Version2_2_0 => 0x485DB68,
                 Version2_2_3 or Version2_3_0 => 0x485DB88,
                 Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x485DC18,
+                    or Version2_6_1 or Version2_6_2 => 0x485DC18,
                 _ => 0
             };
 
@@ -1357,13 +1354,11 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x446E1F8,
                 Version1_8_0 or Version1_8_1 => 0x44FCC68,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x45000A8,
-                Version2_2_0 => 0x4589478,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x4589478,
                 Version2_2_3 or Version2_3_0 => 0x4589498,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x4589478,
                 _ => 0
             };
-
 
             MapDebugFlags.Base = moduleBase + Version switch
             {
@@ -1378,10 +1373,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C52240,
                 Version1_8_0 or Version1_8_1 => 0x3CE0940,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CE3D80,
-                Version2_2_0 => 0x3D6CFC0,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D6CFC0,
                 Version2_2_3 or Version2_3_0 => 0x3D6CFE0,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D6CFC0,
                 _ => 0
             };
 
@@ -1398,10 +1392,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C66D18,
                 Version1_8_0 or Version1_8_1 => 0x3CF5788,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CF8BC8,
-                Version2_2_0 => 0x3D81EE8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D81EE8,
                 Version2_2_3 or Version2_3_0 => 0x3D81F08,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D81EE8,
                 _ => 0
             };
 
@@ -1418,10 +1411,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C624B8,
                 Version1_8_0 or Version1_8_1 => 0x3CF0DD8,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CF4218,
-                Version2_2_0 => 0x3D7D4F8,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D7D4F8,
                 Version2_2_3 or Version2_3_0 => 0x3D7D518,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D7D4F8,
                 _ => 0
             };
 
@@ -1438,30 +1430,9 @@ namespace TarnishedTool.Memory
                 Version1_7_0 => 0x3C47940,
                 Version1_8_0 or Version1_8_1 => 0x3CD57C0,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CD8C00,
-                Version2_2_0 => 0x3D61DB0,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D61DB0,
                 Version2_2_3 or Version2_3_0 => 0x3D61DD0,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D61DB0,
-                _ => 0
-            };
-
-            ChrDbgFlags.Base = moduleBase + Version switch
-            {
-                Version1_2_0 => 0x3C50480,
-                Version1_2_1 => 0x3C504A0,
-                Version1_2_2 => 0x3C504C0,
-                Version1_2_3 => 0x3C534DE,
-                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x3C65050,
-                Version1_4_0 or Version1_4_1 => 0x3C082E0,
-                Version1_5_0 => 0x3C2008A,
-                Version1_6_0 => 0x3C312B0,
-                Version1_7_0 => 0x3C4BC70,
-                Version1_8_0 or Version1_8_1 => 0x3CD9B97,
-                Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CDCFE8,
-                Version2_2_0 => 0x3D661A0,
-                Version2_2_3 or Version2_3_0 => 0x3D661C0,
-                Version2_4_0 or Version2_5_0 or Version2_6_0
-                    or Version2_6_1 => 0x3D661A0,
                 _ => 0
             };
 
@@ -1479,7 +1450,7 @@ namespace TarnishedTool.Memory
                 Version1_8_0 or Version1_8_1 => 0x3CD5F00,
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CD9338,
                 Version2_2_0 or Version2_4_0 or Version2_5_0
-                    or Version2_6_0 or Version2_6_1 => 0x3D624E8,
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D624E8,
                 Version2_2_3 or Version2_3_0 => 0x3D62508,
                 _ => 0
             };
@@ -1506,6 +1477,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x599CA0,
                 Version2_4_0 or Version2_5_0 => 0x599D00,
                 Version2_6_0 or Version2_6_1 => 0x599CD0,
+                Version2_6_2 => 0x599C10,
                 _ => 0L
             };
 
@@ -1529,6 +1501,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x5F9AF0,
                 Version2_4_0 or Version2_5_0 => 0x5F9B50,
                 Version2_6_0 or Version2_6_1 => 0x5F9CD0,
+                Version2_6_2 => 0x5F9BF0,
                 _ => 0L
             };
 
@@ -1547,6 +1520,7 @@ namespace TarnishedTool.Memory
                 Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3E9100,
                 Version2_4_0 or Version2_5_0 => 0x3E9120,
                 Version2_6_0 or Version2_6_1 => 0x3E90F0,
+                Version2_6_2 => 0x3E8FE0,
                 _ => 0L
             };
 
@@ -1566,6 +1540,7 @@ namespace TarnishedTool.Memory
                     or Version2_5_0
                     or Version2_6_0
                     or Version2_6_1 => 0x25E1B0,
+                Version2_6_2 => 0x25E100,
                 _ => 0L
             };
 
@@ -1588,6 +1563,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x507D40,
                 Version2_4_0 or Version2_5_0 => 0x507D80,
                 Version2_6_0 or Version2_6_1 => 0x507D50,
+                Version2_6_2 => 0x507C80,
                 _ => 0L
             };
 
@@ -1611,6 +1587,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x5F79D0,
                 Version2_4_0 or Version2_5_0 => 0x5F7A30,
                 Version2_6_0 or Version2_6_1 => 0x5F7BB0,
+                Version2_6_2 => 0x5F7AD0,
                 _ => 0L
             };
 
@@ -1635,6 +1612,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x5F9300,
                 Version2_4_0 or Version2_5_0 => 0x5F9360,
                 Version2_6_0 or Version2_6_1 => 0x5F94E0,
+                Version2_6_2 => 0x5F9400,
                 _ => 0L
             };
 
@@ -1658,6 +1636,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x784EE0,
                 Version2_4_0 or Version2_5_0 => 0x784F40,
                 Version2_6_0 or Version2_6_1 => 0x7850C0,
+                Version2_6_2 => 0x784FD0,
                 _ => 0L
             };
 
@@ -1680,6 +1659,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x560660,
                 Version2_4_0 or Version2_5_0 => 0x5606A0,
                 Version2_6_0 or Version2_6_1 => 0x560670,
+                Version2_6_2 => 0x5605B0,
                 _ => 0L
             };
 
@@ -1706,6 +1686,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xB12130,
                 Version2_6_0 => 0xB122B0,
                 Version2_6_1 => 0xB12310,
+                Version2_6_2 => 0xB12220,
                 _ => 0L
             };
 
@@ -1728,6 +1709,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x507C60,
                 Version2_4_0 or Version2_5_0 => 0x507CA0,
                 Version2_6_0 or Version2_6_1 => 0x507C70,
+                Version2_6_2 => 0x507BA0,
                 _ => 0L
             };
 
@@ -1750,6 +1732,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x4F6970,
                 Version2_4_0 or Version2_5_0 => 0x4F69B0,
                 Version2_6_0 or Version2_6_1 => 0x4F6980,
+                Version2_6_2 => 0x4F68B0,
                 _ => 0L
             };
 
@@ -1772,6 +1755,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x567DF0,
                 Version2_4_0 or Version2_5_0 => 0x567E30,
                 Version2_6_0 or Version2_6_1 => 0x567E00,
+                Version2_6_2 => 0x567D40,
                 _ => 0L
             };
 
@@ -1794,6 +1778,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x5826F0,
                 Version2_4_0 or Version2_5_0 => 0x582730,
                 Version2_6_0 or Version2_6_1 => 0x582700,
+                Version2_6_2 => 0x582640,
                 _ => 0L
             };
 
@@ -1823,6 +1808,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x2664240,
                 Version2_6_0 => 0x2664210,
                 Version2_6_1 => 0x2664270,
+                Version2_6_2 => 0x2664280,
                 _ => 0L
             };
 
@@ -1845,6 +1831,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x507DF0,
                 Version2_4_0 or Version2_5_0 => 0x507E30,
                 Version2_6_0 or Version2_6_1 => 0x507E00,
+                Version2_6_2 => 0x507D30,
                 _ => 0L
             };
 
@@ -1874,6 +1861,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xE9ECA0,
                 Version2_6_0 => 0xE9EC70,
                 Version2_6_1 => 0xE9ECD0,
+                Version2_6_2 => 0xE9ECC0,
                 _ => 0L
             };
 
@@ -1903,6 +1891,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x207E850,
                 Version2_6_0 => 0x207E820,
                 Version2_6_1 => 0x207E880,
+                Version2_6_2 => 0x207E890,
                 _ => 0L
             };
 
@@ -1932,6 +1921,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x2040FF0,
                 Version2_6_0 => 0x2040FC0,
                 Version2_6_1 => 0x2041020,
+                Version2_6_2 => 0x2041030,
                 _ => 0L
             };
 
@@ -1961,6 +1951,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xEA5280,
                 Version2_6_0 => 0xEA5250,
                 Version2_6_1 => 0xEA52B0,
+                Version2_6_2 => 0xEA5290,
                 _ => 0L
             };
 
@@ -1984,6 +1975,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x61E170,
                 Version2_4_0 or Version2_5_0 => 0x61E1D0,
                 Version2_6_0 or Version2_6_1 => 0x61E350,
+                Version2_6_2 => 0x61E270,
                 _ => 0
             };
 
@@ -2013,9 +2005,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x20269C0,
                 Version2_6_0 => 0x2026990,
                 Version2_6_1 => 0x20269F0,
+                Version2_6_2 => 0x2026A00,
                 _ => 0
             };
-            
+
             Functions.RefreshFromStorage = moduleBase.ToInt64() + Version switch
             {
                 Version1_2_0 => 0x248D90,
@@ -2031,6 +2024,7 @@ namespace TarnishedTool.Memory
                 Version2_2_0 or Version2_2_3 or Version2_3_0
                     or Version2_4_0 or Version2_5_0 or Version2_6_0
                     or Version2_6_1 => 0x24E0A0,
+                Version2_6_2 => 0x24DFF0,
                 _ => 0
             };
 
@@ -2055,6 +2049,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x467989,
                 Version2_4_0 or Version2_5_0 => 0x4679C9,
                 Version2_6_0 or Version2_6_1 => 0x467999,
+                Version2_6_2 => 0x467899,
                 _ => 0L
             };
 
@@ -2076,6 +2071,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x44E268,
                 Version2_4_0 or Version2_5_0 => 0x44E2A8,
                 Version2_6_0 or Version2_6_1 => 0x44E278,
+                Version2_6_2 => 0x44E168,
                 _ => 0L
             };
 
@@ -2106,6 +2102,7 @@ namespace TarnishedTool.Memory
                 Version2_5_0 => 0x5D1954,
                 Version2_6_0 => 0x1F6D09F,
                 Version2_6_1 => 0x1F6D0FF,
+                Version2_6_2 => 0x1F6D10F,
                 _ => 0L
             };
 
@@ -2134,6 +2131,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x1F6C14F,
                 Version2_6_0 => 0x1F6C11F,
                 Version2_6_1 => 0x1F6C17F,
+                Version2_6_2 => 0x1F6C18F,
                 _ => 0L
             };
 
@@ -2156,6 +2154,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x4F9A00,
                 Version2_4_0 or Version2_5_0 => 0x4F9A40,
                 Version2_6_0 or Version2_6_1 => 0x4F9A10,
+                Version2_6_2 => 0x4F9940,
                 _ => 0L
             };
 
@@ -2173,6 +2172,7 @@ namespace TarnishedTool.Memory
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x33CA43,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E293,
                 Version2_6_0 or Version2_6_1 => 0x33E263,
+                Version2_6_2 => 0x33E143,
                 _ => 0L
             };
 
@@ -2196,6 +2196,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x717192,
                 Version2_4_0 or Version2_5_0 => 0x7171F2,
                 Version2_6_0 or Version2_6_1 => 0x717372,
+                Version2_6_2 => 0x717272,
                 _ => 0L
             };
 
@@ -2217,6 +2218,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x445CA0,
                 Version2_4_0 or Version2_5_0 => 0x445CE0,
                 Version2_6_0 or Version2_6_1 => 0x445CB0,
+                Version2_6_2 => 0x445BA0,
                 _ => 0L
             };
 
@@ -2235,6 +2237,7 @@ namespace TarnishedTool.Memory
                 Version2_2_0 or Version2_2_3 or Version2_3_0 => 0x3C7920,
                 Version2_4_0 or Version2_5_0 => 0x3C7940,
                 Version2_6_0 or Version2_6_1 => 0x3C7910,
+                Version2_6_2 => 0x3C7800,
                 _ => 0L
             };
 
@@ -2265,6 +2268,7 @@ namespace TarnishedTool.Memory
                 Version2_5_0 => 0x123846F,
                 Version2_6_0 => 0x53C8D9,
                 Version2_6_1 => 0x5BED8C4,
+                Version2_6_2 => 0x5C7DF02,
                 _ => 0L
             };
 
@@ -2287,6 +2291,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x47E21B,
                 Version2_4_0 or Version2_5_0 => 0x47E25B,
                 Version2_6_0 or Version2_6_1 => 0x47E22B,
+                Version2_6_2 => 0x47E12B,
                 _ => 0L
             };
 
@@ -2310,6 +2315,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x67A8DA,
                 Version2_4_0 or Version2_5_0 => 0x67A93A,
                 Version2_6_0 or Version2_6_1 => 0x67AABA,
+                Version2_6_2 => 0x67A9CA,
                 _ => 0L
             };
 
@@ -2333,6 +2339,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x67A8BA,
                 Version2_4_0 or Version2_5_0 => 0x67A91A,
                 Version2_6_0 or Version2_6_1 => 0x67AA9A,
+                Version2_6_2 => 0x67A9AA,
                 _ => 0L
             };
 
@@ -2357,6 +2364,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x5FC21F,
                 Version2_4_0 or Version2_5_0 => 0x5FC27F,
                 Version2_6_0 or Version2_6_1 => 0x5FC3FF,
+                Version2_6_2 => 0x5FC31F,
                 _ => 0
             };
 
@@ -2366,6 +2374,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x4FF0FA,
                 Version2_4_0 or Version2_5_0 => 0x4FF13A,
                 Version2_6_0 or Version2_6_1 => 0x4FF10A,
+                Version2_6_2 => 0x4FF03A,
                 _ => 0L
             };
 
@@ -2387,6 +2396,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x407BA2,
                 Version2_4_0 or Version2_5_0 => 0x407BE2,
                 Version2_6_0 or Version2_6_1 => 0x407BB2,
+                Version2_6_2 => 0x407AB2,
                 _ => 0L
             };
 
@@ -2408,6 +2418,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x44997B,
                 Version2_4_0 or Version2_5_0 => 0x4499BB,
                 Version2_6_0 or Version2_6_1 => 0x44998B,
+                Version2_6_2 => 0x44987B,
                 _ => 0L
             };
 
@@ -2423,6 +2434,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xD1075C,
                 Version2_6_0 => 0xD108DC,
                 Version2_6_1 => 0xD1093C,
+                Version2_6_2 => 0xD1087C,
                 _ => 0L
             };
 
@@ -2464,6 +2476,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x47E3B7,
                 Version2_4_0 or Version2_5_0 => 0x47E3F7,
                 Version2_6_0 or Version2_6_1 => 0x47E3C7,
+                Version2_6_2 => 0x47E2C7,
                 _ => 0L
             };
 
@@ -2489,6 +2502,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x9C61F1,
                 Version2_4_0 or Version2_5_0 => 0x9C6251,
                 Version2_6_0 or Version2_6_1 => 0x9C63D1,
+                Version2_6_2 => 0x9C6281,
                 _ => 0L
             };
 
@@ -2510,6 +2524,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x437042,
                 Version2_4_0 or Version2_5_0 => 0x437082,
                 Version2_6_0 or Version2_6_1 => 0x437052,
+                Version2_6_2 => 0x436F42,
                 _ => 0
             };
 
@@ -2531,6 +2546,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x436FF0,
                 Version2_4_0 or Version2_5_0 => 0x437030,
                 Version2_6_0 or Version2_6_1 => 0x437000,
+                Version2_6_2 => 0x436EF0,
                 _ => 0
             };
 
@@ -2560,6 +2576,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xB0C26D,
                 Version2_6_0 => 0xB0C3ED,
                 Version2_6_1 => 0xB0C44D,
+                Version2_6_2 => 0xB0C35D,
                 _ => 0
             };
 
@@ -2584,6 +2601,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x65190F,
                 Version2_4_0 or Version2_5_0 => 0x65196F,
                 Version2_6_0 or Version2_6_1 => 0x651AEF,
+                Version2_6_2 => 0x651A0F,
                 _ => 0
             };
 
@@ -2601,6 +2619,7 @@ namespace TarnishedTool.Memory
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x25C887,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0
                     or Version2_6_0 or Version2_6_1 => 0x25E297,
+                Version2_6_2 => 0x25E1E7,
                 _ => 0
             };
 
@@ -2624,6 +2643,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x5FC035,
                 Version2_4_0 or Version2_5_0 => 0x5FC095,
                 Version2_6_0 or Version2_6_1 => 0x5FC215,
+                Version2_6_2 => 0x5FC135,
                 _ => 0
             };
 
@@ -2647,6 +2667,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x7C4C80,
                 Version2_4_0 or Version2_5_0 => 0x7C4CE0,
                 Version2_6_0 or Version2_6_1 => 0x7C4E60,
+                Version2_6_2 => 0x7C4D70,
                 _ => 0
             };
 
@@ -2671,6 +2692,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x7EEB6A,
                 Version2_4_0 or Version2_5_0 => 0x7EEBCA,
                 Version2_6_0 or Version2_6_1 => 0x7EED4A,
+                Version2_6_2 => 0x7EEC5A,
                 _ => 0
             };
 
@@ -2695,6 +2717,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x9C374E,
                 Version2_4_0 or Version2_5_0 => 0x9C37AE,
                 Version2_6_0 or Version2_6_1 => 0x9C392E,
+                Version2_6_2 => 0x9C37DE,
                 _ => 0
             };
 
@@ -2724,6 +2747,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xE43330,
                 Version2_6_0 => 0xE43300,
                 Version2_6_1 => 0xE43360,
+                Version2_6_2 => 0xE432B0,
                 _ => 0
             };
 
@@ -2753,6 +2777,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xE53600,
                 Version2_6_0 => 0xE535D0,
                 Version2_6_1 => 0xE53630,
+                Version2_6_2 => 0xE53580,
                 _ => 0
             };
 
@@ -2782,6 +2807,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xE535E0,
                 Version2_6_0 => 0xE535B0,
                 Version2_6_1 => 0xE53610,
+                Version2_6_2 => 0xE53560,
                 _ => 0
             };
 
@@ -2811,6 +2837,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x268D360,
                 Version2_6_0 => 0x268D330,
                 Version2_6_1 => 0x268D390,
+                Version2_6_2 => 0x268D3A0,
                 _ => 0
             };
 
@@ -2829,6 +2856,7 @@ namespace TarnishedTool.Memory
                 Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x33CD76,
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E5C6,
                 Version2_6_0 or Version2_6_1 => 0x33E596,
+                Version2_6_2 => 0x33E476,
                 _ => 0
             };
 
@@ -2856,6 +2884,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xCEF9AA,
                 Version2_6_0 => 0xCEFB2A,
                 Version2_6_1 => 0xCEFB8A,
+                Version2_6_2 => 0xCEFAAA,
                 _ => 0
             };
 
@@ -2879,6 +2908,7 @@ namespace TarnishedTool.Memory
                 Version2_3_0 => 0x70608F,
                 Version2_4_0 or Version2_5_0 => 0x7060EF,
                 Version2_6_0 or Version2_6_1 => 0x70626F,
+                Version2_6_2 => 0x70616F,
                 _ => 0
             };
 
@@ -2905,6 +2935,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xAF8335,
                 Version2_6_0 => 0xAF84B5,
                 Version2_6_1 => 0xAF8515,
+                Version2_6_2 => 0xAF8425,
                 _ => 0
             };
 
@@ -2933,6 +2964,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xD3BD6E,
                 Version2_6_0 => 0xD3BEEE,
                 Version2_6_1 => 0xD3BF4E,
+                Version2_6_2 => 0xD3BE8E,
                 _ => 0
             };
 
@@ -2961,6 +2993,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xD49B10,
                 Version2_6_0 => 0xD49C90,
                 Version2_6_1 => 0xD49CF0,
+                Version2_6_2 => 0xD49C30,
                 _ => 0
             };
 
@@ -2990,6 +3023,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0xE82B2D,
                 Version2_6_0 => 0xE82AFD,
                 Version2_6_1 => 0xE82B5D,
+                Version2_6_2 => 0xE82B4D,
                 _ => 0
             };
 
