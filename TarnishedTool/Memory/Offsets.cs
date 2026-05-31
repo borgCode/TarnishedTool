@@ -1,6 +1,5 @@
 using System;
 using TarnishedTool.Enums;
-using TarnishedTool.Utilities;
 using static TarnishedTool.Enums.GameVersion;
 
 namespace TarnishedTool.Memory
@@ -45,15 +44,8 @@ namespace TarnishedTool.Memory
                 _ => null
             };
 
-            if (!_version.HasValue)
-            {
-                MsgBox.Show(
-                    $@"Unknown patch version: {_version}, please report it on GitHub. Scanning for addresses instead.",
-                    "Unknown patch version");
-                return false;
-            }
-
-
+            if (!_version.HasValue) return false;
+            
             InitializeBaseAddresses(moduleBase);
             return true;
         }
@@ -3028,100 +3020,123 @@ namespace TarnishedTool.Memory
             };
 
 
-#if DEBUG
-            Console.WriteLine($@"WorldChrMan.Base: 0x{WorldChrMan.Base.ToInt64():X}");
-            Console.WriteLine($@"FieldArea.Base: 0x{FieldArea.Base.ToInt64():X}");
-            Console.WriteLine($@"LuaEventMan.Base: 0x{LuaEventMan.Base.ToInt64():X}");
-            Console.WriteLine($@"VirtualMemFlag.Base: 0x{VirtualMemFlag.Base.ToInt64():X}");
-            Console.WriteLine($@"DamageManager.Base: 0x{DamageManager.Base.ToInt64():X}");
-            Console.WriteLine($@"MenuMan.Base: 0x{MenuMan.Base.ToInt64():X}");
-            Console.WriteLine($@"TargetView.Base: 0x{TargetView.Base.ToInt64():X}");
-            Console.WriteLine($@"GameMan.Base: 0x{GameMan.Base.ToInt64():X}");
-            Console.WriteLine($@"WorldHitMan.Base: 0x{WorldHitMan.Base.ToInt64():X}");
-            Console.WriteLine($@"WorldChrManDbg.Base: 0x{WorldChrManDbg.Base.ToInt64():X}");
-            Console.WriteLine($@"GameDataMan.Base: 0x{GameDataMan.Base.ToInt64():X}");
-            Console.WriteLine($@"CsDlcImp.Base: 0x{CsDlcImp.Base.ToInt64():X}");
-            Console.WriteLine($@"MapItemManImpl.Base: 0x{MapItemManImpl.Base.ToInt64():X}");
-            Console.WriteLine($@"FD4PadManager.Base: 0x{FD4PadManager.Base.ToInt64():X}");
-            Console.WriteLine($@"CSEmkSystem.Base: 0x{CSEmkSystem.Base.ToInt64():X}");
-            Console.WriteLine($@"WorldAreaTimeImpl.Base: 0x{WorldAreaTimeImpl.Base.ToInt64():X}");
-            Console.WriteLine($@"GroupMask.Base: 0x{GroupMask.Base.ToInt64():X}");
-            Console.WriteLine($@"CSFlipperImp.Base: 0x{CSFlipperImp.Base.ToInt64():X}");
-            Console.WriteLine($@"CSDbgEvent.Base: 0x{CSDbgEvent.Base.ToInt64():X}");
-            Console.WriteLine($@"UserInputManager.Base: 0x{UserInputManager.Base.ToInt64():X}");
-            Console.WriteLine($@"CSTrophy.Base: 0x{CSTrophy.Base.ToInt64():X}");
-            Console.WriteLine($@"MapDebugFlags.Base: 0x{MapDebugFlags.Base.ToInt64():X}");
-            Console.WriteLine($@"SoloParamRepositoryImp.Base: 0x{SoloParamRepositoryImp.Base.ToInt64():X}");
-            Console.WriteLine($@"MsgRepository.Base: 0x{MsgRepository.Base.ToInt64():X}");
-            Console.WriteLine($@"DrawPathing.Base: 0x{DrawPathing.Base.ToInt64():X}");
-            Console.WriteLine($@"ChrDbgFlags.Base: 0x{ChrDbgFlags.Base.ToInt64():X}");
+        }
 
-            Console.WriteLine($@"Patches.NoLogo: 0x{Patches.NoLogo.ToInt64():X}");
-            Console.WriteLine($@"Patches.NoRunesFromEnemies: 0x{Patches.NoRunesFromEnemies.ToInt64():X}");
-            Console.WriteLine($@"Patches.NoRuneArcLoss: 0x{Patches.NoRuneArcLoss.ToInt64():X}");
-            Console.WriteLine($@"Patches.NoRuneLossOnDeath: 0x{Patches.NoRuneLossOnDeath.ToInt64():X}");
-            Console.WriteLine($@"Patches.CanFastTravel: 0x{Patches.CanFastTravel.ToInt64():X}");
-            Console.WriteLine($@"Patches.OpenMap: 0x{Patches.OpenMap.ToInt64():X}");
-            Console.WriteLine($@"Patches.CloseMap: 0x{Patches.CloseMap.ToInt64():X}");
-            Console.WriteLine($@"Patches.EnableFreeCam: 0x{Patches.EnableFreeCam.ToInt64():X}");
-            Console.WriteLine($@"Patches.CanDrawEvents1: 0x{Patches.CanDrawEvents1.ToInt64():X}");
-            Console.WriteLine($@"Patches.CanDrawEvents2: 0x{Patches.CanDrawEvents2.ToInt64():X}");
-            Console.WriteLine($@"Patches.DebugFont: 0x{Patches.DebugFont.ToInt64():X}");
-            Console.WriteLine($@"Patches.PlayerSound: 0x{Patches.PlayerSound.ToInt64():X}");
-            Console.WriteLine(
-                $@"Patches.IsTorrentDisabledInUnderworld: 0x{Patches.IsTorrentDisabledInUnderworld.ToInt64():X}");
-            Console.WriteLine($@"Patches.IsWhistleDisabled: 0x{Patches.IsWhistleDisabled.ToInt64():X}");
-            Console.WriteLine($@"Patches.IsWorldPaused: 0x{Patches.IsWorldPaused.ToInt64():X}");
-            Console.WriteLine($@"Patches.GetItemChance: 0x{Patches.GetItemChance.ToInt64():X}");
-            Console.WriteLine($@"Patches.GetShopEvent: 0x{Patches.GetShopEvent.ToInt64():X}");
-            Console.WriteLine($@"Patches.FpsCap: 0x{Patches.FpsCap.ToInt64():X}");
+        private static long _printBaseAddr;
 
-            Console.WriteLine($@"Hooks.UpdateCoords: 0x{Hooks.UpdateCoords:X}");
-            Console.WriteLine($@"Hooks.InAirTimer: 0x{Hooks.InAirTimer:X}");
-            Console.WriteLine($@"Hooks.NoClipKb: 0x{Hooks.NoClipKb:X}");
-            Console.WriteLine($@"Hooks.NoClipTriggers: 0x{Hooks.NoClipTriggers:X}");
-            Console.WriteLine($@"Hooks.HasSpEffect: 0x{Hooks.HasSpEffect:X}");
-            Console.WriteLine($@"Hooks.BlueTargetView: 0x{Hooks.BlueTargetView:X}");
-            Console.WriteLine($@"Hooks.LockedTargetPtr: 0x{Hooks.LockedTargetPtr:X}");
-            Console.WriteLine($@"Hooks.InfinitePoise: 0x{Hooks.InfinitePoise:X}");
-            Console.WriteLine($@"Hooks.ShouldUpdateAi: 0x{Hooks.ShouldUpdateAi:X}");
-            Console.WriteLine($@"Hooks.GetForceActIdx: 0x{Hooks.GetForceActIdx:X}");
-            Console.WriteLine($@"Hooks.AttackInfo: 0x{Hooks.AttackInfo:X}");
-            Console.WriteLine($@"Hooks.WarpCoordWrite: 0x{Hooks.WarpCoordWrite:X}");
-            Console.WriteLine($@"Hooks.WarpAngleWrite: 0x{Hooks.WarpAngleWrite:X}");
-            Console.WriteLine($@"Hooks.NoTimePassOnDeath: 0x{Hooks.NoTimePassOnDeath.ToInt64():X}");
-            Console.WriteLine($@"Hooks.LionCooldownHook: 0x{Hooks.LionCooldownHook:X}");
-            Console.WriteLine($@"Hooks.SetActionRequested: 0x{Hooks.SetActionRequested:X}");
-            Console.WriteLine($@"Hooks.NoGrab: 0x{Hooks.NoGrab:X}");
-            Console.WriteLine($@"Hooks.LoadScreenMsgLookup: 0x{Hooks.LoadScreenMsgLookup:X}");
-            Console.WriteLine($@"Hooks.LoadScreenMsgLookupEarlyPatches: 0x{Hooks.LoadScreenMsgLookupEarlyPatches:X}");
-            Console.WriteLine($@"Hooks.TargetNoStagger: 0x{Hooks.TargetNoStagger:X}");
-            Console.WriteLine($@"Hooks.NoMapAcquiredPopup: 0x{Hooks.NoMapAcquiredPopup:X}");
-            Console.WriteLine($@"Hooks.NoHeal: 0x{Hooks.NoHeal:X}");
-            Console.WriteLine($@"Hooks.LockEstusHp: 0x{Hooks.PlayerLockHp:X}");
+        public static void Print(IntPtr moduleBase)
+        {
+            _printBaseAddr = moduleBase.ToInt64();
+            
+            Console.WriteLine("--- Base Pointers ---");
+            PrintOffset("WorldChrMan.Base",            WorldChrMan.Base);
+            PrintOffset("FieldArea.Base",              FieldArea.Base);
+            PrintOffset("LuaEventMan.Base",            LuaEventMan.Base);
+            PrintOffset("VirtualMemFlag.Base",         VirtualMemFlag.Base);
+            PrintOffset("DamageManager.Base",          DamageManager.Base);
+            PrintOffset("MenuMan.Base",                MenuMan.Base);
+            PrintOffset("TargetView.Base",             TargetView.Base);
+            PrintOffset("GameMan.Base",                GameMan.Base);
+            PrintOffset("WorldHitMan.Base",            WorldHitMan.Base);
+            PrintOffset("WorldChrManDbg.Base",         WorldChrManDbg.Base);
+            PrintOffset("GameDataMan.Base",            GameDataMan.Base);
+            PrintOffset("CsDlcImp.Base",               CsDlcImp.Base);
+            PrintOffset("MapItemManImpl.Base",         MapItemManImpl.Base);
+            PrintOffset("FD4PadManager.Base",          FD4PadManager.Base);
+            PrintOffset("CSEmkSystem.Base",            CSEmkSystem.Base);
+            PrintOffset("WorldAreaTimeImpl.Base",      WorldAreaTimeImpl.Base);
+            PrintOffset("GroupMask.Base",              GroupMask.Base);
+            PrintOffset("CSFlipperImp.Base",           CSFlipperImp.Base);
+            PrintOffset("CSDbgEvent.Base",             CSDbgEvent.Base);
+            PrintOffset("UserInputManager.Base",       UserInputManager.Base);
+            PrintOffset("CSTrophy.Base",               CSTrophy.Base);
+            PrintOffset("MapDebugFlags.Base",          MapDebugFlags.Base);
+            PrintOffset("SoloParamRepositoryImp.Base", SoloParamRepositoryImp.Base);
+            PrintOffset("MsgRepository.Base",          MsgRepository.Base);
+            PrintOffset("DrawPathing.Base",            DrawPathing.Base);
+            PrintOffset("ChrDbgFlags.Base",            ChrDbgFlags.Base);
+            PrintOffset("WorldAiManagerImp.Base",      WorldAiManagerImp.Base);
 
-            Console.WriteLine($@"Funcs.GraceWarp: 0x{Functions.GraceWarp:X}");
-            Console.WriteLine($@"Funcs.SetEvent: 0x{Functions.SetEvent:X}");
-            Console.WriteLine($@"Funcs.SetSpEffect: 0x{Functions.SetSpEffect:X}");
-            Console.WriteLine($@"Funcs.GiveRunes: 0x{Functions.GiveRunes:X}");
-            Console.WriteLine($@"Funcs.LookupByFieldInsHandle: 0x{Functions.LookupByFieldInsHandle:X}");
-            Console.WriteLine($@"Funcs.WarpToBlock: 0x{Functions.WarpToBlock:X}");
-            Console.WriteLine($@"Funcs.GetEvent: 0x{Functions.GetEvent:X}");
-            Console.WriteLine($@"Funcs.GetPlayerItemQuantityById: 0x{Functions.GetPlayerItemQuantityById:X}");
-            Console.WriteLine($@"Funcs.ItemSpawn: 0x{Functions.ItemSpawn:X}");
-            Console.WriteLine($@"Funcs.MatrixVectorProduct: 0x{Functions.MatrixVectorProduct:X}");
-            Console.WriteLine($@"Funcs.ChrInsByHandle: 0x{Functions.ChrInsByHandle:X}");
-            Console.WriteLine($@"Funcs.FindAndRemoveSpEffect: 0x{Functions.FindAndRemoveSpEffect:X}");
-            Console.WriteLine($@"Funcs.EmevdSwitch: 0x{Functions.EmevdSwitch:X}");
-            Console.WriteLine($@"Funcs.EmkEventInsCtor: 0x{Functions.EmkEventInsCtor:X}");
-            Console.WriteLine($@"Funcs.GetMovement: 0x{Functions.GetMovement:X}");
-            Console.WriteLine($@"Funcs.GetChrInsByEntityId: 0x{Functions.GetChrInsByEntityId:X}");
-            Console.WriteLine($@"Funcs.NpcEzStateTalkCtor: 0x{Functions.NpcEzStateTalkCtor:X}");
-            Console.WriteLine($@"Funcs.EzStateEnvQueryImplCtor: 0x{Functions.EzStateEnvQueryImplCtor:X}");
-            Console.WriteLine($@"Funcs.ExternalEventTempCtor: 0x{Functions.ExternalEventTempCtor:X}");
-            Console.WriteLine($@"Funcs.ExecuteTalkCommand: 0x{Functions.ExecuteTalkCommand:X}");
-            Console.WriteLine($@"Funcs.ExecuteTalkCommand: 0x{Functions.LocalToMapCoords:X}");
-#endif
+            Console.WriteLine("\n--- Patches ---");
+            PrintOffset("NoLogo",                       Patches.NoLogo);
+            PrintOffset("NoRunesFromEnemies",           Patches.NoRunesFromEnemies);
+            PrintOffset("NoRuneArcLoss",                Patches.NoRuneArcLoss);
+            PrintOffset("NoRuneLossOnDeath",            Patches.NoRuneLossOnDeath);
+            PrintOffset("CanFastTravel",                Patches.CanFastTravel);
+            PrintOffset("OpenMap",                      Patches.OpenMap);
+            PrintOffset("CloseMap",                     Patches.CloseMap);
+            PrintOffset("EnableFreeCam",                Patches.EnableFreeCam);
+            PrintOffset("CanDrawEvents1",               Patches.CanDrawEvents1);
+            PrintOffset("CanDrawEvents2",               Patches.CanDrawEvents2);
+            PrintOffset("DebugFont",                    Patches.DebugFont);
+            PrintOffset("PlayerSound",                  Patches.PlayerSound);
+            PrintOffset("IsTorrentDisabledInUnderworld",Patches.IsTorrentDisabledInUnderworld);
+            PrintOffset("IsWhistleDisabled",            Patches.IsWhistleDisabled);
+            PrintOffset("IsWorldPaused",                Patches.IsWorldPaused);
+            PrintOffset("GetItemChance",                Patches.GetItemChance);
+            PrintOffset("GetShopEvent",                 Patches.GetShopEvent);
+            PrintOffset("FpsCap",                       Patches.FpsCap);
+
+            Console.WriteLine("\n--- Hooks ---");
+            PrintOffset("UpdateCoords",                     Hooks.UpdateCoords);
+            PrintOffset("InAirTimer",                       Hooks.InAirTimer);
+            PrintOffset("NoClipKb",                         Hooks.NoClipKb);
+            PrintOffset("NoClipTriggers",                   Hooks.NoClipTriggers);
+            PrintOffset("HasSpEffect",                      Hooks.HasSpEffect);
+            PrintOffset("BlueTargetView",                   Hooks.BlueTargetView);
+            PrintOffset("LockedTargetPtr",                  Hooks.LockedTargetPtr);
+            PrintOffset("InfinitePoise",                    Hooks.InfinitePoise);
+            PrintOffset("ShouldUpdateAi",                   Hooks.ShouldUpdateAi);
+            PrintOffset("GetForceActIdx",                   Hooks.GetForceActIdx);
+            PrintOffset("AttackInfo",                       Hooks.AttackInfo);
+            PrintOffset("WarpCoordWrite",                   Hooks.WarpCoordWrite);
+            PrintOffset("WarpAngleWrite",                   Hooks.WarpAngleWrite);
+            PrintOffset("NoTimePassOnDeath",                Hooks.NoTimePassOnDeath);
+            PrintOffset("LionCooldownHook",                 Hooks.LionCooldownHook);
+            PrintOffset("SetActionRequested",               Hooks.SetActionRequested);
+            PrintOffset("NoGrab",                           Hooks.NoGrab);
+            PrintOffset("LoadScreenMsgLookup",              Hooks.LoadScreenMsgLookup);
+            PrintOffset("LoadScreenMsgLookupEarlyPatches",  Hooks.LoadScreenMsgLookupEarlyPatches);
+            PrintOffset("LoadScreenMsgLookupMidPatches",    Hooks.LoadScreenMsgLookupMidPatches);
+            PrintOffset("TargetNoStagger",                  Hooks.TargetNoStagger);
+            PrintOffset("NoMapAcquiredPopup",               Hooks.NoMapAcquiredPopup);
+            PrintOffset("NoHeal",                           Hooks.NoHeal);
+            PrintOffset("PlayerLockHp",                     Hooks.PlayerLockHp);
+
+            Console.WriteLine("\n--- Functions ---");
+            PrintOffset("GraceWarp",                 Functions.GraceWarp);
+            PrintOffset("SetEvent",                  Functions.SetEvent);
+            PrintOffset("SetSpEffect",               Functions.SetSpEffect);
+            PrintOffset("GiveRunes",                 Functions.GiveRunes);
+            PrintOffset("LookupByFieldInsHandle",    Functions.LookupByFieldInsHandle);
+            PrintOffset("WarpToBlock",               Functions.WarpToBlock);
+            PrintOffset("GetEvent",                  Functions.GetEvent);
+            PrintOffset("GetPlayerItemQuantityById", Functions.GetPlayerItemQuantityById);
+            PrintOffset("ItemSpawn",                 Functions.ItemSpawn);
+            PrintOffset("MatrixVectorProduct",       Functions.MatrixVectorProduct);
+            PrintOffset("ChrInsByHandle",            Functions.ChrInsByHandle);
+            PrintOffset("FindAndRemoveSpEffect",     Functions.FindAndRemoveSpEffect);
+            PrintOffset("EmevdSwitch",               Functions.EmevdSwitch);
+            PrintOffset("EmkEventInsCtor",           Functions.EmkEventInsCtor);
+            PrintOffset("GetMovement",               Functions.GetMovement);
+            PrintOffset("GetChrInsByEntityId",       Functions.GetChrInsByEntityId);
+            PrintOffset("NpcEzStateTalkCtor",        Functions.NpcEzStateTalkCtor);
+            PrintOffset("EzStateEnvQueryImplCtor",   Functions.EzStateEnvQueryImplCtor);
+            PrintOffset("ExternalEventTempCtor",     Functions.ExternalEventTempCtor);
+            PrintOffset("ExecuteTalkCommand",        Functions.ExecuteTalkCommand);
+            PrintOffset("LocalToMapCoords",          Functions.LocalToMapCoords);
+            PrintOffset("LuaDoString",               Functions.LuaDoString);
+            PrintOffset("RefreshFromStorage",        Functions.RefreshFromStorage);
+        }
+
+        private static void PrintOffset(string name, IntPtr value) => PrintOffset(name, value.ToInt64());
+
+        private static void PrintOffset(string name, long value)
+        {
+            var rel = value - _printBaseAddr;
+            Console.WriteLine(rel <= 0
+                ? $"  {name,-40} *** NOT SET ***"
+                : $"  {name,-40} 0x{value:X}  (0x{rel:X})");
         }
     }
 }

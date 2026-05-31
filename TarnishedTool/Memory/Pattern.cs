@@ -6,7 +6,8 @@ namespace TarnishedTool.Memory
         int instructionOffset,
         AddressingMode addressingMode,
         int offsetLocation = 0,
-        int instructionLength = 0)
+        int instructionLength = 0,
+        int anchorOffset = -1)
     {
         public byte[] Bytes { get; } = bytes;
         public string Mask { get; } = mask;
@@ -14,6 +15,7 @@ namespace TarnishedTool.Memory
         public AddressingMode AddressingMode { get; } = addressingMode;
         public int OffsetLocation { get; } = offsetLocation;
         public int InstructionLength { get; } = instructionLength;
+        public int AnchorOffset { get; } = anchorOffset;
 
         public static readonly Pattern WorldChrMan = new(
             [
@@ -24,7 +26,8 @@ namespace TarnishedTool.Memory
             0x1A,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 18
         );
 
         public static readonly Pattern FieldArea = new(
@@ -36,7 +39,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 20
         );
 
         public static readonly Pattern LuaEventMan = new(
@@ -45,7 +49,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            8
+            8,
+            anchorOffset: 9
         );
 
         public static readonly Pattern VirtualMemFlag = new(
@@ -54,7 +59,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern DamageManager = new(
@@ -63,7 +69,8 @@ namespace TarnishedTool.Memory
             0x27,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 4
         );
 
         public static readonly Pattern MenuMan = new(
@@ -72,7 +79,8 @@ namespace TarnishedTool.Memory
             3,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern TargetView = new(
@@ -81,7 +89,8 @@ namespace TarnishedTool.Memory
             0x2,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern GameMan = new(
@@ -90,7 +99,8 @@ namespace TarnishedTool.Memory
             -0x7,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 5
         );
 
         public static readonly Pattern WorldHitMan = new(
@@ -99,7 +109,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern WorldChrManDbg = new(
@@ -111,7 +122,8 @@ namespace TarnishedTool.Memory
             -15,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 10
         );
 
         public static readonly Pattern ChrDbgFlags = new Pattern(
@@ -120,7 +132,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             2,
-            7
+            7,
+            anchorOffset: 8
         );
 
         public static readonly Pattern GameDataMan = new(
@@ -129,7 +142,8 @@ namespace TarnishedTool.Memory
             -0x1B,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern CsDlcImp = new(
@@ -138,7 +152,8 @@ namespace TarnishedTool.Memory
             0x7,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 0
         );
 
         public static readonly Pattern MapItemManImpl = new(
@@ -161,7 +176,8 @@ namespace TarnishedTool.Memory
             0xD8,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 10
         );
 
         public static readonly Pattern FD4PadManager = new(
@@ -173,7 +189,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 9
         );
 
         public static readonly Pattern CSEmkSystem = new(
@@ -182,7 +199,8 @@ namespace TarnishedTool.Memory
             0x7,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 2
         );
 
         public static readonly Pattern WorldAreaTimeImpl = new(
@@ -191,7 +209,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern GroupMask = new(
@@ -200,7 +219,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             2,
-            7
+            7,
+            anchorOffset: 0
         );
 
         public static readonly Pattern CSFlipperImp = new(
@@ -209,16 +229,18 @@ namespace TarnishedTool.Memory
             0xC,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 3
         );
 
         public static readonly Pattern CSDbgEvent = new(
-            [0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x8B, 0x43, 0x30, 0x89, 0x44, 0x24, 0x50],
-            "xxx????xxxxxxx",
-            0,
+            new byte[] { 0x48, 0x8B, 0x08, 0x8B, 0x85, 0xE0, 0x00, 0x00, 0x00, 0x89, 0x45, 0xE0, 0x48, 0x89, 0x4D, 0xE8, 0x88, 0x5C, 0x24, 0x20, 0x4C, 0x8D, 0x4D, 0xE0, 0x45, 0x33, 0xC0, 0x48, 0x8D, 0x55, 0x48, 0x48, 0x8D, 0x4C, 0x24, 0x50, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00 },
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xxx????",
+            41,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 15
         );
 
         public static readonly Pattern UserInputManager = new(
@@ -227,7 +249,8 @@ namespace TarnishedTool.Memory
             -0x11,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 3
         );
 
         public static readonly Pattern CSTrophy = new(
@@ -236,7 +259,8 @@ namespace TarnishedTool.Memory
             0x4,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern MapDebugFlags = new Pattern(
@@ -250,25 +274,28 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern SoloParamRepositoryImp = new Pattern(
-            new byte[] { 0x45, 0x33, 0xC0, 0xBA, 0x8F },
+            [0x45, 0x33, 0xC0, 0xBA, 0x8F],
             "xxxxx",
             -0x10,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 3
         );
 
         public static readonly Pattern MsgRepository = new Pattern(
-            new byte[] { 0x80, 0xF9, 0x03, 0x41 },
+            [0x80, 0xF9, 0x03, 0x41],
             "xxxx",
             0xC,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
         );
 
         public static readonly Pattern DrawPathing = new Pattern(
@@ -277,123 +304,133 @@ namespace TarnishedTool.Memory
             0x8,
             AddressingMode.Relative,
             3,
-            7
+            7,
+            anchorOffset: 1
+        );
+
+        public static readonly Pattern WorldAiManagerImp = new Pattern(
+            [0x8B, 0xFA, 0x48, 0x8B, 0xD9, 0x8B, 0x68, 0x10, 0x48, 0x8B, 0x05, 0x00, 0x00, 0x00, 0x00],
+            "xxxxxxxxxxx????",
+            0x8,
+            AddressingMode.Relative,
+            3,
+            7,
+            anchorOffset: 6
         );
 
         //Hooks
 
         public static readonly Pattern NoTimePassOnDeath = new Pattern(
-            new byte[]
-            {
+            [
                 0x4C, 0x8B, 0x74, 0x24, 0x70, 0x48, 0x8B, 0x6C, 0x24, 0x78, 0x4D, 0x39, 0x6F, 0x08, 0x74, 0x40
-            },
+            ],
             "xxxxxxxxxxxxxxxx",
             0,
-            AddressingMode.Absolute
-        );
-
-        public static readonly Pattern LoadScreenMsgLookupEarlyPatches = new Pattern(
-            [
-                0x48, 0x89, 0x44, 0x24, 0x20, 0x4C, 0x8D, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x44, 0x8B, 0xC2, 0xBA, 0xCD,
-                0x00, 0x00, 0x00
-            ],
-            "xxxxxxxx????xxxxxxxx",
-            0xF,
-            AddressingMode.Absolute
-        );
-
-        public static readonly Pattern LoadScreenMsgLookupMidPatches = new Pattern(
-            new byte[] { 0x41, 0xB8, 0xCD, 0x00, 0x00, 0x00, 0x33, 0xD2 },
-            "xxxxxxxx",
-            0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 11
         );
 
         public static readonly Pattern LoadScreenMsgLookup = new Pattern(
             [0x44, 0x8B, 0xCA, 0x33, 0xD2, 0x41, 0xB8, 0xCD],
             "xxxxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern NoMapAcquiredPopup = new Pattern(
-            [0x74, 0x0D, 0x8B, 0x54],
-            "xxxx",
-            0x2,
-            AddressingMode.Absolute
+            [
+                0x8B, 0x54, 0x24, 0x40, 0x48, 0x8B, 0xCE, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x90, 0x4C, 0x89, 0x74, 0x24,
+                0x38, 0xFF, 0xC3, 0x83, 0xFB, 0x20, 0x0F, 0x8C, 0x00, 0x00, 0x00, 0x00
+            ],
+            "xxxxxxxx????xxxxxxxxxxxxx????",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 21
         );
 
         public static readonly Pattern SetActionRequested = new Pattern(
             [0x74, 0x05, 0x49, 0x09, 0x41, 0x10],
             "xxxxxx",
             2,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern InAirTimer = new(
             [0xF3, 0x0F, 0x11, 0x43, 0x18, 0xC6],
             "xxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 4
         );
 
         public static readonly Pattern UpdateCoords = new(
             [0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43],
             "xxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern NoClipKb = new(
             [0xF6, 0x84, 0x08, 0xE8],
             "xxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 0
         );
 
         public static readonly Pattern NoClipTriggers = new(
             [0x0F, 0xB6, 0x44, 0x24, 0x36, 0x0F],
             "xxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 3
         );
 
         public static readonly Pattern HasSpEffect = new(
             [0x39, 0x51, 0x08, 0x74, 0x0C, 0x48, 0x8B],
             "xxxxxxx",
             -0x10,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 0
         );
 
         public static readonly Pattern BlueTargetViewHook = new(
             [0x0F, 0x84, 0x41, 0x01, 0x00, 0x00, 0x48, 0x8D, 0x54],
             "xxxxxxxxx",
             0x6,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern LockedTargetPtr = new(
             [0x74, 0x17, 0x48, 0x8B, 0x8F, 0x88],
             "xxxxxx",
             2,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 4
         );
 
         public static readonly Pattern InfinitePoise = new(
             [
-                0xEB, 0x03, 0x00, 0x00, 0x00, 0x48, 0x8B, 0xCE, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0xC8, 0x4C,
-                0x8B, 0xC7
+                0x4C, 0x8B, 0xC7, 0x40, 0x0F, 0xB6, 0xD5, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x44, 0x0F, 0xB6, 0xC0, 0x0F,
+                0xB6, 0x8F, 0x67, 0x02, 0x00, 0x00, 0xC0, 0xE9, 0x02, 0x80, 0xE1, 0x01, 0x0F, 0xB6, 0xD1, 0x03, 0xD2,
+                0x8B, 0x4B, 0x30, 0x83, 0xE1, 0xFD, 0x0B, 0xD1, 0x89, 0x53, 0x30
             ],
-            "xx???xxxx????xxxxxx",
-            0x10,
-            AddressingMode.Absolute
+            "xxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 17
         );
 
         public static readonly Pattern ShouldUpdateAi = new(
             [0x84, 0xC0, 0x40, 0x0F, 0x94, 0xC6, 0x83],
             "xxxxxxx",
             -0x1B,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 4
         );
 
         public static readonly Pattern GetForceActIdx = new(
@@ -403,49 +440,75 @@ namespace TarnishedTool.Memory
             ],
             "xxxxxxx??xxxxxxxxxxx",
             4,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 5
         );
 
         public static readonly Pattern TargetNoStagger = new Pattern(
-            [0x48, 0x85, 0xC0, 0x74, 0x1A, 0x48, 0x8B, 0x00, 0x48, 0x85, 0xC0, 0x74, 0x12],
-            "xxxxxxxxxxxxx",
-            0x2E,
-            AddressingMode.Absolute
+            new byte[] { 0x48, 0x8B, 0x41, 0x08, 0x83, 0x48, 0x2C, 0x08, 0x0F, 0x28, 0xBC, 0x24, 0xB0, 0x00, 0x00, 0x00, 0x48, 0x81, 0xC4, 0xD0, 0x00, 0x00, 0x00, 0x5F, 0x5E, 0x5B, 0xC3 },
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 6
         );
 
         public static readonly Pattern AttackInfo = new(
             [0x48, 0x8B, 0x08, 0x48, 0x85, 0xC9, 0x74, 0x09, 0x0F, 0xB7, 0x81, 0x3A, 0x01, 0x00, 0x00, 0xEB, 0x02],
             "xxxxxxxxxxxxxxxxx",
             -0x1E,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 10
         );
 
         public static readonly Pattern WarpCoordWrite = new(
             [0x0F, 0x11, 0x80, 0xA0, 0x0A],
             "xxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern WarpAngleWrite = new(
             [0x0F, 0x11, 0x80, 0xB0, 0x0A, 0x00, 0x00, 0xC3],
             "xxxxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern LionCooldownHook = new Pattern(
             [0xF3, 0x0F, 0x59, 0x71, 0x08],
             "xxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern NoGrab = new Pattern(
-            new byte[] { 0x41, 0x8B, 0x56, 0x44, 0x48, 0x8D, 0x4C },
+            [0x41, 0x8B, 0x56, 0x44, 0x48, 0x8D, 0x4C],
             "xxxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
+        );
+
+        public static readonly Pattern NoHeal = new Pattern(
+            [0x48, 0x0F, 0x4F, 0xC7, 0x8B, 0x00, 0x89, 0x81, 0x38, 0x01, 0x00, 0x00],
+            "xxxxxxxxxxxx",
+            0x6,
+            AddressingMode.Absolute,
+            anchorOffset: 2
+        );
+
+        public static readonly Pattern PlayerLockHp = new Pattern(
+            [
+                0x48, 0x89, 0x5C, 0x24, 0x18, 0x48, 0x89, 0x6C, 0x24, 0x20, 0x89, 0x54, 0x24, 0x10, 0x56, 0x57, 0x41,
+                0x56, 0x48, 0x83, 0xEC, 0x30
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 13
         );
 
         //Funcs
@@ -456,14 +519,16 @@ namespace TarnishedTool.Memory
             0x7,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 2
         );
 
         public static readonly Pattern GraceWarp = new(
             [0xC7, 0x44, 0x24, 0x30, 0x10, 0x27, 0x00, 0x00, 0x48, 0x8B, 0xCF],
             "xxxxxxxxxxx",
             -0x14,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 4
         );
 
         public static readonly Pattern SetEvent = new(
@@ -476,7 +541,8 @@ namespace TarnishedTool.Memory
             ],
             "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 43
         );
 
         public static readonly Pattern SetSpEffect = new(
@@ -485,7 +551,8 @@ namespace TarnishedTool.Memory
             0x8,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 2
         );
 
         public static readonly Pattern GiveRunes = new(
@@ -494,16 +561,20 @@ namespace TarnishedTool.Memory
             0xA,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 3
         );
 
         public static readonly Pattern LookupByFieldInsHandle = new(
-            [0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0x5C, 0x24, 0x30, 0x48, 0x85, 0xC0, 0x74, 0x15],
-            "x????xxxxxxxxxx",
-            0,
+            [
+                0xFF, 0x90, 0x68, 0x05, 0x00, 0x00, 0x8B, 0xC8, 0x41, 0x0F, 0xB6, 0xC7, 0x3B, 0xC8, 0x75, 0x26
+            ],
+            "xxxxxxxxxxxxxxxx",
+            -19,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 11
         );
 
         public static readonly Pattern WarpToBlock = new(
@@ -512,21 +583,25 @@ namespace TarnishedTool.Memory
             0x13,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 1
         );
 
         public static readonly Pattern ExternalEventTempCtor = new(
-            [0xC7, 0x41, 0x10, 0x02, 0x00, 0x00, 0x00, 0x89, 0x51],
-            "xxxxxxxxx",
-            -0xD,
-            AddressingMode.Absolute
+            [0x48, 0x8B, 0xC1, 0xC7, 0x41, 0x10, 0x02, 0x00, 0x00, 0x00, 0x89, 0x51, 0x08, 0x48, 0xC7, 0x81, 0xE0, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC3
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxx",
+            -10,
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern ExecuteTalkCommand = new(
             [0x89, 0x7D, 0x80, 0x48, 0x8B, 0x02, 0x48, 0x8B, 0xCA],
             "xxxxxxxxx",
             -0x4F,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern GetEvent = new(
@@ -538,7 +613,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 9
         );
 
         public static readonly Pattern GetPlayerItemQuantityById = new(
@@ -547,7 +623,8 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 6
         );
 
         public static readonly Pattern ItemSpawn = new(
@@ -556,7 +633,8 @@ namespace TarnishedTool.Memory
             0xB,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 2
         );
 
         public static readonly Pattern MatrixVectorProduct = new(
@@ -568,14 +646,16 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 7
         );
 
         public static readonly Pattern ChrInsByHandle = new(
             [0x48, 0xC1, 0xE8, 0x1C, 0x24, 0x0F, 0x3C, 0x01, 0x0F, 0x85, 0xA7],
             "xxxxxxxxxxx",
             -0x1B,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 9
         );
 
         public static readonly Pattern FindAndRemoveSpEffect = new(
@@ -584,16 +664,20 @@ namespace TarnishedTool.Memory
             0xC,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 1
         );
 
         public static readonly Pattern EmevdSwitch = new(
-            [0x8B, 0x8B, 0xC0, 0x00, 0x00, 0x00, 0x89, 0x4B],
-            "xxxxxxxx",
-            -0x1E,
-            AddressingMode.Relative,
-            1,
-            5
+            [
+                0x48, 0x89, 0x5C, 0x24, 0x08, 0x57, 0x48, 0x83, 0xEC, 0x20, 0x49, 0x8B, 0x80, 0xD0, 0x00, 0x00, 0x00,
+                0x49, 0x8B, 0xF8, 0x8B, 0x10, 0x81, 0xFA, 0xE8, 0x03, 0x00, 0x00, 0x0F, 0x87, 0x00, 0x00, 0x00, 0x00,
+                0x0F, 0x84, 0x00, 0x00, 0x00, 0x00, 0x83, 0xFA, 0x14, 0x0F, 0x87
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xx????xxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 41
         );
 
         public static readonly Pattern EmkEventInsCtor = new(
@@ -602,16 +686,20 @@ namespace TarnishedTool.Memory
             -0x2E,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 3
         );
 
         public static readonly Pattern GetMovement = new(
-            [0xE8, 0x00, 0x00, 0x00, 0x00, 0x0F, 0x28, 0xF0, 0xFF],
-            "x????xxxx",
-            0,
+            [
+                0x75, 0xBB, 0xEB, 0x10, 0x83, 0xF8, 0x02, 0x75, 0x0B, 0x49, 0x8B, 0xCE, 0xE8, 0x00, 0x00, 0x00, 0x00
+            ],
+            "xxxxxxxxxxxxx????",
+            12,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 0
         );
 
         public static readonly Pattern CanDrawEvents = new(
@@ -625,14 +713,59 @@ namespace TarnishedTool.Memory
             [0x44, 0x89, 0x41, 0x20, 0x48, 0x89, 0x79],
             "xxxxxxx",
             -0x2D,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 5
         );
 
         public static readonly Pattern EzStateEnvQueryImplCtor = new Pattern(
-            [0xC7, 0x44, 0x24, 0x50, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8D, 0x4D],
-            "xxxxxxxxxxx",
-            -0x3A,
-            AddressingMode.Absolute
+            [
+                0x40, 0x55, 0x53, 0x56, 0x57, 0x41, 0x55, 0x41, 0x56, 0x41, 0x57, 0x48, 0x8D, 0x6C, 0x24, 0xF0, 0x48,
+                0x81, 0xEC, 0x10, 0x01, 0x00, 0x00, 0x48, 0xC7, 0x44, 0x24, 0x60, 0xFE, 0xFF, 0xFF, 0xFF, 0x48, 0x8B,
+                0x05, 0x00, 0x00, 0x00, 0x00, 0x48, 0x33, 0xC4, 0x48, 0x89, 0x45, 0x00, 0x41, 0x8B, 0xF9, 0x4D, 0x8B,
+                0xF0, 0x4C, 0x8B, 0xEA, 0x4C, 0x8B, 0xF9, 0xC7, 0x44, 0x24, 0x50, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8D,
+                0x4D, 0x80
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx????xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 57
+        );
+
+        public static readonly Pattern LocalToMapCoords = new Pattern(
+            [
+                0xE8, 0x00, 0x00, 0x00, 0x00, 0x84, 0xC0, 0x74, 0x26, 0xC6, 0x83, 0x4F, 0x01, 0x00, 0x00, 0x02, 0xF2,
+                0x0F, 0x10, 0x45, 0xA7
+            ],
+            "x????xxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Relative,
+            1,
+            5,
+            anchorOffset: 8
+        );
+
+        public static readonly Pattern LuaDoString = new Pattern(
+            [
+                0x40, 0x53, 0x48, 0x83, 0xEC, 0x30, 0x48, 0x8B, 0xD9, 0x48, 0x89, 0x54, 0x24, 0x20, 0x48, 0x83, 0xC8,
+                0xFF, 0x48, 0xFF, 0xC0, 0x80, 0x3C, 0x02, 0x00
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 22
+        );
+
+        public static readonly Pattern RefreshFromStorage = new Pattern(
+            [
+                0xC6, 0x43, 0x2B, 0x00, 0x48, 0x8B, 0x5C, 0x24, 0x30, 0x48, 0x83, 0xC4, 0x20, 0x5F, 0xE9, 0x00, 0x00,
+                0x00, 0x00
+            ],
+            "xxxxxxxxxxxxxxx????",
+            14,
+            AddressingMode.Relative,
+            1,
+            5,
+            anchorOffset: 1
         );
 
         //Patches
@@ -641,28 +774,32 @@ namespace TarnishedTool.Memory
             [0x41, 0x0F, 0xB7, 0xC0, 0xC3, 0x45, 0x0F, 0xB7, 0x41, 0x42],
             "xxxxxxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 8
         );
 
         public static readonly Pattern IsWorldPaused = new Pattern(
-            new byte[] { 0x0F, 0x84, 0x87, 0x00, 0x00, 0x00, 0xC6, 0x83 },
+            [0x0F, 0x84, 0x87, 0x00, 0x00, 0x00, 0xC6, 0x83],
             "xxxxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern IsTorrentDisabledInUnderworld = new Pattern(
             [0x80, 0x78, 0x36, 0x00, 0x0F],
             "xxxxx",
             4,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern IsWhistleDisabled = new Pattern(
             [0x80, 0x79, 0x36, 0x00, 0x0F, 0x95, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3],
             "xxxxxxxxxxxx",
             4,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern DebugFont = new(
@@ -671,28 +808,32 @@ namespace TarnishedTool.Memory
             0xA,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 3
         );
 
         public static readonly Pattern CanFastTravel = new Pattern(
             [0x74, 0x14, 0xBA, 0x16],
             "xxxx",
             0xC,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 2
         );
 
         public static readonly Pattern NoRunesFromEnemies = new(
             [0x7E, 0x7D, 0x85, 0xC0, 0x7E, 0x12, 0x4C, 0x8B, 0x0F, 0x41, 0xB0, 0x01, 0x8B, 0xD0, 0x48, 0x8B, 0xCF],
             "xxxxxxxxxxxxxxxxx",
             0x11,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 0
         );
 
         public static readonly Pattern NoRuneArcLoss = new(
             [0x74, 0x09, 0x66, 0xC7, 0x81, 0xFF],
             "xxxxxx",
             0,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern NoRuneLossOnDeath = new(
@@ -702,31 +843,33 @@ namespace TarnishedTool.Memory
             ],
             "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             0x43,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 15
         );
 
         public static readonly Pattern OpenMap = new(
             [0x84, 0xC0, 0x74, 0x2E, 0xC7],
             "xxxxx",
             2,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 3
         );
 
         public static readonly Pattern PlayerSound = new(
             [0x40, 0x38, 0xB7, 0xCA],
             "xxxx",
             7,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 1
         );
 
         public static readonly Pattern CloseMap = new(
-            [
-                0x48, 0x8B, 0x03, 0x48, 0x8B, 0xCB, 0x48, 0x8B, 0x94, 0x24, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x50, 0x00,
-                0x48, 0x8D, 0x8B, 0x00, 0x27, 0x00, 0x00
+            [0xFF, 0x50, 0x60, 0x48, 0x8D, 0x8B, 0xD8, 0x27, 0x00, 0x00, 0x66, 0xC7, 0x83, 0x44, 0x0A, 0x00, 0x00, 0x00, 0x00, 0xC6, 0x83, 0x46, 0x0A, 0x00, 0x00, 0x00
             ],
-            "xxxxxxxxxx?xxxxx?xxx?xxx",
-            0xE,
-            AddressingMode.Absolute
+            "xxxxxxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 12
         );
 
         public static readonly Pattern EnableFreeCam = new(
@@ -735,23 +878,55 @@ namespace TarnishedTool.Memory
             0xD,
             AddressingMode.Relative,
             1,
-            5
+            5,
+            anchorOffset: 10
         );
 
         public static readonly Pattern GetShopEvent = new(
-            [0x84, 0xC0, 0x74, 0x17, 0x48, 0x8D, 0x54],
-            "xxxxxxx",
-            -0x5,
-            AddressingMode.Relative,
-            1,
-            5
+            [
+                0x40, 0x53, 0x48, 0x83, 0xEC, 0x40, 0x48, 0x8B, 0x41, 0x08, 0x33, 0xDB, 0x89, 0x5C, 0x24, 0x20, 0x48,
+                0x85, 0xC0, 0x74, 0x0B, 0x8B, 0x40, 0x10, 0x83, 0xF8, 0xFF, 0x0F, 0x44, 0xC3, 0xEB, 0x02
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 28
         );
 
         public static readonly Pattern NoLogo = new(
             [0x48, 0x85, 0xD2, 0x74, 0x07, 0xC6, 0x82],
             "xxxxxxx",
             0x18,
-            AddressingMode.Absolute
+            AddressingMode.Absolute,
+            anchorOffset: 4
+        );
+
+        public static readonly Pattern FpsCap = new Pattern(
+            [0x89, 0x73, 0x00, 0xC7, 0x43, 0x00, 0x89, 0x88, 0x88, 0x3C],
+            "xx?xx?xxxx",
+            3,
+            AddressingMode.Absolute,
+            anchorOffset: 7
+        );
+
+        public static readonly Pattern CanDrawEvents1 = new Pattern(
+            [0x48, 0x89, 0x77, 0x28, 0xE8],
+            "xxxxx",
+            0x4,
+            AddressingMode.Relative,
+            1,
+            5,
+            anchorOffset: 2
+        );
+
+        public static readonly Pattern CanDrawEvents2 = new Pattern(
+            [0x48, 0x89, 0x77, 0x28, 0xE8],
+            "xxxxx",
+            0xD,
+            AddressingMode.Relative,
+            1,
+            5,
+            anchorOffset: 2
         );
     }
 

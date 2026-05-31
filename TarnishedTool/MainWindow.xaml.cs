@@ -25,7 +25,6 @@ namespace TarnishedTool
         private readonly IMemoryService _memoryService;
         private readonly IStateService _stateService;
         private readonly IDlcService _dlcService;
-        private readonly AoBScanner _aobScanner;
 
         private readonly DispatcherTimer _gameLoadedTimer;
 
@@ -44,7 +43,6 @@ namespace TarnishedTool
             }
             else WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            _aobScanner = new AoBScanner(_memoryService);
             _stateService = new StateService(_memoryService);
 
             var hookManager = new HookManager(_memoryService, _stateService);
@@ -206,10 +204,13 @@ namespace TarnishedTool
                 {
                     if (!PatchManager.Initialize(_memoryService))
                     {
-                        _aobScanner.DoFallbackScan();
+                        var aobScanner = new AobScanner(_memoryService);
+                        aobScanner.QueueFallbackPatterns();
+                        aobScanner.Run();
                     }
-
+                    
 #if DEBUG
+                    Print(_memoryService.BaseAddress);
                     Console.WriteLine($@"Base: 0x{(long)_memoryService.BaseAddress:X}");
 #endif
                     _hasCheckedPatch = true;
