@@ -3026,13 +3026,12 @@ namespace TarnishedTool.Memory
                 Version2_6_2 => 0x4588BDC,
                 _ => 0
             };
-
+            
             Patches.NoQuitMessage = moduleBase + Version switch
             {
                 Version2_6_2 => 0x824D16,
                 _ => 0
             };
-
 
         }
 
