@@ -9,4 +9,6 @@ public interface ISettingsService
     void ToggleDisableAchievements(bool isEnabled);
     void ToggleNoLogo(bool isEnabled);
     void ToggleMuteMusic(bool isMuteMusicEnabled);
+    void ToggleMenuDelay(bool isEnabled);
+    void ToggleQuitMessage(bool isEnabled);
 }

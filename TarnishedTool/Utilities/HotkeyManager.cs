@@ -74,7 +74,12 @@ public class HotkeyManager
 
         if (!_hotkeyMappings.TryGetValue(keys, out var actions))
         {
-            actions = new List<string>();
+            if (!SettingsManager.Default.AllowMultipleHotkeys)
+                actions.Clear();
+        }
+        else
+        {
+        actions = new List<string>();
             _hotkeyMappings[keys] = actions;
         }
 

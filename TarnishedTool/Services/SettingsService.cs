@@ -9,8 +9,6 @@ namespace TarnishedTool.Services;
 
 public class SettingsService(IMemoryService memoryService) : ISettingsService
 {
-    
-
     public void ToggleStutterFix(bool isEnabled) =>
         memoryService.Write(memoryService.Read<nint>(UserInputManager.Base) + UserInputManager.SteamInputEnum,
             isEnabled);
@@ -56,4 +54,19 @@ public class SettingsService(IMemoryService memoryService) : ISettingsService
             SettingsManager.Default.Save();
         }
     }
+
+    public void ToggleMenuDelay(bool isEnabled)
+    {
+        if (isEnabled)
+        {
+            memoryService.Write(Patches.MenuDelay, 0f);
+        }
+        else
+        {
+            memoryService.Write(Patches.MenuDelay, 0.32f);
+        }
+    }
+
+    public void ToggleQuitMessage(bool isEnabled) =>
+        memoryService.WriteBytes(Patches.NoQuitMessage, isEnabled ? [0x90, 0x90] : [0x74, 0x65]);
 }

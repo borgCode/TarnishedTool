@@ -325,6 +325,34 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    private bool _isAllowMultipleHotkeysEnabled;
+
+    public bool IsAllowMultipleHotkeysEnabled
+    {
+        get => _isAllowMultipleHotkeysEnabled;
+        set
+        {
+            if (!SetProperty(ref _isAllowMultipleHotkeysEnabled, value)) return;
+            SettingsManager.Default.AllowMultipleHotkeys = value;
+            SettingsManager.Default.Save();
+        }
+    }
+
+    private bool _isShowUsedHotkeysEnabled;
+
+    public bool IsShowUsedHotkeysEnabled
+    {
+        get => _isShowUsedHotkeysEnabled;
+        set
+        {
+            if (!SetProperty(ref _isShowUsedHotkeysEnabled, value)) return;
+            if (value)
+                Hotkeys.SetAdditionalFilter(h => h.HotkeyText != "None");
+            else
+                Hotkeys.ClearAdditionalFilter();
+        }
+    }
+
     private bool _isHotkeyReminderEnabled;
 
     public bool IsHotkeyReminderEnabled
@@ -429,6 +457,38 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    private bool _isNoMenuDelayEnabled;
+
+    public bool IsNoMenuDelayEnabled
+    {
+        get => _isNoMenuDelayEnabled;
+        set
+        {
+            if (!SetProperty(ref _isNoMenuDelayEnabled, value)) return;
+            {
+                SettingsManager.Default.NoMenuDelay = value;
+                SettingsManager.Default.Save();
+                _settingsService.ToggleMenuDelay(_isNoMenuDelayEnabled);
+            }
+        }
+    }
+
+    private bool _isNoQuitMessageEnabled;
+
+    public bool IsNoQuitMessageEnabled
+    {
+        get => _isNoQuitMessageEnabled;
+        set
+        {
+            if (!SetProperty(ref _isNoQuitMessageEnabled, value)) return;
+            {
+                SettingsManager.Default.NoQuitMessage = value;
+                SettingsManager.Default.Save();
+                _settingsService.ToggleQuitMessage(_isNoQuitMessageEnabled);
+            }
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -492,6 +552,9 @@ public class SettingsViewModel : BaseViewModel
         else _hotkeyManager.Stop();
         OnPropertyChanged(nameof(IsEnableHotkeysEnabled));
 
+        _isAllowMultipleHotkeysEnabled = SettingsManager.Default.AllowMultipleHotkeys;
+        OnPropertyChanged(nameof(IsAllowMultipleHotkeysEnabled));
+
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
         IsBlockGameHotkeysEnabled = SettingsManager.Default.BlockHotkeysFromGame;
 
@@ -503,6 +566,10 @@ public class SettingsViewModel : BaseViewModel
 
         _isNoLogoEnabled = SettingsManager.Default.NoLogo;
         OnPropertyChanged(nameof(IsNoLogoEnabled));
+        _isNoMenuDelayEnabled = SettingsManager.Default.NoMenuDelay;
+        OnPropertyChanged(nameof(IsNoMenuDelayEnabled));
+        _isNoQuitMessageEnabled = SettingsManager.Default.NoQuitMessage;
+        OnPropertyChanged(nameof(IsNoQuitMessageEnabled));
         _isMuteMusicEnabled = SettingsManager.Default.MuteMusic;
         OnPropertyChanged(nameof(IsMuteMusicEnabled));
 
@@ -526,6 +593,8 @@ public class SettingsViewModel : BaseViewModel
     private void OnGameAttached()
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
+        if (IsNoQuitMessageEnabled) _settingsService.ToggleQuitMessage(true);
+        if (_isNoMenuDelayEnabled) _settingsService.ToggleMenuDelay(true);
     }
 
     private void OnNewGameStart()
@@ -632,7 +701,6 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    
 
     private void ClearHotkeys()
     {

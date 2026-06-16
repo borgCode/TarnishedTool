@@ -31,6 +31,8 @@ public class SettingsManager
     public bool AlwaysOnTop { get; set; }
     public bool StutterFix { get; set; }
     public bool DisableAchievements { get; set; }
+    public bool NoMenuDelay { get; set; }
+    public bool NoQuitMessage { get; set; }
     public bool NoLogo { get; set; }
     public bool MuteMusic { get; set; }
     public bool HasOriginalMusicVolume { get; set; }
@@ -59,6 +61,7 @@ public class SettingsManager
     public double DefensesWindowTop { get; set; }
     public string HotkeyActionIds { get; set; } = "";
     public bool EnableHotkeys { get; set; }
+    [DefaultValue(true)] public bool AllowMultipleHotkeys { get; set; }
     public bool RememberPlayerSpeed { get; set; }
     public float PlayerSpeed { get; set; }
     public bool RememberGameSpeed { get; set; }
