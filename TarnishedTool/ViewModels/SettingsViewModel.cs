@@ -36,6 +36,7 @@ public class SettingsViewModel : BaseViewModel
         _hotkeyManager = hotkeyManager;
         _activateOnLaunchViewModel = activateOnLaunchViewModel;
 
+
         stateService.Subscribe(State.AppStart, OnAppStart);
         stateService.Subscribe(State.Loaded, OnGameLoaded);
         stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
@@ -280,6 +281,12 @@ public class SettingsViewModel : BaseViewModel
         );
 
         _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
+
+        _hotkeyManager.DisplacedAction = actionId =>
+        {
+            if (_hotkeyLookup.TryGetValue(actionId, out var binding))
+                binding.HotkeyText = "None";
+        };
 
         LoadHotkeyDisplays();
         ClearHotkeysCommand = new DelegateCommand(() =>
