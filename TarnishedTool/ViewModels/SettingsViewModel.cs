@@ -19,6 +19,7 @@ namespace TarnishedTool.ViewModels;
 public class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
+    private readonly IReminderService _reminderService;
     private readonly HotkeyManager _hotkeyManager;
 
     private readonly Dictionary<string, HotkeyBindingViewModel> _hotkeyLookup;
@@ -30,11 +31,12 @@ public class SettingsViewModel : BaseViewModel
     public SearchableGroupedCollection<string, HotkeyBindingViewModel> Hotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager, IStateService stateService,
-        ActivateOnLaunchViewModel activateOnLaunchViewModel)
+        ActivateOnLaunchViewModel activateOnLaunchViewModel, IReminderService reminderService)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
         _activateOnLaunchViewModel = activateOnLaunchViewModel;
+        _reminderService =  reminderService;
 
 
         stateService.Subscribe(State.AppStart, OnAppStart);
@@ -473,6 +475,7 @@ public class SettingsViewModel : BaseViewModel
         {
             if (!SetProperty(ref _isNoMenuDelayEnabled, value)) return;
             {
+                _reminderService.TrySetReminder();
                 SettingsManager.Default.NoMenuDelay = value;
                 SettingsManager.Default.Save();
                 _settingsService.ToggleMenuDelay(_isNoMenuDelayEnabled);
@@ -590,6 +593,11 @@ public class SettingsViewModel : BaseViewModel
         if (IsStutterFixEnabled) _settingsService.ToggleStutterFix(true);
         if (IsDisableAchievementsEnabled) _settingsService.ToggleDisableAchievements(true);
         if (IsMuteMusicEnabled) _settingsService.ToggleMuteMusic(true);
+        if (_isNoMenuDelayEnabled)
+        {
+            _reminderService.TrySetReminder();
+            _settingsService.ToggleMenuDelay(true);
+        }
     }
 
     private void OnGameNotLoaded()
@@ -601,7 +609,6 @@ public class SettingsViewModel : BaseViewModel
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
         if (IsNoQuitMessageEnabled) _settingsService.ToggleQuitMessage(true);
-        if (_isNoMenuDelayEnabled) _settingsService.ToggleMenuDelay(true);
     }
 
     private void OnNewGameStart()

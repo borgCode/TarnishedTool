@@ -78,7 +78,7 @@
                         Height="12"
                         Margin="5,0,10,0"
                         VerticalAlignment="Center"
-                        ToolTip="Gets rid of the menu delay when confirming, does not affect dialogue speed."
+                        ToolTip="Gets rid of the menu delay when confirming, does not affect dialogue speed.&#x0A;This is not allowed in hitless runs whatsoever."
                         ToolTipService.InitialShowDelay='100'>
                         <TextBlock Text="i"
                                    Foreground="White"

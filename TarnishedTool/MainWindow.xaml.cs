@@ -129,7 +129,7 @@ namespace TarnishedTool
             );
 
             SettingsViewModel settingsViewModel = new SettingsViewModel(
-                settingsService, hotkeyManager, _stateService, activateOnLaunchViewModel
+                settingsService, hotkeyManager, _stateService, activateOnLaunchViewModel, reminderService
             );
 
             var playerTab = new PlayerTab(playerViewModel);
