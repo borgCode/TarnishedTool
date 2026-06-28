@@ -88,7 +88,6 @@ public class HotkeyManager
 
         actions.Add(actionId);
         SaveHotkeys();
-        Console.WriteLine($"AllowMultipleHotkeys: {SettingsManager.Default.AllowMultipleHotkeys}");
     }
 
     public void ClearHotkey(string actionId)
