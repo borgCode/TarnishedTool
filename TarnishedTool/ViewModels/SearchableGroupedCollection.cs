@@ -85,8 +85,15 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
     public bool IsSearchActive
     {
         get => _isSearchActive;
-        private set => SetProperty(ref _isSearchActive, value);
+        private set
+        {
+            if (!SetProperty(ref _isSearchActive, value)) return;
+            OnPropertyChanged(nameof(IsOverlayActive));
+        }
     }
+    public bool IsOverlayActive => _isSearchActive || _additionalFilter != null;
+
+    public bool IsFilterActive => _additionalFilter != null;
 
     private string _searchText = string.Empty;
 
@@ -175,18 +182,28 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
     {
         _additionalFilter = filter;
         if (_isSearchActive)
+        {
             ApplyFilter();
+        }
         else
+        {
             UpdateItemsList();
+        }
+        OnPropertyChanged(nameof(IsOverlayActive));
     }
 
     public void ClearAdditionalFilter()
     {
         _additionalFilter = null;
         if (_isSearchActive)
+        {
             ApplyFilter();
+        }
         else
+        {
             UpdateItemsList();
+        }
+        OnPropertyChanged(nameof(IsOverlayActive));
     }
 
     public void SetSearchScope(SearchScopes scope) => SearchScope = scope;

@@ -977,6 +977,8 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.AiInfo, () => ExecuteTargetAction(OpenAiWindow));
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleMadness, () => ShowMadness = !ShowMadness);
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleDeathblight, () => ShowDeathBlight = !ShowDeathBlight);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawStance, () => IsDrawCritViewEnabled = !IsDrawCritViewEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawBackstab, () => IsDrawBackstabViewEnabled = !IsDrawBackstabViewEnabled);
         }
 
         private void ExecuteTargetAction(Action action)

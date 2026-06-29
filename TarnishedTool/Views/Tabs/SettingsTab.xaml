@@ -41,92 +41,152 @@
                               IsChecked="{Binding IsMuteMusicEnabled}"
                               Margin="0,0,0,0" />
                     <Border
-                            Background="#3498db"
-                            CornerRadius="10"
-                            Width="12"
-                            Height="12"
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Center"
-                            ToolTip="Moves the music slider all the way to 0.&#x0a;The initial slider value when you mute is saved and reverted on unmute."
-                            ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox Content="Hotkey Reminder"
-                                  IsChecked="{Binding IsHotkeyReminderEnabled}"
-                                  Margin="10 ,0,0,0" />
-                        <Border
-                            Background="#3498db"
-                            CornerRadius="10"
-                            Width="12"
-                            Height="12"
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Center"
-                            ToolTip="Show a popup reminder when starting a new game while hotkeys are still enabled"
-                            ToolTipService.InitialShowDelay='100'>
-                            <TextBlock Text="i"
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontWeight="Bold"
-                                       FontSize="10" />
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                        Background="#3498db"
+                        CornerRadius="10"
+                        Width="12"
+                        Height="12"
+                        Margin="5,0,10,0"
+                        VerticalAlignment="Center"
+                        ToolTip="Moves the music slider all the way to 0.&#x0a;The initial slider value when you mute is saved and reverted on unmute."
+                        ToolTipService.InitialShowDelay='100'>
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
                     <CheckBox Content="Stutter Fix"
                               IsChecked="{Binding IsStutterFixEnabled}"
                               Margin="0,0,10,0" />
                     <CheckBox Content="Disable Achievements"
                               IsChecked="{Binding IsDisableAchievementsEnabled}"
                               Margin="0,0,10,0" />
-                    <Button Content="Activate On Launch"
-                            Command="{Binding OpenActivateOnLaunchCommand}" />
+
                 </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+
+
+                    <CheckBox Content="No Menu Delay"
+                              IsChecked="{Binding IsNoMenuDelayEnabled}"
+                              Margin="0,0,0,0" />
+                    <Border
+                        Background="#3498db"
+                        CornerRadius="10"
+                        Width="12"
+                        Height="12"
+                        Margin="5,0,10,0"
+                        VerticalAlignment="Center"
+                        ToolTip="Gets rid of the menu delay when confirming, does not affect dialogue speed.&#x0A;This is not allowed in hitless runs whatsoever."
+                        ToolTipService.InitialShowDelay='100'>
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
+                    <CheckBox Content="No Quit Out Message"
+                              IsChecked="{Binding IsNoQuitMessageEnabled}"
+                              Margin="5,0,0,0" />
+                    <Border
+                        Background="#3498db"
+                        CornerRadius="10"
+                        Width="12"
+                        Height="12"
+                        Margin="5,0,10,0"
+                        VerticalAlignment="Center"
+                        ToolTip="Gets rid of the warning message after a force quit, instant quit out or a game crash."
+                        ToolTipService.InitialShowDelay='100'>
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
+                    <Button Content="Activate On Launch"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Command="{Binding OpenActivateOnLaunchCommand}" />
+
+                </StackPanel>
+                
             </StackPanel>
 
             <Separator Margin="0,0,0,10" />
-
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="10,0,5,10" HorizontalAlignment="Left" />
-                <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,10"
+                <TextBlock Text="Hotkey Bindings" FontWeight="Bold" Margin="0,0,10,10" HorizontalAlignment="Left" />
+                
+                
+            </StackPanel>
+            <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="Enable Hotkeys"
+                          IsChecked="{Binding IsEnableHotkeysEnabled}"
+                          Margin="0,0,10,10" />
+                <CheckBox Content="Accept Macros"
+                          IsChecked="{Binding IsAllowMultipleHotkeysEnabled}"
+                          Margin="0,0,5,10" />
+                <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,10,10"
                         VerticalAlignment="Center"
                         ToolTip="For Macros simply set the same keybind to a hotkey."
                         ToolTipService.InitialShowDelay="100">
                     <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
                                VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
                 </Border>
-                <CheckBox Content="Enable Hotkeys"
-                          IsChecked="{Binding IsEnableHotkeysEnabled}"
-                          Margin="20,0,0,10" />
+                <CheckBox Content="Hotkey Reminder"
+                          IsChecked="{Binding IsHotkeyReminderEnabled}"
+                          Margin="0 ,0,0,10" />
+                <Border
+                    Background="#3498db"
+                    CornerRadius="10"
+                    Width="12"
+                    Height="12"
+                    Margin="5,0,10,10"
+                    VerticalAlignment="Center"
+                    ToolTip="Show a popup reminder when starting a new game while hotkeys are still enabled"
+                    ToolTipService.InitialShowDelay='100'>
+                    <TextBlock Text="i"
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               FontSize="10" />
+                </Border>
+                <Button
+                    Content="Clear All Bindings"
+                    HorizontalAlignment="Right"
+                    Margin="50,0,0,10"
+                    Height="23"
+                    Command="{Binding ClearHotkeysCommand}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
                 <CheckBox Content="Block Game Actions"
                           IsChecked="{Binding IsBlockGameHotkeysEnabled}"
-                          Margin="20,0,10,10" />
+                          Margin="0,0,0,10" />
 
-                <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,10"
+                <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,10,10"
                         VerticalAlignment="Center"
                         ToolTip="Disables game actions from happening when you press a hotkey that you've bound to something in here.&#x0A;This may cause some lag depending on your setup"
                         ToolTipService.InitialShowDelay="100">
                     <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
                                VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
                 </Border>
-                <Button
-                    Content="Clear All Bindings"
-                    Margin="15,0,0,10"
-                    Command="{Binding ClearHotkeysCommand}" />
+
+                <CheckBox Content="Show Used Hotkeys"
+                          IsChecked="{Binding IsShowUsedHotkeysEnabled}"
+                          Margin="5,0,0,10" />
+                
+                </StackPanel>
             </StackPanel>
 
 
             <Grid Margin="0,5,0,0">
 
                 <TabControl Margin="0,5,0,0"
-                            Visibility="{Binding Hotkeys.IsSearchActive, Converter={StaticResource InverseBoolToVisibility}}">
+                            Visibility="{Binding Hotkeys.IsOverlayActive, Converter={StaticResource InverseBoolToVisibility}}">
 
                     <TabItem Header="Player" Width="56">
                         <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
@@ -237,7 +297,7 @@
                 <ScrollViewer MaxHeight="390"
                               Margin="0,40,0,0"
                               VerticalScrollBarVisibility="Auto"
-                              Visibility="{Binding Hotkeys.IsSearchActive, Converter={StaticResource BoolToVisibility}}">
+                              Visibility="{Binding Hotkeys.IsOverlayActive, Converter={StaticResource BoolToVisibility}}">
                     <ItemsControl ItemsSource="{Binding Hotkeys.Items}"
                                   Padding="10"
                                   ItemTemplate="{StaticResource HotkeyItemTemplate}">

@@ -19,6 +19,7 @@ namespace TarnishedTool.ViewModels;
 public class SettingsViewModel : BaseViewModel
 {
     private readonly ISettingsService _settingsService;
+    private readonly IReminderService _reminderService;
     private readonly HotkeyManager _hotkeyManager;
 
     private readonly Dictionary<string, HotkeyBindingViewModel> _hotkeyLookup;
@@ -30,11 +31,13 @@ public class SettingsViewModel : BaseViewModel
     public SearchableGroupedCollection<string, HotkeyBindingViewModel> Hotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager, IStateService stateService,
-        ActivateOnLaunchViewModel activateOnLaunchViewModel)
+        ActivateOnLaunchViewModel activateOnLaunchViewModel, IReminderService reminderService)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
         _activateOnLaunchViewModel = activateOnLaunchViewModel;
+        _reminderService =  reminderService;
+
 
         stateService.Subscribe(State.AppStart, OnAppStart);
         stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -166,6 +169,8 @@ public class SettingsViewModel : BaseViewModel
                 new("Toggle Target Frost", HotkeyActions.ToggleFrost),
                 new("Toggle Target Bleed", HotkeyActions.ToggleBleed),
                 new("Open Target AI Window", HotkeyActions.AiInfo),
+                new("Draw Stance Crit", HotkeyActions.DrawStance),
+                new("Draw Backstab", HotkeyActions.DrawBackstab),
             ],
             ["Utility"] =
             [
@@ -279,6 +284,12 @@ public class SettingsViewModel : BaseViewModel
 
         _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
 
+        _hotkeyManager.DisplacedAction = actionId =>
+        {
+            if (_hotkeyLookup.TryGetValue(actionId, out var binding))
+                binding.HotkeyText = "None";
+        };
+
         LoadHotkeyDisplays();
         ClearHotkeysCommand = new DelegateCommand(() =>
         {
@@ -320,6 +331,34 @@ public class SettingsViewModel : BaseViewModel
                 if (_isEnableHotkeysEnabled) _hotkeyManager.Start();
                 else _hotkeyManager.Stop();
             }
+        }
+    }
+
+    private bool _isAllowMultipleHotkeysEnabled;
+
+    public bool IsAllowMultipleHotkeysEnabled
+    {
+        get => _isAllowMultipleHotkeysEnabled;
+        set
+        {
+            if (!SetProperty(ref _isAllowMultipleHotkeysEnabled, value)) return;
+            SettingsManager.Default.AllowMultipleHotkeys = value;
+            SettingsManager.Default.Save();
+        }
+    }
+
+    private bool _isShowUsedHotkeysEnabled;
+
+    public bool IsShowUsedHotkeysEnabled
+    {
+        get => _isShowUsedHotkeysEnabled;
+        set
+        {
+            if (!SetProperty(ref _isShowUsedHotkeysEnabled, value)) return;
+            if (value)
+                Hotkeys.SetAdditionalFilter(h => h.HotkeyText != "None");
+            else
+                Hotkeys.ClearAdditionalFilter();
         }
     }
 
@@ -427,6 +466,39 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    private bool _isNoMenuDelayEnabled;
+
+    public bool IsNoMenuDelayEnabled
+    {
+        get => _isNoMenuDelayEnabled;
+        set
+        {
+            if (!SetProperty(ref _isNoMenuDelayEnabled, value)) return;
+            {
+                _reminderService.TrySetReminder();
+                SettingsManager.Default.NoMenuDelay = value;
+                SettingsManager.Default.Save();
+                _settingsService.ToggleMenuDelay(_isNoMenuDelayEnabled);
+            }
+        }
+    }
+
+    private bool _isNoQuitMessageEnabled;
+
+    public bool IsNoQuitMessageEnabled
+    {
+        get => _isNoQuitMessageEnabled;
+        set
+        {
+            if (!SetProperty(ref _isNoQuitMessageEnabled, value)) return;
+            {
+                SettingsManager.Default.NoQuitMessage = value;
+                SettingsManager.Default.Save();
+                _settingsService.ToggleQuitMessage(_isNoQuitMessageEnabled);
+            }
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -490,6 +562,9 @@ public class SettingsViewModel : BaseViewModel
         else _hotkeyManager.Stop();
         OnPropertyChanged(nameof(IsEnableHotkeysEnabled));
 
+        _isAllowMultipleHotkeysEnabled = SettingsManager.Default.AllowMultipleHotkeys;
+        OnPropertyChanged(nameof(IsAllowMultipleHotkeysEnabled));
+
         IsAlwaysOnTopEnabled = SettingsManager.Default.AlwaysOnTop;
         IsBlockGameHotkeysEnabled = SettingsManager.Default.BlockHotkeysFromGame;
 
@@ -501,6 +576,10 @@ public class SettingsViewModel : BaseViewModel
 
         _isNoLogoEnabled = SettingsManager.Default.NoLogo;
         OnPropertyChanged(nameof(IsNoLogoEnabled));
+        _isNoMenuDelayEnabled = SettingsManager.Default.NoMenuDelay;
+        OnPropertyChanged(nameof(IsNoMenuDelayEnabled));
+        _isNoQuitMessageEnabled = SettingsManager.Default.NoQuitMessage;
+        OnPropertyChanged(nameof(IsNoQuitMessageEnabled));
         _isMuteMusicEnabled = SettingsManager.Default.MuteMusic;
         OnPropertyChanged(nameof(IsMuteMusicEnabled));
 
@@ -514,6 +593,11 @@ public class SettingsViewModel : BaseViewModel
         if (IsStutterFixEnabled) _settingsService.ToggleStutterFix(true);
         if (IsDisableAchievementsEnabled) _settingsService.ToggleDisableAchievements(true);
         if (IsMuteMusicEnabled) _settingsService.ToggleMuteMusic(true);
+        if (_isNoMenuDelayEnabled)
+        {
+            _reminderService.TrySetReminder();
+            _settingsService.ToggleMenuDelay(true);
+        }
     }
 
     private void OnGameNotLoaded()
@@ -524,6 +608,7 @@ public class SettingsViewModel : BaseViewModel
     private void OnGameAttached()
     {
         if (IsNoLogoEnabled) _settingsService.ToggleNoLogo(true);
+        if (IsNoQuitMessageEnabled) _settingsService.ToggleQuitMessage(true);
     }
 
     private void OnNewGameStart()
@@ -630,7 +715,6 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    
 
     private void ClearHotkeys()
     {

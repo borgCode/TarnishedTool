@@ -925,6 +925,8 @@ namespace TarnishedTool.Memory
             public static IntPtr IsWorldPaused;
             public static IntPtr GetItemChance;
             public static IntPtr FpsCap;
+            public static IntPtr MenuDelay;
+            public static IntPtr NoQuitMessage;
         }
 
         private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -3018,7 +3020,18 @@ namespace TarnishedTool.Memory
                 Version2_6_2 => 0xE82B4D,
                 _ => 0
             };
-
+            
+            Patches.MenuDelay = moduleBase + Version switch
+            {
+                Version2_6_2 => 0x4588BDC,
+                _ => 0
+            };
+            
+            Patches.NoQuitMessage = moduleBase + Version switch
+            {
+                Version2_6_2 => 0x824D16,
+                _ => 0
+            };
 
         }
 
@@ -3076,6 +3089,8 @@ namespace TarnishedTool.Memory
             PrintOffset("GetItemChance",                Patches.GetItemChance);
             PrintOffset("GetShopEvent",                 Patches.GetShopEvent);
             PrintOffset("FpsCap",                       Patches.FpsCap);
+            PrintOffset("MenuDelay",                    Patches.MenuDelay);
+            PrintOffset("NoQuitMessage",                Patches.NoQuitMessage);
 
             Console.WriteLine("\n--- Hooks ---");
             PrintOffset("UpdateCoords",                     Hooks.UpdateCoords);

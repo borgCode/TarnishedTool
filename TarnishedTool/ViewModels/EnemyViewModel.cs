@@ -413,7 +413,7 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.ReviveAllBossesFirstEncounter,
             () => SafeExecute(ReviveAllBossesAsFirstEncounter));
         _hotkeyManager.RegisterAction(HotkeyActions.RestOnRevive,
-            () => { _isRestOnReviveEnabled = !_isRestOnReviveEnabled; });
+            () => { IsRestOnReviveEnabled = IsRestOnReviveEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.DrawNavigationRoute,
             () => { IsDrawNavigationRouteEnabled = !IsDrawNavigationRouteEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.RykardNoMega,
@@ -423,7 +423,7 @@ public class EnemyViewModel : BaseViewModel
         _hotkeyManager.RegisterAction(HotkeyActions.LionMainFrost, () => SafeExecute(ForceLionMainBossFrostPhase));
         _hotkeyManager.RegisterAction(HotkeyActions.LionMainWind, () => SafeExecute(ForceLionMainBossWindPhase));
         _hotkeyManager.RegisterAction(HotkeyActions.LionMainLockPhase,
-            () => { _isLionMainBossPhaseLockEnabled = !_isLionMainBossPhaseLockEnabled; });
+            () => { IsLionMainBossPhaseLockEnabled = IsLionMainBossPhaseLockEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.LionMiniDeathblight,
             () => SafeExecute(ForceLionMiniBossDeathblightPhase));
         _hotkeyManager.RegisterAction(HotkeyActions.LionMiniLightning,
@@ -673,7 +673,7 @@ public class EnemyViewModel : BaseViewModel
         }
 
         MsgBox.Show(
-            "EventID 900: Player is in 'Leyndell, Ashen Capital'.\nDraconic Tree Sentinel can only be fought in 'Leyndell, Royal Captial', reviving may not work as expected.",
+            "EventID 900: Player is in 'Leyndell, Ashen Capital'.\nDraconic Tree Sentinel can only be fought in 'Leyndell, Royal Capital', reviving may not work as expected.",
             "Boss Revive Warning");
 
         return true;

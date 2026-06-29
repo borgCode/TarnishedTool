@@ -68,6 +68,7 @@ public class HotkeyManager
         return foregroundProcessId == (uint)_memoryService.TargetProcess.Id;
     }
 
+    public Action<string> DisplacedAction { get; set; }
     public void SetHotkey(string actionId, Keys keys)
     {
         ClearHotkey(actionId);
@@ -77,6 +78,13 @@ public class HotkeyManager
             actions = new List<string>();
             _hotkeyMappings[keys] = actions;
         }
+        else if (!SettingsManager.Default.AllowMultipleHotkeys)
+        {
+            foreach (var displaced in actions)
+                DisplacedAction?.Invoke(displaced);
+            actions.Clear();
+        }
+
 
         actions.Add(actionId);
         SaveHotkeys();
