@@ -876,6 +876,8 @@ namespace TarnishedTool.Memory
             public static long LoadScreenMsgLookupMidPatches;
             public static long NoHeal;
             public static long PlayerLockHp;
+            public static long SpeedyBuff;
+            public static long InputCancel;
         }
 
         public static class Functions
@@ -2543,6 +2545,51 @@ namespace TarnishedTool.Memory
                 Version2_6_2 => 0x436EF0,
                 _ => 0
             };
+            
+            Hooks.SpeedyBuff = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x4248E0,
+                Version1_2_1 or Version1_2_2 => 0x424950,
+                Version1_2_3 => 0x424A70,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x425650,
+                Version1_4_0 => 0x427CD0,
+                Version1_4_1 => 0x427CE0,
+                Version1_5_0 => 0x428110,
+                Version1_6_0 => 0x428F50,
+                Version1_7_0 => 0x428FD0,
+                Version1_8_0 or Version1_8_1 => 0x42A930,
+                Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x42AA70,
+                Version2_2_0 or Version2_2_3 => 0x42D790,
+                Version2_3_0 => 0x42D7B0,
+                Version2_4_0 or Version2_5_0 => 0x42D7F0,
+                Version2_6_0 or Version2_6_1 => 0x42D7C0,
+                Version2_6_2 => 0x42D6B0,
+                _ => 0
+            };
+            
+            Hooks.InputCancel = moduleBase.ToInt64() + Version switch
+            {
+                Version1_2_0 => 0x3FFD90,
+                Version1_2_1 or Version1_2_2 => 0x3FFE00,
+                Version1_2_3 => 0x3FFF20,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x400A10,
+                Version1_4_0 => 0x402F60,
+                Version1_4_1 => 0x402F70,
+                Version1_5_0 => 0x403350,
+                Version1_6_0 => 0x404190,
+                Version1_7_0 => 0x404210,
+                Version1_8_0 or Version1_8_1 => 0x4059D0,
+                Version1_9_0 or Version1_9_1 => 0x405B10,
+                Version2_0_0 or Version2_0_1 => 0x405B00,
+                Version2_2_0 or Version2_2_3 => 0x4085C0,
+                Version2_3_0 => 0x4085E0,
+                Version2_4_0 or Version2_5_0 => 0x408620,
+                Version2_6_0 or Version2_6_1 => 0x4085F0,
+                Version2_6_2 => 0x4084F0,
+                _ => 0
+            };
+
+
 
 
             // Patches
@@ -3117,6 +3164,8 @@ namespace TarnishedTool.Memory
             PrintOffset("NoMapAcquiredPopup",               Hooks.NoMapAcquiredPopup);
             PrintOffset("NoHeal",                           Hooks.NoHeal);
             PrintOffset("PlayerLockHp",                     Hooks.PlayerLockHp);
+            PrintOffset("SpeedyBuff",                     Hooks.SpeedyBuff);
+            PrintOffset("InputCancel",                     Hooks.InputCancel);
 
             Console.WriteLine("\n--- Functions ---");
             PrintOffset("GraceWarp",                 Functions.GraceWarp);

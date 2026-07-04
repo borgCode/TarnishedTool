@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -37,6 +39,23 @@ namespace TarnishedTool.Services
             new(0, Vector3.Zero, 0f)
         ];
 
+        private static readonly byte[] BuffPrefixTable = BuildBuffPrefixTable();
+        
+        private static byte[] BuildBuffPrefixTable()
+        {
+            var table = new byte[1024];
+
+            foreach (int id in DataLoader.GetSimpleList(
+                         "TimeActIds",
+                         s => int.Parse(s, CultureInfo.InvariantCulture)))
+            {
+                table[id] = 1;
+            }
+
+            return table;
+        }
+
+        
         public MapLocation GetMapLocation()
         {
             var playerIns = GetPlayerIns();
@@ -594,6 +613,91 @@ namespace TarnishedTool.Services
         public void ToggleNoRoll(bool isEnabled)
         {
             actionRequestService.ToggleNoRoll(isEnabled);
+        }
+
+        public void ToggleSpeedyBuffing(bool isEnabled)
+        {
+            var speedyBuffCode = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedyBuff;
+            var inputCancelCode = CodeCaveOffsets.Base + CodeCaveOffsets.InputCancel;
+            
+            var speedActiveFlag = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedActiveFlag;
+            var activeTimeActId = CodeCaveOffsets.Base + CodeCaveOffsets.ActiveTimeActId;
+
+            if (isEnabled)
+            {
+                InstallSpeedyBuffingHook(speedyBuffCode, speedActiveFlag, activeTimeActId);
+                InstallInputCancelHook(inputCancelCode, speedActiveFlag, activeTimeActId);
+            }
+            else
+            {
+                hookManager.UninstallHook(speedyBuffCode.ToInt64());
+                hookManager.UninstallHook(inputCancelCode.ToInt64());
+                if (memoryService.Read<byte>(speedActiveFlag) != 1) return;
+                var csFlipper = memoryService.Read<nint>(CSFlipperImp.Base);
+                memoryService.Write(csFlipper + CSFlipperImp.GameSpeed, 1f);
+                memoryService.Write(activeTimeActId, 0);
+            }
+        }
+
+        private void InstallSpeedyBuffingHook(IntPtr code, IntPtr speedActiveFlag, IntPtr activeTimeActId)
+        {
+            var idTable = CodeCaveOffsets.Base + CodeCaveOffsets.TimeActBuffTable;
+            memoryService.WriteBytes(idTable, BuffPrefixTable);
+
+            var eps = CodeCaveOffsets.Base + CodeCaveOffsets.Epsilon;
+            memoryService.Write(eps, 0.0001f);
+            
+            memoryService.Write(speedActiveFlag, false);
+
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.SpeedBuff);
+            
+            AsmHelper.WriteRelativeOffsets(bytes, [
+                (code.ToInt64() + 0x5 , WorldChrMan.Base.ToInt64(), 7, 0x5 + 3),
+                (code.ToInt64() + 0x17, Hooks.SpeedyBuff + 5, 6, 0x17 + 2),
+                (code.ToInt64() + 0x24, idTable.ToInt64(), 7, 0x24 + 3),
+                (code.ToInt64() + 0x3F, speedActiveFlag.ToInt64(), 7, 0x3F + 2),
+                (code.ToInt64() + 0x58, CSFlipperImp.Base.ToInt64(), 7, 0x58 + 3),
+                (code.ToInt64() + 0x69, speedActiveFlag.ToInt64(), 7, 0x69 + 2),
+                (code.ToInt64() + 0x70, activeTimeActId.ToInt64(), 10, 0x70 + 2),
+                (code.ToInt64() + 0x82, eps.ToInt64(), 8, 0x82 + 4),
+                (code.ToInt64() + 0x94, activeTimeActId.ToInt64(), 6, 0x94 + 2),
+                (code.ToInt64() + 0x9A, CSFlipperImp.Base.ToInt64(), 7, 0x9A + 3),
+                (code.ToInt64() + 0xAB, speedActiveFlag.ToInt64(), 7, 0xAB + 2),
+                (code.ToInt64() + 0xB6, Hooks.SpeedyBuff + 5, 5, 0xB6 + 1)
+            ]);
+            
+            AsmHelper.WriteImmediateDwords(bytes, [
+                (WorldChrMan.PlayerIns, 0xC + 3),
+                (CSFlipperImp.GameSpeed, 0x5F + 2),
+                (CSFlipperImp.GameSpeed, 0xA1 + 2),
+            ]);
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), Hooks.SpeedyBuff, [0x48, 0x89, 0x5C, 0x24, 0x10]);
+        }
+
+        private void InstallInputCancelHook(IntPtr code, IntPtr speedActiveFlag, IntPtr activeTimeActId)
+        {
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.CancelSpeedBuff);
+            
+            AsmHelper.WriteRelativeOffsets(bytes, [
+            (code.ToInt64(), speedActiveFlag.ToInt64(), 7, 2),
+            (code.ToInt64() + 0xE, activeTimeActId.ToInt64(), 6, 0xE + 2),
+            (code.ToInt64() + 0x18, WorldChrMan.Base.ToInt64(), 7, 0x18 + 3),
+            (code.ToInt64() + 0x2F, CSFlipperImp.Base.ToInt64(), 7, 0x2F + 3),
+            (code.ToInt64() + 0x40, speedActiveFlag.ToInt64(), 7, 0x40 + 2),
+            (code.ToInt64() + 0x47, activeTimeActId.ToInt64(), 10, 0x47 + 2),
+            (code.ToInt64() + 0x58, Hooks.InputCancel + 6, 5, 0x58 + 1)
+            ]);
+            
+            AsmHelper.WriteImmediateDwords(bytes, [
+                (WorldChrMan.PlayerIns, 0x1F + 3),
+                (CSFlipperImp.GameSpeed, 0x36 + 2),
+            ]);
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), Hooks.InputCancel, [0x40, 0x53, 0x48, 0x83, 0xEC, 0x30]);
+  
         }
     }
 }

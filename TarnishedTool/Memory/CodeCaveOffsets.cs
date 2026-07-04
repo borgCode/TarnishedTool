@@ -97,5 +97,12 @@ namespace TarnishedTool.Memory
         public const int ActionRequestIntercept = 0x4000;
         public const int NoPlayerRoll = 0x4100;
         public const int NoPlayerJump = 0x4101;
+
+        public const int TimeActBuffTable = 0x4200;
+        public const int Epsilon = 0x4600;
+        public const int SpeedActiveFlag = 0x4604;
+        public const int ActiveTimeActId = 0x4608;
+        public const int SpeedyBuff = 0x4610;
+        public const int InputCancel = 0x4700;
     }
 }

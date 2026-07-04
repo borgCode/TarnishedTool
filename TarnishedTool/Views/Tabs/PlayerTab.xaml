@@ -253,6 +253,10 @@
                               ToolTip="Regenerate 3.3% of max FP per tick"
                               IsChecked="{Binding IsFpRegenEnabled}"
                               Margin="0,2" />
+                    <CheckBox Content="Speedy Buffing"
+                              ToolTip="Increases game speed when buffing"
+                              IsChecked="{Binding IsSpeedBuffEnabled}"
+                              Margin="0,2" />
                 </StackPanel>
                 <StackPanel Grid.Column="2" Margin="10, 0, 0, 0">
                     <CheckBox Content="Set RFBS on load in"

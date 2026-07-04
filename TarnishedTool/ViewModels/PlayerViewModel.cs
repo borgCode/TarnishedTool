@@ -224,6 +224,20 @@ namespace TarnishedTool.ViewModels
             get => _isSetRfbsOnLoadEnabled;
             set => SetProperty(ref _isSetRfbsOnLoadEnabled, value);
         }
+        
+        private bool _isSpeedBuffEnabled;
+
+        public bool IsSpeedBuffEnabled
+        {
+            get => _isSpeedBuffEnabled;
+            set
+            {
+                if (SetProperty(ref _isSpeedBuffEnabled, value))
+                {
+                    _playerService.ToggleSpeedyBuffing(_isSpeedBuffEnabled);
+                }
+            }
+        }
 
         private bool _isPos1Saved;
 
@@ -753,6 +767,7 @@ namespace TarnishedTool.ViewModels
             _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
+            if (IsSpeedBuffEnabled) _playerService.ToggleSpeedyBuffing(true);
         }
 
         private void OnFadedIn()
@@ -768,7 +783,6 @@ namespace TarnishedTool.ViewModels
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
             if (IsNoHitEnabled) _playerService.ToggleNoHit(true);
             if (IsNoRollEnabled) _playerService.ToggleNoRoll(true);
-            
         }
 
         private void OnGameFirstLoaded()
@@ -799,6 +813,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = false;
             _gameTickService.Unsubscribe(PlayerTick);
+            _playerService.ToggleSpeedyBuffing(false);
         }
 
         private void OnNewGameStart()
@@ -867,6 +882,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.FpRegen, () => { IsFpRegenEnabled = !IsFpRegenEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.LockHp, () => { IsHpLocked = !IsHpLocked; });
             _hotkeyManager.RegisterAction(HotkeyActions.NoRoll, () => { IsNoRollEnabled = !IsNoRollEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.SpeedBuff, () => { IsSpeedBuffEnabled = !IsSpeedBuffEnabled; });
         }
 
         private void SafeExecute(Action action)

@@ -56,4 +56,5 @@ public interface IPlayerService
     bool IsRiding();
     void RefreshFromStorage();
     void ToggleNoRoll(bool isEnabled);
+    void ToggleSpeedyBuffing(bool isEnabled);
 }

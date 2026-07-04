@@ -209,4 +209,5 @@ public enum HotkeyActions
     NoRoll,
     DrawStance,
     DrawBackstab,
+    SpeedBuff
 }

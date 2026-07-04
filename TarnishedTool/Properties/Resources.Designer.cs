@@ -538,6 +538,24 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 7 &lt;_main+0x7&gt;
+        ///75 4a                   jne    53 &lt;skip&gt;
+        ///45 84 c9                test   r9b,r9b
+        ///74 45                   je     53 &lt;skip&gt;
+        ///3b 15 00 00 00 00       cmp    edx,DWORD PTR [rip+0x0]        # 14 &lt;_main+0x14&gt;
+        ///75 3d                   jne    53 &lt;skip&gt;
+        ///41 53                   push   r11
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 1f &lt;_main+0x1f&gt;
+        ///48 8b 80 00 00 00 00    mov    rax,QWORD PTR [rax+0x0]
+        ///4c 8b 19       [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CancelSpeedBuff {
+            get {
+                return ResourceManager.GetString("CancelSpeedBuff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ChrId,Name
         ///0000,Player
         ///2010,Blaidd
@@ -2896,7 +2914,8 @@ namespace TarnishedTool.Properties {
         ///122,Storm Assault
         ///123,Stormcaller
         ///124,Sword Dance
-        ///125,Spinning Chain        /// [rest of string was truncated]&quot;;.
+        ///125,Spinning Chain
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParamEntries_SwordArtsParam {
             get {
@@ -3135,6 +3154,24 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 48 89 5c 24 10          mov    QWORD PTR [rsp+0x10],rbx
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # c &lt;_main+0xc&gt;
+        ///48 8b 80 00 00 00 00    mov    rax,QWORD PTR [rax+0x0]
+        ///48 3b 41 18             cmp    rax,QWORD PTR [rcx+0x18]
+        ///0f 85 00 00 00 00       jne    1d &lt;_main+0x1d&gt;
+        ///50                      push   rax
+        ///52                      push   rdx
+        ///41 50                   push   r8
+        ///8b 41 10                mov    eax,DWORD PTR [rcx+0x10]
+        ///4c 8d 05 00 00 00 00    lea    r8,[rip+0x0]         [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SpeedBuff {
+            get {
+                return ResourceManager.GetString("SpeedBuff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,40033838,Albinauric Ashes,1,600,1
         ///0,40033068,Ancestral Follower Ashes,1,600,1
         ///1,4021CC58,Ancient Dragon Florissax,1,600,1
@@ -3190,6 +3227,58 @@ namespace TarnishedTool.Properties {
         internal static string TargetNoStagger {
             get {
                 return ResourceManager.GetString("TargetNoStagger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 413
+        ///426
+        ///431
+        ///432
+        ///433
+        ///434
+        ///435
+        ///449
+        ///455
+        ///459
+        ///460
+        ///481
+        ///482
+        ///486
+        ///490
+        ///495
+        ///504
+        ///509
+        ///512
+        ///513
+        ///514
+        ///650
+        ///651
+        ///663
+        ///665
+        ///675
+        ///676
+        ///732
+        ///733
+        ///734
+        ///735
+        ///736
+        ///737
+        ///752
+        ///782
+        ///797
+        ///808
+        ///810
+        ///813
+        ///823
+        ///853
+        ///954
+        ///958
+        ///967.
+        /// </summary>
+        internal static string TimeActIds {
+            get {
+                return ResourceManager.GetString("TimeActIds", resourceCulture);
             }
         }
         
