@@ -317,6 +317,18 @@ namespace TarnishedTool.Memory
             7,
             anchorOffset: 6
         );
+        
+        public static readonly Pattern CSSound = new Pattern(
+            [
+                0xC7, 0x44, 0x24, 0x58, 0x02, 0x00, 0x00, 0x00, 0x89, 0x74, 0x24, 0x5C, 0x48, 0x8B, 0x44, 0x24, 0x58, 0x48,
+                0x89, 0x44, 0x24, 0x58, 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxx????",
+            22,
+            AddressingMode.Relative,
+            3,
+            7
+        );
 
         //Hooks
 

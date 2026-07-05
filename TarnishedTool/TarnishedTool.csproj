@@ -250,6 +250,7 @@
         <Compile Include="Enums\ParamEnums\SwordArtsParam\SwordArtsRefStatusType.cs" />
         <Compile Include="Enums\ParamEnums\SwordArtsParam\SwordArtsShieldIconType.cs" />
         <Compile Include="Enums\ParamFieldDisplayMode.cs" />
+        <Compile Include="Enums\SpeedBuffMode.cs" />
         <Compile Include="Enums\State.cs" />
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />

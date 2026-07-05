@@ -2914,8 +2914,7 @@ namespace TarnishedTool.Properties {
         ///122,Storm Assault
         ///123,Stormcaller
         ///124,Sword Dance
-        ///125,Spinning Chain
-        /// [rest of string was truncated]&quot;;.
+        ///125,Spinning Chain        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParamEntries_SwordArtsParam {
             get {
@@ -3159,11 +3158,10 @@ namespace TarnishedTool.Properties {
         ///48 8b 80 00 00 00 00    mov    rax,QWORD PTR [rax+0x0]
         ///48 3b 41 18             cmp    rax,QWORD PTR [rcx+0x18]
         ///0f 85 00 00 00 00       jne    1d &lt;_main+0x1d&gt;
-        ///50                      push   rax
-        ///52                      push   rdx
-        ///41 50                   push   r8
-        ///8b 41 10                mov    eax,DWORD PTR [rcx+0x10]
-        ///4c 8d 05 00 00 00 00    lea    r8,[rip+0x0]         [rest of string was truncated]&quot;;.
+        ///80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 24 &lt;_main+0x24&gt;
+        ///74 19                   je     3f &lt;continue&gt;
+        ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 2d &lt;_main+0x2d&gt;
+        ///48 8b 80 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SpeedBuff {
             get {
@@ -3231,13 +3229,17 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 413
+        ///   Looks up a localized string similar to 411
+        ///412
+        ///413
+        ///424
         ///426
         ///431
         ///432
         ///433
         ///434
         ///435
+        ///442
         ///449
         ///455
         ///459
@@ -3252,28 +3254,49 @@ namespace TarnishedTool.Properties {
         ///512
         ///513
         ///514
+        ///544
+        ///550
         ///650
         ///651
         ///663
         ///665
         ///675
         ///676
+        ///730
+        ///731
         ///732
         ///733
         ///734
         ///735
         ///736
         ///737
+        ///740
+        ///741
+        ///744
+        ///750
         ///752
+        ///766
+        ///774
         ///782
+        ///786
         ///797
         ///808
         ///810
         ///813
+        ///815
+        ///821
         ///823
+        ///831
+        ///834
+        ///852
         ///853
+        ///872
+        ///884
+        ///886
+        ///911
         ///954
         ///958
+        ///960
         ///967.
         /// </summary>
         internal static string TimeActIds {

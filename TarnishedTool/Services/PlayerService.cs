@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -39,6 +39,8 @@ namespace TarnishedTool.Services
             new(0, Vector3.Zero, 0f)
         ];
 
+        private SpeedBuffMode _currentMode = SpeedBuffMode.Off;
+        
         private static readonly byte[] BuffPrefixTable = BuildBuffPrefixTable();
         
         private static byte[] BuildBuffPrefixTable()
@@ -615,28 +617,40 @@ namespace TarnishedTool.Services
             actionRequestService.ToggleNoRoll(isEnabled);
         }
 
-        public void ToggleSpeedyBuffing(bool isEnabled)
+        public void SetSpeedBuffMode(SpeedBuffMode mode)
         {
+            if (_currentMode == mode)
+                return;
+
             var speedyBuffCode = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedyBuff;
             var inputCancelCode = CodeCaveOffsets.Base + CodeCaveOffsets.InputCancel;
-            
+
             var speedActiveFlag = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedActiveFlag;
             var activeTimeActId = CodeCaveOffsets.Base + CodeCaveOffsets.ActiveTimeActId;
+            var allowedInCombat = CodeCaveOffsets.Base + CodeCaveOffsets.AllowSpeedBuffInCombat;
 
-            if (isEnabled)
+            var wasEnabled = _currentMode != SpeedBuffMode.Off;
+            var isEnabled = mode != SpeedBuffMode.Off;
+
+            if (!wasEnabled && isEnabled)
             {
                 InstallSpeedyBuffingHook(speedyBuffCode, speedActiveFlag, activeTimeActId);
                 InstallInputCancelHook(inputCancelCode, speedActiveFlag, activeTimeActId);
             }
-            else
+            else if (wasEnabled && !isEnabled)
             {
                 hookManager.UninstallHook(speedyBuffCode.ToInt64());
                 hookManager.UninstallHook(inputCancelCode.ToInt64());
-                if (memoryService.Read<byte>(speedActiveFlag) != 1) return;
-                var csFlipper = memoryService.Read<nint>(CSFlipperImp.Base);
-                memoryService.Write(csFlipper + CSFlipperImp.GameSpeed, 1f);
-                memoryService.Write(activeTimeActId, 0);
+                if (memoryService.Read<byte>(speedActiveFlag) == 1)
+                {
+                    var csFlipper = memoryService.Read<nint>(CSFlipperImp.Base);
+                    memoryService.Write(csFlipper + CSFlipperImp.GameSpeed, 1f);
+                    memoryService.Write(activeTimeActId, 0);
+                }
             }
+
+            memoryService.Write(allowedInCombat, mode == SpeedBuffMode.AllowedInCombat);
+            _currentMode = mode;
         }
 
         private void InstallSpeedyBuffingHook(IntPtr code, IntPtr speedActiveFlag, IntPtr activeTimeActId)
@@ -649,27 +663,32 @@ namespace TarnishedTool.Services
             
             memoryService.Write(speedActiveFlag, false);
 
+            var allowedInCombat = CodeCaveOffsets.Base + CodeCaveOffsets.AllowSpeedBuffInCombat;
+
             var bytes = AsmLoader.GetAsmBytes(AsmScript.SpeedBuff);
             
             AsmHelper.WriteRelativeOffsets(bytes, [
                 (code.ToInt64() + 0x5 , WorldChrMan.Base.ToInt64(), 7, 0x5 + 3),
                 (code.ToInt64() + 0x17, Hooks.SpeedyBuff + 5, 6, 0x17 + 2),
-                (code.ToInt64() + 0x24, idTable.ToInt64(), 7, 0x24 + 3),
-                (code.ToInt64() + 0x3F, speedActiveFlag.ToInt64(), 7, 0x3F + 2),
-                (code.ToInt64() + 0x58, CSFlipperImp.Base.ToInt64(), 7, 0x58 + 3),
-                (code.ToInt64() + 0x69, speedActiveFlag.ToInt64(), 7, 0x69 + 2),
-                (code.ToInt64() + 0x70, activeTimeActId.ToInt64(), 10, 0x70 + 2),
-                (code.ToInt64() + 0x82, eps.ToInt64(), 8, 0x82 + 4),
-                (code.ToInt64() + 0x94, activeTimeActId.ToInt64(), 6, 0x94 + 2),
-                (code.ToInt64() + 0x9A, CSFlipperImp.Base.ToInt64(), 7, 0x9A + 3),
-                (code.ToInt64() + 0xAB, speedActiveFlag.ToInt64(), 7, 0xAB + 2),
-                (code.ToInt64() + 0xB6, Hooks.SpeedyBuff + 5, 5, 0xB6 + 1)
+                (code.ToInt64() + 0x1D, allowedInCombat.ToInt64(), 7, 0x1D + 2),
+                (code.ToInt64() + 0x26, CSSound.Base.ToInt64(), 7, 0x26 + 3),
+                (code.ToInt64() + 0x3A, Hooks.SpeedyBuff + 5, 5, 0x3A + 1),
+                (code.ToInt64() + 0x45, idTable.ToInt64(), 7, 0x45 + 3),
+                (code.ToInt64() + 0x60, speedActiveFlag.ToInt64(), 7, 0x60 + 2),
+                (code.ToInt64() + 0x79, CSFlipperImp.Base.ToInt64(), 7, 0x79 + 3),
+                (code.ToInt64() + 0x8A, speedActiveFlag.ToInt64(), 7, 0x8A + 2),
+                (code.ToInt64() + 0x91, activeTimeActId.ToInt64(), 10, 0x91 + 2),
+                (code.ToInt64() + 0xA3, eps.ToInt64(), 8, 0xA3 + 4),
+                (code.ToInt64() + 0xB5, activeTimeActId.ToInt64(), 6, 0xB5 + 2),
+                (code.ToInt64() + 0xBB, CSFlipperImp.Base.ToInt64(), 7, 0xBB + 3),
+                (code.ToInt64() + 0xCC, speedActiveFlag.ToInt64(), 7, 0xCC + 2),
+                (code.ToInt64() + 0xD6, Hooks.SpeedyBuff + 5, 5, 0xD6 + 1)
             ]);
             
             AsmHelper.WriteImmediateDwords(bytes, [
                 (WorldChrMan.PlayerIns, 0xC + 3),
-                (CSFlipperImp.GameSpeed, 0x5F + 2),
-                (CSFlipperImp.GameSpeed, 0xA1 + 2),
+                (CSFlipperImp.GameSpeed, 0x80 + 2),
+                (CSFlipperImp.GameSpeed, 0xC2 + 2),
             ]);
             
             memoryService.WriteBytes(code, bytes);

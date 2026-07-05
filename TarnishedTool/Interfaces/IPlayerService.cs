@@ -1,6 +1,7 @@
 ﻿// 
 
 using System.Numerics;
+using TarnishedTool.Enums;
 using TarnishedTool.Models;
 
 namespace TarnishedTool.Interfaces;
@@ -56,5 +57,5 @@ public interface IPlayerService
     bool IsRiding();
     void RefreshFromStorage();
     void ToggleNoRoll(bool isEnabled);
-    void ToggleSpeedyBuffing(bool isEnabled);
+    void SetSpeedBuffMode(SpeedBuffMode mode);
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
@@ -225,16 +225,52 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _isSetRfbsOnLoadEnabled, value);
         }
         
-        private bool _isSpeedBuffEnabled;
+        
+        private SpeedBuffMode _speedBuffMode;
+        public SpeedBuffMode SpeedBuffMode
+        {
+            get => _speedBuffMode;
+            set
+            {
+                if (!SetProperty(ref _speedBuffMode, value))
+                    return;
+
+                _playerService.SetSpeedBuffMode(value);
+
+                OnPropertyChanged(nameof(IsSpeedBuffEnabled));
+                OnPropertyChanged(nameof(IsSpeedBuffInCombatEnabled));
+            }
+        }
 
         public bool IsSpeedBuffEnabled
         {
-            get => _isSpeedBuffEnabled;
+            get => SpeedBuffMode != SpeedBuffMode.Off;
             set
             {
-                if (SetProperty(ref _isSpeedBuffEnabled, value))
+                if (value)
                 {
-                    _playerService.ToggleSpeedyBuffing(_isSpeedBuffEnabled);
+                    if (SpeedBuffMode == SpeedBuffMode.Off)
+                        SpeedBuffMode = SpeedBuffMode.Normal;
+                }
+                else
+                {
+                    SpeedBuffMode = SpeedBuffMode.Off;
+                }
+            }
+        }
+
+        public bool IsSpeedBuffInCombatEnabled
+        {
+            get => SpeedBuffMode == SpeedBuffMode.AllowedInCombat;
+            set
+            {
+                if (value)
+                {
+                    SpeedBuffMode = SpeedBuffMode.AllowedInCombat;
+                }
+                else if (SpeedBuffMode == SpeedBuffMode.AllowedInCombat)
+                {
+                    SpeedBuffMode = SpeedBuffMode.Normal;
                 }
             }
         }
@@ -767,7 +803,7 @@ namespace TarnishedTool.ViewModels
             _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
-            if (IsSpeedBuffEnabled) _playerService.ToggleSpeedyBuffing(true);
+            if (SpeedBuffMode != SpeedBuffMode.Off) _playerService.SetSpeedBuffMode(SpeedBuffMode);
         }
 
         private void OnFadedIn()
@@ -813,7 +849,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = false;
             _gameTickService.Unsubscribe(PlayerTick);
-            _playerService.ToggleSpeedyBuffing(false);
+            _playerService.SetSpeedBuffMode(SpeedBuffMode.Off);
         }
 
         private void OnNewGameStart()

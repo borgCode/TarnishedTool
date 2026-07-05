@@ -850,6 +850,11 @@ namespace TarnishedTool.Memory
             public static readonly int[] LuaState = [0x6938, 0xB8, 0x28];
         }
 
+        public static class CSSound
+        {
+            public static IntPtr Base;
+        }
+
         public static class Hooks
         {
             public static long UpdateCoords;
@@ -1450,6 +1455,26 @@ namespace TarnishedTool.Memory
                 Version2_2_3 or Version2_3_0 => 0x3D62508,
                 _ => 0
             };
+            
+            CSSound.Base = moduleBase + Version switch
+            {
+                Version1_2_0 => 0x3C6D320,
+                Version1_2_1 => 0x3C6D340,
+                Version1_2_2 => 0x3C6D360,
+                Version1_2_3 => 0x3C70370,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x3C81EC8,
+                Version1_4_0 or Version1_4_1 => 0x3C25068,
+                Version1_5_0 => 0x3C3CE58,
+                Version1_6_0 => 0x3C4E0B8,
+                Version1_7_0 => 0x3C68A88,
+                Version1_8_0 or Version1_8_1 => 0x3CF74F8,
+                Version1_9_0 or Version1_9_1 or Version2_0_0 or Version2_0_1 => 0x3CFA938,
+                Version2_2_0 or Version2_4_0 or Version2_5_0
+                    or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x3D83CD8,
+                Version2_2_3 or Version2_3_0 => 0x3D83CF8,
+                _ => 0
+            };
+
 
 
             // Functions
@@ -3116,6 +3141,7 @@ namespace TarnishedTool.Memory
             PrintOffset("DrawPathing.Base",            DrawPathing.Base);
             PrintOffset("ChrDbgFlags.Base",            ChrDbgFlags.Base);
             PrintOffset("WorldAiManagerImp.Base",      WorldAiManagerImp.Base);
+            PrintOffset("CSSound.Base",      CSSound.Base);
 
             Console.WriteLine("\n--- Patches ---");
             PrintOffset("NoLogo",                       Patches.NoLogo);
