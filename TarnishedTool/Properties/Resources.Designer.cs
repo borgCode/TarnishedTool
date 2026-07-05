@@ -539,11 +539,11 @@ namespace TarnishedTool.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to 80 3d 00 00 00 00 01    cmp    BYTE PTR [rip+0x0],0x1        # 7 &lt;_main+0x7&gt;
-        ///75 4a                   jne    53 &lt;skip&gt;
+        ///75 40                   jne    49 &lt;skip&gt;
         ///45 84 c9                test   r9b,r9b
-        ///74 45                   je     53 &lt;skip&gt;
+        ///74 3b                   je     49 &lt;skip&gt;
         ///3b 15 00 00 00 00       cmp    edx,DWORD PTR [rip+0x0]        # 14 &lt;_main+0x14&gt;
-        ///75 3d                   jne    53 &lt;skip&gt;
+        ///75 33                   jne    49 &lt;skip&gt;
         ///41 53                   push   r11
         ///48 8b 05 00 00 00 00    mov    rax,QWORD PTR [rip+0x0]        # 1f &lt;_main+0x1f&gt;
         ///48 8b 80 00 00 00 00    mov    rax,QWORD PTR [rax+0x0]

@@ -104,6 +104,6 @@ namespace TarnishedTool.Memory
         public const int AllowSpeedBuffInCombat = 0x4605;
         public const int ActiveTimeActId = 0x4608;
         public const int SpeedyBuff = 0x4610;
-        public const int InputCancel = 0x4700;
+        public const int InputCancel = 0x4750;
     }
 }

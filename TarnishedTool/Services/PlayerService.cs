@@ -674,21 +674,27 @@ namespace TarnishedTool.Services
                 (code.ToInt64() + 0x26, CSSound.Base.ToInt64(), 7, 0x26 + 3),
                 (code.ToInt64() + 0x3A, Hooks.SpeedyBuff + 5, 5, 0x3A + 1),
                 (code.ToInt64() + 0x45, idTable.ToInt64(), 7, 0x45 + 3),
-                (code.ToInt64() + 0x60, speedActiveFlag.ToInt64(), 7, 0x60 + 2),
-                (code.ToInt64() + 0x79, CSFlipperImp.Base.ToInt64(), 7, 0x79 + 3),
-                (code.ToInt64() + 0x8A, speedActiveFlag.ToInt64(), 7, 0x8A + 2),
-                (code.ToInt64() + 0x91, activeTimeActId.ToInt64(), 10, 0x91 + 2),
-                (code.ToInt64() + 0xA3, eps.ToInt64(), 8, 0xA3 + 4),
-                (code.ToInt64() + 0xB5, activeTimeActId.ToInt64(), 6, 0xB5 + 2),
-                (code.ToInt64() + 0xBB, CSFlipperImp.Base.ToInt64(), 7, 0xBB + 3),
-                (code.ToInt64() + 0xCC, speedActiveFlag.ToInt64(), 7, 0xCC + 2),
-                (code.ToInt64() + 0xD6, Hooks.SpeedyBuff + 5, 5, 0xD6 + 1)
+                (code.ToInt64() + 0x4E, speedActiveFlag.ToInt64(), 7, 0x4E + 2),
+                (code.ToInt64() + 0x57, activeTimeActId.ToInt64(), 6, 0x57 + 2),
+                (code.ToInt64() + 0x5F, speedActiveFlag.ToInt64(), 7, 0x5F + 2),
+                (code.ToInt64() + 0x66, activeTimeActId.ToInt64(), 10, 0x66 + 2),
+                (code.ToInt64() + 0x75, speedActiveFlag.ToInt64(), 7, 0x75 + 2),
+                (code.ToInt64() + 0x7C, activeTimeActId.ToInt64(), 10, 0x7C + 2),
+                (code.ToInt64() + 0x98, speedActiveFlag.ToInt64(), 7, 0x98 + 2),
+                (code.ToInt64() + 0xB1, CSFlipperImp.Base.ToInt64(), 7, 0xB1 + 3),
+                (code.ToInt64() + 0xC2, speedActiveFlag.ToInt64(), 7, 0xC2 + 2),
+                (code.ToInt64() + 0xC9, activeTimeActId.ToInt64(), 10, 0xC9 + 2),
+                (code.ToInt64() + 0xDB, eps.ToInt64(), 8, 0xDB + 4),
+                (code.ToInt64() + 0xED, activeTimeActId.ToInt64(), 6, 0xED + 2),
+                (code.ToInt64() + 0xF3, CSFlipperImp.Base.ToInt64(), 7, 0xF3 + 3),
+                (code.ToInt64() + 0x104, speedActiveFlag.ToInt64(), 7, 0x104 + 2),
+                (code.ToInt64() + 0x10E, Hooks.SpeedyBuff + 5, 5, 0x10E + 1)
             ]);
             
             AsmHelper.WriteImmediateDwords(bytes, [
                 (WorldChrMan.PlayerIns, 0xC + 3),
-                (CSFlipperImp.GameSpeed, 0x80 + 2),
-                (CSFlipperImp.GameSpeed, 0xC2 + 2),
+                (CSFlipperImp.GameSpeed, 0xB8 + 2),
+                (CSFlipperImp.GameSpeed, 0xFA + 2),
             ]);
             
             memoryService.WriteBytes(code, bytes);
@@ -705,8 +711,7 @@ namespace TarnishedTool.Services
             (code.ToInt64() + 0x18, WorldChrMan.Base.ToInt64(), 7, 0x18 + 3),
             (code.ToInt64() + 0x2F, CSFlipperImp.Base.ToInt64(), 7, 0x2F + 3),
             (code.ToInt64() + 0x40, speedActiveFlag.ToInt64(), 7, 0x40 + 2),
-            (code.ToInt64() + 0x47, activeTimeActId.ToInt64(), 10, 0x47 + 2),
-            (code.ToInt64() + 0x58, Hooks.InputCancel + 6, 5, 0x58 + 1)
+            (code.ToInt64() + 0x4E, Hooks.InputCancel + 6, 5, 0x4E + 1)
             ]);
             
             AsmHelper.WriteImmediateDwords(bytes, [
