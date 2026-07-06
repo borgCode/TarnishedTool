@@ -99,11 +99,8 @@ namespace TarnishedTool.Memory
         public const int NoPlayerJump = 0x4101;
 
         public const int TimeActBuffTable = 0x4200;
-        public const int Epsilon = 0x4600;
-        public const int SpeedActiveFlag = 0x4604;
-        public const int AllowSpeedBuffInCombat = 0x4605;
-        public const int ActiveTimeActId = 0x4608;
+        public const int SpeedActiveFlag = 0x4600;
+        public const int AllowSpeedBuffInCombat = 0x4601;
         public const int SpeedyBuff = 0x4610;
-        public const int InputCancel = 0x4750;
     }
 }

@@ -537,20 +537,6 @@ namespace TarnishedTool.Memory
             5
         
         );
-        
-        public static readonly Pattern InputCancel = new Pattern(
-            new byte[]
-            {
-                0xC1, 0xE9, 0x0B, 0xF6, 0xC1, 0x01, 0x75, 0x0E, 0x41, 0xB1, 0x01, 0x44, 0x8B, 0xC5, 0x48, 0x8B, 0xCE, 0xE8,
-                0x00, 0x00, 0x00, 0x00
-            },
-            "xxxxxxxxxxxxxxxxxx????",
-            17,
-            AddressingMode.Relative,
-            1,
-            5
-        );
-
 
         //Funcs
 

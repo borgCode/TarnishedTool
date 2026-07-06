@@ -623,10 +623,8 @@ namespace TarnishedTool.Services
                 return;
 
             var speedyBuffCode = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedyBuff;
-            var inputCancelCode = CodeCaveOffsets.Base + CodeCaveOffsets.InputCancel;
 
             var speedActiveFlag = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedActiveFlag;
-            var activeTimeActId = CodeCaveOffsets.Base + CodeCaveOffsets.ActiveTimeActId;
             var allowedInCombat = CodeCaveOffsets.Base + CodeCaveOffsets.AllowSpeedBuffInCombat;
 
             var wasEnabled = _currentMode != SpeedBuffMode.Off;
@@ -634,18 +632,15 @@ namespace TarnishedTool.Services
 
             if (!wasEnabled && isEnabled)
             {
-                InstallSpeedyBuffingHook(speedyBuffCode, speedActiveFlag, activeTimeActId);
-                InstallInputCancelHook(inputCancelCode, speedActiveFlag, activeTimeActId);
+                InstallSpeedyBuffingHook(speedyBuffCode, speedActiveFlag);
             }
             else if (wasEnabled && !isEnabled)
             {
                 hookManager.UninstallHook(speedyBuffCode.ToInt64());
-                hookManager.UninstallHook(inputCancelCode.ToInt64());
                 if (memoryService.Read<byte>(speedActiveFlag) == 1)
                 {
                     var csFlipper = memoryService.Read<nint>(CSFlipperImp.Base);
                     memoryService.Write(csFlipper + CSFlipperImp.GameSpeed, 1f);
-                    memoryService.Write(activeTimeActId, 0);
                 }
             }
 
@@ -653,13 +648,10 @@ namespace TarnishedTool.Services
             _currentMode = mode;
         }
 
-        private void InstallSpeedyBuffingHook(IntPtr code, IntPtr speedActiveFlag, IntPtr activeTimeActId)
+        private void InstallSpeedyBuffingHook(IntPtr code, IntPtr speedActiveFlag)
         {
             var idTable = CodeCaveOffsets.Base + CodeCaveOffsets.TimeActBuffTable;
             memoryService.WriteBytes(idTable, BuffPrefixTable);
-
-            var eps = CodeCaveOffsets.Base + CodeCaveOffsets.Epsilon;
-            memoryService.Write(eps, 0.0001f);
             
             memoryService.Write(speedActiveFlag, false);
 
@@ -674,54 +666,22 @@ namespace TarnishedTool.Services
                 (code.ToInt64() + 0x26, CSSound.Base.ToInt64(), 7, 0x26 + 3),
                 (code.ToInt64() + 0x3A, Hooks.SpeedyBuff + 5, 5, 0x3A + 1),
                 (code.ToInt64() + 0x45, idTable.ToInt64(), 7, 0x45 + 3),
-                (code.ToInt64() + 0x4E, speedActiveFlag.ToInt64(), 7, 0x4E + 2),
-                (code.ToInt64() + 0x57, activeTimeActId.ToInt64(), 6, 0x57 + 2),
-                (code.ToInt64() + 0x5F, speedActiveFlag.ToInt64(), 7, 0x5F + 2),
-                (code.ToInt64() + 0x66, activeTimeActId.ToInt64(), 10, 0x66 + 2),
-                (code.ToInt64() + 0x75, speedActiveFlag.ToInt64(), 7, 0x75 + 2),
-                (code.ToInt64() + 0x7C, activeTimeActId.ToInt64(), 10, 0x7C + 2),
-                (code.ToInt64() + 0x98, speedActiveFlag.ToInt64(), 7, 0x98 + 2),
-                (code.ToInt64() + 0xB1, CSFlipperImp.Base.ToInt64(), 7, 0xB1 + 3),
-                (code.ToInt64() + 0xC2, speedActiveFlag.ToInt64(), 7, 0xC2 + 2),
-                (code.ToInt64() + 0xC9, activeTimeActId.ToInt64(), 10, 0xC9 + 2),
-                (code.ToInt64() + 0xDB, eps.ToInt64(), 8, 0xDB + 4),
-                (code.ToInt64() + 0xED, activeTimeActId.ToInt64(), 6, 0xED + 2),
-                (code.ToInt64() + 0xF3, CSFlipperImp.Base.ToInt64(), 7, 0xF3 + 3),
-                (code.ToInt64() + 0x104, speedActiveFlag.ToInt64(), 7, 0x104 + 2),
-                (code.ToInt64() + 0x10E, Hooks.SpeedyBuff + 5, 5, 0x10E + 1)
+                (code.ToInt64() + 0x60, speedActiveFlag.ToInt64(), 7, 0x60 + 2),
+                (code.ToInt64() + 0x69, CSFlipperImp.Base.ToInt64(), 7, 0x69 + 3),
+                (code.ToInt64() + 0x7A, speedActiveFlag.ToInt64(), 7, 0x7A + 2),
+                (code.ToInt64() + 0x83, CSFlipperImp.Base.ToInt64(), 7, 0x83 + 3),
+                (code.ToInt64() + 0x94, speedActiveFlag.ToInt64(), 7, 0x94 + 2),
+                (code.ToInt64() + 0x9E, Hooks.SpeedyBuff + 5, 5, 0x9E + 1)
             ]);
             
             AsmHelper.WriteImmediateDwords(bytes, [
                 (WorldChrMan.PlayerIns, 0xC + 3),
-                (CSFlipperImp.GameSpeed, 0xB8 + 2),
-                (CSFlipperImp.GameSpeed, 0xFA + 2),
+                (CSFlipperImp.GameSpeed, 0x70 + 2),
+                (CSFlipperImp.GameSpeed, 0x8A + 2),
             ]);
             
             memoryService.WriteBytes(code, bytes);
             hookManager.InstallHook(code.ToInt64(), Hooks.SpeedyBuff, [0x48, 0x89, 0x5C, 0x24, 0x10]);
-        }
-
-        private void InstallInputCancelHook(IntPtr code, IntPtr speedActiveFlag, IntPtr activeTimeActId)
-        {
-            var bytes = AsmLoader.GetAsmBytes(AsmScript.CancelSpeedBuff);
-            
-            AsmHelper.WriteRelativeOffsets(bytes, [
-            (code.ToInt64(), speedActiveFlag.ToInt64(), 7, 2),
-            (code.ToInt64() + 0xE, activeTimeActId.ToInt64(), 6, 0xE + 2),
-            (code.ToInt64() + 0x18, WorldChrMan.Base.ToInt64(), 7, 0x18 + 3),
-            (code.ToInt64() + 0x2F, CSFlipperImp.Base.ToInt64(), 7, 0x2F + 3),
-            (code.ToInt64() + 0x40, speedActiveFlag.ToInt64(), 7, 0x40 + 2),
-            (code.ToInt64() + 0x4E, Hooks.InputCancel + 6, 5, 0x4E + 1)
-            ]);
-            
-            AsmHelper.WriteImmediateDwords(bytes, [
-                (WorldChrMan.PlayerIns, 0x1F + 3),
-                (CSFlipperImp.GameSpeed, 0x36 + 2),
-            ]);
-            
-            memoryService.WriteBytes(code, bytes);
-            hookManager.InstallHook(code.ToInt64(), Hooks.InputCancel, [0x40, 0x53, 0x48, 0x83, 0xEC, 0x30]);
-  
         }
     }
 }

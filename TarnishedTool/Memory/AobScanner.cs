@@ -184,7 +184,6 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.NoHeal), Pattern.NoHeal, addr => Hooks.NoHeal = addr);
             Queue(nameof(Pattern.PlayerLockHp), Pattern.PlayerLockHp, addr => Hooks.PlayerLockHp = addr);
             Queue(nameof(Pattern.SpeedyBuff), Pattern.SpeedyBuff, addr => Hooks.SpeedyBuff = addr);
-            Queue(nameof(Pattern.InputCancel), Pattern.InputCancel, addr => Hooks.InputCancel = addr);
         }
         
         public void Queue(string? name, Pattern pattern, Action<nint> setter) =>
