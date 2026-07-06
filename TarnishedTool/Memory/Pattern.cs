@@ -317,6 +317,18 @@ namespace TarnishedTool.Memory
             7,
             anchorOffset: 6
         );
+        
+        public static readonly Pattern CSSound = new Pattern(
+            [
+                0xC7, 0x44, 0x24, 0x58, 0x02, 0x00, 0x00, 0x00, 0x89, 0x74, 0x24, 0x5C, 0x48, 0x8B, 0x44, 0x24, 0x58, 0x48,
+                0x89, 0x44, 0x24, 0x58, 0x48, 0x8B, 0x0D, 0x00, 0x00, 0x00, 0x00
+            ],
+            "xxxxxxxxxxxxxxxxxxxxxxxxx????",
+            22,
+            AddressingMode.Relative,
+            3,
+            7
+        );
 
         //Hooks
 
@@ -509,6 +521,21 @@ namespace TarnishedTool.Memory
             0,
             AddressingMode.Absolute,
             anchorOffset: 13
+        );
+        
+        public static readonly Pattern SpeedyBuff = new Pattern(
+            new byte[]
+            {
+                0x48, 0x8B, 0x47, 0x18, 0xF3, 0x0F, 0x11, 0x40, 0x14, 0xF3, 0x0F, 0x10, 0x43, 0x0C, 0xF3, 0x0F, 0x11, 0x44,
+                0x24, 0x20, 0xF3, 0x0F, 0x10, 0x5B, 0x08, 0xF3, 0x0F, 0x10, 0x53, 0x04, 0x49, 0x8B, 0xD6, 0x48, 0x8B, 0x4F,
+                0x18
+            },
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            37,
+            AddressingMode.Relative,
+            1,
+            5
+        
         );
 
         public static readonly Pattern DamageApply = new(

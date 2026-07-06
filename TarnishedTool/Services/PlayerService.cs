@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -37,6 +39,25 @@ namespace TarnishedTool.Services
             new(0, Vector3.Zero, 0f)
         ];
 
+        private SpeedBuffMode _currentMode = SpeedBuffMode.Off;
+        
+        private static readonly byte[] BuffPrefixTable = BuildBuffPrefixTable();
+        
+        private static byte[] BuildBuffPrefixTable()
+        {
+            var table = new byte[1024];
+
+            foreach (int id in DataLoader.GetSimpleList(
+                         "TimeActIds",
+                         s => int.Parse(s, CultureInfo.InvariantCulture)))
+            {
+                table[id] = 1;
+            }
+
+            return table;
+        }
+
+        
         public MapLocation GetMapLocation()
         {
             var playerIns = GetPlayerIns();
@@ -594,6 +615,73 @@ namespace TarnishedTool.Services
         public void ToggleNoRoll(bool isEnabled)
         {
             actionRequestService.ToggleNoRoll(isEnabled);
+        }
+
+        public void SetSpeedBuffMode(SpeedBuffMode mode)
+        {
+            if (_currentMode == mode)
+                return;
+
+            var speedyBuffCode = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedyBuff;
+
+            var speedActiveFlag = CodeCaveOffsets.Base + CodeCaveOffsets.SpeedActiveFlag;
+            var allowedInCombat = CodeCaveOffsets.Base + CodeCaveOffsets.AllowSpeedBuffInCombat;
+
+            var wasEnabled = _currentMode != SpeedBuffMode.Off;
+            var isEnabled = mode != SpeedBuffMode.Off;
+
+            if (!wasEnabled && isEnabled)
+            {
+                InstallSpeedyBuffingHook(speedyBuffCode, speedActiveFlag);
+            }
+            else if (wasEnabled && !isEnabled)
+            {
+                hookManager.UninstallHook(speedyBuffCode.ToInt64());
+                if (memoryService.Read<byte>(speedActiveFlag) == 1)
+                {
+                    var csFlipper = memoryService.Read<nint>(CSFlipperImp.Base);
+                    memoryService.Write(csFlipper + CSFlipperImp.GameSpeed, 1f);
+                }
+            }
+
+            memoryService.Write(allowedInCombat, mode == SpeedBuffMode.AllowedInCombat);
+            _currentMode = mode;
+        }
+
+        private void InstallSpeedyBuffingHook(IntPtr code, IntPtr speedActiveFlag)
+        {
+            var idTable = CodeCaveOffsets.Base + CodeCaveOffsets.TimeActBuffTable;
+            memoryService.WriteBytes(idTable, BuffPrefixTable);
+            
+            memoryService.Write(speedActiveFlag, false);
+
+            var allowedInCombat = CodeCaveOffsets.Base + CodeCaveOffsets.AllowSpeedBuffInCombat;
+
+            var bytes = AsmLoader.GetAsmBytes(AsmScript.SpeedBuff);
+            
+            AsmHelper.WriteRelativeOffsets(bytes, [
+                (code.ToInt64() + 0x5 , WorldChrMan.Base.ToInt64(), 7, 0x5 + 3),
+                (code.ToInt64() + 0x17, Hooks.SpeedyBuff + 5, 6, 0x17 + 2),
+                (code.ToInt64() + 0x1D, allowedInCombat.ToInt64(), 7, 0x1D + 2),
+                (code.ToInt64() + 0x26, CSSound.Base.ToInt64(), 7, 0x26 + 3),
+                (code.ToInt64() + 0x3A, Hooks.SpeedyBuff + 5, 5, 0x3A + 1),
+                (code.ToInt64() + 0x45, idTable.ToInt64(), 7, 0x45 + 3),
+                (code.ToInt64() + 0x60, speedActiveFlag.ToInt64(), 7, 0x60 + 2),
+                (code.ToInt64() + 0x69, CSFlipperImp.Base.ToInt64(), 7, 0x69 + 3),
+                (code.ToInt64() + 0x7A, speedActiveFlag.ToInt64(), 7, 0x7A + 2),
+                (code.ToInt64() + 0x83, CSFlipperImp.Base.ToInt64(), 7, 0x83 + 3),
+                (code.ToInt64() + 0x94, speedActiveFlag.ToInt64(), 7, 0x94 + 2),
+                (code.ToInt64() + 0x9E, Hooks.SpeedyBuff + 5, 5, 0x9E + 1)
+            ]);
+            
+            AsmHelper.WriteImmediateDwords(bytes, [
+                (WorldChrMan.PlayerIns, 0xC + 3),
+                (CSFlipperImp.GameSpeed, 0x70 + 2),
+                (CSFlipperImp.GameSpeed, 0x8A + 2),
+            ]);
+            
+            memoryService.WriteBytes(code, bytes);
+            hookManager.InstallHook(code.ToInt64(), Hooks.SpeedyBuff, [0x48, 0x89, 0x5C, 0x24, 0x10]);
         }
     }
 }
