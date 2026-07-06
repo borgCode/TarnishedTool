@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Services;
 
@@ -21,6 +22,7 @@ namespace TarnishedTool.Memory
         public HookManager(IMemoryService memoryService, IStateService stateService)
         {
             _memoryService = memoryService;
+            stateService.Subscribe(State.Detached, ClearHooks);
         }
         
         public bool IsHookInstalled(long key) =>  _hookRegistry.ContainsKey(key);
