@@ -97,5 +97,10 @@ namespace TarnishedTool.Memory
         public const int ActionRequestIntercept = 0x4000;
         public const int NoPlayerRoll = 0x4100;
         public const int NoPlayerJump = 0x4101;
+
+        public const int TimeActBuffTable = 0x4200;
+        public const int SpeedActiveFlag = 0x4600;
+        public const int AllowSpeedBuffInCombat = 0x4601;
+        public const int SpeedyBuff = 0x4610;
     }
 }

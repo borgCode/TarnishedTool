@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
@@ -223,6 +223,56 @@ namespace TarnishedTool.ViewModels
         {
             get => _isSetRfbsOnLoadEnabled;
             set => SetProperty(ref _isSetRfbsOnLoadEnabled, value);
+        }
+        
+        
+        private SpeedBuffMode _speedBuffMode;
+        public SpeedBuffMode SpeedBuffMode
+        {
+            get => _speedBuffMode;
+            set
+            {
+                if (!SetProperty(ref _speedBuffMode, value))
+                    return;
+
+                _playerService.SetSpeedBuffMode(value);
+
+                OnPropertyChanged(nameof(IsSpeedBuffEnabled));
+                OnPropertyChanged(nameof(IsSpeedBuffInCombatEnabled));
+            }
+        }
+
+        public bool IsSpeedBuffEnabled
+        {
+            get => SpeedBuffMode != SpeedBuffMode.Off;
+            set
+            {
+                if (value)
+                {
+                    if (SpeedBuffMode == SpeedBuffMode.Off)
+                        SpeedBuffMode = SpeedBuffMode.Normal;
+                }
+                else
+                {
+                    SpeedBuffMode = SpeedBuffMode.Off;
+                }
+            }
+        }
+
+        public bool IsSpeedBuffInCombatEnabled
+        {
+            get => SpeedBuffMode == SpeedBuffMode.AllowedInCombat;
+            set
+            {
+                if (value)
+                {
+                    SpeedBuffMode = SpeedBuffMode.AllowedInCombat;
+                }
+                else if (SpeedBuffMode == SpeedBuffMode.AllowedInCombat)
+                {
+                    SpeedBuffMode = SpeedBuffMode.Normal;
+                }
+            }
         }
 
         private bool _isPos1Saved;
@@ -753,6 +803,7 @@ namespace TarnishedTool.ViewModels
             _gameTickService.Subscribe(PlayerTick);
             _pauseUpdates = false;
             IsDlcAvailable = _dlcService.IsDlcAvailable;
+            if (SpeedBuffMode != SpeedBuffMode.Off) _playerService.SetSpeedBuffMode(SpeedBuffMode);
         }
 
         private void OnFadedIn()
@@ -768,7 +819,6 @@ namespace TarnishedTool.ViewModels
             if (IsNoDamageEnabled) _playerService.ToggleNoDamage(true);
             if (IsNoHitEnabled) _playerService.ToggleNoHit(true);
             if (IsNoRollEnabled) _playerService.ToggleNoRoll(true);
-            
         }
 
         private void OnGameFirstLoaded()
@@ -799,6 +849,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = false;
             _gameTickService.Unsubscribe(PlayerTick);
+            _playerService.SetSpeedBuffMode(SpeedBuffMode.Off);
         }
 
         private void OnNewGameStart()
@@ -867,6 +918,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.FpRegen, () => { IsFpRegenEnabled = !IsFpRegenEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.LockHp, () => { IsHpLocked = !IsHpLocked; });
             _hotkeyManager.RegisterAction(HotkeyActions.NoRoll, () => { IsNoRollEnabled = !IsNoRollEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.SpeedBuff, () => { IsSpeedBuffEnabled = !IsSpeedBuffEnabled; });
         }
 
         private void SafeExecute(Action action)

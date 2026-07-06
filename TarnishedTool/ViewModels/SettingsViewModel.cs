@@ -88,6 +88,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Set NG Cycle to 7", HotkeyActions.SetNgCycleTo7),
                 new("HP Regen", HotkeyActions.HealOverTime),
                 new("FP Regen", HotkeyActions.FpRegen),
+                new("Speedy buffing", HotkeyActions.SpeedBuff),
             ],
             ["Travel"] =
             [

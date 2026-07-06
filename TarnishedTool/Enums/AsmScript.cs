@@ -46,5 +46,7 @@ public enum AsmScript
     PlayerLockHp,
     RefreshFromStorage,
     NoRollHook,
-    ActionRequestIntercept
+    ActionRequestIntercept,
+    SpeedBuff,
+    CancelSpeedBuff,
 }

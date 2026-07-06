@@ -98,6 +98,7 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.DrawPathing), Pattern.DrawPathing, addr => DrawPathing.Base = addr - 0x10);
             Queue(nameof(Pattern.MapDebugFlags), Pattern.MapDebugFlags, addr => MapDebugFlags.Base = addr - 1);
             Queue(nameof(Pattern.WorldAiManagerImp), Pattern.WorldAiManagerImp, addr => WorldAiManagerImp.Base = addr);
+            Queue(nameof(Pattern.CSSound), Pattern.CSSound, addr => CSSound.Base = addr);
 
             Queue(nameof(Pattern.GraceWarp), Pattern.GraceWarp, addr => Functions.GraceWarp = addr);
             Queue(nameof(Pattern.SetEvent), Pattern.SetEvent, addr => Functions.SetEvent = addr);
@@ -182,6 +183,7 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.NoGrab), Pattern.NoGrab, addr => Hooks.NoGrab = addr);
             Queue(nameof(Pattern.NoHeal), Pattern.NoHeal, addr => Hooks.NoHeal = addr);
             Queue(nameof(Pattern.PlayerLockHp), Pattern.PlayerLockHp, addr => Hooks.PlayerLockHp = addr);
+            Queue(nameof(Pattern.SpeedyBuff), Pattern.SpeedyBuff, addr => Hooks.SpeedyBuff = addr);
         }
         
         public void Queue(string? name, Pattern pattern, Action<nint> setter) =>
