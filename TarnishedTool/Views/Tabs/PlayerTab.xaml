@@ -286,7 +286,30 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0" Text="{Binding RuneLevel, StringFormat='Rune Level: {0}'}" FontWeight="Bold" />
+                <TextBlock Grid.Column="0" Text="{Binding RuneLevel, StringFormat='Rune Level: {0}'}" FontWeight="Bold"
+                           VerticalAlignment="Center" />
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="30,0,0,0" VerticalAlignment="Center">
+                    <CheckBox Content="Damage Multiplier"
+                              IsChecked="{Binding IsDamageMultiplierEnabled}"
+                              ToolTip="Scales the damage that is actually applied.&#x0a;Out = damage you deal to enemies, In = damage you take.&#x0a;1 = normal, 2 = double, 0.5 = half. Summon/pet damage counts as Out."
+                              VerticalAlignment="Center"
+                              Margin="0,0,10,0" />
+                    <TextBlock Text="Out" VerticalAlignment="Center" Margin="0,0,5,0" />
+                    <xctk:SingleUpDown Value="{Binding OutgoingDamageMultiplier}"
+                                       Increment="0.5" Minimum="0" Maximum="100"
+                                       TextAlignment="Center" Width="55"
+                                       IsEnabled="{Binding AreOptionsEnabled}"
+                                       Background="{StaticResource ControlBackgroundBrush}"
+                                       BorderBrush="#3F3F46" />
+                    <TextBlock Text="In" VerticalAlignment="Center" Margin="10,0,5,0" />
+                    <xctk:SingleUpDown Value="{Binding IncomingDamageMultiplier}"
+                                       Increment="0.5" Minimum="0" Maximum="100"
+                                       TextAlignment="Center" Width="55"
+                                       IsEnabled="{Binding AreOptionsEnabled}"
+                                       Background="{StaticResource ControlBackgroundBrush}"
+                                       BorderBrush="#3F3F46" />
+                </StackPanel>
 
             </Grid>
             <Grid Grid.Row="4">

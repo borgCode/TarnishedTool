@@ -876,6 +876,7 @@ namespace TarnishedTool.Memory
             public static long LoadScreenMsgLookupMidPatches;
             public static long NoHeal;
             public static long PlayerLockHp;
+            public static long DamageApply;
         }
 
         public static class Functions
@@ -2541,6 +2542,12 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x437030,
                 Version2_6_0 or Version2_6_1 => 0x437000,
                 Version2_6_2 => 0x436EF0,
+                _ => 0
+            };
+
+            Hooks.DamageApply = moduleBase.ToInt64() + Version switch
+            {
+                Version2_6_2 => 0x4484F4,
                 _ => 0
             };
 

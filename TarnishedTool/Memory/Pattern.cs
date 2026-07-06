@@ -511,6 +511,17 @@ namespace TarnishedTool.Memory
             anchorOffset: 13
         );
 
+        public static readonly Pattern DamageApply = new(
+            [
+                0x41, 0x8B, 0x96, 0x28, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF3, 0x00, 0x0F, 0x10, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x85
+            ],
+            "xxxxxxx????x?xx???xxx",
+            0,
+            AddressingMode.Absolute,
+            anchorOffset: 13
+        );
+
         //Funcs
 
         public static readonly Pattern GetChrInsByEntityId = new Pattern(

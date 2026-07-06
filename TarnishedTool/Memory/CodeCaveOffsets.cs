@@ -97,5 +97,9 @@ namespace TarnishedTool.Memory
         public const int ActionRequestIntercept = 0x4000;
         public const int NoPlayerRoll = 0x4100;
         public const int NoPlayerJump = 0x4101;
+
+        public const int DamageMultCode = 0x4200; // 0xD2
+        public const int DamageOutFactor = 0x4300;
+        public const int DamageInFactor = 0x4304;
     }
 }

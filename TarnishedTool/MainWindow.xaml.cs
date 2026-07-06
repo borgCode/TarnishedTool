@@ -72,13 +72,14 @@ namespace TarnishedTool
             IGameTickService gameTickService = new GameTickService(_stateService);
             IAiService aiService = new AiService(_memoryService);
             IAiWindowService aiWindowService = new AiWindowService(aiService, gameTickService, spEffectService);
+            IDamageService damageService = new DamageService(_memoryService, hookManager);
 
             _dlcService = new DlcService(_memoryService);
 
             PlayerViewModel playerViewModel = new PlayerViewModel(
                 playerService, _stateService, hotkeyManager,
                 eventService, spEffectService, emevdService,
-                _dlcService, ezStateService, gameTickService, paramService
+                _dlcService, ezStateService, gameTickService, paramService, damageService
             );
 
             TravelViewModel travelViewModel = new TravelViewModel(
