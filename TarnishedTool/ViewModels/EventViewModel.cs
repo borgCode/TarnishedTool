@@ -67,6 +67,7 @@ namespace TarnishedTool.ViewModels
             ClearDlcCommand = new DelegateCommand(ToggleClearDlc);
             DeactivateMausoleumCommand = new DelegateCommand(ToggleSnowfieldMausoleum);
             LakeOfRotPlatformsCommand = new DelegateCommand(ToggleLakeOfRotPlatforms);
+            GoldenErdtreeCommand = new DelegateCommand(SetGoldenErdtree);
             SetMorningCommand = new DelegateCommand(SetMorning);
             SetNoonCommand = new DelegateCommand(SetNoon);
             SetDuskCommand = new DelegateCommand(SetDusk);
@@ -98,6 +99,7 @@ namespace TarnishedTool.ViewModels
         public ICommand ClearDlcCommand { get; set; }
         public ICommand DeactivateMausoleumCommand { get; set; }
         public ICommand LakeOfRotPlatformsCommand { get; set; }
+        public ICommand GoldenErdtreeCommand { get; set; }
         public ICommand SetMorningCommand { get; set; }
         public ICommand SetNoonCommand { get; set; }
         public ICommand SetDuskCommand { get; set; }
@@ -474,6 +476,8 @@ namespace TarnishedTool.ViewModels
             _eventService.ToggleEvents(Event.LakeOfRotPlatforms);
             UpdateEventStatus();
         }
+
+        private void SetGoldenErdtree() => _eventService.SetEvents(Event.ErdtreeAblaze, false);
 
         private void SetMorning() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetMorning);
         private void SetNoon() => _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNoon);

@@ -21,4 +21,7 @@ public static class Event
 
     public static readonly long[] LakeOfRotPlatforms = [12010590,12010591,12010592,12010593,12010594,12010595];
 
+    //Cataclysm visuals set when the Erdtree burns / after Maliketh: main blaze, world embers, small flames
+    public static readonly long[] ErdtreeAblaze = [300, 301, 302];
+
 }
