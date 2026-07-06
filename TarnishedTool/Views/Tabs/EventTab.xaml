@@ -305,6 +305,28 @@
                                 FontFamily="Bold"
                                 VerticalAlignment="Center" Margin="10,0,0,0" />
 
+                    <Button Content="Golden Erdtree"
+                            Width="130"
+                            Height="22.5"
+                            Command="{Binding GoldenErdtreeCommand}"
+                            Margin="10, 0, 0,2"
+                            IsEnabled="{Binding AreOptionsEnabled}" />
+
+                    <Border Background="#3498db"
+                            CornerRadius="10"
+                            Width="12"
+                            Height="12"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            ToolTip="Removes the red/burning look from the Erdtree and restores its golden look across the world.&#x0a;One way only - there is no undo, the world stays golden until the game itself re-burns it (story progress).&#x0a;Fast-travel to a grace if it doesn't update right away. Does not apply inside Leyndell, Ashen Capital."
+                            ToolTipService.InitialShowDelay="100">
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
 
                 </StackPanel>
             </StackPanel>
