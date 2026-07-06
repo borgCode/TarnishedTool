@@ -2573,9 +2573,26 @@ namespace TarnishedTool.Memory
 
             Hooks.DamageApply = moduleBase.ToInt64() + Version switch
             {
+                Version1_2_0 => 0x43F2FE,
+                Version1_2_1 or Version1_2_2 => 0x43F36E,
+                Version1_2_3 => 0x43F48E,
+                Version1_3_0 or Version1_3_1 or Version1_3_2 => 0x44009E,
+                Version1_4_0 => 0x4428BF,
+                Version1_4_1 => 0x4427CF,
+                Version1_5_0 => 0x442C0F,
+                Version1_6_0 => 0x443A4D,
+                Version1_7_0 => 0x443B9D,
+                Version1_8_0 or Version1_8_1 => 0x445525,
+                Version1_9_0 or Version1_9_1 => 0x445665,
+                Version2_0_0 or Version2_0_1 => 0x445754,
+                Version2_2_0 or Version2_2_3 => 0x4484E4,
+                Version2_3_0 => 0x4485F4,
+                Version2_4_0 or Version2_5_0 => 0x448634,
+                Version2_6_0 or Version2_6_1 => 0x448604,
                 Version2_6_2 => 0x4484F4,
                 _ => 0
             };
+
 
             
             Hooks.SpeedyBuff = moduleBase.ToInt64() + Version switch
@@ -3174,6 +3191,7 @@ namespace TarnishedTool.Memory
             PrintOffset("NoHeal",                           Hooks.NoHeal);
             PrintOffset("PlayerLockHp",                     Hooks.PlayerLockHp);
             PrintOffset("SpeedyBuff",                     Hooks.SpeedyBuff);
+            PrintOffset("DamageApply",                     Hooks.DamageApply);
 
             Console.WriteLine("\n--- Functions ---");
             PrintOffset("GraceWarp",                 Functions.GraceWarp);

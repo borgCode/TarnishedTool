@@ -539,14 +539,10 @@ namespace TarnishedTool.Memory
         );
 
         public static readonly Pattern DamageApply = new(
-            [
-                0x41, 0x8B, 0x96, 0x28, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF3, 0x00, 0x0F, 0x10, 0x00,
-                0x00, 0x00, 0x00, 0x00, 0x85
-            ],
-            "xxxxxxx????x?xx???xxx",
-            0,
-            AddressingMode.Absolute,
-            anchorOffset: 13
+            new byte[] { 0x32, 0xC9, 0x41, 0x8B, 0x96, 0x28, 0x02, 0x00, 0x00 },
+            "xxxxxxxxx",
+            2,
+            AddressingMode.Absolute
         );
 
         //Funcs
