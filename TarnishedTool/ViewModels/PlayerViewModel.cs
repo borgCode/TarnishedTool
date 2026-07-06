@@ -36,6 +36,7 @@ namespace TarnishedTool.ViewModels
         private readonly IDlcService _dlcService;
         private readonly IEzStateService _ezStateService;
         private readonly IGameTickService _gameTickService;
+        private readonly IDamageService _damageService;
 
         public static readonly long[] NewGameEventIds = [50, 51, 52, 53, 54, 55, 56, 57];
 
@@ -63,7 +64,7 @@ namespace TarnishedTool.ViewModels
         public PlayerViewModel(IPlayerService playerService, IStateService stateService, HotkeyManager hotkeyManager,
             IEventService eventService, ISpEffectService spEffectService, IEmevdService emevdService,
             IDlcService dlcService, IEzStateService ezStateService, IGameTickService gameTickService,
-            IParamService paramService)
+            IParamService paramService, IDamageService damageService)
         {
             _playerService = playerService;
             _hotkeyManager = hotkeyManager;
@@ -74,6 +75,7 @@ namespace TarnishedTool.ViewModels
             _ezStateService = ezStateService;
             _gameTickService = gameTickService;
             _paramService = paramService;
+            _damageService = damageService;
 
             RegisterHotkeys();
 
@@ -99,6 +101,51 @@ namespace TarnishedTool.ViewModels
             SetRuneLevelOneCommand = new DelegateCommand(SetRuneLevelOne);
 
             ApplyPrefs();
+        }
+
+        private bool _isDamageMultiplierEnabled;
+
+        public bool IsDamageMultiplierEnabled
+        {
+            get => _isDamageMultiplierEnabled;
+            set
+            {
+                if (SetProperty(ref _isDamageMultiplierEnabled, value))
+                {
+                    _damageService.ToggleDamageMultiplier(_isDamageMultiplierEnabled, OutgoingDamageMultiplier,
+                        IncomingDamageMultiplier);
+                }
+            }
+        }
+
+        private float _outgoingDamageMultiplier = 1f;
+
+        public float OutgoingDamageMultiplier
+        {
+            get => _outgoingDamageMultiplier;
+            set
+            {
+                if (SetProperty(ref _outgoingDamageMultiplier, value))
+                {
+                    if (!IsDamageMultiplierEnabled) return;
+                    _damageService.SetOutgoingMultiplier(_outgoingDamageMultiplier);
+                }
+            }
+        }
+
+        private float _incomingDamageMultiplier = 1f;
+
+        public float IncomingDamageMultiplier
+        {
+            get => _incomingDamageMultiplier;
+            set
+            {
+                if (SetProperty(ref _incomingDamageMultiplier, value))
+                {
+                    if (!IsDamageMultiplierEnabled) return;
+                    _damageService.SetIncomingMultiplier(_incomingDamageMultiplier);
+                }
+            }
         }
 
         #region Commands
@@ -842,6 +889,8 @@ namespace TarnishedTool.ViewModels
             if (IsNoRuneLossEnabled) _playerService.ToggleNoRuneLoss(true);
             if (IsNoTimePassOnDeathEnabled) _playerService.ToggleNoTimePassOnDeath(true);
             if (IsFasterDeathEnabled) ApplyFasterDeath(true);
+            if (IsDamageMultiplierEnabled)
+                _damageService.ToggleDamageMultiplier(true, OutgoingDamageMultiplier, IncomingDamageMultiplier);
             _pauseUpdates = false;
         }
 

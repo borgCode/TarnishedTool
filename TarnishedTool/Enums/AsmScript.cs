@@ -47,6 +47,6 @@ public enum AsmScript
     RefreshFromStorage,
     NoRollHook,
     ActionRequestIntercept,
-    SpeedBuff,
-    CancelSpeedBuff,
+    DamageMultiplier,
+    SpeedBuff
 }

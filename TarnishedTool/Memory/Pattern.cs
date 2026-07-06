@@ -538,6 +538,13 @@ namespace TarnishedTool.Memory
         
         );
 
+        public static readonly Pattern DamageApply = new(
+            new byte[] { 0x32, 0xC9, 0x41, 0x8B, 0x96, 0x28, 0x02, 0x00, 0x00 },
+            "xxxxxxxxx",
+            2,
+            AddressingMode.Absolute
+        );
+
         //Funcs
 
         public static readonly Pattern GetChrInsByEntityId = new Pattern(
