@@ -134,6 +134,7 @@ namespace TarnishedTool.Memory
             public const int NpcParamId = 0x60;
             public const int ChrId = 0x64;
             public const int TeamType = 0x6C;
+            public const int CharacterType = 0x68;
             public const int SpecialEffect = 0x178;
 
             public static int EntityId => Version switch
@@ -189,6 +190,11 @@ namespace TarnishedTool.Memory
                     or Version1_3_2
                     or Version1_4_0 or Version1_4_1 or Version1_5_0 or Version1_6_0 or Version1_7_0 => 0x570,
                 _ => 0x580,
+            };
+
+            public static class ChrManipulatorOffsets
+            {
+                public const int ChrType = 0x98;
             };
 
             public static readonly int[] ChrCtrlFlags = [0xC8, 0x24];

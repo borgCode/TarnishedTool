@@ -19,17 +19,18 @@ namespace TarnishedTool.ViewModels;
 public class AdvancedViewModel : BaseViewModel
 {
     private readonly IItemService _itemService;
-    
+
     private readonly ParamEditorViewModel _paramEditorViewModel;
-    
+
     private readonly ISpEffectService _spEffectService;
     private readonly SpEffectViewModel _spEffectViewModel = new();
     private SpEffectsWindow _spEffectsWindow;
-    
+
     private readonly HotkeyManager _hotkeyManager;
     private readonly IGameTickService _gameTickService;
     private readonly IReminderService _reminderService;
     private readonly IAiService _aiService;
+    private readonly IChrInsService _chrInsService;
 
     private readonly IUtilityService _utilityService;
     private readonly ChrInsWindowViewModel _chrInsWindowViewModel;
@@ -38,7 +39,7 @@ public class AdvancedViewModel : BaseViewModel
     private ParamEditorWindow _paramEditorWindow;
 
     private readonly IPlayerService _playerService;
-    
+
     private bool _hasNotifiedInitialOpen;
 
     public AdvancedViewModel(IItemService itemService, IStateService stateService,
@@ -56,6 +57,7 @@ public class AdvancedViewModel : BaseViewModel
         _aiService = aiService;
         _utilityService = utilityService;
         _hotkeyManager = hotkeyManager;
+        _chrInsService = chrInsService;
 
         RegisterHotkeys();
 
@@ -76,7 +78,7 @@ public class AdvancedViewModel : BaseViewModel
         _chrInsWindowViewModel = new ChrInsWindowViewModel(stateService, gameTickService, playerService, chrInsService, aiWindowService);
     }
 
-    
+
     #region Commands
 
     public ICommand SpawnWithEquipIdCommand { get; set; }
@@ -99,6 +101,60 @@ public class AdvancedViewModel : BaseViewModel
         new("Protector", 0x10000000),
         new("Weapon", 0x00000000)
     };
+
+    public ObservableCollection<KeyValuePair<string, int>> ChrTypes { get; } = new(
+        Enum.GetValues(typeof(ChrType)).Cast<ChrType>()
+            .Select(v => new KeyValuePair<string, int>(v.ToString(), (int)v)));
+
+    public ObservableCollection<KeyValuePair<string, int>> CharacterTypes { get; } = new(
+        Enum.GetValues(typeof(CharacterType)).Cast<CharacterType>()
+            .Select(v => new KeyValuePair<string, int>(v.ToString(), (int)v)));
+
+    public ObservableCollection<KeyValuePair<string, int>> TeamTypes { get; } = new(
+        Enum.GetValues(typeof(TeamType)).Cast<TeamType>()
+            .Select(v => new KeyValuePair<string, int>(v.ToString(), (int)v)));
+
+    private int _selectedChrType;
+
+    public int SelectedChrType
+    {
+        get => _selectedChrType;
+        set
+        {
+            if (SetProperty(ref _selectedChrType, value) && AreOptionsEnabled)
+            {
+                _chrInsService.SetChrType(_playerService.GetPlayerIns(), value);
+            }
+        }
+    }
+
+    private int _selectedCharacterType;
+
+    public int SelectedCharacterType
+    {
+        get => _selectedCharacterType;
+        set
+        {
+            if (SetProperty(ref _selectedCharacterType, value) && AreOptionsEnabled)
+            {
+                _chrInsService.SetCharacterType(_playerService.GetPlayerIns(), value);
+            }
+        }
+    }
+
+    private int _selectedTeamType;
+
+    public int SelectedTeamType
+    {
+        get => _selectedTeamType;
+        set
+        {
+            if (SetProperty(ref _selectedTeamType, value) && AreOptionsEnabled)
+            {
+                _chrInsService.SetTeamType(_playerService.GetPlayerIns(), value);
+            }
+        }
+    }
 
     private uint _selectedEquipType;
 
@@ -123,7 +179,7 @@ public class AdvancedViewModel : BaseViewModel
         get => _areOptionsEnabled;
         set => SetProperty(ref _areOptionsEnabled, value);
     }
-    
+
     private string _applySpEffectId;
 
     public string ApplySpEffectId
@@ -139,9 +195,9 @@ public class AdvancedViewModel : BaseViewModel
         get => _removeSpEffectId;
         set => SetProperty(ref _removeSpEffectId, value);
     }
-    
+
     private bool _isSpEffectWindowOpen;
-    
+
     public bool IsSpEffectWindowOpen
     {
         get => _isSpEffectWindowOpen;
@@ -170,18 +226,18 @@ public class AdvancedViewModel : BaseViewModel
     {
         AreOptionsEnabled = true;
         if (IsSpEffectWindowOpen) _gameTickService.Subscribe(SpEffectsTick);
+        _gameTickService.Subscribe(RefreshChrIdentityValues);
+        CheckChrIdentityOnLoad();
     }
 
     private void RegisterHotkeys()
     {
         _hotkeyManager.RegisterAction(HotkeyActions.ApplySpEffect, () => SafeExecute(ApplySpEffect));
         _hotkeyManager.RegisterAction(HotkeyActions.RemoveSpEffect, () => SafeExecute(RemoveSpEffect));
-        _hotkeyManager.RegisterAction(HotkeyActions.SpawnCustomItem,() => SafeExecute(SpawnWithEquipId));
+        _hotkeyManager.RegisterAction(HotkeyActions.SpawnCustomItem, () => SafeExecute(SpawnWithEquipId));
         _hotkeyManager.RegisterAction(HotkeyActions.OpenParamPatcher, () => SafeExecute(OpenParamEditor));
         _hotkeyManager.RegisterAction(HotkeyActions.OpenCharactersList, () => SafeExecute(OpenAiWindow));
         _hotkeyManager.RegisterAction(HotkeyActions.InjectAiScript, () => SafeExecute(InjectScript));
-        
-
     }
 
     private void SafeExecute(Action action)
@@ -194,6 +250,7 @@ public class AdvancedViewModel : BaseViewModel
     {
         AreOptionsEnabled = false;
         if (IsSpEffectWindowOpen) _gameTickService.Unsubscribe(SpEffectsTick);
+        _gameTickService.Unsubscribe(RefreshChrIdentityValues);
     }
 
     private void SpawnWithEquipId()
@@ -230,7 +287,7 @@ public class AdvancedViewModel : BaseViewModel
             _hasNotifiedInitialOpen = true;
         }
     }
-    
+
     private void OpenSpEffectsWindow()
     {
         if (_spEffectsWindow != null && _spEffectsWindow.IsVisible)
@@ -238,8 +295,8 @@ public class AdvancedViewModel : BaseViewModel
             _spEffectsWindow.Activate();
             return;
         }
-        
-        
+
+
         _spEffectsWindow = new SpEffectsWindow
         {
             DataContext = _spEffectViewModel,
@@ -253,7 +310,7 @@ public class AdvancedViewModel : BaseViewModel
         _spEffectsWindow.Show();
     }
 
-    
+
     private void ShowAboutSpEffects()
     {
         MsgBox.Show(
@@ -282,7 +339,7 @@ public class AdvancedViewModel : BaseViewModel
         var playerIns = _playerService.GetPlayerIns();
         _spEffectService.ApplySpEffect(playerIns, spEffectId);
     }
-    
+
     private void OpenAiWindow()
     {
         if (_chrInsWindow != null && _chrInsWindow.IsVisible)
@@ -290,7 +347,7 @@ public class AdvancedViewModel : BaseViewModel
             _chrInsWindow.Activate();
             return;
         }
-        
+
         _chrInsWindow = new ChrInsWindow
         {
             DataContext = _chrInsWindowViewModel,
@@ -306,11 +363,11 @@ public class AdvancedViewModel : BaseViewModel
         _reminderService.TrySetReminder();
         _chrInsWindow.Show();
         _chrInsWindowViewModel.NotifyWindowOpen();
-        
+
         _chrInsWindow.Activate();
         _chrInsWindow.Focus();
     }
-    
+
     private void InjectScript()
     {
         var dialog = new Microsoft.Win32.OpenFileDialog
@@ -318,24 +375,78 @@ public class AdvancedViewModel : BaseViewModel
             Filter = "Lua files (*.lua)|*.lua",
             Title = "Inject AI Script"
         };
-        
+
         if (dialog.ShowDialog() != true) return;
-        
+
         if (!HasRegisterTableGoal(File.ReadLines(dialog.FileName).Take(5)))
         {
             MsgBox.Show("Did not find \"RegisterTableGoal\", please include that in the loaded file", "Invalid file");
             return;
         }
-        
+
         var content = File.ReadAllText(dialog.FileName).Replace("\r\n", "\n");
         var scriptWithNullTermination = Encoding.UTF8.GetBytes(content + '\0');
 
         _reminderService.TrySetReminder();
         _aiService.InjectAiScript(scriptWithNullTermination);
-        
     }
-    
-    private bool HasRegisterTableGoal(IEnumerable<string> firstLines) => 
+
+    private (bool chrTypeInvalid, bool characterTypeInvalid, bool teamTypeInvalid) GetChrIdentityValidity(
+        nint playerIns)
+    {
+        bool chrTypeInvalid = !Enum.IsDefined(typeof(ChrType), _chrInsService.GetChrType(playerIns));
+        bool characterTypeInvalid = !Enum.IsDefined(typeof(CharacterType), _chrInsService.GetCharacterType(playerIns));
+        bool teamTypeInvalid = !Enum.IsDefined(typeof(TeamType), _chrInsService.GetTeamType(playerIns));
+
+        return (chrTypeInvalid, characterTypeInvalid, teamTypeInvalid);
+    }
+
+    private void TroubleshootChrIdentity()
+    {
+        var playerIns = _playerService.GetPlayerIns();
+        var (chrTypeInvalid, characterTypeInvalid, teamTypeInvalid) = GetChrIdentityValidity(playerIns);
+
+        if (chrTypeInvalid) _chrInsService.SetChrType(playerIns, 0);
+        if (characterTypeInvalid) _chrInsService.SetCharacterType(playerIns, 0);
+        if (teamTypeInvalid) _chrInsService.SetTeamType(playerIns, 1);
+
+        MsgBox.Show(
+            "Any invalid values in ChrType, Character Type, and Team Type were reset to the default values.",
+            "Troubleshoot Complete");
+    }
+
+    private void CheckChrIdentityOnLoad()
+    {
+        var playerIns = _playerService.GetPlayerIns();
+        var (chrTypeInvalid, characterTypeInvalid, teamTypeInvalid) = GetChrIdentityValidity(playerIns);
+
+        if (!chrTypeInvalid && !characterTypeInvalid && !teamTypeInvalid) return;
+
+        var brokenFields = new List<string>();
+        if (chrTypeInvalid) brokenFields.Add("Chr Type");
+        if (characterTypeInvalid) brokenFields.Add("Character Type");
+        if (teamTypeInvalid) brokenFields.Add("Team Type");
+
+        var message = $"Detected an invalid value in: {string.Join(", ", brokenFields)}.\n\n" +
+                      "This can prevent your character from interacting with anything in your own world.\n\n" +
+                      "Would you like to reset them to their default values?";
+
+        if (MsgBox.ShowYesNo(message, "Chr Identity Issue Detected"))
+        {
+            TroubleshootChrIdentity();
+        }
+    }
+
+    private void RefreshChrIdentityValues()
+    {
+        var playerIns = _playerService.GetPlayerIns();
+
+        SelectedChrType = _chrInsService.GetChrType(playerIns);
+        SelectedCharacterType = _chrInsService.GetCharacterType(playerIns);
+        SelectedTeamType = _chrInsService.GetTeamType(playerIns);
+    }
+
+    private bool HasRegisterTableGoal(IEnumerable<string> firstLines) =>
         firstLines.Any(line => line.Contains("RegisterTableGoal"));
 
     #endregion

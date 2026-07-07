@@ -141,6 +141,7 @@
         <Compile Include="Enums\AsmScript.cs" />
         <Compile Include="Enums\GameVersion.cs" />
         <Compile Include="Enums\HotkeyActions.cs" />
+        <Compile Include="Enums\IdentityTypes.cs" />
         <Compile Include="Enums\Param.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\AtkParamAtkAttrType.cs" />
         <Compile Include="Enums\ParamEnums\AtkParam\AtkParamBehaviorId.cs" />
