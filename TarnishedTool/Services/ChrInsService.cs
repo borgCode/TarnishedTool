@@ -367,5 +367,30 @@ public class ChrInsService(IMemoryService memoryService) : IChrInsService
         return memoryService.Read<Vector3>(output);
     }
 
+    public int GetChrType(nint chrIns)
+    {
+        var chrManipulator = memoryService.Read<nint>(chrIns + ChrIns.ChrManipulator);
+        return memoryService.Read<int>(chrManipulator + ChrIns.ChrManipulatorOffsets.ChrType);
+    }
+    
+    public void SetChrType(nint chrIns, int value)
+    {
+        var chrManipulator = memoryService.Read<nint>(chrIns + ChrIns.ChrManipulator);
+        memoryService.Write(chrManipulator + ChrIns.ChrManipulatorOffsets.ChrType, value);
+    }
+    
+    public int GetCharacterType(nint chrIns) =>
+        memoryService.Read<int>(chrIns + ChrIns.CharacterType);
+    
+    
+    public void SetCharacterType(nint chrIns, int value) =>
+        memoryService.Write(chrIns + ChrIns.CharacterType, value);
+    
+    public int GetTeamType(nint chrIns) =>
+        memoryService.Read<byte>(chrIns + ChrIns.TeamType);
+    
+    public void SetTeamType(nint chrIns, int value) =>
+        memoryService.Write(chrIns + ChrIns.TeamType, (byte)value);
+
     #endregion
 }

@@ -501,6 +501,11 @@
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
         </Style>
+        <Style TargetType="wpfTool:SingleUpDown" xmlns:wpfTool="http://schemas.xceed.com/wpf/xaml/toolkit">
+            <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        </Style>
 
         <Style TargetType="wpfTool:DoubleUpDown" xmlns:wpfTool="http://schemas.xceed.com/wpf/xaml/toolkit">
             <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
