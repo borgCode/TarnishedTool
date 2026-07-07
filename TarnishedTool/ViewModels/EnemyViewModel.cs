@@ -533,7 +533,11 @@ public class EnemyViewModel : BaseViewModel
         _ = Task.Run(() =>
         {
             _travelService.WarpToBlockId(bossRevive.Position);
-            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            if (IsRestOnReviveEnabled)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                _playerService.RefreshFromStorage();
+            }
         });
     }
 
@@ -554,7 +558,11 @@ public class EnemyViewModel : BaseViewModel
         _ = Task.Run(() =>
         {
             _travelService.WarpToBlockId(bossRevive.PositionFirstEncounter);
-            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            if (IsRestOnReviveEnabled)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                _playerService.RefreshFromStorage();
+            }
         });
     }
 
@@ -592,7 +600,11 @@ public class EnemyViewModel : BaseViewModel
         if (!bossesInBlock.Any())
         {
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            if (IsRestOnReviveEnabled)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                _playerService.RefreshFromStorage();
+            }
             return;
         }
 
@@ -623,7 +635,11 @@ public class EnemyViewModel : BaseViewModel
             {
                 // If user cancels
                 _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-                if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                if (IsRestOnReviveEnabled)
+                {
+                    _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                    _playerService.RefreshFromStorage();
+                }
                 return;
             }
         }
@@ -636,7 +652,11 @@ public class EnemyViewModel : BaseViewModel
             if (!result)
             {
                 _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ReloadArea);
-                if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                if (IsRestOnReviveEnabled)
+                {
+                    _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                    _playerService.RefreshFromStorage();
+                }
                 return;
             }
 
@@ -653,7 +673,11 @@ public class EnemyViewModel : BaseViewModel
         _ = Task.Run(() =>
         {
             _travelService.WarpToBlockId(targetPosition);
-            if (IsRestOnReviveEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+            if (IsRestOnReviveEnabled)
+            {
+                _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                _playerService.RefreshFromStorage();
+            }
         });
     }
 
