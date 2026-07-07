@@ -271,6 +271,9 @@ namespace TarnishedTool.Services
             memoryService.WriteBytes(Patches.GetShopEvent,
                 isEnabled ? [0xB0, 0x01, 0xC3, 0x90, 0x90, 0x90] : [0x40, 0x53, 0x48, 0x83, 0xEC, 0x40]);
 
+        public void ToggleDisableCutscenes(bool isEnabled) =>
+            memoryService.WriteBytes(Patches.DisableCutscene, isEnabled ? [0x90, 0x90] : [0x74, 0x13]);
+
         public void SetColDrawMode(int val) =>
             memoryService.Write(WorldHitMan.Base + WorldHitMan.Mode, (byte)val);
 

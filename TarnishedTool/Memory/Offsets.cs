@@ -940,6 +940,7 @@ namespace TarnishedTool.Memory
             public static IntPtr FpsCap;
             public static IntPtr MenuDelay;
             public static IntPtr NoQuitMessage;
+            public static IntPtr DisableCutscene;
         }
 
         private static void InitializeBaseAddresses(IntPtr moduleBase)
@@ -3111,6 +3112,12 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
+            Patches.DisableCutscene = moduleBase + Version switch
+            {
+                Version2_6_2 => 0xAA7196,
+                _ => 0
+            };
+
         }
 
         private static long _printBaseAddr;
@@ -3170,6 +3177,7 @@ namespace TarnishedTool.Memory
             PrintOffset("FpsCap",                       Patches.FpsCap);
             PrintOffset("MenuDelay",                    Patches.MenuDelay);
             PrintOffset("NoQuitMessage",                Patches.NoQuitMessage);
+            PrintOffset("DisableCutscene",              Patches.DisableCutscene);
 
             Console.WriteLine("\n--- Hooks ---");
             PrintOffset("UpdateCoords",                     Hooks.UpdateCoords);
