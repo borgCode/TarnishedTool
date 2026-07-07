@@ -41,14 +41,45 @@ public class EnemyViewModel : BaseViewModel
     public const int FrostAnimationId = 20004;
     public const int WindAnimationId = 20006;
 
+    public const int LightningPhaseSpEffectRowId = 20011210;
+    public const int DeathblightPhaseSpEffectRowId = 20011218;
+    public const int FrostPhaseSpEffectRowId = 20011211;
+    public const int WindPhaseSpEffectRowId = 20011212;
+    private const int SpEffectDurationOffset = 0x8;
+    private const float SpEffectDuration = 120f;
+    private const float LockedSpEffectDuration = -1f;
+    public const int LionPhaseTransition = 20011216;
+    private const float LionPhaseTransitionDuration = 30f;
+    public const int LionTriplePhaseTransition = 20011237;
+    private const float LionTripleTransitionDuration = 15f;
+
+
+    private static readonly uint[] MainBossPhaseSpEffectRowIds =
+    {
+        LightningPhaseSpEffectRowId,
+        FrostPhaseSpEffectRowId,
+        WindPhaseSpEffectRowId
+    };
+
+    private static readonly uint[] MiniBossPhaseSpEffectRowIds =
+    {
+        LightningPhaseSpEffectRowId,
+        DeathblightPhaseSpEffectRowId,
+        FrostPhaseSpEffectRowId,
+        WindPhaseSpEffectRowId
+    };
+
+
     private const string BossStatusDead = "Dead";
     private const string BossStatusAlive = "Alive";
     private const string BossStatusFirstEncounter = "Alive, First Encounter";
 
     private static readonly SolidColorBrush BossStatusDeadBrush =
         (SolidColorBrush)new BrushConverter().ConvertFrom("#e74c3c")!;
+
     private static readonly SolidColorBrush BossStatusAliveBrush =
         (SolidColorBrush)new BrushConverter().ConvertFrom("#2ecc71")!;
+
     private static readonly SolidColorBrush BossStatusDefaultBrush = Brushes.White;
 
     public const int NpcParamTableIndex = 6;
@@ -294,6 +325,52 @@ public class EnemyViewModel : BaseViewModel
         }
     }
 
+    private void SetLionPhaseSpEffectsLockState(uint entityId, bool locked, uint[] spEffectRowIds)
+    {
+        var chrIns = _chrInsService.ChrInsByEntityId(entityId);
+        if (chrIns == IntPtr.Zero) return;
+
+        var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+        float duration = locked ? LockedSpEffectDuration : SpEffectDuration;
+
+        foreach (var rowId in spEffectRowIds)
+        {
+            var row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
+            if (row == IntPtr.Zero) continue;
+
+            _paramService.Write(row, SpEffectDurationOffset, duration);
+
+            if (_spEffectService.HasSpEffect(chrIns, rowId))
+                _spEffectService.ApplySpEffect(chrIns, rowId);
+        
+        }
+    }
+
+    // Reverting phase transition durations to normal on unlock because it didn't do that before
+    private void SetLionTransitionSpEffectsLockState(uint entityId, bool locked)
+    {
+        if (locked) return;
+
+        var chrIns = _chrInsService.ChrInsByEntityId(entityId);
+        if (chrIns == IntPtr.Zero) return;
+
+        var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+
+        SetTransitionSpEffectDuration(chrIns, tableIndex, slotIndex, LionPhaseTransition, LionPhaseTransitionDuration);
+        SetTransitionSpEffectDuration(chrIns, tableIndex, slotIndex, LionTriplePhaseTransition,
+            LionTripleTransitionDuration);
+    }
+
+    private void SetTransitionSpEffectDuration(IntPtr chrIns, int tableIndex, int slotIndex, uint rowId, float duration)
+    {
+        var row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
+        if (row == IntPtr.Zero) return;
+
+        _paramService.Write(row, SpEffectDurationOffset, duration);
+
+        _spEffectService.ApplySpEffect(chrIns, rowId);
+    }
+
     private bool _isLionMainBossPhaseLockEnabled;
 
     public bool IsLionMainBossPhaseLockEnabled
@@ -306,6 +383,9 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleLionCooldownHook(_isLionMainBossPhaseLockEnabled, LionMainBossNpcParamId);
             if (_isLionMainBossPhaseLockEnabled) ApplyLionSpEffects(LionMainBossEntityId);
             else RemoveLionSpEffects(LionMainBossEntityId);
+            SetLionPhaseSpEffectsLockState(LionMainBossEntityId, _isLionMainBossPhaseLockEnabled,
+                MainBossPhaseSpEffectRowIds);
+            SetLionTransitionSpEffectsLockState(LionMainBossEntityId, _isLionMainBossPhaseLockEnabled);
         }
     }
 
@@ -321,6 +401,9 @@ public class EnemyViewModel : BaseViewModel
             _enemyService.ToggleLionCooldownHook(_isLionMiniBossPhaseLockEnabled, LionMinibossNpcParamId);
             if (_isLionMiniBossPhaseLockEnabled) ApplyLionSpEffects(LionMinibossEntityId);
             else RemoveLionSpEffects(LionMinibossEntityId);
+            SetLionPhaseSpEffectsLockState(LionMinibossEntityId, _isLionMiniBossPhaseLockEnabled,
+                MiniBossPhaseSpEffectRowIds);
+            SetLionTransitionSpEffectsLockState(LionMinibossEntityId, _isLionMiniBossPhaseLockEnabled);
         }
     }
 
@@ -363,6 +446,7 @@ public class EnemyViewModel : BaseViewModel
             _shouldSetNight = false;
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetNight);
         }
+
         if (BossRevives.SelectedItem != null)
         {
             SelectedBossStatus = GetBossStatus(BossRevives.SelectedItem);
@@ -455,7 +539,7 @@ public class EnemyViewModel : BaseViewModel
         if (chrIns == IntPtr.Zero) return;
         _spEffectService.ApplySpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
         _spEffectService.ApplySpEffect(chrIns,
-            20011237); //Some 15sec duration speffect, needed for no triple phase attack in lightning phase
+            LionTriplePhaseTransition); //Some 15sec duration speffect, needed for no triple phase attack in lightning phase
         _spEffectService.ApplySpEffect(chrIns, 20011245); // Phase 2 active
     }
 
@@ -464,7 +548,7 @@ public class EnemyViewModel : BaseViewModel
         var chrIns = _chrInsService.ChrInsByEntityId(entityId);
         if (chrIns == IntPtr.Zero) return;
         _spEffectService.RemoveSpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
-        _spEffectService.RemoveSpEffect(chrIns, 20011237);
+        _spEffectService.RemoveSpEffect(chrIns, LionTriplePhaseTransition);
     }
 
     private void ForceLionMainBossLightningPhase()
@@ -707,7 +791,7 @@ public class EnemyViewModel : BaseViewModel
         foreach (var flag in bossRevive.BossFlags)
             _eventService.SetEvent(flag.EventId, flag.SetValue);
     }
-    
+
     private string GetBossStatus(BossRevive bossRevive)
     {
         if (bossRevive?.BossFlags == null || bossRevive.BossFlags.Count == 0)
