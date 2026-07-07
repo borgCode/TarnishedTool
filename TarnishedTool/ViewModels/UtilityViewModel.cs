@@ -593,6 +593,18 @@ namespace TarnishedTool.ViewModels
             }
         }
 
+        private bool _isDisableCutscenesEnabled;
+
+        public bool IsDisableCutscenesEnabled
+        {
+            get => _isDisableCutscenesEnabled;
+            set
+            {
+                if (!SetProperty(ref _isDisableCutscenesEnabled, value)) return;
+                _utilityService.ToggleDisableCutscenes(_isDisableCutscenesEnabled);
+            }
+        }
+
         private bool _isUpgradingFlask;
 
         public bool IsUpgradingFlask
@@ -844,6 +856,7 @@ namespace TarnishedTool.ViewModels
             if (IsDungeonWarpEnabled) _utilityService.ToggleDungeonWarp(true);
             if (IsGuaranteedDropEnabled) _utilityService.ToggleGuaranteedDrop(true);
             if (IsShowFullShopLineupEnabled) _utilityService.ToggleFullShopLineup(true);
+            if (IsDisableCutscenesEnabled) _utilityService.ToggleDisableCutscenes(true);
             if (IsDrawPlayerSoundEnabled)
             {
                 _utilityService.PatchDebugFont();

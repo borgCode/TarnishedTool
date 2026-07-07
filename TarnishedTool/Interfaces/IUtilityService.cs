@@ -23,6 +23,7 @@ public interface IUtilityService
     void ToggleDrawLowHit(bool isEnabled);
     void ToggleDrawHighHit(bool isEnabled);
     void ToggleFullShopLineup(bool isEnabled);
+    void ToggleDisableCutscenes(bool isEnabled);
     void SetColDrawMode(int val);
     void PatchDebugFont();
     void TogglePlayerSound(bool isEnabled);
