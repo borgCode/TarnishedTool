@@ -6,7 +6,7 @@ using static TarnishedTool.Memory.Offsets;
 
 namespace TarnishedTool.Services;
 
-public class DamageService(IMemoryService memoryService, HookManager hookManager) : IDamageService
+public class DamageService(IMemoryService memoryService, HookManager hookManager, IReminderService reminderService) : IDamageService
 {
     public void SetOutgoingMultiplier(float value) =>
         memoryService.Write(CodeCaveOffsets.Base + CodeCaveOffsets.DamageOutFactor, value);
@@ -21,6 +21,8 @@ public class DamageService(IMemoryService memoryService, HookManager hookManager
         {
             var hookLoc = Hooks.DamageApply;
             if (hookLoc == memoryService.BaseAddress) return;
+            
+            reminderService.TrySetReminder();
 
             var outFactor = CodeCaveOffsets.Base + CodeCaveOffsets.DamageOutFactor;
             var inFactor = CodeCaveOffsets.Base + CodeCaveOffsets.DamageInFactor;
