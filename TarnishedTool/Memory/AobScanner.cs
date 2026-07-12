@@ -157,6 +157,7 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.FpsCap), Pattern.FpsCap, addr => Patches.FpsCap = addr);
             Queue(nameof(Pattern.CanDrawEvents1), Pattern.CanDrawEvents1, addr => Patches.CanDrawEvents1 = addr);
             Queue(nameof(Pattern.CanDrawEvents2), Pattern.CanDrawEvents2, addr => Patches.CanDrawEvents2 = addr);
+            Queue(nameof(Pattern.DisableCutscene), Pattern.DisableCutscene, addr => Patches.DisableCutscene = addr);
 
             Queue(nameof(Pattern.UpdateCoords), Pattern.UpdateCoords, addr => Hooks.UpdateCoords = addr);
             Queue(nameof(Pattern.InAirTimer), Pattern.InAirTimer, addr => Hooks.InAirTimer = addr);
