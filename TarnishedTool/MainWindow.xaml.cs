@@ -72,7 +72,7 @@ namespace TarnishedTool
             IGameTickService gameTickService = new GameTickService(_stateService);
             IAiService aiService = new AiService(_memoryService);
             IAiWindowService aiWindowService = new AiWindowService(aiService, gameTickService, spEffectService);
-            IDamageService damageService = new DamageService(_memoryService, hookManager);
+            IDamageService damageService = new DamageService(_memoryService, hookManager, reminderService);
 
             _dlcService = new DlcService(_memoryService);
 
