@@ -16,6 +16,7 @@ namespace TarnishedTool.ViewModels
     {
         private int _currentRuneLevel;
         private bool _customHpHasBeenSet = !string.IsNullOrWhiteSpace(SettingsManager.Default.SaveCustomHp);
+        private bool _customFpHasBeenSet = !string.IsNullOrWhiteSpace(SettingsManager.Default.SaveCustomFp);
 
         private float _playerDesiredSpeed = -1f;
         private const float DefaultSpeed = 1f;
@@ -89,6 +90,10 @@ namespace TarnishedTool.ViewModels
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
             DieCommand = new DelegateCommand(Die);
+            
+            EmptyFpCommand = new DelegateCommand(EmptyFp);
+            SetMaxFpCommand = new DelegateCommand(SetMaxFp);
+            SetCustomFpCommand = new DelegateCommand(SetCustomFp);
 
             SavePositionCommand = new DelegateCommand(SavePosition);
             RestorePositionCommand = new DelegateCommand(RestorePosition);
@@ -154,7 +159,9 @@ namespace TarnishedTool.ViewModels
         public ICommand SetMaxHpCommand { get; set; }
         public ICommand SetCustomHpCommand { get; set; }
         public ICommand DieCommand { get; set; }
-
+        public ICommand EmptyFpCommand { get; set; }
+        public ICommand SetMaxFpCommand { get; set; }
+        public ICommand SetCustomFpCommand { get; set; }
         public ICommand SavePositionCommand { get; set; }
         public ICommand RestorePositionCommand { get; set; }
 
@@ -211,6 +218,36 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _customHp, value))
                 {
                     _customHpHasBeenSet = true;
+                }
+            }
+        }
+        
+        private int _currentFp;
+
+        public int CurrentFp
+        {
+            get => _currentFp;
+            set => SetProperty(ref _currentFp, value);
+        }
+        
+        private int _currentMaxFp;
+
+        public int CurrentMaxFp
+        {
+            get => _currentMaxFp;
+            set => SetProperty(ref _currentMaxFp, value);
+        }
+        
+        private string _customFp = SettingsManager.Default.SaveCustomFp;
+        
+        public string CustomFp
+        {
+            get => _customFp;
+            set
+            {
+                if (SetProperty(ref _customFp, value))
+                {
+                    _customFpHasBeenSet = true;
                 }
             }
         }
@@ -825,6 +862,7 @@ namespace TarnishedTool.ViewModels
         public void PauseUpdates() => _pauseUpdates = true;
         public void ResumeUpdates() => _pauseUpdates = false;
         public void SetHp(int hp) => _playerService.SetHp(hp);
+        public void SetFp(int fp) => _playerService.SetFp(fp);
 
         public void SetStat(string statName, int value)
         {
@@ -986,6 +1024,8 @@ namespace TarnishedTool.ViewModels
 
             CurrentHp = _playerService.GetCurrentHp();
             CurrentMaxHp = _playerService.GetMaxHp();
+            CurrentFp = _playerService.GetCurrentFp();
+            CurrentMaxFp = _playerService.GetMaxFp();
             PlayerSpeed = _playerService.GetSpeed();
             int newRuneLevel = _playerService.GetRuneLevel();
             Scadu = _playerService.GetScadu();
@@ -1037,12 +1077,14 @@ namespace TarnishedTool.ViewModels
 
         private void SetRfbs() => _playerService.SetRfbs();
         private void SetMaxHp() => _playerService.SetFullHp();
+        private void SetMaxFp() => _playerService.SetFullFp();
+        private void EmptyFp() => _playerService.SetFp(0);
         private void Die() => _playerService.SetHp(0);
 
         private void SetCustomHp()
         {
             if (!_customHpHasBeenSet) return;
-            var (customHp, error) = ParseCustomHp();
+            var (customHp, error) = ParseCustomVal(CustomHp, CurrentMaxHp);
             if (customHp == null)
             {
                 MsgBox.Show(error, "Invalid Input");
@@ -1056,10 +1098,28 @@ namespace TarnishedTool.ViewModels
             SettingsManager.Default.SaveCustomHp = CustomHp;
             SettingsManager.Default.Save();
         }
-
-        private (int? value, string error) ParseCustomHp()
+        
+        private void SetCustomFp()
         {
-            var input = CustomHp?.Trim();
+            if (!_customFpHasBeenSet) return;
+            var (customFp, error) = ParseCustomVal(CustomFp, CurrentMaxFp);
+            if (customFp == null)
+            {
+                MsgBox.Show(error, "Invalid Input");
+                return;
+            }
+
+            if (customFp > CurrentMaxFp)
+                customFp = CurrentMaxFp;
+
+            _playerService.SetFp(customFp.Value);
+            SettingsManager.Default.SaveCustomFp = CustomFp;
+            SettingsManager.Default.Save();
+        }
+
+        private (int? value, string error) ParseCustomVal(string input, int maxValue)
+        {
+            input = input?.Trim();
             if (string.IsNullOrEmpty(input))
                 return (null, "Please enter a value");
 
@@ -1067,7 +1127,7 @@ namespace TarnishedTool.ViewModels
             {
                 if (double.TryParse(input.TrimEnd('%'), NumberStyles.Float, CultureInfo.InvariantCulture,
                         out var percent))
-                    return ((int)(percent / 100.0 * CurrentMaxHp), null);
+                    return ((int)(percent / 100.0 * maxValue), null);
                 return (null, "Invalid percentage format");
             }
 

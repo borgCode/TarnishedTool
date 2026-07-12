@@ -71,6 +71,7 @@ public class SettingsManager
     public bool HotkeyReminder { get; set; }
     [DefaultValue(true)] public bool EnableUpdateChecks { get; set; }
     public string SaveCustomHp { get; set; } = "";
+    public string SaveCustomFp { get; set; } = "";
     public double GraceImportWindowLeft { get; set; }
     public double GraceImportWindowTop { get; set; }
     public double GracePresetWindowLeft { get; set; }
