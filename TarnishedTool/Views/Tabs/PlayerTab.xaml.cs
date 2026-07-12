@@ -26,6 +26,13 @@ namespace TarnishedTool.Views.Tabs
             );
             
             _ = new UpDownHelper<int>(
+                FocusUpDown,
+                _playerViewModel.SetFp,
+                _playerViewModel.PauseUpdates,
+                _playerViewModel.ResumeUpdates
+            );
+            
+            _ = new UpDownHelper<int>(
                 ScaduUpDown,
                 _playerViewModel.SetScadu,
                 _playerViewModel.PauseUpdates,

@@ -22,6 +22,7 @@ public interface IPlayerService
     int GetCurrentHp();
     int GetMaxHp();
     void SetFullHp();
+    void SetFullFp();
     void SetRfbs();
     void SetFp(int fp);
     int GetCurrentFp();
