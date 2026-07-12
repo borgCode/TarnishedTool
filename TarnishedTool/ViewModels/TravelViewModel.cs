@@ -265,7 +265,11 @@ namespace TarnishedTool.ViewModels
             _ = Task.Run(() =>
             {
                 _travelService.WarpToBlockId(Bosses.SelectedItem.Position);
-                if (IsRestOnWarpEnabled) _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                if (IsRestOnWarpEnabled)
+                {
+                    _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.Rest);
+                    _playerService.RefreshFromStorage();
+                }
             });
         }
 
