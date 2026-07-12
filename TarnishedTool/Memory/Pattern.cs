@@ -932,7 +932,7 @@ namespace TarnishedTool.Memory
             "xxxxxx????xxxx",
             12,
             AddressingMode.Absolute,
-            anchorOffset: 0
+            anchorOffset: 2
         );
 
         public static readonly Pattern NoLogo = new(
