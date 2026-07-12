@@ -697,6 +697,25 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 41 83 be 28 02 00 00 00       cmp    [r14+0x228], 0
+        ///0f 8e a0 00 00 00             jle    done
+        ///50                            push   rax
+        ///51                            push   rcx
+        ///9c                            pushfq
+        ///48 83 ec 20                   sub    rsp, 0x20
+        ///f3 0f 7f 04 24                movdqu [rsp], xmm0
+        ///f3 0f 7f 4c 24 10             movdqu [rsp+0x10], xmm1
+        ///49 8b 8e e0 01 00 00          mov    rcx, [r14+0x1e0]
+        ///48 85 c9                      test   rcx, rcx
+        ///74 46                         je     us [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DamageMultiplier {
+            get {
+                return ResourceManager.GetString("DamageMultiplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50                      push   rax
         ///48 8b 41 10             mov    rax,QWORD PTR [rcx+0x10]
         ///48 3b 05 00 00 00 00    cmp    rax,QWORD PTR [rip+0x0]        # c &lt;_main+0xc&gt;
