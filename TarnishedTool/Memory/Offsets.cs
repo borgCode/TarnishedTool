@@ -3114,9 +3114,31 @@ namespace TarnishedTool.Memory
 
             Patches.DisableCutscene = moduleBase + Version switch
             {
+                Version1_2_0 => 0xA4813C,
+                Version1_2_1 => 0xA481BC,
+                Version1_2_2 => 0xA4822C,
+                Version1_2_3 => 0xA482AC,
+                Version1_3_0 => 0xA4D41C,
+                Version1_3_1 => 0xA4D42C,
+                Version1_3_2 => 0xA4D40C,
+                Version1_4_0 => 0xA2CC2C,
+                Version1_4_1 => 0xA2CB3C,
+                Version1_5_0 => 0xA3116C,
+                Version1_6_0 => 0xA34FCC,
+                Version1_7_0 => 0xA3677C,
+                Version1_8_0 or Version1_8_1 => 0xA7743C,
+                Version1_9_0 => 0xA79FCC,
+                Version1_9_1 => 0xA7A02C,
+                Version2_0_0 or Version2_0_1 => 0xA7A2BC,
+                Version2_2_0 or Version2_2_3 => 0xAA6E76,
+                Version2_3_0 => 0xAA7056,
+                Version2_4_0 or Version2_5_0 => 0xAA70B6,
+                Version2_6_0 => 0xAA7236,
+                Version2_6_1 => 0xAA7296,
                 Version2_6_2 => 0xAA7196,
                 _ => 0
             };
+
 
         }
 

@@ -928,11 +928,10 @@ namespace TarnishedTool.Memory
         );
 
         public static readonly Pattern DisableCutscene = new(
-            [0x0F, 0xBA, 0xF0, 0x07, 0x89, 0x81, 0x00, 0x00, 0x00, 0x00, 0xA8, 0x02, 0x74, 0x13],
-            "xxxxxx????xxxx",
-            12,
-            AddressingMode.Absolute,
-            anchorOffset: 2
+            [0x74, 0x13, 0xE8, 0x00, 0x00, 0x00, 0x00, 0x48, 0x8B, 0x03, 0x48, 0x8B, 0xCB],
+            "xxx????xxxxxx",
+            0,
+            AddressingMode.Absolute
         );
 
         public static readonly Pattern NoLogo = new(
