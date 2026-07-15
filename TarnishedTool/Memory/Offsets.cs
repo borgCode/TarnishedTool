@@ -11,7 +11,7 @@ namespace TarnishedTool.Memory
         public static GameVersion Version => _version
                                              ?? Version2_6_1;
 
-        public static bool Initialize(string fileVersion, IntPtr moduleBase)
+        public static bool Initialize(string fileVersion, nint moduleBase)
         {
             _version = fileVersion switch
             {
@@ -52,7 +52,7 @@ namespace TarnishedTool.Memory
 
         public static class WorldChrMan
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public static int ChrSetPool => Version switch
             {
@@ -448,7 +448,7 @@ namespace TarnishedTool.Memory
 
         public static class FieldArea
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int GameRend = 0x20;
             public const int CamMode = 0xC8; // 1 for free cam
@@ -505,22 +505,22 @@ namespace TarnishedTool.Memory
 
         public static class FD4PadManager
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class DrawPathing
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class LuaEventMan
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class CSDbgEvent
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int DrawEvent = 0x4;
             public const int DisableEvent = 0x28;
@@ -528,17 +528,17 @@ namespace TarnishedTool.Memory
 
         public static class VirtualMemFlag
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class CSEmkSystem
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class GroupMask
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public enum GroupMasks
             {
@@ -565,7 +565,7 @@ namespace TarnishedTool.Memory
 
         public static class DamageManager
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int HitboxView = 0xA0;
             public const int HitboxView2 = 0xA1;
@@ -573,7 +573,7 @@ namespace TarnishedTool.Memory
 
         public static class WorldHitMan
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public static int LowHit => Version switch
             {
@@ -602,7 +602,7 @@ namespace TarnishedTool.Memory
 
         public static class MenuMan
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int FlagArray = 0x90;
             public const int IsLoaded = 0x94;
@@ -635,7 +635,7 @@ namespace TarnishedTool.Memory
 
         public static class GameDataMan
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int PlayerGameData = 0x8;
 
@@ -683,7 +683,7 @@ namespace TarnishedTool.Memory
 
         public static class TargetView
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int Blue = 0x0;
             public const int Yellow = 0x1;
@@ -691,7 +691,7 @@ namespace TarnishedTool.Memory
 
         public static class GameMan
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int ShouldQuitout = 0x10;
 
@@ -739,34 +739,34 @@ namespace TarnishedTool.Memory
 
         public static class MapItemManImpl
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class WorldAreaTimeImpl
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class SoloParamRepositoryImp
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class MsgRepository
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class UserInputManager
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int SteamInputEnum = 0x88B;
         }
 
         public static class CSTrophy
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int CSTrophyPlatformImp_forSteam = 0x8;
             public const int IsAwardAchievementEnabled = 0x4C;
@@ -774,7 +774,7 @@ namespace TarnishedTool.Memory
 
         public static class CSFlipperImp
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public static int GameSpeed => Version switch
             {
@@ -793,7 +793,7 @@ namespace TarnishedTool.Memory
 
         public static class MapDebugFlags
         {
-            public static IntPtr Base;
+            public static nint Base;
             public const int ShowAllMaps = 0x0;
             public const int ShowAllGraces = 0x1;
 
@@ -814,13 +814,13 @@ namespace TarnishedTool.Memory
 
         public static class WorldChrManDbg
         {
-            public static IntPtr Base;
+            public static nint Base;
             public const int PoiseBarsFlag = 0x69;
         }
 
         public static class ChrDbgFlags
         {
-            public static IntPtr Base;
+            public static nint Base;
             public const int PlayerNoDeath = 0x0;
             public const int OneShot = 0x2;
             public const int InfiniteGoods = 0x3;
@@ -839,7 +839,7 @@ namespace TarnishedTool.Memory
 
         public static class CsDlcImp
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public const int ByteFlags = 0x10;
 
@@ -851,99 +851,99 @@ namespace TarnishedTool.Memory
 
         public static class WorldAiManagerImp
         {
-            public static IntPtr Base;
+            public static nint Base;
 
             public static readonly int[] LuaState = [0x6938, 0xB8, 0x28];
         }
 
         public static class CSSound
         {
-            public static IntPtr Base;
+            public static nint Base;
         }
 
         public static class Hooks
         {
-            public static long UpdateCoords;
-            public static long InAirTimer;
-            public static long NoClipKb;
-            public static long NoClipTriggers;
-            public static long HasSpEffect;
-            public static long BlueTargetView;
-            public static long LockedTargetPtr;
-            public static long InfinitePoise;
-            public static long ShouldUpdateAi;
-            public static long GetForceActIdx;
-            public static long TargetNoStagger;
-            public static long AttackInfo;
-            public static long WarpCoordWrite;
-            public static long WarpAngleWrite;
-            public static IntPtr NoTimePassOnDeath;
-            public static long LionCooldownHook;
-            public static long SetActionRequested;
-            public static long NoMapAcquiredPopup;
-            public static long NoGrab;
-            public static long LoadScreenMsgLookup;
-            public static long LoadScreenMsgLookupEarlyPatches;
-            public static long LoadScreenMsgLookupMidPatches;
-            public static long NoHeal;
-            public static long PlayerLockHp;
-            public static long DamageApply;
-            public static long SpeedyBuff;
+            public static nint UpdateCoords;
+            public static nint InAirTimer;
+            public static nint NoClipKb;
+            public static nint NoClipTriggers;
+            public static nint HasSpEffect;
+            public static nint BlueTargetView;
+            public static nint LockedTargetPtr;
+            public static nint InfinitePoise;
+            public static nint ShouldUpdateAi;
+            public static nint GetForceActIdx;
+            public static nint TargetNoStagger;
+            public static nint AttackInfo;
+            public static nint WarpCoordWrite;
+            public static nint WarpAngleWrite;
+            public static nint NoTimePassOnDeath;
+            public static nint LionCooldownHook;
+            public static nint SetActionRequested;
+            public static nint NoMapAcquiredPopup;
+            public static nint NoGrab;
+            public static nint LoadScreenMsgLookup;
+            public static nint LoadScreenMsgLookupEarlyPatches;
+            public static nint LoadScreenMsgLookupMidPatches;
+            public static nint NoHeal;
+            public static nint PlayerLockHp;
+            public static nint DamageApply;
+            public static nint SpeedyBuff;
         }
 
         public static class Functions
         {
-            public static long GraceWarp;
-            public static long SetEvent;
-            public static long SetSpEffect;
-            public static long GiveRunes;
-            public static long LookupByFieldInsHandle;
-            public static long WarpToBlock;
-            public static long ExternalEventTempCtor;
-            public static long ExecuteTalkCommand;
-            public static long GetEvent;
-            public static long GetPlayerItemQuantityById;
-            public static long ItemSpawn;
-            public static long MatrixVectorProduct;
-            public static long ChrInsByHandle;
-            public static long FindAndRemoveSpEffect;
-            public static long EmevdSwitch;
-            public static long EmkEventInsCtor;
-            public static long GetMovement;
-            public static long GetChrInsByEntityId;
-            public static long NpcEzStateTalkCtor;
-            public static long EzStateEnvQueryImplCtor;
-            public static long LocalToMapCoords;
-            public static long LuaDoString;
-            public static long RefreshFromStorage;
+            public static nint GraceWarp;
+            public static nint SetEvent;
+            public static nint SetSpEffect;
+            public static nint GiveRunes;
+            public static nint LookupByFieldInsHandle;
+            public static nint WarpToBlock;
+            public static nint ExternalEventTempCtor;
+            public static nint ExecuteTalkCommand;
+            public static nint GetEvent;
+            public static nint GetPlayerItemQuantityById;
+            public static nint ItemSpawn;
+            public static nint MatrixVectorProduct;
+            public static nint ChrInsByHandle;
+            public static nint FindAndRemoveSpEffect;
+            public static nint EmevdSwitch;
+            public static nint EmkEventInsCtor;
+            public static nint GetMovement;
+            public static nint GetChrInsByEntityId;
+            public static nint NpcEzStateTalkCtor;
+            public static nint EzStateEnvQueryImplCtor;
+            public static nint LocalToMapCoords;
+            public static nint LuaDoString;
+            public static nint RefreshFromStorage;
         }
 
         public static class Patches
         {
-            public static IntPtr CanFastTravel;
-            public static IntPtr NoRunesFromEnemies;
-            public static IntPtr NoRuneArcLoss;
-            public static IntPtr NoRuneLossOnDeath;
-            public static IntPtr OpenMap;
-            public static IntPtr CloseMap;
-            public static IntPtr EnableFreeCam;
-            public static IntPtr CanDrawEvents1;
-            public static IntPtr CanDrawEvents2;
-            public static IntPtr GetShopEvent;
-            public static IntPtr NoLogo;
-            public static IntPtr DebugFont;
-            public static IntPtr PlayerSound;
-            public static IntPtr IsTorrentDisabledInUnderworld;
-            public static IntPtr IsWhistleDisabled;
-            public static IntPtr IsWorldPaused;
-            public static IntPtr GetItemChance;
-            public static IntPtr FpsCap;
-            public static IntPtr MenuDelay;
-            public static IntPtr NoQuitMessage;
-            public static IntPtr DisableCutscene;
+            public static nint CanFastTravel;
+            public static nint NoRunesFromEnemies;
+            public static nint NoRuneArcLoss;
+            public static nint NoRuneLossOnDeath;
+            public static nint OpenMap;
+            public static nint CloseMap;
+            public static nint EnableFreeCam;
+            public static nint CanDrawEvents1;
+            public static nint CanDrawEvents2;
+            public static nint GetShopEvent;
+            public static nint NoLogo;
+            public static nint DebugFont;
+            public static nint PlayerSound;
+            public static nint IsTorrentDisabledInUnderworld;
+            public static nint IsWhistleDisabled;
+            public static nint IsWorldPaused;
+            public static nint GetItemChance;
+            public static nint FpsCap;
+            public static nint MenuDelay;
+            public static nint NoQuitMessage;
+            public static nint DisableCutscene;
         }
 
-        private static void InitializeBaseAddresses(IntPtr moduleBase)
+        private static void InitializeBaseAddresses(nint moduleBase)
         {
             WorldChrMan.Base = moduleBase + Version switch
             {
@@ -1485,7 +1485,7 @@ namespace TarnishedTool.Memory
 
 
             // Functions
-            Functions.GraceWarp = moduleBase.ToInt64() + Version switch
+            Functions.GraceWarp = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5855B0,
                 Version1_2_1 or Version1_2_2 => 0x585620,
@@ -1506,10 +1506,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x599D00,
                 Version2_6_0 or Version2_6_1 => 0x599CD0,
                 Version2_6_2 => 0x599C10,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.SetEvent = moduleBase.ToInt64() + Version switch
+            Functions.SetEvent = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5D9E40,
                 Version1_2_1 or Version1_2_2 => 0x5D9EB0,
@@ -1530,10 +1530,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x5F9B50,
                 Version2_6_0 or Version2_6_1 => 0x5F9CD0,
                 Version2_6_2 => 0x5F9BF0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.SetSpEffect = moduleBase.ToInt64() + Version switch
+            Functions.SetSpEffect = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3E17E0,
                 Version1_2_1 or Version1_2_2 => 0x3E1850,
@@ -1549,10 +1549,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x3E9120,
                 Version2_6_0 or Version2_6_1 => 0x3E90F0,
                 Version2_6_2 => 0x3E8FE0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.GiveRunes = moduleBase.ToInt64() + Version switch
+            Functions.GiveRunes = moduleBase + Version switch
             {
                 Version1_2_0 => 0x258270,
                 Version1_2_1 or Version1_2_2 => 0x2582E0,
@@ -1569,10 +1569,10 @@ namespace TarnishedTool.Memory
                     or Version2_6_0
                     or Version2_6_1 => 0x25E1B0,
                 Version2_6_2 => 0x25E100,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.LookupByFieldInsHandle = moduleBase.ToInt64() + Version switch
+            Functions.LookupByFieldInsHandle = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4F7580,
                 Version1_2_1 or Version1_2_2 => 0x4F75F0,
@@ -1592,10 +1592,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x507D80,
                 Version2_6_0 or Version2_6_1 => 0x507D50,
                 Version2_6_2 => 0x507C80,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.WarpToBlock = moduleBase.ToInt64() + Version switch
+            Functions.WarpToBlock = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5D7DA0,
                 Version1_2_1 or Version1_2_2 => 0x5D7E10,
@@ -1616,11 +1616,11 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x5F7A30,
                 Version2_6_0 or Version2_6_1 => 0x5F7BB0,
                 Version2_6_2 => 0x5F7AD0,
-                _ => 0L
+                _ => 0
             };
 
 
-            Functions.GetEvent = moduleBase.ToInt64() + Version switch
+            Functions.GetEvent = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5D9650,
                 Version1_2_1 or Version1_2_2 => 0x5D96C0,
@@ -1641,10 +1641,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x5F9360,
                 Version2_6_0 or Version2_6_1 => 0x5F94E0,
                 Version2_6_2 => 0x5F9400,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.GetPlayerItemQuantityById = moduleBase.ToInt64() + Version switch
+            Functions.GetPlayerItemQuantityById = moduleBase + Version switch
             {
                 Version1_2_0 => 0x75ACC0,
                 Version1_2_1 or Version1_2_2 => 0x75AD30,
@@ -1665,10 +1665,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x784F40,
                 Version2_6_0 or Version2_6_1 => 0x7850C0,
                 Version2_6_2 => 0x784FD0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.ItemSpawn = moduleBase.ToInt64() + Version switch
+            Functions.ItemSpawn = moduleBase + Version switch
             {
                 Version1_2_0 => 0x54E570,
                 Version1_2_1 or Version1_2_2 => 0x54E5E0,
@@ -1688,10 +1688,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x5606A0,
                 Version2_6_0 or Version2_6_1 => 0x560670,
                 Version2_6_2 => 0x5605B0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.MatrixVectorProduct = moduleBase.ToInt64() + Version switch
+            Functions.MatrixVectorProduct = moduleBase + Version switch
             {
                 Version1_2_0 => 0xAB01E0,
                 Version1_2_1 => 0xAB0260,
@@ -1715,10 +1715,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0xB122B0,
                 Version2_6_1 => 0xB12310,
                 Version2_6_2 => 0xB12220,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.ChrInsByHandle = moduleBase.ToInt64() + Version switch
+            Functions.ChrInsByHandle = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4F74A0,
                 Version1_2_1 or Version1_2_2 => 0x4F7510,
@@ -1738,10 +1738,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x507CA0,
                 Version2_6_0 or Version2_6_1 => 0x507C70,
                 Version2_6_2 => 0x507BA0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.FindAndRemoveSpEffect = moduleBase.ToInt64() + Version switch
+            Functions.FindAndRemoveSpEffect = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4E6970,
                 Version1_2_1 or Version1_2_2 => 0x4E69E0,
@@ -1761,10 +1761,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x4F69B0,
                 Version2_6_0 or Version2_6_1 => 0x4F6980,
                 Version2_6_2 => 0x4F68B0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.EmevdSwitch = moduleBase.ToInt64() + Version switch
+            Functions.EmevdSwitch = moduleBase + Version switch
             {
                 Version1_2_0 => 0x555D00,
                 Version1_2_1 or Version1_2_2 => 0x555D70,
@@ -1784,10 +1784,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x567E30,
                 Version2_6_0 or Version2_6_1 => 0x567E00,
                 Version2_6_2 => 0x567D40,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.EmkEventInsCtor = moduleBase.ToInt64() + Version switch
+            Functions.EmkEventInsCtor = moduleBase + Version switch
             {
                 Version1_2_0 => 0x56ECA0,
                 Version1_2_1 or Version1_2_2 => 0x56ED10,
@@ -1807,10 +1807,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x582730,
                 Version2_6_0 or Version2_6_1 => 0x582700,
                 Version2_6_2 => 0x582640,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.GetMovement = moduleBase.ToInt64() + Version switch
+            Functions.GetMovement = moduleBase + Version switch
             {
                 Version1_2_0 => 0x25B6CD0,
                 Version1_2_1 => 0x25B6D20,
@@ -1837,10 +1837,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0x2664210,
                 Version2_6_1 => 0x2664270,
                 Version2_6_2 => 0x2664280,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.GetChrInsByEntityId = moduleBase.ToInt64() + Version switch
+            Functions.GetChrInsByEntityId = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4F7630,
                 Version1_2_1 or Version1_2_2 => 0x4F76A0,
@@ -1860,10 +1860,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x507E30,
                 Version2_6_0 or Version2_6_1 => 0x507E00,
                 Version2_6_2 => 0x507D30,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.NpcEzStateTalkCtor = moduleBase.ToInt64() + Version switch
+            Functions.NpcEzStateTalkCtor = moduleBase + Version switch
             {
                 Version1_2_0 => 0xE17E70,
                 Version1_2_1 => 0xE17EC0,
@@ -1890,10 +1890,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0xE9EC70,
                 Version2_6_1 => 0xE9ECD0,
                 Version2_6_2 => 0xE9ECC0,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.EzStateEnvQueryImplCtor = moduleBase.ToInt64() + Version switch
+            Functions.EzStateEnvQueryImplCtor = moduleBase + Version switch
             {
                 Version1_2_0 => 0x1FD0D40,
                 Version1_2_1 => 0x1FD0D90,
@@ -1920,10 +1920,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0x207E820,
                 Version2_6_1 => 0x207E880,
                 Version2_6_2 => 0x207E890,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.ExternalEventTempCtor = moduleBase.ToInt64() + Version switch
+            Functions.ExternalEventTempCtor = moduleBase + Version switch
             {
                 Version1_2_0 => 0x1F934E0,
                 Version1_2_1 => 0x1F93530,
@@ -1950,10 +1950,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0x2040FC0,
                 Version2_6_1 => 0x2041020,
                 Version2_6_2 => 0x2041030,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.ExecuteTalkCommand = moduleBase.ToInt64() + Version switch
+            Functions.ExecuteTalkCommand = moduleBase + Version switch
             {
                 Version1_2_0 => 0xE1E320,
                 Version1_2_1 => 0xE1E370,
@@ -1980,10 +1980,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0xEA5250,
                 Version2_6_1 => 0xEA52B0,
                 Version2_6_2 => 0xEA5290,
-                _ => 0L
+                _ => 0
             };
 
-            Functions.LocalToMapCoords = moduleBase.ToInt64() + Version switch
+            Functions.LocalToMapCoords = moduleBase + Version switch
             {
                 Version1_2_0 => 0x5FDCA0,
                 Version1_2_1 or Version1_2_2 => 0x5FDD10,
@@ -2007,7 +2007,7 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
-            Functions.LuaDoString = moduleBase.ToInt64() + Version switch
+            Functions.LuaDoString = moduleBase + Version switch
             {
                 Version1_2_0 => 0x1F78EB0,
                 Version1_2_1 => 0x1F78F00,
@@ -2037,7 +2037,7 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
-            Functions.RefreshFromStorage = moduleBase.ToInt64() + Version switch
+            Functions.RefreshFromStorage = moduleBase + Version switch
             {
                 Version1_2_0 => 0x248D90,
                 Version1_2_1 or Version1_2_2 => 0x248E00,
@@ -2059,7 +2059,7 @@ namespace TarnishedTool.Memory
 
 
             // Hooks
-            Hooks.UpdateCoords = moduleBase.ToInt64() + Version switch
+            Hooks.UpdateCoords = moduleBase + Version switch
             {
                 Version1_2_0 => 0x45E3C9,
                 Version1_2_1 or Version1_2_2 => 0x45E439,
@@ -2078,10 +2078,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x4679C9,
                 Version2_6_0 or Version2_6_1 => 0x467999,
                 Version2_6_2 => 0x467899,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.InAirTimer = moduleBase.ToInt64() + Version switch
+            Hooks.InAirTimer = moduleBase + Version switch
             {
                 Version1_2_0 => 0x444CA8,
                 Version1_2_1 or Version1_2_2 => 0x444D18,
@@ -2100,10 +2100,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x44E2A8,
                 Version2_6_0 or Version2_6_1 => 0x44E278,
                 Version2_6_2 => 0x44E168,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.NoClipKb = moduleBase.ToInt64() + Version switch
+            Hooks.NoClipKb = moduleBase + Version switch
             {
                 Version1_2_0 => 0x1EBF67F,
                 Version1_2_1 => 0x1EBF6CF,
@@ -2131,10 +2131,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0x1F6D09F,
                 Version2_6_1 => 0x1F6D0FF,
                 Version2_6_2 => 0x1F6D10F,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.NoClipTriggers = moduleBase.ToInt64() + Version switch
+            Hooks.NoClipTriggers = moduleBase + Version switch
             {
                 Version1_2_0 => 0x1EBE79E,
                 Version1_2_1 => 0x1EBE7EE,
@@ -2160,10 +2160,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0x1F6C11F,
                 Version2_6_1 => 0x1F6C17F,
                 Version2_6_2 => 0x1F6C18F,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.HasSpEffect = moduleBase.ToInt64() + Version switch
+            Hooks.HasSpEffect = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4E99C0,
                 Version1_2_1 or Version1_2_2 => 0x4E9A30,
@@ -2183,10 +2183,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x4F9A40,
                 Version2_6_0 or Version2_6_1 => 0x4F9A10,
                 Version2_6_2 => 0x4F9940,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.BlueTargetView = moduleBase.ToInt64() + Version switch
+            Hooks.BlueTargetView = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3382C3,
                 Version1_2_1 or Version1_2_2 => 0x338333,
@@ -2201,10 +2201,10 @@ namespace TarnishedTool.Memory
                 Version2_2_0 or Version2_2_3 or Version2_3_0 or Version2_4_0 or Version2_5_0 => 0x33E293,
                 Version2_6_0 or Version2_6_1 => 0x33E263,
                 Version2_6_2 => 0x33E143,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.LockedTargetPtr = moduleBase.ToInt64() + Version switch
+            Hooks.LockedTargetPtr = moduleBase + Version switch
             {
                 Version1_2_0 => 0x6F0A16,
                 Version1_2_1 or Version1_2_2 => 0x6F0A86,
@@ -2225,10 +2225,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x7171F2,
                 Version2_6_0 or Version2_6_1 => 0x717372,
                 Version2_6_2 => 0x717272,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.InfinitePoise = moduleBase.ToInt64() + Version switch
+            Hooks.InfinitePoise = moduleBase + Version switch
             {
                 Version1_2_0 => 0x43CA6A,
                 Version1_2_1 or Version1_2_2 => 0x43CADA,
@@ -2247,10 +2247,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x445CE0,
                 Version2_6_0 or Version2_6_1 => 0x445CB0,
                 Version2_6_2 => 0x445BA0,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.ShouldUpdateAi = moduleBase.ToInt64() + Version switch
+            Hooks.ShouldUpdateAi = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3C09F0,
                 Version1_2_1 or Version1_2_2 => 0x3C0A60,
@@ -2266,10 +2266,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x3C7940,
                 Version2_6_0 or Version2_6_1 => 0x3C7910,
                 Version2_6_2 => 0x3C7800,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.GetForceActIdx = moduleBase.ToInt64() + Version switch
+            Hooks.GetForceActIdx = moduleBase + Version switch
             {
                 Version1_2_0 => 0x527214E,
                 Version1_2_1 => 0x53F7581,
@@ -2297,11 +2297,11 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0x53C8D9,
                 Version2_6_1 => 0x5BED8C4,
                 Version2_6_2 => 0x5C7DF02,
-                _ => 0L
+                _ => 0
             };
 
 
-            Hooks.AttackInfo = moduleBase.ToInt64() + Version switch
+            Hooks.AttackInfo = moduleBase + Version switch
             {
                 Version1_2_0 => 0x474B3A,
                 Version1_2_1 or Version1_2_2 => 0x474BAA,
@@ -2320,10 +2320,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x47E25B,
                 Version2_6_0 or Version2_6_1 => 0x47E22B,
                 Version2_6_2 => 0x47E12B,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.WarpCoordWrite = moduleBase.ToInt64() + Version switch
+            Hooks.WarpCoordWrite = moduleBase + Version switch
             {
                 Version1_2_0 => 0x657AFA,
                 Version1_2_1 or Version1_2_2 => 0x657B6A,
@@ -2344,10 +2344,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x67A93A,
                 Version2_6_0 or Version2_6_1 => 0x67AABA,
                 Version2_6_2 => 0x67A9CA,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.WarpAngleWrite = moduleBase.ToInt64() + Version switch
+            Hooks.WarpAngleWrite = moduleBase + Version switch
             {
                 Version1_2_0 => 0x657ADA,
                 Version1_2_1 or Version1_2_2 => 0x657B4A,
@@ -2368,7 +2368,7 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x67A91A,
                 Version2_6_0 or Version2_6_1 => 0x67AA9A,
                 Version2_6_2 => 0x67A9AA,
-                _ => 0L
+                _ => 0
             };
 
             Hooks.NoTimePassOnDeath = moduleBase + Version switch
@@ -2396,17 +2396,17 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
-            Hooks.LionCooldownHook = moduleBase.ToInt64() + Version switch
+            Hooks.LionCooldownHook = moduleBase + Version switch
             {
                 Version2_2_0 or Version2_2_3 => 0x4FEF7A,
                 Version2_3_0 => 0x4FF0FA,
                 Version2_4_0 or Version2_5_0 => 0x4FF13A,
                 Version2_6_0 or Version2_6_1 => 0x4FF10A,
                 Version2_6_2 => 0x4FF03A,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.SetActionRequested = moduleBase.ToInt64() + Version switch
+            Hooks.SetActionRequested = moduleBase + Version switch
             {
                 Version1_2_0 => 0x3FF362,
                 Version1_2_1 or Version1_2_2 => 0x3FF3D2,
@@ -2425,10 +2425,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x407BE2,
                 Version2_6_0 or Version2_6_1 => 0x407BB2,
                 Version2_6_2 => 0x407AB2,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.NoGrab = moduleBase.ToInt64() + Version switch
+            Hooks.NoGrab = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4402FB,
                 Version1_2_1 or Version1_2_2 => 0x44036B,
@@ -2447,10 +2447,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x4499BB,
                 Version2_6_0 or Version2_6_1 => 0x44998B,
                 Version2_6_2 => 0x44987B,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.LoadScreenMsgLookup = moduleBase.ToInt64() + Version switch
+            Hooks.LoadScreenMsgLookup = moduleBase + Version switch
             {
                 Version1_8_0 => 0xCDACFC,
                 Version1_8_1 => 0xCDACDC,
@@ -2463,10 +2463,10 @@ namespace TarnishedTool.Memory
                 Version2_6_0 => 0xD108DC,
                 Version2_6_1 => 0xD1093C,
                 Version2_6_2 => 0xD1087C,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.LoadScreenMsgLookupEarlyPatches = moduleBase.ToInt64() + Version switch
+            Hooks.LoadScreenMsgLookupEarlyPatches = moduleBase + Version switch
             {
                 Version1_2_0 => 0x737994,
                 Version1_2_1 or Version1_2_2 => 0x737A04,
@@ -2477,16 +2477,16 @@ namespace TarnishedTool.Memory
                 Version1_4_1 => 0x73CE14,
                 Version1_5_0 => 0x73E324,
                 Version1_6_0 => 0x740174,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.LoadScreenMsgLookupMidPatches = moduleBase.ToInt64() + Version switch
+            Hooks.LoadScreenMsgLookupMidPatches = moduleBase + Version switch
             {
                 Version1_7_0 => 0xC95393,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.TargetNoStagger = moduleBase.ToInt64() + Version switch
+            Hooks.TargetNoStagger = moduleBase + Version switch
             {
                 Version1_2_0 => 0x474CC5,
                 Version1_2_1 or Version1_2_2 => 0x474D35,
@@ -2505,10 +2505,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x47E3F7,
                 Version2_6_0 or Version2_6_1 => 0x47E3C7,
                 Version2_6_2 => 0x47E2C7,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.NoMapAcquiredPopup = moduleBase.ToInt64() + Version switch
+            Hooks.NoMapAcquiredPopup = moduleBase + Version switch
             {
                 Version1_2_0 => 0x9929D1,
                 Version1_2_1 => 0x992A51,
@@ -2531,10 +2531,10 @@ namespace TarnishedTool.Memory
                 Version2_4_0 or Version2_5_0 => 0x9C6251,
                 Version2_6_0 or Version2_6_1 => 0x9C63D1,
                 Version2_6_2 => 0x9C6281,
-                _ => 0L
+                _ => 0
             };
 
-            Hooks.NoHeal = moduleBase.ToInt64() + Version switch
+            Hooks.NoHeal = moduleBase + Version switch
             {
                 Version1_2_0 => 0x42E062,
                 Version1_2_1 or Version1_2_2 => 0x42E0D2,
@@ -2556,7 +2556,7 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
-            Hooks.PlayerLockHp = moduleBase.ToInt64() + Version switch
+            Hooks.PlayerLockHp = moduleBase + Version switch
             {
                 Version1_2_0 => 0x42E010,
                 Version1_2_1 or Version1_2_2 => 0x42E080,
@@ -2578,7 +2578,7 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
-            Hooks.DamageApply = moduleBase.ToInt64() + Version switch
+            Hooks.DamageApply = moduleBase + Version switch
             {
                 Version1_2_0 => 0x43F2FE,
                 Version1_2_1 or Version1_2_2 => 0x43F36E,
@@ -2602,7 +2602,7 @@ namespace TarnishedTool.Memory
 
 
             
-            Hooks.SpeedyBuff = moduleBase.ToInt64() + Version switch
+            Hooks.SpeedyBuff = moduleBase + Version switch
             {
                 Version1_2_0 => 0x4248E0,
                 Version1_2_1 or Version1_2_2 => 0x424950,
@@ -3144,9 +3144,9 @@ namespace TarnishedTool.Memory
 
         private static long _printBaseAddr;
 
-        public static void Print(IntPtr moduleBase)
+        public static void Print(nint moduleBase)
         {
-            _printBaseAddr = moduleBase.ToInt64();
+            _printBaseAddr = moduleBase;
             
             Console.WriteLine("--- Base Pointers ---");
             PrintOffset("WorldChrMan.Base",            WorldChrMan.Base);
@@ -3254,15 +3254,13 @@ namespace TarnishedTool.Memory
             PrintOffset("LuaDoString",               Functions.LuaDoString);
             PrintOffset("RefreshFromStorage",        Functions.RefreshFromStorage);
         }
-
-        private static void PrintOffset(string name, IntPtr value) => PrintOffset(name, value.ToInt64());
-
-        private static void PrintOffset(string name, long value)
+        
+        private static void PrintOffset(string name, nint value)
         {
             var rel = value - _printBaseAddr;
             Console.WriteLine(rel <= 0
                 ? $"  {name,-40} *** NOT SET ***"
-                : $"  {name,-40} 0x{value:X}  (0x{rel:X})");
+                : $"  {name,-40} 0x{(long)value:X}  (0x{(long)rel:X})");
         }
     }
 }

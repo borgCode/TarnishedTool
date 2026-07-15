@@ -17,7 +17,7 @@ namespace TarnishedTool.Services
             var bytes = AsmLoader.GetAsmBytes(AsmScript.SetEvent);
             AsmHelper.WriteAbsoluteAddresses(bytes, [
                 (memoryService.Read<nint>(VirtualMemFlag.Base), 0x4 + 2 ),
-                (eventId, 0xE + 2),
+                ((nint) eventId, 0xE + 2),
                 (flagValue ? 1 : 0, 0x18 + 2),
                 (Functions.SetEvent, 0x22 + 2)
             ]);
@@ -36,9 +36,9 @@ namespace TarnishedTool.Services
             var bytes = AsmLoader.GetAsmBytes(AsmScript.GetEvent);
             AsmHelper.WriteAbsoluteAddresses(bytes, [
                 (memoryService.Read<nint>(VirtualMemFlag.Base), 0x0 + 2),
-                (flagId, 0xA + 2),
+                ((nint) flagId, 0xA + 2),
                 (Functions.GetEvent, 0x18 + 2),
-                (result.ToInt64(), 0x28 + 2)
+                (result, 0x28 + 2)
             ]);
 
             memoryService.AllocateAndExecute(bytes);
@@ -85,18 +85,18 @@ namespace TarnishedTool.Services
                 var hookLoc = Functions.SetEvent;
                 
                 AsmHelper.WriteRelativeOffsets(bytes, [
-                (code.ToInt64() + 0x8, writeIndex.ToInt64(), 6, 0x8 + 2),
-                (code.ToInt64() + 0x13, buffer.ToInt64(), 7, 0x13 + 3),
-                (code.ToInt64() + 0x2B, writeIndex.ToInt64(), 6, 0x2B + 2),
-                (code.ToInt64() + 0x34, hookLoc + 0x5, 5, 0x34 + 1)
+                (code + 0x8, writeIndex, 6, 0x8 + 2),
+                (code + 0x13, buffer, 7, 0x13 + 3),
+                (code + 0x2B, writeIndex, 6, 0x2B + 2),
+                (code + 0x34, hookLoc + 0x5, 5, 0x34 + 1)
                 ]);
                 
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x08]);
+                hookManager.InstallHook(code, hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x08]);
             }
             else
             {
-                hookManager.UninstallHook(code.ToInt64());
+                hookManager.UninstallHook(code);
             }
         }
     }

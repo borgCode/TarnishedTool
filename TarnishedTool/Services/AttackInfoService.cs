@@ -31,20 +31,20 @@ public class AttackInfoService(IMemoryService memoryService, HookManager hookMan
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (code.ToInt64() + 0x6, lockedTargetLoc.ToInt64(), 7, 0x6 + 3),
-                (code.ToInt64() + 0x1D, id.ToInt64(), 6, 0x1D + 2),
-                (code.ToInt64() + 0x23, writeIndex.ToInt64(), 6, 0x23 + 2),
-                (code.ToInt64() + 0x2C, attackInfoStart.ToInt64(), 7, 0x2C + 3),
-                (code.ToInt64() + 0x3D, id.ToInt64(), 6, 0x3D + 2),
-                (code.ToInt64() + 0xD6, writeIndex.ToInt64(), 6, 0xD6 + 2),
-                (code.ToInt64() + 0xEB, hookLoc + 5, 5, 0xEB + 1),
+                (code + 0x6, lockedTargetLoc, 7, 0x6 + 3),
+                (code + 0x1D, id, 6, 0x1D + 2),
+                (code + 0x23, writeIndex, 6, 0x23 + 2),
+                (code + 0x2C, attackInfoStart, 7, 0x2C + 3),
+                (code + 0x3D, id, 6, 0x3D + 2),
+                (code + 0xD6, writeIndex, 6, 0xD6 + 2),
+                (code + 0xEB, hookLoc + 5, 5, 0xEB + 1),
             });
             memoryService.WriteBytes(code, bytes);
-            hookManager.InstallHook(code.ToInt64(), hookLoc, OriginalBytesByPatch.AttackInfo.GetOriginal());
+            hookManager.InstallHook(code, hookLoc, OriginalBytesByPatch.AttackInfo.GetOriginal());
         }
         else
         {
-            hookManager.UninstallHook(code.ToInt64());
+            hookManager.UninstallHook(code);
         }
     }
 

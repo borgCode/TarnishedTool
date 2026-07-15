@@ -4,7 +4,7 @@ namespace TarnishedTool.Memory
 {
     public static class CodeCaveOffsets
     {
-        public static IntPtr Base;
+        public static nint Base;
 
         public const int SaveCurrentTime = 0x0;
 

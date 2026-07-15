@@ -50,19 +50,19 @@ public class ReminderService : IReminderService
     private (nint fmg, nint stringTable, int count) GetFmgData(uint version, uint category)
     {
         var msgRepo = _memoryService.Read<nint>(Offsets.MsgRepository.Base);
-        if (msgRepo == 0) return (0, IntPtr.Zero, 0);
+        if (msgRepo == 0) return (0, 0, 0);
 
         var versionCount = _memoryService.Read<uint>(msgRepo + 0x10);
         var categoryCount = _memoryService.Read<uint>(msgRepo + 0x14);
 
-        if (version >= versionCount || category >= categoryCount) return (0, IntPtr.Zero, 0);
+        if (version >= versionCount || category >= categoryCount) return (0, 0, 0);
 
         var versionsArray = _memoryService.Read<nint>(msgRepo + 0x8);
         var versionPtr = _memoryService.Read<nint>((IntPtr)(versionsArray + version * 8));
-        if (versionPtr == 0) return (0, IntPtr.Zero, 0);
+        if (versionPtr == 0) return (0, 0, 0);
 
         var fmg = _memoryService.Read<nint>((IntPtr)(versionPtr + category * 8));
-        if (fmg == 0) return (0, IntPtr.Zero, 0);
+        if (fmg == 0) return (0, 0, 0);
 
         var stringTable = _memoryService.Read<nint>(fmg + 0x18);
         var rangeCount = _memoryService.Read<int>(fmg + 0x0C);
@@ -103,7 +103,7 @@ public class ReminderService : IReminderService
         var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 6, code + 0x12);
         Array.Copy(jmpBytes, 0, bytes, 0xD + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
-        _hookManager.InstallHook(code.ToInt64(), hook, [0x41, 0xB8, 0xCD, 0x00, 0x00, 0x00]);
+        _hookManager.InstallHook(code, hook, [0x41, 0xB8, 0xCD, 0x00, 0x00, 0x00]);
     }
 
     private void DoNormalHook()
@@ -114,7 +114,7 @@ public class ReminderService : IReminderService
         var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0xE);
         Array.Copy(jmpBytes, 0, bytes, 0x9 + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
-        _hookManager.InstallHook(code.ToInt64(), hook, [0x44, 0x8B, 0xCA, 0x33, 0xD2]);
+        _hookManager.InstallHook(code, hook, [0x44, 0x8B, 0xCA, 0x33, 0xD2]);
     }
 
     private void DoEarlyPatchesHook()
@@ -125,6 +125,6 @@ public class ReminderService : IReminderService
         var jmpBytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 5, code + 0x11);
         Array.Copy(jmpBytes, 0, bytes, 0xC + 1, jmpBytes.Length);
         _memoryService.WriteBytes(code, bytes);
-        _hookManager.InstallHook(code.ToInt64(), hook, [0xBA, 0xCD, 0x00, 0x00, 0x00]);
+        _hookManager.InstallHook(code, hook, [0xBA, 0xCD, 0x00, 0x00, 0x00]);
     }
 }

@@ -28,7 +28,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     private readonly HashSet<(Param, uint)> _modifiedEntries = new();
     private LoadedParam _currentParam;
     private List<FieldValueViewModel> _fields;
-    private IntPtr _currentRowPtr;
+    private nint _currentRowPtr;
     private byte[] _currentRowData;
 
     private NavigationHistory<(Param, uint)> _history;
@@ -264,7 +264,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         _fieldsView.Filter = FilterField;
         OnPropertyChanged(nameof(FieldsView));
 
-        _currentRowPtr = IntPtr.Zero;
+        _currentRowPtr = 0;
         _currentRowData = null;
     }
 
@@ -272,7 +272,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     {
         if (ParamEntries.SelectedItem == null || _currentParam == null)
         {
-            _currentRowPtr = IntPtr.Zero;
+            _currentRowPtr = 0;
             _currentRowData = null;
             return;
         }
@@ -285,7 +285,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
             ParamEntries.SelectedItem.Id
         );
 
-        if (_currentRowPtr != IntPtr.Zero)
+        if (_currentRowPtr != 0)
         {
             _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
 
@@ -331,7 +331,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     private void RestoreSelectedEntry()
     {
-        if (_currentRowPtr == IntPtr.Zero || ParamEntries.SelectedItem == null)
+        if (_currentRowPtr == 0 || ParamEntries.SelectedItem == null)
             return;
 
         var key = (ParamEntries.SelectedGroup, ParamEntries.SelectedItem.Id);
@@ -365,7 +365,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
                 key.Item2
             );
 
-            if (rowPtr != IntPtr.Zero)
+            if (rowPtr != 0)
                 _paramService.WriteRow(rowPtr, vanilla);
         }
 
@@ -374,7 +374,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         OnPropertyChanged(nameof(HasAnyModified));
 
         // Make Restore All Params Refresh Field view too
-        if (_currentRowPtr != IntPtr.Zero && ParamEntries.SelectedItem != null)
+        if (_currentRowPtr != 0 && ParamEntries.SelectedItem != null)
         {
             _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);
         }
@@ -490,7 +490,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
 
     public void WriteFieldValue(ParamFieldDef field, object value)
     {
-        if (_currentRowPtr == IntPtr.Zero) return;
+        if (_currentRowPtr == 0) return;
         _reminderService.TrySetReminder();
         _paramService.WriteField(_currentRowPtr, field, value);
         _currentRowData = _paramService.ReadRow(_currentRowPtr, _currentParam.RowSize);

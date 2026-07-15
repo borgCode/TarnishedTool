@@ -38,7 +38,7 @@ namespace TarnishedTool.Services
         private Timer _autoAttachTimer;
         
         
-        public string ReadString(IntPtr addr, int maxLength = 32)
+        public string ReadString(nint addr, int maxLength = 32)
         {
             var bytes = ReadBytes(addr, maxLength * 2);
 
@@ -61,7 +61,7 @@ namespace TarnishedTool.Services
         }
         
         
-        public byte[] ReadBytes(IntPtr addr, int size)
+        public byte[] ReadBytes(nint addr, int size)
         {
             var array = new byte[size];
             var lpNumberOfBytesRead = 1;
@@ -70,7 +70,7 @@ namespace TarnishedTool.Services
         }
 
         
-        public T Read<T>(IntPtr addr) where T : unmanaged
+        public T Read<T>(nint addr) where T : unmanaged
         {
             int size = Unsafe.SizeOf<T>();
             var bytes = ReadBytes(addr, size);
@@ -100,14 +100,14 @@ namespace TarnishedTool.Services
             return sb.ToString();
         }
 
-        public T[] ReadArray<T>(IntPtr addr, int count) where T : unmanaged
+        public T[] ReadArray<T>(nint addr, int count) where T : unmanaged
         {
             int size = Unsafe.SizeOf<T>() * count;
             var bytes = ReadBytes(addr, size);
             return MemoryMarshal.Cast<byte, T>(bytes).ToArray();
         }
 
-        public void Write<T>(IntPtr addr, T value) where T : unmanaged
+        public void Write<T>(nint addr, T value) where T : unmanaged
         {
             int size = Unsafe.SizeOf<T>();
             var bytes = new byte[size];
@@ -115,11 +115,11 @@ namespace TarnishedTool.Services
             WriteBytes(addr, bytes);
         }
         
-        public void Write(IntPtr addr, bool value) => 
+        public void Write(nint addr, bool value) => 
             Write(addr, value ? (byte)1 : (byte)0);
 
 
-        public void WriteString(IntPtr addr, string value, int maxLength = 32)
+        public void WriteString(nint addr, string value, int maxLength = 32)
         {
             var bytes = new byte[maxLength];
             var stringBytes = Encoding.Unicode.GetBytes(value);
@@ -127,12 +127,12 @@ namespace TarnishedTool.Services
             WriteBytes(addr, bytes);
         }
         
-        public void WriteBytes(IntPtr addr, byte[] val)
+        public void WriteBytes(nint addr, byte[] val)
         {
             Kernel32.WriteProcessMemory(ProcessHandle, addr, val, val.Length, 0);
         }
 
-        public void SetBitValue(IntPtr addr, int flagMask, bool setValue)
+        public void SetBitValue(nint addr, int flagMask, bool setValue)
         {
             byte currentByte = Read<byte>(addr);
             byte modifiedByte;
@@ -144,7 +144,7 @@ namespace TarnishedTool.Services
             Write(addr, modifiedByte);
         }
 
-        public bool IsBitSet(IntPtr addr, int flagMask)
+        public bool IsBitSet(nint addr, int flagMask)
         {
             byte currentByte = Read<byte>(addr);
 

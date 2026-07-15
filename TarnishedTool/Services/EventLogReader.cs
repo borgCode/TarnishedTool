@@ -14,8 +14,8 @@ public class EventLogReader(IMemoryService memoryService) : IEventLogReader, IDi
     private DispatcherTimer _timer;
     private int _readIndex;
     
-    private IntPtr _writeIndexAddr;
-    private IntPtr _bufferAddr;
+    private nint _writeIndexAddr;
+    private nint _bufferAddr;
     
     public event Action<List<EventLogEntry>> EntriesReceived;
     

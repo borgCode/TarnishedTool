@@ -21,7 +21,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
             (chrIns, 0x0 + 2),
-            (spEffectId, 0xA + 2),
+            ((nint) spEffectId, 0xA + 2),
             (Functions.SetSpEffect, 0x18 + 2)
         });
         memoryService.AllocateAndExecute(bytes);
@@ -34,7 +34,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
             (specialEffect, 0x0 + 2),
-            (spEffectId, 0xA + 2),
+            ((nint) spEffectId, 0xA + 2),
             (Functions.FindAndRemoveSpEffect, 0x14 + 2)
         });
         memoryService.AllocateAndExecute(bytes);
@@ -46,7 +46,7 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         var specialEffect = memoryService.Read<nint>(chrIns + ChrIns.SpecialEffect);
         var current = memoryService.Read<nint>(specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
         
-        while (current != IntPtr.Zero)
+        while (current != 0)
         {
             if (memoryService.Read<uint>(current + (int)ChrIns.SpEffectEntry.Id) == spEffectId) return true;
             current = memoryService.Read<nint>(current + (int)ChrIns.SpEffectEntry.Next);
@@ -59,9 +59,9 @@ public class SpEffectService(IMemoryService memoryService, IReminderService remi
         reminderService.TrySetReminder();
         var spEffectList = new List<SpEffectEntry>();
         var specialEffect = memoryService.Read<nint>(chrIns + ChrIns.SpecialEffect);
-        var current = (IntPtr) memoryService.Read<nint>((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
+        var current = memoryService.Read<nint>((IntPtr)specialEffect + (int) ChrIns.SpecialEffectOffsets.Head);
         
-        while (current != IntPtr.Zero)
+        while (current != 0)
         {
             var entry = new MemoryBlock(memoryService.ReadBytes(current, SpEffectEntrySize));
     

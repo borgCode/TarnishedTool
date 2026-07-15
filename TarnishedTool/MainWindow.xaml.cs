@@ -222,7 +222,7 @@ namespace TarnishedTool
                 {
                     _memoryService.AllocCodeCave();
 #if DEBUG
-                    Console.WriteLine($@"Code cave: 0x{CodeCaveOffsets.Base.ToInt64():X}");
+                    Console.WriteLine($@"Code cave: 0x{(long)CodeCaveOffsets.Base:X}");
 #endif
                     _stateService.Publish(State.Attached);
                     _hasAllocatedMemory = true;

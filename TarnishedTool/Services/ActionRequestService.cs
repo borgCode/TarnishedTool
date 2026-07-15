@@ -9,9 +9,9 @@ namespace TarnishedTool.Services
 {
     public class ActionRequestService(IMemoryService memoryService, HookManager hookManager) : IActionRequestService
     {
-        private IntPtr _interceptCode;
-        private IntPtr _rollFlag;
-        private IntPtr _jumpFlag;
+        private nint _interceptCode;
+        private nint _rollFlag;
+        private nint _jumpFlag;
 
         public void ToggleNoRoll(bool enabled)
         {
@@ -41,15 +41,15 @@ namespace TarnishedTool.Services
             _rollFlag = CodeCaveOffsets.Base + CodeCaveOffsets.NoPlayerRoll;
             _jumpFlag = CodeCaveOffsets.Base + CodeCaveOffsets.NoPlayerJump;
 
-            if (hookManager.IsHookInstalled(_interceptCode.ToInt64()))
+            if (hookManager.IsHookInstalled(_interceptCode))
                 return;
 
             var bytes = AsmLoader.GetAsmBytes(AsmScript.ActionRequestIntercept);
 
             AsmHelper.WriteRelativeOffsets(bytes, new[]
             {
-                (_interceptCode.ToInt64() + 0x5, _rollFlag.ToInt64(), 7, 0x7),
-                (_interceptCode.ToInt64() + 0x15, _jumpFlag.ToInt64(), 7, 0x17),
+                (_interceptCode + 0x5, _rollFlag, 7, 0x7),
+                (_interceptCode + 0x15, _jumpFlag, 7, 0x17),
             });
 
             memoryService.WriteBytes(_interceptCode, bytes);
@@ -57,7 +57,7 @@ namespace TarnishedTool.Services
             memoryService.Write(_jumpFlag, (byte)0);
 
             hookManager.InstallHook(
-                _interceptCode.ToInt64(),
+                _interceptCode,
                 Hooks.SetActionRequested,
                 [0x49, 0x09, 0x41, 0x10, 0xC3]);
         }
@@ -67,7 +67,7 @@ namespace TarnishedTool.Services
             if (memoryService.Read<byte>(_rollFlag) == 0 &&
                 memoryService.Read<byte>(_jumpFlag) == 0)
             {
-                hookManager.UninstallHook(_interceptCode.ToInt64());
+                hookManager.UninstallHook(_interceptCode);
             }
         }
     }

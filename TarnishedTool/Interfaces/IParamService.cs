@@ -8,15 +8,15 @@ namespace TarnishedTool.Interfaces;
 
 public interface IParamService
 {
-    IntPtr GetParamRow(int tableIndex, int slotIndex, uint rowId);
-    IntPtr GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset);
-    void Write<T>(IntPtr row, int offset, T value) where T : unmanaged;
+    nint GetParamRow(int tableIndex, int slotIndex, uint rowId);
+    nint GetParamRowByMatchingBytes(int tableIndex, int slotIndex, byte[] bytes, int offset);
+    void Write<T>(nint row, int offset, T value) where T : unmanaged;
     void PrintAllParamTableNames();
-    public byte[] ReadRow(IntPtr row, int size);
+    public byte[] ReadRow(nint row, int size);
     public object ReadFieldFromBytes(byte[] data, ParamFieldDef field);
-    void WriteField(IntPtr row, ParamFieldDef field, object value);
-    void SetBit(IntPtr row, int offset, int mask, bool setValue);
-    void WriteRow(IntPtr row, byte[] data);
+    void WriteField(nint row, ParamFieldDef field, object value);
+    void SetBit(nint row, int offset, int mask, bool setValue);
+    void WriteRow(nint row, byte[] data);
     void WriteFieldToAllRows(int tableIndex, int slotIndex, int offset, byte[] value, int rowSize);
     List<byte[]> ReadFieldFromAllRows(int tableIndex, int slotIndex, int offset, int size);
     void RestoreFieldToAllRows(int tableIndex, int slotIndex, int offset, List<byte[]>? values, int rowSize);

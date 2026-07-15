@@ -1252,8 +1252,8 @@ namespace TarnishedTool.ViewModels
         {
             var (tableIndex, slotIndex) = ParamIndices.All["MenuCommonParam"];
 
-            IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, MenuCommonParamRowId);
-            if (row == IntPtr.Zero) return;
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, MenuCommonParamRowId);
+            if (row == 0) return;
 
             float val0 = enabled ? 0f : OriginalDeathTime0x0;
             float val4 = enabled ? 0f : OriginalDeathTime0x4;
@@ -1266,8 +1266,8 @@ namespace TarnishedTool.ViewModels
         {
             var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
 
-            IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, NoMiquellaCharmSpEffectRowId);
-            if (row == IntPtr.Zero) return;
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, NoMiquellaCharmSpEffectRowId);
+            if (row == 0) return;
 
             float duration = enabled ? 0f : OriginalSpEffectDuration;
             int vfx = enabled ? -1 : OriginalSpEffectVfx;
@@ -1279,14 +1279,14 @@ namespace TarnishedTool.ViewModels
         {
             // needed if player enables it while in Abyssal woods
             var playerIns = _playerService.GetPlayerIns();
-            if (playerIns == IntPtr.Zero) return;
+            if (playerIns == 0) return;
             _spEffectService.RemoveSpEffect(playerIns, SpEffect.ForcedDismount);
 
             // needed for later area reloads
             var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
 
-            IntPtr row = _paramService.GetParamRow(tableIndex, slotIndex, NoForcedDismountSpEffectRowId);
-            if (row == IntPtr.Zero) return;
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, NoForcedDismountSpEffectRowId);
+            if (row == 0) return;
 
             float duration = enabled ? 0f : ForcedDismountDuration;
             int stateinfo = enabled ? 0 : ForcedDismountStateInfo;
