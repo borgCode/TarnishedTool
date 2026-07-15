@@ -27,16 +27,16 @@ namespace TarnishedTool.Services
                 var savedPtr = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 var bytes = AsmLoader.GetAsmBytes(AsmScript.LockedTarget);
                 AsmHelper.WriteRelativeOffsets(bytes, [
-                    (code.ToInt64() + 0x7, savedPtr.ToInt64(), 7, 0x7 + 3),
-                    (code.ToInt64() + 0xE, hook + 0x7, 5, 0xE + 1)
+                    (code + 0x7, savedPtr, 7, 0x7 + 3),
+                    (code + 0xE, hook + 0x7, 5, 0xE + 1)
                 ]);
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hook,
+                hookManager.InstallHook(code, hook,
                     [0x48, 0x8B, 0x8F, 0x88, 0x00, 0x00, 0x00]);
             }
             else
             {
-                hookManager.UninstallHook(code.ToInt64());
+                hookManager.UninstallHook(code);
             }
         }
 
@@ -107,16 +107,16 @@ namespace TarnishedTool.Services
                 var lockedTarget = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 var bytes = AsmLoader.GetAsmBytes(AsmScript.TargetNoStagger);
                 AsmHelper.WriteRelativeOffsets(bytes, [
-                    (code.ToInt64() + 0x5, lockedTarget.ToInt64(), 7, 0x5 + 3),
-                    (code.ToInt64() + 0x17, hookLoc + 8, 5, 0x17 + 1)
+                    (code + 0x5, lockedTarget, 7, 0x5 + 3),
+                    (code + 0x17, hookLoc + 8, 5, 0x17 + 1)
                 ]);
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc,
+                hookManager.InstallHook(code, hookLoc,
                     [0x48, 0x8B, 0x41, 0x08, 0x83, 0x48, 0x2C, 0x08]);
             }
             else
             {
-                hookManager.UninstallHook(code.ToInt64());
+                hookManager.UninstallHook(code);
             }
         }
 
@@ -151,16 +151,16 @@ namespace TarnishedTool.Services
                 var bytes = AsmLoader.GetAsmBytes(AsmScript.DisableAllExceptTarget);
 
                 AsmHelper.WriteRelativeOffsets(bytes, [
-                    (code.ToInt64() + 0x5, lockedTargetPtr.ToInt64(), 7, 0x5 + 3),
-                    (code.ToInt64() + 0x14, hookLoc + 0x5, 5, 0x14 + 1)
+                    (code + 0x5, lockedTargetPtr, 7, 0x5 + 3),
+                    (code + 0x14, hookLoc + 0x5, 5, 0x14 + 1)
                 ]);
 
                 memoryService.WriteBytes(code, bytes);
-                hookManager.InstallHook(code.ToInt64(), hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x08]);
+                hookManager.InstallHook(code, hookLoc, [0x48, 0x89, 0x5C, 0x24, 0x08]);
             }
             else
             {
-                hookManager.UninstallHook(code.ToInt64());
+                hookManager.UninstallHook(code);
             }
         }
 
@@ -177,16 +177,16 @@ namespace TarnishedTool.Services
                 var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoHeal);
                 var target = CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr;
                 AsmHelper.WriteRelativeOffsets(codeBytes, [
-                    (code.ToInt64() + 5, target.ToInt64(), 7, 5 + 3),
-                    (code.ToInt64() + 0x24, hook + 6, 5, 0x24 + 1)
+                    (code + 5, target, 7, 5 + 3),
+                    (code + 0x24, hook + 6, 5, 0x24 + 1)
                 ]);
                 memoryService.WriteBytes(code, codeBytes);
-                hookManager.InstallHook(code.ToInt64(), hook, new byte[]
+                hookManager.InstallHook(code, hook, new byte[]
                     { 0x89, 0x81, 0x38, 0x01, 0x00, 0x00 });
             }
             else
             {
-                hookManager.UninstallHook(code.ToInt64());
+                hookManager.UninstallHook(code);
             }
         }
 
@@ -198,7 +198,7 @@ namespace TarnishedTool.Services
         public uint GetEntityId() => chrInsService.GetEntityId(GetTargetChrIns());
 
 
-        public IntPtr GetAiThinkPtr() =>
+        public nint GetAiThinkPtr() =>
             memoryService.FollowPointers(CodeCaveOffsets.Base + CodeCaveOffsets.TargetPtr,
                 [..ChrIns.AiThink], true);
 

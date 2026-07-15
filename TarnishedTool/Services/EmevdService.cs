@@ -20,8 +20,8 @@ public class EmevdService(IMemoryService memoryService) : IEmevdService
         AsmHelper.WriteAbsoluteAddresses(bytes, new []
         {
             (Functions.EmkEventInsCtor, 0x67 + 2),
-            (args.ToInt64(), 0x95 + 2),
-            (CSEmkSystem.Base.ToInt64(), 0xA9 + 2),
+            (args, 0x95 + 2),
+            (CSEmkSystem.Base, 0xA9 + 2),
             (Functions.EmevdSwitch, 0xC0 + 2)
         });
         

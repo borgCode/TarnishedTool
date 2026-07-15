@@ -13,7 +13,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
     public nint GetParamRow(int tableIndex, int slotIndex, uint rowId)
     {
         var data = GetParamData(tableIndex, slotIndex);
-        if (data is not var (paramData, rowCount, descriptorBase)) return IntPtr.Zero;
+        if (data is not var (paramData, rowCount, descriptorBase)) return 0;
 
         int low = 0, high = rowCount - 1;
         while (low <= high)
@@ -53,7 +53,7 @@ public class ParamService(IMemoryService memoryService) : IParamService
                 return row;
         }
 
-        return IntPtr.Zero;
+        return 0;
     }
 
     public void Write<T>(nint row, int offset, T value) where T : unmanaged

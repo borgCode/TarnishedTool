@@ -50,7 +50,7 @@ public interface IChrInsService
     nint ChrInsByEntityId(uint entityId);
     void ToggleNoDeath(nint chrIns, bool isEnabled);
     uint GetBlockId(nint chrIns);
-    void ToggleNoGravity(IntPtr chrIns, bool isEnabled);
+    void ToggleNoGravity(nint chrIns, bool isEnabled);
     void SetDrawCritView(nint chrIns, bool enabled);
     void SetDrawBackstabView(nint chrIns, bool enabled);
     bool IsDrawCritViewEnabled(nint chrIns);

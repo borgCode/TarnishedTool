@@ -48,36 +48,36 @@ namespace TarnishedTool.Services
                 WriteUpdateCoords(updateCoordsCode);
                 actionRequestService.ToggleNoJump(true);
 
-                hookManager.InstallHook(inAirTimerCode.ToInt64(), Hooks.InAirTimer, new byte[]
+                hookManager.InstallHook(inAirTimerCode, Hooks.InAirTimer, new byte[]
                     { 0xF3, 0x0F, 0x11, 0x43, 0x18 });
                 if (!isKeyboardHookDisabled)
                 {
-                    hookManager.InstallHook(kbCode.ToInt64(), Hooks.NoClipKb, new byte[]
+                    hookManager.InstallHook(kbCode, Hooks.NoClipKb, new byte[]
                         { 0xF6, 0x84, 0x08, 0xE8, 0x07, 0x00, 0x00, 0x80 });
                 }
 
-                hookManager.InstallHook(triggersCode.ToInt64(), Hooks.NoClipTriggers, new byte[]
+                hookManager.InstallHook(triggersCode, Hooks.NoClipTriggers, new byte[]
                     { 0x0F, 0xB6, 0x44, 0x24, 0x36 });
-                hookManager.InstallHook(updateCoordsCode.ToInt64(), Hooks.UpdateCoords, new byte[]
+                hookManager.InstallHook(updateCoordsCode, Hooks.UpdateCoords, new byte[]
                     { 0x0F, 0x11, 0x43, 0x70, 0xC7, 0x43, 0x7C, 0x00, 0x00, 0x80, 0x3F });
                 
             }
             else
             {
-                hookManager.UninstallHook(inAirTimerCode.ToInt64());
-                hookManager.UninstallHook(kbCode.ToInt64());
-                hookManager.UninstallHook(triggersCode.ToInt64());
-                hookManager.UninstallHook(updateCoordsCode.ToInt64());
+                hookManager.UninstallHook(inAirTimerCode);
+                hookManager.UninstallHook(kbCode);
+                hookManager.UninstallHook(triggersCode);
+                hookManager.UninstallHook(updateCoordsCode);
                 actionRequestService.ToggleNoJump(false);
 
                 playerService.ToggleNoGravity(false);
             }
         }
 
-        private void WriteInAirTimer(IntPtr inAirTimerCode)
+        private void WriteInAirTimer(nint inAirTimerCode)
         {
             var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_InAirTimer);
-            var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
+            var bytes = BitConverter.GetBytes(WorldChrMan.Base);
             Array.Copy(bytes, 0, codeBytes, 0x1 + 2, 8);
 
             AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0xB + 3) });
@@ -89,36 +89,36 @@ namespace TarnishedTool.Services
             memoryService.WriteBytes(inAirTimerCode, codeBytes);
         }
 
-        private void WriteKbCode(IntPtr kbCode)
+        private void WriteKbCode(nint kbCode)
         {
             var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_Keyboard);
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
 
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
-                (kbCode.ToInt64() + 0x10, zDirection.ToInt64(), 7, 0x10 + 2),
-                (kbCode.ToInt64() + 0x29, zDirection.ToInt64(), 7, 0x29 + 2),
-                (kbCode.ToInt64() + 0x34, Hooks.NoClipKb + 0x8, 5, 0x34 + 1),
-                (kbCode.ToInt64() + 0x41, Hooks.NoClipKb + 0x8, 5, 0x41 + 1),
+                (kbCode + 0x10, zDirection, 7, 0x10 + 2),
+                (kbCode + 0x29, zDirection, 7, 0x29 + 2),
+                (kbCode + 0x34, Hooks.NoClipKb + 0x8, 5, 0x34 + 1),
+                (kbCode + 0x41, Hooks.NoClipKb + 0x8, 5, 0x41 + 1),
             });
 
             memoryService.WriteBytes(kbCode, codeBytes);
         }
 
-        private void WriteTriggerCode(IntPtr triggersCode)
+        private void WriteTriggerCode(nint triggersCode)
         {
             var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_Triggers);
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
-                (triggersCode.ToInt64() + 0x7, zDirection.ToInt64(), 7, 0x7 + 2),
-                (triggersCode.ToInt64() + 0x1C, zDirection.ToInt64(), 7, 0x1C + 2),
-                (triggersCode.ToInt64() + 0x2D, Hooks.NoClipTriggers + 0x5, 5, 0x2D + 1),
+                (triggersCode + 0x7, zDirection, 7, 0x7 + 2),
+                (triggersCode + 0x1C, zDirection, 7, 0x1C + 2),
+                (triggersCode + 0x2D, Hooks.NoClipTriggers + 0x5, 5, 0x2D + 1),
             });
             memoryService.WriteBytes(triggersCode, codeBytes);
         }
 
-        private void WriteUpdateCoords(IntPtr updateCoordsCode)
+        private void WriteUpdateCoords(nint updateCoordsCode)
         {
             var codeBytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_UpdateCoords);
             var zDirection = CodeCaveOffsets.Base + (int)CodeCaveOffsets.NoClip.ZDirection;
@@ -128,19 +128,19 @@ namespace TarnishedTool.Services
 
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
-                (updateCoordsCode.ToInt64() + 0x8, WorldChrMan.Base.ToInt64(), 7, 0x8 + 3),
-                (updateCoordsCode.ToInt64() + 0x43, Functions.ChrInsByHandle, 5, 0x43 + 1),
-                (updateCoordsCode.ToInt64() + 0x7F, FD4PadManager.Base.ToInt64(), 7, 0x7F + 3),
-                (updateCoordsCode.ToInt64() + 0x98, Functions.GetMovement, 5, 0x98 + 1),
-                (updateCoordsCode.ToInt64() + 0xAA, Functions.GetMovement, 5, 0xAA + 1),
-                (updateCoordsCode.ToInt64() + 0xBC, Functions.GetMovement, 5, 0xBC + 1),
-                (updateCoordsCode.ToInt64() + 0xCE, Functions.GetMovement, 5, 0xCE + 1),
-                (updateCoordsCode.ToInt64() + 0xF7, FieldArea.Base.ToInt64(), 7, 0xF7 + 3),
-                (updateCoordsCode.ToInt64() + 0x113, Functions.MatrixVectorProduct, 5, 0x113 + 1),
-                (updateCoordsCode.ToInt64() + 0x132, speedScale.ToInt64(), 9, 0x132 + 5),
-                (updateCoordsCode.ToInt64() + 0x148, zDirection.ToInt64(), 6, 0x148 + 2),
-                (updateCoordsCode.ToInt64() + 0x172, zDirection.ToInt64(), 7, 0x172 + 2),
-                (updateCoordsCode.ToInt64() + 0x1AA, Hooks.UpdateCoords + 0xB, 5, 0x1AA + 1)
+                (updateCoordsCode + 0x8, WorldChrMan.Base, 7, 0x8 + 3),
+                (updateCoordsCode + 0x43, Functions.ChrInsByHandle, 5, 0x43 + 1),
+                (updateCoordsCode + 0x7F, FD4PadManager.Base, 7, 0x7F + 3),
+                (updateCoordsCode + 0x98, Functions.GetMovement, 5, 0x98 + 1),
+                (updateCoordsCode + 0xAA, Functions.GetMovement, 5, 0xAA + 1),
+                (updateCoordsCode + 0xBC, Functions.GetMovement, 5, 0xBC + 1),
+                (updateCoordsCode + 0xCE, Functions.GetMovement, 5, 0xCE + 1),
+                (updateCoordsCode + 0xF7, FieldArea.Base, 7, 0xF7 + 3),
+                (updateCoordsCode + 0x113, Functions.MatrixVectorProduct, 5, 0x113 + 1),
+                (updateCoordsCode + 0x132, speedScale, 9, 0x132 + 5),
+                (updateCoordsCode + 0x148, zDirection, 6, 0x148 + 2),
+                (updateCoordsCode + 0x172, zDirection, 7, 0x172 + 2),
+                (updateCoordsCode + 0x1AA, Hooks.UpdateCoords + 0xB, 5, 0x1AA + 1)
             });
             memoryService.WriteBytes(updateCoordsCode, codeBytes);
         }
@@ -151,12 +151,12 @@ namespace TarnishedTool.Services
             if (!isEnabled)
             {
                 WriteKbCode(kbCode);
-                hookManager.InstallHook(kbCode.ToInt64(), Hooks.NoClipKb, new byte[]
+                hookManager.InstallHook(kbCode, Hooks.NoClipKb, new byte[]
                     { 0xF6, 0x84, 0x08, 0xE8, 0x07, 0x00, 0x00, 0x80 });
             }
             else
             {
-                hookManager.UninstallHook(kbCode.ToInt64());
+                hookManager.UninstallHook(kbCode);
             }
         }
 
@@ -176,7 +176,7 @@ namespace TarnishedTool.Services
         public int GetFps() =>
             (int)Math.Round(1f / memoryService.Read<float>(Patches.FpsCap + 0x3));
 
-        private void WriteJumpIntercept(IntPtr jumpInterceptCode)
+        private void WriteJumpIntercept(nint jumpInterceptCode)
         {
             var bytes = AsmLoader.GetAsmBytes(AsmScript.NoClip_JumpHook);
             memoryService.WriteBytes(jumpInterceptCode, bytes);
@@ -318,7 +318,7 @@ namespace TarnishedTool.Services
         public void ToggleDrawTilesOnMap(bool isEnabled) =>
             memoryService.Write(MapDebugFlags.Base + MapDebugFlags.ShowMapTiles, isEnabled);
 
-        private IntPtr GetDbgCamCoordsPtr() =>
+        private nint GetDbgCamCoordsPtr() =>
             memoryService.FollowPointers(FieldArea.Base,
                 [FieldArea.GameRend, FieldArea.CSDebugCam, FieldArea.CamCoords], false);
     }

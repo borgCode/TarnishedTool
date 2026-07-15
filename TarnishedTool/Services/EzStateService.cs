@@ -29,9 +29,9 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
         var bytes = AsmLoader.GetAsmBytes(AsmScript.ExecuteTalkCommand);
         AsmHelper.WriteRelativeOffsets(bytes, new []
         {
-            (code.ToInt64() + 0x16, Functions.ExternalEventTempCtor, 5, 0x16 + 1),
-            (code.ToInt64() + 0x5A, paramsLoc.ToInt64(), 7, 0x5A + 3),
-            (code.ToInt64() + 0x9A, Functions.ExecuteTalkCommand, 5, 0x9A + 1),
+            (code + 0x16, Functions.ExternalEventTempCtor, 5, 0x16 + 1),
+            (code + 0x5A, paramsLoc, 7, 0x5A + 3),
+            (code + 0x9A, Functions.ExecuteTalkCommand, 5, 0x9A + 1),
         });
 
         AsmHelper.WriteImmediateDwords(bytes, new[]
@@ -40,7 +40,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
             (command.Params.Length, 0x4D + 1)
         });
         
-        AsmHelper.WriteAbsoluteAddress(bytes, chrHandle, 0x3F + 2);
+        AsmHelper.WriteAbsoluteAddress(bytes, (nint)chrHandle, 0x3F + 2);
         
         memoryService.WriteBytes(code, bytes);
         memoryService.RunThread(code);
@@ -79,8 +79,8 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
         var bytes = AsmLoader.GetAsmBytes(AsmScript.CreateNpcTalk);
         AsmHelper.WriteAbsoluteAddresses(bytes, new []
         {
-            (savedNpcTalk.ToInt64(), 0x4 + 2),
-            (chrHandle, 0x22 + 2),
+            (savedNpcTalk, 0x4 + 2),
+            ((nint) chrHandle, 0x22 + 2),
             (Functions.NpcEzStateTalkCtor, 0x2C + 2),
         });
         
@@ -136,7 +136,7 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
         };
     }
     
-    private void ExecuteEnvQuery(IntPtr result, int paramCount)
+    private void ExecuteEnvQuery(nint result, int paramCount)
     {
         var bytes = AsmLoader.GetAsmBytes(AsmScript.ExecuteEnvQuery);
         var envParams = CodeCaveOffsets.Base + CodeCaveOffsets.EnvParams;
@@ -149,9 +149,9 @@ public class EzStateService(IMemoryService memoryService) : IEzStateService
     
         AsmHelper.WriteAbsoluteAddresses(bytes, new[]
         {
-            (envParams.ToInt64(), 0x10 + 2),
-            (savedNpcTalk.ToInt64(), 0x2A + 2),
-            (result.ToInt64(), 0x37 + 2),
+            (envParams, 0x10 + 2),
+            (savedNpcTalk, 0x2A + 2),
+            (result, 0x37 + 2),
             (Functions.EzStateEnvQueryImplCtor, 0x45 + 2)
         });
     

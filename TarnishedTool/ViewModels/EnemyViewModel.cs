@@ -328,7 +328,7 @@ public class EnemyViewModel : BaseViewModel
     private void SetLionPhaseSpEffectsLockState(uint entityId, bool locked, uint[] spEffectRowIds)
     {
         var chrIns = _chrInsService.ChrInsByEntityId(entityId);
-        if (chrIns == IntPtr.Zero) return;
+        if (chrIns == 0) return;
 
         var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
         float duration = locked ? LockedSpEffectDuration : SpEffectDuration;
@@ -336,7 +336,7 @@ public class EnemyViewModel : BaseViewModel
         foreach (var rowId in spEffectRowIds)
         {
             var row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
-            if (row == IntPtr.Zero) continue;
+            if (row == 0) continue;
 
             _paramService.Write(row, SpEffectDurationOffset, duration);
 
@@ -352,7 +352,7 @@ public class EnemyViewModel : BaseViewModel
         if (locked) return;
 
         var chrIns = _chrInsService.ChrInsByEntityId(entityId);
-        if (chrIns == IntPtr.Zero) return;
+        if (chrIns == 0) return;
 
         var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
 
@@ -361,10 +361,10 @@ public class EnemyViewModel : BaseViewModel
             LionTripleTransitionDuration);
     }
 
-    private void SetTransitionSpEffectDuration(IntPtr chrIns, int tableIndex, int slotIndex, uint rowId, float duration)
+    private void SetTransitionSpEffectDuration(nint chrIns, int tableIndex, int slotIndex, uint rowId, float duration)
     {
         var row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
-        if (row == IntPtr.Zero) return;
+        if (row == 0) return;
 
         _paramService.Write(row, SpEffectDurationOffset, duration);
 
@@ -536,7 +536,7 @@ public class EnemyViewModel : BaseViewModel
     private void ApplyLionSpEffects(uint entityId)
     {
         var chrIns = _chrInsService.ChrInsByEntityId(entityId);
-        if (chrIns == IntPtr.Zero) return;
+        if (chrIns == 0) return;
         _spEffectService.ApplySpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
         _spEffectService.ApplySpEffect(chrIns,
             LionTriplePhaseTransition); //Some 15sec duration speffect, needed for no triple phase attack in lightning phase
@@ -546,7 +546,7 @@ public class EnemyViewModel : BaseViewModel
     private void RemoveLionSpEffects(uint entityId)
     {
         var chrIns = _chrInsService.ChrInsByEntityId(entityId);
-        if (chrIns == IntPtr.Zero) return;
+        if (chrIns == 0) return;
         _spEffectService.RemoveSpEffect(chrIns, PhaseTransitionCooldownSpEffectId);
         _spEffectService.RemoveSpEffect(chrIns, LionTriplePhaseTransition);
     }

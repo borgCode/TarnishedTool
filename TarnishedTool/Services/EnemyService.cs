@@ -50,7 +50,7 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             var maxDist = CodeCaveOffsets.Base + (int)CodeCaveOffsets.TargetView.MaxDist;
             memoryService.Write(maxDist, 100.0f * 100.0f);
             var codeBytes = AsmLoader.GetAsmBytes(AsmScript.ReduceTargetView);
-            var bytes = BitConverter.GetBytes(WorldChrMan.Base.ToInt64());
+            var bytes = BitConverter.GetBytes(WorldChrMan.Base);
             var hook = Hooks.BlueTargetView;
             
             AsmHelper.WriteImmediateDwords(codeBytes, new[] { (WorldChrMan.PlayerIns, 0x43 + 3) });
@@ -58,17 +58,17 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             Array.Copy(bytes, 0, codeBytes, 0x36 + 2, 8);
             AsmHelper.WriteRelativeOffsets(codeBytes, new[]
             {
-                (code.ToInt64() + 0x86, maxDist.ToInt64(), 8, 0x86 + 4),
-                (code.ToInt64() + 0xC4, hook + 0x5, 5, 0xC4 + 1),
-                (code.ToInt64() + 0xCA, hook + 0x141, 5, 0xCA + 1),
+                (code + 0x86, maxDist, 8, 0x86 + 4),
+                (code + 0xC4, hook + 0x5, 5, 0xC4 + 1),
+                (code + 0xCA, hook + 0x141, 5, 0xCA + 1),
             });
             memoryService.WriteBytes(code, codeBytes);
-            hookManager.InstallHook(code.ToInt64(), hook, new byte[]
+            hookManager.InstallHook(code, hook, new byte[]
                 { 0x48, 0x8D, 0x54, 0x24, 0x40 });
         }
         else
         {
-            hookManager.UninstallHook(code.ToInt64());
+            hookManager.UninstallHook(code);
         }
     }
 
@@ -88,11 +88,11 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             var bytes = AsmHelper.GetJmpOriginOffsetBytes(hook, 7, code + 0x17);
             Array.Copy(bytes, 0, codeBytes, 0x12 + 1, 4);
             memoryService.WriteBytes(code, codeBytes);
-            hookManager.InstallHook(code.ToInt64(), hook, [0x48, 0x8B, 0x49, 0x08, 0x48, 0x85, 0xC9]);
+            hookManager.InstallHook(code, hook, [0x48, 0x8B, 0x49, 0x08, 0x48, 0x85, 0xC9]);
         }
         else
         {
-            hookManager.UninstallHook(code.ToInt64());
+            hookManager.UninstallHook(code);
         }
     }
 
@@ -125,13 +125,13 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
         
         AsmHelper.WriteRelativeOffsets(bytes, new[]
         {
-            (code.ToInt64(), shouldRunFlag.ToInt64(), 7, 0x0 + 2),
-            (code.ToInt64() + 0x15, currentIdx.ToInt64(), 6, 0x15 + 2),
-            (code.ToInt64() + 0x1B, actsArr.ToInt64(), 7, 0x1B + 3),
-            (code.ToInt64() + 0x28, currentIdx.ToInt64(), 6, 0x28 + 2),
-            (code.ToInt64() + 0x33, shouldRunFlag.ToInt64(), 7, 0x33 + 2),
-            (code.ToInt64() + 0x3D, hookLoc + 7, 5, 0x3D + 1),
-            (code.ToInt64() + 0x49, hookLoc + 7, 5, 0x49 + 1)
+            (code, shouldRunFlag, 7, 0x0 + 2),
+            (code + 0x15, currentIdx, 6, 0x15 + 2),
+            (code + 0x1B, actsArr, 7, 0x1B + 3),
+            (code + 0x28, currentIdx, 6, 0x28 + 2),
+            (code + 0x33, shouldRunFlag, 7, 0x33 + 2),
+            (code + 0x3D, hookLoc + 7, 5, 0x3D + 1),
+            (code + 0x49, hookLoc + 7, 5, 0x49 + 1)
         });
 
         memoryService.WriteBytes(code, bytes);
@@ -139,13 +139,13 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
 
         memoryService.Write(shouldRunFlag, (byte)1);
 
-        hookManager.InstallHook(code.ToInt64(), hookLoc, originalBytes);
+        hookManager.InstallHook(code, hookLoc, originalBytes);
     }
 
     public void UnhookForceAct()
     {
         var codeLoc = CodeCaveOffsets.Base + CodeCaveOffsets.ForceActSequence;
-        hookManager.UninstallHook(codeLoc.ToInt64());
+        hookManager.UninstallHook(codeLoc);
     }
 
     public void ToggleLionCooldownHook(bool isEnabled, int lionEntityId)
@@ -160,11 +160,11 @@ public class EnemyService(IMemoryService memoryService, HookManager hookManager,
             Array.Copy(bytes, 0, codeBytes, 0x31 + 1, 4);
             memoryService.WriteBytes(code, codeBytes);
             memoryService.Write(code + 0x4, lionEntityId);
-            hookManager.InstallHook(code.ToInt64(), hook, [0xF3, 0x0F, 0x59, 0x71, 0x08]);
+            hookManager.InstallHook(code, hook, [0xF3, 0x0F, 0x59, 0x71, 0x08]);
         }
         else
         {
-            hookManager.UninstallHook(code.ToInt64());
+            hookManager.UninstallHook(code);
         }
     }
 
