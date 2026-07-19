@@ -1,7 +1,9 @@
 ﻿// 
 
 using System;
+using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
+using TarnishedTool.Memory;
 using TarnishedTool.Utilities;
 using static TarnishedTool.Memory.Offsets;
 
@@ -57,14 +59,9 @@ public class SettingsService(IMemoryService memoryService) : ISettingsService
 
     public void ToggleMenuDelay(bool isEnabled)
     {
-        if (isEnabled)
-        {
-            memoryService.Write(Patches.MenuDelay, 0f);
-        }
-        else
-        {
-            memoryService.Write(Patches.MenuDelay, 0.32f);
-        }
+        if (Offsets.Version < GameVersion.Version2_2_0) return;
+        
+        memoryService.Write(Patches.MenuDelay, isEnabled ? 0f : 0.32f);
     }
 
     public void ToggleQuitMessage(bool isEnabled) =>
