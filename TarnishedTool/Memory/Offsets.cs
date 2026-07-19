@@ -3102,7 +3102,8 @@ namespace TarnishedTool.Memory
             
             Patches.MenuDelay = moduleBase + Version switch
             {
-                Version2_6_2 => 0x4588BDC,
+                Version2_2_0 or Version2_4_0 or Version2_5_0 or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x4588BDC,
+                Version2_2_3 or Version2_3_0 => 0x4588BFC,
                 _ => 0
             };
             
