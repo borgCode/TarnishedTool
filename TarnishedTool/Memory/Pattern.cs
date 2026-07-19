@@ -969,6 +969,13 @@ namespace TarnishedTool.Memory
             5,
             anchorOffset: 2
         );
+        
+        public static readonly Pattern NoQuitMessage = new Pattern(
+            [0x74, 0x65, 0x48, 0x8D, 0x4C, 0x24, 0x38],
+            "xxxxxxx",
+            0,
+            AddressingMode.Absolute
+        );
     }
 
     public enum AddressingMode
