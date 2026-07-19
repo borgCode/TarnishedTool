@@ -3108,9 +3108,31 @@ namespace TarnishedTool.Memory
             
             Patches.NoQuitMessage = moduleBase + Version switch
             {
+                Version1_2_0 => 0x810436,
+                Version1_2_1 => 0x8104B6,
+                Version1_2_2 => 0x810526,
+                Version1_2_3 => 0x8105F6,
+                Version1_3_0 or Version1_3_1 => 0x813116,
+                Version1_3_2 => 0x8130F6,
+                Version1_4_0 => 0x7F7F76,
+                Version1_4_1 => 0x7F7E86,
+                Version1_5_0 => 0x7FB846,
+                Version1_6_0 => 0x7FCD26,
+                Version1_7_0 => 0x7FE706,
+                Version1_8_0 or Version1_8_1 => 0x810F66,
+                Version1_9_0 => 0x811626,
+                Version1_9_1 => 0x811686,
+                Version2_0_0 or Version2_0_1 => 0x811A16,
+                Version2_2_0 => 0x824966,
+                Version2_2_3 => 0x824556,
+                Version2_3_0 => 0x824B56,
+                Version2_4_0 or Version2_5_0 => 0x824BB6,
+                Version2_6_0 => 0x824D36,
+                Version2_6_1 => 0x824DB6,
                 Version2_6_2 => 0x824D16,
                 _ => 0
             };
+
 
             Patches.DisableCutscene = moduleBase + Version switch
             {
