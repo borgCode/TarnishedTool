@@ -251,29 +251,47 @@ namespace TarnishedTool.Services
             }
 
             var processes = Process.GetProcessesByName(ProcessName);
-            if (processes.Length > 0 && !processes[0].HasExited)
+            if (processes.Length == 0 || processes[0].HasExited) return;
+
+            var candidate = processes[0];
+
+            try
             {
-                TargetProcess = processes[0];
                 ProcessHandle = Kernel32.OpenProcess(
                     ProcessVmRead | ProcessVmWrite | ProcessVmOperation | ProcessQueryInformation,
                     false,
-                    TargetProcess.Id);
+                    candidate.Id);
 
                 if (ProcessHandle == IntPtr.Zero)
                 {
-                    TargetProcess = null;
                     IsAttached = false;
+                    return;
                 }
-                else
-                {
-                    if (TargetProcess.MainModule != null)
-                    {
-                        BaseAddress = TargetProcess.MainModule.BaseAddress;
-                        ModuleMemorySize = TargetProcess.MainModule.ModuleMemorySize;
-                    }
 
-                    IsAttached = true;
+                var mainModule = candidate.MainModule;
+                if (mainModule == null)
+                {
+                    Kernel32.CloseHandle(ProcessHandle);
+                    ProcessHandle = IntPtr.Zero;
+                    IsAttached = false;
+                    return;
                 }
+
+                TargetProcess = candidate;
+                BaseAddress = mainModule.BaseAddress;
+                ModuleMemorySize = mainModule.ModuleMemorySize;
+                IsAttached = true;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                if (ProcessHandle != IntPtr.Zero)
+                {
+                    Kernel32.CloseHandle(ProcessHandle);
+                    ProcessHandle = IntPtr.Zero;
+                }
+
+                TargetProcess = null;
+                IsAttached = false;
             }
         }
 
