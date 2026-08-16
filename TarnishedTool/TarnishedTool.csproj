@@ -256,6 +256,7 @@
         <Compile Include="GameIds\Emevd.cs" />
         <Compile Include="GameIds\Event.cs" />
         <Compile Include="GameIds\EzState.cs" />
+        <Compile Include="GameIds\GestureNameLookup.cs" />
         <Compile Include="GameIds\ParamIndicies.cs" />
         <Compile Include="GameIds\SpEffect.cs" />
         <Compile Include="Interfaces\IAiService.cs" />
@@ -308,6 +309,7 @@
         <Compile Include="Models\Grace.cs" />
         <Compile Include="Models\GracePresetEntry.cs" />
         <Compile Include="Models\GracePresetTemplate.cs" />
+        <Compile Include="Models\GraceSelectionItem.cs" />
         <Compile Include="Models\Item.cs" />
         <Compile Include="Models\ItemTemplate.cs" />
         <Compile Include="Models\LoadedParam.cs" />
@@ -378,6 +380,7 @@
         <Compile Include="ViewModels\EnemyViewModel.cs" />
         <Compile Include="ViewModels\EventLogViewModel.cs" />
         <Compile Include="ViewModels\FieldValueViewModel.cs" />
+        <Compile Include="ViewModels\GestureSelectionViewModel.cs" />
         <Compile Include="ViewModels\GoalParamViewModel.cs" />
         <Compile Include="ViewModels\GoalViewModel.cs" />
         <Compile Include="ViewModels\AiWindowViewModel.cs" />
@@ -483,6 +486,9 @@
         <Compile Include="Views\Windows\AiWindow.xaml.cs">
           <DependentUpon>AiWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\GestureSelectionWindow.xaml.cs">
+          <DependentUpon>GestureSelectionWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\GraceImportPresentSelectionWindow.xaml.cs">
           <DependentUpon>GraceImportPresentSelectionWindow.xaml</DependentUpon>
         </Compile>
@@ -546,6 +552,7 @@
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
         <Page Include="Views\Windows\AiWindow.xaml" />
+        <Page Include="Views\Windows\GestureSelectionWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />
         <Page Include="Views\Windows\GracePresetWindow.xaml" />
         <Page Include="Views\Windows\InputBox.xaml" />

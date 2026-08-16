@@ -31,6 +31,9 @@ namespace TarnishedTool.ViewModels
 
         private readonly List<int> _baseGameGestureIds;
         private readonly List<int> _dlcGestureIds;
+        private readonly List<int> _baseGameSummoningPools;
+        private readonly List<int> _dlcSummoningPools;
+        private readonly List<int> _colosseums;
 
         private readonly EventLogViewModel _eventLogViewModel = new();
         private EventLogWindow _eventLogWindow;
@@ -63,6 +66,8 @@ namespace TarnishedTool.ViewModels
             UnlockMetyrCommand = new DelegateCommand(UnlockMetyr);
             FightFortissaxCommand = new DelegateCommand(FightFortissax);
             UnlockGesturesCommand = new DelegateCommand(UnlockGestures);
+            UnlockSummoningPoolsCommand = new DelegateCommand(UnlockSummoningPools);
+            UnlockAllColosseumsCommand = new DelegateCommand(UnlockAllColosseums);
             FightEldenBeastCommand = new DelegateCommand(FightEldenBeast);
             ClearDlcCommand = new DelegateCommand(ToggleClearDlc);
             DeactivateMausoleumCommand = new DelegateCommand(ToggleSnowfieldMausoleum);
@@ -78,6 +83,13 @@ namespace TarnishedTool.ViewModels
             _baseGameGestureIds =
                 DataLoader.GetSimpleList("BaseGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
             _dlcGestureIds = DataLoader.GetSimpleList("DlcGestures", s => int.Parse(s, CultureInfo.InvariantCulture));
+
+            _baseGameSummoningPools =
+                DataLoader.GetSimpleList("BaseSummoningPools", s => int.Parse(s, CultureInfo.InvariantCulture));
+            _dlcSummoningPools =
+                DataLoader.GetSimpleList("DlcSummoningPools", s => int.Parse(s, CultureInfo.InvariantCulture));
+            _colosseums =
+                DataLoader.GetSimpleList("Colosseums", s => int.Parse(s, CultureInfo.InvariantCulture));
 
             SelectedWeatherType = WeatherTypes.FirstOrDefault();
 
@@ -95,6 +107,8 @@ namespace TarnishedTool.ViewModels
         public ICommand UnlockMetyrCommand { get; set; }
         public ICommand FightFortissaxCommand { get; set; }
         public ICommand UnlockGesturesCommand { get; set; }
+        public ICommand UnlockSummoningPoolsCommand { get; set; }
+        public ICommand UnlockAllColosseumsCommand { get; set; }
         public ICommand FightEldenBeastCommand { get; set; }
         public ICommand ClearDlcCommand { get; set; }
         public ICommand DeactivateMausoleumCommand { get; set; }
@@ -354,7 +368,7 @@ namespace TarnishedTool.ViewModels
                 () => IsDisableEventsEnabled = !IsDisableEventsEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.OpenEventLogger, () => OpenEventLogWindow());
             _hotkeyManager.RegisterAction(HotkeyActions.UnlockAffinites, () => SafeExecute(UnlockWhetblades));
-            _hotkeyManager.RegisterAction(HotkeyActions.UnlockGestures, () => SafeExecute(UnlockGestures));
+            _hotkeyManager.RegisterAction(HotkeyActions.UnlockGestures, () => SafeExecute(UnlockAllGesturesInternal));
             _hotkeyManager.RegisterAction(HotkeyActions.FightEldenBeast, () => SafeExecute(FightEldenBeast));
             _hotkeyManager.RegisterAction(HotkeyActions.FightFortissax, () => SafeExecute(FightFortissax));
             _hotkeyManager.RegisterAction(HotkeyActions.UnlockMetyr, () => SafeExecute(UnlockMetyr));
@@ -420,7 +434,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockMetyr()
         {
-                _eventService.SetEvents(Event.UnlockMetyr, true);
+            _eventService.SetEvents(Event.UnlockMetyr, true);
         }
 
         private void FightFortissax() => _eventService.SetEvent(Event.FightFortissax, true);
@@ -428,35 +442,54 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockGestures()
         {
-            UnlockBaseGestures();
+            var vm = new GestureSelectionViewModel(
+                _ezStateService, _baseGameGestureIds, _dlcGestureIds,
+                IsDlcAvailable, PreOrderBaseGesture, PreOrderDlcGesture);
+
+            var window = new GestureSelectionWindow { DataContext = vm };
+            window.Show();
+        }
+
+        private void UnlockAllGesturesInternal() 
+        {
+            var vm = new GestureSelectionViewModel(
+                _ezStateService, _baseGameGestureIds, _dlcGestureIds,
+                IsDlcAvailable, PreOrderBaseGesture, PreOrderDlcGesture);
+
+            vm.UnlockAllCommand.Execute(null);
+        }
+
+        private void UnlockSummoningPools()
+        {
+            UnlockBaseSummoningPools();
 
             if (!IsDlcAvailable) return;
 
-            UnlockDlcGestures();
+            UnlockDlcSummoningPools();
         }
 
-        private void UnlockBaseGestures()
+        private void UnlockBaseSummoningPools()
         {
-            foreach (var baseGameGestureId in _baseGameGestureIds)
+            foreach (var baseSummoningPoolId in _baseGameSummoningPools)
             {
-                _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(baseGameGestureId));
+                _eventService.SetEvent(baseSummoningPoolId, true);
             }
-
-            // Pre-Order Check
-            int basePreOrderGestureId = !PreOrderBaseGesture ? 109 : 108;
-            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(basePreOrderGestureId));
         }
 
-        private void UnlockDlcGestures()
+        private void UnlockDlcSummoningPools()
         {
-            foreach (var dlcGestureId in _dlcGestureIds)
+            foreach (var dlcSummoningPoolId in _dlcSummoningPools)
             {
-                _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcGestureId));
+                _eventService.SetEvent(dlcSummoningPoolId, true);
             }
+        }
 
-            // Pre-Order Check
-            int dlcPreOrderGestureId = !PreOrderDlcGesture ? 113 : 116;
-            _ezStateService.ExecuteTalkCommand(EzState.TalkCommands.AcquireGesture(dlcPreOrderGestureId));
+        private void UnlockAllColosseums()
+        {
+            foreach (var colosseum in _colosseums)
+            {
+                _eventService.SetEvent(colosseum, true);
+            }
         }
 
         private void ToggleClearDlc()

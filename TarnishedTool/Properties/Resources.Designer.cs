@@ -492,6 +492,79 @@ namespace TarnishedTool.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 670135
+        ///670132
+        ///670133
+        ///670131
+        ///670134
+        ///670130
+        ///670330
+        ///670332
+        ///670331
+        ///670333
+        ///670334
+        ///670731
+        ///670730
+        ///670614
+        ///670611
+        ///670612
+        ///670610
+        ///670616
+        ///670615
+        ///670613
+        ///670625
+        ///670624
+        ///670622
+        ///670620
+        ///670621
+        ///670623
+        ///670626
+        ///670633
+        ///670632
+        ///670630
+        ///670631
+        ///670634
+        ///670652
+        ///670651
+        ///670650
+        ///670671
+        ///670670
+        ///670740
+        ///670741
+        ///670742
+        ///670743
+        ///670744
+        ///670745
+        ///670746
+        ///670747
+        ///670231
+        ///670232
+        ///670233
+        ///670530
+        ///670531
+        ///670532
+        ///670534
+        ///670535
+        ///670536
+        ///670537
+        ///670539
+        ///670352
+        ///670351
+        ///670353
+        ///670354
+        ///670750
+        ///670160
+        ///670161
+        ///670162
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string BaseSummoningPools {
+            get {
+                return ResourceManager.GetString("BaseSummoningPools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 0,400022E9,Abandoned Merchant&apos;s Bell Bearing,1,1
         ///0,400022D4,Bernahl&apos;s Bell Bearing,1,1
         ///0,400022EE,Blackguard&apos;s Bell Bearing,1,1
@@ -587,6 +660,17 @@ namespace TarnishedTool.Properties {
         internal static string ChrNames {
             get {
                 return ResourceManager.GetString("ChrNames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 60360
+        ///60350
+        ///60370.
+        /// </summary>
+        internal static string Colosseums {
+            get {
+                return ResourceManager.GetString("Colosseums", resourceCulture);
             }
         }
         
@@ -758,6 +842,77 @@ namespace TarnishedTool.Properties {
         internal static string DLCMaps {
             get {
                 return ResourceManager.GetString("DLCMaps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 670842
+        ///670843
+        ///670841
+        ///670851
+        ///670854
+        ///670853
+        ///670850
+        ///670852
+        ///670940
+        ///670941
+        ///670942
+        ///670943
+        ///670909
+        ///670953
+        ///670956
+        ///670955
+        ///670950
+        ///670951
+        ///670952
+        ///670945
+        ///670831
+        ///670830
+        ///670814
+        ///670815
+        ///670860
+        ///670960
+        ///670961
+        ///670813
+        ///670870
+        ///670970
+        ///670871
+        ///670980
+        ///670880
+        ///670908
+        ///670908
+        ///670901
+        ///670907
+        ///670907
+        ///670806
+        ///670805
+        ///670800
+        ///670801
+        ///670801
+        ///670902
+        ///670902
+        ///670906
+        ///670906
+        ///670802
+        ///670802
+        ///670912
+        ///670912
+        ///670808
+        ///670809
+        ///670804
+        ///670807
+        ///670913
+        ///670900
+        ///670911
+        ///670904
+        ///670910
+        ///670903
+        ///670930
+        ///670812.
+        /// </summary>
+        internal static string DlcSummoningPools {
+            get {
+                return ResourceManager.GetString("DlcSummoningPools", resourceCulture);
             }
         }
         

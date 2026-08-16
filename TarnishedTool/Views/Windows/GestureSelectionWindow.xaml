@@ -1,0 +1,95 @@
+<local:TopmostWindow x:Class="TarnishedTool.Views.Windows.GestureSelectionWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:local="clr-namespace:TarnishedTool.Views.Windows"
+                      xmlns:controls="clr-namespace:TarnishedTool.Controls"
+                      mc:Ignorable="d"
+                      Title="Unlock Gestures" Height="500" Width="380"
+                      Background="{StaticResource BackgroundBrush}"
+                      Foreground="{StaticResource TextBrush}"
+                      BorderBrush="{StaticResource BorderBrush}"
+                      WindowStyle="None"
+                      AllowsTransparency="True"
+                      ResizeMode="NoResize"
+                      WindowStartupLocation="CenterOwner">
+
+    <local:TopmostWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </local:TopmostWindow.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <controls:TitleBar Title="Unlock Gestures" />
+
+        <Grid Grid.Row="1" Margin="15">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Top bar: select all / none -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                <Button Content="Select All" Command="{Binding SelectAllCommand}" Width="90" Margin="0,0,6,0" />
+                <Button Content="Select None" Command="{Binding SelectNoneCommand}" Width="90" />
+            </StackPanel>
+
+            <!-- Gesture list -->
+            <Border Grid.Row="1"
+                    BorderThickness="1"
+                    BorderBrush="#333"
+                    CornerRadius="3">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Margin="10">
+
+                        <TextBlock Text="Base Game"
+                                   FontSize="13"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0,0,0,6" />
+                        <ItemsControl ItemsSource="{Binding BaseGestures}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}"
+                                              IsChecked="{Binding IsSelected}"
+                                              Margin="0,0,0,4" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <StackPanel Visibility="{Binding IsDlcAvailable, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="DLC"
+                                       FontSize="13"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource AccentBrush}"
+                                       Margin="0,14,0,6" />
+                            <ItemsControl ItemsSource="{Binding DlcGestures}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Name}"
+                                                  IsChecked="{Binding IsSelected}"
+                                                  Margin="0,0,0,4" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Bottom bar: actions -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                <Button Content="Unlock All" Command="{Binding UnlockAllCommand}" Width="110" Margin="0,0,6,0" />
+                <Button Content="Unlock Selected" Command="{Binding UnlockSelectedCommand}" Width="130" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</local:TopmostWindow>
