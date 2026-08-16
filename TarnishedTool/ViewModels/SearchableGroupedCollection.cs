@@ -91,6 +91,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             OnPropertyChanged(nameof(IsOverlayActive));
         }
     }
+
     public bool IsOverlayActive => _isSearchActive || _additionalFilter != null;
 
     public bool IsFilterActive => _additionalFilter != null;
@@ -144,18 +145,20 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
 
     public void UpdateItemsList()
     {
+        if (_additionalFilter != null)
+        {
+            Items = new ObservableCollection<TItem>(_allItems.Where(_additionalFilter));
+            SelectedItem = Items.FirstOrDefault();
+            return;
+        }
+
         if (SelectedGroup == null || !_groupedItems.ContainsKey(SelectedGroup))
         {
             Items = new ObservableCollection<TItem>();
             return;
         }
 
-        var items = _groupedItems[SelectedGroup].AsEnumerable();
-
-        if (_additionalFilter != null)
-            items = items.Where(_additionalFilter);
-
-        Items = new ObservableCollection<TItem>(items);
+        Items = new ObservableCollection<TItem>(_groupedItems[SelectedGroup]);
         SelectedItem = Items.FirstOrDefault();
     }
 
@@ -189,6 +192,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         {
             UpdateItemsList();
         }
+
         OnPropertyChanged(nameof(IsOverlayActive));
     }
 
@@ -203,6 +207,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         {
             UpdateItemsList();
         }
+
         OnPropertyChanged(nameof(IsOverlayActive));
     }
 
@@ -265,16 +270,16 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
             SelectedGroup = _groups.FirstOrDefault();
         }
     }
-    
+
     public void Remove(TGroup group, TItem item)
     {
         if (!_groupedItems.ContainsKey(group)) return;
 
         _groupedItems[group].Remove(item);
         _allItems.Remove(item);
-        
+
         Items.Remove(item);
-    
+
         if (_groupedItems[group].Count == 0)
         {
             _groupedItems.Remove(group);
@@ -285,7 +290,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
                 SelectedGroup = _groups.FirstOrDefault();
             }
         }
-    
+
         if (EqualityComparer<TItem>.Default.Equals(SelectedItem, item))
         {
             SelectedItem = Items.FirstOrDefault();
