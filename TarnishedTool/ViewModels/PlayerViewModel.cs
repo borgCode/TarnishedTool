@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -90,7 +91,7 @@ namespace TarnishedTool.ViewModels
             SetMaxHpCommand = new DelegateCommand(SetMaxHp);
             SetCustomHpCommand = new DelegateCommand(SetCustomHp);
             DieCommand = new DelegateCommand(Die);
-            
+
             EmptyFpCommand = new DelegateCommand(EmptyFp);
             SetMaxFpCommand = new DelegateCommand(SetMaxFp);
             SetCustomFpCommand = new DelegateCommand(SetCustomFp);
@@ -221,7 +222,7 @@ namespace TarnishedTool.ViewModels
                 }
             }
         }
-        
+
         private int _currentFp;
 
         public int CurrentFp
@@ -229,7 +230,7 @@ namespace TarnishedTool.ViewModels
             get => _currentFp;
             set => SetProperty(ref _currentFp, value);
         }
-        
+
         private int _currentMaxFp;
 
         public int CurrentMaxFp
@@ -237,9 +238,9 @@ namespace TarnishedTool.ViewModels
             get => _currentMaxFp;
             set => SetProperty(ref _currentMaxFp, value);
         }
-        
+
         private string _customFp = SettingsManager.Default.SaveCustomFp;
-        
+
         public string CustomFp
         {
             get => _customFp;
@@ -248,6 +249,20 @@ namespace TarnishedTool.ViewModels
                 if (SetProperty(ref _customFp, value))
                 {
                     _customFpHasBeenSet = true;
+                }
+            }
+        }
+
+        private bool _isGgrFixEnabled;
+
+        public bool IsGgrFixEnabled
+        {
+            get => _isGgrFixEnabled;
+            set
+            {
+                if (SetProperty(ref _isGgrFixEnabled, value))
+                {
+                    if (!value) RestoreGgr();
                 }
             }
         }
@@ -308,9 +323,10 @@ namespace TarnishedTool.ViewModels
             get => _isSetRfbsOnLoadEnabled;
             set => SetProperty(ref _isSetRfbsOnLoadEnabled, value);
         }
-        
-        
+
+
         private SpeedBuffMode _speedBuffMode;
+
         public SpeedBuffMode SpeedBuffMode
         {
             get => _speedBuffMode;
@@ -1018,6 +1034,8 @@ namespace TarnishedTool.ViewModels
         {
             if (_pauseUpdates) return;
 
+            if (IsGgrFixEnabled) FixGgr();
+
             if (IsHotEnabled) TryApplyHot();
 
             if (IsFpRegenEnabled) TryApplyFpRegen();
@@ -1047,6 +1065,38 @@ namespace TarnishedTool.ViewModels
             if (currentHp >= maxHp) return;
             int hpToSet = Math.Min(currentHp + (int)(maxHp * 0.033), maxHp);
             _playerService.SetHp(hpToSet);
+        }
+
+        private void FixGgr()
+        {
+            var playerIns = _playerService.GetPlayerIns();
+            if (playerIns == 0) return;
+            var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, 601); // Godrick's Great Rune Effect 1
+            if (row == 0) return;
+            if (_spEffectService.HasSpEffect(playerIns, 600))
+            {
+                // Change healing from -295 to 0 and Fp regen from -65 to 0
+                _paramService.Write(row, 0xa0, 0); 
+                _paramService.Write(row, 0xa8, 0);
+            }
+            else
+            {
+                // Restore if rune is inactive
+                _paramService.Write(row, 0xa0, -295);
+                _paramService.Write(row, 0xa8, -65);
+            }
+        }
+
+        private void RestoreGgr()
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, 601); // Godrick's Great Rune Effect 1
+            if (row == 0) return;
+            // Restore vanilla interaction if option is inactive
+            _paramService.Write(row, 0xa0, -295);
+            _paramService.Write(row, 0xa8, -65);
+            
         }
 
         private void TryApplyFpRegen()
@@ -1098,7 +1148,7 @@ namespace TarnishedTool.ViewModels
             SettingsManager.Default.SaveCustomHp = CustomHp;
             SettingsManager.Default.Save();
         }
-        
+
         private void SetCustomFp()
         {
             if (!_customFpHasBeenSet) return;
