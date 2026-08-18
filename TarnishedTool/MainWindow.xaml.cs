@@ -109,7 +109,7 @@ namespace TarnishedTool
             UtilityViewModel utilityViewModel = new UtilityViewModel(
                 utilityService, _stateService, ezStateService,
                 playerService, hotkeyManager, playerViewModel,
-                _dlcService, spEffectService, flaskService, paramService
+                _dlcService, spEffectService, flaskService, paramService, emevdService
             );
 
             ItemViewModel itemViewModel = new ItemViewModel(

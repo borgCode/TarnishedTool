@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TarnishedTool.Core;
@@ -36,8 +37,10 @@ namespace TarnishedTool.ViewModels
         private readonly ISpEffectService _spEffectService;
         private readonly IFlaskService _flaskService;
         private readonly IParamService _paramService;
+        private readonly IEmevdService _emevdService;
 
         public const int MaterialId01Offset = 0x0;
+
         /* saving those just in case I decide to add no crafting cost
         public const int MaterialId02Offset = 0x4;
         public const int MaterialId03Offset = 0x8;
@@ -45,6 +48,7 @@ namespace TarnishedTool.ViewModels
         public const int MaterialId05Offset = 0x10;
         public const int MaterialId06Offset = 0x14;
         */
+
         public const int ItemNum01Offset = 0x20;
         private List<byte[]>? _originalMaterialIds;
         private List<byte[]>? _originalItemNums;
@@ -67,6 +71,26 @@ namespace TarnishedTool.ViewModels
         private List<byte[]>? _originalProtectorDiscard;
         private List<byte[]>? _originalWeaponDiscard;
 
+        // Break Objects Stuff
+
+        public const int AtkParamPcAtkObjOffset = 0x62;
+        public const int AtkParamPcAtkObjVal = 0;
+        public const int AtkParamPcAtkBehaviourOffset = 0x82;
+        public const int AtkParamPcAtkBehaviourVal = 7;
+
+        public const int AtkParamPcAppearAiSoundOffset = 0x90;
+        public const int AtkParamPcAppearAiSoundVal = 2030;
+
+        public const int AtkParamPcHitAiSoundOffset = 0x94;
+        public const int AtkParamPcHitAiSoundVal = 2130;
+
+        public const int ShackleRowId = 10214000;
+
+        public const int ModifiedBehaviourRowId = 600000800;
+        public const int OriginalRowId = 200002340;
+        public const int ReferenceIdOffset = 0xc;
+
+
         private static readonly uint[] DisableGraceWarpIds = [4270, 4271, 4272, 4282, 4286, 4288];
         private readonly List<EquipMtrlUpgrades> _equipMtrlUpgrades = DataLoader.GetEquipMtrlUpgrades();
         private readonly Dictionary<uint, (int Material, int ItemNum)> _originalEquipMtrlUpgradeMaterials = new();
@@ -76,7 +100,8 @@ namespace TarnishedTool.ViewModels
         public UtilityViewModel(IUtilityService utilityService, IStateService stateService,
             IEzStateService ezStateService, IPlayerService playerService, HotkeyManager hotkeyManager,
             PlayerViewModel playerViewModel, IDlcService dlcService,
-            ISpEffectService spEffectService, IFlaskService flaskService, IParamService paramService)
+            ISpEffectService spEffectService, IFlaskService flaskService, IParamService paramService,
+            IEmevdService emevdService)
         {
             _utilityService = utilityService;
             _ezStateService = ezStateService;
@@ -87,6 +112,7 @@ namespace TarnishedTool.ViewModels
             _spEffectService = spEffectService;
             _flaskService = flaskService;
             _paramService = paramService;
+            _emevdService = emevdService;
 
             stateService.Subscribe(State.AppStart, OnAppStart);
             stateService.Subscribe(State.Loaded, OnGameLoaded);
@@ -116,6 +142,7 @@ namespace TarnishedTool.ViewModels
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
             OpenSpiritTuningCommand = new DelegateCommand(OpenSpiritTuning);
             QuitoutCommand = new DelegateCommand(() => _utilityService.Quitout());
+            BreakNearbyObjectsCommand = new DelegateCommand(BreakNearbyObjects);
 
             _allShops = DataLoader.GetShops();
             FilteredShops = new ObservableCollection<ShopCommand>();
@@ -149,6 +176,7 @@ namespace TarnishedTool.ViewModels
         public ICommand OpenMirrorCommand { get; }
         public ICommand QuitoutCommand { get; set; }
         public ICommand OpenSpiritTuningCommand { get; }
+        public ICommand BreakNearbyObjectsCommand { get; }
 
         #endregion
 
@@ -1162,6 +1190,69 @@ namespace TarnishedTool.ViewModels
             return result;
         }
 
+        private void PatchShackleAtkParam()
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["AtkParam_Pc"];
+
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, ShackleRowId);
+            if (row == 0) return;
+
+            _paramService.Write(row, AtkParamPcAtkObjOffset, 999);
+            _paramService.Write(row, AtkParamPcAppearAiSoundOffset, 0);
+            _paramService.Write(row, AtkParamPcHitAiSoundOffset, 0);
+            _paramService.Write(row, AtkParamPcAtkBehaviourOffset, 0);
+        }
+
+        private void RevertShackleAtkParam()
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["AtkParam_Pc"];
+
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, ShackleRowId);
+            if (row == 0) return;
+
+            _paramService.Write(row, AtkParamPcAtkObjOffset, AtkParamPcAtkObjVal);
+            _paramService.Write(row, AtkParamPcAppearAiSoundOffset, AtkParamPcAppearAiSoundVal);
+            _paramService.Write(row, AtkParamPcHitAiSoundOffset, AtkParamPcHitAiSoundVal);
+            _paramService.Write(row, AtkParamPcAtkBehaviourOffset, AtkParamPcAtkBehaviourVal);
+        }
+
+        private void PatchUnusedBehaviourParam()
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["BehaviorParam_PC"];
+
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, ModifiedBehaviourRowId);
+            if (row == 0) return;
+
+            _paramService.Write(row, ReferenceIdOffset, ShackleRowId);
+        }
+
+        private void RevertUnusedBehaviourParam()
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["BehaviorParam_PC"];
+
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, ModifiedBehaviourRowId);
+            if (row == 0) return;
+
+            _paramService.Write(row, ReferenceIdOffset, OriginalRowId);
+        }
+
+
+        private void BreakNearbyObjects()
+        {
+            var playerIns = _playerService.GetPlayerIns();
+            if (playerIns == 0) return;
+
+            PatchShackleAtkParam();
+            PatchUnusedBehaviourParam();
+
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ShootBullet(10000, 10000, 100,
+                ModifiedBehaviourRowId, 0, 1, 0));
+
+            Thread.Sleep(20); // sleep until bullet plays out
+            RevertShackleAtkParam();
+            RevertUnusedBehaviourParam();
+        }
+        
         #endregion
     }
 }

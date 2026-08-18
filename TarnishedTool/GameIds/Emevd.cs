@@ -93,5 +93,10 @@ public static class Emevd
         public static EmevdCommand ResetCharacterPosition(uint entityId) => new(2004, 81, entityId);
         
         public static EmevdCommand AwardItemsIncludingClients(int itemId) => new(2003, 36, itemId);
+        
+        public static EmevdCommand ShootBullet(uint bulletTeamEntityId, uint bulletProducerEntityId, int dummypolyId,
+            int behaviorId, int firingAngleX, int firingAngleY, int firingAngleZ)
+            => new(2003, 5, bulletTeamEntityId, bulletProducerEntityId, dummypolyId, behaviorId, firingAngleX,
+                firingAngleY, firingAngleZ);
     }
 }

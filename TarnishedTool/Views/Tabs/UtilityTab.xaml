@@ -85,6 +85,11 @@
                             IsEnabled="{Binding AreOptionsEnabled}"
                             IsChecked="{Binding IsNoUpgradeCostEnabled}"
                             Margin="15,0,0,0" />
+                        <Button Content="Break Nearby Objects"
+                                IsEnabled="{Binding AreOptionsEnabled}"
+                                Padding="5,3"
+                                Command="{Binding BreakNearbyObjectsCommand}"
+                                Margin="15,0,20,0" />
 
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
