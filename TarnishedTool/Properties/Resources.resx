@@ -1454,7 +1454,7 @@ c3                      ret</value>
 412000,Wing Stance,ff1f,000000000002</value>
   </data>
     <data name="Weapons" xml:space="preserve">
-    <value>33200000,Academy Glintstone Staff,57,2,0
+        <value>33200000,Academy Glintstone Staff,57,2,0
 3070000,Alabaster Lord's Sword,5,0,1
 41010000,Albinauric Bow,51,2,0
 31040000,Albinauric Shield,67,2,0
@@ -1652,6 +1652,7 @@ c3                      ret</value>
 18080000,Golden Halberd,29,0,1
 31530000,Golden Lion Shield,67,0,1
 3170000,Golden Order Greatsword,5,0,1
+13510000,Golden Order Flail,24,0,1
 34060000,Golden Order Seal,61,0,1
 21540000,Golem Fist,35,2,0
 42010000,Golem Greatbow,53,0,1
@@ -1689,6 +1690,7 @@ c3                      ret</value>
 31270000,Hawk Crest Wooden Shield,67,2,0
 31330000,Heater Shield,67,2,0
 43030000,Heavy Crossbow,55,0,0
+8530000,Hefty Scimitar,11,2,0
 3130000,Helphen's Steeple,5,0,1
 14100000,Highland Axe,17,2,0
 22000000,Hookclaws,37,2,0
@@ -1700,6 +1702,7 @@ c3                      ret</value>
 30140000,Ice Crest Shield,65,2,0
 14080000,Icerind Hatchet,17,0,1
 32140000,Icon Shield,69,0,1
+67530000,Idus Sword,93,2,0
 42500000,Igon's Greatbow,53,2,0
 16130000,Inquisitor's Girandole,25,0,1
 2090000,Inseparable Sword,5,0,1
@@ -1723,6 +1726,7 @@ c3                      ret</value>
 31230000,Large Leather Shield,67,2,0
 2250000,Lazuli Glintstone Sword,3,0,1
 67510000,Leda's Sword,93,0,1
+3560000,Leontiel's Greatsword,5,0,1
 43020000,Light Crossbow,55,0,0
 61530000,Lightning Perfume Bottle,89,2,0
 42000000,Lion Greatbow,53,0,1
@@ -1807,14 +1811,17 @@ c3                      ret</value>
 30070000,Red Thorn Roundshield,65,2,0
 32230000,Redmane Greatshield,69,2,0
 1040000,Reduvia,1,0,1
+66530000,Reed Great Katana,94,2,0
 2220000,Regalia of Eochaid,3,0,1
 67520000,Rellana's Twin Blades,93,0,1
 43500000,Repeating Crossbow,55,0,1
+64530000,Reverse-Bladed Sword,92,2,0
 30030000,Rickety Shield,65,2,0
 30110000,Rift Shield,65,2,0
 11130000,Ringed Finger,21,0,1
 14050000,Ripple Blade,17,0,0
 18060000,Ripple Crescent Halberd,29,0,0
+62520000,Ritual Thrusting Shield,90,2,0
 9040000,Rivers of Blood,13,0,1
 30090000,Riveted Wooden Shield,65,2,0
 5030000,Rogier's Rapier,15,2,0
@@ -1854,6 +1861,7 @@ c3                      ret</value>
 40000000,Shortbow,50,2,0
 7020000,Shotel,9,2,0
 17020000,Siluria's Tree,28,0,1
+31540000,Silver Grooved Shield,67,2,0
 31060000,Silver Mirrorshield,67,0,1
 14500000,Smithscript Axe,17,2,0
 64510000,Smithscript Cirque,92,2,0
@@ -1934,7 +1942,7 @@ c3                      ret</value>
 8050000,Zamor Curved Sword,11,0,1
 4040000,Zweihander,7,2,0
 </value>
-  </data>
+    </data>
     <data name="Arrows" xml:space="preserve">
     <value>0,02faf080,Arrow,99,600
 0,02fb1790,Fire Arrow,99,600
@@ -2667,7 +2675,7 @@ c3                      ret</value>
 0,40002AA7,Great Ghost Glovewort,999,999</value>
   </data>
     <data name="Armor" xml:space="preserve">
-    <value>0,1001D588,Alberich's Bracers,1,1
+        <value>0,1001D588,Alberich's Bracers,1,1
 0,1001D4C0,Alberich's Pointed Hat,1,1
 0,1001D8A8,Alberich's Pointed Hat (Altered),1,1
 0,1001D524,Alberich's Robe,1,1
@@ -2767,6 +2775,7 @@ c3                      ret</value>
 0,10033518,Briar Gauntlets,1,1
 0,1003357C,Briar Greaves,1,1
 0,10033450,Briar Helm,1,1
+0,10517B60,Broken Golden Mask,1,1
 0,10022344,Bull-Goat Armor,1,1
 0,100223A8,Bull-Goat Gauntlets,1,1
 0,1002240C,Bull-Goat Greaves,1,1
@@ -2971,6 +2980,9 @@ c3                      ret</value>
 0,100816B4,Godskin Noble Robe,1,1
 0,1008177C,Godskin Noble Trousers,1,1
 0,100FDF48,Gold Bracelets,1,1
+0,10517BC4,Gold Tattoo (Chest),1,1
+0,10517C28,Gold Tattoo (Arm),1,1
+0,10517C8C,Gold Tattoo (Leg),1,1
 0,100FDFAC,Gold Waistwrap,1,1
 0,100FDEE4,Goldmask's Rags,1,1
 0,104FCEDC,Gravebird Anklets,1,1
@@ -3076,6 +3088,11 @@ c3                      ret</value>
 0,10009D6C,Leather Trousers,1,1
 0,101C3AF4,Leather-Draped Tabard,1,1
 0,104C4BA4,Leda's Armor,1,1
+0,1051C980,Leontiel's Hat,1,1
+0,1051C9E4,Leontiel's Armor,1,1
+0,1051CA48,Leontiel's Leather Gloves,1,1
+0,1051CAAC,Leontiel's Boots,1,1
+0,1051CD68,Leontiel's Hat (Altered),1,1
 0,101B5094,Leyndell Knight Armor,1,1
 0,101B547C,Leyndell Knight Armor (Altered),1,1
 0,101B50F8,Leyndell Knight Gauntlets,1,1
@@ -3286,6 +3303,11 @@ c3                      ret</value>
 0,1004982C,Shaman Furs,1,1
 0,100498F4,Shaman Leggings,1,1
 0,100497C8,Shining Horned Headband,1,1
+0,1051A270,Silver Grooved Helm,1,1
+0,1051A2D4,Silver Grooved Armor,1,1
+0,1051A338,Silver Grooved Gauntlets,1,1
+0,1051A39C,Silver Grooved Greaves,1,1
+0,1051A6BC,Silver Grooved Armor (Altered),1,1
 0,1010A1D0,Silver Tear Mask,1,1
 0,100E30D0,Skeletal Mask,1,1
 0,100F6950,Snow Witch Hat,1,1
@@ -3301,6 +3323,10 @@ c3                      ret</value>
 0,1002001C,Spellblade's Traveling Attire (Altered),1,1
 0,1001FCFC,Spellblade's Trousers,1,1
 0,1050DF20,St. Trina's Blossom,1,1
+0,1051F090,Steel Helm,1,1
+0,1051F0F4,Steel Armor,1,1
+0,1051F158,Steel Gauntlets,1,1
+0,1051F1BC,Steel Greeves,1,1
 0,104CC0D4,Thiollier's Garb,1,1
 0,104CC4BC,Thiollier's Garb (Altered),1,1
 0,104CC138,Thiollier's Gloves,1,1
@@ -3371,7 +3397,7 @@ c3                      ret</value>
 0,10105478,Zamor Bracelets,1,1
 0,101054DC,Zamor Legwraps,1,1
 0,101053B0,Zamor Mask,1,1</value>
-  </data>
+    </data>
     <data name="BellBearings" xml:space="preserve">
     <value>0,400022E9,Abandoned Merchant's Bell Bearing,1,1
 0,400022D4,Bernahl's Bell Bearing,1,1
@@ -3937,6 +3963,9 @@ c3                      ret</value>
 0,4000006D,Small Golden Effigy,1,0,1,60230
 0,4000006E,Small Red Effigy,1,0,1,60250
 0,4000200B,Sorcerer Painting,1,1,1,580030
+0,401EAA00,Spectral Steed Regalia: Tree Sentinel,1,1,1,60101
+0,401EAA0A,Spectral Steed Regalia: Carian Silver,1,1,1,60102
+0,401EAA14,Spectral Steed Regalia: Funeral Night,1,1,1,60103
 0,40000082,Spectral Steed Whistle,1,0,1,60100
 0,40001FDE,Spirit Calling Bell,1,1,1,60110
 0,40001F40,Stonesword Key,99,600,0,-1
