@@ -29,5 +29,6 @@ public enum GameVersion
     Version2_5_0, //  1.15
     Version2_6_0, // 1.16
     Version2_6_1, // 1.16.1
-    Version2_6_2,
+    Version2_6_2, // 1.16.2
+    Version2_7_0 // 1.17.0
 }

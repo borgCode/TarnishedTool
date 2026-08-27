@@ -155,6 +155,7 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.GetShopEvent), Pattern.GetShopEvent, addr => Patches.GetShopEvent = addr);
             Queue(nameof(Pattern.DebugFont), Pattern.DebugFont, addr => Patches.DebugFont = addr);
             Queue(nameof(Pattern.FpsCap), Pattern.FpsCap, addr => Patches.FpsCap = addr);
+            Queue(nameof(Pattern.MenuDelay), Pattern.MenuDelay, addr => Patches.MenuDelay = addr);
             Queue(nameof(Pattern.CanDrawEvents1), Pattern.CanDrawEvents1, addr => Patches.CanDrawEvents1 = addr);
             Queue(nameof(Pattern.CanDrawEvents2), Pattern.CanDrawEvents2, addr => Patches.CanDrawEvents2 = addr);
             Queue(nameof(Pattern.DisableCutscene), Pattern.DisableCutscene, addr => Patches.DisableCutscene = addr);
