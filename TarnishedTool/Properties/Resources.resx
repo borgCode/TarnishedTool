@@ -8950,7 +8950,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 ]</value>
   </data>
     <data name="ParamEntries_SpEffectParam" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
 1,
 2,
@@ -9888,6 +9888,8 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 4053,Scarlet Rot Swamp
 4054,Lake of Rot
 4055,Lake of Rot
+4070,
+4071,
 4080,
 4085,
 4090,
@@ -11268,7 +11270,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 10875,
 10876,
 10877,
-10880,
+10880,Mausoleum Knights Colour
 10881,
 10882,
 10883,
@@ -14371,6 +14373,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 19368,Human-NPC Area Scaling:
 19369,Human-NPC Area Scaling:
 19370,Human-NPC Area Scaling:
+19380,
+19381,
+19382,
 19384,
 19385,
 19386,
@@ -16124,6 +16129,24 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 130120,
 130130,
 130140,
+190000,
+190001,
+190002,
+190010,
+190011,
+190020,
+190021,
+190022,
+190023,
+190024,
+190025,
+190050,
+191000,
+191001,
+191010,
+191020,
+191021,
+191022,
 200000,[Spirit Summon] Black Knife Tiche
 200001,[Spirit Summon] Black Knife Tiche +1
 200002,[Spirit Summon] Black Knife Tiche +2
@@ -17739,6 +17762,12 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 6531000,[Armor] Crucible Hammer-Helm
 6532000,[Armor] Greatjar
 6533000,[Armor] Imp Head (Lion)
+6534000,
+6534002,
+6534010,
+6534011,
+6534012,
+6534015,
 7000000,
 7000010,
 7000020,
@@ -20275,10 +20304,11 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 21730002,[Incantation] Midra's Flame of Frenzy: Apply Madness
 21950010,
 21950011,
-999999999,</value>
-  </data>
+999999999,
+</value>
+    </data>
     <data name="ParamEntries_NpcParam" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
 1,Human
 100,
@@ -26489,6 +26519,10 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 71000150,Ancient Hero of Zamor (Mountaintops of the Giants) - Zamor Ruins
 71000950,Ancient Hero of Zamor (Mountaintops of the Giants) - Giant-Conquering Hero's Grave [Boss]
 80000000,Torrent
+80020000,
+80030000,
+80040000,
+80050000,
 81000000,Ballista (Base)
 81000010,Ballista (Limgrave) - Fort Haight
 81000012,Ballista (Weeping Peninsula) - Tower of Return / Forest Lookout Tower
@@ -27136,6 +27170,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 524310080,Logur- the Beast Claw (Gravesite Plain - South of Scorched Ruins)
 524320000,Moonrithyll- Carian Knight
 524320082,Moonrithyll- Carian Knight (Gravesite Plain - West Castle Ensis)
+524700000,
 526000000,
 526050000,
 526060000,
@@ -27315,13 +27350,14 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 544500000,
 544600000,
 544700000,
+544710000,
 544800000,
 544900000,
 599999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_NpcThinkParam" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
 1,
 2,
@@ -29533,13 +29569,14 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 544500000,
 544600000,
 544700000,
+544710000,
 544800000,
 544900000,
 599999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_ItemLotParam_map" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
 1,
 2,Flask of Crimson Tears
@@ -31120,6 +31157,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 10000975,[LD - Stormveil] Curved Sword Talisman
 10000980,[LD - Stormveil] Somber Smithing Stone [2]
 10000990,[LD - Stormveil] Godskin Prayerbook
+10000995,Spectral Steed Regalia: Tree Sentinel
 10001085,[LD - Stormveil] Somber Smithing Stone [1]
 10001086,[LD - Stormveil] Beast Blood
 10001087,[LD - Stormveil] Old Fang
@@ -31272,6 +31310,11 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 11001193,[LD - Leyndell] Golden Seed
 11001195,[LD - Leyndell] Somber Smithing Stone [7]
 11001198,[LD - Leyndell] Lord's Rune
+11001952,Golden Order Flail
+11001953,Broken Golden Mask
+11001954,Gold Tattoo (Chest)
+11001955,Gold Tattoo (Arm)
+11001956,Gold Tattoo (Leg)
 11001985,[LD - Leyndell] Raging Wolf Helm
 11001986,[LD - Leyndell] Raging Wolf Armor
 11001987,[LD - Leyndell] Raging Wolf Gauntlets
@@ -32086,12 +32129,14 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 20000030,Neutralizing Boluses
 20000040,Knot Resin
 20000050,Stimulating Boluses
-20000060,Somber Smithing Stone [3]
+20000060,Somber Smithing Stone [5]
 20000070,Messmerfire Grease
 20000080,Black Pyrefly
 20000090,Silver Horn Tender
 20000100,Silver Horn Tender
-20000110,Somber Smithing Stone [4]
+20000110,Silver Horn Tender
+20000111,Golden Horn Tender
+20000112,Somber Smithing Stone [7]
 20000120,Rada Fruit
 20000130,Rada Fruit
 20000140,Rada Fruit
@@ -33368,6 +33413,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1034500090,Black Wolf Mask
 1034500100,Memory Stone
 1034500200,
+1034500300,Spectral Steed Regalia: Carian Silver
 1034510900,Snow Witch Hat
 1034510901,Snow Witch Robe
 1034510902,Snow Witch Skirt
@@ -33607,6 +33653,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1038400010,Glintstone Craftsman's Cookbook [1]
 1038410000,Glintstone Craftsman's Cookbook [2]
 1038410010,Sacrificial Twig
+1038410020,Idus Sword
 1038410100,Ash of War: Gravitas
 1038410200,Map: Liurnia- East
 1038420000,Smithing Stone [2]
@@ -34105,6 +34152,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1044520000,Great Arrow
 1044520010,Golden Rune [6]
 1044520020,Golden Rune [2]
+1044520300,Spectral Steed Regalia: Funeral Night
 1044530010,Golden Rune [4]
 1044530200,Crimson Crystal Tear
 1044530201,Twiggy Cracked Tear
@@ -34219,6 +34267,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1047400900,Rune Arc
 1047400910,Sword of St. Trina
 1047400920,Greatsword
+1047420000,Ritual Thrusting Shield
 1047510000,Drawstring Fire Grease
 1047510010,Golden Rune [7]
 1047510300,Dragonwound Grease
@@ -34398,6 +34447,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1050390100,Golden Seed
 1050390900,[Sorcery] Night Comet
 1050390910,Imbued Sword Key
+1050400000,Reed Great Katana
 1050400800,Dragon Heart
 1050530000,Somber Smithing Stone [7]
 1050530300,Smoldering Butterfly
@@ -34521,6 +34571,11 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1051570811,Beast Blood
 1051570812,Old Fang
 1051580800,Haligtree Secret Medallion (Left)
+1052390500,Leontiel's Greatsword
+1052390501,Leontiel's Hat
+1052390502,Leontiel's Armor
+1052390503,Leontiel's Leather Gloves
+1052390504,Leontiel's Boots
 1052410000,Golden Rune [8]
 1052410010,Golden Rune [6]
 1052410020,Golden Rune [3]
@@ -34599,6 +34654,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2045410020,Sanguine Amaryllis
 2045410030,Somber Smithing Stone [4]
 2045410040,Smithing Stone [4]
+2045410041,Smithing Stone [5]
 2045410050,Great Arrow
 2045410700,Revered Spirit Ash
 2045410710,String-Seller's Bell Bearing
@@ -34828,6 +34884,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2047440901,Royal Magic Grease
 2047450000,Black Pyrefly
 2047450010,Smithing Stone [3]
+2047450011,Smithing Stone [7]
 2047450020,Somber Smithing Stone [2]
 2047450030,Greater Potentate's Cookbook [3]
 2047450040,Messmerfire Grease
@@ -34837,17 +34894,20 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2047450800,Larval Tear
 2047450900,Serpent Flail
 2047450910,Arrow's Soaring Sting Talisman
-2047450920,Smithing Stone [7]
+2047450920,Blessed Bone Shard
+2047450921,Smithing Stone [8]
 2047460000,Rune Arc
 2047460010,Rauh Burrow
 2047460030,Rauh Burrow
 2047460500,Scadutree Fragment
-2047470000,Somber Smithing Stone [8]
+2047470000,Sacred Bloody Flesh
+2047470001,Somber Smithing Stone [8]
 2047470010,Golden Horn Tender
 2047470020,Spirit Calculus
 2047470030,Sacred Bloody Flesh
 2047470040,Sanguine Amaryllis
-2047470050,Smithing Stone [7]
+2047470050,Sacred Bloody Flesh
+2047470051,Smithing Stone [7]
 2047470070,Shadow Realm Rune [3]
 2047470900,Pearl Shield Talisman
 2048370010,Grave Glovewort [9]
@@ -34864,7 +34924,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2048390010,Grave Cricket
 2048390020,Human Bone Shard
 2048390030,Call of Tibia
-2048390040,Grave Glovewort [7]
+2048390040,Grave Glovewort [9]
 2048390050,[Sorcery] Rings of Spectral Light
 2048400000,Lightning Perfume Bottle
 2048400010,Spirit Glaive
@@ -34872,7 +34932,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2048400021,Viridian Hidden Tear
 2048410000,Fire Coil
 2048410010,Blessing of Marika
-2048410030,Smithing Stone [2]
+2048410030,Smithing Stone [6]
 2048410700,Scadutree Fragment
 2048410800,Ancient Dragon Smithing Stone
 2048410980,Black Steel Greathammer
@@ -34890,9 +34950,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2048440020,Hefty Beast Bone
 2048440030,String
 2048440040,Lump of Flesh
-2048440050,Somber Smithing Stone [5]
+2048440050,Somber Smithing Stone [7]
 2048440060,Somber Smithing Stone [6]
-2048440070,Somber Smithing Stone [4]
+2048440070,Somber Smithing Stone [7]
 2048440080,Ghost Glovewort [7]
 2048440500,Scadutree Fragment
 2048440800,Imbued Sword Key
@@ -34903,10 +34963,11 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2048450520,Scadutree Fragment
 2048460010,Golden Vow
 2048460020,Battlefield Priest's Cookbook [3]
-2048460030,Somber Smithing Stone [6]
+2048460030,Perfumer's Bolt
+2048460031,Somber Smithing Stone [7]
 2048460040,Ember of Messmer
 2048460050,Drawstring Messmerfire Grease
-2048460060,Smithing Stone [3]
+2048460060,Smithing Stone [7]
 2048460090,Shadow Sunflower
 2048460500,Shadow Realm Rune [4]
 2048460510,Scadutree Fragment
@@ -34920,11 +34981,11 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2049380030,Dragon Communion Harpoon
 2049380040,Grave Keeper's Cookbook [2]
 2049380050,Finger-Weaver's Cookbook [1]
-2049380060,Smithing Stone [2]
+2049380060,Smithing Stone [6]
 2049390000,Red Fulgurbloom
 2049390010,Igon's Cookbook [1]
 2049420000,Talisman of the Dread
-2049420010,Somber Smithing Stone [7]
+2049420010,Great Grave Glovewort
 2049420700,Swollen Grape
 2049420720,Swollen Grape
 2049430000,Repeating Crossbow
@@ -34941,17 +35002,18 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2049430300,Fireproof Pickled Liver
 2049430310,Blessed Bone Shard
 2049430320,Broken Rune
-2049430330,Ghost Glovewort [1]
+2049430330,Ghost Glovewort [6]
 2049430340,Broken Rune
 2049430350,Redflesh Mushroom
 2049430360,Throwing Dagger
 2049430370,Shadow Realm Rune [4]
 2049430380,Festive Grease
 2049430400,Greater Potentate's Cookbook [7]
-2049430500,Smithing Stone [6]
+2049430500,Sunwarmth Stone
+2049430501,Smithing Stone [7]
 2049430510,Battlefield Priest's Cookbook [2]
-2049430520,Smithing Stone [8]
-2049430600,Smithing Stone [5]
+2049430520,Ancient Dragon Smithing Stone
+2049430600,Smithing Stone [6]
 2049430610,Fireproof Pickled Liver
 2049430620,Blessing of Marika
 2049430900,Broken Rune
@@ -34969,7 +35031,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2049440040,Shadow Realm Rune [3]
 2049440050,Golden Horn Tender
 2049440060,Whiteflesh Mushroom
-2049440070,Smithing Stone [1]
+2049440070,Smithing Stone [7]
 2049440090,Shattered Stone Talisman
 2049440500,Revered Spirit Ash
 2049440530,Scadutree Fragment
@@ -35014,11 +35076,12 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2050420700,Swollen Grape
 2050430000,Silver Horn Tender
 2050430010,Scadutree Fragment
-2050430040,Smithing Stone [7]
+2050430040,Clarifying Cured Meat
+2050430041,Smithing Stone [7]
 2050430220,Smithing Stone [6]
 2050430500,Scadutree Fragment
 2050430720,Revered Spirit Ash
-2050440000,Smithing Stone [3]
+2050440000,Smithing Stone [7]
 2050440010,Shadow Realm Rune [4]
 2050440020,Living Jar Shard
 2050440030,Living Jar Shard
@@ -35060,16 +35123,17 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2050460800,Larval Tear
 2050460900,Stone-Sheathed Sword
 2050460910,[Sorcery] Giant Golden Arc
-2050470010,Grave Glovewort [6]
+2050470010,Grave Glovewort [7]
 2050470020,Blessed Bone Shard
-2051410000,Ghost Glovewort [7]
+2051410000,Clarifying Cured Meat
+2051410001,Ghost Glovewort [9]
 2051410010,Greater Potentate's Cookbook [6]
 2051410700,Aged One's Exultation
 2051410710,Swollen Grape
 2051420000,Shadow Realm Rune [7]
 2051440000,Tooth Whip
 2051440010,Nascent Butterfly
-2051440020,Smithing Stone [1]
+2051440020,Smithing Stone [8]
 2051440030,Fly Mold
 2051440040,Scorpion Liver
 2051440500,Scadutree Fragment
@@ -35088,7 +35152,8 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2051470030,Fingerprint Nostrum
 2051470500,[Incantation] Minor Erdtree
 2051470510,Golden Braid
-2052400010,Somber Smithing Stone [6]
+2052400010,Surging Frenzied Flame
+2052400011,Somber Smithing Stone [9]
 2052410000,Shadow Realm Rune [7]
 2052410010,Clarifying Boluses
 2052410600,Map: Abyss
@@ -35105,7 +35170,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2054390000,Ancient Dragon Smithing Stone
 2054400000,Igon's Cookbook [2]
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_ResistCorrectParam" xml:space="preserve">
     <value>ID,Name
 0,
@@ -35162,15 +35227,15 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 </value>
   </data>
     <data name="ParamEntries_SwordArtsParam" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
-1,
+1,No Skill
 10,No Skill
 100,Lion's Claw
 101,Impaling Thrust
 102,Piercing Fang
 103,Spinning Slash
-104,%null%
+104,
 105,Charge Forth
 106,Stamp (Upward Cut)
 107,Stamp (Sweep)
@@ -35187,7 +35252,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 118,Loretta's Slash
 119,Poison Moth Flight
 120,Spinning Weapon
-121,%null%
+121,
 122,Storm Assault
 123,Stormcaller
 124,Sword Dance
@@ -35233,7 +35298,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 404,Enchanted Shot
 405,Sky Shot
 406,Rain of Arrows
-407,%null%
+407,
 501,Hoarfrost Stomp
 502,Storm Stomp
 503,Kick
@@ -35293,7 +35358,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1027,Cursed-Blood Slice
 1028,Waterfowl Dance
 1029,Gold Breaker
-1030,I Command Thee Kneel!
+1030,I Command Thee- Kneel!
 1031,Regal Roar
 1032,Starcaller Cry
 1033,Wave of Destruction
@@ -35319,8 +35384,8 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1053,Last Rites
 1054,Unblockable Blade
 1055,Eochaid's Dancing Blade
-1165,
-1166,
+1165,Loretta's Slash
+1166,Spinning Slash
 1167,Corpse Wax Cutter
 1168,Zamor Ice Storm
 1169,Radahn's Rain
@@ -35334,11 +35399,11 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1177,Corpse Piler
 1178,Transient Moonlight
 1179,Bloodblade Dance
-1180,%null%
-1181,%null%
+1180,
+1181,
 1182,Knowledge Above All
 1183,Devourer of Worlds
-1184,Familal Rancor
+1184,Familial Rancor
 1185,Rosus's Summons
 1186,Thunderstorm
 1187,Sacred Phalanx
@@ -35354,6 +35419,8 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 1197,Contagious Fury
 1198,Ordovis's Vortex
 1199,Spinning Weapon
+1200,Muleta
+1201,Causality's Wrath
 2000,Dryleaf Whirlwind
 2001,Aspects of the Crucible: Wings
 4000,Spinning Gravity Thrust
@@ -35378,7 +35445,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 4190,Shriek of Sorrow
 4210,Igon's Drake Hunt
 4220,Ghostflame Call
-4990,
+4990,Kick
 5000,Dragonwound Slash
 5010,Needle Piercer
 5020,Light
@@ -35393,7 +35460,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 5130,Blinkbolt: Twinaxe
 5140,Blinkbolt: Long-hafted Axe
 5150,Promised Consort
-5160,Shadow Sunflower Headbutts
+5160,Shadow Sunflower Headbutt
 5170,Moon-and-Fire Stance
 5180,Devonia's Vortex
 5190,Messmer's Assault
@@ -35426,7 +35493,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 5480,Roaring Bash
 5490,Deadly Poison Spray
 5500,Flare- O Serpent
-5510,Scattershot (Claws)
+5510,Scattershot Throw
 5520,Hone Blade
 5530,Horn Calling
 5540,Horn Calling: Storm
@@ -35434,13 +35501,13 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 5560,Bloodfiends' Bloodboon
 5570,Dragonform Flame
 5580,Lightspeed Slash
-5590,
+5590,Impaling Thrust
 5600,Rancor Shot
-8000,
+8000,Shield Strike
 9991,
 9992,
 </value>
-  </data>
+    </data>
     <data name="Param_SwordArtsParam" xml:space="preserve">
     <value>[
   {
@@ -36106,7 +36173,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 </value>
   </data>
     <data name="ParamEntries_EquipParamGoods" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
 10,
 11,
@@ -38153,6 +38220,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2009344,Grave Keeper's Cookbook [1]
 2009345,St. Trina Disciple's Cookbook [2]
 2009500,Hefty Cracked Pot
+2009600,Spectral Steed Regalia: Tree Sentinel
+2009610,Spectral Steed Regalia: Carian Silver
+2009620,Spectral Steed Regalia: Funeral Night
 2010000,Scadutree Fragment
 2010100,Revered Spirit Ash
 2011000,Viridian Hidden Tear
@@ -38434,9 +38504,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2220010,Jolan and Anna +10
 999999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_EquipParamProtector" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 1000,Type 1
 1100,Type 2
 1200,Type 3
@@ -39256,11 +39326,29 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 5310000,Crucible Hammer-Helm
 5320000,Greatjar
 5330000,Imp Head (Lion)
+5340000,Broken Golden Mask
+5340100,Gold Tattoo (Chest)
+5340200,Gold Tattoo (Arm)
+5340300,Gold Tattoo (Leg)
+5350000,Silver Grooved Helm
+5350100,Silver Grooved Armor
+5350200,Silver Grooved Gauntlets
+5350300,Silver Grooved Greaves
+5351100,Silver Grooved Armor (Altered)
+5360000,Leontiel's Hat
+5360100,Leontiel's Armor
+5360200,Leontiel's Leather Gloves
+5360300,Leontiel's Boots
+5361000,Leontiel's Hat (Altered)
+5370000,Steel Helm
+5370100,Steel Armor
+5370200,Steel Gauntlets
+5370300,Steel Greeves
 9999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_EquipParamWeapon" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 1000,
 1100,
 1200,
@@ -39797,8 +39885,10 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 3521100,Blood Lizard Greatsword
 3521200,Occult Lizard Greatsword
 3550000,Greatsword of Solitude
+3560000,Leontiel's Greatsword
 3690000,[NPC] Greatsword of Solitude
 3900000,
+3910000,[NPC] Leontiel's Greatsword
 4000000,Greatsword
 4000100,Heavy Greatsword
 4000200,Keen Greatsword
@@ -40226,6 +40316,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 8511100,Freyja's Blood Greatsword
 8511200,Freyja's Occult Greatsword
 8520000,Horned Warrior's Greatsword
+8530000,Hefty Scimitar
+8530100,Heavy Hefty Scimitar
+8530200,Keen Hefty Scimitar
+8530300,Quality Hefty Scimitar
+8530400,Fire Hefty Scimitar
+8530500,Flame Art Hefty Scimitar
+8530600,Lightning Hefty Scimitar
+8530700,Sacred Hefty Scimitar
+8530800,Magic Hefty Scimitar
+8530900,Cold Hefty Scimitar
+8531000,Poison Hefty Scimitar
+8531100,Blood Hefty Scimitar
+8531200,Occult Hefty Scimitar
 8690000,[NPC] Freyja's Greatsword
 8900000,
 9000000,Uchigatana
@@ -40692,6 +40795,8 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 13041100,Blood Chainlink Flail
 13041200,Occult Chainlink Flail
 13500000,Serpent Flail
+13510000,Golden Order Flail
+13900000,[NPC] Golden Order Flail
 14000000,Battle Axe
 14000100,Heavy Battle Axe
 14000200,Keen Battle Axe
@@ -42234,6 +42339,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 31521100,Blood Serpent Crest Shield
 31521200,Occult Serpent Crest Shield
 31530000,Golden Lion Shield
+31540000,Silver Grooved Shield
+31540100,Heavy Silver Grooved Shield
+31540200,Keen Silver Grooved Shield
+31540300,Quality Silver Grooved Shield
+31540400,Fire Silver Grooved Shield
+31540500,Flame Art Silver Grooved Shield
+31540600,Lightning Silver Grooved Shield
+31540700,Sacred Silver Grooved Shield
+31540800,Magic Silver Grooved Shield
+31540900,Cold Silver Grooved Shield
+31541000,Poison Silver Grooved Shield
+31541100,Blood Silver Grooved Shield
+31541200,Occult Silver Grooved Shield
 31690000,[NPC] Golden Lion Shield
 32000000,Dragon Towershield
 32000100,Heavy Dragon Towershield
@@ -42711,6 +42829,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 62511000,Poison Carian Thrusting Shield
 62511100,Blood Carian Thrusting Shield
 62511200,Occult Carian Thrusting Shield
+62520000,Ritual Thrusting Shield
+62520100,Heavy Ritual Thrusting Shield
+62520200,Keen Ritual Thrusting Shield
+62520300,Quality Ritual Thrusting Shield
+62520400,Fire Ritual Thrusting Shield
+62520500,Flame Art Ritual Thrusting Shield
+62520600,Lightning Ritual Thrusting Shield
+62520700,Sacred Ritual Thrusting Shield
+62520800,Magic Ritual Thrusting Shield
+62520900,Cold Ritual Thrusting Shield
+62521000,Poison Ritual Thrusting Shield
+62521100,Blood Ritual Thrusting Shield
+62521200,Occult Ritual Thrusting Shield
 63500000,Smithscript Dagger
 63500100,Heavy Smithscript Dagger
 63500200,Keen Smithscript Dagger
@@ -42751,6 +42882,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 64511100,Blood Smithscript Cirque
 64511200,Occult Smithscript Cirque
 64520000,Curseblade's Cirque
+64530000,Reverse-Bladed Sword
+64530100,Heavy Reverse-Bladed Sword
+64530200,Keen Reverse-Bladed Sword
+64530300,Quality Reverse-Bladed Sword
+64530400,Fire Reverse-Bladed Sword
+64530500,Flame Art Reverse-Bladed Sword
+64530600,Lightning Reverse-Bladed Sword
+64530700,Sacred Reverse-Bladed Sword
+64530800,Magic Reverse-Bladed Sword
+64530900,Cold Reverse-Bladed Sword
+64531000,Poison Reverse-Bladed Sword
+64531100,Blood Reverse-Bladed Sword
+64531200,Occult Reverse-Bladed Sword
 66500000,Great Katana
 66500100,Heavy Great Katana
 66500200,Keen Great Katana
@@ -42766,6 +42910,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 66501200,Occult Great Katana
 66510000,Dragon-Hunter's Great Katana
 66520000,Rakshasa's Great Katana
+66530000,Reed Great Katana
+66530100,Heavy Reed Great Katana
+66530200,Keen Reed Great Katana
+66530300,Quality Reed Great Katana
+66530400,Fire Reed Great Katana
+66530500,Flame Art Reed Great Katana
+66530600,Lightning Reed Great Katana
+66530700,Sacred Reed Great Katana
+66530800,Magic Reed Great Katana
+66530900,Cold Reed Great Katana
+66531000,Poison Reed Great Katana
+66531100,Blood Reed Great Katana
+66531200,Occult Reed Great Katana
 66680000,[NPC] Rakshasa's Great Katana
 66690000,[NPC] Dragon-Hunter's Great Katana
 67500000,Milady
@@ -42783,6 +42940,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 67501200,Occult Milady
 67510000,Leda's Sword
 67520000,Rellana's Twin Blades
+67530000,Idus Sword
+67530100,Heavy Idus Sword
+67530200,Keen Idus Sword
+67530300,Quality Idus Sword
+67530400,Fire Idus Sword
+67530500,Flame Art Idus Sword
+67530600,Lightning Idus Sword
+67530700,Sacred Idus Sword
+67530800,Magic Idus Sword
+67530900,Cold Idus Sword
+67531000,Poison Idus Sword
+67531100,Blood Idus Sword
+67531200,Occult Idus Sword
 67690000,[NPC] Leda's Sword
 68500000,Beast Claw
 68500100,Heavy Beast Claw
@@ -42816,7 +42986,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 99060000,
 99999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_CalcCorrectGraph" xml:space="preserve">
     <value>ID,Name
 0,Default
@@ -68933,7 +69103,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 </value>
   </data>
     <data name="ParamEntries_AtkParam_PC" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,Impact: Oppose
 1,Impact: No Target
 2,Impact: Oppose and Self
@@ -70376,6 +70546,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 321875,
 321890,
 321895,
+330100,
+330105,
+330110,
+330115,
+330200,
+330210,
+330220,
+330230,
+330300,
+330305,
+330310,
+330315,
+330330,
 400000,Default - Colossal Sword
 400001,Default - Colossal Sword
 400002,Default - Colossal Sword
@@ -76060,6 +76243,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 6200530,Throwing Blade - Default Attack
 6200550,Throwing Blade - Default Attack
 6200560,Throwing Blade - Default Attack
+6200561,
 6200590,Throwing Blade - Default Attack
 6200591,Throwing Blade - Default Attack
 6200600,Throwing Blade - Default Bullet
@@ -79233,6 +79417,18 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 303401800,Golden Epitaph [AOW] Last Rites
 304400800,
 304400801,
+305000000,
+305000010,
+305000011,
+305000012,
+305000050,
+305000060,
+305000061,
+305000062,
+305000100,
+305000110,
+305000120,
+305000199,
 306100670,Thrusting Shield - Default Attack
 306100671,Thrusting Shield - Default Attack
 306100780,Thrusting Shield - Default Attack
@@ -79926,9 +80122,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 999999998,
 999999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_BehaviorParam_PC" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,
 10,
 11,
@@ -80776,6 +80972,19 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 100321875,
 100321890,
 100321895,
+100330100,
+100330105,
+100330110,
+100330115,
+100330200,
+100330210,
+100330220,
+100330230,
+100330300,
+100330305,
+100330310,
+100330315,
+100330330,
 100400000,Default - Colossal Sword
 100400001,Default - Colossal Sword
 100400002,Default - Colossal Sword
@@ -91678,6 +91887,14 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 300317915,Golden Order Greatsword - [AOW] Establish Order
 300317916,Golden Order Greatsword - [AOW] Establish Order
 300319900,Helphen's Steeple - [AOW] Ruinous Ghostflame
+300330900,
+300330910,
+300330911,
+300330912,
+300330950,
+300330960,
+300330961,
+300330962,
 300400950,Colossal Sword Category - [AOW] Spinning Wheel
 300400951,Colossal Sword Category - [AOW] Spinning Wheel
 300400952,Colossal Sword Category - [AOW] Spinning Wheel
@@ -92240,6 +92457,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 301302903,Family Heads - [AOW] Familial Rancor
 301302904,Family Heads - [AOW] Familial Rancor
 301302905,Family Heads - [AOW] Familial Rancor
+301330900,
+301330930,
+301330960,
 301400500,Axe Category - [AOW] Wild Strikes
 301400501,Axe Category - [AOW] Wild Strikes
 301400502,Axe Category - [AOW] Wild Strikes
@@ -93771,7 +93991,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 999999998,
 999999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_BehaviorParam" xml:space="preserve">
     <value>ID,Name
 0,
@@ -107672,7 +107892,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 </value>
   </data>
     <data name="ParamEntries_Bullet" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,Smithscript Spear - Bullet 
 1,
 2,
@@ -108270,6 +108490,97 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 4157,Blasphemous Blade [AOW] Taker's Flames        
 4158,Blasphemous Blade [AOW] Taker's Flames         
 4159,Blasphemous Blade [AOW] Taker's Flames          
+5000,
+5001,
+5002,
+5003,
+5004,
+5005,
+5006,
+5007,
+5008,
+5009,
+5010,
+5050,
+5051,
+5052,
+5053,
+5070,
+5071,
+5090,
+5091,
+5092,
+5093,
+5100,
+5101,
+5102,
+5103,
+5104,
+5105,
+5106,
+5107,
+5108,
+5109,
+5110,
+5111,
+5112,
+5113,
+5114,
+5115,
+5116,
+5117,
+5118,
+5119,
+5150,
+5151,
+5152,
+5153,
+5154,
+5155,
+5156,
+5157,
+5170,
+5171,
+5172,
+5190,
+5191,
+5192,
+5193,
+5194,
+5195,
+5196,
+5197,
+5200,
+5201,
+5202,
+5203,
+5204,
+5205,
+5206,
+5207,
+5208,
+5209,
+5210,
+5250,
+5251,
+5252,
+5253,
+5254,
+5255,
+5256,
+5257,
+5270,
+5271,
+5272,
+5273,
+5290,
+5291,
+5292,
+5293,
+5294,
+5295,
+5296,
+5297,
 6000,
 6050,
 6110,
@@ -123058,9 +123369,9 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 999999998,
 999999999,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_ItemLotParam_enemy" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 0,Head
 1,Neutralizing Boluses
 2,Flask of Crimson Tears +5- Flask of Crimson Tears +5- Flask of Crimson Tears +6- Flask of Crimson Tears +6- Flask of Crimson Tears +11- Flask of Crimson Tears- Flask of Crimson Tears
@@ -126336,1679 +126647,1679 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 491000000,[Magma Wyrm] None
 496000000,[Giant Skeleton Torso] None
 496000100,[Giant Skeleton Torso] None
-500000000,
-501000000,
-501100000,
-502000000,
-502000100,
-503000000,
-504000000,Curseblade's Cirque
-504000001,Curseblade Mask
-504000002,Ascetic's Loincloth
-504000003,Ascetic's Wrist Guards
-504000004,Ascetic's Ankle Guards
-504000100,Curseblade's Cirque
-504000101,Curseblade Mask
-504000102,Ascetic's Loincloth
-504000103,Ascetic's Wrist Guards
-504000104,Ascetic's Ankle Guards
-504000200,Curseblade's Cirque
-504000201,Curseblade Mask
-504000202,Ascetic's Loincloth
-504000203,Ascetic's Wrist Guards
-504000204,Ascetic's Ankle Guards
-504000300,Curseblade's Cirque
-504000301,Curseblade Mask
-504000302,Ascetic's Loincloth
-504000303,Ascetic's Wrist Guards
-504000304,Ascetic's Ankle Guards
-505000000,
-505100000,
-506000000,Pearlescent Scale
-506000010,Pearlescent Scale
-506000011,Finger Mimic
-506000100,Pearlescent Scale
-506000110,Pearlescent Scale
-506000111,Finger Mimic
-506000200,Pearlescent Scale
-506000300,Pearlescent Scale
-506000310,Pearlescent Scale
-506000311,Finger Mimic
-506000400,Pearlescent Scale
-506000410,Pearlescent Scale
-506000411,Finger Mimic
-506100000,Pearlescent Scale
-506100010,Pearlescent Scale
-506100011,Finger Mimic
-507000000,
-507000100,
-508000000,Sacred Bloody Flesh
-508000001,String
-508000010,Sacred Bloody Flesh
-508000011,String
-508000020,Sacred Bloody Flesh
-508000021,String
-508000030,Sacred Bloody Flesh
-508000031,String
-508000040,Sacred Bloody Flesh
-508000041,String
-508000110,Bloodfiend's Fork
-508000111,Sacred Bloody Flesh
-508000112,String
-508000120,Bloodfiend's Fork
-508000121,Sacred Bloody Flesh
-508000122,String
-508000130,Bloodfiend's Fork
-508000131,Sacred Bloody Flesh
-508000132,String
-508000140,Bloodfiend's Fork
-508000141,Sacred Bloody Flesh
-508000142,String
-508000150,Bloodfiend's Fork
-508000151,Sacred Bloody Flesh
-508000152,String
-508000200,Sacred Bloody Flesh
-508000201,String
-508000300,Bloodfiend's Fork
-508000301,Sacred Bloody Flesh
-508000302,String
-508000303,Nectarblood Burgeon
-508000400,Bloodfiend's Fork
-508000401,Sacred Bloody Flesh
-508000402,String
-508000403,Nectarblood Burgeon
-508000700,Sacred Bloody Flesh
-508000701,String
-508000702,Bloodfiend's Arm
-508095200,Sacred Bloody Flesh
-508095201,String
-508095202,Bloodfiend's Sacred Spear
-508100000,
-508100700,Sacred Bloody Flesh
-508100710,Sacred Bloody Flesh
-509000000,Smithing Stone [3]
-509000001,Smithing Stone [4]
-509000002,Smithing Stone [5]
-509000100,Smithing Stone [3]
-509000101,Smithing Stone [4]
-509000102,Smithing Stone [5]
-509000200,Smithing Stone [3]
-509000201,Smithing Stone [4]
-509000202,Smithing Stone [5]
-509000300,Smithing Stone [3]
-509000301,Smithing Stone [4]
-509000302,Smithing Stone [5]
-509000400,Smithing Stone [3]
-509000401,Smithing Stone [4]
-509000402,Smithing Stone [5]
-509000500,Smithing Stone [3]
-509000501,Smithing Stone [4]
-509000502,Smithing Stone [5]
-511000000,Grave Glovewort [1]
-511000001,Grave Glovewort [2]
-511000002,Grave Glovewort [3]
-511000003,Ghost Glovewort [1]
-511000004,Ghost Glovewort [2]
-511000005,Ghost Glovewort [3]
-511000100,Grave Glovewort [1]
-511000101,Grave Glovewort [2]
-511000102,Grave Glovewort [3]
-511000103,Ghost Glovewort [1]
-511000104,Ghost Glovewort [2]
-511000105,Ghost Glovewort [3]
-511000200,Grave Glovewort [1]
-511000201,Grave Glovewort [2]
-511000202,Grave Glovewort [3]
-511000203,Ghost Glovewort [1]
-511000204,Ghost Glovewort [2]
-511000205,Ghost Glovewort [3]
-511000300,Grave Glovewort [1]
-511000301,Grave Glovewort [2]
-511000302,Grave Glovewort [3]
-511000303,Ghost Glovewort [1]
-511000304,Ghost Glovewort [2]
-511000305,Ghost Glovewort [3]
-511000400,Grave Glovewort [7]
-511000401,Grave Glovewort [8]
-511000402,Grave Glovewort [9]
-511000403,Ghost Glovewort [7]
-511000404,Ghost Glovewort [8]
-511000405,Ghost Glovewort [9]
-511000500,Grave Glovewort [7]
-511000501,Grave Glovewort [8]
-511000502,Grave Glovewort [9]
-511000503,Ghost Glovewort [7]
-511000504,Ghost Glovewort [8]
-511000505,Ghost Glovewort [9]
-511000600,Grave Glovewort [7]
-511000601,Grave Glovewort [8]
-511000602,Grave Glovewort [9]
-511000603,Ghost Glovewort [7]
-511000604,Ghost Glovewort [8]
-511000605,Ghost Glovewort [9]
-511000700,Grave Glovewort [7]
-511000701,Grave Glovewort [8]
-511000702,Grave Glovewort [9]
-511000703,Ghost Glovewort [7]
-511000704,Ghost Glovewort [8]
-511000705,Ghost Glovewort [9]
-512000000,
-513000000,
-513000100,
-513100000,
-513200000,
-514000000,
-514100000,
-516000000,Fire Knight's Greatsword
-516000001,Fire Knight Helm
-516000002,Fire Knight Armor
-516000003,Fire Knight Gauntlets
-516000004,Fire Knight Greaves
-516000005,Smithing Stone [6]
-516000006,Smithing Stone [7]
-516000007,Smithing Stone [8]
-516000010,
-516000020,
-516000100,Fire Knight's Shortsword
-516000101,Fire Knight Helm
-516000102,Fire Knight Armor
-516000103,Fire Knight Gauntlets
-516000104,Fire Knight Greaves
-516000105,Smithing Stone [6]
-516000106,Smithing Stone [7]
-516000107,Smithing Stone [8]
-516000110,
-516000120,
-516000200,Fire Knight Helm
-516000201,Fire Knight Armor
-516000202,Fire Knight Gauntlets
-516000203,Fire Knight Greaves
-516000204,Smithing Stone [6]
-516000205,Smithing Stone [7]
-516000206,Smithing Stone [8]
-516000210,
-516000220,Fire Knight Helm
-516000221,Fire Knight Armor
-516000222,Fire Knight Gauntlets
-516000223,Fire Knight Greaves
-516000224,Smithing Stone [6]
-516000225,Smithing Stone [7]
-516000226,Smithing Stone [8]
-516000230,
-517000000,
-517000100,
-517000200,
-519000000,Scorpion Liver
-519000001,Somber Smithing Stone [2]
-519000002,Somber Smithing Stone [3]
-519000003,Somber Smithing Stone [4]
-519000010,Scorpion Liver
-519000011,Somber Smithing Stone [2]
-519000012,Somber Smithing Stone [3]
-519000013,Somber Smithing Stone [4]
-519000100,Scorpion Liver
-519000101,Somber Smithing Stone [3]
-519000102,Somber Smithing Stone [4]
-519000103,Somber Smithing Stone [5]
-519000200,Scorpion Liver
-519000201,Somber Smithing Stone [2]
-519000202,Somber Smithing Stone [3]
-519000203,Somber Smithing Stone [4]
-519000300,Scorpion Liver
-519000301,Somber Smithing Stone [3]
-519000302,Somber Smithing Stone [4]
-519000303,Somber Smithing Stone [5]
-519000310,Scorpion Liver
-519000311,Somber Smithing Stone [3]
-519000312,Somber Smithing Stone [4]
-519000313,Somber Smithing Stone [5]
-519200000,Scorpion Liver
-519200001,Somber Smithing Stone [4]
-519200002,Somber Smithing Stone [5]
-519200003,Somber Smithing Stone [6]
-519300000,Scorpion Liver
-519300001,Somber Smithing Stone [1]
-519300002,Somber Smithing Stone [2]
-520000000,
-521000000,
-522000000,
-522000100,
-522000200,
-522100000,
-523000000,
-524000100,Smithing Stone [2]
-524000101,Smithing Stone [3]
-524000102,Smithing Stone [4]
-524000200,Ember of Messmer
-524000201,Beast Horn
-524000300,Ember of Messmer
-524000301,Beast Horn
-524000310,Ember of Messmer
-524000311,Beast Horn
-524000320,Ember of Messmer
-524000321,Beast Horn
-524000330,Beast Horn
-524000340,Beast Horn
-524080000,Rada Fruit
-524080001,Redflesh Mushroom
-524080002,Whiteflesh Mushroom
-524080003,Knot Resin
-524080010,Frozen Maggot
-524080700,Rada Fruit
-524080701,Redflesh Mushroom
-524080702,Whiteflesh Mushroom
-524080703,Knot Resin
-524080704,Scadutree Fragment
-524080705,Silver Horn Tender
-524080710,Rada Fruit
-524080711,Redflesh Mushroom
-524080712,Whiteflesh Mushroom
-524080713,Knot Resin
-524080714,Scadutree Fragment
-524080715,Silver Horn Tender
-524081000,Rada Fruit
-524081001,Redflesh Mushroom
-524081002,Whiteflesh Mushroom
-524081003,Knot Resin
-524083000,Whiteflesh Mushroom
-524083001,Knot Resin
-524083002,Deep-Purple Lily
-524084020,Frozen Maggot
-524086000,Silver Horn Tender
-524086001,Winter-Lantern Fly
-524086100,Silver Horn Tender
-524086101,Winter-Lantern Fly
-524086102,Surging Frenzied Flame
-524088000,Silver Horn Tender
-524088001,Black Pyrefly
-524088700,Silver Horn Tender
-524088701,Black Pyrefly
-524088702,Revered Spirit Ash
-524088703,Golden Horn Tender
-524090000,Rada Fruit
-524090001,Redflesh Mushroom
-524090002,Whiteflesh Mushroom
-524090003,Knot Resin
-524090010,Frozen Maggot
-524090700,Rada Fruit
-524090701,Redflesh Mushroom
-524090702,Whiteflesh Mushroom
-524090703,Knot Resin
-524090704,Scadutree Fragment
-524090705,Golden Horn Tender
-524091000,Rada Fruit
-524091001,Dewgem
-524091100,Rada Fruit
-524091101,Dewgem
-524091102,Spiritgrave Stone
-524094000,Redflesh Mushroom
-524094001,Whiteflesh Mushroom
-524094002,Dewgem
-524094003,Rauh Burrow
-524094100,Redflesh Mushroom
-524094101,Whiteflesh Mushroom
-524094102,Dewgem
-524094103,Rauh Burrow
-524094104,Fire Spritestone
-524094700,Redflesh Mushroom
-524094701,Whiteflesh Mushroom
-524094702,Dewgem
-524094703,Rauh Burrow
-524094704,Spirit Calculus
-524094710,Redflesh Mushroom
-524094711,Whiteflesh Mushroom
-524094712,Dewgem
-524094713,Rauh Burrow
-524094714,Scadutree Fragment
-524094715,Golden Horn Tender
-524094720,Redflesh Mushroom
-524094721,Whiteflesh Mushroom
-524094722,Dewgem
-524094723,Rauh Burrow
-524094724,Spirit Calculus
-524094730,Redflesh Mushroom
-524094731,Whiteflesh Mushroom
-524094732,Dewgem
-524094733,Rauh Burrow
-524094734,Revered Spirit Ash
-524094735,Silver Horn Tender
-524094740,Redflesh Mushroom
-524094741,Whiteflesh Mushroom
-524094742,Dewgem
-524094743,Rauh Burrow
-524094744,Revered Spirit Ash
-524094745,Silver Horn Tender
-524095000,Rada Fruit
-524095001,Redflesh Mushroom
-524095002,Whiteflesh Mushroom
-524095003,Knot Resin
-524095004,Rauh Burrow
-524095110,Rada Fruit
-524095111,Redflesh Mushroom
-524095112,Whiteflesh Mushroom
-524095113,Knot Resin
-524095114,Rauh Burrow
-524095115,Spiritgrave Stone
-524095700,Rada Fruit
-524095701,Redflesh Mushroom
-524095702,Whiteflesh Mushroom
-524095703,Knot Resin
-524095704,Rauh Burrow
-524095705,Rauh Burrow
-524095706,Silver Horn Tender
-524095710,Rada Fruit
-524095711,Redflesh Mushroom
-524095712,Whiteflesh Mushroom
-524095713,Knot Resin
-524095714,Rauh Burrow
-524095715,Antiquity Scholar's Cookbook [1]
-524095716,Fire Spritestone
-524100000,Smithing Stone [4]
-524100001,Smithing Stone [5]
-524100002,Smithing Stone [6]
-525000000,Horned Warrior's Sword
-525000001,Horned Warrior Helm
-525000002,Horned Warrior Armor
-525000003,Horned Warrior Gauntlets
-525000004,Horned Warrior Greaves
-525000005,Somber Smithing Stone [7]
-525000006,Somber Smithing Stone [8]
-525000007,Somber Smithing Stone [9]
-525000010,Horned Warrior's Sword
-525000011,Divine Bird Helm
-525000012,Divine Bird Warrior Armor
-525000013,Divine Bird Warrior Gauntlets
-525000014,Divine Bird Warrior Greaves
-525000015,Somber Smithing Stone [8]
-525000016,Somber Smithing Stone [9]
-525000100,Horned Warrior Helm
-525000101,Horned Warrior Armor
-525000102,Horned Warrior Gauntlets
-525000103,Horned Warrior Greaves
-525000104,Somber Smithing Stone [7]
-525000105,Somber Smithing Stone [8]
-525000106,Somber Smithing Stone [9]
-525000110,Divine Beast Helm
-525000111,Divine Beast Warrior Armor
-525000112,Somber Smithing Stone [8]
-525000113,Somber Smithing Stone [9]
-525000120,Divine Beast Helm
-525000121,Divine Beast Warrior Armor
-525000122,Somber Smithing Stone [8]
-525000123,Somber Smithing Stone [9]
-525000130,Divine Beast Helm
-525000131,Divine Beast Warrior Armor
-525000132,Somber Smithing Stone [8]
-525000133,Somber Smithing Stone [9]
-525000140,
-525000200,Somber Smithing Stone [7]
-525000201,Somber Smithing Stone [8]
-525000202,Somber Smithing Stone [9]
-525100000,Somber Smithing Stone [7]
-525100001,Somber Smithing Stone [8]
-525100002,Somber Smithing Stone [9]
-526000000,Smithing Stone [5]
-526000001,Smithing Stone [6]
-526000002,Smithing Stone [7]
-526000003,Somber Smithing Stone [6]
-526000004,Somber Smithing Stone [7]
-526000005,Somber Smithing Stone [8]
-526000010,Smithing Stone [5]
-526000011,Smithing Stone [6]
-526000012,Smithing Stone [7]
-526000013,Somber Smithing Stone [6]
-526000014,Somber Smithing Stone [7]
-526000015,Somber Smithing Stone [8]
-526000020,Smithing Stone [5]
-526000021,Smithing Stone [6]
-526000022,Smithing Stone [7]
-526000023,Somber Smithing Stone [6]
-526000024,Somber Smithing Stone [7]
-526000025,Somber Smithing Stone [8]
-526000100,Smithing Stone [5]
-526000101,Smithing Stone [6]
-526000102,Smithing Stone [7]
-526000103,Somber Smithing Stone [6]
-526000104,Somber Smithing Stone [7]
-526000105,Somber Smithing Stone [8]
-526000110,Smithing Stone [5]
-526000111,Smithing Stone [6]
-526000112,Smithing Stone [7]
-526000113,Somber Smithing Stone [6]
-526000114,Somber Smithing Stone [7]
-526000115,Somber Smithing Stone [8]
-526000120,Smithing Stone [5]
-526000121,Smithing Stone [6]
-526000122,Smithing Stone [7]
-526000123,Somber Smithing Stone [6]
-526000124,Somber Smithing Stone [7]
-526000125,Somber Smithing Stone [8]
-526000200,Smithing Stone [5]
-526000201,Smithing Stone [6]
-526000202,Smithing Stone [7]
-526000203,Somber Smithing Stone [6]
-526000204,Somber Smithing Stone [7]
-526000205,Somber Smithing Stone [8]
-526000210,Smithing Stone [5]
-526000211,Smithing Stone [6]
-526000212,Smithing Stone [7]
-526000213,Somber Smithing Stone [6]
-526000214,Somber Smithing Stone [7]
-526000215,Somber Smithing Stone [8]
-526000220,Golem Fist
-526000221,Smithing Stone [5]
-526000222,Smithing Stone [6]
-526000223,Smithing Stone [7]
-526000224,Somber Smithing Stone [6]
-526000225,Somber Smithing Stone [7]
-526000226,Somber Smithing Stone [8]
-526000230,Golem Fist
-526000231,Smithing Stone [5]
-526000232,Smithing Stone [6]
-526000233,Smithing Stone [7]
-526000234,Somber Smithing Stone [6]
-526000235,Somber Smithing Stone [7]
-526000236,Somber Smithing Stone [8]
-526000240,Smithing Stone [5]
-526000241,Smithing Stone [6]
-526000242,Smithing Stone [7]
-526000243,Somber Smithing Stone [6]
-526000244,Somber Smithing Stone [7]
-526000245,Somber Smithing Stone [8]
-527000000,Innard Meat
-527000001,Human Bone Shard
-527000100,Innard Meat
-527000101,Human Bone Shard
-527000200,Innard Meat
-527000201,Human Bone Shard
-527100000,Innard Meat
-527100001,Human Bone Shard
-527100100,Innard Meat
-527100101,Human Bone Shard
-527100200,Innard Meat
-527100201,Human Bone Shard
-528000000,
-530000000,
-531100000,Golden Horn Tender
-531100010,Golden Horn Tender
-531100020,
-531100030,
-531100040,Golden Horn Tender
-531100050,Golden Horn Tender
-531100100,
-531100110,
-531100120,Golden Horn Tender
-531200000,
-531200010,
-532000700,Golden Horn Tender
-532000701,Revered Spirit Ash
-532000710,Golden Horn Tender
-532000711,Revered Spirit Ash
-536000000,Human Bone Shard
-536000010,Human Bone Shard
-536000020,Human Bone Shard
-536000030,Human Bone Shard
-536000040,Human Bone Shard
-536000050,Human Bone Shard
-536000100,Human Bone Shard
-536000101,Bolt
-536000110,Human Bone Shard
-536000111,Bolt
-536000120,Human Bone Shard
-536000121,Bolt
-536000200,Grave Scythe
-536000201,Human Bone Shard
-536000210,Grave Scythe
-536000211,Human Bone Shard
-536000220,Grave Scythe
-536000221,Human Bone Shard
-536000300,Sun Realm Shield
-536000301,Human Bone Shard
-536000310,Sun Realm Shield
-536000311,Human Bone Shard
-536000320,Sun Realm Shield
-536000321,Human Bone Shard
-536000400,Bandit's Curved Sword
-536000401,Bandit's Curved Sword
-536000402,Human Bone Shard
-536000410,Bandit's Curved Sword
-536000411,Bandit's Curved Sword
-536000412,Human Bone Shard
-536000420,Bandit's Curved Sword
-536000421,Bandit's Curved Sword
-536000422,Human Bone Shard
-537000000,
-538000000,Poisonbloom
-538000001,Miranda Powder
-538000100,Poisonbloom
-538000101,Miranda Powder
-538000200,Poisonbloom
-538000201,Miranda Powder
-538100000,Poisonbloom
-538100001,Miranda Powder
-538100010,Poisonbloom
-538100011,Miranda Powder
-538100100,Poisonbloom
-538100101,Miranda Powder
-538100110,Poisonbloom
-538100111,Miranda Powder
-538100200,Poisonbloom
-538100201,Miranda Powder
-538100210,Poisonbloom
-538100211,Miranda Powder
-539000000,
-539000100,
-539000200,
-539000300,
-539000400,
-539000500,
-539100000,
-539100100,
-539100200,
-539100300,
-539200000,
-540100000,Flight Pinion
-540100001,Four-Toed Fowl Foot
-540100100,Beast Horn
-540100101,Flight Pinion
-540100102,Four-Toed Fowl Foot
-540185000,Flight Pinion
-540185001,Four-Toed Fowl Foot
-540185002,Dragon's Calorbloom
-540187000,Flight Pinion
-540187001,Four-Toed Fowl Foot
-540187002,Nectarblood Burgeon
-540188000,Flight Pinion
-540188001,Four-Toed Fowl Foot
-540188002,Dragon's Calorbloom
-540194100,Spirit Calculus
-540194101,Beast Horn
-540194102,Flight Pinion
-540194103,Four-Toed Fowl Foot
-541000000,Sliver of Meat
-541000001,Beast Liver
-541000002,Thin Beast Bones
-541000003,Budding Horn
-541000100,Beast Horn
-541000101,Sliver of Meat
-541000102,Beast Liver
-541000103,Thin Beast Bones
-541000104,Budding Horn
-541080000,Sliver of Meat
-541080001,Beast Liver
-541080002,Thin Beast Bones
-541080003,Budding Horn
-541080004,Empyrean-Blood Burgeon
-541081000,Sliver of Meat
-541081001,Beast Liver
-541081002,Thin Beast Bones
-541081003,Budding Horn
-541081004,Empyrean-Blood Burgeon
-541085000,Sliver of Meat
-541085001,Beast Liver
-541085002,Thin Beast Bones
-541085003,Budding Horn
-541085004,Dragon's Calorbloom
-541087000,Sliver of Meat
-541087001,Beast Liver
-541087002,Thin Beast Bones
-541087003,Budding Horn
-541087004,Nectarblood Burgeon
-541094100,Spirit Calculus
-541094101,Beast Horn
-541094102,Sliver of Meat
-541094103,Beast Liver
-541094104,Thin Beast Bones
-541094105,Budding Horn
-542100000,Lump of Flesh
-542100001,Hefty Beast Bone
-542100002,Beast Blood
-542100100,Beast Horn
-542100101,Lump of Flesh
-542100102,Hefty Beast Bone
-542100103,Beast Blood
-542194100,Spirit Calculus
-542194101,Beast Horn
-542194102,Lump of Flesh
-542194103,Hefty Beast Bone
-542194104,Beast Blood
-543000000,Slumbering Egg
-543000100,Beast Horn
-543000101,Slumbering Egg
-543087000,Slumbering Egg
-543087001,Nectarblood Burgeon
-543094100,Spirit Calculus
-543094101,Beast Horn
-543094102,Slumbering Egg
-544000000,Lump of Flesh
-544000001,Hefty Beast Bone
-544000002,Old Fang
-544000003,Gold-Tinged Excrement
-544000100,Beast Horn
-544000101,Lump of Flesh
-544000102,Hefty Beast Bone
-544000103,Old Fang
-544000104,Gold-Tinged Excrement
-544000200,Lump of Flesh
-544000201,Hefty Beast Bone
-544000202,Old Fang
-544000203,Gold-Tinged Excrement
-544000300,Beast Horn
-544000301,Lump of Flesh
-544000302,Hefty Beast Bone
-544000303,Old Fang
-544000304,Gold-Tinged Excrement
-544090000,Lump of Flesh
-544090001,Hefty Beast Bone
-544090002,Old Fang
-544090003,Gold-Tinged Excrement
-544090004,Empyrean-Blood Burgeon
-544094100,Spirit Calculus
-544094101,Beast Horn
-544094102,Lump of Flesh
-544094103,Hefty Beast Bone
-544094104,Old Fang
-544094105,Gold-Tinged Excrement
-544094300,Spirit Calculus
-544094301,Beast Horn
-544094302,Lump of Flesh
-544094303,Hefty Beast Bone
-544094304,Old Fang
-544094305,Gold-Tinged Excrement
-545000000,Sliver of Meat
-545000001,Beast Liver
-545000002,Thin Beast Bones
-545000003,Budding Horn
-545000100,Sliver of Meat
-545000101,Beast Liver
-545000102,Thin Beast Bones
-545000103,Budding Horn
-545000200,Sliver of Meat
-545000201,Beast Liver
-545000202,Thin Beast Bones
-545000203,Budding Horn
-545000300,Sliver of Meat
-545000301,Beast Liver
-545000302,Thin Beast Bones
-545000303,Budding Horn
-545000304,Yellow Fulgurbloom
-545000400,Sliver of Meat
-545000401,Beast Liver
-545000402,Thin Beast Bones
-545000403,Budding Horn
-545000404,Yellow Fulgurbloom
-545000500,Sliver of Meat
-545000501,Beast Liver
-545000502,Thin Beast Bones
-545000503,Budding Horn
-545000504,Yellow Fulgurbloom
-545000600,Beast Horn
-545000601,Sliver of Meat
-545000602,Beast Liver
-545000603,Thin Beast Bones
-545000604,Budding Horn
-545000700,Beast Horn
-545000701,Sliver of Meat
-545000702,Beast Liver
-545000703,Thin Beast Bones
-545000704,Budding Horn
-545000800,Sliver of Meat
-545000801,Beast Liver
-545000802,Thin Beast Bones
-545000803,Budding Horn
-545000900,Sliver of Meat
-545000901,Beast Liver
-545000902,Thin Beast Bones
-545000903,Budding Horn
-545080000,Sliver of Meat
-545080001,Beast Liver
-545080002,Thin Beast Bones
-545080003,Budding Horn
-545080004,Empyrean-Blood Burgeon
-545085000,Sliver of Meat
-545085001,Beast Liver
-545085002,Thin Beast Bones
-545085003,Budding Horn
-545085004,Dragon's Calorbloom
-545087000,Sliver of Meat
-545087001,Beast Liver
-545087002,Thin Beast Bones
-545087003,Budding Horn
-545087004,Nectarblood Burgeon
-545090000,Sliver of Meat
-545090001,Beast Liver
-545090002,Thin Beast Bones
-545090003,Budding Horn
-545090004,Empyrean-Blood Burgeon
-545094600,Spirit Calculus
-545094601,Beast Horn
-545094602,Sliver of Meat
-545094603,Beast Liver
-545094604,Thin Beast Bones
-545094605,Budding Horn
-545094700,Spirit Calculus
-545094701,Beast Horn
-545094702,Sliver of Meat
-545094703,Beast Liver
-545094704,Thin Beast Bones
-545094705,Budding Horn
-546000000,Flight Pinion
-546000001,Four-Toed Fowl Foot
-546000100,Beast Horn
-546000101,Flight Pinion
-546000102,Four-Toed Fowl Foot
-546094100,Spirit Calculus
-546094101,Beast Horn
-546094102,Flight Pinion
-546094103,Four-Toed Fowl Foot
-547000000,Great Dragonfly Head
-547100000,Great Dragonfly Head
-547200000,Great Dragonfly Head
-548000000,Turtle Neck Meat
-548000001,Strip of White Flesh
-548000100,Beast Horn
-548000101,Turtle Neck Meat
-548000102,Strip of White Flesh
-548087000,Turtle Neck Meat
-548087001,Strip of White Flesh
-548087002,Nectarblood Burgeon
-548094100,Spirit Calculus
-548094101,Beast Horn
-548094102,Turtle Neck Meat
-548094103,Strip of White Flesh
-549000000,Sliver of Meat
-549000001,Beast Liver
-549000002,Thin Beast Bones
-549000100,Beast Horn
-549000101,Sliver of Meat
-549000102,Beast Liver
-549000103,Thin Beast Bones
-549085000,Sliver of Meat
-549085001,Beast Liver
-549085002,Thin Beast Bones
-549085003,Thin Beast Bones
-549087000,Sliver of Meat
-549087001,Beast Liver
-549087002,Thin Beast Bones
-549087003,Thin Beast Bones
-549094100,Spirit Calculus
-549094101,Beast Horn
-549094102,Sliver of Meat
-549094103,Beast Liver
-549094104,Thin Beast Bones
-550000000,Gas Stone
-550000001,Smithing Stone [1]
-550000002,Smithing Stone [2]
-550000003,Smithing Stone [3]
-550000004,Somber Smithing Stone [1]
-550000005,Somber Smithing Stone [2]
-550000006,Somber Smithing Stone [3]
-550000100,Gas Stone
-550000101,Smithing Stone [1]
-550000102,Smithing Stone [2]
-550000103,Smithing Stone [3]
-550000104,Somber Smithing Stone [1]
-550000105,Somber Smithing Stone [2]
-550000106,Somber Smithing Stone [3]
-550000200,Gas Stone
-550000201,Smithing Stone [1]
-550000202,Smithing Stone [2]
-550000203,Smithing Stone [3]
-550000204,Somber Smithing Stone [1]
-550000205,Somber Smithing Stone [2]
-550000206,Somber Smithing Stone [3]
-550000300,Gas Stone
-550000301,Smithing Stone [1]
-550000302,Smithing Stone [2]
-550000303,Smithing Stone [3]
-550000304,Somber Smithing Stone [1]
-550000305,Somber Smithing Stone [2]
-550000306,Somber Smithing Stone [3]
-550000400,Gas Stone
-550000401,Smithing Stone [1]
-550000402,Smithing Stone [2]
-550000403,Smithing Stone [3]
-550000404,Somber Smithing Stone [1]
-550000405,Somber Smithing Stone [2]
-550000406,Somber Smithing Stone [3]
-550000500,Gas Stone
-550000501,Smithing Stone [1]
-550000502,Smithing Stone [2]
-550000503,Smithing Stone [3]
-550000504,Somber Smithing Stone [1]
-550000505,Somber Smithing Stone [2]
-550000506,Somber Smithing Stone [3]
-550000600,Gas Stone
-550000601,Smithing Stone [1]
-550000602,Smithing Stone [2]
-550000603,Smithing Stone [3]
-550000604,Somber Smithing Stone [1]
-550000605,Somber Smithing Stone [2]
-550000606,Somber Smithing Stone [3]
-550000700,Gas Stone
-550000701,Smithing Stone [1]
-550000702,Smithing Stone [2]
-550000703,Smithing Stone [3]
-550000704,Somber Smithing Stone [1]
-550000705,Somber Smithing Stone [2]
-550000706,Somber Smithing Stone [3]
-550000800,Gas Stone
-550000801,Smithing Stone [1]
-550000802,Smithing Stone [2]
-550000803,Smithing Stone [3]
-550000804,Somber Smithing Stone [1]
-550000805,Somber Smithing Stone [2]
-550000806,Somber Smithing Stone [3]
-550100000,Silver Tear Husk
-550100001,Sharp Gravel Stone
-550100100,Silver Tear Husk
-550100101,Sharp Gravel Stone
-550100200,Silver Tear Husk
-550100201,Sharp Gravel Stone
-551100000,Ember of Messmer
-551100100,Ember of Messmer
-551200000,Ember of Messmer
-551200100,Ember of Messmer
-551300000,Ghost Glovewort [4]
-551300001,Ghost Glovewort [5]
-551300002,Ghost Glovewort [6]
-552000000,Thin Beast Bones
-552000001,Beast Blood
-552000002,Ember of Messmer
-552100000,Thin Beast Bones
-552100001,Beast Blood
-552100002,Ember of Messmer
-552200000,Thin Beast Bones
-552200001,Beast Blood
-552300000,Thin Beast Bones
-552300001,Beast Blood
-552400000,Thin Beast Bones
-552400001,Beast Blood
-552500000,Thin Beast Bones
-552500001,Beast Blood
-552600000,Thin Beast Bones
-552600001,Beast Blood
-552700000,Thin Beast Bones
-552700001,Beast Blood
-553000000,Shadow Realm Rune [1]
-553000010,Shadow Realm Rune [1]
-553000020,Shadow Realm Rune [1]
-553000100,Shadow Realm Rune [1]
-553000110,Shadow Realm Rune [1]
-553000120,Shadow Realm Rune [1]
-554000000,Thin Beast Bones
-554000001,Lump of Flesh
-554000100,Thin Beast Bones
-554000101,Lump of Flesh
-554100000,Thin Beast Bones
-554100001,Lump of Flesh
-555000000,Somber Smithing Stone [4]
-555000001,Somber Smithing Stone [5]
-555000002,Somber Smithing Stone [6]
-555000010,Somber Smithing Stone [4]
-555000011,Somber Smithing Stone [5]
-555000012,Somber Smithing Stone [6]
-555100000,
-555100100,
-555600000,Somber Smithing Stone [1]
-555600001,Somber Smithing Stone [2]
-555600002,Somber Smithing Stone [3]
-557000000,Shortbow
-557000001,Marionette Soldier Helm
-557000002,Marionette Soldier Armor
-557000003,Cuckoo Glintstone
-557000004,Arrow
-557000100,Marionette Soldier Helm
-557000101,Marionette Soldier Armor
-557000102,Cuckoo Glintstone
-557000200,Marionette Soldier Helm
-557000201,Marionette Soldier Armor
-557000202,Cuckoo Glintstone
-557000300,Marionette Soldier Helm
-557000301,Marionette Soldier Armor
-557000302,Cuckoo Glintstone
-557000400,Spiked Spear
-557000401,Marionette Soldier Helm
-557000402,Marionette Soldier Armor
-557000403,Cuckoo Glintstone
-558000000,
-558000100,
-558100000,
-559000000,Glass Shard
-559000001,Smithing Stone [1]
-559000002,Smithing Stone [2]
-559000003,Smithing Stone [3]
-559000100,Glass Shard
-559000101,Thin Beast Bones
-559000102,Hefty Beast Bone
-559000103,Smithing Stone [1]
-559000104,Smithing Stone [2]
-559000105,Smithing Stone [3]
-559000200,Glass Shard
-559000300,Glass Shard
-559000400,Glass Shard
-559000401,Congealed Putrescence
-559000402,Smithing Stone [1]
-559000403,Smithing Stone [2]
-559000404,Smithing Stone [3]
-559000500,Glass Shard
-559000501,Sharp Gravel Stone
-559000502,Smithing Stone [1]
-559000503,Smithing Stone [2]
-559000504,Smithing Stone [3]
-559100000,Glass Shard
-559100100,Glass Shard
-559100700,Congealed Putrescence
-559100701,Smithing Stone [8]
-559100702,Congealed Putrescence
-560000000,Scimitar
-560000001,Scripture Wooden Shield
-560000002,Human Bone Shard
-560000003,Smoldering Butterfly
-560000004,Mushroom
-560000010,Scimitar
-560000011,Human Bone Shard
-560000020,Scimitar
-560000021,Human Bone Shard
-560000100,Grossmesser
-560000101,Human Bone Shard
-560000110,Grossmesser
-560000121,Human Bone Shard
-560000200,Longbow
-560000201,Human Bone Shard
-560000202,Arrow
-560000210,Longbow
-560000211,Human Bone Shard
-560000212,Arrow
-560000300,Human Bone Shard
-560000301,Smoldering Butterfly
-560000302,Mushroom
-560000310,Human Bone Shard
-560000311,Black Pyrefly
-560000312,Redflesh Mushroom
-560000320,Human Bone Shard
-560000321,Black Pyrefly
-560000322,Redflesh Mushroom
-560000330,Human Bone Shard
-560000331,Black Pyrefly
-560000332,Redflesh Mushroom
-562000000,
-563000000,Strip of White Flesh
-563000100,Strip of White Flesh
-563000101,Crab Eggs
-563000200,Strip of White Flesh
-563000201,Smithing Stone [5]
-563000202,Smithing Stone [6]
-563000203,Smithing Stone [7]
-563000700,Strip of White Flesh
-563000701,Smithing Stone [5]
-563000702,Smithing Stone [6]
-563000703,Smithing Stone [7]
-563000704,Smithing Stone [8]
-564000000,Crab Eggs
-564000001,Strip of White Flesh
-564000100,Crab Eggs
-564000101,Strip of White Flesh
-564100000,Crab Eggs
-564100001,Strip of White Flesh
-565100000,Dagger
-565100001,Common Soldier Helm
-565100002,Common Soldier Cloth Armor
-565100003,Common Soldier Gauntlets
-565100004,Common Soldier Greaves
-565100005,Bolt
-565100010,Dagger
-565100011,Common Soldier Helm
-565100012,Common Soldier Cloth Armor
-565100013,Common Soldier Gauntlets
-565100014,Common Soldier Greaves
-565100015,Bolt
-565100020,Dagger
-565100021,Common Soldier Helm
-565100022,Common Soldier Cloth Armor
-565100023,Common Soldier Gauntlets
-565100024,Common Soldier Greaves
-565100025,Black Pyrefly
-565100026,Redflesh Mushroom
-565100030,Dagger
-565100031,Common Soldier Helm
-565100032,Common Soldier Cloth Armor
-565100033,Common Soldier Gauntlets
-565100034,Common Soldier Greaves
-565100035,Bolt
-565100040,Dagger
-565100041,Common Soldier Helm
-565100042,Common Soldier Cloth Armor
-565100043,Common Soldier Gauntlets
-565100044,Common Soldier Greaves
-565100045,Bolt
-565100050,Dagger
-565100051,Common Soldier Helm
-565100052,Common Soldier Cloth Armor
-565100053,Common Soldier Gauntlets
-565100054,Common Soldier Greaves
-565100055,Bolt
-565100060,Dagger
-565100061,Common Soldier Helm
-565100062,Common Soldier Cloth Armor
-565100063,Common Soldier Gauntlets
-565100064,Common Soldier Greaves
-565100065,Bolt
-565100070,Dagger
-565100071,Common Soldier Helm
-565100072,Common Soldier Cloth Armor
-565100073,Common Soldier Gauntlets
-565100074,Common Soldier Greaves
-565100075,Bolt
-565100080,Dagger
-565100081,Common Soldier Helm
-565100082,Common Soldier Cloth Armor
-565100083,Common Soldier Gauntlets
-565100084,Common Soldier Greaves
-565100085,Bolt
-565100090,Dagger
-565100091,Common Soldier Helm
-565100092,Common Soldier Cloth Armor
-565100093,Common Soldier Gauntlets
-565100094,Common Soldier Greaves
-565100095,Bolt
-565100100,Short Sword
-565100101,Common Soldier Helm
-565100102,Common Soldier Cloth Armor
-565100103,Common Soldier Gauntlets
-565100104,Common Soldier Greaves
-565100105,Bolt
-565100110,Short Sword
-565100111,Common Soldier Helm
-565100112,Common Soldier Cloth Armor
-565100113,Common Soldier Gauntlets
-565100114,Common Soldier Greaves
-565100115,Bolt
-565100120,Short Sword
-565100121,Common Soldier Helm
-565100122,Common Soldier Cloth Armor
-565100123,Common Soldier Gauntlets
-565100124,Common Soldier Greaves
-565100125,Black Pyrefly
-565100126,Redflesh Mushroom
-565100130,Short Sword
-565100131,Common Soldier Helm
-565100132,Common Soldier Cloth Armor
-565100133,Common Soldier Gauntlets
-565100134,Common Soldier Greaves
-565100135,Bolt
-565100200,Soldier's Crossbow
-565100201,Common Soldier Helm
-565100202,Common Soldier Cloth Armor
-565100203,Common Soldier Gauntlets
-565100204,Common Soldier Greaves
-565100205,Bolt
-565100300,Short Spear
-565100301,Common Soldier Helm
-565100302,Common Soldier Cloth Armor
-565100303,Common Soldier Gauntlets
-565100304,Common Soldier Greaves
-565100305,Bolt
-565100800,Dagger
-565100801,Common Soldier Helm
-565100802,Common Soldier Cloth Armor
-565100803,Common Soldier Gauntlets
-565100804,Common Soldier Greaves
-565100805,Furnace Visage
-566100000,Vulgar Militia Saw
-566100001,Shadow Militiaman Helm
-566100002,Shadow Militiaman Armor
-566100003,Shadow Militiaman Gauntlets
-566100004,Shadow Militiaman Greaves
-566100005,Kukri
-566100100,Vulgar Militia Saw
-566100101,Shadow Militiaman Helm
-566100102,Shadow Militiaman Armor
-566100103,Shadow Militiaman Gauntlets
-566100104,Shadow Militiaman Greaves
-566100105,Kukri
-566100200,Vulgar Militia Shotel
-566100201,Shadow Militiaman Helm
-566100202,Shadow Militiaman Armor
-566100203,Shadow Militiaman Gauntlets
-566100204,Shadow Militiaman Greaves
-566100205,Kukri
-566100300,Vulgar Militia Shotel
-566100301,Shadow Militiaman Helm
-566100302,Shadow Militiaman Armor
-566100303,Shadow Militiaman Gauntlets
-566100304,Shadow Militiaman Greaves
-566100305,Kukri
-566100400,Shadow Militiaman Helm
-566100401,Shadow Militiaman Armor
-566100402,Shadow Militiaman Gauntlets
-566100403,Shadow Militiaman Greaves
-566100404,Kukri
-566100500,Shadow Militiaman Helm
-566100501,Shadow Militiaman Armor
-566100502,Shadow Militiaman Gauntlets
-566100503,Shadow Militiaman Greaves
-566100504,Kukri
+500000000,[Commander Gaius] None
+501000000,[Golden Hippopotamus] None
+501100000,[Golden Hippopotamus] None
+502000000,[Putrescent Knight] None
+502000100,[Putrescent Knight] None
+503000000,[Romina- Saint of the Bud] None
+504000000,[Curseblade Labirith] Curseblade's Cirque
+504000001,[Curseblade Labirith] Curseblade Mask
+504000002,[Curseblade Labirith] Ascetic's Loincloth
+504000003,[Curseblade Labirith] Ascetic's Wrist Guards
+504000004,[Curseblade Labirith] Ascetic's Ankle Guards
+504000100,[Curseblade Labirith] Curseblade's Cirque
+504000101,[Curseblade Labirith] Curseblade Mask
+504000102,[Curseblade Labirith] Ascetic's Loincloth
+504000103,[Curseblade Labirith] Ascetic's Wrist Guards
+504000104,[Curseblade Labirith] Ascetic's Ankle Guards
+504000200,[Curseblade Labirith] Curseblade's Cirque
+504000201,[Curseblade Labirith] Curseblade Mask
+504000202,[Curseblade Labirith] Ascetic's Loincloth
+504000203,[Curseblade Labirith] Ascetic's Wrist Guards
+504000204,[Curseblade Labirith] Ascetic's Ankle Guards
+504000300,[Curseblade Labirith] Curseblade's Cirque
+504000301,[Curseblade Labirith] Curseblade Mask
+504000302,[Curseblade Labirith] Ascetic's Loincloth
+504000303,[Curseblade Labirith] Ascetic's Wrist Guards
+504000304,[Curseblade Labirith] Ascetic's Ankle Guards
+505000000,[Midra- Lord of Frenzied Flame] None
+505100000,[Midra- Lord of Frenzied Flame] None
+506000000,[Lamprey] Pearlescent Scale
+506000010,[Lamprey] Pearlescent Scale
+506000011,[Lamprey] Finger Mimic
+506000100,[Lamprey] Pearlescent Scale
+506000110,[Lamprey] Pearlescent Scale
+506000111,[Lamprey] Finger Mimic
+506000200,[Lamprey] Pearlescent Scale
+506000300,[Lamprey] Pearlescent Scale
+506000310,[Lamprey] Pearlescent Scale
+506000311,[Lamprey] Finger Mimic
+506000400,[Lamprey] Pearlescent Scale
+506000410,[Lamprey] Pearlescent Scale
+506000411,[Lamprey] Finger Mimic
+506100000,[Lamprey] Pearlescent Scale
+506100010,[Lamprey] Pearlescent Scale
+506100011,[Lamprey] Finger Mimic
+507000000,[Death Knight] None
+507000100,[Death Knight] None
+508000000,[Bloodfiend] Sacred Bloody Flesh
+508000001,[Bloodfiend] String
+508000010,[Bloodfiend] Sacred Bloody Flesh
+508000011,[Bloodfiend] String
+508000020,[Bloodfiend] Sacred Bloody Flesh
+508000021,[Bloodfiend] String
+508000030,[Bloodfiend] Sacred Bloody Flesh
+508000031,[Bloodfiend] String
+508000040,[Bloodfiend] Sacred Bloody Flesh
+508000041,[Bloodfiend] String
+508000110,[Bloodfiend] Bloodfiend's Fork
+508000111,[Bloodfiend] Sacred Bloody Flesh
+508000112,[Bloodfiend] String
+508000120,[Bloodfiend] Bloodfiend's Fork
+508000121,[Bloodfiend] Sacred Bloody Flesh
+508000122,[Bloodfiend] String
+508000130,[Bloodfiend] Bloodfiend's Fork
+508000131,[Bloodfiend] Sacred Bloody Flesh
+508000132,[Bloodfiend] String
+508000140,[Bloodfiend] Bloodfiend's Fork
+508000141,[Bloodfiend] Sacred Bloody Flesh
+508000142,[Bloodfiend] String
+508000150,[Bloodfiend] Bloodfiend's Fork
+508000151,[Bloodfiend] Sacred Bloody Flesh
+508000152,[Bloodfiend] String
+508000200,[Bloodfiend] Sacred Bloody Flesh
+508000201,[Bloodfiend] String
+508000300,[Bloodfiend] Bloodfiend's Fork
+508000301,[Bloodfiend] Sacred Bloody Flesh
+508000302,[Bloodfiend] String
+508000303,[Bloodfiend] Nectarblood Burgeon
+508000400,[Bloodfiend] Bloodfiend's Fork
+508000401,[Bloodfiend] Sacred Bloody Flesh
+508000402,[Bloodfiend] String
+508000403,[Bloodfiend] Nectarblood Burgeon
+508000700,[Bloodfiend] Sacred Bloody Flesh
+508000701,[Bloodfiend] String
+508000702,[Bloodfiend] Bloodfiend's Arm
+508095200,[Bloodfiend] Sacred Bloody Flesh
+508095201,[Bloodfiend] String
+508095202,[Bloodfiend] Bloodfiend's Sacred Spear
+508100000,[Chief Bloodfiend] None
+508100700,[Chief Bloodfiend] Sacred Bloody Flesh
+508100710,[Chief Bloodfiend] Sacred Bloody Flesh
+509000000,[Gravebird] Smithing Stone [3]
+509000001,[Gravebird] Smithing Stone [4]
+509000002,[Gravebird] Smithing Stone [5]
+509000100,[Gravebird] Smithing Stone [3]
+509000101,[Gravebird] Smithing Stone [4]
+509000102,[Gravebird] Smithing Stone [5]
+509000200,[Gravebird] Smithing Stone [3]
+509000201,[Gravebird] Smithing Stone [4]
+509000202,[Gravebird] Smithing Stone [5]
+509000300,[Gravebird] Smithing Stone [3]
+509000301,[Gravebird] Smithing Stone [4]
+509000302,[Gravebird] Smithing Stone [5]
+509000400,[Gravebird] Smithing Stone [3]
+509000401,[Gravebird] Smithing Stone [4]
+509000402,[Gravebird] Smithing Stone [5]
+509000500,[Gravebird] Smithing Stone [3]
+509000501,[Gravebird] Smithing Stone [4]
+509000502,[Gravebird] Smithing Stone [5]
+511000000,[Spirit Eel] Grave Glovewort [1]
+511000001,[Spirit Eel] Grave Glovewort [2]
+511000002,[Spirit Eel] Grave Glovewort [3]
+511000003,[Spirit Eel] Ghost Glovewort [1]
+511000004,[Spirit Eel] Ghost Glovewort [2]
+511000005,[Spirit Eel] Ghost Glovewort [3]
+511000100,[Spirit Eel] Grave Glovewort [1]
+511000101,[Spirit Eel] Grave Glovewort [2]
+511000102,[Spirit Eel] Grave Glovewort [3]
+511000103,[Spirit Eel] Ghost Glovewort [1]
+511000104,[Spirit Eel] Ghost Glovewort [2]
+511000105,[Spirit Eel] Ghost Glovewort [3]
+511000200,[Spirit Eel] Grave Glovewort [1]
+511000201,[Spirit Eel] Grave Glovewort [2]
+511000202,[Spirit Eel] Grave Glovewort [3]
+511000203,[Spirit Eel] Ghost Glovewort [1]
+511000204,[Spirit Eel] Ghost Glovewort [2]
+511000205,[Spirit Eel] Ghost Glovewort [3]
+511000300,[Spirit Eel] Grave Glovewort [1]
+511000301,[Spirit Eel] Grave Glovewort [2]
+511000302,[Spirit Eel] Grave Glovewort [3]
+511000303,[Spirit Eel] Ghost Glovewort [1]
+511000304,[Spirit Eel] Ghost Glovewort [2]
+511000305,[Spirit Eel] Ghost Glovewort [3]
+511000400,[Spirit Eel] Grave Glovewort [7]
+511000401,[Spirit Eel] Grave Glovewort [8]
+511000402,[Spirit Eel] Grave Glovewort [9]
+511000403,[Spirit Eel] Ghost Glovewort [7]
+511000404,[Spirit Eel] Ghost Glovewort [8]
+511000405,[Spirit Eel] Ghost Glovewort [9]
+511000500,[Spirit Eel] Grave Glovewort [7]
+511000501,[Spirit Eel] Grave Glovewort [8]
+511000502,[Spirit Eel] Grave Glovewort [9]
+511000503,[Spirit Eel] Ghost Glovewort [7]
+511000504,[Spirit Eel] Ghost Glovewort [8]
+511000505,[Spirit Eel] Ghost Glovewort [9]
+511000600,[Spirit Eel] Grave Glovewort [7]
+511000601,[Spirit Eel] Grave Glovewort [8]
+511000602,[Spirit Eel] Grave Glovewort [9]
+511000603,[Spirit Eel] Ghost Glovewort [7]
+511000604,[Spirit Eel] Ghost Glovewort [8]
+511000605,[Spirit Eel] Ghost Glovewort [9]
+511000700,[Spirit Eel] Grave Glovewort [7]
+511000701,[Spirit Eel] Grave Glovewort [8]
+511000702,[Spirit Eel] Grave Glovewort [9]
+511000703,[Spirit Eel] Ghost Glovewort [7]
+511000704,[Spirit Eel] Ghost Glovewort [8]
+511000705,[Spirit Eel] Ghost Glovewort [9]
+512000000,[Bayle the Dread] None
+513000000,[Messmer the Impaler] None
+513000100,[Messmer the Impaler] None
+513100000,[Messmer the Impaler] None
+513200000,[Messmer the Impaler] None
+514000000,[Messmer: Base Serpent] None
+514100000,[Messmer: Base Serpent] None
+516000000,[Fire Knight] Fire Knight's Greatsword
+516000001,[Fire Knight] Fire Knight Helm
+516000002,[Fire Knight] Fire Knight Armor
+516000003,[Fire Knight] Fire Knight Gauntlets
+516000004,[Fire Knight] Fire Knight Greaves
+516000005,[Fire Knight] Smithing Stone [6]
+516000006,[Fire Knight] Smithing Stone [7]
+516000007,[Fire Knight] Smithing Stone [8]
+516000010,[Fire Knight] None
+516000020,[Fire Knight] None
+516000100,[Fire Knight] Fire Knight's Shortsword
+516000101,[Fire Knight] Fire Knight Helm
+516000102,[Fire Knight] Fire Knight Armor
+516000103,[Fire Knight] Fire Knight Gauntlets
+516000104,[Fire Knight] Fire Knight Greaves
+516000105,[Fire Knight] Smithing Stone [6]
+516000106,[Fire Knight] Smithing Stone [7]
+516000107,[Fire Knight] Smithing Stone [8]
+516000110,[Fire Knight] None
+516000120,[Fire Knight] None
+516000200,[Fire Knight] Fire Knight Helm
+516000201,[Fire Knight] Fire Knight Armor
+516000202,[Fire Knight] Fire Knight Gauntlets
+516000203,[Fire Knight] Fire Knight Greaves
+516000204,[Fire Knight] Smithing Stone [6]
+516000205,[Fire Knight] Smithing Stone [7]
+516000206,[Fire Knight] Smithing Stone [8]
+516000210,[Fire Knight] None
+516000220,[Fire Knight] Fire Knight Helm
+516000221,[Fire Knight] Fire Knight Armor
+516000222,[Fire Knight] Fire Knight Gauntlets
+516000223,[Fire Knight] Fire Knight Greaves
+516000224,[Fire Knight] Smithing Stone [6]
+516000225,[Fire Knight] Smithing Stone [7]
+516000226,[Fire Knight] Smithing Stone [8]
+516000230,[Fire Knight] None
+517000000,[Furnace Golem] None
+517000100,[Furnace Golem] None
+517000200,[Furnace Golem] None
+519000000,[Spider Scorpion] Scorpion Liver
+519000001,[Spider Scorpion] Somber Smithing Stone [2]
+519000002,[Spider Scorpion] Somber Smithing Stone [3]
+519000003,[Spider Scorpion] Somber Smithing Stone [4]
+519000010,[Spider Scorpion] Scorpion Liver
+519000011,[Spider Scorpion] Somber Smithing Stone [2]
+519000012,[Spider Scorpion] Somber Smithing Stone [3]
+519000013,[Spider Scorpion] Somber Smithing Stone [4]
+519000100,[Spider Scorpion] Scorpion Liver
+519000101,[Spider Scorpion] Somber Smithing Stone [3]
+519000102,[Spider Scorpion] Somber Smithing Stone [4]
+519000103,[Spider Scorpion] Somber Smithing Stone [5]
+519000200,[Spider Scorpion] Scorpion Liver
+519000201,[Spider Scorpion] Somber Smithing Stone [2]
+519000202,[Spider Scorpion] Somber Smithing Stone [3]
+519000203,[Spider Scorpion] Somber Smithing Stone [4]
+519000300,[Spider Scorpion] Scorpion Liver
+519000301,[Spider Scorpion] Somber Smithing Stone [3]
+519000302,[Spider Scorpion] Somber Smithing Stone [4]
+519000303,[Spider Scorpion] Somber Smithing Stone [5]
+519000310,[Spider Scorpion] Scorpion Liver
+519000311,[Spider Scorpion] Somber Smithing Stone [3]
+519000312,[Spider Scorpion] Somber Smithing Stone [4]
+519000313,[Spider Scorpion] Somber Smithing Stone [5]
+519200000,[Spider Scorpion] Scorpion Liver
+519200001,[Spider Scorpion] Somber Smithing Stone [4]
+519200002,[Spider Scorpion] Somber Smithing Stone [5]
+519200003,[Spider Scorpion] Somber Smithing Stone [6]
+519300000,[Spider Scorpion] Scorpion Liver
+519300001,[Spider Scorpion] Somber Smithing Stone [1]
+519300002,[Spider Scorpion] Somber Smithing Stone [2]
+520000000,[Metyr- Mother of Fingers] None
+521000000,[Divine Beast Dancing Lion] None
+522000000,[Promised Consort Radahn] None
+522000100,[Promised Consort Radahn] None
+522000200,[Promised Consort Radahn] None
+522100000,[Miquella's Arms] None
+523000000,[Scadutree Avatar] None
+524000100,[Commoner (Pot)] Smithing Stone [2]
+524000101,[Commoner (Pot)] Smithing Stone [3]
+524000102,[Commoner (Pot)] Smithing Stone [4]
+524000200,[Commoner (Pot)] Ember of Messmer
+524000201,[Commoner (Pot)] Beast Horn
+524000300,[Commoner (Pot)] Ember of Messmer
+524000301,[Commoner (Pot)] Beast Horn
+524000310,[Commoner (Pot)] Ember of Messmer
+524000311,[Commoner (Pot)] Beast Horn
+524000320,[Commoner (Pot)] Ember of Messmer
+524000321,[Commoner (Pot)] Beast Horn
+524000330,[Commoner (Pot)] Beast Horn
+524000340,[Commoner (Pot)] Beast Horn
+524080000,[Commoner (Pot)] Rada Fruit
+524080001,[Commoner (Pot)] Redflesh Mushroom
+524080002,[Commoner (Pot)] Whiteflesh Mushroom
+524080003,[Commoner (Pot)] Knot Resin
+524080010,[Commoner (Pot)] Frozen Maggot
+524080700,[Commoner (Pot)] Rada Fruit
+524080701,[Commoner (Pot)] Redflesh Mushroom
+524080702,[Commoner (Pot)] Whiteflesh Mushroom
+524080703,[Commoner (Pot)] Knot Resin
+524080704,[Commoner (Pot)] Scadutree Fragment
+524080705,[Commoner (Pot)] Silver Horn Tender
+524080710,[Commoner (Pot)] Rada Fruit
+524080711,[Commoner (Pot)] Redflesh Mushroom
+524080712,[Commoner (Pot)] Whiteflesh Mushroom
+524080713,[Commoner (Pot)] Knot Resin
+524080714,[Commoner (Pot)] Scadutree Fragment
+524080715,[Commoner (Pot)] Silver Horn Tender
+524081000,[Commoner (Pot)] Rada Fruit
+524081001,[Commoner (Pot)] Redflesh Mushroom
+524081002,[Commoner (Pot)] Whiteflesh Mushroom
+524081003,[Commoner (Pot)] Knot Resin
+524083000,[Commoner (Pot)] Whiteflesh Mushroom
+524083001,[Commoner (Pot)] Knot Resin
+524083002,[Commoner (Pot)] Deep-Purple Lily
+524084020,[Commoner (Pot)] Frozen Maggot
+524086000,[Commoner (Pot)] Silver Horn Tender
+524086001,[Commoner (Pot)] Winter-Lantern Fly
+524086100,[Commoner (Pot)] Silver Horn Tender
+524086101,[Commoner (Pot)] Winter-Lantern Fly
+524086102,[Commoner (Pot)] Surging Frenzied Flame
+524088000,[Commoner (Pot)] Silver Horn Tender
+524088001,[Commoner (Pot)] Black Pyrefly
+524088700,[Commoner (Pot)] Silver Horn Tender
+524088701,[Commoner (Pot)] Black Pyrefly
+524088702,[Commoner (Pot)] Revered Spirit Ash
+524088703,[Commoner (Pot)] Golden Horn Tender
+524090000,[Commoner (Pot)] Rada Fruit
+524090001,[Commoner (Pot)] Redflesh Mushroom
+524090002,[Commoner (Pot)] Whiteflesh Mushroom
+524090003,[Commoner (Pot)] Knot Resin
+524090010,[Commoner (Pot)] Frozen Maggot
+524090700,[Commoner (Pot)] Rada Fruit
+524090701,[Commoner (Pot)] Redflesh Mushroom
+524090702,[Commoner (Pot)] Whiteflesh Mushroom
+524090703,[Commoner (Pot)] Knot Resin
+524090704,[Commoner (Pot)] Scadutree Fragment
+524090705,[Commoner (Pot)] Golden Horn Tender
+524091000,[Commoner (Pot)] Rada Fruit
+524091001,[Commoner (Pot)] Dewgem
+524091100,[Commoner (Pot)] Rada Fruit
+524091101,[Commoner (Pot)] Dewgem
+524091102,[Commoner (Pot)] Spiritgrave Stone
+524094000,[Commoner (Pot)] Redflesh Mushroom
+524094001,[Commoner (Pot)] Whiteflesh Mushroom
+524094002,[Commoner (Pot)] Dewgem
+524094003,[Commoner (Pot)] Rauh Burrow
+524094100,[Commoner (Pot)] Redflesh Mushroom
+524094101,[Commoner (Pot)] Whiteflesh Mushroom
+524094102,[Commoner (Pot)] Dewgem
+524094103,[Commoner (Pot)] Rauh Burrow
+524094104,[Commoner (Pot)] Fire Spritestone
+524094700,[Commoner (Pot)] Redflesh Mushroom
+524094701,[Commoner (Pot)] Whiteflesh Mushroom
+524094702,[Commoner (Pot)] Dewgem
+524094703,[Commoner (Pot)] Rauh Burrow
+524094704,[Commoner (Pot)] Spirit Calculus
+524094710,[Commoner (Pot)] Redflesh Mushroom
+524094711,[Commoner (Pot)] Whiteflesh Mushroom
+524094712,[Commoner (Pot)] Dewgem
+524094713,[Commoner (Pot)] Rauh Burrow
+524094714,[Commoner (Pot)] Scadutree Fragment
+524094715,[Commoner (Pot)] Golden Horn Tender
+524094720,[Commoner (Pot)] Redflesh Mushroom
+524094721,[Commoner (Pot)] Whiteflesh Mushroom
+524094722,[Commoner (Pot)] Dewgem
+524094723,[Commoner (Pot)] Rauh Burrow
+524094724,[Commoner (Pot)] Spirit Calculus
+524094730,[Commoner (Pot)] Redflesh Mushroom
+524094731,[Commoner (Pot)] Whiteflesh Mushroom
+524094732,[Commoner (Pot)] Dewgem
+524094733,[Commoner (Pot)] Rauh Burrow
+524094734,[Commoner (Pot)] Revered Spirit Ash
+524094735,[Commoner (Pot)] Silver Horn Tender
+524094740,[Commoner (Pot)] Redflesh Mushroom
+524094741,[Commoner (Pot)] Whiteflesh Mushroom
+524094742,[Commoner (Pot)] Dewgem
+524094743,[Commoner (Pot)] Rauh Burrow
+524094744,[Commoner (Pot)] Revered Spirit Ash
+524094745,[Commoner (Pot)] Silver Horn Tender
+524095000,[Commoner (Pot)] Rada Fruit
+524095001,[Commoner (Pot)] Redflesh Mushroom
+524095002,[Commoner (Pot)] Whiteflesh Mushroom
+524095003,[Commoner (Pot)] Knot Resin
+524095004,[Commoner (Pot)] Rauh Burrow
+524095110,[Commoner (Pot)] Rada Fruit
+524095111,[Commoner (Pot)] Redflesh Mushroom
+524095112,[Commoner (Pot)] Whiteflesh Mushroom
+524095113,[Commoner (Pot)] Knot Resin
+524095114,[Commoner (Pot)] Rauh Burrow
+524095115,[Commoner (Pot)] Spiritgrave Stone
+524095700,[Commoner (Pot)] Rada Fruit
+524095701,[Commoner (Pot)] Redflesh Mushroom
+524095702,[Commoner (Pot)] Whiteflesh Mushroom
+524095703,[Commoner (Pot)] Knot Resin
+524095704,[Commoner (Pot)] Rauh Burrow
+524095705,[Commoner (Pot)] Rauh Burrow
+524095706,[Commoner (Pot)] Silver Horn Tender
+524095710,[Commoner (Pot)] Rada Fruit
+524095711,[Commoner (Pot)] Redflesh Mushroom
+524095712,[Commoner (Pot)] Whiteflesh Mushroom
+524095713,[Commoner (Pot)] Knot Resin
+524095714,[Commoner (Pot)] Rauh Burrow
+524095715,[Commoner (Pot)] Antiquity Scholar's Cookbook [1]
+524095716,[Commoner (Pot)] Fire Spritestone
+524100000,[Commoner] Smithing Stone [4]
+524100001,[Commoner] Smithing Stone [5]
+524100002,[Commoner] Smithing Stone [6]
+525000000,[Horned Warrior] Horned Warrior's Sword
+525000001,[Horned Warrior] Horned Warrior Helm
+525000002,[Horned Warrior] Horned Warrior Armor
+525000003,[Horned Warrior] Horned Warrior Gauntlets
+525000004,[Horned Warrior] Horned Warrior Greaves
+525000005,[Horned Warrior] Somber Smithing Stone [7]
+525000006,[Horned Warrior] Somber Smithing Stone [8]
+525000007,[Horned Warrior] Somber Smithing Stone [9]
+525000010,[Horned Warrior] Horned Warrior's Sword
+525000011,[Horned Warrior] Divine Bird Helm
+525000012,[Horned Warrior] Divine Bird Warrior Armor
+525000013,[Horned Warrior] Divine Bird Warrior Gauntlets
+525000014,[Horned Warrior] Divine Bird Warrior Greaves
+525000015,[Horned Warrior] Somber Smithing Stone [8]
+525000016,[Horned Warrior] Somber Smithing Stone [9]
+525000100,[Horned Warrior] Horned Warrior Helm
+525000101,[Horned Warrior] Horned Warrior Armor
+525000102,[Horned Warrior] Horned Warrior Gauntlets
+525000103,[Horned Warrior] Horned Warrior Greaves
+525000104,[Horned Warrior] Somber Smithing Stone [7]
+525000105,[Horned Warrior] Somber Smithing Stone [8]
+525000106,[Horned Warrior] Somber Smithing Stone [9]
+525000110,[Horned Warrior] Divine Beast Helm
+525000111,[Horned Warrior] Divine Beast Warrior Armor
+525000112,[Horned Warrior] Somber Smithing Stone [8]
+525000113,[Horned Warrior] Somber Smithing Stone [9]
+525000120,[Horned Warrior] Divine Beast Helm
+525000121,[Horned Warrior] Divine Beast Warrior Armor
+525000122,[Horned Warrior] Somber Smithing Stone [8]
+525000123,[Horned Warrior] Somber Smithing Stone [9]
+525000130,[Horned Warrior] Divine Beast Helm
+525000131,[Horned Warrior] Divine Beast Warrior Armor
+525000132,[Horned Warrior] Somber Smithing Stone [8]
+525000133,[Horned Warrior] Somber Smithing Stone [9]
+525000140,[Horned Warrior] None
+525000200,[Horned Warrior] Somber Smithing Stone [7]
+525000201,[Horned Warrior] Somber Smithing Stone [8]
+525000202,[Horned Warrior] Somber Smithing Stone [9]
+525100000,[Horned Shaman] Somber Smithing Stone [7]
+525100001,[Horned Shaman] Somber Smithing Stone [8]
+525100002,[Horned Shaman] Somber Smithing Stone [9]
+526000000,[Golem Smith] Smithing Stone [5]
+526000001,[Golem Smith] Smithing Stone [6]
+526000002,[Golem Smith] Smithing Stone [7]
+526000003,[Golem Smith] Somber Smithing Stone [6]
+526000004,[Golem Smith] Somber Smithing Stone [7]
+526000005,[Golem Smith] Somber Smithing Stone [8]
+526000010,[Golem Smith] Smithing Stone [5]
+526000011,[Golem Smith] Smithing Stone [6]
+526000012,[Golem Smith] Smithing Stone [7]
+526000013,[Golem Smith] Somber Smithing Stone [6]
+526000014,[Golem Smith] Somber Smithing Stone [7]
+526000015,[Golem Smith] Somber Smithing Stone [8]
+526000020,[Golem Smith] Smithing Stone [5]
+526000021,[Golem Smith] Smithing Stone [6]
+526000022,[Golem Smith] Smithing Stone [7]
+526000023,[Golem Smith] Somber Smithing Stone [6]
+526000024,[Golem Smith] Somber Smithing Stone [7]
+526000025,[Golem Smith] Somber Smithing Stone [8]
+526000100,[Golem Smith] Smithing Stone [5]
+526000101,[Golem Smith] Smithing Stone [6]
+526000102,[Golem Smith] Smithing Stone [7]
+526000103,[Golem Smith] Somber Smithing Stone [6]
+526000104,[Golem Smith] Somber Smithing Stone [7]
+526000105,[Golem Smith] Somber Smithing Stone [8]
+526000110,[Golem Smith] Smithing Stone [5]
+526000111,[Golem Smith] Smithing Stone [6]
+526000112,[Golem Smith] Smithing Stone [7]
+526000113,[Golem Smith] Somber Smithing Stone [6]
+526000114,[Golem Smith] Somber Smithing Stone [7]
+526000115,[Golem Smith] Somber Smithing Stone [8]
+526000120,[Golem Smith] Smithing Stone [5]
+526000121,[Golem Smith] Smithing Stone [6]
+526000122,[Golem Smith] Smithing Stone [7]
+526000123,[Golem Smith] Somber Smithing Stone [6]
+526000124,[Golem Smith] Somber Smithing Stone [7]
+526000125,[Golem Smith] Somber Smithing Stone [8]
+526000200,[Golem Smith] Smithing Stone [5]
+526000201,[Golem Smith] Smithing Stone [6]
+526000202,[Golem Smith] Smithing Stone [7]
+526000203,[Golem Smith] Somber Smithing Stone [6]
+526000204,[Golem Smith] Somber Smithing Stone [7]
+526000205,[Golem Smith] Somber Smithing Stone [8]
+526000210,[Golem Smith] Smithing Stone [5]
+526000211,[Golem Smith] Smithing Stone [6]
+526000212,[Golem Smith] Smithing Stone [7]
+526000213,[Golem Smith] Somber Smithing Stone [6]
+526000214,[Golem Smith] Somber Smithing Stone [7]
+526000215,[Golem Smith] Somber Smithing Stone [8]
+526000220,[Golem Smith] Golem Fist
+526000221,[Golem Smith] Smithing Stone [5]
+526000222,[Golem Smith] Smithing Stone [6]
+526000223,[Golem Smith] Smithing Stone [7]
+526000224,[Golem Smith] Somber Smithing Stone [6]
+526000225,[Golem Smith] Somber Smithing Stone [7]
+526000226,[Golem Smith] Somber Smithing Stone [8]
+526000230,[Golem Smith] Golem Fist
+526000231,[Golem Smith] Smithing Stone [5]
+526000232,[Golem Smith] Smithing Stone [6]
+526000233,[Golem Smith] Smithing Stone [7]
+526000234,[Golem Smith] Somber Smithing Stone [6]
+526000235,[Golem Smith] Somber Smithing Stone [7]
+526000236,[Golem Smith] Somber Smithing Stone [8]
+526000240,[Golem Smith] Smithing Stone [5]
+526000241,[Golem Smith] Smithing Stone [6]
+526000242,[Golem Smith] Smithing Stone [7]
+526000243,[Golem Smith] Somber Smithing Stone [6]
+526000244,[Golem Smith] Somber Smithing Stone [7]
+526000245,[Golem Smith] Somber Smithing Stone [8]
+527000000,[Jar Innards] Innard Meat
+527000001,[Jar Innards] Human Bone Shard
+527000100,[Jar Innards] Innard Meat
+527000101,[Jar Innards] Human Bone Shard
+527000200,[Jar Innards] Innard Meat
+527000201,[Jar Innards] Human Bone Shard
+527100000,[Jar Innards] Innard Meat
+527100001,[Jar Innards] Human Bone Shard
+527100100,[Jar Innards] Innard Meat
+527100101,[Jar Innards] Human Bone Shard
+527100200,[Jar Innards] Innard Meat
+527100201,[Jar Innards] Human Bone Shard
+528000000,[Winter-Lantern] None
+530000000,[Rellana- Twin Moon Knight] None
+531100000,[Inquisitor (Candles)] Golden Horn Tender
+531100010,[Inquisitor (Candles)] Golden Horn Tender
+531100020,[Inquisitor (Candles)] None
+531100030,[Inquisitor (Candles)] None
+531100040,[Inquisitor (Candles)] Golden Horn Tender
+531100050,[Inquisitor (Candles)] Golden Horn Tender
+531100100,[Inquisitor (Candles)] None
+531100110,[Inquisitor (Candles)] None
+531100120,[Inquisitor (Candles)] Golden Horn Tender
+531200000,[Jori- Elder Inquisitor] None
+531200010,[Jori- Elder Inquisitor] None
+532000700,[Fat Inquisitor] Golden Horn Tender
+532000701,[Fat Inquisitor] Revered Spirit Ash
+532000710,[Fat Inquisitor] Golden Horn Tender
+532000711,[Fat Inquisitor] Revered Spirit Ash
+536000000,[Giant Beast Skeleton] Human Bone Shard
+536000010,[Giant Beast Skeleton] Human Bone Shard
+536000020,[Giant Beast Skeleton] Human Bone Shard
+536000030,[Giant Beast Skeleton] Human Bone Shard
+536000040,[Giant Beast Skeleton] Human Bone Shard
+536000050,[Giant Beast Skeleton] Human Bone Shard
+536000100,[Giant Beast Skeleton] Human Bone Shard
+536000101,[Giant Beast Skeleton] Bolt
+536000110,[Giant Beast Skeleton] Human Bone Shard
+536000111,[Giant Beast Skeleton] Bolt
+536000120,[Giant Beast Skeleton] Human Bone Shard
+536000121,[Giant Beast Skeleton] Bolt
+536000200,[Giant Beast Skeleton] Grave Scythe
+536000201,[Giant Beast Skeleton] Human Bone Shard
+536000210,[Giant Beast Skeleton] Grave Scythe
+536000211,[Giant Beast Skeleton] Human Bone Shard
+536000220,[Giant Beast Skeleton] Grave Scythe
+536000221,[Giant Beast Skeleton] Human Bone Shard
+536000300,[Giant Beast Skeleton] Sun Realm Shield
+536000301,[Giant Beast Skeleton] Human Bone Shard
+536000310,[Giant Beast Skeleton] Sun Realm Shield
+536000311,[Giant Beast Skeleton] Human Bone Shard
+536000320,[Giant Beast Skeleton] Sun Realm Shield
+536000321,[Giant Beast Skeleton] Human Bone Shard
+536000400,[Giant Beast Skeleton] Bandit's Curved Sword
+536000401,[Giant Beast Skeleton] Bandit's Curved Sword
+536000402,[Giant Beast Skeleton] Human Bone Shard
+536000410,[Giant Beast Skeleton] Bandit's Curved Sword
+536000411,[Giant Beast Skeleton] Bandit's Curved Sword
+536000412,[Giant Beast Skeleton] Human Bone Shard
+536000420,[Giant Beast Skeleton] Bandit's Curved Sword
+536000421,[Giant Beast Skeleton] Bandit's Curved Sword
+536000422,[Giant Beast Skeleton] Human Bone Shard
+537000000,[Ancient Dragon Senessax] None
+538000000,[Miranda Blossom] Poisonbloom
+538000001,[Miranda Blossom] Miranda Powder
+538000100,[Miranda Blossom] Poisonbloom
+538000101,[Miranda Blossom] Miranda Powder
+538000200,[Miranda Blossom] Poisonbloom
+538000201,[Miranda Blossom] Miranda Powder
+538100000,[Miranda Sprout] Poisonbloom
+538100001,[Miranda Sprout] Miranda Powder
+538100010,[Miranda Sprout] Poisonbloom
+538100011,[Miranda Sprout] Miranda Powder
+538100100,[Miranda Sprout] Poisonbloom
+538100101,[Miranda Sprout] Miranda Powder
+538100110,[Miranda Sprout] Poisonbloom
+538100111,[Miranda Sprout] Miranda Powder
+538100200,[Miranda Sprout] Poisonbloom
+538100201,[Miranda Sprout] Miranda Powder
+538100210,[Miranda Sprout] Poisonbloom
+538100211,[Miranda Sprout] Miranda Powder
+539000000,[Troll] None
+539000100,[Troll] None
+539000200,[Troll] None
+539000300,[Troll] None
+539000400,[Troll] None
+539000500,[Troll] None
+539100000,[Troll Knight] None
+539100100,[Troll Knight] None
+539100200,[Troll Knight] None
+539100300,[Troll Knight] None
+539200000,[Troll Knight] None
+540100000,[Eagle] Flight Pinion
+540100001,[Eagle] Four-Toed Fowl Foot
+540100100,[Eagle] Beast Horn
+540100101,[Eagle] Flight Pinion
+540100102,[Eagle] Four-Toed Fowl Foot
+540185000,[Eagle] Flight Pinion
+540185001,[Eagle] Four-Toed Fowl Foot
+540185002,[Eagle] Dragon's Calorbloom
+540187000,[Eagle] Flight Pinion
+540187001,[Eagle] Four-Toed Fowl Foot
+540187002,[Eagle] Nectarblood Burgeon
+540188000,[Eagle] Flight Pinion
+540188001,[Eagle] Four-Toed Fowl Foot
+540188002,[Eagle] Dragon's Calorbloom
+540194100,[Eagle] Spirit Calculus
+540194101,[Eagle] Beast Horn
+540194102,[Eagle] Flight Pinion
+540194103,[Eagle] Four-Toed Fowl Foot
+541000000,[Deer] Sliver of Meat
+541000001,[Deer] Beast Liver
+541000002,[Deer] Thin Beast Bones
+541000003,[Deer] Budding Horn
+541000100,[Deer] Beast Horn
+541000101,[Deer] Sliver of Meat
+541000102,[Deer] Beast Liver
+541000103,[Deer] Thin Beast Bones
+541000104,[Deer] Budding Horn
+541080000,[Deer] Sliver of Meat
+541080001,[Deer] Beast Liver
+541080002,[Deer] Thin Beast Bones
+541080003,[Deer] Budding Horn
+541080004,[Deer] Empyrean-Blood Burgeon
+541081000,[Deer] Sliver of Meat
+541081001,[Deer] Beast Liver
+541081002,[Deer] Thin Beast Bones
+541081003,[Deer] Budding Horn
+541081004,[Deer] Empyrean-Blood Burgeon
+541085000,[Deer] Sliver of Meat
+541085001,[Deer] Beast Liver
+541085002,[Deer] Thin Beast Bones
+541085003,[Deer] Budding Horn
+541085004,[Deer] Dragon's Calorbloom
+541087000,[Deer] Sliver of Meat
+541087001,[Deer] Beast Liver
+541087002,[Deer] Thin Beast Bones
+541087003,[Deer] Budding Horn
+541087004,[Deer] Nectarblood Burgeon
+541094100,[Deer] Spirit Calculus
+541094101,[Deer] Beast Horn
+541094102,[Deer] Sliver of Meat
+541094103,[Deer] Beast Liver
+541094104,[Deer] Thin Beast Bones
+541094105,[Deer] Budding Horn
+542100000,[Red Bear] Lump of Flesh
+542100001,[Red Bear] Hefty Beast Bone
+542100002,[Red Bear] Beast Blood
+542100100,[Red Bear] Beast Horn
+542100101,[Red Bear] Lump of Flesh
+542100102,[Red Bear] Hefty Beast Bone
+542100103,[Red Bear] Beast Blood
+542194100,[Red Bear] Spirit Calculus
+542194101,[Red Bear] Beast Horn
+542194102,[Red Bear] Lump of Flesh
+542194103,[Red Bear] Hefty Beast Bone
+542194104,[Red Bear] Beast Blood
+543000000,[Owl] Slumbering Egg
+543000100,[Owl] Beast Horn
+543000101,[Owl] Slumbering Egg
+543087000,[Owl] Slumbering Egg
+543087001,[Owl] Nectarblood Burgeon
+543094100,[Owl] Spirit Calculus
+543094101,[Owl] Beast Horn
+543094102,[Owl] Slumbering Egg
+544000000,[Boar] Lump of Flesh
+544000001,[Boar] Hefty Beast Bone
+544000002,[Boar] Old Fang
+544000003,[Boar] Gold-Tinged Excrement
+544000100,[Boar] Beast Horn
+544000101,[Boar] Lump of Flesh
+544000102,[Boar] Hefty Beast Bone
+544000103,[Boar] Old Fang
+544000104,[Boar] Gold-Tinged Excrement
+544000200,[Boar] Lump of Flesh
+544000201,[Boar] Hefty Beast Bone
+544000202,[Boar] Old Fang
+544000203,[Boar] Gold-Tinged Excrement
+544000300,[Boar] Beast Horn
+544000301,[Boar] Lump of Flesh
+544000302,[Boar] Hefty Beast Bone
+544000303,[Boar] Old Fang
+544000304,[Boar] Gold-Tinged Excrement
+544090000,[Boar] Lump of Flesh
+544090001,[Boar] Hefty Beast Bone
+544090002,[Boar] Old Fang
+544090003,[Boar] Gold-Tinged Excrement
+544090004,[Boar] Empyrean-Blood Burgeon
+544094100,[Boar] Spirit Calculus
+544094101,[Boar] Beast Horn
+544094102,[Boar] Lump of Flesh
+544094103,[Boar] Hefty Beast Bone
+544094104,[Boar] Old Fang
+544094105,[Boar] Gold-Tinged Excrement
+544094300,[Boar] Spirit Calculus
+544094301,[Boar] Beast Horn
+544094302,[Boar] Lump of Flesh
+544094303,[Boar] Hefty Beast Bone
+544094304,[Boar] Old Fang
+544094305,[Boar] Gold-Tinged Excrement
+545000000,[Ram] Sliver of Meat
+545000001,[Ram] Beast Liver
+545000002,[Ram] Thin Beast Bones
+545000003,[Ram] Budding Horn
+545000100,[Ram] Sliver of Meat
+545000101,[Ram] Beast Liver
+545000102,[Ram] Thin Beast Bones
+545000103,[Ram] Budding Horn
+545000200,[Ram] Sliver of Meat
+545000201,[Ram] Beast Liver
+545000202,[Ram] Thin Beast Bones
+545000203,[Ram] Budding Horn
+545000300,[Ram] Sliver of Meat
+545000301,[Ram] Beast Liver
+545000302,[Ram] Thin Beast Bones
+545000303,[Ram] Budding Horn
+545000304,[Ram] Yellow Fulgurbloom
+545000400,[Ram] Sliver of Meat
+545000401,[Ram] Beast Liver
+545000402,[Ram] Thin Beast Bones
+545000403,[Ram] Budding Horn
+545000404,[Ram] Yellow Fulgurbloom
+545000500,[Ram] Sliver of Meat
+545000501,[Ram] Beast Liver
+545000502,[Ram] Thin Beast Bones
+545000503,[Ram] Budding Horn
+545000504,[Ram] Yellow Fulgurbloom
+545000600,[Ram] Beast Horn
+545000601,[Ram] Sliver of Meat
+545000602,[Ram] Beast Liver
+545000603,[Ram] Thin Beast Bones
+545000604,[Ram] Budding Horn
+545000700,[Ram] Beast Horn
+545000701,[Ram] Sliver of Meat
+545000702,[Ram] Beast Liver
+545000703,[Ram] Thin Beast Bones
+545000704,[Ram] Budding Horn
+545000800,[Ram] Sliver of Meat
+545000801,[Ram] Beast Liver
+545000802,[Ram] Thin Beast Bones
+545000803,[Ram] Budding Horn
+545000900,[Ram] Sliver of Meat
+545000901,[Ram] Beast Liver
+545000902,[Ram] Thin Beast Bones
+545000903,[Ram] Budding Horn
+545080000,[Ram] Sliver of Meat
+545080001,[Ram] Beast Liver
+545080002,[Ram] Thin Beast Bones
+545080003,[Ram] Budding Horn
+545080004,[Ram] Empyrean-Blood Burgeon
+545085000,[Ram] Sliver of Meat
+545085001,[Ram] Beast Liver
+545085002,[Ram] Thin Beast Bones
+545085003,[Ram] Budding Horn
+545085004,[Ram] Dragon's Calorbloom
+545087000,[Ram] Sliver of Meat
+545087001,[Ram] Beast Liver
+545087002,[Ram] Thin Beast Bones
+545087003,[Ram] Budding Horn
+545087004,[Ram] Nectarblood Burgeon
+545090000,[Ram] Sliver of Meat
+545090001,[Ram] Beast Liver
+545090002,[Ram] Thin Beast Bones
+545090003,[Ram] Budding Horn
+545090004,[Ram] Empyrean-Blood Burgeon
+545094600,[Ram] Spirit Calculus
+545094601,[Ram] Beast Horn
+545094602,[Ram] Sliver of Meat
+545094603,[Ram] Beast Liver
+545094604,[Ram] Thin Beast Bones
+545094605,[Ram] Budding Horn
+545094700,[Ram] Spirit Calculus
+545094701,[Ram] Beast Horn
+545094702,[Ram] Sliver of Meat
+545094703,[Ram] Beast Liver
+545094704,[Ram] Thin Beast Bones
+545094705,[Ram] Budding Horn
+546000000,[Murre] Flight Pinion
+546000001,[Murre] Four-Toed Fowl Foot
+546000100,[Murre] Beast Horn
+546000101,[Murre] Flight Pinion
+546000102,[Murre] Four-Toed Fowl Foot
+546094100,[Murre] Spirit Calculus
+546094101,[Murre] Beast Horn
+546094102,[Murre] Flight Pinion
+546094103,[Murre] Four-Toed Fowl Foot
+547000000,[Dragonfly] Great Dragonfly Head
+547100000,[Dragonfly] Great Dragonfly Head
+547200000,[Dragonfly] Great Dragonfly Head
+548000000,[Turtle] Turtle Neck Meat
+548000001,[Turtle] Strip of White Flesh
+548000100,[Turtle] Beast Horn
+548000101,[Turtle] Turtle Neck Meat
+548000102,[Turtle] Strip of White Flesh
+548087000,[Turtle] Turtle Neck Meat
+548087001,[Turtle] Strip of White Flesh
+548087002,[Turtle] Nectarblood Burgeon
+548094100,[Turtle] Spirit Calculus
+548094101,[Turtle] Beast Horn
+548094102,[Turtle] Turtle Neck Meat
+548094103,[Turtle] Strip of White Flesh
+549000000,[Springhare] Sliver of Meat
+549000001,[Springhare] Beast Liver
+549000002,[Springhare] Thin Beast Bones
+549000100,[Springhare] Beast Horn
+549000101,[Springhare] Sliver of Meat
+549000102,[Springhare] Beast Liver
+549000103,[Springhare] Thin Beast Bones
+549085000,[Springhare] Sliver of Meat
+549085001,[Springhare] Beast Liver
+549085002,[Springhare] Thin Beast Bones
+549085003,[Springhare] Thin Beast Bones
+549087000,[Springhare] Sliver of Meat
+549087001,[Springhare] Beast Liver
+549087002,[Springhare] Thin Beast Bones
+549087003,[Springhare] Thin Beast Bones
+549094100,[Springhare] Spirit Calculus
+549094101,[Springhare] Beast Horn
+549094102,[Springhare] Sliver of Meat
+549094103,[Springhare] Beast Liver
+549094104,[Springhare] Thin Beast Bones
+550000000,[Living Magma] Gas Stone
+550000001,[Living Magma] Smithing Stone [1]
+550000002,[Living Magma] Smithing Stone [2]
+550000003,[Living Magma] Smithing Stone [3]
+550000004,[Living Magma] Somber Smithing Stone [1]
+550000005,[Living Magma] Somber Smithing Stone [2]
+550000006,[Living Magma] Somber Smithing Stone [3]
+550000100,[Living Magma] Gas Stone
+550000101,[Living Magma] Smithing Stone [1]
+550000102,[Living Magma] Smithing Stone [2]
+550000103,[Living Magma] Smithing Stone [3]
+550000104,[Living Magma] Somber Smithing Stone [1]
+550000105,[Living Magma] Somber Smithing Stone [2]
+550000106,[Living Magma] Somber Smithing Stone [3]
+550000200,[Living Magma] Gas Stone
+550000201,[Living Magma] Smithing Stone [1]
+550000202,[Living Magma] Smithing Stone [2]
+550000203,[Living Magma] Smithing Stone [3]
+550000204,[Living Magma] Somber Smithing Stone [1]
+550000205,[Living Magma] Somber Smithing Stone [2]
+550000206,[Living Magma] Somber Smithing Stone [3]
+550000300,[Living Magma] Gas Stone
+550000301,[Living Magma] Smithing Stone [1]
+550000302,[Living Magma] Smithing Stone [2]
+550000303,[Living Magma] Smithing Stone [3]
+550000304,[Living Magma] Somber Smithing Stone [1]
+550000305,[Living Magma] Somber Smithing Stone [2]
+550000306,[Living Magma] Somber Smithing Stone [3]
+550000400,[Living Magma] Gas Stone
+550000401,[Living Magma] Smithing Stone [1]
+550000402,[Living Magma] Smithing Stone [2]
+550000403,[Living Magma] Smithing Stone [3]
+550000404,[Living Magma] Somber Smithing Stone [1]
+550000405,[Living Magma] Somber Smithing Stone [2]
+550000406,[Living Magma] Somber Smithing Stone [3]
+550000500,[Living Magma] Gas Stone
+550000501,[Living Magma] Smithing Stone [1]
+550000502,[Living Magma] Smithing Stone [2]
+550000503,[Living Magma] Smithing Stone [3]
+550000504,[Living Magma] Somber Smithing Stone [1]
+550000505,[Living Magma] Somber Smithing Stone [2]
+550000506,[Living Magma] Somber Smithing Stone [3]
+550000600,[Living Magma] Gas Stone
+550000601,[Living Magma] Smithing Stone [1]
+550000602,[Living Magma] Smithing Stone [2]
+550000603,[Living Magma] Smithing Stone [3]
+550000604,[Living Magma] Somber Smithing Stone [1]
+550000605,[Living Magma] Somber Smithing Stone [2]
+550000606,[Living Magma] Somber Smithing Stone [3]
+550000700,[Living Magma] Gas Stone
+550000701,[Living Magma] Smithing Stone [1]
+550000702,[Living Magma] Smithing Stone [2]
+550000703,[Living Magma] Smithing Stone [3]
+550000704,[Living Magma] Somber Smithing Stone [1]
+550000705,[Living Magma] Somber Smithing Stone [2]
+550000706,[Living Magma] Somber Smithing Stone [3]
+550000800,[Living Magma] Gas Stone
+550000801,[Living Magma] Smithing Stone [1]
+550000802,[Living Magma] Smithing Stone [2]
+550000803,[Living Magma] Smithing Stone [3]
+550000804,[Living Magma] Somber Smithing Stone [1]
+550000805,[Living Magma] Somber Smithing Stone [2]
+550000806,[Living Magma] Somber Smithing Stone [3]
+550100000,[Living Magma] Silver Tear Husk
+550100001,[Living Magma] Sharp Gravel Stone
+550100100,[Living Magma] Silver Tear Husk
+550100101,[Living Magma] Sharp Gravel Stone
+550100200,[Living Magma] Silver Tear Husk
+550100201,[Living Magma] Sharp Gravel Stone
+551100000,[Shade] Ember of Messmer
+551100100,[Shade] Ember of Messmer
+551200000,[Shade] Ember of Messmer
+551200100,[Shade] Ember of Messmer
+551300000,[Cemetery Shade] Ghost Glovewort [4]
+551300001,[Cemetery Shade] Ghost Glovewort [5]
+551300002,[Cemetery Shade] Ghost Glovewort [6]
+552000000,[Stray] Thin Beast Bones
+552000001,[Stray] Beast Blood
+552000002,[Stray] Ember of Messmer
+552100000,[Stray] Thin Beast Bones
+552100001,[Stray] Beast Blood
+552100002,[Stray] Ember of Messmer
+552200000,[Stray] Thin Beast Bones
+552200001,[Stray] Beast Blood
+552300000,[Stray] Thin Beast Bones
+552300001,[Stray] Beast Blood
+552400000,[Braided Stray] Thin Beast Bones
+552400001,[Braided Stray] Beast Blood
+552500000,[Braided Stray] Thin Beast Bones
+552500001,[Braided Stray] Beast Blood
+552600000,[Bloodbane Stray] Thin Beast Bones
+552600001,[Bloodbane Stray] Beast Blood
+552700000,[Bloodbane Stray] Thin Beast Bones
+552700001,[Bloodbane Stray] Beast Blood
+553000000,[Man-Bat] Shadow Realm Rune [1]
+553000010,[Man-Bat] Shadow Realm Rune [1]
+553000020,[Man-Bat] Shadow Realm Rune [1]
+553000100,[Man-Bat] Shadow Realm Rune [1]
+553000110,[Man-Bat] Shadow Realm Rune [1]
+553000120,[Man-Bat] Shadow Realm Rune [1]
+554000000,[Wolf] Thin Beast Bones
+554000001,[Wolf] Lump of Flesh
+554000100,[Wolf] Thin Beast Bones
+554000101,[Wolf] Lump of Flesh
+554100000,[Wolf] Thin Beast Bones
+554100001,[Wolf] Lump of Flesh
+555000000,[Fingercreeper] Somber Smithing Stone [4]
+555000001,[Fingercreeper] Somber Smithing Stone [5]
+555000002,[Fingercreeper] Somber Smithing Stone [6]
+555000010,[Fingercreeper] Somber Smithing Stone [4]
+555000011,[Fingercreeper] Somber Smithing Stone [5]
+555000012,[Fingercreeper] Somber Smithing Stone [6]
+555100000,[Fingercreeper (Large)] None
+555100100,[Fingercreeper (Large)] None
+555600000,[Fingercreeper (Small)] Somber Smithing Stone [1]
+555600001,[Fingercreeper (Small)] Somber Smithing Stone [2]
+555600002,[Fingercreeper (Small)] Somber Smithing Stone [3]
+557000000,[Marionette Soldier] Shortbow
+557000001,[Marionette Soldier] Marionette Soldier Helm
+557000002,[Marionette Soldier] Marionette Soldier Armor
+557000003,[Marionette Soldier] Cuckoo Glintstone
+557000004,[Marionette Soldier] Arrow
+557000100,[Marionette Soldier] Marionette Soldier Helm
+557000101,[Marionette Soldier] Marionette Soldier Armor
+557000102,[Marionette Soldier] Cuckoo Glintstone
+557000200,[Marionette Soldier] Marionette Soldier Helm
+557000201,[Marionette Soldier] Marionette Soldier Armor
+557000202,[Marionette Soldier] Cuckoo Glintstone
+557000300,[Marionette Soldier] Marionette Soldier Helm
+557000301,[Marionette Soldier] Marionette Soldier Armor
+557000302,[Marionette Soldier] Cuckoo Glintstone
+557000400,[Marionette Soldier] Spiked Spear
+557000401,[Marionette Soldier] Marionette Soldier Helm
+557000402,[Marionette Soldier] Marionette Soldier Armor
+557000403,[Marionette Soldier] Cuckoo Glintstone
+558000000,[Jagged Peak Drake] None
+558000100,[Jagged Peak Drake] None
+558100000,[Jagged Peak Drake] None
+559000000,[Putrid Flesh] Glass Shard
+559000001,[Putrid Flesh] Smithing Stone [1]
+559000002,[Putrid Flesh] Smithing Stone [2]
+559000003,[Putrid Flesh] Smithing Stone [3]
+559000100,[Putrid Flesh] Glass Shard
+559000101,[Putrid Flesh] Thin Beast Bones
+559000102,[Putrid Flesh] Hefty Beast Bone
+559000103,[Putrid Flesh] Smithing Stone [1]
+559000104,[Putrid Flesh] Smithing Stone [2]
+559000105,[Putrid Flesh] Smithing Stone [3]
+559000200,[Putrid Flesh] Glass Shard
+559000300,[Putrid Flesh] Glass Shard
+559000400,[Putrid Flesh] Glass Shard
+559000401,[Putrid Flesh] Congealed Putrescence
+559000402,[Putrid Flesh] Smithing Stone [1]
+559000403,[Putrid Flesh] Smithing Stone [2]
+559000404,[Putrid Flesh] Smithing Stone [3]
+559000500,[Putrid Flesh] Glass Shard
+559000501,[Putrid Flesh] Sharp Gravel Stone
+559000502,[Putrid Flesh] Smithing Stone [1]
+559000503,[Putrid Flesh] Smithing Stone [2]
+559000504,[Putrid Flesh] Smithing Stone [3]
+559100000,[Putrid Flesh (Large)] Glass Shard
+559100100,[Putrid Flesh (Large)] Glass Shard
+559100700,[Putrid Flesh (Large)] Congealed Putrescence
+559100701,[Putrid Flesh (Large)] Smithing Stone [8]
+559100702,[Putrid Flesh (Large)] Congealed Putrescence
+560000000,[Catacomb Skeleton] Scimitar
+560000001,[Catacomb Skeleton] Scripture Wooden Shield
+560000002,[Catacomb Skeleton] Human Bone Shard
+560000003,[Catacomb Skeleton] Smoldering Butterfly
+560000004,[Catacomb Skeleton] Mushroom
+560000010,[Catacomb Skeleton] Scimitar
+560000011,[Catacomb Skeleton] Human Bone Shard
+560000020,[Catacomb Skeleton] Scimitar
+560000021,[Catacomb Skeleton] Human Bone Shard
+560000100,[Catacomb Skeleton] Grossmesser
+560000101,[Catacomb Skeleton] Human Bone Shard
+560000110,[Catacomb Skeleton] Grossmesser
+560000121,[Catacomb Skeleton] Human Bone Shard
+560000200,[Catacomb Skeleton] Longbow
+560000201,[Catacomb Skeleton] Human Bone Shard
+560000202,[Catacomb Skeleton] Arrow
+560000210,[Catacomb Skeleton] Longbow
+560000211,[Catacomb Skeleton] Human Bone Shard
+560000212,[Catacomb Skeleton] Arrow
+560000300,[Catacomb Skeleton] Human Bone Shard
+560000301,[Catacomb Skeleton] Smoldering Butterfly
+560000302,[Catacomb Skeleton] Mushroom
+560000310,[Catacomb Skeleton] Human Bone Shard
+560000311,[Catacomb Skeleton] Black Pyrefly
+560000312,[Catacomb Skeleton] Redflesh Mushroom
+560000320,[Catacomb Skeleton] Human Bone Shard
+560000321,[Catacomb Skeleton] Black Pyrefly
+560000322,[Catacomb Skeleton] Redflesh Mushroom
+560000330,[Catacomb Skeleton] Human Bone Shard
+560000331,[Catacomb Skeleton] Black Pyrefly
+560000332,[Catacomb Skeleton] Redflesh Mushroom
+562000000,[Tibia Mariner] None
+563000000,[Giant Crayfish] Strip of White Flesh
+563000100,[Giant Crayfish] Strip of White Flesh
+563000101,[Giant Crayfish] Crab Eggs
+563000200,[Giant Crayfish] Strip of White Flesh
+563000201,[Giant Crayfish] Smithing Stone [5]
+563000202,[Giant Crayfish] Smithing Stone [6]
+563000203,[Giant Crayfish] Smithing Stone [7]
+563000700,[Giant Crayfish] Strip of White Flesh
+563000701,[Giant Crayfish] Smithing Stone [5]
+563000702,[Giant Crayfish] Smithing Stone [6]
+563000703,[Giant Crayfish] Smithing Stone [7]
+563000704,[Giant Crayfish] Smithing Stone [8]
+564000000,[Giant Crab] Crab Eggs
+564000001,[Giant Crab] Strip of White Flesh
+564000100,[Giant Crab] Crab Eggs
+564000101,[Giant Crab] Strip of White Flesh
+564100000,[Crab] Crab Eggs
+564100001,[Crab] Strip of White Flesh
+565100000,[Messmer Foot Soldier] Dagger
+565100001,[Messmer Foot Soldier] Common Soldier Helm
+565100002,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100003,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100004,[Messmer Foot Soldier] Common Soldier Greaves
+565100005,[Messmer Foot Soldier] Bolt
+565100010,[Messmer Foot Soldier] Dagger
+565100011,[Messmer Foot Soldier] Common Soldier Helm
+565100012,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100013,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100014,[Messmer Foot Soldier] Common Soldier Greaves
+565100015,[Messmer Foot Soldier] Bolt
+565100020,[Messmer Foot Soldier] Dagger
+565100021,[Messmer Foot Soldier] Common Soldier Helm
+565100022,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100023,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100024,[Messmer Foot Soldier] Common Soldier Greaves
+565100025,[Messmer Foot Soldier] Black Pyrefly
+565100026,[Messmer Foot Soldier] Redflesh Mushroom
+565100030,[Messmer Foot Soldier] Dagger
+565100031,[Messmer Foot Soldier] Common Soldier Helm
+565100032,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100033,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100034,[Messmer Foot Soldier] Common Soldier Greaves
+565100035,[Messmer Foot Soldier] Bolt
+565100040,[Messmer Foot Soldier] Dagger
+565100041,[Messmer Foot Soldier] Common Soldier Helm
+565100042,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100043,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100044,[Messmer Foot Soldier] Common Soldier Greaves
+565100045,[Messmer Foot Soldier] Bolt
+565100050,[Messmer Foot Soldier] Dagger
+565100051,[Messmer Foot Soldier] Common Soldier Helm
+565100052,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100053,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100054,[Messmer Foot Soldier] Common Soldier Greaves
+565100055,[Messmer Foot Soldier] Bolt
+565100060,[Messmer Foot Soldier] Dagger
+565100061,[Messmer Foot Soldier] Common Soldier Helm
+565100062,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100063,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100064,[Messmer Foot Soldier] Common Soldier Greaves
+565100065,[Messmer Foot Soldier] Bolt
+565100070,[Messmer Foot Soldier] Dagger
+565100071,[Messmer Foot Soldier] Common Soldier Helm
+565100072,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100073,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100074,[Messmer Foot Soldier] Common Soldier Greaves
+565100075,[Messmer Foot Soldier] Bolt
+565100080,[Messmer Foot Soldier] Dagger
+565100081,[Messmer Foot Soldier] Common Soldier Helm
+565100082,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100083,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100084,[Messmer Foot Soldier] Common Soldier Greaves
+565100085,[Messmer Foot Soldier] Bolt
+565100090,[Messmer Foot Soldier] Dagger
+565100091,[Messmer Foot Soldier] Common Soldier Helm
+565100092,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100093,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100094,[Messmer Foot Soldier] Common Soldier Greaves
+565100095,[Messmer Foot Soldier] Bolt
+565100100,[Messmer Foot Soldier] Short Sword
+565100101,[Messmer Foot Soldier] Common Soldier Helm
+565100102,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100103,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100104,[Messmer Foot Soldier] Common Soldier Greaves
+565100105,[Messmer Foot Soldier] Bolt
+565100110,[Messmer Foot Soldier] Short Sword
+565100111,[Messmer Foot Soldier] Common Soldier Helm
+565100112,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100113,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100114,[Messmer Foot Soldier] Common Soldier Greaves
+565100115,[Messmer Foot Soldier] Bolt
+565100120,[Messmer Foot Soldier] Short Sword
+565100121,[Messmer Foot Soldier] Common Soldier Helm
+565100122,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100123,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100124,[Messmer Foot Soldier] Common Soldier Greaves
+565100125,[Messmer Foot Soldier] Black Pyrefly
+565100126,[Messmer Foot Soldier] Redflesh Mushroom
+565100130,[Messmer Foot Soldier] Short Sword
+565100131,[Messmer Foot Soldier] Common Soldier Helm
+565100132,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100133,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100134,[Messmer Foot Soldier] Common Soldier Greaves
+565100135,[Messmer Foot Soldier] Bolt
+565100200,[Messmer Foot Soldier] Soldier's Crossbow
+565100201,[Messmer Foot Soldier] Common Soldier Helm
+565100202,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100203,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100204,[Messmer Foot Soldier] Common Soldier Greaves
+565100205,[Messmer Foot Soldier] Bolt
+565100300,[Messmer Foot Soldier] Short Spear
+565100301,[Messmer Foot Soldier] Common Soldier Helm
+565100302,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100303,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100304,[Messmer Foot Soldier] Common Soldier Greaves
+565100305,[Messmer Foot Soldier] Bolt
+565100800,[Messmer Foot Soldier] Dagger
+565100801,[Messmer Foot Soldier] Common Soldier Helm
+565100802,[Messmer Foot Soldier] Common Soldier Cloth Armor
+565100803,[Messmer Foot Soldier] Common Soldier Gauntlets
+565100804,[Messmer Foot Soldier] Common Soldier Greaves
+565100805,[Messmer Foot Soldier] Furnace Visage
+566100000,[Shadow Militia] Vulgar Militia Saw
+566100001,[Shadow Militia] Shadow Militiaman Helm
+566100002,[Shadow Militia] Shadow Militiaman Armor
+566100003,[Shadow Militia] Shadow Militiaman Gauntlets
+566100004,[Shadow Militia] Shadow Militiaman Greaves
+566100005,[Shadow Militia] Kukri
+566100100,[Shadow Militia] Vulgar Militia Saw
+566100101,[Shadow Militia] Shadow Militiaman Helm
+566100102,[Shadow Militia] Shadow Militiaman Armor
+566100103,[Shadow Militia] Shadow Militiaman Gauntlets
+566100104,[Shadow Militia] Shadow Militiaman Greaves
+566100105,[Shadow Militia] Kukri
+566100200,[Shadow Militia] Vulgar Militia Shotel
+566100201,[Shadow Militia] Shadow Militiaman Helm
+566100202,[Shadow Militia] Shadow Militiaman Armor
+566100203,[Shadow Militia] Shadow Militiaman Gauntlets
+566100204,[Shadow Militia] Shadow Militiaman Greaves
+566100205,[Shadow Militia] Kukri
+566100300,[Shadow Militia] Vulgar Militia Shotel
+566100301,[Shadow Militia] Shadow Militiaman Helm
+566100302,[Shadow Militia] Shadow Militiaman Armor
+566100303,[Shadow Militia] Shadow Militiaman Gauntlets
+566100304,[Shadow Militia] Shadow Militiaman Greaves
+566100305,[Shadow Militia] Kukri
+566100400,[Shadow Militia] Shadow Militiaman Helm
+566100401,[Shadow Militia] Shadow Militiaman Armor
+566100402,[Shadow Militia] Shadow Militiaman Gauntlets
+566100403,[Shadow Militia] Shadow Militiaman Greaves
+566100404,[Shadow Militia] Kukri
+566100500,[Shadow Militia] Shadow Militiaman Helm
+566100501,[Shadow Militia] Shadow Militiaman Armor
+566100502,[Shadow Militia] Shadow Militiaman Gauntlets
+566100503,[Shadow Militia] Shadow Militiaman Greaves
+566100504,[Shadow Militia] Kukri
 567000000,
-568000000,
-569000000,
-570000000,Falchion
-570000001,Rickety Shield
-570000002,String
-570000003,Glass Shard
-570000004,Spiritgrave Stone
-570000005,Polter Stone
-570000100,Falchion
-570000101,String
-570000102,Glass Shard
-570000103,Spiritgrave Stone
-570000104,Polter Stone
-570000200,Club
-570000201,String
-570000202,Glass Shard
-570000203,Spiritgrave Stone
-570000204,Polter Stone
-570100000,Club
-570100001,String
-570100002,Glass Shard
-570100003,Spiritgrave Stone
-570100004,Polter Stone
-571000000,Great Knife
-571000001,String
-571000002,Spiritgrave Stone
-571000003,Polter Stone
-572000000,Bloodstained Dagger
-572000001,String
-572000002,Glass Shard
-572000003,Spiritgrave Stone
-572000004,Polter Stone
-572000100,Bloodstained Dagger
-572000101,String
-572000102,Glass Shard
-572000103,Spiritgrave Stone
-572000104,Polter Stone
-573000000,
-573000100,
-574000000,
-574000100,
-574000200,
-574000300,
-574000400,
-574094000,Scarlet Bud
-574094100,Scarlet Bud
-574094200,Scarlet Bud
-574094300,Scarlet Bud
-574094400,Scarlet Bud
-574095000,Scarlet Bud
-574095100,Scarlet Bud
-574095200,Scarlet Bud
-574095300,Scarlet Bud
-574095400,Scarlet Bud
-575000000,Living Jar Shard
-575000010,Living Jar Shard
-575080700,Living Jar Shard
-575080701,Living Jar Shard
-575080702,Raw Meat Dumpling
-575080710,Living Jar Shard
-575080711,Living Jar Shard
-575080712,Raw Meat Dumpling
-575080720,Living Jar Shard
-575080721,Living Jar Shard
-575080722,Raw Meat Dumpling
-575080730,Living Jar Shard
-575080731,Living Jar Shard
-575080732,Raw Meat Dumpling
-575080740,Living Jar Shard
-575080741,Living Jar Shard
-575080742,Raw Meat Dumpling
-575080750,Living Jar Shard
-575080751,Living Jar Shard
-575080752,Raw Meat Dumpling
-575084700,Living Jar Shard
-575084701,Living Jar Shard
-575084702,Raw Meat Dumpling
-575084710,Living Jar Shard
-575084711,Living Jar Shard
-575084712,Raw Meat Dumpling
-575084720,Living Jar Shard
-575084721,Living Jar Shard
-575084722,Raw Meat Dumpling
-575090700,Living Jar Shard
-575090701,Living Jar Shard
-575090702,Raw Meat Dumpling
-575090710,Living Jar Shard
-575090711,Living Jar Shard
-575090712,Raw Meat Dumpling
-575090720,Living Jar Shard
-575090721,Living Jar Shard
-575090722,Raw Meat Dumpling
-575090730,Living Jar Shard
-575090731,Living Jar Shard
-575090732,Raw Meat Dumpling
-575090740,Living Jar Shard
-575090741,Living Jar Shard
-575090742,Raw Meat Dumpling
-575098700,Living Jar Shard
-575098701,Living Jar Shard
-575098702,Raw Meat Dumpling
-575100000,Living Jar Shard
-575100100,Living Jar Shard
-575100200,Living Jar Shard
-575100300,Living Jar Shard
-576000000,Shadow Realm Rune [2]
-576000001,Rune Arc
-576000100,Shadow Realm Rune [2]
-576000101,Rune Arc
-576000200,Shadow Realm Rune [2]
-576000201,Winter-Lantern Fly
-576000202,Rune Arc
-576086200,Shadow Realm Rune [2]
-576086201,Swollen Grape
-576086202,Rune Arc
-576100000,Shadow Realm Rune [2]
-576100001,Rune Arc
-576100100,Shadow Realm Rune [2]
-576100101,Winter-Lantern Fly
-576100102,Rune Arc
-576186100,Shadow Realm Rune [2]
-576186101,Swollen Grape
-576186102,Rune Arc
+568000000,[Wheeled Ballista] None
+569000000,[Dragon-faced Flamethrower] None
+570000000,[Demi-Human] Falchion
+570000001,[Demi-Human] Rickety Shield
+570000002,[Demi-Human] String
+570000003,[Demi-Human] Glass Shard
+570000004,[Demi-Human] Spiritgrave Stone
+570000005,[Demi-Human] Polter Stone
+570000100,[Demi-Human] Falchion
+570000101,[Demi-Human] String
+570000102,[Demi-Human] Glass Shard
+570000103,[Demi-Human] Spiritgrave Stone
+570000104,[Demi-Human] Polter Stone
+570000200,[Demi-Human] Club
+570000201,[Demi-Human] String
+570000202,[Demi-Human] Glass Shard
+570000203,[Demi-Human] Spiritgrave Stone
+570000204,[Demi-Human] Polter Stone
+570100000,[Demi-Human (Large)] Club
+570100001,[Demi-Human (Large)] String
+570100002,[Demi-Human (Large)] Glass Shard
+570100003,[Demi-Human (Large)] Spiritgrave Stone
+570100004,[Demi-Human (Large)] Polter Stone
+571000000,[Demi-Human Shaman] Great Knife
+571000001,[Demi-Human Shaman] String
+571000002,[Demi-Human Shaman] Spiritgrave Stone
+571000003,[Demi-Human Shaman] Polter Stone
+572000000,[Demi-Human Chief] Bloodstained Dagger
+572000001,[Demi-Human Chief] String
+572000002,[Demi-Human Chief] Glass Shard
+572000003,[Demi-Human Chief] Spiritgrave Stone
+572000004,[Demi-Human Chief] Polter Stone
+572000100,[Demi-Human Chief] Bloodstained Dagger
+572000101,[Demi-Human Chief] String
+572000102,[Demi-Human Chief] Glass Shard
+572000103,[Demi-Human Chief] Spiritgrave Stone
+572000104,[Demi-Human Chief] Polter Stone
+573000000,[Demi-Human Queen] None
+573000100,[Demi-Human Queen] None
+574000000,[Kindred of Rot] None
+574000100,[Kindred of Rot] None
+574000200,[Kindred of Rot] None
+574000300,[Kindred of Rot] None
+574000400,[Kindred of Rot] None
+574094000,[Kindred of Rot] Scarlet Bud
+574094100,[Kindred of Rot] Scarlet Bud
+574094200,[Kindred of Rot] Scarlet Bud
+574094300,[Kindred of Rot] Scarlet Bud
+574094400,[Kindred of Rot] Scarlet Bud
+574095000,[Kindred of Rot] Scarlet Bud
+574095100,[Kindred of Rot] Scarlet Bud
+574095200,[Kindred of Rot] Scarlet Bud
+574095300,[Kindred of Rot] Scarlet Bud
+574095400,[Kindred of Rot] Scarlet Bud
+575000000,[Living Jar Warrior] Living Jar Shard
+575000010,[Living Jar Warrior] Living Jar Shard
+575080700,[Living Jar Warrior] Living Jar Shard
+575080701,[Living Jar Warrior] Living Jar Shard
+575080702,[Living Jar Warrior] Raw Meat Dumpling
+575080710,[Living Jar Warrior] Living Jar Shard
+575080711,[Living Jar Warrior] Living Jar Shard
+575080712,[Living Jar Warrior] Raw Meat Dumpling
+575080720,[Living Jar Warrior] Living Jar Shard
+575080721,[Living Jar Warrior] Living Jar Shard
+575080722,[Living Jar Warrior] Raw Meat Dumpling
+575080730,[Living Jar Warrior] Living Jar Shard
+575080731,[Living Jar Warrior] Living Jar Shard
+575080732,[Living Jar Warrior] Raw Meat Dumpling
+575080740,[Living Jar Warrior] Living Jar Shard
+575080741,[Living Jar Warrior] Living Jar Shard
+575080742,[Living Jar Warrior] Raw Meat Dumpling
+575080750,[Living Jar Warrior] Living Jar Shard
+575080751,[Living Jar Warrior] Living Jar Shard
+575080752,[Living Jar Warrior] Raw Meat Dumpling
+575084700,[Living Jar Warrior] Living Jar Shard
+575084701,[Living Jar Warrior] Living Jar Shard
+575084702,[Living Jar Warrior] Raw Meat Dumpling
+575084710,[Living Jar Warrior] Living Jar Shard
+575084711,[Living Jar Warrior] Living Jar Shard
+575084712,[Living Jar Warrior] Raw Meat Dumpling
+575084720,[Living Jar Warrior] Living Jar Shard
+575084721,[Living Jar Warrior] Living Jar Shard
+575084722,[Living Jar Warrior] Raw Meat Dumpling
+575090700,[Living Jar Warrior] Living Jar Shard
+575090701,[Living Jar Warrior] Living Jar Shard
+575090702,[Living Jar Warrior] Raw Meat Dumpling
+575090710,[Living Jar Warrior] Living Jar Shard
+575090711,[Living Jar Warrior] Living Jar Shard
+575090712,[Living Jar Warrior] Raw Meat Dumpling
+575090720,[Living Jar Warrior] Living Jar Shard
+575090721,[Living Jar Warrior] Living Jar Shard
+575090722,[Living Jar Warrior] Raw Meat Dumpling
+575090730,[Living Jar Warrior] Living Jar Shard
+575090731,[Living Jar Warrior] Living Jar Shard
+575090732,[Living Jar Warrior] Raw Meat Dumpling
+575090740,[Living Jar Warrior] Living Jar Shard
+575090741,[Living Jar Warrior] Living Jar Shard
+575090742,[Living Jar Warrior] Raw Meat Dumpling
+575098700,[Living Jar Warrior] Living Jar Shard
+575098701,[Living Jar Warrior] Living Jar Shard
+575098702,[Living Jar Warrior] Raw Meat Dumpling
+575100000,[Living Jar] Living Jar Shard
+575100100,[Living Jar] Living Jar Shard
+575100200,[Living Jar] Living Jar Shard
+575100300,[Living Jar] Living Jar Shard
+576000000,[Rat] Shadow Realm Rune [2]
+576000001,[Rat] Rune Arc
+576000100,[Rat] Shadow Realm Rune [2]
+576000101,[Rat] Rune Arc
+576000200,[Rat] Shadow Realm Rune [2]
+576000201,[Rat] Winter-Lantern Fly
+576000202,[Rat] Rune Arc
+576086200,[Rat] Shadow Realm Rune [2]
+576086201,[Rat] Swollen Grape
+576086202,[Rat] Rune Arc
+576100000,[Giant Rat] Shadow Realm Rune [2]
+576100001,[Giant Rat] Rune Arc
+576100100,[Giant Rat] Shadow Realm Rune [2]
+576100101,[Giant Rat] Winter-Lantern Fly
+576100102,[Giant Rat] Rune Arc
+576186100,[Giant Rat] Shadow Realm Rune [2]
+576186101,[Giant Rat] Swollen Grape
+576186102,[Giant Rat] Rune Arc
 577000000,
 577000100,
-578000000,Beast Blood
-578000001,Hefty Beast Bone
-578000002,Lump of Flesh
-578000003,Horn-Strewn Excrement
-578000100,Beast Blood
-578000101,Hefty Beast Bone
-578000102,Lump of Flesh
-578000103,Horn-Strewn Excrement
-578000200,Beast Blood
-578000201,Hefty Beast Bone
-578000202,Lump of Flesh
-578000203,Horn-Strewn Excrement
-579000000,Golem's Halberd
-579000001,Smithing Stone [6]
-579000002,Smithing Stone [7]
-579000003,Smithing Stone [8]
-579000010,Golem's Halberd
-579000011,Smithing Stone [6]
-579000012,Smithing Stone [7]
-579000013,Smithing Stone [8]
-579000100,Golem Greatbow
-579000101,Great Arrow
-579000102,Golem's Great Arrow
-579000103,Smithing Stone [6]
-579000104,Smithing Stone [7]
-579000105,Smithing Stone [8]
-579000110,Golem Greatbow
-579000111,Great Arrow
-579000112,Golem's Great Arrow
-579000113,Smithing Stone [6]
-579000114,Smithing Stone [7]
-579000115,Smithing Stone [8]
-579000200,Golem's Halberd
-579000201,Smithing Stone [6]
-579000202,Smithing Stone [7]
-579000203,Smithing Stone [8]
-579000210,Golem's Halberd
-579000211,Smithing Stone [6]
-579000212,Smithing Stone [7]
-579000213,Smithing Stone [8]
-579000300,Golem Greatbow
-579000301,Great Arrow
-579000302,Golem's Great Arrow
-579000303,Smithing Stone [6]
-579000304,Smithing Stone [7]
-579000305,Smithing Stone [8]
-579000310,Golem Greatbow
-579000311,Great Arrow
-579000312,Golem's Great Arrow
-579000313,Smithing Stone [6]
-579000314,Smithing Stone [7]
-579000315,Smithing Stone [8]
-579000400,Golem's Halberd
-579000401,Smithing Stone [6]
-579000402,Smithing Stone [7]
-579000403,Smithing Stone [8]
-579000410,Golem's Halberd
-579000411,Smithing Stone [6]
-579000412,Smithing Stone [7]
-579000413,Smithing Stone [8]
-579000500,Golem Greatbow
-579000501,Great Arrow
-579000502,Golem's Great Arrow
-579000503,Smithing Stone [6]
-579000504,Smithing Stone [7]
-579000505,Smithing Stone [8]
-579000510,Golem Greatbow
-579000511,Great Arrow
-579000512,Golem's Great Arrow
-579000513,Smithing Stone [6]
-579000514,Smithing Stone [7]
-579000515,Smithing Stone [8]
-579000600,Golem's Halberd
-579000601,Smithing Stone [6]
-579000602,Smithing Stone [7]
-579000603,Smithing Stone [8]
-579000700,Golem Greatbow
-579000701,Great Arrow
-579000702,Golem's Great Arrow
-579000703,Smithing Stone [6]
-579000704,Smithing Stone [7]
-579000705,Smithing Stone [8]
-579000800,Golem's Halberd
-579000801,Smithing Stone [6]
-579000802,Smithing Stone [7]
-579000803,Smithing Stone [8]
-579000900,Golem Greatbow
-579000901,Great Arrow
-579000902,Golem's Great Arrow
-579000903,Smithing Stone [6]
-579000904,Smithing Stone [7]
-579000905,Smithing Stone [8]
-580000000,
-581000000,String
-581000001,Glass Shard
-581000002,Spiritgrave Stone
-581000003,Polter Stone
-581000700,String
-581000701,Glass Shard
-581000702,Spiritgrave Stone
-581000703,Polter Stone
-581000704,Starlight Shards
-582000000,
-583080000,Messmer Soldier's Axe
-583080001,Messmer Soldier Shield
-583080002,Messmer Soldier Helm
-583080003,Messmer Soldier Armor
-583080004,Messmer Soldier Gauntlets
-583080005,Messmer Soldier Greaves
-583080006,Smithing Stone [3]
-583080007,Smithing Stone [4]
-583080008,Smithing Stone [5]
-583080010,Messmer Soldier's Axe
-583080011,Messmer Soldier Shield
-583080012,Messmer Soldier Helm
-583080013,Messmer Soldier Armor
-583080014,Messmer Soldier Gauntlets
-583080015,Messmer Soldier Greaves
-583080016,Smithing Stone [3]
-583080017,Smithing Stone [4]
-583080018,Smithing Stone [5]
-583080020,Messmer Soldier's Axe
-583080021,Messmer Soldier Shield
-583080022,Heavy Crossbow
-583080023,Lordsworn's Bolt
-583080024,Messmer Soldier Helm
-583080025,Messmer Soldier Armor
-583080026,Messmer Soldier Gauntlets
-583080027,Messmer Soldier Greaves
-583080028,Smithing Stone [3]
-583080029,Smithing Stone [4]
-583080030,Smithing Stone [5]
-583080040,Messmer Soldier's Axe
-583080041,Messmer Soldier Helm
-583080042,Messmer Soldier Armor
-583080043,Messmer Soldier Gauntlets
-583080044,Messmer Soldier Greaves
-583080045,Smithing Stone [3]
-583080046,Smithing Stone [4]
-583080047,Smithing Stone [5]
-583080050,Messmer Soldier's Axe
-583080051,Messmer Soldier Shield
-583080052,Messmer Soldier Helm
-583080053,Messmer Soldier Armor
-583080054,Messmer Soldier Gauntlets
-583080055,Messmer Soldier Greaves
-583080056,Black Pyrefly
-583080057,Redflesh Mushroom
-583080058,Smithing Stone [3]
-583080059,Smithing Stone [4]
-583080060,Smithing Stone [5]
-583080100,Messmer Soldier's Spear
-583080101,Messmer Soldier Shield
-583080102,Messmer Soldier Helm
-583080103,Messmer Soldier Armor
-583080104,Messmer Soldier Gauntlets
-583080105,Messmer Soldier Greaves
-583080106,Smithing Stone [3]
-583080107,Smithing Stone [4]
-583080108,Smithing Stone [5]
-583080200,Messmer Soldier's Axe
-583080201,Messmer Soldier Helm
-583080202,Messmer Soldier Armor
-583080203,Messmer Soldier Gauntlets
-583080204,Messmer Soldier Greaves
-583080205,Smithing Stone [3]
-583080206,Smithing Stone [4]
-583080207,Smithing Stone [5]
-583090000,Messmer Soldier's Axe
-583090001,Messmer Soldier Shield
-583090002,Messmer Soldier Helm
-583090003,Messmer Soldier Armor
-583090004,Messmer Soldier Gauntlets
-583090005,Messmer Soldier Greaves
-583090006,Smithing Stone [3]
-583090007,Smithing Stone [4]
-583090008,Smithing Stone [5]
-583090009,Blessed Bone Shard
-583090010,Messmer Soldier's Axe
-583090011,Messmer Soldier Shield
-583090012,Messmer Soldier Helm
-583090013,Messmer Soldier Armor
-583090014,Messmer Soldier Gauntlets
-583090015,Messmer Soldier Greaves
-583090016,Smithing Stone [3]
-583090017,Smithing Stone [4]
-583090018,Smithing Stone [5]
-583090019,Blessed Bone Shard
-583090020,Messmer Soldier's Axe
-583090021,Messmer Soldier Shield
-583090022,Heavy Crossbow
-583090023,Lordsworn's Bolt
-583090024,Messmer Soldier Helm
-583090025,Messmer Soldier Armor
-583090026,Messmer Soldier Gauntlets
-583090027,Messmer Soldier Greaves
-583090028,Smithing Stone [3]
-583090029,Smithing Stone [4]
-583090030,Smithing Stone [5]
-583090031,Blessed Bone Shard
-583090040,Messmer Soldier's Axe
-583090041,Messmer Soldier Helm
-583090042,Messmer Soldier Armor
-583090043,Messmer Soldier Gauntlets
-583090044,Messmer Soldier Greaves
-583090045,Smithing Stone [3]
-583090046,Smithing Stone [4]
-583090047,Smithing Stone [5]
-583090048,Blessed Bone Shard
-583090050,Messmer Soldier's Axe
-583090051,Messmer Soldier Shield
-583090052,Messmer Soldier Helm
-583090053,Messmer Soldier Armor
-583090054,Messmer Soldier Gauntlets
-583090055,Messmer Soldier Greaves
-583090056,Black Pyrefly
-583090057,Redflesh Mushroom
-583090058,Smithing Stone [3]
-583090059,Smithing Stone [4]
-583090060,Smithing Stone [5]
-583090061,Blessed Bone Shard
-583090100,Messmer Soldier's Spear
-583090101,Messmer Soldier Shield
-583090102,Messmer Soldier Helm
-583090103,Messmer Soldier Armor
-583090104,Messmer Soldier Gauntlets
-583090105,Messmer Soldier Greaves
-583090106,Smithing Stone [3]
-583090107,Smithing Stone [4]
-583090108,Smithing Stone [5]
-583090109,Blessed Bone Shard
-583090200,Messmer Soldier's Axe
-583090201,Messmer Soldier Helm
-583090202,Messmer Soldier Armor
-583090203,Messmer Soldier Gauntlets
-583090204,Messmer Soldier Greaves
-583090205,Smithing Stone [3]
-583090206,Smithing Stone [4]
-583090207,Smithing Stone [5]
-583090208,Blessed Bone Shard
-584000400,
-584000500,
-584080000,Black Knight Helm
-584080001,Black Knight Armor
-584080002,Black Knight Gauntlets
-584080003,Black Knight Greaves
-584080004,Smithing Stone [5]
-584080005,Smithing Stone [6]
-584080006,Smithing Stone [7]
-584080100,Greatbow
-584080101,Great Arrow
-584080102,Black Knight Helm
-584080103,Black Knight Armor
-584080104,Black Knight Gauntlets
-584080105,Black Knight Greaves
-584080106,Smithing Stone [5]
-584080107,Smithing Stone [6]
-584080108,Smithing Stone [7]
-584080200,Black Knight Helm
-584080201,Black Knight Armor
-584080202,Black Knight Gauntlets
-584080203,Black Knight Greaves
-584080204,Smithing Stone [5]
-584080205,Smithing Stone [6]
-584080206,Smithing Stone [7]
-584080300,Greatbow
-584080301,Great Arrow
-584080302,Black Knight Helm
-584080303,Black Knight Armor
-584080304,Black Knight Gauntlets
-584080305,Black Knight Greaves
-584080306,Smithing Stone [5]
-584080307,Smithing Stone [6]
-584080308,Smithing Stone [7]
-584090000,Black Knight Helm
-584090001,Black Knight Armor
-584090002,Black Knight Gauntlets
-584090003,Black Knight Greaves
-584090004,Smithing Stone [5]
-584090005,Smithing Stone [6]
-584090006,Smithing Stone [7]
-584090007,Blessed Bone Shard
-584090100,Greatbow
-584090101,Great Arrow
-584090102,Black Knight Helm
-584090103,Black Knight Armor
-584090104,Black Knight Gauntlets
-584090105,Black Knight Greaves
-584090106,Smithing Stone [5]
-584090107,Smithing Stone [6]
-584090108,Smithing Stone [7]
-584090109,Blessed Bone Shard
-584090200,Black Knight Helm
-584090201,Black Knight Armor
-584090202,Black Knight Gauntlets
-584090203,Black Knight Greaves
-584090204,Smithing Stone [5]
-584090205,Smithing Stone [6]
-584090206,Smithing Stone [7]
-584090207,Blessed Bone Shard
-584090300,Greatbow
-584090301,Great Arrow
-584090302,Black Knight Helm
-584090303,Black Knight Armor
-584090304,Black Knight Gauntlets
-584090305,Black Knight Greaves
-584090306,Smithing Stone [5]
-584090307,Smithing Stone [6]
-584090308,Smithing Stone [7]
-584090309,Blessed Bone Shard
-585000000,Sliver of Meat
-585000001,Beast Liver
-585000002,Hefty Beast Bone
-585000100,Sliver of Meat
-585000101,Beast Liver
-585000102,Hefty Beast Bone
-586000000,
-587000000,Forked-Tongue Hatchet
-587000001,Grave Glovewort [4]
-587000002,Grave Glovewort [5]
-587000003,Grave Glovewort [6]
-587000100,Grave Glovewort [4]
-587000101,Grave Glovewort [5]
-587000102,Grave Glovewort [6]
-587000200,Lizard Greatsword
-587000201,Grave Glovewort [4]
-587000202,Grave Glovewort [5]
-587000203,Grave Glovewort [6]
-587000300,Lizard Greatsword
-587000301,Grave Glovewort [4]
-587000302,Grave Glovewort [5]
-587000303,Grave Glovewort [6]
-587100000,Grave Glovewort [6]
-587100001,Grave Glovewort [7]
-587100002,Grave Glovewort [8]
-587200000,
-587200700,Great Ghost Glovewort
-588000000,Ghost Glovewort [4]
-588000001,Ghost Glovewort [5]
-588000002,Ghost Glovewort [6]
-588000100,Ghost Glovewort [4]
-588000101,Ghost Glovewort [5]
-588000102,Ghost Glovewort [6]
-588000200,Ghost Glovewort [4]
-588000201,Ghost Glovewort [5]
-588000202,Ghost Glovewort [6]
-589000000,Sliver of Meat
-589000001,Beast Liver
-590000000,Fly Mold
-590000001,Silver Horn Tender
-590000100,Fly Mold
-590000101,Silver Horn Tender
-590000110,Fly Mold
-590000111,Silver Horn Tender
-592000000,
-592000100,
-593000000,Executioner's Greataxe
-593000001,Human Bone Shard
-593000100,Glaive
-593000101,Human Bone Shard
-593100000,Executioner's Greataxe
-593100001,Human Bone Shard
-593100100,Glaive
-593100101,Human Bone Shard
-594000000,Congealed Putrescence
-594000100,Congealed Putrescence
-594000200,Congealed Putrescence
-594000300,Congealed Putrescence
-594000400,Congealed Putrescence
-594000500,Congealed Putrescence
-595000000,
-595000100,
-596000000,
-596000100,
-597000000,
-597000100,
-597000200,
-597000300,
-597000700,Broken Rune
-597000701,Shadow Realm Rune [2]
-597000702,Shadow Realm Rune [3]
-597000710,Broken Rune
-597000711,Shadow Realm Rune [1]
-597000712,Shadow Realm Rune [4]
-598000000,
-598000100,
-598000700,Blessed Bone Shard
-598000710,Blessed Bone Shard
-598000720,Iris of Occultation
-599000000,Ghost Glovewort [7]
-599000001,Ghost Glovewort [8]
-599000002,Ghost Glovewort [9]
-599000100,
-599000200,
+578000000,[Runebear] Beast Blood
+578000001,[Runebear] Hefty Beast Bone
+578000002,[Runebear] Lump of Flesh
+578000003,[Runebear] Horn-Strewn Excrement
+578000100,[Runebear] Beast Blood
+578000101,[Runebear] Hefty Beast Bone
+578000102,[Runebear] Lump of Flesh
+578000103,[Runebear] Horn-Strewn Excrement
+578000200,[Runebear] Beast Blood
+578000201,[Runebear] Hefty Beast Bone
+578000202,[Runebear] Lump of Flesh
+578000203,[Runebear] Horn-Strewn Excrement
+579000000,[Guardian Golem] Golem's Halberd
+579000001,[Guardian Golem] Smithing Stone [6]
+579000002,[Guardian Golem] Smithing Stone [7]
+579000003,[Guardian Golem] Smithing Stone [8]
+579000010,[Guardian Golem] Golem's Halberd
+579000011,[Guardian Golem] Smithing Stone [6]
+579000012,[Guardian Golem] Smithing Stone [7]
+579000013,[Guardian Golem] Smithing Stone [8]
+579000100,[Guardian Golem] Golem Greatbow
+579000101,[Guardian Golem] Great Arrow
+579000102,[Guardian Golem] Golem's Great Arrow
+579000103,[Guardian Golem] Smithing Stone [6]
+579000104,[Guardian Golem] Smithing Stone [7]
+579000105,[Guardian Golem] Smithing Stone [8]
+579000110,[Guardian Golem] Golem Greatbow
+579000111,[Guardian Golem] Great Arrow
+579000112,[Guardian Golem] Golem's Great Arrow
+579000113,[Guardian Golem] Smithing Stone [6]
+579000114,[Guardian Golem] Smithing Stone [7]
+579000115,[Guardian Golem] Smithing Stone [8]
+579000200,[Guardian Golem] Golem's Halberd
+579000201,[Guardian Golem] Smithing Stone [6]
+579000202,[Guardian Golem] Smithing Stone [7]
+579000203,[Guardian Golem] Smithing Stone [8]
+579000210,[Guardian Golem] Golem's Halberd
+579000211,[Guardian Golem] Smithing Stone [6]
+579000212,[Guardian Golem] Smithing Stone [7]
+579000213,[Guardian Golem] Smithing Stone [8]
+579000300,[Guardian Golem] Golem Greatbow
+579000301,[Guardian Golem] Great Arrow
+579000302,[Guardian Golem] Golem's Great Arrow
+579000303,[Guardian Golem] Smithing Stone [6]
+579000304,[Guardian Golem] Smithing Stone [7]
+579000305,[Guardian Golem] Smithing Stone [8]
+579000310,[Guardian Golem] Golem Greatbow
+579000311,[Guardian Golem] Great Arrow
+579000312,[Guardian Golem] Golem's Great Arrow
+579000313,[Guardian Golem] Smithing Stone [6]
+579000314,[Guardian Golem] Smithing Stone [7]
+579000315,[Guardian Golem] Smithing Stone [8]
+579000400,[Guardian Golem] Golem's Halberd
+579000401,[Guardian Golem] Smithing Stone [6]
+579000402,[Guardian Golem] Smithing Stone [7]
+579000403,[Guardian Golem] Smithing Stone [8]
+579000410,[Guardian Golem] Golem's Halberd
+579000411,[Guardian Golem] Smithing Stone [6]
+579000412,[Guardian Golem] Smithing Stone [7]
+579000413,[Guardian Golem] Smithing Stone [8]
+579000500,[Guardian Golem] Golem Greatbow
+579000501,[Guardian Golem] Great Arrow
+579000502,[Guardian Golem] Golem's Great Arrow
+579000503,[Guardian Golem] Smithing Stone [6]
+579000504,[Guardian Golem] Smithing Stone [7]
+579000505,[Guardian Golem] Smithing Stone [8]
+579000510,[Guardian Golem] Golem Greatbow
+579000511,[Guardian Golem] Great Arrow
+579000512,[Guardian Golem] Golem's Great Arrow
+579000513,[Guardian Golem] Smithing Stone [6]
+579000514,[Guardian Golem] Smithing Stone [7]
+579000515,[Guardian Golem] Smithing Stone [8]
+579000600,[Guardian Golem] Golem's Halberd
+579000601,[Guardian Golem] Smithing Stone [6]
+579000602,[Guardian Golem] Smithing Stone [7]
+579000603,[Guardian Golem] Smithing Stone [8]
+579000700,[Guardian Golem] Golem Greatbow
+579000701,[Guardian Golem] Great Arrow
+579000702,[Guardian Golem] Golem's Great Arrow
+579000703,[Guardian Golem] Smithing Stone [6]
+579000704,[Guardian Golem] Smithing Stone [7]
+579000705,[Guardian Golem] Smithing Stone [8]
+579000800,[Guardian Golem] Golem's Halberd
+579000801,[Guardian Golem] Smithing Stone [6]
+579000802,[Guardian Golem] Smithing Stone [7]
+579000803,[Guardian Golem] Smithing Stone [8]
+579000900,[Guardian Golem] Golem Greatbow
+579000901,[Guardian Golem] Great Arrow
+579000902,[Guardian Golem] Golem's Great Arrow
+579000903,[Guardian Golem] Smithing Stone [6]
+579000904,[Guardian Golem] Smithing Stone [7]
+579000905,[Guardian Golem] Smithing Stone [8]
+580000000,[Crucible Knight Devonia] None
+581000000,[Demi-Human Swordmaster Onze] String
+581000001,[Demi-Human Swordmaster Onze] Glass Shard
+581000002,[Demi-Human Swordmaster Onze] Spiritgrave Stone
+581000003,[Demi-Human Swordmaster Onze] Polter Stone
+581000700,[Demi-Human Swordmaster Onze] String
+581000701,[Demi-Human Swordmaster Onze] Glass Shard
+581000702,[Demi-Human Swordmaster Onze] Spiritgrave Stone
+581000703,[Demi-Human Swordmaster Onze] Polter Stone
+581000704,[Demi-Human Swordmaster Onze] Starlight Shards
+582000000,[Great Red Bear] None
+583080000,[Messmer Soldier] Messmer Soldier's Axe
+583080001,[Messmer Soldier] Messmer Soldier Shield
+583080002,[Messmer Soldier] Messmer Soldier Helm
+583080003,[Messmer Soldier] Messmer Soldier Armor
+583080004,[Messmer Soldier] Messmer Soldier Gauntlets
+583080005,[Messmer Soldier] Messmer Soldier Greaves
+583080006,[Messmer Soldier] Smithing Stone [3]
+583080007,[Messmer Soldier] Smithing Stone [4]
+583080008,[Messmer Soldier] Smithing Stone [5]
+583080010,[Messmer Soldier] Messmer Soldier's Axe
+583080011,[Messmer Soldier] Messmer Soldier Shield
+583080012,[Messmer Soldier] Messmer Soldier Helm
+583080013,[Messmer Soldier] Messmer Soldier Armor
+583080014,[Messmer Soldier] Messmer Soldier Gauntlets
+583080015,[Messmer Soldier] Messmer Soldier Greaves
+583080016,[Messmer Soldier] Smithing Stone [3]
+583080017,[Messmer Soldier] Smithing Stone [4]
+583080018,[Messmer Soldier] Smithing Stone [5]
+583080020,[Messmer Soldier] Messmer Soldier's Axe
+583080021,[Messmer Soldier] Messmer Soldier Shield
+583080022,[Messmer Soldier] Heavy Crossbow
+583080023,[Messmer Soldier] Lordsworn's Bolt
+583080024,[Messmer Soldier] Messmer Soldier Helm
+583080025,[Messmer Soldier] Messmer Soldier Armor
+583080026,[Messmer Soldier] Messmer Soldier Gauntlets
+583080027,[Messmer Soldier] Messmer Soldier Greaves
+583080028,[Messmer Soldier] Smithing Stone [3]
+583080029,[Messmer Soldier] Smithing Stone [4]
+583080030,[Messmer Soldier] Smithing Stone [5]
+583080040,[Messmer Soldier] Messmer Soldier's Axe
+583080041,[Messmer Soldier] Messmer Soldier Helm
+583080042,[Messmer Soldier] Messmer Soldier Armor
+583080043,[Messmer Soldier] Messmer Soldier Gauntlets
+583080044,[Messmer Soldier] Messmer Soldier Greaves
+583080045,[Messmer Soldier] Smithing Stone [3]
+583080046,[Messmer Soldier] Smithing Stone [4]
+583080047,[Messmer Soldier] Smithing Stone [5]
+583080050,[Messmer Soldier] Messmer Soldier's Axe
+583080051,[Messmer Soldier] Messmer Soldier Shield
+583080052,[Messmer Soldier] Messmer Soldier Helm
+583080053,[Messmer Soldier] Messmer Soldier Armor
+583080054,[Messmer Soldier] Messmer Soldier Gauntlets
+583080055,[Messmer Soldier] Messmer Soldier Greaves
+583080056,[Messmer Soldier] Black Pyrefly
+583080057,[Messmer Soldier] Redflesh Mushroom
+583080058,[Messmer Soldier] Smithing Stone [3]
+583080059,[Messmer Soldier] Smithing Stone [4]
+583080060,[Messmer Soldier] Smithing Stone [5]
+583080100,[Messmer Soldier] Messmer Soldier's Spear
+583080101,[Messmer Soldier] Messmer Soldier Shield
+583080102,[Messmer Soldier] Messmer Soldier Helm
+583080103,[Messmer Soldier] Messmer Soldier Armor
+583080104,[Messmer Soldier] Messmer Soldier Gauntlets
+583080105,[Messmer Soldier] Messmer Soldier Greaves
+583080106,[Messmer Soldier] Smithing Stone [3]
+583080107,[Messmer Soldier] Smithing Stone [4]
+583080108,[Messmer Soldier] Smithing Stone [5]
+583080200,[Messmer Soldier] Messmer Soldier's Axe
+583080201,[Messmer Soldier] Messmer Soldier Helm
+583080202,[Messmer Soldier] Messmer Soldier Armor
+583080203,[Messmer Soldier] Messmer Soldier Gauntlets
+583080204,[Messmer Soldier] Messmer Soldier Greaves
+583080205,[Messmer Soldier] Smithing Stone [3]
+583080206,[Messmer Soldier] Smithing Stone [4]
+583080207,[Messmer Soldier] Smithing Stone [5]
+583090000,[Messmer Soldier] Messmer Soldier's Axe
+583090001,[Messmer Soldier] Messmer Soldier Shield
+583090002,[Messmer Soldier] Messmer Soldier Helm
+583090003,[Messmer Soldier] Messmer Soldier Armor
+583090004,[Messmer Soldier] Messmer Soldier Gauntlets
+583090005,[Messmer Soldier] Messmer Soldier Greaves
+583090006,[Messmer Soldier] Smithing Stone [3]
+583090007,[Messmer Soldier] Smithing Stone [4]
+583090008,[Messmer Soldier] Smithing Stone [5]
+583090009,[Messmer Soldier] Blessed Bone Shard
+583090010,[Messmer Soldier] Messmer Soldier's Axe
+583090011,[Messmer Soldier] Messmer Soldier Shield
+583090012,[Messmer Soldier] Messmer Soldier Helm
+583090013,[Messmer Soldier] Messmer Soldier Armor
+583090014,[Messmer Soldier] Messmer Soldier Gauntlets
+583090015,[Messmer Soldier] Messmer Soldier Greaves
+583090016,[Messmer Soldier] Smithing Stone [3]
+583090017,[Messmer Soldier] Smithing Stone [4]
+583090018,[Messmer Soldier] Smithing Stone [5]
+583090019,[Messmer Soldier] Blessed Bone Shard
+583090020,[Messmer Soldier] Messmer Soldier's Axe
+583090021,[Messmer Soldier] Messmer Soldier Shield
+583090022,[Messmer Soldier] Heavy Crossbow
+583090023,[Messmer Soldier] Lordsworn's Bolt
+583090024,[Messmer Soldier] Messmer Soldier Helm
+583090025,[Messmer Soldier] Messmer Soldier Armor
+583090026,[Messmer Soldier] Messmer Soldier Gauntlets
+583090027,[Messmer Soldier] Messmer Soldier Greaves
+583090028,[Messmer Soldier] Smithing Stone [3]
+583090029,[Messmer Soldier] Smithing Stone [4]
+583090030,[Messmer Soldier] Smithing Stone [5]
+583090031,[Messmer Soldier] Blessed Bone Shard
+583090040,[Messmer Soldier] Messmer Soldier's Axe
+583090041,[Messmer Soldier] Messmer Soldier Helm
+583090042,[Messmer Soldier] Messmer Soldier Armor
+583090043,[Messmer Soldier] Messmer Soldier Gauntlets
+583090044,[Messmer Soldier] Messmer Soldier Greaves
+583090045,[Messmer Soldier] Smithing Stone [3]
+583090046,[Messmer Soldier] Smithing Stone [4]
+583090047,[Messmer Soldier] Smithing Stone [5]
+583090048,[Messmer Soldier] Blessed Bone Shard
+583090050,[Messmer Soldier] Messmer Soldier's Axe
+583090051,[Messmer Soldier] Messmer Soldier Shield
+583090052,[Messmer Soldier] Messmer Soldier Helm
+583090053,[Messmer Soldier] Messmer Soldier Armor
+583090054,[Messmer Soldier] Messmer Soldier Gauntlets
+583090055,[Messmer Soldier] Messmer Soldier Greaves
+583090056,[Messmer Soldier] Black Pyrefly
+583090057,[Messmer Soldier] Redflesh Mushroom
+583090058,[Messmer Soldier] Smithing Stone [3]
+583090059,[Messmer Soldier] Smithing Stone [4]
+583090060,[Messmer Soldier] Smithing Stone [5]
+583090061,[Messmer Soldier] Blessed Bone Shard
+583090100,[Messmer Soldier] Messmer Soldier's Spear
+583090101,[Messmer Soldier] Messmer Soldier Shield
+583090102,[Messmer Soldier] Messmer Soldier Helm
+583090103,[Messmer Soldier] Messmer Soldier Armor
+583090104,[Messmer Soldier] Messmer Soldier Gauntlets
+583090105,[Messmer Soldier] Messmer Soldier Greaves
+583090106,[Messmer Soldier] Smithing Stone [3]
+583090107,[Messmer Soldier] Smithing Stone [4]
+583090108,[Messmer Soldier] Smithing Stone [5]
+583090109,[Messmer Soldier] Blessed Bone Shard
+583090200,[Messmer Soldier] Messmer Soldier's Axe
+583090201,[Messmer Soldier] Messmer Soldier Helm
+583090202,[Messmer Soldier] Messmer Soldier Armor
+583090203,[Messmer Soldier] Messmer Soldier Gauntlets
+583090204,[Messmer Soldier] Messmer Soldier Greaves
+583090205,[Messmer Soldier] Smithing Stone [3]
+583090206,[Messmer Soldier] Smithing Stone [4]
+583090207,[Messmer Soldier] Smithing Stone [5]
+583090208,[Messmer Soldier] Blessed Bone Shard
+584000400,[Black Knight] None
+584000500,[Black Knight] None
+584080000,[Black Knight] Black Knight Helm
+584080001,[Black Knight] Black Knight Armor
+584080002,[Black Knight] Black Knight Gauntlets
+584080003,[Black Knight] Black Knight Greaves
+584080004,[Black Knight] Smithing Stone [5]
+584080005,[Black Knight] Smithing Stone [6]
+584080006,[Black Knight] Smithing Stone [7]
+584080100,[Black Knight] Greatbow
+584080101,[Black Knight] Great Arrow
+584080102,[Black Knight] Black Knight Helm
+584080103,[Black Knight] Black Knight Armor
+584080104,[Black Knight] Black Knight Gauntlets
+584080105,[Black Knight] Black Knight Greaves
+584080106,[Black Knight] Smithing Stone [5]
+584080107,[Black Knight] Smithing Stone [6]
+584080108,[Black Knight] Smithing Stone [7]
+584080200,[Black Knight] Black Knight Helm
+584080201,[Black Knight] Black Knight Armor
+584080202,[Black Knight] Black Knight Gauntlets
+584080203,[Black Knight] Black Knight Greaves
+584080204,[Black Knight] Smithing Stone [5]
+584080205,[Black Knight] Smithing Stone [6]
+584080206,[Black Knight] Smithing Stone [7]
+584080300,[Black Knight] Greatbow
+584080301,[Black Knight] Great Arrow
+584080302,[Black Knight] Black Knight Helm
+584080303,[Black Knight] Black Knight Armor
+584080304,[Black Knight] Black Knight Gauntlets
+584080305,[Black Knight] Black Knight Greaves
+584080306,[Black Knight] Smithing Stone [5]
+584080307,[Black Knight] Smithing Stone [6]
+584080308,[Black Knight] Smithing Stone [7]
+584090000,[Black Knight] Black Knight Helm
+584090001,[Black Knight] Black Knight Armor
+584090002,[Black Knight] Black Knight Gauntlets
+584090003,[Black Knight] Black Knight Greaves
+584090004,[Black Knight] Smithing Stone [5]
+584090005,[Black Knight] Smithing Stone [6]
+584090006,[Black Knight] Smithing Stone [7]
+584090007,[Black Knight] Blessed Bone Shard
+584090100,[Black Knight] Greatbow
+584090101,[Black Knight] Great Arrow
+584090102,[Black Knight] Black Knight Helm
+584090103,[Black Knight] Black Knight Armor
+584090104,[Black Knight] Black Knight Gauntlets
+584090105,[Black Knight] Black Knight Greaves
+584090106,[Black Knight] Smithing Stone [5]
+584090107,[Black Knight] Smithing Stone [6]
+584090108,[Black Knight] Smithing Stone [7]
+584090109,[Black Knight] Blessed Bone Shard
+584090200,[Black Knight] Black Knight Helm
+584090201,[Black Knight] Black Knight Armor
+584090202,[Black Knight] Black Knight Gauntlets
+584090203,[Black Knight] Black Knight Greaves
+584090204,[Black Knight] Smithing Stone [5]
+584090205,[Black Knight] Smithing Stone [6]
+584090206,[Black Knight] Smithing Stone [7]
+584090207,[Black Knight] Blessed Bone Shard
+584090300,[Black Knight] Greatbow
+584090301,[Black Knight] Great Arrow
+584090302,[Black Knight] Black Knight Helm
+584090303,[Black Knight] Black Knight Armor
+584090304,[Black Knight] Black Knight Gauntlets
+584090305,[Black Knight] Black Knight Greaves
+584090306,[Black Knight] Smithing Stone [5]
+584090307,[Black Knight] Smithing Stone [6]
+584090308,[Black Knight] Smithing Stone [7]
+584090309,[Black Knight] Blessed Bone Shard
+585000000,[Giant Ram] Sliver of Meat
+585000001,[Giant Ram] Beast Liver
+585000002,[Giant Ram] Hefty Beast Bone
+585000100,[Giant Ram] Sliver of Meat
+585000101,[Giant Ram] Beast Liver
+585000102,[Giant Ram] Hefty Beast Bone
+586000000,[Ghostflame Dragon] None
+587000000,[Imp (Lion Head)] Forked-Tongue Hatchet
+587000001,[Imp (Lion Head)] Grave Glovewort [4]
+587000002,[Imp (Lion Head)] Grave Glovewort [5]
+587000003,[Imp (Lion Head)] Grave Glovewort [6]
+587000100,[Imp (Lion Head)] Grave Glovewort [4]
+587000101,[Imp (Lion Head)] Grave Glovewort [5]
+587000102,[Imp (Lion Head)] Grave Glovewort [6]
+587000200,[Imp (Lion Head)] Lizard Greatsword
+587000201,[Imp (Lion Head)] Grave Glovewort [4]
+587000202,[Imp (Lion Head)] Grave Glovewort [5]
+587000203,[Imp (Lion Head)] Grave Glovewort [6]
+587000300,[Imp (Lion Head)] Lizard Greatsword
+587000301,[Imp (Lion Head)] Grave Glovewort [4]
+587000302,[Imp (Lion Head)] Grave Glovewort [5]
+587000303,[Imp (Lion Head)] Grave Glovewort [6]
+587100000,[Imp (Dragon Head)] Grave Glovewort [6]
+587100001,[Imp (Dragon Head)] Grave Glovewort [7]
+587100002,[Imp (Dragon Head)] Grave Glovewort [8]
+587200000,[Imp (Dragon Head)] None
+587200700,[Imp (Dragon Head)] Great Ghost Glovewort
+588000000,[Catacombs Sorcerer] Ghost Glovewort [4]
+588000001,[Catacombs Sorcerer] Ghost Glovewort [5]
+588000002,[Catacombs Sorcerer] Ghost Glovewort [6]
+588000100,[Catacombs Sorcerer] Ghost Glovewort [4]
+588000101,[Catacombs Sorcerer] Ghost Glovewort [5]
+588000102,[Catacombs Sorcerer] Ghost Glovewort [6]
+588000200,[Catacombs Sorcerer] Ghost Glovewort [4]
+588000201,[Catacombs Sorcerer] Ghost Glovewort [5]
+588000202,[Catacombs Sorcerer] Ghost Glovewort [6]
+589000000,[Black Knight Horse] Sliver of Meat
+589000001,[Black Knight Horse] Beast Liver
+590000000,[Man-Fly] Fly Mold
+590000001,[Man-Fly] Silver Horn Tender
+590000100,[Man-Fly] Fly Mold
+590000101,[Man-Fly] Silver Horn Tender
+590000110,[Man-Fly] Fly Mold
+590000111,[Man-Fly] Silver Horn Tender
+592000000,[Magma Wyrm] None
+592000100,[Magma Wyrm] None
+593000000,[Giant Skeleton] Executioner's Greataxe
+593000001,[Giant Skeleton] Human Bone Shard
+593000100,[Giant Skeleton] Glaive
+593000101,[Giant Skeleton] Human Bone Shard
+593100000,[Giant Beast Skeleton] Executioner's Greataxe
+593100001,[Giant Beast Skeleton] Human Bone Shard
+593100100,[Giant Beast Skeleton] Glaive
+593100101,[Giant Beast Skeleton] Human Bone Shard
+594000000,[Watcher Stones] Congealed Putrescence
+594000100,[Watcher Stones] Congealed Putrescence
+594000200,[Watcher Stones] Congealed Putrescence
+594000300,[Watcher Stones] Congealed Putrescence
+594000400,[Watcher Stones] Congealed Putrescence
+594000500,[Watcher Stones] Congealed Putrescence
+595000000,[Leonine Misbegotten] None
+595000100,[Leonine Misbegotten] None
+596000000,[Ulcerated Tree Spirit] None
+596000100,[Ulcerated Tree Spirit] None
+597000000,[Abductor Virgin] None
+597000100,[Abductor Virgin] None
+597000200,[Abductor Virgin] None
+597000300,[Abductor Virgin] None
+597000700,[Abductor Virgin] Broken Rune
+597000701,[Abductor Virgin] Shadow Realm Rune [2]
+597000702,[Abductor Virgin] Shadow Realm Rune [3]
+597000710,[Abductor Virgin] Broken Rune
+597000711,[Abductor Virgin] Shadow Realm Rune [1]
+597000712,[Abductor Virgin] Shadow Realm Rune [4]
+598000000,[Omenkiller] None
+598000100,[Omenkiller] None
+598000700,[Omenkiller] Blessed Bone Shard
+598000710,[Omenkiller] Blessed Bone Shard
+598000720,[Omenkiller] Iris of Occultation
+599000000,[Basilisk] Ghost Glovewort [7]
+599000001,[Basilisk] Ghost Glovewort [8]
+599000002,[Basilisk] Ghost Glovewort [9]
+599000100,[Basilisk] None
+599000200,[Basilisk] None
 600000000,[Eagle] Flight Pinion- Flight Pinion- Flight Pinion
 600000001,[Eagle] Four-Toed Fowl Foot
 601000000,[Deer] Sliver of Meat
@@ -128066,96 +128377,96 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 610000000,[Rabbitgaroo] Thin Beast Bones- Thin Beast Bones- Thin Beast Bones
 610000001,[Rabbitgaroo] Sliver of Meat
 610000002,[Rabbitgaroo] Beast Liver
-621000000,Albinauric Bow
-621000001,Blue Silver Mail Hood
-621000002,Blue Silver Mail Armor
-621000003,Blue Silver Bracelets
-621000004,Blue Silver Mail Skirt
-621000005,Albinauric Bloodclot
-621000006,Arrow
-621000007,St. Trina's Arrow
-621000700,Albinauric Bow
-621000701,Blue Silver Mail Hood
-621000702,Blue Silver Bracelets
-621000703,Blue Silver Mail Skirt
-621000704,Albinauric Bloodclot
-621000705,Arrow
-621000706,St. Trina's Arrow
-621000707,Gaius's Greaves
-621000708,Albinauric Bloodclot
-622000000,Thin Beast Bones
-622000001,Lump of Flesh
-622100000,Thin Beast Bones
-622100001,Lump of Flesh
-623100000,Perfumer Hood
-623100001,Perfumer Robe
-623100002,Perfumer Gloves
-623100003,Perfumer Sarong
-623100004,Budding Cave Moss
-623100005,Altus Bloom
-623100006,Miranda Powder
-623100100,Perfumer's Shield
-623100101,Perfumer Hood
-623100102,Perfumer Robe
-623100103,Perfumer Gloves
-623100104,Perfumer Sarong
-623100105,Budding Cave Moss
-623100106,Altus Bloom
-623100107,Miranda Powder
-623200000,Lazuli Glintstone Sword
-623200001,Lazuli Robe
-623300000,Red Branch Shortbow
-623300001,Perfumer's Bolt
-623300002,Page Hood
-623300003,Page Garb
-623300004,Page Trousers
-623300100,Red Branch Shortbow
-623300101,Perfumer's Bolt
-623300102,Page Hood
-623300103,Page Garb
-623300104,Page Trousers
-625100000,
-625100100,
-626000000,
-626000100,
-627000000,
-627000100,
-629000000,Iron Cleaver
-629000001,Old Fang
-629000010,Iron Cleaver
-629000011,Old Fang
-629000020,Iron Cleaver
-629000021,Old Fang
-629000100,Misbegotten Shortbow
-629000101,Old Fang
-629000110,Old Fang
-629000120,Misbegotten Shortbow
-629000121,Old Fang
-629000130,Old Fang
-629100000,Longhaft Axe
-629100001,Old Fang
-629100100,Longhaft Axe
-629100101,Old Fang
-630000000,Strip of White Flesh
-630000001,Thin Beast Bones
-630000100,Strip of White Flesh
-630000101,Thin Beast Bones
-630000200,Strip of White Flesh
-630000201,Thin Beast Bones
-630000300,Thin Beast Bones
-630000400,Strip of White Flesh
-630000401,Thin Beast Bones
-632000000,Glintstone Staff
-632000001,Aristocrat Headband
-632000002,Aristocrat Garb
-632000003,Aristocrat Boots
-632000004,Glintslab Firefly
-632000010,Glintstone Staff
-632000011,Aristocrat Headband
-632000012,Aristocrat Garb
-632000013,Aristocrat Boots
-632000014,Glintslab Firefly
-632000100,
+621000000,[Albinauric Archer] Albinauric Bow
+621000001,[Albinauric Archer] Blue Silver Mail Hood
+621000002,[Albinauric Archer] Blue Silver Mail Armor
+621000003,[Albinauric Archer] Blue Silver Bracelets
+621000004,[Albinauric Archer] Blue Silver Mail Skirt
+621000005,[Albinauric Archer] Albinauric Bloodclot
+621000006,[Albinauric Archer] Arrow
+621000007,[Albinauric Archer] St. Trina's Arrow
+621000700,[Albinauric Archer] Albinauric Bow
+621000701,[Albinauric Archer] Blue Silver Mail Hood
+621000702,[Albinauric Archer] Blue Silver Bracelets
+621000703,[Albinauric Archer] Blue Silver Mail Skirt
+621000704,[Albinauric Archer] Albinauric Bloodclot
+621000705,[Albinauric Archer] Arrow
+621000706,[Albinauric Archer] St. Trina's Arrow
+621000707,[Albinauric Archer] Gaius's Greaves
+621000708,[Albinauric Archer] Albinauric Bloodclot
+622000000,[Wolf] Thin Beast Bones
+622000001,[Wolf] Lump of Flesh
+622100000,[Wolf] Thin Beast Bones
+622100001,[Wolf] Lump of Flesh
+623100000,[Perfumer] Perfumer Hood
+623100001,[Perfumer] Perfumer Robe
+623100002,[Perfumer] Perfumer Gloves
+623100003,[Perfumer] Perfumer Sarong
+623100004,[Perfumer] Budding Cave Moss
+623100005,[Perfumer] Altus Bloom
+623100006,[Perfumer] Miranda Powder
+623100100,[Perfumer] Perfumer's Shield
+623100101,[Perfumer] Perfumer Hood
+623100102,[Perfumer] Perfumer Robe
+623100103,[Perfumer] Perfumer Gloves
+623100104,[Perfumer] Perfumer Sarong
+623100105,[Perfumer] Budding Cave Moss
+623100106,[Perfumer] Altus Bloom
+623100107,[Perfumer] Miranda Powder
+623200000,[Glintstone Sorcerer] Lazuli Glintstone Sword
+623200001,[Glintstone Sorcerer] Lazuli Robe
+623300000,[Page] Red Branch Shortbow
+623300001,[Page] Perfumer's Bolt
+623300002,[Page] Page Hood
+623300003,[Page] Page Garb
+623300004,[Page] Page Trousers
+623300100,[Page] Red Branch Shortbow
+623300101,[Page] Perfumer's Bolt
+623300102,[Page] Page Hood
+623300103,[Page] Page Garb
+623300104,[Page] Page Trousers
+625100000,[Tree Sentinel] None
+625100100,[Tree Sentinel] None
+626000000,[Death Rite Bird] None
+626000100,[Death Rite Bird] None
+627000000,[Royal Revenant] None
+627000100,[Royal Revenant] None
+629000000,[Misbegotten] Iron Cleaver
+629000001,[Misbegotten] Old Fang
+629000010,[Misbegotten] Iron Cleaver
+629000011,[Misbegotten] Old Fang
+629000020,[Misbegotten] Iron Cleaver
+629000021,[Misbegotten] Old Fang
+629000100,[Misbegotten] Misbegotten Shortbow
+629000101,[Misbegotten] Old Fang
+629000110,[Misbegotten] Old Fang
+629000120,[Misbegotten] Misbegotten Shortbow
+629000121,[Misbegotten] Old Fang
+629000130,[Misbegotten] Old Fang
+629100000,[Scaly Misbegotten] Longhaft Axe
+629100001,[Scaly Misbegotten] Old Fang
+629100100,[Scaly Misbegotten] Longhaft Axe
+629100101,[Scaly Misbegotten] Old Fang
+630000000,[Snail] Strip of White Flesh
+630000001,[Snail] Thin Beast Bones
+630000100,[Snail] Strip of White Flesh
+630000101,[Snail] Thin Beast Bones
+630000200,[Snail] Strip of White Flesh
+630000201,[Snail] Thin Beast Bones
+630000300,[Snail] Thin Beast Bones
+630000400,[Snail] Strip of White Flesh
+630000401,[Snail] Thin Beast Bones
+632000000,[Wandering Noble] Glintstone Staff
+632000001,[Wandering Noble] Aristocrat Headband
+632000002,[Wandering Noble] Aristocrat Garb
+632000003,[Wandering Noble] Aristocrat Boots
+632000004,[Wandering Noble] Glintslab Firefly
+632000010,[Wandering Noble] Glintstone Staff
+632000011,[Wandering Noble] Aristocrat Headband
+632000012,[Wandering Noble] Aristocrat Garb
+632000013,[Wandering Noble] Aristocrat Boots
+632000014,[Wandering Noble] Glintslab Firefly
+632000100,[Wandering Noble] None
 700000000,[Fallen Hawk Soldier] Iron Spear
 700000001,[Fallen Hawk Soldier] Spiritflame Arrow
 700000002,[Fallen Hawk Soldier] Dewkissed Herba
@@ -128197,7 +128508,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 999999001,
 999999002,
 </value>
-  </data>
+    </data>
     <data name="ParamEntries_Magic" xml:space="preserve">
     <value>ID,Name
 4000,[Sorcery] Glintstone Pebble
@@ -138252,7 +138563,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 ]</value>
   </data>
     <data name="ParamEntries_CharaInitParam" xml:space="preserve">
-    <value>ID,Name
+        <value>ID,Name
 10,
 11,
 12,
@@ -138281,26 +138592,32 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 3007,Class - Samurai
 3008,Class - Prisoner
 3009,Class - Wretch
-3100,
-3101,
-3102,
-3103,
-3104,
-3105,
-3106,
-3107,
-3108,
-3109,
-3110,
-3111,
-3112,
-3113,
-3114,
-3115,
-3116,
-3117,
-3118,
-3119,
+3010,Class - Idus Knight
+3011,Class - Heavy Knight
+3100,Class - Vagabond
+3101,Class - Vagabond
+3102,Class - Warrior
+3103,Class - Warrior
+3104,Class - Hero
+3105,Class - Hero
+3106,Class - Bandit
+3107,Class - Bandit
+3108,Class - Astrologer
+3109,Class - Astrologer
+3110,Class - Prophet
+3111,Class - Prophet
+3112,Class - Confessor
+3113,Class - Confessor
+3114,Class - Samurai
+3115,Class - Samurai
+3116,Class - Prisoner
+3117,Class - Prisoner
+3118,Class - Wretch
+3119,Class - Wretch
+3120,Class - Idus Knight
+3121,Class - Idus Knight
+3122,Class - Heavy Knight
+3123,Class - Heavy Knight
 4000,
 4001,
 4002,
@@ -140572,6 +140889,10 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 24000,
 24010,Stray Mimic Tear
 24020,Mimic Tear
+24700,Leontiel Invader
+24701,Leontiel Invader
+24702,Leontiel Invader
+24710,Broken Mask Invader
 26050,Mimic Tear
 27000,Stormhill Colosseum Silent Spirit
 27001,Caria Manor Silent Spirit
@@ -140684,6 +141005,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2004020,
 2004021,
 2004023,
+2004024,
 2004030,
 2004032,
 2004033,
@@ -140698,6 +141020,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2004070,
 2004071,
 2004072,
+2004073,
 2004080,
 2004090,
 2004091,
@@ -140707,6 +141030,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2004112,
 2004113,
 2004120,
+2004121,
 2004130,
 2004131,
 2004132,
@@ -140742,6 +141066,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2004251,
 2004252,
 2004253,
+2004254,
 2004260,
 2004262,
 2004270,
@@ -140778,6 +141103,10 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2004410,
 2004411,
 2004412,
+2005000,
+2005010,
+2005020,
+2005030,
 2005990,
 2005999,
 2006000,
@@ -140837,6 +141166,12 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2006160,
 2006165,
 2006170,
+2006175,
+2006180,
+2006181,
+2006185,
+2006186,
+2006190,
 2006500,
 2006501,
 2006502,
@@ -140894,6 +141229,12 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2006660,
 2006665,
 2006670,
+2006675,
+2006680,
+2006681,
+2006685,
+2006686,
+2006690,
 2007000,
 2007005,
 2007010,
@@ -141006,6 +141347,8 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2007980,
 2007985,
 2007990,
+2007991,
+2007992,
 2008000,
 2008001,
 2008002,
@@ -141070,6 +141413,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2008536,
 2008537,
 2008538,
+2008540,
 2008580,
 2008581,
 2008582,
@@ -141494,7 +141838,7 @@ e9 00 00 00 00          jmp    29 &lt;normal+0xc&gt; </value>
 2049902,
 2999999,
 </value>
-  </data>
+    </data>
     <data name="GoalInfo" xml:space="preserve">
     <value>GoalId,Name,ParamNames
 0,UndefinedGoalNotification

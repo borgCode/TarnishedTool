@@ -3076,13 +3076,13 @@ namespace TarnishedTool.Properties {
         /// <summary>
         ///   Looks up a localized string similar to ID,Name
         ///0,
-        ///1,
+        ///1,No Skill
         ///10,No Skill
         ///100,Lion&apos;s Claw
         ///101,Impaling Thrust
         ///102,Piercing Fang
         ///103,Spinning Slash
-        ///104,%null%
+        ///104,
         ///105,Charge Forth
         ///106,Stamp (Upward Cut)
         ///107,Stamp (Sweep)
@@ -3099,11 +3099,12 @@ namespace TarnishedTool.Properties {
         ///118,Loretta&apos;s Slash
         ///119,Poison Moth Flight
         ///120,Spinning Weapon
-        ///121,%null%
+        ///121,
         ///122,Storm Assault
         ///123,Stormcaller
         ///124,Sword Dance
-        ///125,Spinning Chain        /// [rest of string was truncated]&quot;;.
+        ///125,Spinning Chain
+        ///200 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ParamEntries_SwordArtsParam {
             get {
