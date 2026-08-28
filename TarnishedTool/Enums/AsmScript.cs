@@ -48,5 +48,6 @@ public enum AsmScript
     NoRollHook,
     ActionRequestIntercept,
     DamageMultiplier,
-    SpeedBuff
+    SpeedBuff,
+    AiRequestAttackCooldown
 }

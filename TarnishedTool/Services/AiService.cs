@@ -181,6 +181,23 @@ public class AiService : IAiService
         _memoryService.AllocateAndExecute(bytes);
         _memoryService.FreeMem(scriptPtr);
     }
+    public void RequestAttackCooldown(nint aiThink, uint attackId)
+    {
+        var funcAddr = Functions.AiRequestAttackCooldown;
+        if (funcAddr == 0) return;
+
+        var bytes = AsmLoader.GetAsmBytes(AsmScript.AiRequestAttackCooldown);
+
+        AsmHelper.WriteAbsoluteAddresses(bytes, [
+            (aiThink, 2),
+            ((nint)funcAddr, 21)
+        ]);
+        AsmHelper.WriteImmediateDwords(bytes, [
+            ((int)attackId, 11)
+        ]);
+
+        _memoryService.AllocateAndExecute(bytes);
+    }
 
     #endregion
 

@@ -22,4 +22,5 @@ public interface IAiService
     List<CoolTimeEntry> GetCoolTimeItemList(nint aiThink);
     int GetMainScriptGoalId(nint aiThink);
     void InjectAiScript(byte[] script);
+    void RequestAttackCooldown(nint aiThink, uint attackId);
 }

@@ -3326,7 +3326,7 @@ c3                      ret</value>
 0,1051F090,Steel Helm,1,1
 0,1051F0F4,Steel Armor,1,1
 0,1051F158,Steel Gauntlets,1,1
-0,1051F1BC,Steel Greeves,1,1
+0,1051F1BC,Steel Greaves,1,1
 0,104CC0D4,Thiollier's Garb,1,1
 0,104CC4BC,Thiollier's Garb (Altered),1,1
 0,104CC138,Thiollier's Gloves,1,1
@@ -143953,5 +143953,14 @@ e9 00 00 00 00          jmp    53 &lt;skip+0xa&gt;</value>
         <value>60360
 60350
 60370</value>
+    </data>
+    <data name="AiRequestAttackCooldown" xml:space="preserve">
+        <value>48 b9 00 00 00 00 00 00 00 00   movabs rcx,0x0
+ba 00 00 00 00                  mov    edx,0x0
+48 83 ec 28                     sub    rsp,0x28
+48 b8 00 00 00 00 00 00 00 00   movabs rax,0x0
+ff d0                           call   rax
+48 83 c4 28                     add    rsp,0x28
+c3                               ret</value>
     </data>
 </root>

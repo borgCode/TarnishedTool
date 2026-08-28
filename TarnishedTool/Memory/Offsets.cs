@@ -917,6 +917,7 @@ namespace TarnishedTool.Memory
             public static nint LocalToMapCoords;
             public static nint LuaDoString;
             public static nint RefreshFromStorage;
+            public static nint AiRequestAttackCooldown;
         }
 
         public static class Patches
@@ -2105,6 +2106,13 @@ namespace TarnishedTool.Memory
                     or Version2_6_1 => 0x24E0A0,
                 Version2_6_2 => 0x24DFF0,
                 Version2_7_0 => 0x24DFF0,
+                _ => 0
+            };
+            
+            Functions.AiRequestAttackCooldown = moduleBase + Version switch
+            {
+                Version2_6_2 => 0x2C6280,
+                Version2_7_0 => 0x2C6290,
                 _ => 0
             };
 
@@ -3373,6 +3381,7 @@ namespace TarnishedTool.Memory
             PrintOffset("LocalToMapCoords",          Functions.LocalToMapCoords);
             PrintOffset("LuaDoString",               Functions.LuaDoString);
             PrintOffset("RefreshFromStorage",        Functions.RefreshFromStorage);
+            PrintOffset("AiRequestAttackCooldown",   Functions.AiRequestAttackCooldown);
         }
         
         private static void PrintOffset(string name, nint value)
