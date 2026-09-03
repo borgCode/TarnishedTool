@@ -189,7 +189,7 @@
                             Visibility="{Binding Hotkeys.IsOverlayActive, Converter={StaticResource InverseBoolToVisibility}}">
 
                     <TabItem Header="Player" Width="56">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Player]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -202,7 +202,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Travel" Width="54">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Travel]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -215,7 +215,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Enemies" Width="67">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Enemies]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -228,7 +228,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Target" Width="56">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Target]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -241,7 +241,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Utility" Width="54">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Utility]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -254,7 +254,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Event" Width="53">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Event]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -267,7 +267,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Items" Width="52">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Items]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
@@ -280,7 +280,7 @@
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="Advanced" Width="76">
-                        <ScrollViewer MaxHeight="430" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer MaxHeight="363" VerticalScrollBarVisibility="Auto">
                             <ItemsControl ItemsSource="{Binding Hotkeys[Advanced]}"
                                           Padding="5"
                                           ItemTemplate="{StaticResource HotkeyItemTemplate}">
