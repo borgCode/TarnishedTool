@@ -41,7 +41,7 @@ namespace TarnishedTool.ViewModels
 
         public TravelViewModel(ITravelService travelService, IEventService eventService, IStateService stateService,
             IDlcService dlcService, IEmevdService emevdService, IPlayerService playerService,
-            IGameTickService gameTickService,HotkeyManager hotkeyManager)
+            IGameTickService gameTickService, HotkeyManager hotkeyManager)
         {
             _travelService = travelService;
             _eventService = eventService;
@@ -228,15 +228,18 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.UnlockAllMainGameGraces, UnlockMainGameGraces);
             _hotkeyManager.RegisterAction(HotkeyActions.UnlockAllDlcGraces, UnlockDlcGraces);
             _hotkeyManager.RegisterAction(HotkeyActions.UnlockAllMainRemembrancesGraces, UnlockBaseArGraces);
-            _hotkeyManager.RegisterAction(HotkeyActions.UnlockAllDlcRemembrancesGraces,UnlockDlcArGraces);
-            _hotkeyManager.RegisterAction(HotkeyActions.UnlockPresetGraces,UnlockGracePreset);
-            _hotkeyManager.RegisterAction(HotkeyActions.ShowAllGraces, () => IsShowAllGracesEnabled = !IsShowAllGracesEnabled );
-            _hotkeyManager.RegisterAction(HotkeyActions.ShowAllMaps, ()  => IsShowAllMapsEnabled = !IsShowAllMapsEnabled );
-            _hotkeyManager.RegisterAction(HotkeyActions.NoMapAcquiredPopup, () => IsNoMapAcquiredPopupsEnabled = !IsNoMapAcquiredPopupsEnabled );
+            _hotkeyManager.RegisterAction(HotkeyActions.UnlockAllDlcRemembrancesGraces, UnlockDlcArGraces);
+            _hotkeyManager.RegisterAction(HotkeyActions.UnlockPresetGraces, UnlockGracePreset);
+            _hotkeyManager.RegisterAction(HotkeyActions.ShowAllGraces,
+                () => IsShowAllGracesEnabled = !IsShowAllGracesEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.ShowAllMaps,
+                () => IsShowAllMapsEnabled = !IsShowAllMapsEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.NoMapAcquiredPopup,
+                () => IsNoMapAcquiredPopupsEnabled = !IsNoMapAcquiredPopupsEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.WarpToGrace, () => GraceWarp());
-            _hotkeyManager.RegisterAction(HotkeyActions.WarpToBoss, () =>  BossWarp());
-            _hotkeyManager.RegisterAction(HotkeyActions.WarpToCustomLocation,  () => CustomWarp());
-            _hotkeyManager.RegisterAction(HotkeyActions.RestOnWarp,  () => IsRestOnWarpEnabled = !IsRestOnWarpEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.WarpToBoss, () => BossWarp());
+            _hotkeyManager.RegisterAction(HotkeyActions.WarpToCustomLocation, () => CustomWarp());
+            _hotkeyManager.RegisterAction(HotkeyActions.RestOnWarp, () => IsRestOnWarpEnabled = !IsRestOnWarpEnabled);
         }
 
         private void OnGameLoaded()
@@ -255,12 +258,16 @@ namespace TarnishedTool.ViewModels
 
         private void GraceWarp()
         {
+            if (!AreOptionsEnabled) return;
+            if (Graces.SelectedItem == null) return;
             if (Graces.SelectedItem.IsDlc && !IsDlcAvailable) return;
             _travelService.Warp(Graces.SelectedItem);
         }
 
         private void BossWarp()
         {
+            if (!AreOptionsEnabled) return;
+            if (Bosses.SelectedItem == null) return;
             if (Bosses.SelectedItem.IsDlc && !IsDlcAvailable) return;
             _ = Task.Run(() =>
             {
@@ -275,6 +282,8 @@ namespace TarnishedTool.ViewModels
 
         private void CustomWarp()
         {
+            if (!AreOptionsEnabled) return;
+            if (CustomWarps.SelectedItem == null) return;
             if (CustomWarps.SelectedItem.IsDlc && !IsDlcAvailable) return;
             _ = Task.Run(() =>
             {
@@ -285,6 +294,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockMainGameGraces()
         {
+            if (!AreOptionsEnabled) return;
             _eventService.SetEvent(Event.SeeUndergroundGraces, true);
             foreach (var grace in Graces.AllItems)
             {
@@ -295,6 +305,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockDlcGraces()
         {
+            if (!AreOptionsEnabled) return;
             _eventService.SetEvent(Event.SeeDlcGraces, true);
             foreach (var grace in Graces.AllItems)
             {
@@ -305,6 +316,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockBaseGameMaps()
         {
+            if (!AreOptionsEnabled) return;
             foreach (var baseGameMap in _baseGameMaps)
             {
                 _eventService.SetEvent(baseGameMap, true);
@@ -313,6 +325,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockDlcMaps()
         {
+            if (!AreOptionsEnabled) return;
             foreach (var dlcMap in _dlcMaps)
             {
                 _eventService.SetEvent(dlcMap, true);
@@ -321,6 +334,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockBaseArGraces()
         {
+            if (!AreOptionsEnabled) return;
             _eventService.SetEvent(Event.SeeUndergroundGraces, true);
             foreach (var baseArGrace in _baseArGraces)
             {
@@ -330,6 +344,7 @@ namespace TarnishedTool.ViewModels
 
         private void UnlockDlcArGraces()
         {
+            if (!AreOptionsEnabled) return;
             _eventService.SetEvent(Event.SeeDlcGraces, true);
             foreach (var dlcArGrace in _dlcArGraces)
             {

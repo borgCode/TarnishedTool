@@ -58,7 +58,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         get => _selectedGroup;
         set
         {
-            if (!SetProperty(ref _selectedGroup, value) || value == null) return;
+            if (!SetProperty(ref _selectedGroup, value)) return;
 
             if (_isSearchActive)
             {
@@ -155,6 +155,7 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         if (SelectedGroup == null || !_groupedItems.ContainsKey(SelectedGroup))
         {
             Items = new ObservableCollection<TItem>();
+            SelectedItem = default;
             return;
         }
 
