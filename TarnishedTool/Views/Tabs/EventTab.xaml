@@ -141,7 +141,8 @@
                             Content="Unlock Metyr"
                             Command="{Binding UnlockMetyrCommand}"
                             Width="155"
-                            Margin="10, 0, -2,2">
+                            
+                            Margin="10, 0, -2,-1">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                     <Binding Path="AreOptionsEnabled" />
@@ -232,6 +233,10 @@
                             IsEnabled="{Binding AreOptionsEnabled}"
                             Margin="7, 4.7, 0,2">
                     </Button>
+                    <Button Grid.Row="2" Grid.Column="2" Content="Unlock All Map Landmarks"
+                            IsEnabled="{Binding AreOptionsEnabled}"
+                            Command="{Binding UnlockAllLandmarksCommand}"
+                            Margin="7, 4.7, 0,7" />
                 </Grid>
             </StackPanel>
         </Border>

@@ -34,6 +34,8 @@ namespace TarnishedTool.ViewModels
         private readonly List<int> _baseGameSummoningPools;
         private readonly List<int> _dlcSummoningPools;
         private readonly List<int> _colosseums;
+        private readonly List<int> _baseLandmarks;
+        private readonly List<int> _dlcLandmarks;
 
         private readonly EventLogViewModel _eventLogViewModel = new();
         private EventLogWindow _eventLogWindow;
@@ -68,6 +70,7 @@ namespace TarnishedTool.ViewModels
             UnlockGesturesCommand = new DelegateCommand(UnlockGestures);
             UnlockSummoningPoolsCommand = new DelegateCommand(UnlockSummoningPools);
             UnlockAllColosseumsCommand = new DelegateCommand(UnlockAllColosseums);
+            UnlockAllLandmarksCommand = new DelegateCommand(UnlockAllLandmarks);
             FightEldenBeastCommand = new DelegateCommand(FightEldenBeast);
             ClearDlcCommand = new DelegateCommand(ToggleClearDlc);
             DeactivateMausoleumCommand = new DelegateCommand(ToggleSnowfieldMausoleum);
@@ -90,6 +93,10 @@ namespace TarnishedTool.ViewModels
                 DataLoader.GetSimpleList("DlcSummoningPools", s => int.Parse(s, CultureInfo.InvariantCulture));
             _colosseums =
                 DataLoader.GetSimpleList("Colosseums", s => int.Parse(s, CultureInfo.InvariantCulture));
+            _baseLandmarks =
+                DataLoader.GetSimpleList("BaseLandmarks", s => int.Parse(s, CultureInfo.InvariantCulture));
+            _dlcLandmarks =
+                DataLoader.GetSimpleList("DlcLandmarks", s => int.Parse(s, CultureInfo.InvariantCulture));
 
             SelectedWeatherType = WeatherTypes.FirstOrDefault();
 
@@ -109,6 +116,7 @@ namespace TarnishedTool.ViewModels
         public ICommand UnlockGesturesCommand { get; set; }
         public ICommand UnlockSummoningPoolsCommand { get; set; }
         public ICommand UnlockAllColosseumsCommand { get; set; }
+        public ICommand UnlockAllLandmarksCommand { get; set; }
         public ICommand FightEldenBeastCommand { get; set; }
         public ICommand ClearDlcCommand { get; set; }
         public ICommand DeactivateMausoleumCommand { get; set; }
@@ -491,6 +499,32 @@ namespace TarnishedTool.ViewModels
                 _eventService.SetEvent(colosseum, true);
             }
         }
+        
+        private void UnlockAllLandmarks()
+        {
+            UnlockBaseLandmarks();
+
+            if (!IsDlcAvailable) return;
+
+            UnlockDlcLandmarks();
+        }
+
+        private void UnlockBaseLandmarks()
+        {
+            foreach (var baseLandmarkId in _baseLandmarks)
+            {
+                _eventService.SetEvent(baseLandmarkId, true);
+            }
+        }
+
+        private void UnlockDlcLandmarks()
+        {
+            foreach (var dlcLandmarkId in _dlcLandmarks)
+            {
+                _eventService.SetEvent(dlcLandmarkId, true);
+            }
+        }
+
 
         private void ToggleClearDlc()
         {
