@@ -52,6 +52,7 @@ public class EnemyViewModel : BaseViewModel
     private const float LionPhaseTransitionDuration = 30f;
     public const int LionTriplePhaseTransition = 20011237;
     private const float LionTripleTransitionDuration = 15f;
+    private const int ChangeHpRateOffset = 0x9c;
 
 
     private static readonly uint[] MainBossPhaseSpEffectRowIds =
@@ -67,6 +68,27 @@ public class EnemyViewModel : BaseViewModel
         DeathblightPhaseSpEffectRowId,
         FrostPhaseSpEffectRowId,
         WindPhaseSpEffectRowId
+    };
+
+    private static readonly (uint RowId, float PercentageDamage)[] SerpentHunterPercentageDamageRows =
+    {
+        // Solo (No Coop)
+        (19450, 1f), // 1%
+        (19455, 2f), // 2%
+        (19460, 4f), // 4%
+        (19465, 11f), // 11%
+
+        // 1 player coop
+        (19451, 0.67f), // 0.67%
+        (19456, 1.3f), // 1.3%
+        (19461, 2.7f), // 2.7%
+        (19466, 7.2f), // 7.2%
+
+        // 2 players coop
+        (19452, 0.5f), // 0.5%
+        (19457, 1f), // 1%
+        (19462, 2f), // 2%
+        (19467, 5.5f), // 5.5%
     };
 
 
@@ -206,8 +228,11 @@ public class EnemyViewModel : BaseViewModel
         get => _isNoDamageEnabled;
         set
         {
-            SetProperty(ref _isNoDamageEnabled, value);
-            _enemyService.ToggleNoDamage(_isNoDamageEnabled);
+            if (SetProperty(ref _isNoDamageEnabled, value))
+            {
+                _enemyService.ToggleNoDamage(_isNoDamageEnabled);
+                RemoveSerpentHunterPercentageDamage(true);
+            }
         }
     }
 
@@ -466,7 +491,11 @@ public class EnemyViewModel : BaseViewModel
     private void OnGameFirstLoaded()
     {
         if (IsNoDeathEnabled) _enemyService.ToggleNoDeath(true);
-        if (IsNoDamageEnabled) _enemyService.ToggleNoDamage(true);
+        if (IsNoDamageEnabled)
+        {
+            _enemyService.ToggleNoDamage(true);
+            RemoveSerpentHunterPercentageDamage(true);
+        }
         if (IsNoHitEnabled) _enemyService.ToggleNoHit(true);
         if (IsNoAttackEnabled) _enemyService.ToggleNoAttack(true);
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
@@ -532,6 +561,20 @@ public class EnemyViewModel : BaseViewModel
         int[] acts = [EldenStarsActIdx, SelectedAct.ActIdx];
         _enemyService.ForceActSequence(acts, EbNpcThinkParamId);
     }
+    
+    private void RemoveSerpentHunterPercentageDamage(bool enabled)
+        {
+            var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+            
+            foreach (var (rowId, percentageDamage) in SerpentHunterPercentageDamageRows)
+            {
+                nint row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
+                if (row == 0) return;
+
+                float changeHpRate = enabled ? 0f : percentageDamage;
+                _paramService.Write(row, ChangeHpRateOffset, changeHpRate);
+            }
+        }
 
     private void ApplyLionSpEffects(uint entityId)
     {
@@ -604,6 +647,7 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
 
+        if (!AreOptionsEnabled) return;
         if (!CheckDtsValidity(bossRevive)) return; // Cancel early if DTS is picked in ashen capital
 
         SetBossFlags(bossRevive, isFirstEncounter: false);
@@ -629,6 +673,7 @@ public class EnemyViewModel : BaseViewModel
     {
         var bossRevive = BossRevives.SelectedItem;
 
+        if (!AreOptionsEnabled) return;
         if (!CheckDtsValidity(bossRevive)) return; // Cancel early if DTS is picked in ashen capital
 
         SetBossFlags(bossRevive, isFirstEncounter: true);
@@ -668,6 +713,7 @@ public class EnemyViewModel : BaseViewModel
 
     private void HandleReviveAllWarp(bool useFirstEncounter)
     {
+        if (!AreOptionsEnabled) return;
         // Find nearest bosses to warp to
         var playerBlockId = _playerService.GetBlockId();
         var bossesInBlock = new List<BossRevive>();
