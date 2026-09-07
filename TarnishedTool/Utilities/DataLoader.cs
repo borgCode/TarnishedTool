@@ -757,5 +757,38 @@ namespace TarnishedTool.Utilities
 
             return dict;
         }
+        
+        // new thing for param entries
+        public static Dictionary<TKey, TValue> GetSimpleDictFromFile<TKey, TValue>(
+        string filePath,
+        Func<string, TKey> keyParser,
+        Func<string, TValue> valueParser,
+        char delimiter = ',')
+        {
+            var dict = new Dictionary<TKey, TValue>();
+        
+            string[] lines;
+            try
+            {
+                lines = File.ReadAllLines(filePath);
+            }
+            catch
+            {
+                return dict;
+            }
+        
+            foreach (var rawLine in lines.Skip(1))
+            {
+                var line = rawLine.Trim();
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("#")) continue;
+        
+                var parts = line.Split(delimiter);
+                if (parts.Length < 2) continue;
+        
+                dict[keyParser(parts[0])] = valueParser(parts[1]);
+            }
+        
+            return dict;
+        }
     }
 }

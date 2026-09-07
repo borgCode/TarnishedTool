@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 using TarnishedTool.Core;
 using TarnishedTool.Enums;
@@ -82,6 +84,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
         RenameRowCommand = new DelegateCommand<ParamEntry>(RenameRow);
         ToggleVanillaValuesCommand = new DelegateCommand(ToggleVanillaValues);
         CycleParamFieldDisplayModeCommand = new DelegateCommand(CycleParamFieldDisplayMode);
+        ImportCustomParamEntriesCommand = new DelegateCommand(ImportCustomParamEntries);
         PopulateEnumTypes();
 
         ParamEntries.SetSearchScope(SearchScopes.SelectedGroup);
@@ -109,6 +112,7 @@ public sealed class ParamEditorViewModel : BaseViewModel
     public ICommand RenameRowCommand { get; set; }
     public ICommand ToggleVanillaValuesCommand { get; set; }
     public ICommand CycleParamFieldDisplayModeCommand { get; set; }
+    public ICommand ImportCustomParamEntriesCommand { get; set; }
 
     #endregion
 
@@ -462,6 +466,140 @@ public sealed class ParamEditorViewModel : BaseViewModel
             ParamFieldDisplayMode.OffsetInternal => ParamFieldDisplayMode.OffsetNameInternal,
             _ => ParamFieldDisplayMode.OffsetNameInternal
         };
+    }
+
+    private (Dictionary<Param, int> countsByParam, int totalRows) MergeCustomParamEntriesFromFolder(string folderPath)
+    {
+        var countsByParam = new Dictionary<Param, int>();
+        bool? overwriteExistingNames = null;
+
+        foreach (var filePath in Directory.GetFiles(folderPath, "*.csv"))
+        {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+
+            if (!Enum.TryParse<Param>(fileName, true, out var param))
+                continue;
+
+            Dictionary<uint, string> customEntries;
+            try
+            {
+                customEntries = DataLoader.GetSimpleDictFromFile(filePath, uint.Parse, s => s);
+            }
+            catch (Exception ex)
+            {
+                MsgBox.Show($"Failed to parse \"{fileName}.csv\"... skipping.\n\n{ex.Message}",
+                    "Import Custom Param Entries");
+                continue;
+            }
+
+            if (customEntries.Count == 0) continue;
+
+            var existingById = ParamEntries.GroupedItems.TryGetValue(param, out var existingList)
+                ? existingList.ToDictionary(e => e.Id)
+                : new Dictionary<uint, ParamEntry>();
+
+            var newEntries = new List<ParamEntry>();
+            int importedForThisParam = 0;
+
+            foreach (var kvp in customEntries)
+            {
+                var id = kvp.Key;
+                var name = kvp.Value;
+
+                if (existingById.TryGetValue(id, out var existingEntry))
+                {
+                    if (existingEntry.HasName)
+                    {
+                        overwriteExistingNames ??= MsgBox.ShowYesNo(
+                            "Some CSVs contain names for rows that already have a name.\n\n" +
+                            "Overwrite existing names with the CSV names?",
+                            "Import Custom Param Entries");
+
+                        if (overwriteExistingNames != true)
+                            continue;
+                    }
+
+                    existingEntry.CustomName = name;
+                    importedForThisParam++;
+                    continue;
+                }
+
+                newEntries.Add(new ParamEntry(id, name) { Parent = param });
+                importedForThisParam++;
+            }
+
+            if (newEntries.Count > 0)
+                ParamEntries.AddRange(param, newEntries);
+
+            if (importedForThisParam > 0)
+            {
+                ParamEntries.GroupedItems[param].Sort((a, b) => a.Id.CompareTo(b.Id));
+                countsByParam[param] = importedForThisParam;
+            }
+        }
+
+        if (countsByParam.Count > 0)
+            ParamEntries.UpdateItemsList();
+
+        return (countsByParam, countsByParam.Values.Sum());
+    }
+
+    private static string FormatParamNameList(IEnumerable<Param> parameters)
+    {
+        var names = parameters.Select(p => p.ToString()).ToList();
+
+        switch (names.Count)
+        {
+            case 0: return "";
+            case 1: return names[0];
+            case 2: return $"{names[0]} and {names[1]}";
+            default:
+                return string.Join(", ", names.Take(names.Count - 1)) + $", and {names[names.Count - 1]}";
+        }
+    }
+
+
+    private void ImportCustomParamEntries()
+    {
+        var proceed = MsgBox.ShowOkCancel(
+            "In the next window, please select the folder which contains the custom entries you'd like to add.\nKeep in mind that any entry you add will remain in the param editor until you restart the tool.\n\n" +
+            "Please make sure the CSV name matches the params available otherwise it will be ignored. e.g. \"AtkParam_Npc.csv\"\nIdeally, use Smithbox to export the CSVs for accurate formatting.",
+            "Import Custom Param Entries");
+
+        if (!proceed) return;
+
+        string folderPath;
+        // Fake save for more modern window instead of old tree styled thing because it's annoying to find the folder every time
+        using (var dialog = new SaveFileDialog
+               {
+                   Title = "Select folder containing custom param entry CSVs",
+                   FileName = "Go to directory and click save",
+                   Filter = "Folder|Go to directory and click save",
+                   CheckFileExists = false,
+                   CheckPathExists = true,
+                   OverwritePrompt = false
+               })
+        {
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            folderPath = Path.GetDirectoryName(dialog.FileName);
+            if (string.IsNullOrEmpty(folderPath))
+                return;
+        }
+
+        var (countsByParam, totalRows) = MergeCustomParamEntriesFromFolder(folderPath);
+
+        if (totalRows == 0)
+        {
+            MsgBox.Show("No matching custom param entries were found in the selected folder.",
+                "Import Custom Param Entries");
+            return;
+        }
+
+        MsgBox.Show(
+            $"Imported {FormatParamNameList(countsByParam.Keys)} (total rows imported: {totalRows}).",
+            "Import Custom Param Entries");
     }
 
     private void RenameRow(ParamEntry entry)
