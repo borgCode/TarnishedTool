@@ -119,6 +119,7 @@ namespace TarnishedTool.ViewModels
             stateService.Subscribe(State.NotLoaded, OnGameNotLoaded);
             stateService.Subscribe(State.FirstLoaded, OnGameFirstLoaded);
             stateService.Subscribe(State.FadedIn, OnFadedIn);
+            stateService.Subscribe(State.Attached, OnGameAttached);
 
             SaveCommand = new DelegateCommand(Save);
             TriggerNgCycleCommand = new DelegateCommand(TriggerNgCycle);
@@ -181,6 +182,14 @@ namespace TarnishedTool.ViewModels
         #endregion
 
         #region Properties
+
+        private bool _isGameAttached;
+
+        public bool IsGameAttached
+        {
+            get => _isGameAttached;
+            set => SetProperty(ref _isGameAttached, value);
+        }
 
         private bool _areOptionsEnabled;
 
@@ -826,11 +835,17 @@ namespace TarnishedTool.ViewModels
             IsNoClipKeyboardDisableEnabled = SettingsManager.Default.IsNoClipKeyboardDisabled;
         }
 
+        private void OnGameAttached()
+        {
+            IsGameAttached = true;
+            GameSpeed = _utilityService.GetSpeed();
+            Fps = _utilityService.GetFps();
+        }
+
         private void OnGameLoaded()
         {
             AreOptionsEnabled = true;
-            GameSpeed = _utilityService.GetSpeed();
-            Fps = _utilityService.GetFps();
+            
             if (IsDungeonWarpEnabled)
             {
                 var playerIns = _playerService.GetPlayerIns();
@@ -986,13 +1001,13 @@ namespace TarnishedTool.ViewModels
             });
             _hotkeyManager.RegisterAction(HotkeyActions.DrawPoiseBars,
                 () => IsDrawPoiseBarsEnabled = !IsDrawPoiseBarsEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.Set20Fps, () => SafeExecute(() => Fps = 20));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set30Fps, () => SafeExecute(() => Fps = 30));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set60Fps, () => SafeExecute(() => Fps = 60));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set90Fps, () => SafeExecute(() => Fps = 90));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps, () => SafeExecute(() => Fps = 120));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps, () => SafeExecute(() => Fps = 180));
-            _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => SafeExecute(() => Fps = 240));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set20Fps, () => GameAttachedExecute(() => Fps = 20));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set30Fps, () => GameAttachedExecute(() => Fps = 30));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set60Fps, () => GameAttachedExecute(() => Fps = 60));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set90Fps, () => GameAttachedExecute(() => Fps = 90));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set120Fps, () => GameAttachedExecute(() => Fps = 120));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set180Fps, () => GameAttachedExecute(() => Fps = 180));
+            _hotkeyManager.RegisterAction(HotkeyActions.Set240Fps, () => GameAttachedExecute(() => Fps = 240));
             _hotkeyManager.RegisterAction(HotkeyActions.NoUpgradeCost,
                 () => SafeExecute(() => { IsNoUpgradeCostEnabled = !IsNoUpgradeCostEnabled; }));
             _hotkeyManager.RegisterAction(HotkeyActions.AllDiscardable,
@@ -1024,6 +1039,12 @@ namespace TarnishedTool.ViewModels
                 () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
         }
 
+        private void GameAttachedExecute(Action action)
+        {
+            if (!IsGameAttached) return;
+            action();
+        }
+
         private void SafeExecute(Action action)
         {
             if (!AreOptionsEnabled) return;
@@ -1048,7 +1069,7 @@ namespace TarnishedTool.ViewModels
 
         private void ToggleSpeed()
         {
-            if (!AreOptionsEnabled) return;
+            if (!IsGameAttached) return;
 
             if (!IsApproximately(GameSpeed, DefaultGameSpeed))
             {
@@ -1107,6 +1128,7 @@ namespace TarnishedTool.ViewModels
 
         private void OpenShopSelector()
         {
+            if (!AreOptionsEnabled) return;
             if (_shopSelectorWindow != null && _shopSelectorWindow.IsVisible)
             {
                 _shopSelectorWindow.Activate();

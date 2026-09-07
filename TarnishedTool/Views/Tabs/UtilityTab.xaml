@@ -48,7 +48,7 @@
                             Width="80"
                             Minimum="1"
                             Maximum="1000"
-                            IsEnabled="{Binding AreOptionsEnabled}"
+                            IsEnabled="{Binding IsGameAttached}"
                             BorderBrush="#3F3F46">
                         </xctk:IntegerUpDown>
                         <TextBlock Margin="10,3,20,0" Text="Set FPS cap"></TextBlock>
@@ -132,14 +132,16 @@
                                         Minimum="0"
                                         Increment="0.50"
                                         FormatString="F2"
-                                        BorderBrush="#3F3F46" />
+                                        BorderBrush="#3F3F46"
+                                        IsEnabled="{Binding IsGameAttached}"/>
                                     <TextBlock Text="Speed" VerticalAlignment="Center" Margin="5,0,0,0" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                     <CheckBox Content="Remember Speed"
                                               IsChecked="{Binding IsRememberSpeedEnabled}"
                                               VerticalAlignment="Center"
-                                              Margin="0,0,5,0" />
+                                              Margin="0,0,5,0"
+                                              IsEnabled="{Binding IsGameAttached}"/>
                                     <Border Background="#3498db" CornerRadius="10" Width="12" Height="12"
                                             Margin="3,2.5,0,0" VerticalAlignment="Center"
                                             ToolTip="Remember toggled speed across app restarts"
@@ -518,7 +520,8 @@
                 <TabItem Header="Shops">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Open shops"
-                                Command="{Binding OpenShopSelectorCommand}" />
+                                Command="{Binding OpenShopSelectorCommand}"
+                                IsEnabled="{Binding AreOptionsEnabled}"/>
 
                         <CheckBox
                             Content="Show full shop lineup"
