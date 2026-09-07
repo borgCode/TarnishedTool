@@ -910,7 +910,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.SetTargetMaxHp, () =>
                 ExecuteTargetAction(() => SetHpPercentage(100)));
             _hotkeyManager.RegisterAction(HotkeyActions.SetTargetCustomHp, () =>
-                ExecuteTargetAction(() => SetHp(CustomHp)));
+                ExecuteTargetAction(SetCustomHp));
             _hotkeyManager.RegisterAction(HotkeyActions.ShowAllResistances, () =>
             {
                 if (!IsTargetOptionsEnabled) IsTargetOptionsEnabled = true;
@@ -977,8 +977,10 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.AiInfo, () => ExecuteTargetAction(OpenAiWindow));
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleMadness, () => ShowMadness = !ShowMadness);
             _hotkeyManager.RegisterAction(HotkeyActions.ToggleDeathblight, () => ShowDeathBlight = !ShowDeathBlight);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawStance, () => IsDrawCritViewEnabled = !IsDrawCritViewEnabled);
-            _hotkeyManager.RegisterAction(HotkeyActions.DrawBackstab, () => IsDrawBackstabViewEnabled = !IsDrawBackstabViewEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawStance,
+                () => IsDrawCritViewEnabled = !IsDrawCritViewEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.DrawBackstab,
+                () => IsDrawBackstabViewEnabled = !IsDrawBackstabViewEnabled);
         }
 
         private void ExecuteTargetAction(Action action)
@@ -1027,11 +1029,15 @@ namespace TarnishedTool.ViewModels
 
         private bool IsApproximately(float a, float b) => Math.Abs(a - b) < Epsilon;
 
-        private void SetHp(object parameter) =>
+        private void SetHp(object parameter)
+        {
+            if (!AreOptionsEnabled) return;
             _targetService.SetHp(Convert.ToInt32(parameter));
+        }
 
         private void SetHpPercentage(object parameter)
         {
+            if (!AreOptionsEnabled) return;
             int healthPercentage = Convert.ToInt32(parameter);
             int newHealth = MaxHealth * healthPercentage / 100;
             _targetService.SetHp(newHealth);
@@ -1039,6 +1045,7 @@ namespace TarnishedTool.ViewModels
 
         private void SetCustomHp()
         {
+            if (!AreOptionsEnabled) return;
             if (!_customHpHasBeenSet) return;
             var (CustomHp, error) = ParseCustomHp();
             if (CustomHp == null)
@@ -1123,10 +1130,6 @@ namespace TarnishedTool.ViewModels
                 IsDrawBackstabViewEnabled = _targetService.IsDrawBackstabViewEnabled();
 
                 _currentTargetChrIns = chrIns;
-                MaxPoise = _targetService.GetMaxPoise();
-
-                UpdateImmunities();
-                UpdateDefenses();
                 RefreshResistancesWindow();
             }
 
@@ -1137,11 +1140,14 @@ namespace TarnishedTool.ViewModels
             CurrentAnimation = _targetService.GetCurrentAnimation();
             TargetSpeed = _targetService.GetSpeed();
             CurrentPoise = _targetService.GetCurrentPoise();
+            MaxPoise = _targetService.GetMaxPoise();
             PoiseTimer = _targetService.GetPoiseTimer();
 
             Dist = _targetService.GetDist();
-
+            
             UpdateResistances();
+            UpdateImmunities();
+            UpdateDefenses();
 
 
             if (IsShowAttackInfoEnabled)
