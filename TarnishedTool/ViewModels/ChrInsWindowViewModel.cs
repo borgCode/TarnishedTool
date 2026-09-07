@@ -151,6 +151,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
 
                     existingEntry.CurrentHp = _chrInsService.GetCurrentHp(existingEntry.ChrIns);
                     existingEntry.MaxHp = _chrInsService.GetMaxHp(existingEntry.ChrIns);
+                    existingEntry.CurrentAnimation =  _chrInsService.GetCurrentAnimation(existingEntry.ChrIns);
                 }
 
                 continue;
@@ -171,6 +172,7 @@ internal class ChrInsWindowViewModel : BaseViewModel
             entry.NpcParamId = _chrInsService.GetNpcParamId(entry.ChrIns);
             entry.CurrentHp = _chrInsService.GetCurrentHp(entry.ChrIns);
             entry.MaxHp = _chrInsService.GetMaxHp(entry.ChrIns);
+            entry.CurrentAnimation = _chrInsService.GetCurrentAnimation(entry.ChrIns);
 
             _entriesByHandle[handle] = entry;
             ChrInsEntries.Add(entry);
@@ -294,7 +296,10 @@ internal class ChrInsWindowViewModel : BaseViewModel
         var s = ChrInsSearchText.ToLowerInvariant();
         return (e.Name?.ToLowerInvariant().Contains(s) ?? false)
                || (e.InternalName?.ToLowerInvariant().Contains(s) ?? false)
-               || e.ChrId.ToString().Contains(s);
+               || e.ChrId.ToString().Contains(s)
+               || (e.NpcParamId != 0 && e.NpcParamId.ToString().Contains(s))
+               || (e.EntityId != 0 && e.EntityId.ToString().Contains(s))
+               || (e.NpcThinkParamId != 0 && e.NpcThinkParamId.ToString().Contains(s));
     }
 
     private void ClearSelection()

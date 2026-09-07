@@ -166,6 +166,14 @@ public class ChrInsEntry(nint chrIns) : BaseViewModel
         get => _maxHp;
         set => SetProperty(ref _maxHp, value);
     }
+    
+    private int _currentAnimation;
+
+    public int CurrentAnimation
+    {
+        get => _currentAnimation;
+        set => SetProperty(ref _currentAnimation, value);
+    }
 
     private ICommand _warpCommand;
 

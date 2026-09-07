@@ -171,6 +171,11 @@
                                     <TextBlock Text="{Binding Distance, StringFormat={}{0:F2}}" FontSize="15"
                                                TextAlignment="Right" Margin="5,0,0,0" />
                                 </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <TextBlock FontSize="15" Text="Anim:" />
+                                    <TextBlock Text="{Binding CurrentAnimation}" FontSize="15"
+                                               TextAlignment="Right" Margin="5,0,0,0" />
+                                </StackPanel>
                             </StackPanel>
 
 
