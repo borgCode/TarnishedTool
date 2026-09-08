@@ -78,6 +78,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Faster Death", HotkeyActions.FasterDeath),
                 new("Torrent Anywhere", HotkeyActions.TorrentAnywhere),
                 new("Torrent No Death", HotkeyActions.TorrentNoDeath),
+                new ("No GGR Heal on Load", HotkeyActions.GgrFix),
                 new("RFBS On Load", HotkeyActions.RfbsOnLoad),
                 new("No Runes From Enemies", HotkeyActions.NoRunesFromEnemies),
                 new("No Rune Loss On Death", HotkeyActions.NoRuneLossOnDeath),
@@ -138,6 +139,7 @@ public class SettingsViewModel : BaseViewModel
             ["Target"] =
             [
                 new("Enable Target Options", HotkeyActions.EnableTargetOptions),
+                new ("Trigger Next Phase", HotkeyActions.TriggerNextPhase),
                 new("Kill Target", HotkeyActions.KillTarget),
                 new("Set Max HP", HotkeyActions.SetTargetMaxHp),
                 new("Set Target Custom HP", HotkeyActions.SetTargetCustomHp),

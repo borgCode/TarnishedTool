@@ -15,7 +15,6 @@ public class PhaseTransitionViewModel : BaseViewModel
     private readonly IChrInsService _chrInsService;
     private readonly ISpEffectService _spEffectService;
     private readonly IAiService _aiService;
-    private PhaseTransition? _currentTransition;
 
     public PhaseTransitionViewModel(ITargetService targetService, IEmevdService emevdService, IEventService eventService, IChrInsService chrInsService, ISpEffectService spEffectService, IAiService aiService)
     {
@@ -72,7 +71,7 @@ public class PhaseTransitionViewModel : BaseViewModel
 
     public void TriggerPhase()
     {
-        if (_currentTransition?.CanActivate(_targetService) == true)
-            _currentTransition.Execute(_targetService, _emevdService);
+        var next = PhaseButtons.FirstOrDefault(b => b.IsEnabled);
+        next?.TriggerCommand.Execute(null);
     }
 }

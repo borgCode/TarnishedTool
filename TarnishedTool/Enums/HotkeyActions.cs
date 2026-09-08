@@ -209,5 +209,7 @@ public enum HotkeyActions
     NoRoll,
     DrawStance,
     DrawBackstab,
-    SpeedBuff
+    SpeedBuff,
+    TriggerNextPhase,
+    GgrFix
 }

@@ -988,6 +988,8 @@ namespace TarnishedTool.ViewModels
                 () => IsDrawCritViewEnabled = !IsDrawCritViewEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.DrawBackstab,
                 () => IsDrawBackstabViewEnabled = !IsDrawBackstabViewEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.TriggerNextPhase,
+            () => ExecuteTargetAction(() => _phaseTransitionViewModel.TriggerPhase()));
         }
 
         private void ExecuteTargetAction(Action action)

@@ -194,7 +194,7 @@ public static class PhaseTransitionRegistry
             {
                 32520054, new List<PhaseTransition>
                 {
-                    new PhaseTransition.HaligtreeLorettaPhase2() 
+                    new PhaseTransition.LorettaPhase2() 
                     
                 }
             },
@@ -220,7 +220,7 @@ public static class PhaseTransitionRegistry
             {
                 32520921, new List<PhaseTransition>
                 {
-                    new PhaseTransition.RoyalLorettaPhase2() 
+                    new PhaseTransition.LorettaPhase2() 
                     
                 }
             },
@@ -393,6 +393,17 @@ public static class PhaseTransitionRegistry
                 52200089, new List<PhaseTransition>
                 {
                     new PhaseTransition.PcrPhase2(chrInsService) 
+                    
+                }
+            },
+            
+            // Promised Consort Radahn Phase 2
+            {
+                // 20010800
+                52201089, new List<PhaseTransition>
+                {
+                    new PhaseTransition.PcrPontiffCombo(),
+                    new PhaseTransition.PcrMeteor(chrInsService, aiService) 
                     
                 }
             },

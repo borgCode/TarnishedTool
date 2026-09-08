@@ -215,8 +215,8 @@ public abstract class PhaseTransition
         public override string Label => "Phase 2";
         protected override float Threshold => 0.599f;
         protected override uint Phase2SpEffect => 15501;
-        
-        
+
+
         public override void Execute(ITargetService targetService, IEmevdService emevdService)
         {
             base.Execute(targetService, emevdService);
@@ -370,7 +370,6 @@ public abstract class PhaseTransition
         public NobleGduoPhase2(IChrInsService chrInsService)
         {
             _chrInsService = chrInsService;
-
         }
 
         public override bool IsPhase2(ISpEffectService spEffectService, ITargetService targetService)
@@ -423,7 +422,7 @@ public abstract class PhaseTransition
 
         public override bool CanActivate(ITargetService targetService)
             => targetService.GetCurrentHp() > 0.60f;
-        
+
 
         public override void Execute(ITargetService targetService, IEmevdService emevdService)
         {
@@ -439,7 +438,6 @@ public abstract class PhaseTransition
             _chrInsService.SetHp(undergroundApostleChrIns, undergroundCurrentApostleHp);
             emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetSpEffect(ApostleEntityId, 15451));
             ForceActAndWait(targetService, 11);
-            
         }
     }
 
@@ -454,6 +452,14 @@ public abstract class PhaseTransition
 
         public MalikethPhase2(IChrInsService chrInsService) : base(chrInsService)
         {
+        }
+        
+        public override void Execute(ITargetService targetService, IEmevdService emevdService)
+        {
+            PlayAnimation(emevdService, Entity1Id, 6000);
+            Thread.Sleep(1);
+            base.Execute(targetService, emevdService);
+           
         }
     }
 
@@ -502,7 +508,7 @@ public abstract class PhaseTransition
 
             int godfreyMaxHp = GetMaxHp(godfreyChrIns);
             int hoarahLouxMaxHp = GetMaxHp(hoarahLouxChrIns);
-
+            
             SetHp(godfreyChrIns, 1);
             SetHp(hoarahLouxChrIns, hoarahLouxMaxHp - godfreyMaxHp + 1);
         }
@@ -580,8 +586,8 @@ public abstract class PhaseTransition
         }
     }
 
-    // Loretta, Knight of the Haligtree
-    public class HaligtreeLorettaPhase2 : SimplePhaseTransition
+    // Loretta, Knight of the Haligtree and Royal Knight Loretta
+    public class LorettaPhase2 : SimplePhaseTransition
     {
         public override string Label => "Phase 2";
         protected override float Threshold => 0.499f;
@@ -614,13 +620,6 @@ public abstract class PhaseTransition
         protected override uint Phase2SpEffect => 10648;
     }
 
-    // Royal Kight Loretta
-    public class RoyalLorettaPhase2 : SimplePhaseTransition
-    {
-        public override string Label => "Phase 2";
-        protected override float Threshold => 0.499f;
-        protected override uint Phase2SpEffect => 13802;
-    }
 
     // Astel, Naturalborn of the Void
     public class AstelNaturalbornPhase2 : SimplePhaseTransition
@@ -667,11 +666,9 @@ public abstract class PhaseTransition
         {
             emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetSpEffect(13000830, 16890));
             emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.SetSpEffect(13000830, 16891));
-           SetAttackCooldown(_chrInsService, _aiService, 13000830, 3034);
-           Thread.Sleep(100);
-           PlayAnimation(emevdService, 13000830, 3034);
-  //          emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ForceAnimationPlayback(13000830, 3034, false, false, false, 0, 1f));
-          //  PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 13000830, 3034);
+            SetAttackCooldown(_chrInsService, _aiService, 13000830, 3034);
+            Thread.Sleep(100);
+            PlayAnimation(emevdService, 13000830, 3034);
         }
     }
 
@@ -702,8 +699,6 @@ public abstract class PhaseTransition
             SetAttackCooldown(_chrInsService, _aiService, 13000830, 20015);
             Thread.Sleep(100);
             PlayAnimation(emevdService, 13000830, 20015);
-   //        emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ForceAnimationPlayback(13000830, 20015, false, false, false, 0, 1f));
-   //         PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 13000830, 20015);
         }
     }
 
@@ -759,8 +754,8 @@ public abstract class PhaseTransition
 
         public override void Execute(ITargetService targetService, IEmevdService emevdService)
         {
-            base.Execute(targetService, emevdService); 
-            PlayAnimationAndSetCooldown(emevdService,_chrInsService,_aiService,2048440800, 3030);
+            base.Execute(targetService, emevdService);
+            PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 2048440800, 3030);
         }
     }
 
@@ -784,7 +779,7 @@ public abstract class PhaseTransition
         public override void Execute(ITargetService targetService, IEmevdService emevdService)
         {
             base.Execute(targetService, emevdService);
-            PlayAnimationAndSetCooldown(emevdService,_chrInsService,_aiService,2048440800, 3024);
+            PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 2048440800, 3024);
         }
     }
 
@@ -872,7 +867,7 @@ public abstract class PhaseTransition
             // don't keep at max to avoid delay issues when setting health
             SetHp(scaduBodyChrIns, 1);
             SetHp(scaduHealthChrIns, 1);
-            PlayAnimation(emevdService, Entity1Id,20004);
+            PlayAnimation(emevdService, Entity1Id, 20004);
 
             Task.Run(async () =>
                 {
@@ -968,7 +963,7 @@ public abstract class PhaseTransition
         public override string Label => "Phase 2";
         protected override float Threshold => 0.6501f;
         protected override uint Phase2SpEffect => 20010050;
-        
+
         private readonly IChrInsService _chrInsService;
         private readonly IAiService _aiService;
 
@@ -985,13 +980,13 @@ public abstract class PhaseTransition
             var distanceFromPlayer = targetService.GetDist();
             if (distanceFromPlayer >= 10)
             {
-                PlayAnimationAndSetCooldown(emevdService,_chrInsService, _aiService, 22000800, 3028);
+                PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 22000800, 3028);
             }
             else
             {
-                PlayAnimationAndSetCooldown(emevdService,_chrInsService, _aiService, 22000800, 3012);
+                PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 22000800, 3012);
                 Thread.Sleep(3666); // duration of the previous animation
-                PlayAnimationAndSetCooldown(emevdService,_chrInsService, _aiService, 22000800, 3028);
+                PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 22000800, 3028);
             }
         }
     }
@@ -1022,7 +1017,7 @@ public abstract class PhaseTransition
         public override void Execute(ITargetService targetService, IEmevdService emevdService)
         {
             base.Execute(targetService, emevdService);
-            PlayAnimationAndSetCooldown(emevdService,_chrInsService, _aiService, 28000800, 3020);
+            PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 28000800, 3020);
         }
     }
 
@@ -1045,7 +1040,7 @@ public abstract class PhaseTransition
         public override void Execute(ITargetService targetService, IEmevdService emevdService)
         {
             base.Execute(targetService, emevdService);
-            PlayAnimationAndSetCooldown(emevdService,_chrInsService, _aiService, 2044450800, 3018);
+            PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 2044450800, 3018);
         }
     }
 
@@ -1089,6 +1084,41 @@ public abstract class PhaseTransition
 
         public PcrPhase2(IChrInsService chrInsService) : base(chrInsService)
         {
+        }
+    }
+
+    // Promised Consort Radahn Phase 2
+
+    public class PcrPontiffCombo : SimplePhaseTransitionNoSpEffect
+    {
+        public override string Label => "Pontiff Combo";
+        protected override float Threshold => 0.50f;
+        public override void Execute(ITargetService targetService, IEmevdService emevdService)
+        {
+            base.Execute(targetService, emevdService);
+            ForceActAndWait(targetService, 20);
+        }
+    }
+    
+    public class PcrMeteor : SimplePhaseTransition
+    {
+        public override string Label => "Meteor Dive";
+        protected override float Threshold => 0.25f;
+        protected override uint Phase2SpEffect => 20011573;
+
+        private readonly IChrInsService _chrInsService;
+        private readonly IAiService _aiService;
+
+        public PcrMeteor(IChrInsService chrInsService, IAiService aiService)
+        {
+            _chrInsService = chrInsService;
+            _aiService = aiService;
+        }
+
+        public override void Execute(ITargetService targetService, IEmevdService emevdService)
+        {
+            base.Execute(targetService, emevdService);
+            PlayAnimationAndSetCooldown(emevdService, _chrInsService, _aiService, 20010800, 3021);
         }
     }
 
