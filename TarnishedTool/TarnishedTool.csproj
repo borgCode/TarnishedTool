@@ -318,6 +318,8 @@
         <Compile Include="Models\MapLocation.cs" />
         <Compile Include="Models\ParamEntry.cs" />
         <Compile Include="Models\ParamFieldDef.cs" />
+        <Compile Include="Models\PhaseTransition.cs" />
+        <Compile Include="Models\PhaseTransitionRegistery.cs" />
         <Compile Include="Models\Position.cs" />
         <Compile Include="Models\PosWithHurtbox.cs" />
         <Compile Include="Models\ResistanceData.cs" />
@@ -394,6 +396,8 @@
         <Compile Include="ViewModels\LuaNumberViewModel.cs" />
         <Compile Include="ViewModels\LuaTimerViewModel.cs" />
         <Compile Include="ViewModels\ParamEditorViewModel.cs" />
+        <Compile Include="ViewModels\PhaseButtonViewModel.cs" />
+        <Compile Include="ViewModels\PhaseTransitionViewModel.cs" />
         <Compile Include="ViewModels\SearchableGroupedCollection.cs" />
         <Compile Include="ViewModels\SettingsViewModel.cs" />
         <Compile Include="ViewModels\SpEffectViewModel.cs" />

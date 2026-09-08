@@ -80,7 +80,7 @@ public static class Emevd
             (float)-1, (byte)1
         );
 
-        public static EmevdCommand ForcePlaybackAnimation(uint entityId, int animationId) => new(
+        public static EmevdCommand ForceAnimationPlayback(uint entityId, int animationId) => new(
             2003,
             18,
             entityId,
@@ -98,5 +98,10 @@ public static class Emevd
             int behaviorId, int firingAngleX, int firingAngleY, int firingAngleZ)
             => new(2003, 5, bulletTeamEntityId, bulletProducerEntityId, dummypolyId, behaviorId, firingAngleX,
                 firingAngleY, firingAngleZ);
+        
+        public static EmevdCommand SetSpEffect(uint entityId, int spEffectId) => new(2004, 08, entityId, spEffectId);
+        
+        public static EmevdCommand ClearSpEffect(uint entityId, int spEffectId) => new(2004, 21, entityId, spEffectId);
+        
     }
 }

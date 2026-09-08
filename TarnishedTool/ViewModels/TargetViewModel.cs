@@ -29,6 +29,8 @@ namespace TarnishedTool.ViewModels
 
         private readonly SpEffectViewModel _spEffectViewModel = new();
         private SpEffectsWindow _spEffectsWindow;
+        
+        private readonly PhaseTransitionViewModel _phaseTransitionViewModel;
 
         private readonly ITargetService _targetService;
         private readonly IEnemyService _enemyService;
@@ -39,13 +41,14 @@ namespace TarnishedTool.ViewModels
         private readonly IEmevdService _emevdService;
         private readonly IGameTickService _gameTickService;
         private readonly IAiWindowService _aiWindowService;
+        private readonly IAiService _aiService;
 
         private DateTime _forceActSequenceLastExecuted = DateTime.MinValue;
         private static readonly TimeSpan ForceActSequenceCooldown = TimeSpan.FromSeconds(2);
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
             IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService,
-            IEmevdService emevdService, IGameTickService gameTickService, IAiWindowService aiWindowService)
+            IEmevdService emevdService, IGameTickService gameTickService, IAiWindowService aiWindowService, IEventService eventService, IChrInsService chrInsService, IAiService aiService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
@@ -58,6 +61,8 @@ namespace TarnishedTool.ViewModels
             _emevdService = emevdService;
             _gameTickService = gameTickService;
             _aiWindowService = aiWindowService;
+            _aiService = aiService;
+            _phaseTransitionViewModel = new PhaseTransitionViewModel(targetService, emevdService, eventService, chrInsService, spEffectService, aiService);
             RegisterHotkeys();
 
             ShowPoise = SettingsManager.Default.ResistancesShowPoise;
@@ -79,6 +84,7 @@ namespace TarnishedTool.ViewModels
             ForActSequenceCommand = new DelegateCommand(ForceActSequence);
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
             ResetPositionCommand = new DelegateCommand(ResetPosition);
+            TriggerPhaseCommand = new DelegateCommand(() => _phaseTransitionViewModel.TriggerPhase());
         }
 
         #region Commands
@@ -89,6 +95,7 @@ namespace TarnishedTool.ViewModels
         public ICommand ForActSequenceCommand { get; set; }
         public ICommand KillAllCommand { get; set; }
         public ICommand ResetPositionCommand { get; set; }
+        public ICommand TriggerPhaseCommand { get; set; }
 
         #endregion
 
@@ -1109,6 +1116,7 @@ namespace TarnishedTool.ViewModels
                 IsTargetingViewEnabled = _targetService.IsTargetViewEnabled();
                 IsNoMoveEnabled = _targetService.IsNoMoveEnabled();
                 IsNoAttackEnabled = _targetService.IsNoAttackEnabled();
+                _phaseTransitionViewModel.OnTargetChanged(_targetService.GetNpcParamId());
 
                 int forceActValue = _targetService.GetForceAct();
                 if (forceActValue != 0)
@@ -1142,6 +1150,7 @@ namespace TarnishedTool.ViewModels
             CurrentPoise = _targetService.GetCurrentPoise();
             MaxPoise = _targetService.GetMaxPoise();
             PoiseTimer = _targetService.GetPoiseTimer();
+            _phaseTransitionViewModel.OnTick();
 
             Dist = _targetService.GetDist();
             
@@ -1435,6 +1444,7 @@ namespace TarnishedTool.ViewModels
         #region Public Methods
 
         public void SetSpeed(double value) => TargetSpeed = (float)value;
+        public PhaseTransitionViewModel PhaseTransition => _phaseTransitionViewModel;
 
         #endregion
     }
