@@ -131,6 +131,8 @@
                                   IsChecked="{Binding IsTorrentNoDeathChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="RFBS On Load" Margin="0,0,0,4"
                                   IsChecked="{Binding IsRfbsOnLoadChecked}" IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="No GGR Heal On Load" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsGgrFixChecked}" IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="No Runes From Enemies" Margin="0,0,0,4"
                                   IsChecked="{Binding IsNoRunesFromEnemiesChecked}" IsEnabled="{Binding IsEnabled}" />
                         <CheckBox Content="No Rune Loss On Death" Margin="0,0,0,4"
@@ -194,6 +196,12 @@
                                   IsEnabled="{Binding IsEnabled}"/>
                         <CheckBox Content="Unlock DLC AR Graces" Margin="0,0,0,4"
                                   IsChecked="{Binding IsDlcArGracesChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Show All Graces" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsShowAllGracesChecked}"
+                                  IsEnabled="{Binding IsEnabled}"/>
+                        <CheckBox Content="Show All Maps" Margin="0,0,0,4"
+                                  IsChecked="{Binding IsShowAllMapsChecked}"
                                   IsEnabled="{Binding IsEnabled}"/>
                         
                         <!-- Enemies -->

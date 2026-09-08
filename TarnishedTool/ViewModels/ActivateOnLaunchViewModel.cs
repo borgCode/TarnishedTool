@@ -62,6 +62,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         if (IsNoRunesFromEnemiesChecked) _playerViewModel.IsNoRuneGainEnabled = true;
         if (IsNoRuneLossChecked) _playerViewModel.IsNoRuneLossEnabled = true;
         if (IsNoRuneArcLossChecked) _playerViewModel.IsNoRuneArcLossEnabled = true;
+        if (IsGgrFixChecked) _playerViewModel.IsGgrFixEnabled = true;
         if (IsNoTimeChangeOnDeathChecked) _playerViewModel.IsNoTimePassOnDeathEnabled = true;
         if (IsHpRegenChecked) _playerViewModel.IsHotEnabled = true;
         if (IsFpRegenChecked) _playerViewModel.IsFpRegenEnabled = true;
@@ -73,6 +74,8 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         if (IsNoMapAcquiredPopupsChecked) _travelViewModel.IsNoMapAcquiredPopupsEnabled = true;
         if (IsUnlockPresetGracesOnStartChecked) _travelViewModel.IsAutoUnlockPresetEnabled = true;
         if (IsRestOnWarpChecked) _travelViewModel.IsRestOnWarpEnabled = true;
+        if (IsShowAllMapsChecked) _travelViewModel.IsShowAllMapsEnabled = true;
+        if (IsShowAllGracesChecked) _travelViewModel.IsShowAllGracesEnabled = true;
 
         // Enemies 
         if (IsAllNoDeathChecked) _enemyViewModel.IsNoDeathEnabled = true;
@@ -178,6 +181,7 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         _isNoRunesFromEnemiesChecked = Get(nameof(IsNoRunesFromEnemiesChecked));
         _isNoRuneLossChecked = Get(nameof(IsNoRuneLossChecked));
         _isNoRuneArcLossChecked = Get(nameof(IsNoRuneArcLossChecked));
+        _isGgrFixChecked = Get(nameof(IsGgrFixChecked));
         _isNoTimeChangeOnDeathChecked = Get(nameof(IsNoTimeChangeOnDeathChecked));
         _isHpRegenChecked = Get(nameof(IsHpRegenChecked));
         _isFpRegenChecked = Get(nameof(IsFpRegenChecked));
@@ -206,6 +210,8 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         _isDlcGracesChecked = Get(nameof(IsDlcGracesChecked));
         _isMainArGracesChecked = Get(nameof(IsMainArGracesChecked));
         _isDlcArGracesChecked = Get(nameof(IsDlcArGracesChecked));
+        _isShowAllMapsChecked = Get(nameof(IsShowAllMapsChecked));
+        _isShowAllGracesChecked = Get(nameof(IsShowAllGracesChecked));
 
         _isUnlockWeaponOnStartChecked = Get(nameof(IsUnlockWeaponOnStartChecked));
         _isUnlockLoadoutOnStartChecked = Get(nameof(IsUnlockLoadoutOnStartChecked));
@@ -451,6 +457,17 @@ public class ActivateOnLaunchViewModel : BaseViewModel
         set
         {
             if (SetProperty(ref _isNoRuneArcLossChecked, value)) Set(nameof(IsNoRuneArcLossChecked), value);
+        }
+    }
+    
+    private bool _isGgrFixChecked;
+
+    public bool IsGgrFixChecked
+    {
+        get => _isGgrFixChecked;
+        set
+        {
+            if (SetProperty(ref _isGgrFixChecked, value)) Set(nameof(IsGgrFixChecked), value);
         }
     }
 
@@ -792,6 +809,29 @@ public class ActivateOnLaunchViewModel : BaseViewModel
             }
         }
     }
+    
+    private bool _isShowAllMapsChecked;
+
+    public bool IsShowAllMapsChecked
+    {
+        get => _isShowAllMapsChecked;
+        set
+        {
+                if (SetProperty(ref _isShowAllMapsChecked, value)) Set(nameof(_isShowAllMapsChecked), value);
+        }
+    }
+    
+    private bool _isShowAllGracesChecked;
+
+    public bool IsShowAllGracesChecked
+    {
+        get => _isShowAllGracesChecked;
+        set
+        {
+            if (SetProperty(ref _isShowAllGracesChecked, value)) Set(nameof(_isShowAllGracesChecked), value);
+        }
+    }
+    
 
     private bool _isRestOnWarpChecked;
 
