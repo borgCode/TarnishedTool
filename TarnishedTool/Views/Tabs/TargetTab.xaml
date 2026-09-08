@@ -25,791 +25,867 @@
                 BorderBrush="#333"
                 CornerRadius="3"
                 Margin="0,0,0,5">
-            <StackPanel Margin="5">
-                <TextBlock Text="Target Controls"
-                           FontWeight="Bold"
-                           Margin="0,0,0,5" />
+            <DockPanel Margin="5">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,0,0,0"
+                            Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
+                    <Button Content="Kill All Enemies Besides Target" Command="{Binding KillAllCommand}"
+                            Margin="10,0,10,0">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsValidTarget" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                    <CheckBox Content="Disable All AI Besides Target"
+                              Margin="0,0,10,0" IsChecked="{Binding IsDisableAllExceptTargetEnabled}"
+                              VerticalAlignment="Center">
+                        <CheckBox.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsValidTarget" />
+                            </MultiBinding>
+                        </CheckBox.IsEnabled>
+                    </CheckBox>
+                    <Button Content="Reset Position" Command="{Binding ResetPositionCommand}">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                <Binding Path="AreOptionsEnabled" />
+                                <Binding Path="IsValidTarget" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                </StackPanel>
+                <StackPanel>
+                    
 
+                        <TextBlock Text="Target Controls" FontWeight="Bold" Margin="0,2,0,5" />
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <CheckBox Grid.Column="0"
-                              Content="Enable Target Options"
-                              IsChecked="{Binding IsTargetOptionsEnabled}"
-                              Margin="0,0,0,0" />
-
-                    <StackPanel Grid.Column="1"
-                                Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}"
-                                Orientation="Horizontal"
-                                HorizontalAlignment="Right">
-                        <TextBox Width="60"
-                                 Margin="5,2,5,1"
-                                 Text="{Binding CustomHp, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="11"
-                                 Padding="-0.2"
-                                 VerticalContentAlignment="Center"
-                                 HorizontalContentAlignment="Center"
-                                 MaxLength="5" />
-                        <Button Content="Set hp" Margin="1"
-                                Command="{Binding SetCustomHpCommand}">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="AreOptionsEnabled" />
-                                    <Binding Path="IsValidTarget" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
-                        </Button>
-                    </StackPanel>
-                </Grid>
-
-                <StackPanel Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}" Margin="0,-10,0,0">
-                    <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5">
-                        <Run Text="Health: " />
-                        <Run Text="{Binding CurrentHealth, Mode=OneWay}" />
-                        <Run Text="/" />
-                        <Run Text="{Binding MaxHealth, Mode=OneWay}" />
-                        <Run Text=" (" /><Run Text="{Binding HealthPercentage, Mode=OneWay, StringFormat={}{0:F1}%}" /><Run Text=")" />
-                    </TextBlock>
-
-                    <ProgressBar Width="250" Height="20"
-                                 Value="{Binding CurrentHealth}"
-                                 Maximum="{Binding MaxHealth, FallbackValue=100}"
-                                 Margin="0,0,0,5">
-                        <ProgressBar.Template>
-                            <ControlTemplate TargetType="ProgressBar">
-                                <Border BorderBrush="#444444" BorderThickness="1" Background="#222222" CornerRadius="3">
-                                    <Grid x:Name="PART_Track">
-                                        <Rectangle x:Name="PART_Indicator"
-                                                   HorizontalAlignment="Left"
-                                                   RadiusX="2" RadiusY="2"
-                                                   Margin="1">
-                                            <Rectangle.Fill>
-                                                <MultiBinding Converter="{StaticResource HealthFillConverter}">
-                                                    <Binding Path="Value"
-                                                             RelativeSource="{RelativeSource TemplatedParent}" />
-                                                    <Binding Path="Maximum"
-                                                             RelativeSource="{RelativeSource TemplatedParent}" />
-                                                </MultiBinding>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </ProgressBar.Template>
-                    </ProgressBar>
-
-                    <Grid Margin="0,0,0,10">
+                    <Grid Margin="0,0,0,15">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-
-                        <UniformGrid Grid.Column="0" Rows="1" Columns="5">
-                            <Button Content="Kill" Margin="1"
-                                    Command="{Binding SetHpCommand}"
-                                    CommandParameter="0">
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                            <Button Content="25%" Margin="1"
-                                    Command="{Binding SetHpPercentageCommand}"
-                                    CommandParameter="25">
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                            <Button Content="50%" Margin="1"
-                                    Command="{Binding SetHpPercentageCommand}"
-                                    CommandParameter="50">
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                            <Button Content="75%" Margin="1"
-                                    Command="{Binding SetHpPercentageCommand}"
-                                    CommandParameter="75">
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                            <Button Content="100%" Margin="1"
-                                    Command="{Binding SetHpPercentageCommand}"
-                                    CommandParameter="100">
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                        </UniformGrid>
-
-                        <CheckBox Grid.Column="1" Content="Freeze Health" Margin="10,0,0,0"
-                                  IsChecked="{Binding IsFreezeHealthEnabled}">
-                            <CheckBox.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="AreOptionsEnabled" />
-                                    <Binding Path="IsValidTarget" />
-                                </MultiBinding>
-                            </CheckBox.IsEnabled>
-                        </CheckBox>
-                    </Grid>
-                    <Grid Margin="0,-5,0,10">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="Show:" Margin="0,0,0,0" />
 
-                        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
-                            <CheckBox Content="Pop out Resistances"
-                                      IsEnabled="{Binding IsTargetOptionsEnabled}"
-                                      IsChecked="{Binding IsResistancesWindowOpen}"
-                                      Margin="0,2" />
+                        <CheckBox Grid.Column="0" Grid.Row="1"
+                                  Content="Enable Target Options"
+                                  IsChecked="{Binding IsTargetOptionsEnabled}"
+                                  Margin="0,0,0,0"
+                                  VerticalAlignment="Center" />
 
-                            <Border
-                                Background="#3498db"
-                                CornerRadius="10"
-                                Width="12"
-                                Height="12"
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Will only stay on top of game in windowed mode"
-                                ToolTipService.InitialShowDelay='100'>
-                                <TextBlock Text="i"
-                                           Foreground="White"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           FontWeight="Bold"
-                                           FontSize="10" />
-                            </Border>
+
+                        <TextBlock Grid.Column="1" Grid.Row="0" Margin="0,0,0,2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="13"
+                                   IsHitTestVisible="False"
+                                   Panel.ZIndex="1"
+                                   Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
+                            <Run Text="Health: " />
+                            <Run Text="{Binding CurrentHealth, Mode=OneWay}" />
+                            <Run Text="/" />
+                            <Run Text="{Binding MaxHealth, Mode=OneWay}" />
+                            <Run Text=" (" /><Run Text="{Binding HealthPercentage, Mode=OneWay, StringFormat={}{0:F1}%}" /><Run Text=")" />
+                        </TextBlock>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
+                            <ProgressBar Width="250" Height="23"
+                                         Value="{Binding CurrentHealth}"
+                                         Maximum="{Binding MaxHealth, FallbackValue=100}">
+                                <ProgressBar.Template>
+                                    <ControlTemplate TargetType="ProgressBar">
+                                        <Border BorderBrush="#444444" BorderThickness="1" Background="#222222"
+                                                CornerRadius="3">
+                                            <Grid x:Name="PART_Track">
+                                                <Rectangle x:Name="PART_Indicator"
+                                                           HorizontalAlignment="Left"
+                                                           RadiusX="2" RadiusY="2"
+                                                           Margin="1">
+                                                    <Rectangle.Fill>
+                                                        <MultiBinding Converter="{StaticResource HealthFillConverter}">
+                                                            <Binding Path="Value"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                            <Binding Path="Maximum"
+                                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        </MultiBinding>
+                                                    </Rectangle.Fill>
+
+                                                </Rectangle>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </ProgressBar.Template>
+                            </ProgressBar>
                         </StackPanel>
-                        <Grid Grid.Row="1">
+                        <StackPanel Grid.Column="1" Grid.Row="2" Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
+                            <ItemsControl x:Name="PhaseButtonsPanel"
+                                          ItemsSource="{Binding PhaseTransition.PhaseButtons}"
+                                          Visibility="{Binding PhaseTransition.IsVisible, Converter={StaticResource BoolToVis}}"
+                                          Width="250"
+                                          Margin="0,3,0,-3">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Rows="1" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding Label}"
+                                                Command="{Binding TriggerCommand}"
+                                                Height="20"
+                                                Margin="2,0">
+                                            <Button.IsEnabled>
+                                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                                    <Binding Path="IsEnabled" />
+                                                    <Binding Path="DataContext.AreOptionsEnabled"
+                                                             RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                                    <Binding Path="DataContext.IsValidTarget"
+                                                             RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                                </MultiBinding>
+                                            </Button.IsEnabled>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,-1,0,0"
+                                    Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}">
+                            <TextBox Width="60" Height="23" Margin="5,2,5,1"
+                                     Text="{Binding CustomHp, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="11" Padding="-0.2"
+                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     MaxLength="5" />
+                            <Button Content="Set hp" Margin="1" Height="23"
+                                    Command="{Binding SetCustomHpCommand}">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+
+                    <StackPanel Visibility="{Binding IsTargetOptionsEnabled, Converter={StaticResource BoolToVis}}"
+                                Margin="0,-10,0,0">
+
+
+                        <Grid Margin="0,0,0,10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0" Margin="0,5,10,0">
-                                <CheckBox Content="Poise" Margin="0,5"
-                                          IsChecked="{Binding ShowPoise, FallbackValue=False}" />
-                                <CheckBox Content="Sleep" Margin="0,5"
-                                          IsChecked="{Binding ShowSleep, FallbackValue=False}" />
-                                <CheckBox Content="Poison" Margin="0,5"
-                                          IsChecked="{Binding ShowPoison, FallbackValue=False}" />
-                                <CheckBox Content="Rot" Margin="0,5"
-                                          IsChecked="{Binding ShowRot, FallbackValue=False}" />
-                                <CheckBox Content="Frost" Margin="0,5"
-                                          IsChecked="{Binding ShowFrost, FallbackValue=False}" />
-                                <CheckBox Content="Bleed" Margin="0,5"
-                                          IsChecked="{Binding ShowBleed, FallbackValue=False}" />
-                                <CheckBox Content="Madness" Margin="0,5"
-                                          IsChecked="{Binding ShowMadness, FallbackValue=False}" />
-                                <CheckBox Content="Deathblight" Margin="0,5"
-                                          IsChecked="{Binding ShowDeathBlight, FallbackValue=False}" />
-                                <CheckBox Content="Show All" Margin="0,5"
-                                          IsChecked="{Binding ShowAllResistances, FallbackValue=False}" />
-                            </StackPanel>
-
-                            <Grid Grid.Column="1" Margin="0,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel Grid.Row="0" Grid.Column="0"
-                                            Visibility="{Binding ShowPoise, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="0,0,5,5">
-                                    <TextBlock
-                                        Text="{Binding PoiseTimer, StringFormat={}Timer: {0:F1}s, Mode=OneWay}"
-                                        HorizontalAlignment="Center" Margin="0,2,0,0" />
-                                    <ProgressBar Height="25"
-                                                 Value="{Binding CurrentPoise}"
-                                                 Maximum="{Binding MaxPoise, FallbackValue=100}">
-                                        <ProgressBar.Template>
-                                            <ControlTemplate TargetType="ProgressBar">
-                                                <Border BorderBrush="#444444" BorderThickness="1" Background="#222222"
-                                                        CornerRadius="3">
-                                                    <Grid x:Name="PART_Track">
-                                                        <Rectangle x:Name="PART_Indicator"
-                                                                   Fill="#d6d6d6"
-                                                                   HorizontalAlignment="Left"
-                                                                   RadiusX="2" RadiusY="2"
-                                                                   Margin="1" />
-                                                    </Grid>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </ProgressBar.Template>
-                                    </ProgressBar>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Poise " />
-                                        <Run Text="{Binding CurrentPoise, StringFormat=F1, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxPoise, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="0" Grid.Column="1"
-                                            Visibility="{Binding ShowSleep, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="5,0,0,5">
-                                    <TextBlock
-                                        Text=""
-                                        HorizontalAlignment="Center" Margin="0,2,0,0" />
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentSleep}"
-                                                     Maximum="{Binding MaxSleep, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsSleepImmune,
-                                                                        Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#CE93D8}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsSleepImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Sleep " />
-                                        <Run Text="{Binding CurrentSleep, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxSleep, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="1" Grid.Column="0"
-                                            Visibility="{Binding ShowPoison, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="0,5,5,5">
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentPoison}"
-                                                     Maximum="{Binding MaxPoison, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsPoisonImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#4A750B}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsPoisonImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Poison " />
-                                        <Run Text="{Binding CurrentPoison,  Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxPoison, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="1" Grid.Column="1"
-                                            Visibility="{Binding ShowRot, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="5,5,0,5">
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentRot}"
-                                                     Maximum="{Binding MaxRot, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsRotImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#D14C4B}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsRotImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Rot " />
-                                        <Run Text="{Binding CurrentRot, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxRot, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="2" Grid.Column="0"
-                                            Visibility="{Binding ShowFrost, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="0,5,5,0">
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentFrost}"
-                                                     Maximum="{Binding MaxFrost, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsFrostImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#8CB1C9}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsFrostImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Frost " />
-                                        <Run Text="{Binding CurrentFrost, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxFrost, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="2" Grid.Column="1"
-                                            Visibility="{Binding ShowBleed, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="0,5,5,0">
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentBleed}"
-                                                     Maximum="{Binding MaxBleed, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsBleedImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#A80202}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsBleedImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Bleed " />
-                                        <Run Text="{Binding CurrentBleed, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxBleed, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-                                <StackPanel Grid.Row="3" Grid.Column="0"
-                                            Visibility="{Binding ShowMadness, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="0,5,5,0">
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentMadness}"
-                                                     Maximum="{Binding MaxMadness, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsMadnessImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#DC9F02}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsMadnessImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Madness " />
-                                        <Run Text="{Binding CurrentMadness, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxMadness, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Grid.Row="3" Grid.Column="1"
-                                            Visibility="{Binding ShowDeathBlight, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
-                                            Margin="0,5,5,0">
-                                    <Grid>
-                                        <ProgressBar Height="25"
-                                                     Value="{Binding CurrentDeathBlight}"
-                                                     Maximum="{Binding MaxDeathBlight, FallbackValue=100}">
-                                            <ProgressBar.Template>
-                                                <ControlTemplate TargetType="ProgressBar">
-                                                    <Border BorderBrush="#444444" BorderThickness="1"
-                                                            Background="#222222"
-                                                            CornerRadius="3">
-                                                        <Grid x:Name="PART_Track">
-                                                            <Rectangle x:Name="PART_Indicator"
-                                                                       Fill="{Binding IsDeathBlightImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#586575}"
-                                                                       HorizontalAlignment="Left"
-                                                                       RadiusX="2" RadiusY="2"
-                                                                       Margin="1" />
-                                                        </Grid>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </ProgressBar.Template>
-                                        </ProgressBar>
-
-                                        <TextBlock Text="IMMUNE"
-                                                   Foreground="White"
-                                                   FontWeight="Bold"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding IsDeathBlightImmune, Converter={StaticResource BoolToVis}}" />
-                                    </Grid>
-                                    <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
-                                        <Run Text="Deathblight " />
-                                        <Run Text="{Binding CurrentDeathBlight, Mode=OneWay}" />
-                                        <Run Text="/" />
-                                        <Run Text="{Binding MaxDeathBlight, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top"
-                                    Margin="0,0,20,0">
-                            <TextBlock Text="Speed Modifier:" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <xctk:DoubleUpDown x:Name="SpeedUpDown"
-                                               Value="{Binding TargetSpeed}"
-                                               FormatString="F2"
-                                               Minimum="0"
-                                               Maximum="5"
-                                               Increment="0.50"
-                                               Width="100">
-                                <xctk:DoubleUpDown.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </xctk:DoubleUpDown.IsEnabled>
-                            </xctk:DoubleUpDown>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top"
-                                    Margin="0,10,20,0">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Last Act:" VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center" Width="20"
-                                           TextAlignment="Right" Margin="5,0,15,0" Foreground="Gold" FontFamily="Bold" />
-                                <TextBlock Text="Repeat Act:" VerticalAlignment="Center" Margin="0,0,10,0" />
-                                <xctk:IntegerUpDown Width="50" Height="20"
-                                                    Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
-                                                    Minimum="0"
-                                                    Maximum="255"
-                                                    VerticalAlignment="Center">
-                                    <xctk:IntegerUpDown.IsEnabled>
+                            <UniformGrid Grid.Column="0" Rows="1" Columns="5">
+                                <Button Content="Kill" Margin="1"
+                                        Command="{Binding SetHpCommand}"
+                                        CommandParameter="0">
+                                    <Button.IsEnabled>
                                         <MultiBinding Converter="{StaticResource BooleanAndConverter}">
                                             <Binding Path="AreOptionsEnabled" />
                                             <Binding Path="IsValidTarget" />
                                         </MultiBinding>
-                                    </xctk:IntegerUpDown.IsEnabled>
-                                </xctk:IntegerUpDown>
-                                <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,0"
-                                        VerticalAlignment="Center"
-                                        ToolTip="Force Act:&#x0A;• Enter 0 for normal behavior&#x0A;• Enter a number to repeat a specific action&#x0A;• Numbers exceeding available acts will be ignored"
-                                        ToolTipService.InitialShowDelay="100">
-                                    <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
-                                               VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
-                                </Border>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top"
-                                        Margin="0,10,20,0">
-                                <TextBlock Text="Current Animation:" VerticalAlignment="Center" />
-                                <TextBlock Text="{Binding CurrentAnimation}" VerticalAlignment="Center" Width="60"
-                                           Foreground="Gold"
-                                           TextAlignment="Right" Margin="5,0,15,0" />
-                            </StackPanel>
-                        </StackPanel>
+                                    </Button.IsEnabled>
+                                </Button>
+                                <Button Content="25%" Margin="1"
+                                        Command="{Binding SetHpPercentageCommand}"
+                                        CommandParameter="25">
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                </Button>
+                                <Button Content="50%" Margin="1"
+                                        Command="{Binding SetHpPercentageCommand}"
+                                        CommandParameter="50">
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                </Button>
+                                <Button Content="75%" Margin="1"
+                                        Command="{Binding SetHpPercentageCommand}"
+                                        CommandParameter="75">
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                </Button>
+                                <Button Content="100%" Margin="1"
+                                        Command="{Binding SetHpPercentageCommand}"
+                                        CommandParameter="100">
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                </Button>
+                            </UniformGrid>
 
-
-                        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="130" />
-                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="1" Content="Freeze Health" Margin="10,0,0,0"
+                                      IsChecked="{Binding IsFreezeHealthEnabled}">
+                                <CheckBox.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                        <Binding Path="AreOptionsEnabled" />
+                                        <Binding Path="IsValidTarget" />
+                                    </MultiBinding>
+                                </CheckBox.IsEnabled>
+                            </CheckBox>
+                        </Grid>
+                        <Grid Margin="0,-5,0,10">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
+                            <TextBlock Grid.Row="0" Text="Show:" Margin="0,0,0,0" />
 
-                            <CheckBox Grid.Row="0" Grid.Column="0" Content="Show Attack Info" Margin="0,2,0,2"
-                                      IsChecked="{Binding IsShowAttackInfoEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                            <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+                                <CheckBox Content="Pop out Resistances"
+                                          IsEnabled="{Binding IsTargetOptionsEnabled}"
+                                          IsChecked="{Binding IsResistancesWindowOpen}"
+                                          Margin="0,2" />
+
+                                <Border
+                                    Background="#3498db"
+                                    CornerRadius="10"
+                                    Width="12"
+                                    Height="12"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Will only stay on top of game in windowed mode"
+                                    ToolTipService.InitialShowDelay='100'>
+                                    <TextBlock Text="i"
+                                               Foreground="White"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="10" />
+                                </Border>
+                            </StackPanel>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,5,10,0">
+                                    <CheckBox Content="Poise" Margin="0,5"
+                                              IsChecked="{Binding ShowPoise, FallbackValue=False}" />
+                                    <CheckBox Content="Sleep" Margin="0,5"
+                                              IsChecked="{Binding ShowSleep, FallbackValue=False}" />
+                                    <CheckBox Content="Poison" Margin="0,5"
+                                              IsChecked="{Binding ShowPoison, FallbackValue=False}" />
+                                    <CheckBox Content="Rot" Margin="0,5"
+                                              IsChecked="{Binding ShowRot, FallbackValue=False}" />
+                                    <CheckBox Content="Frost" Margin="0,5"
+                                              IsChecked="{Binding ShowFrost, FallbackValue=False}" />
+                                    <CheckBox Content="Bleed" Margin="0,5"
+                                              IsChecked="{Binding ShowBleed, FallbackValue=False}" />
+                                    <CheckBox Content="Madness" Margin="0,5"
+                                              IsChecked="{Binding ShowMadness, FallbackValue=False}" />
+                                    <CheckBox Content="Deathblight" Margin="0,5"
+                                              IsChecked="{Binding ShowDeathBlight, FallbackValue=False}" />
+                                    <CheckBox Content="Show All" Margin="0,5"
+                                              IsChecked="{Binding ShowAllResistances, FallbackValue=False}" />
+                                </StackPanel>
+
+                                <Grid Grid.Column="1" Margin="0,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="0"
+                                                Visibility="{Binding ShowPoise, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="0,0,5,5">
+                                        <TextBlock
+                                            Text="{Binding PoiseTimer, StringFormat={}Timer: {0:F1}s, Mode=OneWay}"
+                                            HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                        <ProgressBar Height="25"
+                                                     Value="{Binding CurrentPoise}"
+                                                     Maximum="{Binding MaxPoise, FallbackValue=100}">
+                                            <ProgressBar.Template>
+                                                <ControlTemplate TargetType="ProgressBar">
+                                                    <Border BorderBrush="#444444" BorderThickness="1"
+                                                            Background="#222222"
+                                                            CornerRadius="3">
+                                                        <Grid x:Name="PART_Track">
+                                                            <Rectangle x:Name="PART_Indicator"
+                                                                       Fill="#d6d6d6"
+                                                                       HorizontalAlignment="Left"
+                                                                       RadiusX="2" RadiusY="2"
+                                                                       Margin="1" />
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </ProgressBar.Template>
+                                        </ProgressBar>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Poise " />
+                                            <Run Text="{Binding CurrentPoise, StringFormat=F1, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxPoise, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="1"
+                                                Visibility="{Binding ShowSleep, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="5,0,0,5">
+                                        <TextBlock
+                                            Text=""
+                                            HorizontalAlignment="Center" Margin="0,2,0,0" />
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentSleep}"
+                                                         Maximum="{Binding MaxSleep, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsSleepImmune,
+                                                                        Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#CE93D8}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsSleepImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Sleep " />
+                                            <Run Text="{Binding CurrentSleep, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxSleep, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="0"
+                                                Visibility="{Binding ShowPoison, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="0,5,5,5">
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentPoison}"
+                                                         Maximum="{Binding MaxPoison, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsPoisonImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#4A750B}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsPoisonImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Poison " />
+                                            <Run Text="{Binding CurrentPoison,  Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxPoison, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="1"
+                                                Visibility="{Binding ShowRot, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="5,5,0,5">
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentRot}"
+                                                         Maximum="{Binding MaxRot, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsRotImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#D14C4B}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsRotImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Rot " />
+                                            <Run Text="{Binding CurrentRot, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxRot, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="0"
+                                                Visibility="{Binding ShowFrost, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="0,5,5,0">
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentFrost}"
+                                                         Maximum="{Binding MaxFrost, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsFrostImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#8CB1C9}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsFrostImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Frost " />
+                                            <Run Text="{Binding CurrentFrost, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxFrost, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="1"
+                                                Visibility="{Binding ShowBleed, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="0,5,5,0">
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentBleed}"
+                                                         Maximum="{Binding MaxBleed, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsBleedImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#A80202}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsBleedImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Bleed " />
+                                            <Run Text="{Binding CurrentBleed, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxBleed, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3" Grid.Column="0"
+                                                Visibility="{Binding ShowMadness, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="0,5,5,0">
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentMadness}"
+                                                         Maximum="{Binding MaxMadness, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsMadnessImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#DC9F02}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsMadnessImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Madness " />
+                                            <Run Text="{Binding CurrentMadness, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxMadness, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="3" Grid.Column="1"
+                                                Visibility="{Binding ShowDeathBlight, Converter={StaticResource BoolToVis}, FallbackValue=Visible}"
+                                                Margin="0,5,5,0">
+                                        <Grid>
+                                            <ProgressBar Height="25"
+                                                         Value="{Binding CurrentDeathBlight}"
+                                                         Maximum="{Binding MaxDeathBlight, FallbackValue=100}">
+                                                <ProgressBar.Template>
+                                                    <ControlTemplate TargetType="ProgressBar">
+                                                        <Border BorderBrush="#444444" BorderThickness="1"
+                                                                Background="#222222"
+                                                                CornerRadius="3">
+                                                            <Grid x:Name="PART_Track">
+                                                                <Rectangle x:Name="PART_Indicator"
+                                                                           Fill="{Binding IsDeathBlightImmune, Converter={StaticResource ImmuneFillConverter}, ConverterParameter=#586575}"
+                                                                           HorizontalAlignment="Left"
+                                                                           RadiusX="2" RadiusY="2"
+                                                                           Margin="1" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </ProgressBar.Template>
+                                            </ProgressBar>
+
+                                            <TextBlock Text="IMMUNE"
+                                                       Foreground="White"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="{Binding IsDeathBlightImmune, Converter={StaticResource BoolToVis}}" />
+                                        </Grid>
+                                        <TextBlock HorizontalAlignment="Center" Margin="0,2,0,0">
+                                            <Run Text="Deathblight " />
+                                            <Run Text="{Binding CurrentDeathBlight, Mode=OneWay}" />
+                                            <Run Text="/" />
+                                            <Run Text="{Binding MaxDeathBlight, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="260" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                                        Orientation="Vertical" VerticalAlignment="Top"
+                                        Margin="5,0,10,0">
+                                
+                                
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    
+                                    <TextBlock Text="Target Speed:" VerticalAlignment="Center"
+                                               FontWeight="SemiBold" FontSize="13" Margin="0,0,10,0"/>
+                                    
+                                    <xctk:DoubleUpDown x:Name="SpeedUpDown" 
+                                                       Value="{Binding TargetSpeed}"
+                                                       FormatString="F2"
+                                                       Increment="0.50"
+                                                       Width="60"
+                                                       BorderBrush="#3F3F46"
+                                                       TextAlignment="Center">
+                                        <xctk:DoubleUpDown.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                                <Binding Path="AreOptionsEnabled" />
+                                                <Binding Path="IsValidTarget" />
+                                            </MultiBinding>
+                                        </xctk:DoubleUpDown.IsEnabled>
+                                    </xctk:DoubleUpDown>
+                                    
+
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <TextBlock Text="Distance:" VerticalAlignment="Center" Margin="0,0,5,0"
+                                               FontWeight="SemiBold" FontSize="13" />
+                                    <TextBlock Text="{Binding Dist, StringFormat={}{0:F2}}" VerticalAlignment="Center"
+                                               Foreground="Gold" FontWeight="SemiBold" FontSize="13" />
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <TextBlock Text="Current Animation:" VerticalAlignment="Center" Margin="0,0,5,0"
+                                               FontWeight="SemiBold" FontSize="13" />
+                                    <TextBlock Text="{Binding CurrentAnimation}" VerticalAlignment="Center"
+                                               Foreground="Gold" FontWeight="SemiBold" FontSize="13" />
+                                    
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                    <TextBlock Text="Last Act:" VerticalAlignment="Center" Margin="0,0,5,0"
+                                               FontWeight="SemiBold" FontSize="13" />
+                                    <TextBlock Text="{Binding LastAct}" VerticalAlignment="Center"
+                                               Foreground="Gold" Margin="0,0,0,0" FontWeight="SemiBold" FontSize="13" />
+
+                                    <Border Width="1" Height="10" Background="#333" Margin="5,0,5,0" />
+
+                                    <TextBlock Text="Loop Act:" VerticalAlignment="Center" Margin="0,0,5,0"
+                                               FontWeight="SemiBold" FontSize="13" />
+                                    <xctk:IntegerUpDown Width="60" Height="20"
+                                                        Value="{Binding ForceAct, UpdateSourceTrigger=PropertyChanged}"
+                                                        Minimum="0" Maximum="255" VerticalAlignment="Center">
+                                        <xctk:IntegerUpDown.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                                <Binding Path="AreOptionsEnabled" />
+                                                <Binding Path="IsValidTarget" />
+                                            </MultiBinding>
+                                        </xctk:IntegerUpDown.IsEnabled>
+                                    </xctk:IntegerUpDown>
+                                    <Border Background="#3498db" CornerRadius="10" Width="12" Height="12"
+                                            Margin="5,0,0,0"
+                                            VerticalAlignment="Center"
+                                            ToolTip="Loop Act:&#x0A;• Enter 0 for normal behavior&#x0A;• Enter a number to repeat a specific action&#x0A;• Numbers exceeding available acts will be ignored"
+                                            ToolTipService.InitialShowDelay="100">
+                                        <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                                    </Border>
+                                </StackPanel>
 
 
-                            <CheckBox Grid.Row="1" Grid.Column="0" Content="Show Defenses" Margin="0,2,0,2"
-                                      IsChecked="{Binding IsShowDefensesEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                            </StackPanel>
 
-                            <CheckBox Grid.Row="2" Grid.Column="0" Content="Show Active Special Effects"
-                                      Margin="0,2,0,2"
-                                      IsChecked="{Binding IsShowSpEffectEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="130" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                            <CheckBox Grid.Row="3" Grid.Column="0" Content="Show AI Info" Margin="0,2,0,2"
-                                      IsChecked="{Binding IsShowAiInfoEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
 
-                            <CheckBox Grid.Row="4" Grid.Column="0" Content="Repeat Last Act" Margin="0,2,0,2"
-                                      IsChecked="{Binding IsRepeatActEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
-                            <CheckBox Grid.Row="5" Grid.Column="0" Content="Draw Backstab" Margin="0,2,0,2"
-                                      IsChecked="{Binding IsDrawBackstabViewEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="Show Attack Info" Margin="0,2,0,2"
+                                          IsChecked="{Binding IsShowAttackInfoEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
 
-                            <CheckBox Grid.Row="0" Grid.Column="1" Content="Disable AI" Margin="10,2,0,2"
-                                      IsChecked="{Binding IsFreezeAiEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
-                            <CheckBox Grid.Row="1" Grid.Column="1" Content="Targeting View" Margin="10,2,0,2"
-                                      IsChecked="{Binding IsTargetingViewEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
 
-                            <CheckBox Grid.Row="2" Grid.Column="1" Content="No Stagger" Margin="10,2,0,2"
-                                      IsChecked="{Binding IsNoStaggerEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                                <CheckBox Grid.Row="1" Grid.Column="0" Content="Show Defenses" Margin="0,2,0,2"
+                                          IsChecked="{Binding IsShowDefensesEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
 
-                            <CheckBox Grid.Row="3" Grid.Column="1" Content="No Attack" Margin="10,2,0,2"
-                                      IsChecked="{Binding IsNoAttackEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                                <CheckBox Grid.Row="2" Grid.Column="0" Content="Show Active Special Effects"
+                                          Margin="0,2,0,2"
+                                          IsChecked="{Binding IsShowSpEffectEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
 
-                            <CheckBox Grid.Row="4" Grid.Column="1" Content="No Move" Margin="10,2,0,2"
-                                      IsChecked="{Binding IsNoMoveEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
-                            <CheckBox Grid.Row="5" Grid.Column="1" Content="Draw Stance Crit" Margin="10,2,0,2"
-                                      IsChecked="{Binding IsDrawCritViewEnabled}">
-                                <CheckBox.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                        <Binding Path="AreOptionsEnabled" />
-                                        <Binding Path="IsValidTarget" />
-                                    </MultiBinding>
-                                </CheckBox.IsEnabled>
-                            </CheckBox>
+                                <CheckBox Grid.Row="3" Grid.Column="0" Content="Show AI Info" Margin="0,2,0,2"
+                                          IsChecked="{Binding IsShowAiInfoEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+
+                                <CheckBox Grid.Row="4" Grid.Column="0" Content="Repeat Last Act" Margin="0,2,0,2"
+                                          IsChecked="{Binding IsRepeatActEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+                                <CheckBox Grid.Row="5" Grid.Column="0" Content="Draw Backstab" Margin="0,2,0,2"
+                                          IsChecked="{Binding IsDrawBackstabViewEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="Disable AI" Margin="10,2,0,2"
+                                          IsChecked="{Binding IsFreezeAiEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+                                <CheckBox Grid.Row="1" Grid.Column="1" Content="Targeting View" Margin="10,2,0,2"
+                                          IsChecked="{Binding IsTargetingViewEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+
+                                <CheckBox Grid.Row="2" Grid.Column="1" Content="No Stagger" Margin="10,2,0,2"
+                                          IsChecked="{Binding IsNoStaggerEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+
+                                <CheckBox Grid.Row="3" Grid.Column="1" Content="No Attack" Margin="10,2,0,2"
+                                          IsChecked="{Binding IsNoAttackEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+
+                                <CheckBox Grid.Row="4" Grid.Column="1" Content="No Move" Margin="10,2,0,2"
+                                          IsChecked="{Binding IsNoMoveEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+                                <CheckBox Grid.Row="5" Grid.Column="1" Content="Draw Stance Crit" Margin="10,2,0,2"
+                                          IsChecked="{Binding IsDrawCritViewEnabled}">
+                                    <CheckBox.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                            <Binding Path="AreOptionsEnabled" />
+                                            <Binding Path="IsValidTarget" />
+                                        </MultiBinding>
+                                    </CheckBox.IsEnabled>
+                                </CheckBox>
+
+                            </Grid>
 
                         </Grid>
-                    </Grid>
+                        <TextBlock Text="Force Act Sequence" FontWeight="Bold" Margin="5,0,0,0" />
+                        <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
+                            <TextBox Text="{Binding ActSequence, UpdateSourceTrigger=PropertyChanged}" Height="28"
+                                     Width="250" FontSize="12" Margin="10"
+                                     MaxLength="29" />
+                            <Button Content="Force acts" IsEnabled="{Binding AreOptionsEnabled}"
+                                    Command="{Binding ForActSequenceCommand}" Height="28" Margin="10,0,0,0" />
+                            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    ToolTip="Enter a sequence of acts separated by spaces, max 10 acts&#x0A;Not entirely consistent but should work most of the time if you&#x0A;use a keybind and try to time the attack as the enemy is is finishing another move"
+                                    ToolTipService.InitialShowDelay="100">
+                                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+                            </Border>
 
-                    <TextBlock Text="Force Act Sequence" FontWeight="Bold" Margin="5,0,0,0" />
-                    <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
-                        <TextBox Text="{Binding ActSequence, UpdateSourceTrigger=PropertyChanged}" Height="32"
-                                 Width="250" FontSize="14" Margin="10"
-                                 MaxLength="29" />
-                        <Button Content="Force acts" IsEnabled="{Binding AreOptionsEnabled}"
-                                Command="{Binding ForActSequenceCommand}" Height="32" Margin="10,0,0,0" />
-                        <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                ToolTip="Enter a sequence of acts separated by spaces, max 10 acts&#x0A;Not entirely consistent but should work most of the time if you&#x0A;use a keybind and try to time the attack as the enemy is is finishing another move"
-                                ToolTipService.InitialShowDelay="100">
-                            <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
-                                       VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
-                        </Border>
 
-                        <TextBlock FontSize="16" Text="Dist:" Margin="40,10,0,0" />
-                        <TextBlock Text="{Binding Dist, StringFormat={}{0:F2}}" Width="40" FontSize="16"
-                                   TextAlignment="Right" Margin="5,10,0,0" />
-                    </StackPanel>
+                        </StackPanel>
 
-                    <StackPanel Orientation="Horizontal" Margin="0,-10,0,0">
-                        <Button Content="Kill All Enemies Besides Target" Command="{Binding KillAllCommand}"
-                                Margin="10,10,0,0" HorizontalAlignment="Left">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="AreOptionsEnabled" />
-                                    <Binding Path="IsValidTarget" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
-                        </Button>
 
-                        <CheckBox Content="Disable All AI Besides Target"
-                                  Margin="20,10,0,0" IsChecked="{Binding IsDisableAllExceptTargetEnabled}">
-                            <CheckBox.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="AreOptionsEnabled" />
-                                    <Binding Path="IsValidTarget" />
-                                </MultiBinding>
-                            </CheckBox.IsEnabled>
-                        </CheckBox>
-
-                        <Button Content="Reset Position"
-                                Margin="20,10,0,0" Command="{Binding ResetPositionCommand}">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
-                                    <Binding Path="AreOptionsEnabled" />
-                                    <Binding Path="IsValidTarget" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
-                        </Button>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </DockPanel>
         </Border>
     </Grid>
 </UserControl>

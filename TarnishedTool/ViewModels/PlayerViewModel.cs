@@ -1022,6 +1022,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.LockHp, () => { IsHpLocked = !IsHpLocked; });
             _hotkeyManager.RegisterAction(HotkeyActions.NoRoll, () => { IsNoRollEnabled = !IsNoRollEnabled; });
             _hotkeyManager.RegisterAction(HotkeyActions.SpeedBuff, () => { IsSpeedBuffEnabled = !IsSpeedBuffEnabled; });
+            _hotkeyManager.RegisterAction(HotkeyActions.GgrFix, () => { IsGgrFixEnabled = !IsGgrFixEnabled; });
         }
 
         private void SafeExecute(Action action)

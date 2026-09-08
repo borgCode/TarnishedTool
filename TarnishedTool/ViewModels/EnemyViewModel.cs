@@ -598,49 +598,49 @@ public class EnemyViewModel : BaseViewModel
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMainBossEntityId, LightningAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMainBossEntityId, LightningAnimationId));
     }
 
     private void ForceLionMainBossFrostPhase()
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMainBossEntityId, FrostAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMainBossEntityId, FrostAnimationId));
     }
 
     private void ForceLionMainBossWindPhase()
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMainBossEntityId, WindAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMainBossEntityId, WindAnimationId));
     }
 
     private void ForceLionMiniBossDeathblightPhase()
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, DeathblightAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMinibossEntityId, DeathblightAnimationId));
     }
 
     private void ForceLionMiniBossFrostPhase()
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, FrostAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMinibossEntityId, FrostAnimationId));
     }
 
     private void ForceLionMiniBossWindPhase()
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, WindAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMinibossEntityId, WindAnimationId));
     }
 
     private void ForceLionMiniBossLightningPhase()
     {
         _reminderService.TrySetReminder();
         _emevdService.ExecuteEmevdCommand(
-            Emevd.EmevdCommands.ForcePlaybackAnimation(LionMinibossEntityId, LightningAnimationId));
+            Emevd.EmevdCommands.ForceAnimationPlayback(LionMinibossEntityId, LightningAnimationId));
     }
 
     private void ReviveBoss()
