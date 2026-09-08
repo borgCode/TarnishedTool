@@ -1,6 +1,4 @@
-﻿// 
-
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -14,12 +12,13 @@ using System.Windows.Media;
 
 public static class VersionChecker
 {
-    public static async Task<(bool hasUpdate, Version currentVersion, Version webVersion)> CheckForUpdate()
+    public static async Task<(bool hasUpdate, bool checkFailed, Version currentVersion, Version webVersion)>
+        CheckForUpdate()
     {
         try
         {
             var currentVersion = Assembly.GetEntryAssembly()?.GetName().Version;
-            if (currentVersion == null) return (false, null, null);
+            if (currentVersion == null) return (false, true, null, null);
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.Add(
@@ -29,26 +28,39 @@ public static class VersionChecker
                 "https://api.github.com/repos/borgCode/TarnishedTool/releases/latest");
 
             int tagIndex = response.IndexOf("\"tag_name\":", StringComparison.OrdinalIgnoreCase);
-            if (tagIndex == -1) return (false, currentVersion, null);
+            if (tagIndex == -1) return (false, true, currentVersion, null);
 
             int quoteStart = response.IndexOf('"', tagIndex + "\"tag_name\":".Length) + 1;
             int quoteEnd = response.IndexOf('"', quoteStart);
 
-            if (quoteStart == -1 || quoteEnd == -1) return (false, currentVersion, null);
+            if (quoteStart == -1 || quoteEnd == -1) return (false, true, currentVersion, null);
 
-            var webVersion = new Version(response.Substring(quoteStart, quoteEnd - quoteStart).TrimStart('v'));
+            var tag = response.Substring(quoteStart, quoteEnd - quoteStart).TrimStart('v', 'V');
+            var webVersion = new Version(tag);
 
-            return (webVersion > currentVersion, currentVersion, webVersion);
+            return (webVersion > currentVersion, false, currentVersion, webVersion);
         }
         catch (Exception ex)
         {
-            return (false, null, null);
+            System.Diagnostics.Debug.WriteLine($"Update check failed: {ex}");
+            return (false, true, null, null);
         }
     }
 
     public static async void CheckForUpdates(Window parentWindow, bool showNoUpdateMessage = false)
     {
-        var (hasUpdate, currentVersion, webVersion) = await CheckForUpdate();
+        var (hasUpdate, checkFailed, currentVersion, webVersion) = await CheckForUpdate();
+
+        if (checkFailed)
+        {
+            if (showNoUpdateMessage)
+            {
+                MsgBox.Show("Couldn't check for updates. Please check your internet connection and try again later.",
+                    "Update Check");
+            }
+
+            return;
+        }
 
         if (!hasUpdate || webVersion == null || currentVersion == null)
         {
@@ -116,7 +128,6 @@ public static class VersionChecker
         Grid.SetRow(dontShowCheckbox, 1);
         grid.Children.Add(dontShowCheckbox);
 
-
         var buttonPanel = new StackPanel
         {
             Orientation = Orientation.Horizontal,
@@ -126,7 +137,7 @@ public static class VersionChecker
 
         var downloadButton = new Button
         {
-            Content = "Download",
+            Content = "Github",
             Width = 80,
             Height = 25,
             Margin = new Thickness(5)
@@ -139,6 +150,26 @@ public static class VersionChecker
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "https://github.com/borgCode/TarnishedTool/releases/latest",
+                UseShellExecute = true
+            });
+            updateWindow.Close();
+        };
+
+        var nexusDownloadButton = new Button
+        {
+            Content = "NexusMods",
+            Width = 80,
+            Height = 25,
+            Margin = new Thickness(5)
+        };
+        nexusDownloadButton.Click += (s, e) =>
+        {
+            SettingsManager.Default.EnableUpdateChecks = dontShowCheckbox.IsChecked != true;
+            SettingsManager.Default.Save();
+
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://www.nexusmods.com/eldenring/mods/9277?tab=files",
                 UseShellExecute = true
             });
             updateWindow.Close();
@@ -161,6 +192,7 @@ public static class VersionChecker
         };
 
         buttonPanel.Children.Add(downloadButton);
+        buttonPanel.Children.Add(nexusDownloadButton);
         buttonPanel.Children.Add(laterButton);
         grid.Children.Add(buttonPanel);
         Grid.SetRow(buttonPanel, 2);
