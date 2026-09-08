@@ -29,7 +29,7 @@ namespace TarnishedTool.ViewModels
 
         private readonly SpEffectViewModel _spEffectViewModel = new();
         private SpEffectsWindow _spEffectsWindow;
-        
+
         private readonly PhaseTransitionViewModel _phaseTransitionViewModel;
 
         private readonly ITargetService _targetService;
@@ -48,7 +48,8 @@ namespace TarnishedTool.ViewModels
 
         public TargetViewModel(ITargetService targetService, IStateService stateService, IEnemyService enemyService,
             IAttackInfoService attackInfoService, HotkeyManager hotkeyManager, ISpEffectService spEffectService,
-            IEmevdService emevdService, IGameTickService gameTickService, IAiWindowService aiWindowService, IEventService eventService, IChrInsService chrInsService, IAiService aiService)
+            IEmevdService emevdService, IGameTickService gameTickService, IAiWindowService aiWindowService,
+            IEventService eventService, IChrInsService chrInsService, IAiService aiService)
         {
             _targetService = targetService;
             _enemyService = enemyService;
@@ -62,7 +63,8 @@ namespace TarnishedTool.ViewModels
             _gameTickService = gameTickService;
             _aiWindowService = aiWindowService;
             _aiService = aiService;
-            _phaseTransitionViewModel = new PhaseTransitionViewModel(targetService, emevdService, eventService, chrInsService, spEffectService, aiService);
+            _phaseTransitionViewModel = new PhaseTransitionViewModel(targetService, emevdService, eventService,
+                chrInsService, spEffectService, aiService);
             RegisterHotkeys();
 
             ShowPoise = SettingsManager.Default.ResistancesShowPoise;
@@ -85,6 +87,7 @@ namespace TarnishedTool.ViewModels
             KillAllCommand = new DelegateCommand(KillAllBesidesTarget);
             ResetPositionCommand = new DelegateCommand(ResetPosition);
             TriggerPhaseCommand = new DelegateCommand(() => _phaseTransitionViewModel.TriggerPhase());
+            PlayAnimationCommand = new DelegateCommand(PlayAnimation);
         }
 
         #region Commands
@@ -96,6 +99,7 @@ namespace TarnishedTool.ViewModels
         public ICommand KillAllCommand { get; set; }
         public ICommand ResetPositionCommand { get; set; }
         public ICommand TriggerPhaseCommand { get; set; }
+        public ICommand PlayAnimationCommand { get; set; }
 
         #endregion
 
@@ -637,6 +641,14 @@ namespace TarnishedTool.ViewModels
             set => SetProperty(ref _currentAnimation, value);
         }
 
+        private string _forceAnimationId;
+
+        public string ForceAnimationId
+        {
+            get => _forceAnimationId;
+            set => SetProperty(ref _forceAnimationId, value);
+        }
+
         private string _customHp = "1";
 
         public string CustomHp
@@ -989,7 +1001,9 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.DrawBackstab,
                 () => IsDrawBackstabViewEnabled = !IsDrawBackstabViewEnabled);
             _hotkeyManager.RegisterAction(HotkeyActions.TriggerNextPhase,
-            () => ExecuteTargetAction(() => _phaseTransitionViewModel.TriggerPhase()));
+                () => ExecuteTargetAction(() => _phaseTransitionViewModel.TriggerPhase()));
+            _hotkeyManager.RegisterAction(HotkeyActions.PlayAnimation,
+                () => ExecuteTargetAction(PlayAnimation));
         }
 
         private void ExecuteTargetAction(Action action)
@@ -1155,7 +1169,7 @@ namespace TarnishedTool.ViewModels
             _phaseTransitionViewModel.OnTick();
 
             Dist = _targetService.GetDist();
-            
+
             UpdateResistances();
             UpdateImmunities();
             UpdateDefenses();
@@ -1413,6 +1427,20 @@ namespace TarnishedTool.ViewModels
         {
             var entityId = _targetService.GetEntityId();
             _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ResetCharacterPosition(entityId));
+        }
+
+        private void PlayAnimation()
+        {
+            if (!AreOptionsEnabled) return;
+            if (!int.TryParse(ForceAnimationId?.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture,
+                    out int animationId))
+            {
+                MsgBox.Show("Enter a valid animation ID", "Invalid Input");
+                return;
+            }
+
+            uint entityId = _targetService.GetEntityId();
+            _emevdService.ExecuteEmevdCommand(Emevd.EmevdCommands.ForceAnimationPlayback(entityId, animationId));
         }
 
         private void OpenAiWindow()

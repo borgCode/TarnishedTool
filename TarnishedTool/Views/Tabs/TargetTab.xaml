@@ -864,23 +864,57 @@
                             </Grid>
 
                         </Grid>
-                        <TextBlock Text="Force Act Sequence" FontWeight="Bold" Margin="5,0,0,0" />
-                        <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
-                            <TextBox Text="{Binding ActSequence, UpdateSourceTrigger=PropertyChanged}" Height="28"
-                                     Width="250" FontSize="12" Margin="10"
-                                     MaxLength="29" />
-                            <Button Content="Force acts" IsEnabled="{Binding AreOptionsEnabled}"
-                                    Command="{Binding ForActSequenceCommand}" Height="28" Margin="10,0,0,0" />
-                            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    ToolTip="Enter a sequence of acts separated by spaces, max 10 acts&#x0A;Not entirely consistent but should work most of the time if you&#x0A;use a keybind and try to time the attack as the enemy is is finishing another move"
-                                    ToolTipService.InitialShowDelay="100">
-                                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
-                            </Border>
+                        <Grid Margin="0,0,0,0">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
 
+    <StackPanel Grid.Column="0">
+        <TextBlock Text="Force Act Sequence" FontWeight="Bold" Margin="5,10,0,0" />
+        <StackPanel Orientation="Horizontal" Margin="-1,-5,0,0">
+            <TextBox Text="{Binding ActSequence, UpdateSourceTrigger=PropertyChanged}" Height="28"
+                     Width="180" FontSize="12" Margin="10"
+                     MaxLength="29" />
+            <Button Content="Force" IsEnabled="{Binding AreOptionsEnabled}"
+                    Command="{Binding ForActSequenceCommand}" Height="28" Margin="0,0,0,0" />
+            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    ToolTip="Enter a sequence of acts separated by spaces, max 10 acts&#x0A;Not entirely consistent but should work most of the time if you&#x0A;use a keybind and try to time the attack as the enemy is is finishing another move"
+                    ToolTipService.InitialShowDelay="100">
+                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+            </Border>
+        </StackPanel>
+    </StackPanel>
 
-                        </StackPanel>
+    <Border Grid.Column="1" Width="2" Background="#333" Margin="10,35,10,12" />
+
+    <StackPanel Grid.Column="2">
+        <TextBlock Text="Play Animation" FontWeight="Bold" Margin="5,10,0,0" />
+        <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
+            <TextBox Text="{Binding ForceAnimationId, UpdateSourceTrigger=PropertyChanged}" Height="28"
+                     Width="180" FontSize="12" Margin="10"
+                     MaxLength="10" />
+            <Button Content="Play" Command="{Binding PlayAnimationCommand}" Height="28" Margin="0,0,0,0">
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                        <Binding Path="AreOptionsEnabled" />
+                        <Binding Path="IsValidTarget" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+            <Border Background="#3498db" CornerRadius="10" Width="12" Height="12" Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    ToolTip="Enter an animation ID and click Play to force it onto the locked-on target.&#x0A;Works as long as animation priority allows it.&#x0A;This is done through Emevd so not every animation can be forced.&#x0A;Hotkey advised."
+                    ToolTipService.InitialShowDelay="100">
+                <TextBlock Text="i" Foreground="White" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontWeight="Bold" FontSize="10" />
+            </Border>
+        </StackPanel>
+    </StackPanel>
+</Grid>
 
 
                     </StackPanel>

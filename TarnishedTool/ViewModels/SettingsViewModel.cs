@@ -163,6 +163,7 @@ public class SettingsViewModel : BaseViewModel
                 new("No Move", HotkeyActions.TargetNoMove),
                 new("No Attack", HotkeyActions.TargetNoAttack),
                 new("Force Act Sequence", HotkeyActions.ForceActSequence),
+                new("Play Animation",  HotkeyActions.PlayAnimation),
                 new("Kill All Except Target", HotkeyActions.KillAllExceptTarget),
                 new("Reset Position", HotkeyActions.ResetTargetPosition),
                 new("Toggle Target Poise", HotkeyActions.TogglePoise),

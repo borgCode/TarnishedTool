@@ -211,5 +211,6 @@ public enum HotkeyActions
     DrawBackstab,
     SpeedBuff,
     TriggerNextPhase,
-    GgrFix
+    GgrFix,
+    PlayAnimation
 }
