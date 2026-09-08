@@ -390,7 +390,7 @@
                                     </CheckBox>
 
                                     <CheckBox
-                                        Content="Event Logger"
+                                        Content="Event Flag Logger"
                                         IsChecked="{Binding IsEventLoggerEnabled}">
 
                                     </CheckBox>

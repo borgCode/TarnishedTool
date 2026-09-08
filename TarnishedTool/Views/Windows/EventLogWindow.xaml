@@ -174,7 +174,7 @@
                 <TextBlock Grid.Row="5"
                            Grid.Column="0"
                            Margin="10, 10, 0, 0"
-                           Text="Excluded Event IDs" />
+                           Text="Excluded Event Flag IDs" />
 
                 <ListBox
                     Margin="10"

@@ -562,7 +562,7 @@ namespace TarnishedTool.ViewModels
             _eventLogWindow = new EventLogWindow()
             {
                 DataContext = _eventLogViewModel,
-                Title = "Event Log"
+                Title = "Event Flag Logger"
             };
             _eventLogWindow.Closed += (s, e) =>
             {
