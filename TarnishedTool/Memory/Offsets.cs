@@ -3233,8 +3233,7 @@ namespace TarnishedTool.Memory
             {
                 Version2_2_0 or Version2_4_0 or Version2_5_0 or Version2_6_0 or Version2_6_1 or Version2_6_2 => 0x4588BDC,
                 Version2_2_3 or Version2_3_0 => 0x4588BFC,
-                Version2_7_0 => 0x458CC5C,
-                Version2_7_1 => 0x458CCE4,
+                Version2_7_0 or Version2_7_1 => 0x458CC5C,
                 _ => 0
             };
             
