@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: "Build"
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - uses: nuget/setup-nuget@v2
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v5
+        with:
+          path: packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/packages.config') }}
+          restore-keys: |
+            nuget-${{ runner.os }}-
+
+      - name: Restore
+        run: nuget restore TarnishedTool.sln
+
+      - name: Build
+        run: msbuild TarnishedTool.sln /p:Configuration=Release /p:Platform="Any CPU" /m
+
+      - name: Stage files
+        shell: pwsh
+        run: |
+          $out = "TarnishedTool/bin/Release"
+          New-Item -ItemType Directory -Force -Path deploy | Out-Null
+          Copy-Item "$out/TarnishedTool.exe", "$out/TarnishedTool.exe.config" deploy/
+          Get-ChildItem "$out/*.dll" -ErrorAction SilentlyContinue | Copy-Item -Destination deploy/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: "TarnishedTool-SHA${{ github.sha }}"
+          path: deploy/
