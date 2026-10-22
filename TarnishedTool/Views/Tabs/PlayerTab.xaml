@@ -779,6 +779,12 @@
                                 <TextBlock Text="{Binding CurrentAnimation}" VerticalAlignment="Center" Width="65"
                                            TextAlignment="Right" Margin="5,-4,0,0" />
                             </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                                <TextBlock Text="Death Count: "></TextBlock>
+                                <TextBlock Text="{Binding DeathCount}" VerticalAlignment="Center" Width="65"
+                                           TextAlignment="Right" Margin="5,-4,0,0" />
+                            </StackPanel>
 
                         </Grid>
                     </Grid>

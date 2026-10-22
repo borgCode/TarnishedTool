@@ -780,6 +780,14 @@ namespace TarnishedTool.ViewModels
             get => _currentAnimation;
             set => SetProperty(ref _currentAnimation, value);
         }
+        
+        private int _deathCount;
+
+        public int DeathCount
+        {
+            get => _deathCount;
+            set => SetProperty(ref _deathCount, value);
+        }
 
         private float _playerSpeed;
 
@@ -1050,6 +1058,7 @@ namespace TarnishedTool.ViewModels
             Scadu = _playerService.GetScadu();
             SpiritAsh = _playerService.GetSpiritAsh();
             CurrentAnimation = _playerService.GetCurrentAnimation();
+            DeathCount = _playerService.GetDeathCount();
             if (ShowPlayerLocation) MapLocation = _playerService.GetMapLocation();
 
             if (_currentRuneLevel == newRuneLevel) return;

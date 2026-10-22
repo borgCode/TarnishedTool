@@ -689,6 +689,7 @@ namespace TarnishedTool.Memory
             }
 
             public const int Igt = 0xA0; //Uint
+            public const int DeathCount = 0x94;
             public const int NewGame = 0x120;
         }
 

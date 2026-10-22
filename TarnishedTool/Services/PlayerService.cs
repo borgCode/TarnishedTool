@@ -564,6 +564,9 @@ namespace TarnishedTool.Services
             memoryService.Read<byte>(GetGameDataPtr() + (int)GameDataMan.PlayerGameDataOffsets.SpiritAsh);
 
         public int GetCurrentAnimation() => chrInsService.GetCurrentAnimation(GetPlayerIns());
+        
+        public int GetDeathCount() =>
+            memoryService.Read<int>(memoryService.Read<nint>(GameDataMan.Base) + GameDataMan.DeathCount);
 
         public void ToggleTorrentAnywhere(bool isEnabled)
         {

@@ -54,6 +54,7 @@ public interface IPlayerService
     void SetSpiritAsh(int value);
     int GetSpiritAsh();
     int GetCurrentAnimation();
+    int GetDeathCount();
     void ToggleTorrentAnywhere(bool isEnabled);
     bool IsRiding();
     void RefreshFromStorage();
