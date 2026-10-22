@@ -61,25 +61,30 @@ namespace TarnishedTool.ViewModels
 
             Graces = new SearchableGroupedCollection<string, Grace>(
                 DataLoader.GetGraces(),
-                (grace, search) => grace.Name.ToLower().Contains(search) ||
-                                   grace.MainArea.ToLower().Contains(search));
+                (grace, search) => grace.Name.ContainsFuzzy(search) ||
+                                   grace.MainArea.ContainsFuzzy(search),
+                
+                grace => new[] { grace.Name, grace.MainArea, grace.IsDlc ? "DLC" : "Base Game"  });
             Bosses = new SearchableGroupedCollection<string, BlockWarp>(
                 DataLoader.GetBossWarps(),
-                (bossWarp, search) => bossWarp.Name.ToLower().Contains(search) ||
-                                      bossWarp.MainArea.ToLower().Contains(search));
+                (bossWarp, search) => bossWarp.Name.ContainsFuzzy(search) ||
+                                      bossWarp.MainArea.ContainsFuzzy(search),
+                bossWarp => new[] { bossWarp.Name,  bossWarp.MainArea, bossWarp.IsDlc ? "DLC" : "Base Game"  });
 
             CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
                 DataLoader.LoadCustomWarps(),
-                (customWarp, search) => customWarp.Name.ToLower().Contains(search) ||
-                                        customWarp.MainArea.ToLower().Contains(search));
+                (customWarp, search) => customWarp.Name.ContainsFuzzy(search) ||
+                                        customWarp.MainArea.ContainsFuzzy(search),
+                                        customWarp => new[] { customWarp.Name, customWarp.MainArea, customWarp.IsDlc ? "DLC" : "Base Game"  });
 
             _gracesForPresetWindow = new SearchableGroupedCollection<string, Grace>(
                 Graces.AllItems
                     .Select(g => g.Clone())
                     .GroupBy(g => g.MainArea)
                     .ToDictionary(g => g.Key, g => g.ToList()),
-                (grace, search) => grace.Name.ToLower().Contains(search) ||
-                                   grace.MainArea.ToLower().Contains(search));
+                (grace, search) => grace.Name.ContainsFuzzy(search) ||
+                                   grace.MainArea.ContainsFuzzy(search),
+                                   grace => new[] { grace.Name, grace.MainArea, grace.IsDlc ? "DLC" : "Base Game" });
 
             GraceWarpCommand = new DelegateCommand(GraceWarp);
             UnlockMainGameGracesCommand = new DelegateCommand(UnlockMainGameGraces);

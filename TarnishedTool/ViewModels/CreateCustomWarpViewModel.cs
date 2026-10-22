@@ -41,8 +41,9 @@ public class CreateCustomWarpViewModel : BaseViewModel
 
         CustomWarps = new SearchableGroupedCollection<string, BlockWarp>(
             customWarps,
-            (customWarp, search) => customWarp.Name.ToLower().Contains(search) ||
-                                    customWarp.MainArea.ToLower().Contains(search));
+            (customWarp, search) => customWarp.Name.ContainsFuzzy(search) ||
+                                    customWarp.MainArea.ContainsFuzzy(search),
+            customWarp => new[] { customWarp.Name, customWarp.MainArea });
 
 
         AreOptionsEnabled = areOptionsEnabled;

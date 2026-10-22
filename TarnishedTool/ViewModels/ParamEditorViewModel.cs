@@ -70,7 +70,8 @@ public sealed class ParamEditorViewModel : BaseViewModel
             (entry, search) =>
                 entry.Id.ToString().Contains(search) ||
                 entry.Parent.ToString().Contains(search) ||
-                (entry.DisplayName?.ToLower().Contains(search) ?? false)
+                (entry.DisplayName?.ContainsFuzzy(search) ?? false),
+                entry => new[] { entry.DisplayName ?? entry.Id.ToString() }
         );
 
         ParamEntries.PropertyChanged += OnParamEntriesPropertyChanged;

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using TarnishedTool.Enums;
 using TarnishedTool.Models;
+using TarnishedTool.Utilities;
 
 namespace TarnishedTool.ViewModels;
 
@@ -332,8 +333,12 @@ public class ItemSelectionViewModel : BaseViewModel
 
     private void ApplyFilter()
     {
+        var aliasMatches = AliasResolver.ResolveMatches(_searchText);
+
         var filtered = _allItems.Where(i =>
-            _compareInfo.IndexOf(i.Name, _searchText, CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0);
+            i.Name.ContainsFuzzy(_searchText) ||
+            i.Name.ContainsFuzzy(_searchText) ||
+            ItemAliasTags.ForItem(i).Any(tag => aliasMatches.Contains(tag.NormalizeForAlias())));
 
         filtered = filtered.Where(IsItemAvailable);
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using TarnishedTool.Utilities;
 
 namespace TarnishedTool.ViewModels;
 
@@ -23,9 +24,11 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
 
     public SearchableGroupedCollection(
         Dictionary<TGroup, List<TItem>> data,
-        Func<TItem, string, bool> matchesSearch)
+        Func<TItem, string, bool> matchesSearch,
+        Func<TItem, IEnumerable<string>> aliasTagsSelector = null)
     {
         _matchesSearch = matchesSearch;
+        _aliasTagsSelector = aliasTagsSelector;
         _groupedItems = data;
         _allItems = data.Values.SelectMany(x => x).ToList();
         _groups = new ObservableCollection<TGroup>(data.Keys);
@@ -34,6 +37,8 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
         SelectedGroup = _groups.FirstOrDefault();
         UpdateItemsList();
     }
+
+    private readonly Func<TItem, IEnumerable<string>> _aliasTagsSelector;
 
     private ObservableCollection<TGroup> _groups;
     public ObservableCollection<TGroup> Groups => _groups;
@@ -165,11 +170,18 @@ public class SearchableGroupedCollection<TGroup, TItem> : BaseViewModel
 
     private void ApplyFilter()
     {
-        var searchLower = SearchText.ToLower();
+        var search = SearchText;
 
         var source = _searchScope == SearchScopes.AllGroups ? _allItems : _groupedItems[SelectedGroup];
 
-        var items = source.Where(item => _matchesSearch(item, searchLower));
+        var aliasMatches = _aliasTagsSelector != null
+            ? AliasResolver.ResolveMatches(search)
+            : new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        var items = source.Where(item =>
+            _matchesSearch(item, search) ||
+            (_aliasTagsSelector != null &&
+             _aliasTagsSelector(item).Any(tag => aliasMatches.Contains(tag.NormalizeForAlias()))));
 
         if (_additionalFilter != null)
             items = items.Where(_additionalFilter);

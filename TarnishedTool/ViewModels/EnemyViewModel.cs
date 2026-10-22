@@ -156,8 +156,9 @@ public class EnemyViewModel : BaseViewModel
 
         BossRevives = new SearchableGroupedCollection<string, BossRevive>(
             DataLoader.GetBossRevives(),
-            (bossRevive, search) => bossRevive.BossName.ToLower().Contains(search) ||
-                                    bossRevive.Area.ToLower().Contains(search));
+            (bossRevive, search) => bossRevive.BossName.ContainsFuzzy(search) ||
+                                    bossRevive.Area.ContainsFuzzy(search),
+             bossRevive => new[] {bossRevive.BossName, bossRevive.Area, bossRevive.IsDlc ? "DLC" : "Base Game"});
         // Boss Status
         BossRevives.PropertyChanged += (_, e) =>
         {

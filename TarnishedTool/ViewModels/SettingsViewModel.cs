@@ -283,7 +283,7 @@ public class SettingsViewModel : BaseViewModel
 
         Hotkeys = new SearchableGroupedCollection<string, HotkeyBindingViewModel>(
             groupedHotkeys,
-            (hotkey, search) => hotkey.DisplayName.ToLower().Contains(search)
+            (hotkey, search) => hotkey.DisplayName.ContainsFuzzy(search), hotkey => new [] {hotkey.DisplayName}
         );
 
         _hotkeyLookup = Hotkeys.AllItems.ToDictionary(h => h.ActionId);
