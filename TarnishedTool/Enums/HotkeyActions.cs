@@ -146,6 +146,7 @@ public enum HotkeyActions
     RestOnRevive,
     DrawNavigationRoute,
     RykardNoMega,
+    MaleniaNoHpRecovery,
     LionMainLightning,
     LionMainFrost,
     LionMainWind,

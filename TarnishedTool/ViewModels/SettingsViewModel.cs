@@ -125,6 +125,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Rest On Revive", HotkeyActions.RestOnRevive),
                 new("Draw Enemy Nav Route", HotkeyActions.DrawNavigationRoute),
                 new("Rykard No Mega", HotkeyActions.RykardNoMega),
+                new("Malenia No HP Recovery", HotkeyActions.MaleniaNoHpRecovery),
                 new("Lion Main Lightning Phase", HotkeyActions.LionMainLightning),
                 new("Lion Main Frost Phase", HotkeyActions.LionMainFrost),
                 new("Lion Main Wind Phase", HotkeyActions.LionMainWind),

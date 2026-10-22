@@ -54,6 +54,24 @@ public class EnemyViewModel : BaseViewModel
     private const float LionTripleTransitionDuration = 15f;
     private const int ChangeHpRateOffset = 0x9c;
 
+    private static readonly (uint RowId, float ChangeHpRate)[] MaleniaHpRecoveryRows =
+    {
+        (18400, -1.5f),
+        (18401, -5f),
+        (18402, -10f),
+        (18403, -18f),
+        (18405, -0.5f),
+        (18410, -0.4f),
+        (18411, -0.8f),
+        (18412, -1.6f),
+        (18413, -3.2f),
+        (18414, -4.8f),
+        (18415, -6.4f),
+        (18416, -8.2f),
+        (18417, -10.6f), // on grab
+        (18418, -12.8f),
+        (18419, -16.4f),
+    };
 
     private static readonly uint[] MainBossPhaseSpEffectRowIds =
     {
@@ -351,6 +369,18 @@ public class EnemyViewModel : BaseViewModel
         }
     }
 
+    private bool _isMaleniaNoHpRecoveryEnabled;
+
+    public bool IsMaleniaNoHpRecoveryEnabled
+    {
+        get => _isMaleniaNoHpRecoveryEnabled;
+        set
+        {
+            if (!SetProperty(ref _isMaleniaNoHpRecoveryEnabled, value)) return;
+            SetMaleniaNoHpRecovery(_isMaleniaNoHpRecoveryEnabled);
+        }
+    }
+
     private void SetLionPhaseSpEffectsLockState(uint entityId, bool locked, uint[] spEffectRowIds)
     {
         var chrIns = _chrInsService.ChrInsByEntityId(entityId);
@@ -502,6 +532,7 @@ public class EnemyViewModel : BaseViewModel
         if (IsNoMoveEnabled) _enemyService.ToggleNoMove(true);
         if (IsDisableAiEnabled) _enemyService.ToggleDisableAi(true);
         if (IsRykardNoMegaEnabled) _enemyService.ToggleRykardMega(true);
+        if (IsMaleniaNoHpRecoveryEnabled) SetMaleniaNoHpRecovery(true);
         if (IsTargetingViewEnabled) _enemyService.ToggleTargetingView(true);
         if (IsDrawReducedTargetViewEnabled && IsTargetingViewEnabled)
             _enemyService.ToggleReducedTargetingView(true);
@@ -532,6 +563,8 @@ public class EnemyViewModel : BaseViewModel
             () => { IsDrawNavigationRouteEnabled = !IsDrawNavigationRouteEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.RykardNoMega,
             () => { IsRykardNoMegaEnabled = !IsRykardNoMegaEnabled; });
+        _hotkeyManager.RegisterAction(HotkeyActions.MaleniaNoHpRecovery,
+            () => { IsMaleniaNoHpRecoveryEnabled = !IsMaleniaNoHpRecoveryEnabled; });
         _hotkeyManager.RegisterAction(HotkeyActions.LionMainLightning,
             () => SafeExecute(ForceLionMainBossLightningPhase));
         _hotkeyManager.RegisterAction(HotkeyActions.LionMainFrost, () => SafeExecute(ForceLionMainBossFrostPhase));
@@ -576,6 +609,19 @@ public class EnemyViewModel : BaseViewModel
                 _paramService.Write(row, ChangeHpRateOffset, changeHpRate);
             }
         }
+
+    private void SetMaleniaNoHpRecovery(bool enabled)
+    {
+        var (tableIndex, slotIndex) = ParamIndices.All["SpEffectParam"];
+
+        foreach (var (rowId, vanillaChangeHpRate) in MaleniaHpRecoveryRows)
+        {
+            nint row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
+            if (row == 0) continue;
+
+            _paramService.Write(row, ChangeHpRateOffset, enabled ? 0f : vanillaChangeHpRate);
+        }
+    }
 
     private void ApplyLionSpEffects(uint entityId)
     {
