@@ -68,7 +68,7 @@ public class EnemyViewModel : BaseViewModel
         (18414, -4.8f),
         (18415, -6.4f),
         (18416, -8.2f),
-        (18417, -10.6f), // on grab
+        (18417, -10.6f),
         (18418, -12.8f),
         (18419, -16.4f),
     };
