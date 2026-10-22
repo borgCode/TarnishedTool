@@ -230,7 +230,7 @@
                                 Height="12"
                                 Margin="10,0,0,0"
                                 VerticalAlignment="Center"
-                                ToolTip="Malenia heals nothing from hits, including grabs"
+                                ToolTip="Prevents Malenia from getting HP back from hits"
                                 ToolTipService.InitialShowDelay='100'>
                                 <TextBlock Text="i"
                                            Foreground="White"
