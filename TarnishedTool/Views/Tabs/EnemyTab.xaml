@@ -21,6 +21,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0"
@@ -215,6 +216,38 @@
                         BorderBrush="#333"
                         CornerRadius="3">
                     <StackPanel Margin="10">
+                        <TextBlock Text="Malenia"
+                                   Margin="0,0,0,10" />
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="No HP recovery on hit"
+                                      IsChecked="{Binding IsMaleniaNoHpRecoveryEnabled}"
+                                      Margin="0,2" />
+
+                            <Border
+                                Background="#3498db"
+                                CornerRadius="10"
+                                Width="12"
+                                Height="12"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                ToolTip="Prevents Malenia from getting HP back from hits"
+                                ToolTipService.InitialShowDelay='100'>
+                                <TextBlock Text="i"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontWeight="Bold"
+                                           FontSize="10" />
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="4"
+                        BorderThickness="1"
+                        BorderBrush="#333"
+                        CornerRadius="3">
+                    <StackPanel Margin="10">
                         <TextBlock Text="Lion Main Boss"
                                    Margin="0,0,0,10" />
                         <StackPanel Orientation="Horizontal">
@@ -268,7 +301,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Grid.Row="4"
+                <Border Grid.Row="5"
                         BorderThickness="1"
                         BorderBrush="#333"
                         CornerRadius="3">
