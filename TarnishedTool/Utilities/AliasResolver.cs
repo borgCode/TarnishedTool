@@ -94,6 +94,8 @@ public class AliasResolver // I heckin love fuzzy search!
             new() { Names = ["gduo"], Targets = ["Godskin Duo"] },
             new() { Names = ["boatman"], Targets = ["Tibia Mariner"] },
             new() { Names = ["bug"], Targets = ["Romina Saint of the Bud"] },
+            new() { Names = ["pcr"], Targets = ["Promised Consort Radahn"] },
+            new() { Names = ["radahn"], Targets = ["Starscourge Greatsword"] },
 
             new() { Names = ["adm"], Targets = ["Ancient Dragon-Man"] },
             new() { Names = ["Knight of the Solitary Gaol"], Targets = ["Blackgaol Knight"] },
