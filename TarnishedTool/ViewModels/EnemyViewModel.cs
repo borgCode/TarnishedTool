@@ -56,7 +56,6 @@ public class EnemyViewModel : BaseViewModel
 
     private static readonly (uint RowId, float ChangeHpRate)[] MaleniaHpRecoveryRows =
     {
-        (18400, -1.5f),
         (18401, -5f),
         (18402, -10f),
         (18403, -18f),
