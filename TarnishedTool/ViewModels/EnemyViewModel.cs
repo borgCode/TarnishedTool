@@ -249,7 +249,7 @@ public class EnemyViewModel : BaseViewModel
             if (SetProperty(ref _isNoDamageEnabled, value))
             {
                 _enemyService.ToggleNoDamage(_isNoDamageEnabled);
-                RemoveSerpentHunterPercentageDamage(true);
+                RemoveSerpentHunterPercentageDamage(_isNoDamageEnabled);
             }
         }
     }
@@ -616,7 +616,7 @@ public class EnemyViewModel : BaseViewModel
         foreach (var (rowId, vanillaChangeHpRate) in MaleniaHpRecoveryRows)
         {
             nint row = _paramService.GetParamRow(tableIndex, slotIndex, rowId);
-            if (row == 0) continue;
+            if (row == 0) return;
 
             _paramService.Write(row, ChangeHpRateOffset, enabled ? 0f : vanillaChangeHpRate);
         }
