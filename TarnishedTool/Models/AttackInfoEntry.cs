@@ -52,6 +52,7 @@ public class AttackInfoEntry
             PhysicalAttackType.Slash => "Slash",
             PhysicalAttackType.Strike => "Strike",
             PhysicalAttackType.Pierce => "Pierce",
+            PhysicalAttackType.Standard => "Standard",
             _ => "Unknown"
         };
         

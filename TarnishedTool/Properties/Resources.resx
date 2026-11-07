@@ -958,7 +958,7 @@ e9 00 00 00 00          jmp    4e &lt;normal+0xc&gt;</value>
 31,Flying Needles</value>
   </data>
     <data name="SaveAttackInfo" xml:space="preserve">
-    <value>30 db                   xor    bl,bl
+        <value>30 db                   xor    bl,bl
 0f 57 ff                xorps  xmm7,xmm7
 52                      push   rdx
 48 8b 15 00 00 00 00    mov    rdx,QWORD PTR [rip+0x0]        # d &lt;_main+0xd&gt;
@@ -990,7 +990,7 @@ f3 44 0f 10 be 44 02    movss  xmm15,DWORD PTR [rsi+0x244]
 f3 44 0f 59 be 00 01    mulss  xmm15,DWORD PTR [rsi+0x100]
 00 00
 f3 44 0f 11 7b 20       movss  DWORD PTR [rbx+0x20],xmm15
-8a 4e 64                mov    cl,BYTE PTR [rsi+0x64]
+8a 4e 25                mov    cl,BYTE PTR [rsi+0x25]
 88 4b 24                mov    BYTE PTR [rbx+0x24],cl
 8b 8e 28 02 00 00       mov    ecx,DWORD PTR [rsi+0x228]
 89 4b 28                mov    DWORD PTR [rbx+0x28],ecx
@@ -1015,7 +1015,7 @@ c7 43 04 01 00 00 00    mov    DWORD PTR [rbx+0x4],0x1
 0000000000ea &lt;normal&gt;:
 5a                      pop    rdx
 e9 00 00 00 00          jmp    f0 &lt;normal+0x6&gt;</value>
-  </data>
+    </data>
     <data name="DamageMultiplier" xml:space="preserve">
     <value>41 83 be 28 02 00 00 00       cmp    [r14+0x228], 0
 0f 8e a0 00 00 00             jle    done

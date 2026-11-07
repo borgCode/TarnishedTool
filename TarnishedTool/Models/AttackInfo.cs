@@ -26,5 +26,6 @@ public enum PhysicalAttackType
     Slash = 0,
     Strike = 1,
     Pierce = 2,
+    Standard = 3
 }
 
