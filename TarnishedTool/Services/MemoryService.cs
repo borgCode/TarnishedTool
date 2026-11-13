@@ -19,6 +19,7 @@ namespace TarnishedTool.Services
         public nint BaseAddress { get; private set; }
         public int ModuleMemorySize { get; private set; }
 
+        private const int ProcessCreateThread = 0x0002;
         private const int ProcessVmRead = 0x0010;
         private const int ProcessVmWrite = 0x0020;
         private const int ProcessVmOperation = 0x0008;
@@ -258,7 +259,7 @@ namespace TarnishedTool.Services
             try
             {
                 ProcessHandle = Kernel32.OpenProcess(
-                    ProcessVmRead | ProcessVmWrite | ProcessVmOperation | ProcessQueryInformation,
+                    ProcessCreateThread | ProcessVmRead | ProcessVmWrite | ProcessVmOperation | ProcessQueryInformation,
                     false,
                     candidate.Id);
 

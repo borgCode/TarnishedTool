@@ -1,6 +1,6 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarnishedTool", "TarnishedTool\TarnishedTool.csproj", "{4172780B-E0B6-4558-9879-8AD367E51C64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarnishedTool", "TarnishedTool\TarnishedTool.csproj", "{4172780B-E0B6-4558-9879-8AD367E51C64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
