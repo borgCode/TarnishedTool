@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Threading;
 using TarnishedTool.Enums;
 using TarnishedTool.Interfaces;
 using TarnishedTool.Memory;
@@ -12,6 +13,9 @@ namespace TarnishedTool.Services
         : IUtilityService
     {
         public const float DefaultNoClipSpeedScale = 0.2f;
+
+        private const float FreezeWorldSettleSpeed = 0.0001f;
+        private const int FreezeWorldSettleFrames = 3;
         
         public void Quitout() =>
         memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
@@ -239,8 +243,42 @@ namespace TarnishedTool.Services
             }
         }
 
-        public void ToggleFreezeWorld(bool isEnabled) =>
-            memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
+        public void ToggleFreezeWorld(bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                // Zero out bone motion first so TAA doesn't smear frozen characters
+                var speed = GetSpeed();
+                SetSpeed(FreezeWorldSettleSpeed);
+                WaitFrames(FreezeWorldSettleFrames);
+                WriteFreezeWorldPatch(true);
+                WaitFrames(FreezeWorldSettleFrames);
+                SetSpeed(speed);
+            }
+            else
+            {
+                WriteFreezeWorldPatch(false);
+                WaitFrames(FreezeWorldSettleFrames);
+            }
+        }
+
+        private void WriteFreezeWorldPatch(bool isEnabled)
+        {
+            if (Patches.ShouldPauseWorld <= memoryService.BaseAddress)
+            {
+                memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
+                return;
+            }
+
+            memoryService.WriteBytes(Patches.ShouldPauseWorld, isEnabled ? [0x90, 0x90] : [0x74, 0x09]);
+        }
+
+        private void WaitFrames(int frames)
+        {
+            var frameTime = memoryService.Read<float>(Patches.FpsCap + 0x3);
+            frameTime = Math.Min(Math.Max(frameTime, 1f / 60), 1f / 15);
+            Thread.Sleep((int)(frameTime * 1000 * frames));
+        }
 
         public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
             memoryService.Write(memoryService.Read<nint>(DamageManager.Base) + DamageManager.HitboxView,

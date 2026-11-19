@@ -880,6 +880,7 @@ namespace TarnishedTool.ViewModels
         {
             AreOptionsEnabled = false;
             IsFreeCamEnabled = false;
+            IsFreezeWorldEnabled = false;
             if (IsDrawLowHitEnabled)
             {
                 _utilityService.ToggleDrawLowHit(false);

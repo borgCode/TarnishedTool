@@ -959,6 +959,7 @@ namespace TarnishedTool.Memory
             public static nint IsTorrentDisabledInUnderworld;
             public static nint IsWhistleDisabled;
             public static nint IsWorldPaused;
+            public static nint ShouldPauseWorld;
             public static nint GetItemChance;
             public static nint FpsCap;
             public static nint MenuDelay;
@@ -3229,6 +3230,12 @@ namespace TarnishedTool.Memory
                 _ => 0
             };
 
+            Patches.ShouldPauseWorld = moduleBase + Version switch
+            {
+                Version2_7_2 => 0xAF9F45,
+                _ => 0
+            };
+
             Patches.GetItemChance = moduleBase + Version switch
             {
                 Version1_2_0 => 0xCC9E0E,
@@ -3505,6 +3512,7 @@ namespace TarnishedTool.Memory
             PrintOffset("IsTorrentDisabledInUnderworld",Patches.IsTorrentDisabledInUnderworld);
             PrintOffset("IsWhistleDisabled",            Patches.IsWhistleDisabled);
             PrintOffset("IsWorldPaused",                Patches.IsWorldPaused);
+            PrintOffset("ShouldPauseWorld",             Patches.ShouldPauseWorld);
             PrintOffset("GetItemChance",                Patches.GetItemChance);
             PrintOffset("GetShopEvent",                 Patches.GetShopEvent);
             PrintOffset("FpsCap",                       Patches.FpsCap);

@@ -144,6 +144,7 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.NoRuneLossOnDeath), Pattern.NoRuneLossOnDeath,
                 addr => Patches.NoRuneLossOnDeath = addr);
             Queue(nameof(Pattern.IsWorldPaused), Pattern.IsWorldPaused, addr => Patches.IsWorldPaused = addr);
+            Queue(nameof(Pattern.ShouldPauseWorld), Pattern.ShouldPauseWorld, addr => Patches.ShouldPauseWorld = addr);
             Queue(nameof(Pattern.GetItemChance), Pattern.GetItemChance, addr => Patches.GetItemChance = addr);
             Queue(nameof(Pattern.OpenMap), Pattern.OpenMap, addr => Patches.OpenMap = addr);
             Queue(nameof(Pattern.CloseMap), Pattern.CloseMap, addr => Patches.CloseMap = addr);

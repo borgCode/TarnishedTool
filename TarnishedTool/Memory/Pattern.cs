@@ -829,6 +829,13 @@ namespace TarnishedTool.Memory
             anchorOffset: 1
         );
 
+        public static readonly Pattern ShouldPauseWorld = new Pattern(
+            [0x84, 0xC0, 0x74, 0x09, 0x66, 0xC7, 0x83, 0xB8, 0x04, 0x00, 0x00, 0x00, 0x01],
+            "xxxxxxxxxxxxx",
+            2,
+            AddressingMode.Absolute
+        );
+
         public static readonly Pattern IsTorrentDisabledInUnderworld = new Pattern(
             [0x80, 0x78, 0x36, 0x00, 0x0F],
             "xxxxx",
