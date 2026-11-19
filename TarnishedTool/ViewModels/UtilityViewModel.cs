@@ -1037,6 +1037,7 @@ namespace TarnishedTool.ViewModels
             _hotkeyManager.RegisterAction(HotkeyActions.OpenSpiritTuning, () => SafeExecute(OpenSpiritTuning));
             _hotkeyManager.RegisterAction(HotkeyActions.DisableKbForNoClip,
                 () => _isNoClipKeyboardDisableEnabled = !IsNoClipKeyboardDisableEnabled);
+            _hotkeyManager.RegisterAction(HotkeyActions.BreakNearbyObjects, () => SafeExecute(BreakNearbyObjects));
         }
 
         private void GameAttachedExecute(Action action)

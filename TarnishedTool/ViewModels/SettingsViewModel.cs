@@ -235,6 +235,7 @@ public class SettingsViewModel : BaseViewModel
                 new("Hide Characters", HotkeyActions.HideCharacters),
                 new("Full Shop Lineup", HotkeyActions.FullShopLineup),
                 new("Disable KB for No Clip", HotkeyActions.DisableKbForNoClip),
+                new("Break Nearby Objects", HotkeyActions.BreakNearbyObjects),
             ],
 
             ["Event"] =

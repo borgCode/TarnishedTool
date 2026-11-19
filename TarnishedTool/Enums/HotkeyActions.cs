@@ -213,5 +213,6 @@ public enum HotkeyActions
     SpeedBuff,
     TriggerNextPhase,
     GgrFix,
-    PlayAnimation
+    PlayAnimation,
+    BreakNearbyObjects
 }
