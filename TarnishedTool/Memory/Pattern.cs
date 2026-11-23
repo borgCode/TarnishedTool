@@ -330,6 +330,17 @@ namespace TarnishedTool.Memory
             7
         );
 
+        public static readonly Pattern GxRenderer = new(
+            [
+                0x48, 0x8B, 0x15, 0x00, 0x00, 0x00, 0x00, 0x48, 0x85, 0xD2, 0x74, 0x28, 0x48, 0x8B, 0x82, 0x60, 0x3A, 0x01, 0x00
+            ],
+            "xxx????xxxxxxxxxxxx",
+            0,
+            AddressingMode.Relative,
+            3,
+            7
+        );
+
         //Hooks
 
         public static readonly Pattern NoTimePassOnDeath = new Pattern(

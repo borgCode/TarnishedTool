@@ -239,8 +239,14 @@ namespace TarnishedTool.Services
             }
         }
 
-        public void ToggleFreezeWorld(bool isEnabled) =>
+        public void ToggleFreezeWorld(bool isEnabled)
+        {
             memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
+            if (GxRenderer.Base <= memoryService.BaseAddress) return;
+            var aaConfig = memoryService.FollowPointers(GxRenderer.Base, [GxRenderer.AaConfig], true);
+            if (aaConfig != 0)
+                memoryService.Write(aaConfig + GxRenderer.DisableTaa, isEnabled);
+        }
 
         public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
             memoryService.Write(memoryService.Read<nint>(DamageManager.Base) + DamageManager.HitboxView,
