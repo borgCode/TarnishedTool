@@ -367,6 +367,7 @@
         <Compile Include="Utilities\PositionUtils.cs" />
         <Compile Include="Utilities\DataLoader.cs" />
         <Compile Include="Utilities\ExeManager.cs" />
+        <Compile Include="Utilities\FreeCamInputController.cs" />
         <Compile Include="Utilities\HotkeyManager.cs" />
         <Compile Include="Utilities\MsgBox.cs" />
         <Compile Include="Utilities\SearchExtensions.cs" />

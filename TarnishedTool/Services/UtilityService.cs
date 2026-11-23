@@ -12,6 +12,7 @@ namespace TarnishedTool.Services
         : IUtilityService
     {
         public const float DefaultNoClipSpeedScale = 0.2f;
+        private readonly FreeCamInputController _freeCamInput = new(memoryService);
         
         public void Quitout() =>
         memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
@@ -203,9 +204,13 @@ namespace TarnishedTool.Services
             {
                 memoryService.WriteBytes(patchLoc, [0xB0, 0x01, 0xC3]);
                 memoryService.Write(camMode, (byte)1);
+                SetFreeCamActionBlock(true);
+                _freeCamInput.Start();
             }
             else
             {
+                _freeCamInput.Stop();
+                SetFreeCamActionBlock(false);
                 memoryService.WriteBytes(patchLoc, [0xEB, 0x80, 0xCC]);
                 memoryService.Write(camMode, (byte)0);
             }
@@ -215,6 +220,15 @@ namespace TarnishedTool.Services
         {
             var camMode = memoryService.FollowPointers(FieldArea.Base, [FieldArea.GameRend, FieldArea.CamMode], false);
             memoryService.Write(camMode, isEnabled ? (byte)3 : (byte)1);
+            SetFreeCamActionBlock(!isEnabled);
+        }
+
+        private void SetFreeCamActionBlock(bool block)
+        {
+            if (Hooks.SetActionRequested <= memoryService.BaseAddress) return;
+            if (hookManager.IsHookInstalled(CodeCaveOffsets.Base + CodeCaveOffsets.ActionRequestIntercept)) return;
+            memoryService.WriteBytes(Hooks.SetActionRequested,
+                block ? [0x90, 0x90, 0x90, 0x90] : [0x49, 0x09, 0x41, 0x10]);
         }
 
         public void MoveCamToPlayer()
