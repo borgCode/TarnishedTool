@@ -138,6 +138,7 @@ namespace TarnishedTool.ViewModels
             OpenShopCommand = new DelegateCommand<ShopCommand>(OpenShop);
             MoveCamToPlayerCommand = new DelegateCommand(MoveCamToPlayer);
             MovePlayerToCamCommand = new DelegateCommand(MovePlayerToCam);
+            OpenFreeCamKeybindsCommand = new DelegateCommand(OpenFreeCamKeybinds);
             UpgradeFlaskCommand = new DelegateCommand(UpgradeFlask);
             IncreaseChargesCommand = new DelegateCommand(IncreaseCharges);
             OpenMirrorCommand = new DelegateCommand(OpenMirror);
@@ -172,6 +173,7 @@ namespace TarnishedTool.ViewModels
         public ICommand OpenShopCommand { get; }
         public ICommand MoveCamToPlayerCommand { get; }
         public ICommand MovePlayerToCamCommand { get; }
+        public ICommand OpenFreeCamKeybindsCommand { get; }
         public ICommand UpgradeFlaskCommand { get; }
         public ICommand IncreaseChargesCommand { get; }
         public ICommand OpenMirrorCommand { get; }
@@ -1174,6 +1176,12 @@ namespace TarnishedTool.ViewModels
 
         private void MoveCamToPlayer() => _utilityService.MoveCamToPlayer();
         private void MovePlayerToCam() => _utilityService.MovePlayerToCam();
+
+        private void OpenFreeCamKeybinds()
+        {
+            var win = new FreeCamKeybindsWindow { Owner = System.Windows.Application.Current?.MainWindow };
+            win.ShowDialog();
+        }
 
         private async void UpgradeFlask()
         {

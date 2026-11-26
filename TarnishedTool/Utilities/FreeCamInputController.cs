@@ -17,17 +17,10 @@ namespace TarnishedTool.Utilities
         private const int RimTypeMouse = 0;
         private const int RidevInputsink = 0x00000100;
 
-        private const int VkW = 0x57;
-        private const int VkS = 0x53;
-        private const int VkA = 0x41;
-        private const int VkD = 0x44;
-        private const int VkSpace = 0x20;
-        private const int VkControl = 0x11;
-        private const int VkShift = 0x10;
-
         private const float BaseSpeed = 7f;
         private const float FastSpeed = 20f;
         private const float MouseSensitivity = 0.0025f;
+        private const float TiltSpeed = 1.5f;
         private const float PitchLimit = 1.55f;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -150,7 +143,7 @@ namespace TarnishedTool.Utilities
             base.WndProc(ref m);
         }
 
-        private static bool IsKeyDown(int vk) => (User32.GetAsyncKeyState(vk) & 0x8000) != 0;
+        private static bool IsKeyDown(int vk) => vk > 0 && (User32.GetAsyncKeyState(vk) & 0x8000) != 0;
 
         private bool IsGameForeground()
         {
@@ -165,7 +158,7 @@ namespace TarnishedTool.Utilities
             var sw = Stopwatch.StartNew();
             var lastTime = sw.Elapsed.TotalSeconds;
             var wasActive = false;
-            float yaw = 0f, pitch = 0f;
+            float yaw = 0f, pitch = 0f, roll = 0f;
 
             while (_running)
             {
@@ -206,6 +199,12 @@ namespace TarnishedTool.Utilities
                     continue;
                 }
 
+                var rx = BitConverter.ToSingle(mat, 0);
+                var ry = BitConverter.ToSingle(mat, 4);
+                var rz = BitConverter.ToSingle(mat, 8);
+                var ux = BitConverter.ToSingle(mat, 16);
+                var uy = BitConverter.ToSingle(mat, 20);
+                var uz = BitConverter.ToSingle(mat, 24);
                 var fx = BitConverter.ToSingle(mat, 32);
                 var fy = BitConverter.ToSingle(mat, 36);
                 var fz = BitConverter.ToSingle(mat, 40);
@@ -217,16 +216,27 @@ namespace TarnishedTool.Utilities
                 {
                     yaw = (float)Math.Atan2(fx, fz);
                     pitch = (float)Math.Asin(Math.Max(-0.999f, Math.Min(0.999f, fy)));
+                    var r0xInit = (float)Math.Cos(yaw);
+                    var r0zInit = -(float)Math.Sin(yaw);
+                    var dotR = rx * r0xInit + rz * r0zInit;
+                    var dotU = ux * r0xInit + uz * r0zInit;
+                    roll = (float)Math.Atan2(-dotU, dotR);
                     wasActive = true;
                 }
 
+                var cfg = SettingsManager.Default;
                 var changed = false;
+
                 if (dx != 0 || dy != 0)
                 {
                     yaw += dx * MouseSensitivity;
                     pitch = Math.Max(-PitchLimit, Math.Min(PitchLimit, pitch - dy * MouseSensitivity));
                     changed = true;
                 }
+
+                if (IsKeyDown(cfg.FreeCamTiltLeftKey)) { roll += TiltSpeed * dt; changed = true; }
+                if (IsKeyDown(cfg.FreeCamTiltRightKey)) { roll -= TiltSpeed * dt; changed = true; }
+                if (IsKeyDown(cfg.FreeCamResetTiltKey) && roll != 0f) { roll = 0f; changed = true; }
 
                 var cosP = (float)Math.Cos(pitch);
                 var sinP = (float)Math.Sin(pitch);
@@ -237,26 +247,38 @@ namespace TarnishedTool.Utilities
                 var nfy = sinP;
                 var nfz = cosY * cosP;
 
-                var nrx = cosY;
-                var nrz = -sinY;
+                var r0x = cosY;
+                var r0z = -sinY;
 
-                var nux = nfy * nrz;
-                var nuy = nfz * nrx - nfx * nrz;
-                var nuz = -nfy * nrx;
+                var u0x = nfy * r0z;
+                var u0y = nfz * r0x - nfx * r0z;
+                var u0z = -nfy * r0x;
 
-                var move = (IsKeyDown(VkShift) ? FastSpeed : BaseSpeed) * dt;
+                var cosR = (float)Math.Cos(roll);
+                var sinR = (float)Math.Sin(roll);
 
-                if (IsKeyDown(VkW)) { px += nfx * move; py += nfy * move; pz += nfz * move; changed = true; }
-                if (IsKeyDown(VkS)) { px -= nfx * move; py -= nfy * move; pz -= nfz * move; changed = true; }
-                if (IsKeyDown(VkD)) { px += nrx * move; pz += nrz * move; changed = true; }
-                if (IsKeyDown(VkA)) { px -= nrx * move; pz -= nrz * move; changed = true; }
-                if (IsKeyDown(VkSpace)) { py += move; changed = true; }
-                if (IsKeyDown(VkControl)) { py -= move; changed = true; }
+                var nrx = r0x * cosR + u0x * sinR;
+                var nry = u0y * sinR;
+                var nrz = r0z * cosR + u0z * sinR;
+
+                var nux = u0x * cosR - r0x * sinR;
+                var nuy = u0y * cosR;
+                var nuz = u0z * cosR - r0z * sinR;
+
+                var move = (IsKeyDown(cfg.FreeCamFastKey) ? FastSpeed : BaseSpeed) * dt;
+
+                if (IsKeyDown(cfg.FreeCamForwardKey)) { px += nfx * move; py += nfy * move; pz += nfz * move; changed = true; }
+                if (IsKeyDown(cfg.FreeCamBackwardKey)) { px -= nfx * move; py -= nfy * move; pz -= nfz * move; changed = true; }
+                if (IsKeyDown(cfg.FreeCamRightKey)) { px += nrx * move; py += nry * move; pz += nrz * move; changed = true; }
+                if (IsKeyDown(cfg.FreeCamLeftKey)) { px -= nrx * move; py -= nry * move; pz -= nrz * move; changed = true; }
+                if (IsKeyDown(cfg.FreeCamUpKey)) { py += move; changed = true; }
+                if (IsKeyDown(cfg.FreeCamDownKey)) { py -= move; changed = true; }
 
                 if (changed)
                 {
                     var outMat = new byte[0x40];
                     Array.Copy(BitConverter.GetBytes(nrx), 0, outMat, 0, 4);
+                    Array.Copy(BitConverter.GetBytes(nry), 0, outMat, 4, 4);
                     Array.Copy(BitConverter.GetBytes(nrz), 0, outMat, 8, 4);
                     Array.Copy(BitConverter.GetBytes(nux), 0, outMat, 16, 4);
                     Array.Copy(BitConverter.GetBytes(nuy), 0, outMat, 20, 4);

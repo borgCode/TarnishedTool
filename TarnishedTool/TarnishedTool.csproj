@@ -496,6 +496,9 @@
         <Compile Include="Views\Windows\EventLogWindow.xaml.cs">
           <DependentUpon>EventLogWindow.xaml</DependentUpon>
         </Compile>
+        <Compile Include="Views\Windows\FreeCamKeybindsWindow.xaml.cs">
+          <DependentUpon>FreeCamKeybindsWindow.xaml</DependentUpon>
+        </Compile>
         <Compile Include="Views\Windows\AiWindow.xaml.cs">
           <DependentUpon>AiWindow.xaml</DependentUpon>
         </Compile>
@@ -565,6 +568,7 @@
         <Page Include="Views\Windows\CustomWarpImportSelectionWindow.xaml" />
         <Page Include="Views\Windows\DefensesWindow.xaml" />
         <Page Include="Views\Windows\EventLogWindow.xaml" />
+        <Page Include="Views\Windows\FreeCamKeybindsWindow.xaml" />
         <Page Include="Views\Windows\AiWindow.xaml" />
         <Page Include="Views\Windows\GestureSelectionWindow.xaml" />
         <Page Include="Views\Windows\GraceImportPresentSelectionWindow.xaml" />

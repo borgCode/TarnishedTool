@@ -130,6 +130,17 @@ public class SettingsManager
     public bool ActivateOnLaunchEnabled { get; set; }
     public string ActivateOnLaunchActionIds { get; set; } = "";
 
+    [DefaultValue(0x57)] public int FreeCamForwardKey { get; set; }
+    [DefaultValue(0x53)] public int FreeCamBackwardKey { get; set; }
+    [DefaultValue(0x41)] public int FreeCamLeftKey { get; set; }
+    [DefaultValue(0x44)] public int FreeCamRightKey { get; set; }
+    [DefaultValue(0x20)] public int FreeCamUpKey { get; set; }
+    [DefaultValue(0x11)] public int FreeCamDownKey { get; set; }
+    [DefaultValue(0x10)] public int FreeCamFastKey { get; set; }
+    [DefaultValue(0x51)] public int FreeCamTiltLeftKey { get; set; }
+    [DefaultValue(0x45)] public int FreeCamTiltRightKey { get; set; }
+    [DefaultValue(0x52)] public int FreeCamResetTiltKey { get; set; }
+
 
     private static string SettingsPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

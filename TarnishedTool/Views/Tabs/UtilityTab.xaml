@@ -299,6 +299,11 @@
                                         Command="{Binding MovePlayerToCamCommand}"
                                         IsEnabled="{Binding IsFreeCamEnabled}"
                                         Padding="5,0"
+                                        Margin="0,0,0,5"
+                                        HorizontalAlignment="Left" />
+                                <Button Content="Keybinds..."
+                                        Command="{Binding OpenFreeCamKeybindsCommand}"
+                                        Padding="5,0"
                                         HorizontalAlignment="Left" />
                             </StackPanel>
                         </Border>
