@@ -129,6 +129,8 @@ public class SettingsManager
 
     public bool ActivateOnLaunchEnabled { get; set; }
     public string ActivateOnLaunchActionIds { get; set; } = "";
+    public bool RememberSelectedOptions { get; set; }
+    public string SavedSelectedOptions { get; set; } = "";
 
 
     private static string SettingsPath => Path.Combine(

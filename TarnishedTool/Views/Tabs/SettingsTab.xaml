@@ -110,6 +110,26 @@
                         Margin="5,0,0,0"
                         HorizontalAlignment="Left"
                         Command="{Binding OpenActivateOnLaunchCommand}" />
+                    <CheckBox Content="Remember Selected Options"
+                              IsChecked="{Binding IsRememberOptionsEnabled}"
+                              Margin="10,0,0,0"
+                              VerticalAlignment="Center" />
+                    <Border
+                        Background="#3498db"
+                        CornerRadius="10"
+                        Width="12"
+                        Height="12"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        ToolTip="Automatically saves and restores selected options across app and PC restarts."
+                        ToolTipService.InitialShowDelay="100">
+                        <TextBlock Text="i"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   FontSize="10" />
+                    </Border>
 
                 </StackPanel>
                 
