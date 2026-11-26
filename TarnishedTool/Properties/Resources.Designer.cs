@@ -3658,6 +3658,12 @@ namespace TarnishedTool.Properties {
                 return ResourceManager.GetString("TimeActIds", resourceCulture);
             }
         }
+
+        internal static string ConsumableTimeActIds {
+            get {
+                return ResourceManager.GetString("ConsumableTimeActIds", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to 0,40002774,Smithing Stone [1],999,999

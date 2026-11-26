@@ -105,5 +105,6 @@ namespace TarnishedTool.Memory
         public const int SpeedActiveFlag = 0x4800;
         public const int AllowSpeedBuffInCombat = 0x4801;
         public const int SpeedyBuff = 0x4810;
+        public const int ConsumableBuffTable = 0x4900;
     }
 }
