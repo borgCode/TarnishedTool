@@ -129,8 +129,12 @@ namespace TarnishedTool
                 playerViewModel,enemyViewModel,utilityViewModel, travelViewModel, eventViewModel, itemViewModel,activateOnLaunchManager,_stateService
             );
 
+            var optionPersistenceManager = new OptionPersistenceManager(
+                playerViewModel, enemyViewModel, utilityViewModel, travelViewModel, itemViewModel, _stateService
+            );
+
             SettingsViewModel settingsViewModel = new SettingsViewModel(
-                settingsService, hotkeyManager, _stateService, activateOnLaunchViewModel, reminderService
+                settingsService, hotkeyManager, _stateService, activateOnLaunchViewModel, reminderService, optionPersistenceManager
             );
 
             var playerTab = new PlayerTab(playerViewModel);

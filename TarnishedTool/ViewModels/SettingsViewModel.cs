@@ -21,6 +21,7 @@ public class SettingsViewModel : BaseViewModel
     private readonly ISettingsService _settingsService;
     private readonly IReminderService _reminderService;
     private readonly HotkeyManager _hotkeyManager;
+    private readonly OptionPersistenceManager _optionPersistenceManager;
 
     private readonly Dictionary<string, HotkeyBindingViewModel> _hotkeyLookup;
 
@@ -31,12 +32,14 @@ public class SettingsViewModel : BaseViewModel
     public SearchableGroupedCollection<string, HotkeyBindingViewModel> Hotkeys { get; }
 
     public SettingsViewModel(ISettingsService settingsService, HotkeyManager hotkeyManager, IStateService stateService,
-        ActivateOnLaunchViewModel activateOnLaunchViewModel, IReminderService reminderService)
+        ActivateOnLaunchViewModel activateOnLaunchViewModel, IReminderService reminderService,
+        OptionPersistenceManager optionPersistenceManager)
     {
         _settingsService = settingsService;
         _hotkeyManager = hotkeyManager;
         _activateOnLaunchViewModel = activateOnLaunchViewModel;
         _reminderService =  reminderService;
+        _optionPersistenceManager = optionPersistenceManager;
 
 
         stateService.Subscribe(State.AppStart, OnAppStart);
@@ -505,6 +508,20 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
+    private bool _isRememberOptionsEnabled;
+
+    public bool IsRememberOptionsEnabled
+    {
+        get => _isRememberOptionsEnabled;
+        set
+        {
+            if (!SetProperty(ref _isRememberOptionsEnabled, value)) return;
+            SettingsManager.Default.RememberSelectedOptions = value;
+            SettingsManager.Default.Save();
+            if (value) _optionPersistenceManager.SaveCurrentOptions();
+        }
+    }
+
     #endregion
 
     #region Public Methods
@@ -591,6 +608,9 @@ public class SettingsViewModel : BaseViewModel
 
         _isHotkeyReminderEnabled = SettingsManager.Default.HotkeyReminder;
         OnPropertyChanged(nameof(IsHotkeyReminderEnabled));
+
+        _isRememberOptionsEnabled = SettingsManager.Default.RememberSelectedOptions;
+        OnPropertyChanged(nameof(IsRememberOptionsEnabled));
     }
 
     private void OnGameLoaded()
