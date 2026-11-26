@@ -266,7 +266,7 @@
                                         Height="12"
                                         Margin="3,3,10,0"
                                         VerticalAlignment="Center"
-                                        ToolTip="Only works with controller for now"
+                                        ToolTip="Works with controllers and K/M"
                                         ToolTipService.InitialShowDelay="100">
                                         <TextBlock Text="i"
                                                    Foreground="White"

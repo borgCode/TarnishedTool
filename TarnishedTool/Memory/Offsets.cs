@@ -889,6 +889,7 @@ namespace TarnishedTool.Memory
 
             public const int AaConfig = 0x13A60;
             public const int DisableTaa = 0x9;
+            public const int EnableMotionBlur = 0x20;
         }
 
         public static class Hooks

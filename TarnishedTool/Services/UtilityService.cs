@@ -13,6 +13,7 @@ namespace TarnishedTool.Services
     {
         public const float DefaultNoClipSpeedScale = 0.2f;
         private readonly FreeCamInputController _freeCamInput = new(memoryService);
+        private byte? _savedMotionBlur;
         
         public void Quitout() =>
         memoryService.Write(memoryService.Read<nint>(GameMan.Base) + GameMan.ShouldQuitout, (byte)1);
@@ -258,8 +259,19 @@ namespace TarnishedTool.Services
             memoryService.WriteBytes(Patches.IsWorldPaused, isEnabled ? [0x0F, 0x85] : [0x0F, 0x84]);
             if (GxRenderer.Base <= memoryService.BaseAddress) return;
             var aaConfig = memoryService.FollowPointers(GxRenderer.Base, [GxRenderer.AaConfig], true);
-            if (aaConfig != 0)
-                memoryService.Write(aaConfig + GxRenderer.DisableTaa, isEnabled);
+            if (aaConfig == 0) return;
+
+            memoryService.Write(aaConfig + GxRenderer.DisableTaa, isEnabled);
+            if (isEnabled)
+            {
+                _savedMotionBlur ??= memoryService.Read<byte>(aaConfig + GxRenderer.EnableMotionBlur);
+                memoryService.Write(aaConfig + GxRenderer.EnableMotionBlur, (byte)0);
+            }
+            else if (_savedMotionBlur.HasValue)
+            {
+                memoryService.Write(aaConfig + GxRenderer.EnableMotionBlur, _savedMotionBlur.Value);
+                _savedMotionBlur = null;
+            }
         }
 
         public void ToggleDrawHitbox(bool isDrawHitboxEnabled) =>
