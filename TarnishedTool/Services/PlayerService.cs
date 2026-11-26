@@ -42,6 +42,7 @@ namespace TarnishedTool.Services
         private SpeedBuffMode _currentMode = SpeedBuffMode.Off;
         
         private static readonly byte[] BuffPrefixTable = BuildBuffPrefixTable();
+        private static readonly byte[] ConsumableBuffTable = BuildConsumableBuffTable();
         
         private static byte[] BuildBuffPrefixTable()
         {
@@ -52,6 +53,26 @@ namespace TarnishedTool.Services
                          s => int.Parse(s, CultureInfo.InvariantCulture)))
             {
                 table[id] = 1;
+            }
+
+            return table;
+        }
+
+        private static byte[] BuildConsumableBuffTable()
+        {
+            var table = new byte[1000];
+
+            foreach (int id in DataLoader.GetSimpleList(
+                         "ConsumableTimeActIds",
+                         s => int.Parse(s, CultureInfo.InvariantCulture)))
+            {
+                int baseIndex = id - 50000;
+                for (int i = 0; i < 10; i++)
+                {
+                    int index = baseIndex + i;
+                    if ((uint)index < (uint)table.Length)
+                        table[index] = 1;
+                }
             }
 
             return table;
@@ -662,6 +683,9 @@ namespace TarnishedTool.Services
         {
             var idTable = CodeCaveOffsets.Base + CodeCaveOffsets.TimeActBuffTable;
             memoryService.WriteBytes(idTable, BuffPrefixTable);
+
+            var consumableTable = CodeCaveOffsets.Base + CodeCaveOffsets.ConsumableBuffTable;
+            memoryService.WriteBytes(consumableTable, ConsumableBuffTable);
             
             memoryService.Write(speedActiveFlag, false);
 
@@ -676,18 +700,19 @@ namespace TarnishedTool.Services
                 (code + 0x26, CSSound.Base, 7, 0x26 + 3),
                 (code + 0x3A, Hooks.SpeedyBuff + 5, 5, 0x3A + 1),
                 (code + 0x45, idTable, 7, 0x45 + 3),
-                (code + 0x60, speedActiveFlag, 7, 0x60 + 2),
-                (code + 0x69, CSFlipperImp.Base, 7, 0x69 + 3),
+                (code + 0x6C, consumableTable, 7, 0x6C + 3),
                 (code + 0x7A, speedActiveFlag, 7, 0x7A + 2),
                 (code + 0x83, CSFlipperImp.Base, 7, 0x83 + 3),
                 (code + 0x94, speedActiveFlag, 7, 0x94 + 2),
-                (code + 0x9E, Hooks.SpeedyBuff + 5, 5, 0x9E + 1)
+                (code + 0x9D, CSFlipperImp.Base, 7, 0x9D + 3),
+                (code + 0xAE, speedActiveFlag, 7, 0xAE + 2),
+                (code + 0xB8, Hooks.SpeedyBuff + 5, 5, 0xB8 + 1)
             ]);
             
             AsmHelper.WriteImmediateDwords(bytes, [
                 (WorldChrMan.PlayerIns, 0xC + 3),
-                (CSFlipperImp.GameSpeed, 0x70 + 2),
                 (CSFlipperImp.GameSpeed, 0x8A + 2),
+                (CSFlipperImp.GameSpeed, 0xA4 + 2),
             ]);
             
             memoryService.WriteBytes(code, bytes);
