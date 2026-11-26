@@ -883,6 +883,15 @@ namespace TarnishedTool.Memory
             public static nint Base;
         }
 
+        public static class GxRenderer
+        {
+            public static nint Base;
+
+            public const int AaConfig = 0x13A60;
+            public const int DisableTaa = 0x9;
+            public const int EnableMotionBlur = 0x20;
+        }
+
         public static class Hooks
         {
             public static nint UpdateCoords;
@@ -1558,6 +1567,12 @@ namespace TarnishedTool.Memory
                 Version2_2_3 or Version2_3_0 => 0x3D83CF8,
                 Version2_7_0 or Version2_7_1 => 0x3D87D48,
                 Version2_7_2 => 0x3D8AD68,
+                _ => 0
+            };
+
+            GxRenderer.Base = moduleBase + Version switch
+            {
+                Version2_7_2 => 0x47F67C8,
                 _ => 0
             };
 
@@ -3432,6 +3447,7 @@ namespace TarnishedTool.Memory
             PrintOffset("DrawPathing.Base",            DrawPathing.Base);
             PrintOffset("WorldAiManagerImp.Base",      WorldAiManagerImp.Base);
             PrintOffset("CSSound.Base",      CSSound.Base);
+            PrintOffset("GxRenderer.Base",   GxRenderer.Base);
             
                         Console.WriteLine("\n--- Functions ---");
             PrintOffset("GraceWarp",                 Functions.GraceWarp);

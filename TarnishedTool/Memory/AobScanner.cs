@@ -99,6 +99,7 @@ namespace TarnishedTool.Memory
             Queue(nameof(Pattern.MapDebugFlags), Pattern.MapDebugFlags, addr => MapDebugFlags.Base = addr - 1);
             Queue(nameof(Pattern.WorldAiManagerImp), Pattern.WorldAiManagerImp, addr => WorldAiManagerImp.Base = addr);
             Queue(nameof(Pattern.CSSound), Pattern.CSSound, addr => CSSound.Base = addr);
+            Queue(nameof(Pattern.GxRenderer), Pattern.GxRenderer, addr => GxRenderer.Base = addr);
 
             Queue(nameof(Pattern.GraceWarp), Pattern.GraceWarp, addr => Functions.GraceWarp = addr);
             Queue(nameof(Pattern.SetEvent), Pattern.SetEvent, addr => Functions.SetEvent = addr);

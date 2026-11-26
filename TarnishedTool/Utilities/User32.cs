@@ -20,6 +20,9 @@ namespace TarnishedTool.Utilities
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("user32.dll")]
+        public static extern short GetAsyncKeyState(int vKey);
         
         public static void SetTopmost(IntPtr hwnd)
         {
